@@ -11,7 +11,7 @@ int main()
    array<Byte>^preamble = unicode->GetPreamble();
    
    // Make sure a preamble was returned 
-   // and is large enough to containa BOM.
+   // and is large enough to contain a BOM.
    if ( preamble->Length >= 2 )
    {
       

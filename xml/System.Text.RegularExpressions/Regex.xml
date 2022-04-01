@@ -89,7 +89,7 @@
   
 <a name="regex_vs_string"></a>   
 ## Regex vs. String Methods  
- The <xref:System.String?displayProperty=nameWithType> class includes several search and comparison methods that you can use to perform pattern matching with text. For example, the <xref:System.String.Contains%2A?displayProperty=nameWithType>, <xref:System.String.EndsWith%2A?displayProperty=nameWithType>, and <xref:System.String.StartsWith%2A?displayProperty=nameWithType> methods determine whether a string instance contains a specified substring; and the <xref:System.String.IndexOf%2A?displayProperty=nameWithType>, <xref:System.String.IndexOfAny%2A?displayProperty=nameWithType>, <xref:System.String.LastIndexOf%2A?displayProperty=nameWithType>, and <xref:System.String.LastIndexOfAny%2A?displayProperty=nameWithType> methods return the starting position of a specified substring in a string. Use the methods of the <xref:System.String?displayProperty=nameWithType> class when you are searching for a specific string. Use the <xref:System.Text.RegularExpressions.Regex> class when you are searching for a specific pattern in a string. For more information and examples, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions).  
+ The <xref:System.String?displayProperty=nameWithType> class includes several search and comparison methods that you can use to perform pattern matching with text. For example, the <xref:System.String.Contains%2A?displayProperty=nameWithType>, <xref:System.String.EndsWith%2A?displayProperty=nameWithType>, and <xref:System.String.StartsWith%2A?displayProperty=nameWithType> methods determine whether a string instance contains a specified substring; and the <xref:System.String.IndexOf%2A?displayProperty=nameWithType>, <xref:System.String.IndexOfAny%2A?displayProperty=nameWithType>, <xref:System.String.LastIndexOf%2A?displayProperty=nameWithType>, and <xref:System.String.LastIndexOfAny%2A?displayProperty=nameWithType> methods return the starting position of a specified substring in a string. Use the methods of the <xref:System.String?displayProperty=nameWithType> class when you are searching for a specific string. Use the <xref:System.Text.RegularExpressions.Regex> class when you are searching for a specific pattern in a string. For more information and examples, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions).  
   
  [Back to Remarks](#remarks)  
   
@@ -150,9 +150,9 @@
   
 <a name="define_timeout"></a>   
 ## Defining a Time-Out Value  
- The .NET Framework supports a full-featured regular expression language that provides substantial power and flexibility in pattern matching. However, the power and flexibility come at a cost: the risk of poor performance. Regular expressions that perform poorly are surprisingly easy to create. In some cases, regular expression operations that rely on excessive backtracking can appear to stop responding when they process text that nearly matches the regular expression pattern. For more information about the .NET Framework regular expression engine, see [Details of Regular Expression Behavior](/dotnet/standard/base-types/details-of-regular-expression-behavior). For more information about excessive backtracking, see [Backtracking](/dotnet/standard/base-types/backtracking-in-regular-expressions).  
+ .NET supports a full-featured regular expression language that provides substantial power and flexibility in pattern matching. However, the power and flexibility come at a cost: the risk of poor performance. Regular expressions that perform poorly are surprisingly easy to create. In some cases, regular expression operations that rely on excessive backtracking can appear to stop responding when they process text that nearly matches the regular expression pattern. For more information about the .NET Regular Expression engine, see [Details of Regular Expression Behavior](/dotnet/standard/base-types/details-of-regular-expression-behavior). For more information about excessive backtracking, see [Backtracking](/dotnet/standard/base-types/backtracking-in-regular-expressions).  
   
- Starting with the .NET Framework 4.5, you can define a time-out interval for regular expression matches. If the regular expression engine cannot identify a match within this time interval, the matching operation throws a <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception. In most cases, this prevents the regular expression engine from wasting processing power by trying to match text that nearly matches the regular expression pattern. It also could indicate, however, that the timeout interval has been set too low, or that the current machine load has caused an overall degradation in performance.  
+ Starting with the .NET Framework 4.5, you can define a time-out interval for regular expression matches to limit excessive backtracking. Depending on the regular expression pattern and the input text, the execution time may exceed the specified time-out interval, but it will not spend more time backtracking than the specified time-out interval. If the regular expression engine times out, it throws a <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception. In most cases, this prevents the regular expression engine from wasting processing power by trying to match text that nearly matches the regular expression pattern. It also could indicate, however, that the time-out interval has been set too low, or that the current machine load has caused an overall degradation in performance.  
   
  How you handle the exception depends on the cause of the exception. If the exception occurs because the time-out interval is set too low or because of excessive machine load, you can increase the time-out interval and retry the matching operation. If the exception occurs because the regular expression relies on excessive backtracking, you can assume that a match does not exist, and, optionally, you can log information that will help you modify the regular expression pattern.  
   
@@ -211,7 +211,7 @@
     </remarks>
     <threadsafe>The <see cref="T:System.Text.RegularExpressions.Regex" /> class is immutable (read-only) and thread safe. <see cref="T:System.Text.RegularExpressions.Regex" /> objects can be created on any thread and shared between threads. For more information, see [Thread Safety](/dotnet/standard/base-types/thread-safety-in-regular-expressions).</threadsafe>
     <altmember cref="T:System.Configuration.RegexStringValidator" />
-    <related type="Article" href="/dotnet/standard/base-types/regular-expressions">.NET Framework Regular Expressions</related>
+    <related type="Article" href="/dotnet/standard/base-types/regular-expressions">.NET Regular Expressions</related>
     <related type="Article" href="/dotnet/standard/base-types/regular-expression-language-quick-reference">Regular Expression Language Elements</related>
     <related type="ExternalDocumentation" href="https://download.microsoft.com/download/D/2/4/D240EBF6-A9BA-4E4F-A63F-AEB6DA0B921C/Regular%20expressions%20quick%20reference.docx">Regular Expressions - Quick Reference (download in Word format)</related>
     <related type="ExternalDocumentation" href="https://download.microsoft.com/download/D/2/4/D240EBF6-A9BA-4E4F-A63F-AEB6DA0B921C/Regular%20expressions%20quick%20reference.pdf">Regular Expressions - Quick Reference (download in PDF format)</related>
@@ -322,7 +322,14 @@
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="pattern">The regular expression pattern to match.</param>
@@ -331,7 +338,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see the [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference) topics.  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see the [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference) topics.  
   
  Calling the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String)> constructor is equivalent to calling the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions)> constructor with a value of <xref:System.Text.RegularExpressions.RegexOptions.None> for the `options` argument.  
   
@@ -443,7 +450,14 @@
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
       <Docs>
@@ -454,7 +468,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see the [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference) topics.  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see the [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference) topics.  
   
  A <xref:System.Text.RegularExpressions.Regex> object is immutable, which means that it can be used only for the match parameters you define when you create it. However, it can be used any number of times without being recompiled.  
   
@@ -513,7 +527,14 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="pattern" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
@@ -526,7 +547,7 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see the [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference) topics.  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see the [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference) topics.  
   
  A <xref:System.Text.RegularExpressions.Regex> object is immutable, which means that it can be used only for the match pattern that you define when you create it. However, it can be used any number of times without being recompiled.  
   
@@ -1245,6 +1266,178 @@
 -   Instead of calling <see cref="M:System.Text.RegularExpressions.Regex.CompileToAssembly(System.Text.RegularExpressions.RegexCompilationInfo[],System.Reflection.AssemblyName)" /> and retrieving the compiled regular expression from an assembly, use either static or instance <see cref="T:System.Text.RegularExpressions.Regex" /> methods with the <see cref="F:System.Text.RegularExpressions.RegexOptions.Compiled" /> option when you instantiate a <see cref="T:System.Text.RegularExpressions.Regex" /> object or call a regular expression pattern matching method.</para>
         </block>
         <related type="Article" href="/dotnet/standard/base-types/compilation-and-reuse-in-regular-expressions">Compilation and Reuse</related>
+      </Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public int Count (string input);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 Count(string input) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Regex.Count(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Count (input As String) As Integer" />
+      <MemberSignature Language="F#" Value="member this.Count : string -&gt; int" Usage="regex.Count input" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int Count(System::String ^ input);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="net-7.0" />
+      </Parameters>
+      <Docs>
+        <param name="input">The string to search for a match.</param>
+        <summary>Searches an input string for all occurrences of a regular expression and returns the number of matches.</summary>
+        <returns>The number of matches.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="input" /> is <see langword="null" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public static int Count (string input, string pattern);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 Count(string input, string pattern) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Regex.Count(System.String,System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Count (input As String, pattern As String) As Integer" />
+      <MemberSignature Language="F#" Value="static member Count : string * string -&gt; int" Usage="System.Text.RegularExpressions.Regex.Count (input, pattern)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static int Count(System::String ^ input, System::String ^ pattern);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="net-7.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="net-7.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="input">The string to search for a match.</param>
+        <param name="pattern">The regular expression pattern to match.</param>
+        <summary>Searches an input string for all occurrences of a regular expression and returns the number of matches.</summary>
+        <returns>The number of matches.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="input" /> or <paramref name="pattern" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.RegularExpressions.RegexParseException">A regular expression parsing error occurred.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public static int Count (string input, string pattern, System.Text.RegularExpressions.RegexOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 Count(string input, string pattern, valuetype System.Text.RegularExpressions.RegexOptions options) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Regex.Count(System.String,System.String,System.Text.RegularExpressions.RegexOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Count (input As String, pattern As String, options As RegexOptions) As Integer" />
+      <MemberSignature Language="F#" Value="static member Count : string * string * System.Text.RegularExpressions.RegexOptions -&gt; int" Usage="System.Text.RegularExpressions.Regex.Count (input, pattern, options)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static int Count(System::String ^ input, System::String ^ pattern, System::Text::RegularExpressions::RegexOptions options);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="net-7.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="net-7.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="2" FrameworkAlternate="net-7.0" />
+      </Parameters>
+      <Docs>
+        <param name="input">The string to search for a match.</param>
+        <param name="pattern">The regular expression pattern to match.</param>
+        <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
+        <summary>Searches an input string for all occurrences of a regular expression and returns the number of matches.</summary>
+        <returns>The number of matches.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="input" /> or <paramref name="pattern" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="options" /> is not a valid bitwise combination of RegexOptions values.</exception>
+        <exception cref="T:System.Text.RegularExpressions.RegexParseException">A regular expression parsing error occurred.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public static int Count (string input, string pattern, System.Text.RegularExpressions.RegexOptions options, TimeSpan matchTimeout);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 Count(string input, string pattern, valuetype System.Text.RegularExpressions.RegexOptions options, valuetype System.TimeSpan matchTimeout) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Regex.Count(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Count (input As String, pattern As String, options As RegexOptions, matchTimeout As TimeSpan) As Integer" />
+      <MemberSignature Language="F#" Value="static member Count : string * string * System.Text.RegularExpressions.RegexOptions * TimeSpan -&gt; int" Usage="System.Text.RegularExpressions.Regex.Count (input, pattern, options, matchTimeout)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static int Count(System::String ^ input, System::String ^ pattern, System::Text::RegularExpressions::RegexOptions options, TimeSpan matchTimeout);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="net-7.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="net-7.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="2" FrameworkAlternate="net-7.0" />
+        <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="net-7.0" />
+      </Parameters>
+      <Docs>
+        <param name="input">The string to search for a match.</param>
+        <param name="pattern">The regular expression pattern to match.</param>
+        <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
+        <param name="matchTimeout">A time-out interval, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> to indicate that the method should not time out.</param>
+        <summary>Searches an input string for all occurrences of a regular expression and returns the number of matches.</summary>
+        <returns>The number of matches.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="input" /> or <paramref name="pattern" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="options" /> is not a valid bitwise combination of RegexOptions values, or <paramref name="matchTimeout" /> is negative, zero, or greater than approximately 24 days.</exception>
+        <exception cref="T:System.Text.RegularExpressions.RegexParseException">A regular expression parsing error occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="Escape">
@@ -2071,7 +2264,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="input">The string to search for a match.</param>
@@ -2087,7 +2287,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String)> method is equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the regular expression pattern specified by `pattern` and calling the <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String)> instance method. This regular expression pattern is cached for rapid retrieval by the regular expression engine.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception is thrown if the execution time of the matching operation exceeds the time-out interval specified for the application domain in which the method is called. If no time-out is defined in the application domain's properties, or if the time-out value is <xref:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout?displayProperty=nameWithType>, no exception is thrown.  
   
@@ -2169,7 +2369,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
       <Docs>
@@ -2187,7 +2394,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions)> method is equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the regular expression pattern specified by `pattern` and the regular expression options specified by `options` and calling the <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String)> instance method. This regular expression pattern is cached for rapid retrieval by the regular expression engine.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception is thrown if the execution time of the matching operation exceeds the time-out interval specified for the application domain in which the method is called. If no time-out is defined in the application domain's properties, or if the time-out value is <xref:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout?displayProperty=nameWithType>, no exception is thrown.  
   
@@ -2277,7 +2484,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
@@ -2297,7 +2511,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)> method is equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the regular expression pattern specified by `pattern` and the regular expression options specified by `options` and calling the <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String)> instance method. This regular expression pattern is cached for rapid retrieval by the regular expression engine.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The `matchTimeout` parameter specifies how long a pattern matching method should try to find a match before it times out. Setting a time-out interval prevents regular expressions that rely on excessive backtracking from appearing to stop responding when they process input that contains near matches. For more information, see [Best Practices for Regular Expressions](/dotnet/standard/base-types/best-practices) and [Backtracking](/dotnet/standard/base-types/backtracking-in-regular-expressions). If no match is found in that time interval, the method throws a <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception. `matchTimeout` overrides any default time-out value defined for the application domain in which the method executes.  
   
@@ -2568,7 +2782,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="input">The string to search for a match.</param>
@@ -2583,7 +2804,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.String)> method is equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance <xref:System.Text.RegularExpressions.Regex.Match(System.String)> method. In this case, the regular expression engine caches the regular expression pattern.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Group.Success%2A> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Capture.Value%2A> property contains the substring from `input` that matches the regular expression pattern. If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.  
   
@@ -2740,7 +2961,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
       <Docs>
@@ -2757,7 +2985,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.String,System.Text.RegularExpressions.RegexOptions)> method is equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions)> constructor and calling the instance <xref:System.Text.RegularExpressions.Regex.Match(System.String)> method.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Group.Success%2A> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Capture.Value%2A> property contains the substring from `input` that matches the regular expression pattern. If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.  
   
@@ -2833,7 +3061,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
@@ -2852,7 +3087,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)> method is equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)> constructor and calling the instance <xref:System.Text.RegularExpressions.Regex.Match(System.String)> method.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Group.Success%2A> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Capture.Value%2A> property contains the substring from `input` that matches the regular expression pattern. If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.  
   
@@ -3114,7 +3349,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="input">The string to search for a match.</param>
@@ -3132,7 +3374,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static `Matches` methods are equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance method `Matches`.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The <xref:System.Text.RegularExpressions.Regex.Matches%2A> method uses lazy evaluation to populate the returned <xref:System.Text.RegularExpressions.MatchCollection> object. Accessing members of this collection such as <xref:System.Text.RegularExpressions.MatchCollection.Count%2A?displayProperty=nameWithType> and <xref:System.Text.RegularExpressions.MatchCollection.CopyTo%2A?displayProperty=nameWithType> causes the collection to be populated immediately. To take advantage of lazy evaluation, you should iterate the collection by using a construct such as `foreach` in C# and `For Each`...`Next` in Visual Basic.  
   
@@ -3204,7 +3446,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
       <Docs>
@@ -3224,7 +3473,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static `Matches` methods are equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance method `Matches`.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The <xref:System.Text.RegularExpressions.Regex.Matches%2A> method uses lazy evaluation to populate the returned <xref:System.Text.RegularExpressions.MatchCollection> object. Accessing members of this collection such as <xref:System.Text.RegularExpressions.MatchCollection.Count%2A?displayProperty=nameWithType> and <xref:System.Text.RegularExpressions.MatchCollection.CopyTo%2A?displayProperty=nameWithType> causes the collection to be populated immediately. To take advantage of lazy evaluation, you should iterate the collection by using a construct such as `foreach` in C# and `For Each`...`Next` in Visual Basic.  
   
@@ -3296,7 +3545,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
@@ -3318,7 +3574,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The static `Matches` methods are equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance method `Matches`.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The <xref:System.Text.RegularExpressions.Regex.Matches%2A> method uses lazy evaluation to populate the returned <xref:System.Text.RegularExpressions.MatchCollection> object. Accessing members of this collection such as <xref:System.Text.RegularExpressions.MatchCollection.Count%2A?displayProperty=nameWithType> and <xref:System.Text.RegularExpressions.MatchCollection.CopyTo%2A?displayProperty=nameWithType> causes the collection to be populated immediately. To take advantage of lazy evaluation, you should iterate the collection by using a construct such as `foreach` in C# and `For Each`...`Next` in Visual Basic.  
   
@@ -3838,7 +4094,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="replacement" Type="System.String" />
       </Parameters>
       <Docs>
@@ -3853,7 +4116,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The static `Replace` methods are equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance method `Replace`.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference). The search for matches starts at the beginning of the `input` string.  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference). The search for matches starts at the beginning of the `input` string.  
   
  The `replacement` parameter specifies the string that is to replace each match in `input`. `replacement` can consist of any combination of literal text and [substitutions](/dotnet/standard/base-types/substitutions-in-regular-expressions). For example, the replacement pattern `a*${test}b` inserts the string "a*" followed by the substring that is matched by the `test` capturing group, if any, followed by the string "b". The * character is not recognized as a metacharacter within a replacement pattern.  
   
@@ -3945,7 +4208,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="evaluator" Type="System.Text.RegularExpressions.MatchEvaluator" />
       </Parameters>
       <Docs>
@@ -3968,7 +4238,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The method is equivalent to calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.String)?displayProperty=nameWithType> method and passing each <xref:System.Text.RegularExpressions.Match> object in the returned <xref:System.Text.RegularExpressions.MatchCollection> collection to the `evaluator` delegate.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The `evaluator` parameter is the delegate for a custom method that you define and that examines each match. The custom method must have the following signature to match the <xref:System.Text.RegularExpressions.MatchEvaluator> delegate.  
   
@@ -4236,7 +4506,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="replacement" Type="System.String" />
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
@@ -4253,7 +4530,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The static `Replace` methods are equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance method `Replace`.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference). If you specify <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft> for the `options` parameter, the search for matches begins at the end of the input string and moves left; otherwise, the search begins at the start of the input string and moves right.  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference). If you specify <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft> for the `options` parameter, the search for matches begins at the end of the input string and moves left; otherwise, the search begins at the start of the input string and moves right.  
   
  The `replacement` parameter specifies the string that is to replace each match in `input`. `replacement` can consist of any combination of literal text and [substitutions](/dotnet/standard/base-types/substitutions-in-regular-expressions). For example, the replacement pattern `a*${test}b` inserts the string "a*" followed by the substring that is matched by the `test` capturing group, if any, followed by the string "b". The * character is not recognized as a metacharacter within a replacement pattern.  
   
@@ -4343,7 +4620,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="evaluator" Type="System.Text.RegularExpressions.MatchEvaluator" />
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
@@ -4368,7 +4652,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The method is equivalent to calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.String,System.Text.RegularExpressions.RegexOptions)?displayProperty=nameWithType> method and passing each <xref:System.Text.RegularExpressions.Match> object in the returned <xref:System.Text.RegularExpressions.MatchCollection> collection to the `evaluator` delegate.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The `evaluator` parameter is the delegate for a custom method that you define and that examines each match. The custom method must have the following signature to match the <xref:System.Text.RegularExpressions.MatchEvaluator> delegate.  
   
@@ -4529,7 +4813,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="replacement" Type="System.String" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="3" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="4" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
@@ -4548,7 +4839,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The static `Replace` methods are equivalent to constructing a <xref:System.Text.RegularExpressions.Regex> object with the specified regular expression pattern and calling the instance method `Replace`.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference). If you specify <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft> for the `options` parameter, the search for matches begins at the end of the input string and moves left; otherwise, the search begins at the start of the input string and moves right.  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference). If you specify <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft> for the `options` parameter, the search for matches begins at the end of the input string and moves left; otherwise, the search begins at the start of the input string and moves right.  
   
  The `replacement` parameter specifies the string that is to replace each match in `input`. `replacement` can consist of any combination of literal text and [substitutions](/dotnet/standard/base-types/substitutions-in-regular-expressions). For example, the replacement pattern `a*${test}b` inserts the string "a*" followed by the substring that is matched by the `test` capturing group, if any, followed by the string "b". The * character is not recognized as a metacharacter within a replacement pattern.  
   
@@ -4648,7 +4939,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="evaluator" Type="System.Text.RegularExpressions.MatchEvaluator" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="3" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="4" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
@@ -4675,7 +4973,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The method is equivalent to calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.String,System.Text.RegularExpressions.RegexOptions)?displayProperty=nameWithType> method and passing each <xref:System.Text.RegularExpressions.Match> object in the returned <xref:System.Text.RegularExpressions.MatchCollection> collection to the `evaluator` delegate.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  The `evaluator` parameter is the delegate for a custom method that you define and that examines each match. The custom method must have the following signature to match the <xref:System.Text.RegularExpressions.MatchEvaluator> delegate.  
  
@@ -5039,7 +5337,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="input">The string to split.</param>
@@ -5052,7 +5357,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> methods are similar to the <xref:System.String.Split%2A?displayProperty=nameWithType> method, except that <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> splits the string at a delimiter determined by a regular expression instead of a set of characters. The `input` string is split as many times as possible. If `pattern` is not found in the `input` string, the return value contains one element whose value is the original `input` string.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
 > [!IMPORTANT]
 >  Compiled regular expressions used in calls to static <xref:System.Text.RegularExpressions.Regex.Split%2A> methods are automatically cached. To manage the lifetime of compiled regular expressions yourself, use the instance <xref:System.Text.RegularExpressions.Regex.Split%2A> methods.  
@@ -5223,7 +5528,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" />
-        <Parameter Name="pattern" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" />
       </Parameters>
       <Docs>
@@ -5238,7 +5550,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> methods are similar to the <xref:System.String.Split(System.Char%5B%5D)?displayProperty=nameWithType> method, except that <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> splits the string at a delimiter determined by a regular expression instead of a set of characters. The string is split as many times as possible. If no delimiter is found, the return value contains one element whose value is the original `input` string.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
 > [!IMPORTANT]
 >  Compiled regular expressions used in calls to static <xref:System.Text.RegularExpressions.Regex.Split%2A> methods are automatically cached. To manage the lifetime of compiled regular expressions yourself, use the instance <xref:System.Text.RegularExpressions.Regex.Split%2A> methods.  
@@ -5314,7 +5626,14 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
       </ReturnValue>
       <Parameters>
         <Parameter Name="input" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="pattern" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Regex", new System.Object[] { Mono.Cecil.CustomAttributeArgument })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="options" Type="System.Text.RegularExpressions.RegexOptions" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
         <Parameter Name="matchTimeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
@@ -5331,7 +5650,7 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> methods are similar to the <xref:System.String.Split(System.Char%5B%5D)?displayProperty=nameWithType> method, except that <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> splits the string at a delimiter determined by a regular expression instead of a set of characters. The string is split as many times as possible. If no delimiter is found, the return value contains one element whose value is the original `input` string.  
   
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
 > [!IMPORTANT]
 >  Compiled regular expressions used in calls to static <xref:System.Text.RegularExpressions.Regex.Split%2A> methods are automatically cached. To manage the lifetime of compiled regular expressions yourself, use the instance <xref:System.Text.RegularExpressions.Regex.Split%2A> methods.  
@@ -5482,7 +5801,7 @@ Any objects that are included in the <xref:System.Runtime.Serialization.Serializ
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Framework Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The `pattern` parameter consists of regular expression language elements that symbolically describe the string to match. For more information about regular expressions, see [.NET Regular Expressions](/dotnet/standard/base-types/regular-expressions) and [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
  ]]></format>
         </remarks>
