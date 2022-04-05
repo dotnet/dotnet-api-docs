@@ -10,7 +10,6 @@ public class MyProduct : IEquatable<MyProduct>
 
     public bool Equals(MyProduct other)
     {
-
         //Check whether the compared object is null.
         if (Object.ReferenceEquals(other, null)) return false;
 
@@ -54,9 +53,7 @@ class Program1
                                new ProductA { Name = "lemon", Code = 12 } };
         //</Snippet10>
 
-        //INTERSECT
-
-        //<Snippet3>
+        //<Intersect>
         // Get the products from the first array
         // that have duplicates in the second array.
 
@@ -70,11 +67,9 @@ class Program1
             This code produces the following output:
             apple 9
         */
-        //</Snippet3>
+        //</Intersect>
 
-        //UNION
-
-        //<Snippet4>
+        //<Union>
         //Get the products from the both arrays
         //excluding duplicates.
 
@@ -91,17 +86,15 @@ class Program1
             orange 4
             lemon 12
         */
-        //</Snippet4>
+        //</Union>
 
-        //DISTINCT
-
-        //<Snippet5>
+        //<Distinct>
         MyProduct[] products = { new MyProduct { Name = "apple", Code = 9 },
                                new MyProduct { Name = "orange", Code = 4 },
                                new MyProduct { Name = "apple", Code = 9 },
                                new MyProduct { Name = "lemon", Code = 12 } };
 
-        //Exclude duplicates.
+        // Exclude duplicates.
 
         IEnumerable<MyProduct> noduplicates =
             products.Distinct();
@@ -115,19 +108,17 @@ class Program1
             orange 4
             lemon 12
         */
-        //</Snippet5>
+        //</Distinct>
 
-        //EXCEPT
-
-        //<Snippet7>
+        //<Except>
         ProductA[] fruits1 = { new ProductA { Name = "apple", Code = 9 },
                                new ProductA { Name = "orange", Code = 4 },
                                 new ProductA { Name = "lemon", Code = 12 } };
 
         ProductA[] fruits2 = { new ProductA { Name = "apple", Code = 9 } };
 
-        //Get all the elements from the first array
-        //except for the elements from the second array.
+        // Get all the elements from the first array
+        // except for the elements from the second array.
 
         IEnumerable<ProductA> except =
             fruits1.Except(fruits2);
@@ -141,11 +132,9 @@ class Program1
           orange 4
           lemon 12
         */
-        //</Snippet7>
+        //</Except>
 
-        //SEQUENCEEQUAL
-
-        //<Snippet8>
+        //<SequenceEqual>
 
         ProductA[] storeA = { new ProductA { Name = "apple", Code = 9 },
                                new ProductA { Name = "orange", Code = 4 } };
@@ -162,26 +151,26 @@ class Program1
 
             Equal? True
         */
-        //</Snippet8>
+        //</SequenceEqual>
         Console.ReadLine();
     }
 
-//<Snippet9>
-public class ProductA: IEquatable<ProductA>
-{
-    public string Name { get; set; }
-    public int Code { get; set; }
-
-    public bool Equals(ProductA other)
+    //<Snippet9>
+    public class ProductA : IEquatable<ProductA>
     {
-        if (other is null)
-            return false;
+        public string Name { get; set; }
+        public int Code { get; set; }
 
-        return this.Name == other.Name && this.Code == other.Code;
+        public bool Equals(ProductA other)
+        {
+            if (other is null)
+                return false;
+
+            return this.Name == other.Name && this.Code == other.Code;
+        }
+
+        public override bool Equals(object obj) => Equals(obj as ProductA);
+        public override int GetHashCode() => (Name, Code).GetHashCode();
     }
-
-    public override bool Equals(object obj) => Equals(obj as ProductA);
-    public override int GetHashCode() => (Name, Code).GetHashCode();
-}
-//</Snippet9>
+    //</Snippet9>
 }

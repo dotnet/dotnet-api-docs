@@ -51,17 +51,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        //<Snippet2>
+        //<Intersect>
         Product[] store1 = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 } };
 
         Product[] store2 = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "lemon", Code = 12 } };
-        //</Snippet2>
 
-        //INTERSECT
-
-        //<Snippet3>
         // Get the products from the first array
         // that have duplicates in the second array.
 
@@ -75,18 +71,22 @@ class Program
             This code produces the following output:
             apple 9
         */
-        //</Snippet3>
+        //</Intersect>
 
-        //UNION
+        //<Union>
+        Product[] store10 = { new Product { Name = "apple", Code = 9 },
+                               new Product { Name = "orange", Code = 4 } };
 
-        //<Snippet4>
+        Product[] store20 = { new Product { Name = "apple", Code = 9 },
+                               new Product { Name = "lemon", Code = 12 } };
+
         //Get the products from the both arrays
         //excluding duplicates.
 
         IEnumerable<Product> union =
-          store1.Union(store2, new ProductComparer());
+          store10.Union(store20, new ProductComparer());
 
-        foreach (var product in union)
+        foreach (Product product in union)
             Console.WriteLine(product.Name + " " + product.Code);
 
         /*
@@ -96,17 +96,15 @@ class Program
             orange 4
             lemon 12
         */
-        //</Snippet4>
+        //</Union>
 
-        //DISTINCT
-
-        //<Snippet5>
+        //<Distinct>
         Product[] products = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 },
                                new Product { Name = "apple", Code = 9 },
                                new Product { Name = "lemon", Code = 12 } };
 
-        //Exclude duplicates.
+        // Exclude duplicates.
 
         IEnumerable<Product> noduplicates =
             products.Distinct(new ProductComparer());
@@ -120,18 +118,15 @@ class Program
             orange 4
             lemon 12
         */
-        //</Snippet5>
+        //</Distinct>
 
-        //CONTAINS
-
-        //<Snippet6>
-
+        //<Contains>
         Product[] fruits = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 },
                                new Product { Name = "lemon", Code = 12 } };
 
         Product apple = new Product { Name = "apple", Code = 9 };
-        Product kiwi = new Product {Name = "kiwi", Code = 8 };
+        Product kiwi = new Product { Name = "kiwi", Code = 8 };
 
         ProductComparer prodc = new ProductComparer();
 
@@ -148,19 +143,17 @@ class Program
             Kiwi? False
         */
 
-        //</Snippet6>
+        //</Contains>
 
-        //EXCEPT
-
-        //<Snippet7>
+        //<Except>
         Product[] fruits1 = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 },
                                 new Product { Name = "lemon", Code = 12 } };
 
         Product[] fruits2 = { new Product { Name = "apple", Code = 9 } };
 
-        //Get all the elements from the first array
-        //except for the elements from the second array.
+        // Get all the elements from the first array
+        // except for the elements from the second array.
 
         IEnumerable<Product> except =
             fruits1.Except(fruits2, new ProductComparer());
@@ -175,11 +168,9 @@ class Program
           lemon 12
         */
 
-        //</Snippet7>
+        //</Except>
 
-        //SEQUENCEEQUAL
-
-        //<Snippet8>
+        //<SequenceEqual>
 
         Product[] storeA = { new Product { Name = "apple", Code = 9 },
                                new Product { Name = "orange", Code = 4 } };
@@ -197,7 +188,8 @@ class Program
             Equal? True
         */
 
-        //</Snippet8>
+        //</SequenceEqual>
+
         Console.ReadLine();
     }
 }
