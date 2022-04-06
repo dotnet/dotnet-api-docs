@@ -1,4 +1,6 @@
-﻿//<Snippet1>
+﻿module source
+
+//<Snippet1>
 open System
 open System.Reflection
 
