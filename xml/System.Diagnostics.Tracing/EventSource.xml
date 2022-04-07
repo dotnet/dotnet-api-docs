@@ -3505,6 +3505,102 @@ class AnotherEventSource : EventSource {
   
 ```  
   
+  These are the expected sizes and data encodings for standard serializable types:
+
+```csharp 
+// bool arg
+int temp = arg ? 1 : 0;
+desc.DataPointer = (IntPtr)(&temp);
+desc.Size = 4;
+
+// byte arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 1;
+
+// sbyte arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 1;
+
+// char arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 2;
+
+// short arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 2;
+
+// ushort arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 2;
+
+// int arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 4;
+
+// uint arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 4;
+
+// long arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 8;
+
+// ulong arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 8;
+
+// float arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 4;
+
+// double arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 8;
+
+// decimal arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 16;
+
+// Guid arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = 16;
+
+// IntPtr arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = IntPtr.Size;
+
+// UIntPtr arg
+desc.DataPointer = (IntPtr)(&arg);
+desc.Size = UIntPtr.Size;
+
+// DateTime arg
+long fileTime = arg.ToFileTimeUtc();
+desc.DataPointer = (IntPtr)(&fileTime);
+desc.Size = 8;
+
+// string arg
+fixed(byte* ptr = arg)
+{
+    int length = arg.Length;
+    desc.DataPointer = ptr;
+    desc.Size = (arg.Length + 1) * 2;  // strings use 2 byte per char UTF16 encoding and a null terminator at the end
+}
+
+// byte[] arg
+// This one is encoded using two adjacent EventData elements.
+fixed(byte* ptr = arg)
+{
+    int length = arg.Length;
+    desc[i].DataPointer = (IntPtr)(&length);
+    desc[i].Size = 4;
+    desc[i + 1].DataPointer = (IntPtr)ptr;
+    desc[i + 1].Size = arg.Length;
+}
+
+// enums should be converted to their underlying type and then serialized
+// as byte, short, or int.
+
+```
  ]]></format>
         </remarks>
       </Docs>
@@ -3674,7 +3770,7 @@ class AnotherEventSource : EventSource {
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- <xref:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore%2A> is similar to the <xref:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityId%2A> method but offers better performance, bevcause it does not have to unbox the `childActivityID` and `data` arguments.  
+ <xref:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore%2A> is similar to the <xref:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityId%2A> method but offers better performance, because it does not have to unbox the `childActivityID` and `data` arguments.  
   
  Your ETW event method calling this function must follow these guidelines:  
   
@@ -3684,7 +3780,7 @@ class AnotherEventSource : EventSource {
   
 3.  Call <xref:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore%2A> passing in the event ID, followed by the related ID GUID, followed by all the parameters the event method is passed, in the same order.  
   
-   
+ This method uses the same rules as <xref:System.Diagnostics.Tracing.EventSource.WriteEventCore%2A> for the `args` parameter. See WriteEventCore documentation for more details.
   
 ## Examples  
  The following C# code example shows how to define a method overload that calls <xref:System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore%2A>.  
