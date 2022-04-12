@@ -3579,11 +3579,12 @@ desc.DataPointer = (IntPtr)(&fileTime);
 desc.Size = 8;
 
 // string arg
-fixed(byte* ptr = arg)
+fixed(char* ptr = arg)
 {
-    int length = arg.Length;
-    desc.DataPointer = ptr;
-    desc.Size = (arg.Length + 1) * 2;  // strings use 2 byte per char UTF16 encoding and a null terminator at the end
+    desc.DataPointer = (IntPtr)ptr;
+    // strings use 2 byte per char UTF16 encoding and a null terminator at the end
+    // only strings without embedded null characters are supported
+    desc.Size = (arg.Length + 1) * 2;  
 }
 
 // byte[] arg
