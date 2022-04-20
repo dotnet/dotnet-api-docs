@@ -56,7 +56,7 @@
  The <xref:System.Diagnostics.DefaultTraceListener.Fail%2A> method, by default, displays a message box when the application is running in a user interface mode; it also emits the message using <xref:System.Diagnostics.DefaultTraceListener.WriteLine%2A>.  
   
 > [!NOTE]
->  The display of the message box for <xref:System.Diagnostics.Debug.Assert%2A> and <xref:System.Diagnostics.Debug.Fail%2A> method calls depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace), by the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).  
+>  The display of the message box for <xref:System.Diagnostics.Debug.Assert%2A> and <xref:System.Diagnostics.Debug.Fail%2A> method calls depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
   
  You must enable tracing or debugging to use a trace listener. The following syntax is compiler specific. If you use compilers other than C# or Visual Basic, refer to the documentation for your compiler.  
   
@@ -64,7 +64,7 @@
   
 -   To enable tracing in C#, add the `/d:TRACE` flag to the compiler command line when you compile your code, or add `#define TRACE` to the top of your file. In Visual Basic, add the `/d:TRACE=True` flag to the compiler command line.  
   
- To add a trace listener, edit the configuration file that corresponds to the name of your application. Within this file, you can add a listener, set its type and set its parameters, remove a listener, or clear all the listeners previously set by the application. The configuration file should be formatted similar to the following example:  
+For .NET Framework apps, you can add a trace listener by editing the configuration file that corresponds to the name of your application. Within this file, you can add a listener, set its type and set its parameters, remove a listener, or clear all the listeners previously set by the application. The configuration file should be formatted similar to the following example:  
   
 ```xml  
 <configuration>  
@@ -72,14 +72,12 @@
   <trace autoflush="false" indentsize="4">  
     <listeners>  
       <remove name="Default" />  
-      <add name="myListener"  type="System.Diagnostics.TextWriterTraceListener"    initializeData="c:\myListener.log" />  
+      <add name="myListener" type="System.Diagnostics.TextWriterTraceListener" initializeData="c:\myListener.log" />  
     </listeners>  
   </trace>  
 </system.diagnostics>  
 </configuration>  
-```  
-  
-   
+```
   
 ## Examples  
  The following code example calculates binomial coefficients, which are values used in probability and statistics. This example uses a <xref:System.Diagnostics.DefaultTraceListener> to trace results and log errors. It creates a new <xref:System.Diagnostics.DefaultTraceListener>, adds it to the <xref:System.Diagnostics.Trace.Listeners%2A?displayProperty=nameWithType> collection, and sets the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A> property to the log file specified in the command-line arguments.  

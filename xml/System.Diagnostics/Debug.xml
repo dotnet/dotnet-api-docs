@@ -54,11 +54,17 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If you use methods in the <xref:System.Diagnostics.Debug> class to print debugging information and check your logic with assertions, you can make your code more robust without impacting the performance and code size of your shipping product.
 
- This class provides methods to display an <xref:System.Diagnostics.Debug.Assert%2A> dialog box, and to emit an assertion that will always fail. This class provides write methods in the following variations: <xref:System.Diagnostics.Debug.Write%2A>, <xref:System.Diagnostics.Debug.WriteLine%2A>, <xref:System.Diagnostics.Debug.WriteIf%2A>, and <xref:System.Diagnostics.Debug.WriteLineIf%2A>.
+To make your code more robust without impacting the performance and code size of your shipping product, use methods in the <xref:System.Diagnostics.Debug> class to print debugging information and check your logic with assertions.
 
- The <xref:System.Diagnostics.BooleanSwitch> and <xref:System.Diagnostics.TraceSwitch> classes provide means to dynamically control the tracing output. You can modify the values of these switches without recompiling your application. For information on using the configuration file to set a switch, see the <xref:System.Diagnostics.Switch> class and the [Trace Switches](/dotnet/framework/debug-trace-profile/trace-switches) article.
+ This class provides methods to display an <xref:System.Diagnostics.Debug.Assert%2A> dialog box, and to emit an assertion that will always fail. This class provides write methods in the following variations:
+
+- <xref:System.Diagnostics.Debug.Write%2A>
+- <xref:System.Diagnostics.Debug.WriteLine%2A>
+- <xref:System.Diagnostics.Debug.WriteIf%2A>
+- <xref:System.Diagnostics.Debug.WriteLineIf%2A>
+
+ The <xref:System.Diagnostics.BooleanSwitch> and <xref:System.Diagnostics.TraceSwitch> classes provide means to dynamically control the tracing output. For .NET Framework apps, you can modify the values of these switches without recompiling your application. For information on using the configuration file to set a switch in .NET Framework apps, see the <xref:System.Diagnostics.Switch> class and the [Trace Switches](/dotnet/framework/debug-trace-profile/trace-switches) article.
 
  You can customize the tracing output's target by adding <xref:System.Diagnostics.TraceListener> instances to or removing instances from the <xref:System.Diagnostics.Debug.Listeners%2A> collection. The <xref:System.Diagnostics.Debug.Listeners%2A> collection is shared by both the <xref:System.Diagnostics.Debug> and the <xref:System.Diagnostics.Trace> classes; adding a trace listener to either class adds the listener to both. By default, the <xref:System.Diagnostics.DefaultTraceListener> class emits trace output.
 
@@ -67,7 +73,7 @@
 
  You can modify the level of indentation using the <xref:System.Diagnostics.Debug.Indent%2A> method or the <xref:System.Diagnostics.Debug.IndentLevel%2A> property. To modify the indent spacing, use the <xref:System.Diagnostics.Debug.IndentSize%2A> property. You can specify whether to automatically flush the output buffer after each write by setting the <xref:System.Diagnostics.Debug.AutoFlush%2A> property to `true`.
 
- To set the <xref:System.Diagnostics.Debug.AutoFlush%2A> and <xref:System.Diagnostics.Debug.IndentSize%2A> for <xref:System.Diagnostics.Debug>, you can edit the configuration file corresponding to the name of your application. The configuration file should be formatted as shown in the following example.
+For .NET Framework apps, you can set the <xref:System.Diagnostics.Debug.AutoFlush%2A> and <xref:System.Diagnostics.Debug.IndentSize%2A> for <xref:System.Diagnostics.Debug> by editing your app's configuration file. The configuration file should be formatted as shown in the following example.
 
 ```xml
 <configuration>
@@ -77,10 +83,10 @@
 </configuration>
 ```
 
- The <xref:System.Diagnostics.ConditionalAttribute> attribute is applied to the methods of <xref:System.Diagnostics.Debug>. Compilers that support <xref:System.Diagnostics.ConditionalAttribute> ignore calls to these methods unless "DEBUG" is defined as a conditional compilation symbol. Refer to a compiler's documentation to determine whether <xref:System.Diagnostics.ConditionalAttribute> is supported and the syntax for defining a conditional compilation symbol.
+ The <xref:System.Diagnostics.ConditionalAttribute> attribute is applied to the methods of <xref:System.Diagnostics.Debug>. Compilers that support <xref:System.Diagnostics.ConditionalAttribute> ignore calls to these methods unless `DEBUG` is defined as a conditional compilation symbol. Refer to a compiler's documentation to determine whether <xref:System.Diagnostics.ConditionalAttribute> is supported and the syntax for defining a conditional compilation symbol.
 
 > [!NOTE]
-> In Visual Studio C# and Visual Basic projects, by default, the `DEBUG` conditional compilation symbol is defined for debug builds, and the `TRACE` symbol is defined for both debug and release builds. For information about how to disable this behavior, see the Visual Studio documentation. For information about conditional debugging in Visual C++, see [Debug class (C++/CLI)](/cpp/dotnet/debug-class-cpp-cli).
+> In Visual Studio C# and Visual Basic projects, by default, the `DEBUG` conditional compilation symbol is defined for debug builds, and the `TRACE` symbol is defined for both debug and release builds. For information about conditional debugging in Visual C++, see [Debug class (C++/CLI)](/cpp/dotnet/debug-class-cpp-cli).
 
  To define the `DEBUG` conditional compilation symbol in C#, add the `/d:DEBUG` option to the compiler command line when you compile your code using a command line, or add `#define DEBUG` to the top of your file. In Visual Basic, add the `/d:DEBUG=True` option to the compiler command line or add `#Const DEBUG=True` to the file.
 
@@ -180,20 +186,17 @@ The following example uses <xref:System.Diagnostics.Debug> to indicate the begin
 ## Remarks
  By default, the <xref:System.Diagnostics.Debug.Assert%2A?displayProperty=nameWithType> method works only in debug builds. Use the <xref:System.Diagnostics.Trace.Assert%2A?displayProperty=nameWithType> method if you want to do assertions in release builds. For more information, see [Assertions in Managed Code](/visualstudio/debugger/assertions-in-managed-code).
 
-> [!IMPORTANT]
->  The `Assert` methods are not available for Windows Store apps.
-
  Typically, the <xref:System.Diagnostics.Debug.Assert%28System.Boolean%29> method is used to identify logic errors during program development. <xref:System.Diagnostics.Debug.Assert%2A> evaluates the condition. If the result is `false`, it sends a failure message to the <xref:System.Diagnostics.Debug.Listeners%2A> collection. You can customize this behavior by adding a <xref:System.Diagnostics.TraceListener> to, or removing one from, the <xref:System.Diagnostics.Debug.Listeners%2A> collection.
 
  When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.
 
 > [!NOTE]
->  Windows 8.x Store apps do not support modal dialog boxes, so they behave the same in user interface mode and non-user interface mode. The message is written to the active trace listeners in debugging mode, or no message is written in release mode.
+> Windows 8.x apps do not support modal dialog boxes, so they behave the same in user interface mode and non-user interface mode. The message is written to the active trace listeners in debugging mode, or no message is written in release mode.
 
 > [!NOTE]
->  The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace), the [&lt;remove&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).
+> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
 
- You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
+For .NET Framework apps, you can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
 
 ```xml
 <configuration>
@@ -290,9 +293,9 @@ This overload was introduced in .NET 6 to improve performance. In comparison to 
  When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.
 
 > [!NOTE]
-> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) or the [&lt;remove&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).
+> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
 
- You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
+For .NET Framework apps, you can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
 
 ```xml
 <configuration>
@@ -383,9 +386,9 @@ This overload was introduced in .NET 6 to improve performance. In comparison to 
  When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.
 
 > [!NOTE]
->  The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace), the [&lt;remove&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).
+>  The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
 
- You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
+For .NET Framework apps, you can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
 
 ```xml
 <configuration>
@@ -491,9 +494,9 @@ This overload was introduced in .NET 6 to improve performance. In comparison to 
  When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.
 
 > [!NOTE]
-> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) or the [&lt;remove&gt; element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).
+> The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
 
- You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
+For .NET Framework apps, you can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
 
 ```xml
 <configuration>
@@ -585,9 +588,9 @@ This overload was introduced in .NET 6 to improve performance. In comparison to 
  When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.
 
 > [!NOTE]
->  The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace), the [&lt;remove&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).
+>  The display of the message box depends on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
 
- You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
+For .NET Framework apps, you can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
 
 ```xml
 <configuration>
@@ -697,9 +700,9 @@ The following example checks whether the `type` parameter is valid. If `type` is
  When the application runs in user interface mode, it displays a message box that shows the call stack with file and line numbers. The message box contains three buttons: **Abort**, **Retry**, and **Ignore**. Clicking the **Abort** button terminates the application. Clicking **Retry** sends you to the code in the debugger if your application is running in a debugger, or offers to open a debugger if it is not. Clicking **Ignore** continues with the next instruction in the code.
 
 > [!NOTE]
->  The display of the message box is dependent on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by the [&lt;clear&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace), the [&lt;remove&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace), or by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`).
+>  The display of the message box is dependent on the presence of the <xref:System.Diagnostics.DefaultTraceListener>. If the <xref:System.Diagnostics.DefaultTraceListener> is not in the <xref:System.Diagnostics.Trace.Listeners%2A> collection, the message box is not displayed. The <xref:System.Diagnostics.DefaultTraceListener> can be removed by calling the <xref:System.Diagnostics.TraceListenerCollection.Clear%2A> method on the <xref:System.Diagnostics.Trace.Listeners%2A> property (`System.Diagnostics.Trace.Listeners.Clear()`). For .NET Framework apps, you can also use the [\<clear> element](/dotnet/framework/configure-apps/file-schema/trace-debug/clear-element-for-listeners-for-trace) and the [\<remove> element](/dotnet/framework/configure-apps/file-schema/trace-debug/remove-element-for-listeners-for-trace) in your app's configuration file.
 
- You can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
+For .NET Framework apps, you can change the behavior of the <xref:System.Diagnostics.DefaultTraceListener> in the configuration file that corresponds to the name of your application. In this file, you can enable and disable the assert message box or set the <xref:System.Diagnostics.DefaultTraceListener.LogFileName%2A?displayProperty=nameWithType> property. The configuration file should be formatted as follows:
 
 ```xml
 <configuration>
@@ -760,7 +763,7 @@ The following example checks whether the `type` parameter is valid. If `type` is
 
  Flushing the stream will not flush its underlying encoder unless you explicitly call <xref:System.Diagnostics.Debug.Flush%2A> or <xref:System.Diagnostics.Debug.Close%2A>. Setting <xref:System.Diagnostics.Debug.AutoFlush%2A> to `true` means that data will be flushed from the buffer to the stream, but the encoder state will not be flushed. This allows the encoder to keep its state (partial characters) so that it can encode the next block of characters correctly. This scenario affects UTF8 and UTF7 where certain characters can only be encoded after the encoder receives the adjacent character or characters.
 
- To set the <xref:System.Diagnostics.Debug.AutoFlush%2A> and <xref:System.Diagnostics.Debug.IndentSize%2A> for <xref:System.Diagnostics.Debug>, you can also edit the configuration file corresponding to the name of your application. The configuration file should be formatted as shown in the following example.
+For .NET Framework apps, you can also set the <xref:System.Diagnostics.Debug.AutoFlush%2A> and <xref:System.Diagnostics.Debug.IndentSize%2A> properties for <xref:System.Diagnostics.Debug> by editing the configuration file corresponding to the name of your application. The configuration file should be formatted as shown in the following example.
 
 ```xml
 <configuration>
@@ -1316,7 +1319,7 @@ End of list of errors
 ## Remarks
  A <xref:System.Diagnostics.TextWriterTraceListener> interprets this number as spaces. An <xref:System.Diagnostics.EventLogTraceListener> ignores this value.
 
- To set the <xref:System.Diagnostics.Debug.AutoFlush%2A> and <xref:System.Diagnostics.Debug.IndentSize%2A> for <xref:System.Diagnostics.Debug>, you can also edit the configuration file corresponding to the name of your application. The configuration file should be formatted as shown in the following example.
+For .NET Framework apps, you can also set the <xref:System.Diagnostics.Debug.AutoFlush%2A> and <xref:System.Diagnostics.Debug.IndentSize%2A> properties for <xref:System.Diagnostics.Debug> by editing the configuration file corresponding to the name of your application. The configuration file should be formatted as shown in the following example.
 
 ```xml
 <configuration>
