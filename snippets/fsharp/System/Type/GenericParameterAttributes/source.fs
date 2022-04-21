@@ -35,7 +35,7 @@ let listGenericParameterAttributes (t: Type) =
         if variance = GenericParameterAttributes.None then
             "No variance flag"
         else
-            if variance &&& GenericParameterAttributes.Covariant <> 0 then
+            if variance &&& GenericParameterAttributes.Covariant |> int <> 0 then
                 "Covariant"
             else
                 "Contravariant"
@@ -45,19 +45,17 @@ let listGenericParameterAttributes (t: Type) =
     if constraints = GenericParameterAttributes.None then
         retval <- retval + " No special constraints"
     else
-        if constraints &&& GenericParameterAttributes.ReferenceTypeConstraint <> 0 then
+        if constraints &&& GenericParameterAttributes.ReferenceTypeConstraint |> int <> 0 then
             retval <- retval + " ReferenceTypeConstraint"
-        if constraints &&& GenericParameterAttributes.NotNullableValueTypeConstraint <> 0 then
+        if constraints &&& GenericParameterAttributes.NotNullableValueTypeConstraint |> int <> 0 then
             retval <- retval + " NotNullableValueTypeConstraint"
-        if constraints &&& GenericParameterAttributes.DefaultConstructorConstraint <> 0 then
+        if constraints &&& GenericParameterAttributes.DefaultConstructorConstraint |> int <> 0 then
             retval <- retval + " DefaultConstructorConstraint"
     retval
 
 
-// To get the generic type definition, omit the type
-// arguments but retain the comma to indicate the number
-// of type arguments. 
-let def = typeof<Test<_,_>>.GetGenericTypeDefinition()
+// To get the generic type definition, call .GetGenericTypeDefinition().
+let def = typeof<Test<Derived, _>>.GetGenericTypeDefinition()
 printfn $"\nExamining generic type {def}"
 
 // Get the type parameters of the generic type definition,

@@ -3,6 +3,7 @@
 // <Snippet1>
 open System
 open System.Reflection
+open System.Reflection.Emit
 
 type A() = class end
 
