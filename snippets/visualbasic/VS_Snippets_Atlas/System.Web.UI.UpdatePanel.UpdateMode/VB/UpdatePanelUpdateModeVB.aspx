@@ -7,7 +7,7 @@
 <script runat="server">
     Protected Property LastUpdate() As DateTime
         Get
-            If Not ViewState("LastUpdate") Is Nothing Then
+            If ViewState("LastUpdate") IsNot Nothing Then
                 Return ViewState("LastUpdate")
             Else : Return DateTime.Now()
             End If
