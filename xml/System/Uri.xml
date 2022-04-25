@@ -143,15 +143,15 @@ Web addresses are typically expressed using uniform resource identifiers that co
 
  With the growth of the Internet, there is a growing need to identify resources using languages other than English. Identifiers which facilitate this need and allow non-ASCII characters (characters in the Unicode/ISO 10646 character set) are known as International Resource Identifiers (IRIs). The specifications for IRIs are documented in RFC 3987 published by IETF. Using IRIs allows a URL to contain Unicode characters.
 
- The existing <xref:System.Uri> class has been extended in .NET Framework v3.5, 3.0 SP1, and 2.0 SP1 to provide IRI support based on RFC 3987. Users of .NET Framework versions before version 4.5 will not see any change from the .NET Framework 2.0 behavior unless they specifically enable IRI. This ensures application compatibility with prior versions of .NET Framework.
+ The existing <xref:System.Uri> class was extended in .NET Framework v3.5, 3.0 SP1, and 2.0 SP1 to provide IRI support based on RFC 3987. Users of .NET Framework versions before version 4.5 will not see any change from the .NET Framework 2.0 behavior unless they specifically enable IRI. This ensures application compatibility with prior versions of .NET Framework.
 
  In .NET Framework 4.5 and later versions, IRI is always enabled and can't be changed using a configuration option. To enable support for IRI in .NET Framework versions prior to .NET Framework 4.5, set a configuration option in the *machine.config* or in the *app.config* file. Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. For example:
 
 ```xml
 <configuration>
   <uri>
-  <idn enabled="All" />
-  <iriParsing enabled="true" />
+    <idn enabled="All" />
+    <iriParsing enabled="true" />
   </uri>
 </configuration>
 ```
@@ -172,7 +172,7 @@ There are three possible values for IDN depending on the DNS servers that are us
 
 - idn enabled = None
 
-  This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behaviour.
+  This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behavior.
 
  When IRI parsing is enabled (iriParsing enabled = `true`), normalization and character checking are done according to the latest IRI rules in RFC 3986 and RFC 3987. When IRI parsing is disabled, normalization and character checking are performed according to RFC 2396 and RFC 2732 (for IPv6 literals). In versions of .NET Framework before version 4.5, the default value is `false`. In .NET Framework 4.5+, .NET Core, and .NET 5+, the default value is `true`, and the enabled state of IRI parsing cannot be modified by settings in a *.config* file.
 
@@ -1672,26 +1672,26 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
 If you used an escaped string to construct this instance (for example, `"http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm"`), then DnsSafeHost returns an escaped string. Unescape any escaped string returned from `DnsSafeHost` before using that string for DNS resolution (see the Example). If you used an invalid unescaped string to construct this instance (for example, "http://[fe80::200:39ff:fe36:1a2d%4]/temp/example.htm"), then DnsSafeHost returns an unescaped string.
 
- The <xref:System.Uri.DnsSafeHost%2A> property is dependent on configuration settings, as discussed later in this topic. Configuration settings cannot be changed by Windows Store applications, which can lead to inconsistent results when using <xref:System.Uri.DnsSafeHost%2A>. The <xref:System.Uri.IdnHost%2A> property is provided as the preferred alternative to using <xref:System.Uri.DnsSafeHost%2A>, because <xref:System.Uri.IdnHost%2A> is guaranteed to always be DNS safe, no matter what the current *app.config* settings might be.
+ The <xref:System.Uri.DnsSafeHost%2A> property is dependent on configuration settings in .NET Framework apps, as discussed later in this topic. The <xref:System.Uri.IdnHost%2A> property is provided as the preferred alternative to using <xref:System.Uri.DnsSafeHost%2A>, because <xref:System.Uri.IdnHost%2A> is guaranteed to always be DNS safe.
 
- The <xref:System.Uri.DnsSafeHost%2A> property has been extended in .NET Framework v3.5, 3.0 SP1, and 2.0 SP1 to provide International Resource Identifier (IRI) support based on RFC 3987. Current users will not see any change from the .NET Framework 2.0 behavior unless they specifically enable IRI. This ensures application compatibility with prior versions of the .NET Framework.
+ The <xref:System.Uri.DnsSafeHost%2A> property was extended in .NET Framework v3.5, 3.0 SP1, and 2.0 SP1 to provide International Resource Identifier (IRI) support based on RFC 3987. However, to ensure application compatibility with prior versions, you must specifically enable it in .NET Framework apps. To enable support for IRI, the following two changes are required:
 
- To enable support for IRI, the following two changes are required:
+1. Add the following line to the *machine.config* file under the .NET Framework 2.0 directory:
 
-1.  Add the following line to the *machine.config* file under the .NET Framework 2.0 directory  \<section name="uri" type="System.Configuration.UriSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+   `\<section name="uri" type="System.Configuration.UriSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />`
 
-2.  Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following:
+2. Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following:
 
     ```xml
     <configuration>
       <uri>
-      <idn enabled="All" />
-      <iriParsing enabled="true" />
+        <idn enabled="All" />
+        <iriParsing enabled="true" />
       </uri>
     </configuration>
     ```
 
- Enabling IDN will convert all Unicode labels in a domain name to their Punycode equivalents. Punycode names contain only ASCII characters and always start with the xn-- prefix. The reason for this is to support existing DNS servers on the Internet, since most DNS servers only support ASCII characters (see RFC 3940).
+ Enabling IDN converts all Unicode labels in a domain name to their Punycode equivalents. Punycode names contain only ASCII characters and always start with the xn-- prefix. The reason for this is to support existing DNS servers on the Internet, since most DNS servers only support ASCII characters (see RFC 3940).
 
  Enabling IDN only affects the value of the <xref:System.Uri.DnsSafeHost%2A> property.
 
@@ -1707,9 +1707,9 @@ If you used an escaped string to construct this instance (for example, `"http://
 
 - idn enabled = None
 
-  This value will not convert any Unicode domain names to use Punycode. This is the default value which is consistent with the .NET Framework 2.0 behaviour.
+  This value will not convert any Unicode domain names to use Punycode. This is the default value, which is consistent with the .NET Framework 2.0 behavior.
 
- Enabling IRI parsing (iriParsing enabled = `true`) will do normalization and character checking according to the latest IRI rules in RFC 3987. The default value is `false` and will do normalization and character checking according to RFC 2396 and RFC 2732 (for IPv6 literals).
+ Enabling IRI parsing (iriParsing enabled = `true`) normalizes and checks characters according to the IRI rules in RFC 3987. The default value is `false` and normalizes and checks characters according to RFC 2396 and RFC 2732 (for IPv6 literals).
 
  For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
 
