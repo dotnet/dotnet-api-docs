@@ -757,7 +757,6 @@ namespace NCLWebClientAsync
         //</SnippetDownloadProgressChanged>
 
         // Nothing below this line appears in the docs.
-        //[System.Security.Permissions.FileIOPermissionAttribute(System.Security.Permissions.SecurityAction.Deny, Write=@"c:\whidbeycode\ncl.xml")]
 
         public static void Main(string[] args)
         {

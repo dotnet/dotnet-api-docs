@@ -187,7 +187,6 @@ public class SongFile : IXmlSerializable
         reader.ReadEndElement();
     }
 
-    [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
     public void Play()
     {
         System.Diagnostics.Process.Start(this.filePath);
