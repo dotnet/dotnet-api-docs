@@ -6,7 +6,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 
-public class Server
+public class Server1
 {
     public static void Main(string[] args)
     {
