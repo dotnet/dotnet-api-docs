@@ -51,8 +51,6 @@ namespace ClaimsBasedAuthorization
         //
         // Declarative access check using the permission class. The caller must satisfy both demands.
         //
-        [ClaimsPrincipalPermission(SecurityAction.Demand, Resource = "resource", Operation = "action")]
-        [ClaimsPrincipalPermission(SecurityAction.Demand, Resource = "resource1", Operation = "action1")]
         static void ProtectedMethod()
         {
         }

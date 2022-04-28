@@ -291,7 +291,6 @@ namespace Microsoft.Samples.WinForms.Cs.HelpLabel
         // </desc>
         // </doc>
         //
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
         public class HelpLabelDesigner : System.Windows.Forms.Design.ControlDesigner 
         {
 
@@ -300,8 +299,8 @@ namespace Microsoft.Samples.WinForms.Cs.HelpLabel
             /// <summary>
             /// This property is added to the control's set of properties in the method
             /// PreFilterProperties below.  Note that on designers, properties that are
-            /// explictly declared by TypeDescriptor.CreateProperty can be declared as
-            /// private on the designer.  This helps to keep the designer's publi
+            /// explicitly declared by TypeDescriptor.CreateProperty can be declared as
+            /// private on the designer.  This helps to keep the designer's public
             /// object model clean.
             /// </summary>
             [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]

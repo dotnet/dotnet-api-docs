@@ -11,7 +11,6 @@ using System.Security.Permissions;
 
 namespace ClickOnceAPI
 {
-    [System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
     public partial class Form1 : Form
     {
         public Form1()

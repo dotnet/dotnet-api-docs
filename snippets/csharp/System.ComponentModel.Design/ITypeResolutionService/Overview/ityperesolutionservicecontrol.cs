@@ -321,7 +321,6 @@ namespace ITypeResolutionServiceExample
         }
 
         // Window procedure override passes events to the control.
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")] 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {   
             if( m.HWnd == this.Control.Handle )            

@@ -15,7 +15,6 @@ namespace WebApplication1
     public partial class Contact : System.Web.UI.Page
     {
         //THIS SHOULD THROW AN EXCEPTION
-        [ClaimsPrincipalPermission(SecurityAction.Demand, Operation = "Show", Resource = "Contacts")]
         protected void Page_Load(object sender, EventArgs e)
         {
 

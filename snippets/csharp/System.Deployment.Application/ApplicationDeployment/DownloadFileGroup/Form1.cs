@@ -13,7 +13,6 @@ using Microsoft.Samples.ClickOnceOnDemand;
 //<SNIPPET2>
 namespace ClickOnceOnDemand
 {
-    [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, Unrestricted=true)]
     public class Form1 : Form
     {
         // Maintain a dictionary mapping DLL names to download file groups. This is trivial for this sample,
