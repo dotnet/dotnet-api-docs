@@ -7,6 +7,7 @@ using System.Security;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.ConstrainedExecution;
+using System.Security.Permissions;
 
 namespace SafeHandleDemo
 {
