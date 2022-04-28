@@ -11,7 +11,6 @@ namespace IWindowsFormsEditorServiceExample
 {	
     // Example UITypeEditor that uses the IWindowsFormsEditorService to 
     // display a drop-down control.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class TestDropDownEditor : System.Drawing.Design.UITypeEditor
     {
         public TestDropDownEditor()

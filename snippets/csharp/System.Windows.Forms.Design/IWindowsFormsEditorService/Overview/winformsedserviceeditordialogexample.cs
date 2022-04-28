@@ -11,7 +11,6 @@ namespace IWindowsFormsEditorServiceExample
 {	
     // Example UITypeEditor that uses the IWindowsFormsEditorService 
     // to display a Form.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")] 
     public class TestDialogEditor : UITypeEditor
     {
         public TestDialogEditor()

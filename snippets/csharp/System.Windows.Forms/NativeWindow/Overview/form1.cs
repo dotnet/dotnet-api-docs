@@ -6,9 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace NativeWindowApplication
 {
-
     // Summary description for Form1.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     public class Form1 : System.Windows.Forms.Form
     {
         private MyNativeWindowListener nwl;
@@ -39,10 +37,8 @@ namespace NativeWindowApplication
 
     //<Snippet2>
     // NativeWindow class to listen to operating system messages.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     internal class MyNativeWindowListener : NativeWindow
     {
-
         // Constant value was found in the "windows.h" header file.
         private const int WM_ACTIVATEAPP = 0x001C;
 
@@ -67,7 +63,7 @@ namespace NativeWindowApplication
             // Window was destroyed, release hook.
             ReleaseHandle();
         }
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+
         protected override void WndProc(ref Message m)
         {
             // Listen for operating system messages
@@ -90,7 +86,6 @@ namespace NativeWindowApplication
 
     //<Snippet3>
     // MyNativeWindow class to create a window given a class name.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     internal class MyNativeWindow : NativeWindow
     {
 
@@ -127,13 +122,11 @@ namespace NativeWindowApplication
         }
 
         // Listen to when the handle changes to keep the variable in sync
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void OnHandleChange()
         {
             windowHandle = (int)this.Handle;
         }
 
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
             // Listen for messages that are sent to the button window. Some messages are sent

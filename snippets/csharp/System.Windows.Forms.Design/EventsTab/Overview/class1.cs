@@ -23,8 +23,6 @@ namespace EventsTabExample
     }
 
     // This example events tab lists events by their delegate type.
-    [System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Name="FullTrust")]
-    [System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
     public class TypeEventsTab : System.Windows.Forms.Design.EventsTab
     {
         [BrowsableAttribute(true)]

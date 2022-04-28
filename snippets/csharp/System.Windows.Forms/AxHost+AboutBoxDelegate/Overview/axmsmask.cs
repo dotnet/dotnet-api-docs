@@ -3,15 +3,12 @@
 
 namespace AxMSMask
 {
-
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
     [System.Windows.Forms.AxHost.ClsidAttribute("{c932ba85-4374-101b-a56c-00aa003668dc}")]
     [System.ComponentModel.DesignTimeVisibleAttribute(true)]
     [System.ComponentModel.DefaultEvent("Change")]
     [System.ComponentModel.DefaultProperty("defaultText")]
     public class AxMaskEdBox : System.Windows.Forms.AxHost
     {
-
         private MSMask.IMSMask ocx;
 
         private AxMaskEdBoxEventMulticaster eventMulticaster;

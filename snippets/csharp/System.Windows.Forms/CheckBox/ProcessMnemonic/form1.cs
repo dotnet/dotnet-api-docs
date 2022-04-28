@@ -70,11 +70,7 @@ public class MyMnemonicButton:Button
 	// mneumonic is correct before displaying the message box
 	// and triggering the click event.
 {
-	[UIPermission(
-        SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
-        protected override bool ProcessMnemonic(char inputChar)
 	{
-
 		if (CanSelect&&IsMnemonic(inputChar, this.Text))
 		{
 			MessageBox.Show("You've raised the click event " +

@@ -19,10 +19,8 @@ const int WM_RBUTTONDOWN = 0x0204;
 const int WM_MOVE = 0x0003;
 
 // Overrides the base class hook procedure...
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")] 
 protected override IntPtr HookProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam)
 {
-
 	// Evaluates the message parameter to determine the user action.
 
 	switch(msg)
