@@ -14,7 +14,6 @@ open System.Security.Permissions
 
     interface ISerializable with
         // GetObjectData performs a custom serialization.
-        [<SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)>]
         member this.GetObjectData(info: SerializationInfo, context: StreamingContext) =
             // Change the case of two properties, and then use the
             // method of the base class.

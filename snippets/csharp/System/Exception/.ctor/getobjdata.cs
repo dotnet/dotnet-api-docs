@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
-using System.Security.Permissions;
 
  // Define a serializable derived exception class.
  [Serializable()]
@@ -24,7 +23,6 @@ using System.Security.Permissions;
      { }
 
      // GetObjectData performs a custom serialization.
-     [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
      public override void GetObjectData( SerializationInfo info,
          StreamingContext context )
      {
