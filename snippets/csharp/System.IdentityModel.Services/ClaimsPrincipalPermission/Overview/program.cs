@@ -2,6 +2,7 @@
 using System;
 using System.IdentityModel.Services;
 using System.Security.Claims;
+using System.Security.Permissions;
 using System.Threading;
 
 namespace ClaimsBasedAuthorization
