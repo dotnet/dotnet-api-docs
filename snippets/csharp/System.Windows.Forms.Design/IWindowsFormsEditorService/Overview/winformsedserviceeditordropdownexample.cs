@@ -1,14 +1,13 @@
 ﻿//<Snippet1>
 using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace IWindowsFormsEditorServiceExample
-{	
+{
     // Example UITypeEditor that uses the IWindowsFormsEditorService to 
     // display a drop-down control.
     public class TestDropDownEditor : System.Drawing.Design.UITypeEditor
@@ -16,21 +15,21 @@ namespace IWindowsFormsEditorServiceExample
         public TestDropDownEditor()
         {
         }
-	
+
         public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
         {
             // Indicates that this editor can display a control-based 
             // drop-down interface.
             return UITypeEditorEditStyle.DropDown;
         }
-	
+
         public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, System.IServiceProvider provider, object value)
         {
             // Attempts to obtain an IWindowsFormsEditorService.
             IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-            if( edSvc == null )
-                return value;       
-            
+            if (edSvc == null)
+                return value;
+
             // Displays a drop-down control.
             StringInputControl inputControl = new StringInputControl((string)value, edSvc);
             edSvc.DropDownControl(inputControl);
@@ -61,7 +60,7 @@ namespace IWindowsFormsEditorServiceExample
             this.ok_button = new System.Windows.Forms.Button();
             this.cancel_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right);
             this.inputTextBox.Location = new System.Drawing.Point(6, 7);
             this.inputTextBox.Name = "inputTextBox";
@@ -76,7 +75,7 @@ namespace IWindowsFormsEditorServiceExample
             this.ok_button.Text = "OK";
             this.ok_button.Click += new EventHandler(this.CloseControl);
             this.cancel_button.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
-            this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;            
+            this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel_button.Location = new System.Drawing.Point(267, 38);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.TabIndex = 2;
@@ -96,7 +95,7 @@ namespace IWindowsFormsEditorServiceExample
             edSvc.CloseDropDown();
         }
     }
-    
+
     // Provides an example control that displays instructions in design mode,
     // with which the example UITypeEditor is associated.
     public class WinFormsEdServiceDropDownExampleControl : UserControl
@@ -109,11 +108,11 @@ namespace IWindowsFormsEditorServiceExample
                 return localDropDownTestString;
             }
             set
-            {       
+            {
                 localDropDownTestString = value;
             }
         }
-        
+
         private string localDropDownTestString;
 
         public WinFormsEdServiceDropDownExampleControl()
@@ -125,7 +124,7 @@ namespace IWindowsFormsEditorServiceExample
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
-            if( this.DesignMode )
+            if (this.DesignMode)
             {
                 e.Graphics.DrawString("Use the Properties window to show", new Font("Arial", 8), new SolidBrush(Color.Black), 5, 5);
                 e.Graphics.DrawString("a drop-down control, using the", new Font("Arial", 8), new SolidBrush(Color.Black), 5, 17);

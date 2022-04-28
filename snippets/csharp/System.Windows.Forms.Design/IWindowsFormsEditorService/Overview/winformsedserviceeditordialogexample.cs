@@ -1,14 +1,13 @@
 ﻿//<Snippet1>
 using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace IWindowsFormsEditorServiceExample
-{	
+{
     // Example UITypeEditor that uses the IWindowsFormsEditorService 
     // to display a Form.
     public class TestDialogEditor : UITypeEditor
@@ -24,18 +23,18 @@ namespace IWindowsFormsEditorServiceExample
         }
 
         public override object EditValue(
-            ITypeDescriptorContext context, 
-            IServiceProvider provider, 
+            ITypeDescriptorContext context,
+            IServiceProvider provider,
             object value)
         {
             // Attempts to obtain an IWindowsFormsEditorService.
-            IWindowsFormsEditorService edSvc = 
+            IWindowsFormsEditorService edSvc =
                 (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc == null)
             {
                 return null;
             }
-            
+
             // Displays a StringInputDialog Form to get a user-adjustable 
             // string value.
             using (StringInputDialog form = new StringInputDialog((string)value))
@@ -48,7 +47,7 @@ namespace IWindowsFormsEditorServiceExample
 
             // If OK was not pressed, return the original value
             return value;
-        }        
+        }
     }
 
     // Example Form for entering a string.
@@ -74,20 +73,20 @@ namespace IWindowsFormsEditorServiceExample
             this.ok_button.Location = new System.Drawing.Point(180, 43);
             this.ok_button.Name = "ok_button";
             this.ok_button.TabIndex = 1;
-            this.ok_button.Text = "OK";      
-            this.ok_button.DialogResult = System.Windows.Forms.DialogResult.OK;            
+            this.ok_button.Text = "OK";
+            this.ok_button.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.cancel_button.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right);
             this.cancel_button.Location = new System.Drawing.Point(260, 43);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.TabIndex = 2;
-            this.cancel_button.Text = "Cancel";            
+            this.cancel_button.Text = "Cancel";
             this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.inputTextBox.Location = new System.Drawing.Point(6, 9);
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(327, 20);
             this.inputTextBox.TabIndex = 0;
-            this.inputTextBox.Text = "";            
-            this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.inputTextBox.Text = "";
+            this.inputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right);
             this.ClientSize = new System.Drawing.Size(342, 73);
             this.Controls.AddRange(new System.Windows.Forms.Control[] {
@@ -118,17 +117,17 @@ namespace IWindowsFormsEditorServiceExample
             }
         }
         private string localDialogTestString;
-      
+
         public WinFormsEdServiceDialogExampleControl()
         {
-            localDialogTestString = "Test String"; 
+            localDialogTestString = "Test String";
             this.Size = new Size(210, 74);
             this.BackColor = Color.Beige;
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if( this.DesignMode )
+            if (this.DesignMode)
             {
                 e.Graphics.DrawString("Use the Properties window to show", new Font("Arial", 8), new SolidBrush(Color.Black), 5, 5);
                 e.Graphics.DrawString("a Form dialog box, using the", new Font("Arial", 8), new SolidBrush(Color.Black), 5, 17);

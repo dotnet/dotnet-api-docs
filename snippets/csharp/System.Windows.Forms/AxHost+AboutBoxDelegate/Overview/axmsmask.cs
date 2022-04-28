@@ -1,5 +1,4 @@
-﻿[assembly: System.Reflection.AssemblyVersion("1.1.0.0")]
-[assembly: System.Windows.Forms.AxHost.TypeLibraryTimeStamp("7/22/2001 12:56:59 PM")]
+﻿[assembly: System.Windows.Forms.AxHost.TypeLibraryTimeStamp("7/22/2001 12:56:59 PM")]
 
 namespace AxMSMask
 {
