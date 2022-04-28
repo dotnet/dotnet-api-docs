@@ -1,13 +1,10 @@
 ﻿//<SNIPPET1>
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.Reflection;
 using System.Deployment.Application;
+using System.Drawing;
+using System.Reflection;
+using System.Windows.Forms;
 using Microsoft.Samples.ClickOnceOnDemand;
 
 //<SNIPPET2>
@@ -72,8 +69,8 @@ namespace ClickOnceOnDemand
                 // is cached by the CLR. LoadFrom() is not recommended. Use LoadFile() instead.
                 try
                 {
-                    newAssembly = Assembly.LoadFile(Application.StartupPath + @"\" + dllName + ".dll," +  
-			"Version=1.0.0.0, Culture=en, PublicKeyToken=03689116d3a4ae33");
+                    newAssembly = Assembly.LoadFile(Application.StartupPath + @"\" + dllName + ".dll," +
+            "Version=1.0.0.0, Culture=en, PublicKeyToken=03689116d3a4ae33");
                 }
                 catch (Exception e)
                 {
