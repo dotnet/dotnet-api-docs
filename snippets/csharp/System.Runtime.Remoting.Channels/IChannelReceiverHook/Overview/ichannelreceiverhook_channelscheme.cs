@@ -60,7 +60,6 @@ public class IChannelReceiverHook_ChannelScheme
 }
 // <Snippet1>
 // Implementation of 'IChannelReceiverHook' interface.
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class MyCustomChannel : IChannelReceiverHook
 {
    private bool portSet;

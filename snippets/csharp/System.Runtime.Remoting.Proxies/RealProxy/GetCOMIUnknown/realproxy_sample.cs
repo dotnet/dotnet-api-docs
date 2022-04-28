@@ -29,7 +29,6 @@ namespace CustomProxySample
    {
       String m_URI;
       MarshalByRefObject myMarshalByRefObject;
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public MyProxy(): base()
       {
          Console.WriteLine("MyProxy Constructor Called...");
@@ -37,7 +36,6 @@ namespace CustomProxySample
          ObjRef myObjRef = RemotingServices.Marshal(myMarshalByRefObject);
          m_URI = myObjRef.URI;
       }
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public MyProxy(Type myType): base(myType)
       {
          Console.WriteLine("MyProxy Constructor Called...");
@@ -45,7 +43,6 @@ namespace CustomProxySample
          ObjRef myObjRef = RemotingServices.Marshal(myMarshalByRefObject);
          m_URI = myObjRef.URI;
       }
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public MyProxy(Type myType, MarshalByRefObject targetObject) : base(myType)
       {
          Console.WriteLine("MyProxy Constructor Called...");
@@ -53,7 +50,6 @@ namespace CustomProxySample
          ObjRef myObjRef = RemotingServices.Marshal(myMarshalByRefObject);
          m_URI = myObjRef.URI;
       }
-      [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
       public override IMessage Invoke(IMessage msg)
       {
          if (msg is IConstructionCallMessage)
@@ -78,7 +74,6 @@ namespace CustomProxySample
 // <Snippet1>
 // <Snippet2>
 // <Snippet3>
-      [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
       public override IntPtr SupportsInterface(ref Guid myGuid)
       {
          Console.WriteLine("SupportsInterface method called");
@@ -97,7 +92,6 @@ namespace CustomProxySample
    public class ProxySample
    {
       // Acts as a custom proxy user.
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public static void Main()
       {
          Console.WriteLine("");

@@ -17,7 +17,6 @@ using System.Security.Permissions;
 namespace RemotingSamples {
    public class MyChannelServices_Client
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          try

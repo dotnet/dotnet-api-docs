@@ -4,10 +4,8 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Lifetime;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 
 public class Client {
-[SecurityPermission(SecurityAction.Demand)]
    public static void Main() {
 
       ChannelServices.RegisterChannel(new HttpChannel(0));
@@ -37,7 +35,6 @@ public class MyClientSponsor : MarshalByRefObject, ISponsor {
        lastRenewal = DateTime.Now;
    }
 
-[SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.Infrastructure)]
    public TimeSpan Renewal(ILease lease) {
       Console.WriteLine("Renewing a lease for 4 seconds.");
       Console.WriteLine("Time since last renewal:" + (DateTime.Now - lastRenewal).ToString());

@@ -14,11 +14,9 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Services;
-using System.Security.Permissions;
 
 public class Server
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         // Register the TCP channel.
