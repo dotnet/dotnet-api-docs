@@ -18,7 +18,7 @@ public class TypeLoadException_Constructor3
       Console.WriteLine("Calling a method in a non-existent DLL which triggers a TypeLoadException.");
       try
       {
-         TypeLoadExceptionDemoClass.GenerateException();
+         TypeLoadExceptionDemoClass3.GenerateException();
       }
       catch (TypeLoadException e)
       {
@@ -32,7 +32,7 @@ public class TypeLoadException_Constructor3
    }
 }
 
-class TypeLoadExceptionDemoClass
+class TypeLoadExceptionDemoClass3
 {
    // A call to this method will raise a TypeLoadException.
    [DllImport("NonExistentDLL.DLL", EntryPoint="MethodNotExists")]

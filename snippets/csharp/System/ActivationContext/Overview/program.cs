@@ -1,10 +1,5 @@
 ﻿//<Snippet1>
 using System;
-using System.Collections;
-using System.Text;
-using System.Security.Policy;
-using System.Reflection;
-using System.Security;
 
 namespace ActivationContextSample
 {
@@ -23,7 +18,7 @@ namespace ActivationContextSample
 
             Console.Read();
         }
-        
+
         public void Run()
         {
             Main(new string[] { });
