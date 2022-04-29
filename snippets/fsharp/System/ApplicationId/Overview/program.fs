@@ -5,9 +5,7 @@ open System.Text
 open System.Security.Policy
 open System.Reflection
 open System.Security
-open System.Security.Permissions
 
-[<SecurityPermission(SecurityAction.Demand, ControlDomainPolicy = true)>]
 let main _ =
     //<Snippet2>
     printfn $"Full name = {AppDomain.CurrentDomain.ActivationContext.Identity.FullName}"
