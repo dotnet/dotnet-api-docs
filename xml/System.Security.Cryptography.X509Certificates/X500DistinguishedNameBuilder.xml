@@ -14,8 +14,26 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Facilitates building a distinguished name for an X.509 certificate.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When constructing the `SEQUENCE OF` `Relative Distinguished Names`, this builder constructs the `SEQUENCE OF` in the opposite order which they were added to the builder. For example:
+
+```cs
+builder.AddCommonName("Contoso");
+builder.AddCountryOrRegion("US");
+```
+
+Will produce a `SEQUENCE OF` with the country or region first, and the common name second. Because <xref:System.Security.Cryptography.X509Certificates.X500DistinguishedName> follows RFC 4514
+when converting a `Distinguished Name` to a string, it starts with the last `Relative Distinguished Name` component, moving backward toward the first.
+
+Because the builder creates the `SEQUENCE OF` in reverse, and <xref:System.Security.Cryptography.X509Certificates.X500DistinguishedName> is also in reverse, it gives the appearance of the added attributes and the string representation of the `Distinguished Name` in the same order.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -55,11 +73,24 @@
         <Parameter Name="stringEncodingType" Type="System.Nullable&lt;System.Formats.Asn1.UniversalTagNumber&gt;" />
       </Parameters>
       <Docs>
-        <param name="oid">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="stringEncodingType">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="oid">The OID of the attribute.</param>
+        <param name="value">The value of the attribute.</param>
+        <param name="stringEncodingType">The encoding type to use when encoding the <paramref name="value" /> in to the attribute.</param>
+        <summary>Adds a <c>Relative Distinguished Name</c> attribute identified by an OID.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="oid" /> or <paramref name="value" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="oid" /> does not contain a valid OID.
+
+-or-
+
+<paramref name="stringEncodingType" /> is not a type for character strings.
+
+-or-
+
+<paramref name="value" /> is not encodable as defined by <paramref name="stringEncodingType" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -82,11 +113,24 @@
         <Parameter Name="stringEncodingType" Type="System.Nullable&lt;System.Formats.Asn1.UniversalTagNumber&gt;" />
       </Parameters>
       <Docs>
-        <param name="oidValue">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="stringEncodingType">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="oidValue">The OID of the attribute.</param>
+        <param name="value">The value of the attribute.</param>
+        <param name="stringEncodingType">The encoding type to use when encoding the <paramref name="value" /> in to the attribute.</param>
+        <summary>Adds a <c>Relative Distinguished Name</c> attribute identified by an OID.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="oidValue" /> or <paramref name="value" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="oidValue" /> is an empty string or not a valid OID.
+
+-or-
+
+<paramref name="stringEncodingType" /> is not a type for character strings.
+
+-or-
+
+<paramref name="value" /> is not encodable as defined by <paramref name="stringEncodingType" />.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="AddCommonName">
@@ -108,9 +152,21 @@
         <Parameter Name="commonName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="commonName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="commonName">The common name to add.</param>
+        <summary>Adds a common name attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 2.5.4.3 as a UTF8String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="commonName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="commonName" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddCountryOrRegion">
@@ -132,9 +188,24 @@
         <Parameter Name="twoLetterCode" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="twoLetterCode">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="twoLetterCode">The two letter code of the country or region.</param>
+        <summary>Adds a country or region attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 2.5.4.6 as a PrintableString.
+
+`twoLetterCode` should be a two letter ISO 3166 alpha-2 code, and will be normalized to upper case characters.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="twoLetterCode" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="twoLetterCode" /> is not exactly two characters, or contains
+            characters that are not A through Z.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddDomainComponent">
@@ -156,9 +227,21 @@
         <Parameter Name="domainComponent" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="domainComponent">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="domainComponent">The domain component to add.</param>
+        <summary>Adds a domain component attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 0.9.2342.19200300.100.1.25 as an IA5String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="domainComponent" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="domainComponent" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddEmailAddress">
@@ -180,9 +263,21 @@
         <Parameter Name="emailAddress" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="emailAddress">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="emailAddress">The email address to add.</param>
+        <summary>Adds an email address attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 1.2.840.113549.1.9.1 as an IA5String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="emailAddress" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="emailAddress" /> is empty or exceeds 255 characters.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddLocalityName">
@@ -204,9 +299,21 @@
         <Parameter Name="localityName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="localityName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="localityName">The locality name to add.</param>
+        <summary>Adds a locality name attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 2.5.4.7 as a UTF8String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="localityName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="localityName" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddOrganizationalUnitName">
@@ -228,9 +335,21 @@
         <Parameter Name="organizationalUnitName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="organizationalUnitName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="organizationalUnitName">The organizational unit name to add.</param>
+        <summary>Adds an organizational unit name attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 2.5.4.11 as a UTF8String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="organizationalUnitName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="organizationalUnitName" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddOrganizationName">
@@ -252,9 +371,21 @@
         <Parameter Name="organizationName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="organizationName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="organizationName">The organization name to add.</param>
+        <summary>Adds an organization name attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 2.5.4.10 as a UTF8String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="organizationName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="organizationName" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddStateOrProvinceName">
@@ -276,9 +407,21 @@
         <Parameter Name="stateOrProvinceName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="stateOrProvinceName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="stateOrProvinceName">The state or province name to add.</param>
+        <summary>Adds a state or province name attribute.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This encodes an attribute with the OID 2.5.4.8 as a UTF8String.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stateOrProvinceName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="stateOrProvinceName" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -298,8 +441,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Builds an <see cref="T:System.Security.Cryptography.X509Certificates.X500DistinguishedName" /> that represents the encoded attributes.</summary>
+        <returns>An <see cref="T:System.Security.Cryptography.X509Certificates.X500DistinguishedName" /> that represents the encoded attributes.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
