@@ -5,7 +5,6 @@ using System.ComponentModel.Design;
 
 namespace DesignerCollectionExample
 {
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class ExampleComponent : Component
     {
         public ExampleComponent()

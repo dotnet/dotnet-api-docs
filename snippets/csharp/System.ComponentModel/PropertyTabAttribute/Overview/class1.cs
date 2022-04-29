@@ -24,7 +24,6 @@ namespace TypeCategoryTabExample
 
     // A TypeCategoryTab property tab lists properties by the 
     // category of the type of each property.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class TypeCategoryTab : PropertyTab
     {
         [BrowsableAttribute(true)]

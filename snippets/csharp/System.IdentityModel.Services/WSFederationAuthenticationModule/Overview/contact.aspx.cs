@@ -18,7 +18,6 @@ namespace WebApplication1
         [ClaimsPrincipalPermission(SecurityAction.Demand, Operation = "Show", Resource = "Contacts")]
         protected void Page_Load(object sender, EventArgs e)
         {
-
             ClaimsPrincipalPermission p = new ClaimsPrincipalPermission( "Contacts", "Show");
             p.Demand();
 
