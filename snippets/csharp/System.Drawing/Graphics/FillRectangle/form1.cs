@@ -288,6 +288,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
                int lrCornerX, int lrCornerY);
         }
 
+        private void GetHdcForGDI1(PaintEventArgs e)
         {
             // Create pen.
             Pen redPen = new Pen(Color.Red, 1);
@@ -923,6 +924,7 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             int ulCornerX, int ulCornerY,
             int lrCornerX, int lrCornerY);
 
+        private void GetHdcForGDI2(PaintEventArgs e)
         {
             // Create pen.
             Pen redPen = new Pen(Color.Red, 1);
