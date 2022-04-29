@@ -80,7 +80,7 @@
 <a name="Static"></a>   
 ## Static constructors and the TypeInitializationException
 
- A static constructor, if one exists, is called automatically by the runtime before creating a new instance of a type. Static constructors can be explicitly defined by a developer. If a static  constructor is not explicitly defined, compilers automatically create one to initialize any `static` (in C#) or `Shared` (in Visual Basic) members of the type.  For more information on static constructors, see [Static Constructors](/dotnet/csharp/programming-guide/classes-and-structs/static-constructors).  
+ A static constructor, if one exists, is called automatically by the runtime before creating a new instance of a type. Static constructors can be explicitly defined by a developer. If a static  constructor is not explicitly defined, compilers automatically create one to initialize any `static` (in C# or F#) or `Shared` (in Visual Basic) members of the type.  For more information on static constructors, see [Static Constructors](/dotnet/csharp/programming-guide/classes-and-structs/static-constructors).  
   
  Most commonly, a <xref:System.TypeInitializationException> exception is thrown when a static constructor is unable to instantiate a type.  The <xref:System.Exception.InnerException%2A> property indicates why the static constructor was unable to instantiate the type. Some of the more common causes of a <xref:System.TypeInitializationException> exception are:  
   
@@ -92,7 +92,7 @@
   
    -   It has been explicitly defined as a member of a type.  
   
-   -   The type has  `static` (in C#) or `Shared` (in Visual Basic) variables that are declared and initialized in a single statement. In this case, the language compiler generates a static constructor for the type. You can inspect it by using a utility such as [IL Disassembler](/dotnet/framework/tools/ildasm-exe-il-disassembler). For instance, when the C# and VB compilers compile the following example, they generate the IL for a static constructor that is similar to this:  
+   -   The type has  `static` (in C# or F#) or `Shared` (in Visual Basic) variables that are declared and initialized in a single statement. In this case, the language compiler generates a static constructor for the type. You can inspect it by using a utility such as [IL Disassembler](/dotnet/framework/tools/ildasm-exe-il-disassembler). For instance, when the C# and VB compilers compile the following example, they generate the IL for a static constructor that is similar to this:  
   
    ```  
    .method private specialname rtspecialname static   
@@ -121,12 +121,17 @@
    ```csharp  
    csc -t:library Missing1a.cs  
    ```  
+
+   ```fsharp  
+   fsc --target:library Missing1a.fs  
+   ```  
   
    ```vb  
    vbc Missing1a.vb -t:library  
    ```  
   
    :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Missing1a.cs" id="Snippet1":::
+   :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Missing1a.fs" id="Snippet1":::
    :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/System.TypeInitializationException/vb/Missing1a.vb" id="Snippet1":::  
   
    You can then compile the following example to an executable named Missing1.exe by including a reference to Missing1a.dll:  
@@ -142,6 +147,7 @@
    However, if you rename, move, or delete Missing1a.dll and run the example, it throws a <xref:System.TypeInitializationException> exception and displays the output shown in the example.  Note that the exception message includes information about the <xref:System.Exception.InnerException%2A> property. In this case,  the inner exception is a <xref:System.IO.FileNotFoundException> that is thrown because the runtime cannot find the dependent assembly.  
   
    :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Missing1.cs" id="Snippet2":::
+   :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Missing1.fs" id="Snippet2":::
    :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/System.TypeInitializationException/vb/Missing1.vb" id="Snippet2":::  
   
    > [!NOTE]
@@ -154,6 +160,7 @@
  The following example shows the <xref:System.TypeInitializationException> that is thrown when the value assigned to the "REGEX_DEFAULT_MATCH_TIMEOUT" property is invalid. To eliminate the exception, set the"REGEX_DEFAULT_MATCH_TIMEOUT" property to a  <xref:System.TimeSpan> value that is greater than zero and less than approximately 24 days.  
   
  :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Regex1.cs" id="Snippet4":::
+ :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Regex1.fs" id="Snippet4":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/System.TypeInitializationException/vb/Regex1.vb" id="Snippet4":::  
   
 <a name="Calendars"></a>   
