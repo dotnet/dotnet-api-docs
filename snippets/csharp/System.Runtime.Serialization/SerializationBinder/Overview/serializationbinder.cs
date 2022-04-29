@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
-using System.Security.Permissions;
 
 class App
 {
@@ -93,18 +92,12 @@ class Version2Type : ISerializable
     public Int32 x;
     public String name;
 
-    // The security attribute demands that code that calls
-    // this method have permission to perform serialization.
-    [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
     void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
     {
         info.AddValue("x", x);
         info.AddValue("name", name);
     }
 
-    // The security attribute demands that code that calls
-    // this method have permission to perform serialization.
-    [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
     private Version2Type(SerializationInfo info, StreamingContext context)
     {
         x = info.GetInt32("x");
