@@ -16,7 +16,6 @@ namespace EventDesignerTest
     // associated control.
     // If a "testEvent" event of the associated control does not exist, 
     // the IEventBindingService declares it.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class EventDesigner : System.Windows.Forms.Design.ControlDesigner
     {
         public EventDesigner()

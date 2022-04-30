@@ -11,8 +11,6 @@ public class WebPermissionAttribute_AcceptConnect
 
 // <Snippet1>
 
-  // Set the declarative security for the URI.
-  [WebPermission(SecurityAction.Deny, Connect = @"http://www.contoso.com/")]
   public void Connect() 
   {
     // Throw an exception.   

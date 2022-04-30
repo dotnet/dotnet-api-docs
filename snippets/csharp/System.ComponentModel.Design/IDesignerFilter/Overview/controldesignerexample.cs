@@ -10,11 +10,10 @@ using System.Windows.Forms.Design;
 namespace ControlDesignerExample
 {
     // ExampleControlDesigner is an example control designer that 
-    // demonstrates basic functions of a ControlDesigner.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
+    // demonstrates basic functions of a ControlDesigner. 
     public class ExampleControlDesigner  : System.Windows.Forms.Design.ControlDesigner
     {
-        // This boolean state reflects whether the mouse is over the control.
+        // This Boolean state reflects whether the mouse is over the control.
         private bool mouseover = false;
         // This color is a private field for the OutlineColor property.
         private Color lineColor = Color.White;

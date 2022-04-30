@@ -116,7 +116,6 @@ public class ColorLabel : System.Windows.Forms.Label
 // designer action panel.
 // Must add reference to System.Design.dll
 /////////////////////////////////////////////////////////////////
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
 public class ColorLabelDesigner : 
          System.Windows.Forms.Design.ControlDesigner
 {

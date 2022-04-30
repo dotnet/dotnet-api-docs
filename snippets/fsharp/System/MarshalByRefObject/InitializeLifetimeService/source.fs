@@ -6,7 +6,6 @@ open System.Security.Permissions
 type MyClass() =
     inherit MarshalByRefObject()
    
-    [<SecurityPermissionAttribute(SecurityAction.Demand, Flags=SecurityPermissionFlag.Infrastructure)>]
     override _.InitializeLifetimeService() =
         let lease = base.InitializeLifetimeService() :?> ILease
         if lease.CurrentState = LeaseState.Initial then

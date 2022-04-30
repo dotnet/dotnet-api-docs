@@ -7,7 +7,7 @@ let myHandler _ (args: UnhandledExceptionEventArgs) =
     printfn $"MyHandler caught : {e.Message}"
     printfn $"Runtime terminating: {args.IsTerminating}"
 
-[<EntryPoint; SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.ControlAppDomain)>]
+[<EntryPoint>]
 let main _ =
     let currentDomain = AppDomain.CurrentDomain
     currentDomain.UnhandledException.AddHandler(UnhandledExceptionEventHandler myHandler)

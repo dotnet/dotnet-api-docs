@@ -10,8 +10,7 @@ using System.Windows.Forms;
 
 namespace ToolboxCategoryNamesControl
 {
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-	public class ToolboxCategoryNamesControl : System.Windows.Forms.UserControl
+    public class ToolboxCategoryNamesControl : System.Windows.Forms.UserControl
 	{		
         private System.Drawing.Design.IToolboxService toolboxService;
         private System.Drawing.Design.CategoryNameCollection categoryNames;

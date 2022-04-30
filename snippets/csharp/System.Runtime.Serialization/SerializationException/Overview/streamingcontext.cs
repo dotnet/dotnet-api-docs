@@ -6,10 +6,7 @@ using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
-[assembly: SecurityPermission(
-SecurityAction.RequestMinimum, Execution = true)]
 // This class includes several Win32 interop definitions.
 internal class Win32
 {
@@ -114,9 +111,6 @@ public sealed class SharedMemory : ISerializable, IDisposable
         return (flags & flagsToTest) != 0;
     }
 
-    // The security attribute demands that code that calls
-    // this method have permission to perform serialization.
-    [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
     void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
     {
         // The context's State member indicates
@@ -155,9 +149,6 @@ public sealed class SharedMemory : ISerializable, IDisposable
         }
     }
 
-    // The security attribute demands that code that calls
-    // this method have permission to perform serialization.
-    [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
     private SharedMemory(SerializationInfo info, StreamingContext context)
     {
         // The context's State member indicates

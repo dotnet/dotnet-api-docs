@@ -16,7 +16,6 @@ namespace IToolboxServiceExample
     // categories and items, and to add components or controls 
     // to the parent form using code.
     [DesignerAttribute(typeof(WindowMessageDesigner), typeof(IDesigner))]
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class IToolboxServiceControl : System.Windows.Forms.UserControl
     {		
         private System.Windows.Forms.ListBox listBox1;
@@ -208,7 +207,6 @@ namespace IToolboxServiceExample
         }
         
         // Window procedure override passes events to control.
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")] 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {   
             if( m.HWnd == this.Control.Handle )

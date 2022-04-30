@@ -18,7 +18,6 @@ namespace IDesignerExample
         }
     }
 
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class ExampleIDesigner : System.ComponentModel.Design.IDesigner
     {
         // Local reference to the designer's component.
