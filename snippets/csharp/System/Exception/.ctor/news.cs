@@ -2,7 +2,7 @@
 // Example for the Exception( string ) constructor.
 using System;
 
-namespace NDP_UE_CS
+namespace NDP_UE_CS2
 {
     // Derive an exception with a specifiable message.
     class NotEvenException : Exception

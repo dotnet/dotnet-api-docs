@@ -4,7 +4,6 @@ using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
-using System.Security.Permissions;
 
 namespace StreamingContextExample
 {
@@ -29,8 +28,7 @@ namespace StreamingContextExample
         static void SerializeAndDeserialize()
         {
             object myObject = DateTime.Now;
-            // Create a StreamingContext that includes a
-            // a DateTime.
+            // Create a StreamingContext that includes a DateTime.
             StreamingContext sc = new StreamingContext(
                 StreamingContextStates.CrossProcess, myObject);
             BinaryFormatter bf = new BinaryFormatter(null, sc);
@@ -50,7 +48,6 @@ namespace StreamingContextExample
     }
 
     [Serializable]
-    [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
     class MyClass : ISerializable
     {
         private int minValue_value;

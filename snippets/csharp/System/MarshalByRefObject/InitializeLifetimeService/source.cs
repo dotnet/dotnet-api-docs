@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 
 // <Snippet1>
  public class MyClass : MarshalByRefObject
  {
-   [SecurityPermissionAttribute(SecurityAction.Demand,
-                                Flags=SecurityPermissionFlag.Infrastructure)]
    public override Object InitializeLifetimeService()
    {
      ILease lease = (ILease)base.InitializeLifetimeService();

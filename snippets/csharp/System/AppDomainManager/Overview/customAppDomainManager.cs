@@ -11,7 +11,6 @@ using System.Collections;
 using System.Net;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.Policy;
 using System.Security.Principal;
 using System.Threading;
@@ -22,10 +21,6 @@ using System.Runtime.InteropServices;
 namespace MyNamespace
 {
     [GuidAttribute("F4D15099-3407-4A7E-A607-DEA440CF3891")]
-    [SecurityPermissionAttribute(SecurityAction.LinkDemand,
-        Flags = SecurityPermissionFlag.Infrastructure)]
-    [SecurityPermissionAttribute(SecurityAction.InheritanceDemand,
-        Flags = SecurityPermissionFlag.Infrastructure)]
     public class MyAppDomainManager : AppDomainManager
     {
         private HostSecurityManager mySecurityManager = null;

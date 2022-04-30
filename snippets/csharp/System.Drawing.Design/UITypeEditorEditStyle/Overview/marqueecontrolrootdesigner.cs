@@ -15,7 +15,6 @@ namespace MarqueeControlLibrary.Design
 {
     [ToolboxItemFilter("MarqueeControlLibrary.MarqueeBorder", ToolboxItemFilterType.Require)]
     [ToolboxItemFilter("MarqueeControlLibrary.MarqueeText", ToolboxItemFilterType.Require)]
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class MarqueeControlRootDesigner : DocumentDesigner
     {
         // </snippet530>

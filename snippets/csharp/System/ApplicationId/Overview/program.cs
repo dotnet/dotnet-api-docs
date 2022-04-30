@@ -5,13 +5,11 @@ using System.Text;
 using System.Security.Policy;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 
 namespace ActivationContextSample
 {
     public class Program : MarshalByRefObject
     {
-        [SecurityPermission(SecurityAction.Demand, ControlDomainPolicy = true)]
         public static void Main(string[] args)
         {
             //<Snippet2>

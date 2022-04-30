@@ -27,8 +27,7 @@ namespace CSMenuCommand
         }
     }
 
-//<Snippet1>
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
+    //<Snippet1>
     public class CDesigner : System.ComponentModel.Design.ComponentDesigner 
     {
         public override void Initialize(IComponent comp) 

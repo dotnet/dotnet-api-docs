@@ -6,7 +6,6 @@ open System.Security.Permissions
 type TestClass() =
     inherit MarshalByRefObject()
 
-[<SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.RemotingConfiguration)>]
 [<EntryPoint>]
 let main _ =
     let obj = TestClass()

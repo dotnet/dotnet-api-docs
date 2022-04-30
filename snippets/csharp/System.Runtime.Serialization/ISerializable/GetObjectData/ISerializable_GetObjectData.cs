@@ -2,11 +2,8 @@
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.IO;
 
-[assembly: SecurityPermission(
-SecurityAction.RequestMinimum, Execution = true)]
 namespace ISerializableExample
 {
     class Program
@@ -64,8 +61,6 @@ namespace ISerializableExample
             ID_value = (int)info.GetValue("AltID", typeof(int));
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand,
-            Flags = SecurityPermissionFlag.SerializationFormatter)]
         public virtual void GetObjectData(
         SerializationInfo info, StreamingContext context)
         {

@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 namespace BufferingExample
 {
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
-
     public class BufferingExamples : Form
     {
         private BufferedGraphicsContext appDomainBufferedGraphicsContext;

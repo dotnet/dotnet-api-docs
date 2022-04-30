@@ -12,7 +12,6 @@ using System.Windows.Forms.Design;
 // <snippet430>
 namespace MarqueeControlLibrary.Design
 {
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class MarqueeBorderDesigner : ParentControlDesigner
     {
         // </snippet430>

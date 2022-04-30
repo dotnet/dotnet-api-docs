@@ -15,7 +15,6 @@ using System;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
-using System.Security.Permissions;
 using System.IO;
 
 class GetObjectDataDemo
@@ -80,8 +79,6 @@ public class MyTypeLoadException : TypeLoadException
       _errorDateTime = sInfo.GetDateTime("ErrorDate");
    }
 
-   // GetObjectData overrides must always have a demand for SerializationFormatter.
-   [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
    public override void GetObjectData(SerializationInfo sInfo, StreamingContext sContext)
    {
       base.GetObjectData(sInfo, sContext);
