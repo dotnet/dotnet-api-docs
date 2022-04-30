@@ -1012,7 +1012,7 @@
         <param name="obj">The object on which to invoke the method or constructor. If a method is static, this argument is ignored. If a constructor is static, this argument must be <see langword="null" /> or an instance of the class that defines the constructor.</param>
         <param name="parameters">An argument list for the invoked method or constructor. This is an array of objects with the same number, order, and type as the parameters of the method or constructor to be invoked. If there are no parameters, <paramref name="parameters" /> should be <see langword="null" />.  
   
- If the method or constructor represented by this instance takes a <see langword="ref" /> parameter (<see langword="ByRef" /> in Visual Basic), no special attribute is required for that parameter in order to invoke the method or constructor using this function. Any object in this array that is not explicitly initialized with a value will contain the default value for that object type. For reference-type elements, this value is <see langword="null" />. For value-type elements, this value is 0, 0.0, or <see langword="false" />, depending on the specific element type.</param>
+ If the method or constructor represented by this instance takes a <see langword="ref" /> parameter (<see langword="ByRef" /> in Visual Basic), no special attribute is required for that parameter in order to invoke the method or constructor using this function. Any object in this array that is not explicitly initialized with a value will contain the default value for that object type. For reference-type elements, this value is <see langword="null" />. For value-type elements, the default value is 0, 0.0, or <see langword="false" />, depending on the specific element type.</param>
         <summary>Invokes the method or constructor represented by the current instance, using the specified parameters.</summary>
         <returns>An object containing the return value of the invoked method, or <see langword="null" /> in the case of a constructor.</returns>
         <remarks>
@@ -1021,7 +1021,7 @@
 ## Remarks  
  This is a convenience method that calls the <xref:System.Reflection.MethodBase.Invoke%28System.Object%2CSystem.Reflection.BindingFlags%2CSystem.Reflection.Binder%2CSystem.Object%5B%5D%2CSystem.Globalization.CultureInfo%29> method overload, passing <xref:System.Reflection.BindingFlags.Default> for `invokeAttr` and `null` for `binder` and `culture`.  
   
- If the invoked method throws an exception, the <xref:System.Exception.GetBaseException%2A?displayProperty=nameWithType> method returns the exception.  
+ If the invoked method throws an exception, the <xref:System.Exception.GetBaseException%2A?displayProperty=nameWithType> method returns the originating exception.
   
  To invoke a static method using its <xref:System.Reflection.MethodInfo> object, pass `null` for `obj`.  
   
@@ -1029,11 +1029,9 @@
 >  If this method overload is used to invoke an instance constructor, the object supplied for `obj` is reinitialized; that is, all instance initializers are executed. The return value is `null`. If a class constructor is invoked, the class is reinitialized; that is, all class initializers are executed. The return value is `null`.  
   
 > [!NOTE]
->  Starting with the .NET Framework 2.0 Service Pack 1, this method can be used to access non-public members if the caller has been granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag and if the grant set of the non-public members is restricted to the caller's grant set, or a subset thereof. (See [Security Considerations for Reflection](/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection).)  
->   
->  To use this functionality, your application should target the .NET Framework 3.5 or later.  
+>  Starting with .NET Framework 2.0, this method can be used to access non-public members if the caller has been granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag and if the grant set of the non-public members is restricted to the caller's grant set, or a subset thereof. (See [Security Considerations for Reflection](/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection).) To use this functionality, your application should target .NET Framework 3.5 or later.  
   
- If a parameter of the current method is a value type, and the corresponding argument in `parameters` is `null`, the runtime passes a zero-initialized instance of the value type.  
+ If a parameter of the reflected method is a value type, and the corresponding argument in `parameters` is `null`, the runtime passes a zero-initialized instance of the value type.  
   
    
   
@@ -1134,9 +1132,10 @@ Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Win
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Dynamically invokes the method reflected by this instance on `obj`, and passes along the specified parameters. If the method is static, the `obj` parameter is ignored. For non-static methods, `obj` should be an instance of a class that inherits or declares the method and must be the same type as this class. If the method has no parameters, the value of `parameters` should be `null`. Otherwise, the number, type, and order of elements in `parameters` should be identical to the number, type, and order of parameters for the method reflected by this instance.  
+
+This method dynamically invokes the method reflected by this instance on `obj`, and passes along the specified parameters. If the method is static, the `obj` parameter is ignored. For non-static methods, `obj` should be an instance of a class that inherits or declares the method and must be the same type as this class. If the method has no parameters, the value of `parameters` should be `null`. Otherwise, the number, type, and order of elements in `parameters` should be identical to the number, type, and order of parameters for the method reflected by this instance.  
   
- You may not omit optional parameters in calls to `Invoke`. To invoke a method omitting optional parameters, you should call `Type.InvokeMember` instead.  
+ You may not omit optional parameters in calls to `Invoke`. To invoke a method and omit optional parameters, call `Type.InvokeMember` instead.  
   
 > [!NOTE]
 >  If this method overload is used to invoke an instance constructor, the object supplied for `obj` is reinitialized; that is, all instance initializers are executed. The return value is `null`. If a class constructor is invoked, the class is reinitialized; that is, all class initializers are executed. The return value is `null`.  
@@ -1151,14 +1150,12 @@ Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Win
   
  On the other hand, if the method is non-virtual, then reflection will use the implementation given by the type from which the `MethodInfo` was obtained, regardless of the type of the object passed as the target.  
   
- Access restrictions are ignored for fully trusted code. That is, private constructors, methods, fields, and properties can be accessed and invoked via reflection whenever the code is fully trusted.  
-  
- If the invoked method throws an exception, `TargetInvocationException.GetException` returns the exception. This implementation throws a `NotSupportedException`.  
+ Access restrictions are ignored for fully trusted code. That is, private constructors, methods, fields, and properties can be accessed and invoked via reflection whenever the code is fully trusted.
+
+ If the invoked method throws an exception, the <xref:System.Exception.GetBaseException%2A?displayProperty=nameWithType> method returns the originating exception.
   
 > [!NOTE]
->  Starting with the .NET Framework 2.0 Service Pack 1, this method can be used to access non-public members if the caller has been granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag and if the grant set of the non-public members is restricted to the caller's grant set, or a subset thereof. (See [Security Considerations for Reflection](/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection).)  
->   
->  To use this functionality, your application should target the .NET Framework 3.5 or later.  
+>  Starting with .NET Framework 2.0, this method can be used to access non-public members if the caller has been granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag and if the grant set of the non-public members is restricted to the caller's grant set, or a subset thereof. (See [Security Considerations for Reflection](/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection).) To use this functionality, your application should target .NET Framework 3.5 or later.  
   
    
   
