@@ -73,7 +73,6 @@ using System.Security.Permissions;
 
    public class TestClass
    {
-      [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
       public static void Main()
       {
          CodeGenerator myCodeGenerator = new CodeGenerator();
