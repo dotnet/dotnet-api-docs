@@ -2,13 +2,11 @@
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 using SampleNamespace;
 
 // Note: this snippet is based on v-ralphs' Dynamic Remoting sample.
 public class ManualServer {
 
-[SecurityPermission(SecurityAction.LinkDemand)]
 public static void Main() {
       // <Snippet2>
       TcpChannel channel = new TcpChannel(9000);

@@ -5,12 +5,10 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
-using System.Security.Permissions;
 using MyLogging;
 
 public class MyServerProcessingClient
 {
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main()
    {
       IClientChannelSinkProvider mySoapClientFormatterProvider = new SoapClientFormatterSinkProvider();

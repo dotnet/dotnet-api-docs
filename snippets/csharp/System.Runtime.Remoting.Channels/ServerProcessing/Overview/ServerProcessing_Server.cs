@@ -5,13 +5,11 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 using System.Collections;
 using MyLogging;
 
 public class MyServerClass
 {
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main()
    {
       IDictionary prop = new Hashtable();

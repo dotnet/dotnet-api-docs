@@ -14,7 +14,7 @@ using SampleNamespace;
 
 // System.Runtime.Remoting.Channels.Http.HttpChannel.HttpChannel()
 // <Snippet3>
-public class SampleClient : MarshalByRefObject {
+public class SampleClient2 : MarshalByRefObject {
     public static void Main() {
 
         ChannelServices.RegisterChannel(new HttpChannel());
