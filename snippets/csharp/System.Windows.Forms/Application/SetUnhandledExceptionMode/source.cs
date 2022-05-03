@@ -4,12 +4,10 @@ using System.Threading;
 using System.Drawing;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Security.Permissions;
 
 // Creates a class to throw the error.
 namespace Samples.Microsoft.WindowsThreadException
 {
-
     // Our Form class. Contains the program's entry point.
     public class ErrorHandlerForm : System.Windows.Forms.Form
     {
@@ -45,7 +43,6 @@ namespace Samples.Microsoft.WindowsThreadException
         Thread newThread = null;
 
         // Starts the application.
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         public static void Main(string[] args)
         {
             // Add the event handler for handling UI thread exceptions to the event.
