@@ -3,7 +3,6 @@ using System;
 using System.Windows.Forms;
 using System.Security.Permissions;
 
-[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
 public class Form1 : Form
 {
     public Form1()

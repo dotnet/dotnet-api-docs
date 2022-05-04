@@ -3,7 +3,6 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 
 namespace RemotingSamples
 {
@@ -15,7 +14,6 @@ namespace RemotingSamples
          return "Hello " + name;
       }
 
-[SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.Infrastructure)]
       public override object InitializeLifetimeService()
       {
          ILease baseLease = (ILease)base.InitializeLifetimeService();

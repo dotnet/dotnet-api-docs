@@ -7,7 +7,6 @@
     using System.Windows.Controls;
     using System.Collections.Generic;
     using System.Windows.Input;
-    using System.Security.Permissions;
 
     public class MagnitismCanvas : Canvas
     {
@@ -57,7 +56,6 @@
         }
         #endregion
 
-        [SecurityPermission(SecurityAction.Demand, Flags=SecurityPermissionFlag.ControlAppDomain)]
         public MagnitismCanvas()
             : base()
         {

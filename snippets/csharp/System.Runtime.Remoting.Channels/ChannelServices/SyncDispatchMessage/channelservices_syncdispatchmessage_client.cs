@@ -24,7 +24,6 @@ public class MyProxy : RealProxy
    String myURIString;
    MarshalByRefObject myMarshalByRefObject;
 
-   [PermissionSet(SecurityAction.LinkDemand)]
    public MyProxy(Type myType) : base(myType)
    {
       // RealProxy uses the Type to generate a transparent proxy.
@@ -36,7 +35,6 @@ public class MyProxy : RealProxy
       Console.WriteLine("URI :{0}", myObjRef.URI);
    }
 
-   [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.Infrastructure)]
    public override IMessage Invoke(IMessage myIMessage)
    {
       Console.WriteLine("MyProxy.Invoke Start");
@@ -105,7 +103,6 @@ public class MyProxy : RealProxy
 // </Snippet1>
 public class Client
 {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main()
    {
       try

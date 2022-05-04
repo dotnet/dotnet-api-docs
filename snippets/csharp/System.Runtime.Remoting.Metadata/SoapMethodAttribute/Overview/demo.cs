@@ -15,7 +15,6 @@
 //<snippet100>
 using System;
 using System.Runtime.Remoting.Metadata;
-using System.Security.Permissions;
 
 namespace ExampleNamespace
 {
@@ -39,7 +38,6 @@ namespace ExampleNamespace
 
 public class Demo
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         // Get the method info object for the GetHello method.

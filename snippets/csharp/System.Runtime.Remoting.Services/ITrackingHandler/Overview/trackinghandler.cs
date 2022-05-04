@@ -21,9 +21,6 @@ public class TrackingHandler : ITrackingHandler
     //<snippet31>
     // Called when the tracked object is marshaled.
 
-    [System.Security.Permissions.SecurityPermissionAttribute(
-     System.Security.Permissions.SecurityAction.LinkDemand,
-     Flags=System.Security.Permissions.SecurityPermissionFlag.Infrastructure)]
     public void MarshaledObject(Object obj, ObjRef objRef)
     {
         // Notify the user of the marshal event.
@@ -65,9 +62,6 @@ public class TrackingHandler : ITrackingHandler
 
     //<snippet32>
     // Called when the tracked object is unmarshaled.
-    [System.Security.Permissions.SecurityPermissionAttribute(
-     System.Security.Permissions.SecurityAction.LinkDemand,
-     Flags=System.Security.Permissions.SecurityPermissionFlag.Infrastructure)]
     public void UnmarshaledObject(Object obj, ObjRef objRef)
     {
         Console.WriteLine("Tracking: An instance of {0} was unmarshaled.", 
@@ -77,9 +71,6 @@ public class TrackingHandler : ITrackingHandler
 
     //<snippet33>
     // Called when the tracked object is disconnected.
-    [System.Security.Permissions.SecurityPermissionAttribute(
-     System.Security.Permissions.SecurityAction.LinkDemand,
-     Flags=System.Security.Permissions.SecurityPermissionFlag.Infrastructure)]
     public void DisconnectedObject(Object obj)
     {
         Console.WriteLine("Tracking: An instance of {0} was disconnected.", 

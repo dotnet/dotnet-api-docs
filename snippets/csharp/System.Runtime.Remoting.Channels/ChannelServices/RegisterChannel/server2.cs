@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 using SampleNamespace;
 
 // This assembly contains a remote service and its server host wrapped together.
-public class SampleServer {
+public class SampleServer2 {
     public static void Main() {
 
         // The following sample uses an HttpChannel constructor

@@ -75,14 +75,49 @@
  Most of the common properties of the <xref:System.Windows.Forms.AxHost> class are only valid and used if the underlying ActiveX control exposes those properties. A few examples of the common properties are <xref:System.Windows.Forms.Control.BackColor%2A>, <xref:System.Windows.Forms.Control.Cursor%2A>, <xref:System.Windows.Forms.Control.Font%2A>, and <xref:System.Windows.Forms.Control.Text%2A>.  
   
 > [!NOTE]
->  If you are using Visual Studio as your Windows Forms design environment, you can make an ActiveX control available to your application by adding the ActiveX control to your Toolbox. To accomplish this, right-click the **Toolbox**, select **Customize Toolbox**, then browse to the ActiveX control's.ocx file. For more information, see "Adding ActiveX Controls to Windows Forms" in the Visual Studio documentation.  
-  
-   
+> If you're using Visual Studio as your Windows Forms design environment, you can make an ActiveX control available to your application by adding the ActiveX control to your Toolbox. To accomplish this, right-click the **Toolbox**, select **Customize Toolbox**, then browse to the ActiveX control's *.ocx* file. For more information, see [How to: Add ActiveX Controls to Windows Forms](/dotnet/desktop/winforms/controls/how-to-add-activex-controls-to-windows-forms).
   
 ## Examples  
- The following code example overrides the constructor, and the <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> and <xref:System.Windows.Forms.AxHost.AttachInterfaces%2A> methods of an <xref:System.Windows.Forms.AxHost> derived class that wraps the Microsoft Masked Edit ActiveX Control. This code requires that you have created the generated source code by running the AxImp.exe on the MSMask32.ocx file with the `/source` switch to generate the wrapper class to be edited. This code is only shown in C# syntax because that is the only language output by the AxImp.exe.  
+ The following code example overrides the constructor and the <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> and <xref:System.Windows.Forms.AxHost.AttachInterfaces%2A> methods of an <xref:System.Windows.Forms.AxHost>-derived class that wraps the Microsoft Masked Edit ActiveX Control. This code requires that you've generated the source code by running the AxImp.exe tool on the *MSMask32.ocx* file with the `/source` switch. This code is only shown in C# syntax because that's the only language output by the AxImp.exe tool.
   
- :::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/AxHost+AboutBoxDelegate/Overview/axmsmask.cs" id="Snippet1":::  
+```csharp
+        public AxMaskEdBox()
+            :
+          base("c932ba85-4374-101b-a56c-00aa003668dc") // The ActiveX control's class identifier.
+        {
+            // Make the AboutBox method the about box delegate.
+            this.SetAboutBoxDelegate(new AboutBoxDelegate(AboutBox));
+        }
+
+        public virtual void AboutBox()
+        {
+            // If the instance of the ActiveX control is null when the AboutBox method
+            // is called, raise an InvalidActiveXStateException exception.
+            if ((this.ocx == null))
+            {
+                throw new System.Windows.Forms.AxHost.InvalidActiveXStateException(
+                  "AboutBox", System.Windows.Forms.AxHost.ActiveXInvokeKind.MethodInvoke);
+            }
+            // Show the about box if the ActiveX control has one.
+            if (this.HasAboutBox)
+            {
+                this.ocx.AboutBox();
+            }
+        }
+
+        protected override void AttachInterfaces()
+        {
+            try
+            {
+                // Attach the IMSMask interface to the ActiveX control.
+                this.ocx = ((MSMask.IMSMask)(this.GetOcx()));
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+        }
+```
   
  ]]></format>
     </remarks>
@@ -191,16 +226,7 @@
       <Parameters />
       <Docs>
         <summary>When overridden in a derived class, attaches interfaces to the underlying ActiveX control.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following code example overrides the constructor, and the <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> and <xref:System.Windows.Forms.AxHost.AttachInterfaces%2A> methods of an <xref:System.Windows.Forms.AxHost> derived class that wraps the Microsoft Masked Edit ActiveX Control. This code requires that you have created the generated source code by running the AxImp.exe on the MSMask32.ocx file with the `/source` switch to generate the wrapper class to be edited. This code is only shown in C# syntax because that is the only language output by the AxImp.exe.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/AxHost+AboutBoxDelegate/Overview/axmsmask.cs" id="Snippet1":::  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <block subset="none" type="overrides">
           <para>Classes that extend <see cref="T:System.Windows.Forms.AxHost" /> should override this method. Within an overridden version of this method, the extending class should call <see cref="M:System.Windows.Forms.AxHost.GetOcx" /> to retrieve its own interface. In most cases, the <see cref="M:System.Windows.Forms.AxHost.GetOcx" /> method should not be called before this method is called.</para>
         </block>
@@ -2043,16 +2069,7 @@
       <Docs>
         <summary>Retrieves a reference to the underlying ActiveX control.</summary>
         <returns>An object that represents the ActiveX control.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following code example overrides the constructor, and the <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> and <xref:System.Windows.Forms.AxHost.AttachInterfaces%2A> methods of an <xref:System.Windows.Forms.AxHost> derived class that wraps the Microsoft Masked Edit ActiveX Control. This code requires that you have created the generated source code by running the AxImp.exe on the MSMask32.ocx file with the `/source` switch to generate the wrapper class to be edited. This code is only shown in C# syntax because that is the only language output by the AxImp.exe.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/AxHost+AboutBoxDelegate/Overview/axmsmask.cs" id="Snippet1":::  
-  
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Windows.Forms.AxHost.OcxState" />
       </Docs>
     </Member>
@@ -2361,16 +2378,10 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The **About** dialog box typically displays version and copyright information about the ActiveX control.  
-  
-   
-  
-## Examples  
- The following code example overrides the constructor, and the <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> and <xref:System.Windows.Forms.AxHost.AttachInterfaces%2A> methods of an <xref:System.Windows.Forms.AxHost> derived class that wraps the Microsoft Masked Edit ActiveX Control. This code requires that you have created the generated source code by running the AxImp.exe on the MSMask32.ocx file with the `/source` switch to generate the wrapper class to be edited. This code is only shown in C# syntax because that is the only language output by the AxImp.exe.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/AxHost+AboutBoxDelegate/Overview/axmsmask.cs" id="Snippet1":::  
-  
+## Remarks
+
+The **About** dialog box typically displays version and copyright information about the ActiveX control.
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Windows.Forms.AxHost.ShowAboutBox" />
@@ -4182,14 +4193,9 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> method also allows derived classes to handle the <xref:System.Windows.Forms.AxHost.ShowAboutBox%2A> method without attaching a delegate. This is the preferred technique for handling the <xref:System.Windows.Forms.AxHost.ShowAboutBox%2A> method in a derived class.  
-  
-   
-  
-## Examples  
- The following code example overrides the constructor, and the <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> and <xref:System.Windows.Forms.AxHost.AttachInterfaces%2A> methods of an <xref:System.Windows.Forms.AxHost> derived class that wraps the Microsoft Masked Edit ActiveX Control. This code requires that you have created the generated source code by running the AxImp.exe on the MSMask32.ocx file with the `/source` switch to generate the wrapper class to be edited. This code is only shown in C# syntax because that is the only language output by the AxImp.exe.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/AxHost+AboutBoxDelegate/Overview/axmsmask.cs" id="Snippet1":::  
+ The <xref:System.Windows.Forms.AxHost.SetAboutBoxDelegate%2A> method also allows derived classes to handle the <xref:System.Windows.Forms.AxHost.ShowAboutBox%2A> method without attaching a delegate. This is the preferred technique for handling the <xref:System.Windows.Forms.AxHost.ShowAboutBox%2A> method in a derived class.
+
+For an example, see <xref:System.Windows.Forms.AxHost>.
   
  ]]></format>
         </remarks>

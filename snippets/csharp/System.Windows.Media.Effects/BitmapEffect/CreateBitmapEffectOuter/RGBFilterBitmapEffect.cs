@@ -5,7 +5,6 @@ using System.Windows.Media.Effects;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using System.Reflection;
-using System.Security.Permissions;
 
 namespace RGBFilter
 {
@@ -23,7 +22,6 @@ namespace RGBFilter
         }
     }
 
-    //
     public class Ole32Methods
     {
         [DllImport("ole32.dll")]
@@ -38,9 +36,7 @@ namespace RGBFilter
 	//<SnippetBitmapEffectClass>
     public class RGBFilterBitmapEffect : BitmapEffect
     {
-
 		//<SnippetCreateUnmanagedEffect>
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         unsafe protected override SafeHandle CreateUnmanagedEffect()
         {
             const uint CLSCTX_INPROC_SERVER = 1;

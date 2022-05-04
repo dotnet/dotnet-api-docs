@@ -5,11 +5,9 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
-using System.Security.Permissions;
 
-public class Server
+public class Server2
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         //<snippet41>

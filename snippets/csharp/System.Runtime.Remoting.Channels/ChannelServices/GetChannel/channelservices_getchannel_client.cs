@@ -17,7 +17,6 @@ namespace RemotingSamples
 {
    public class MyChannelServices_Client
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          ListDictionary myProperties = new ListDictionary();

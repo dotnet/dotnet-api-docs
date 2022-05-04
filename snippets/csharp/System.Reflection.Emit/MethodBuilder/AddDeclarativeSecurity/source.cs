@@ -11,9 +11,6 @@ class MyMethodBuilderDemo {
 
 	//<Snippet1>
 	// myModBuilder is an instance of ModuleBuilder.
-	// Note that for the use of PermissionSet and SecurityAction,
-	// the namespaces System.Security and System.Security.Permissions
-	// should be included.
 	
 	TypeBuilder myTypeBuilder = myModBuilder.DefineType("MyType",
 				    	TypeAttributes.Public);

@@ -5,11 +5,9 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Activation;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 
 public class Client
 {
-[SecurityPermission(SecurityAction.Demand)]
     [STAThread]
     public static void Main()
     {
