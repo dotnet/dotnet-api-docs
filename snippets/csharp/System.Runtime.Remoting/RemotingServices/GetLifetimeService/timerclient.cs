@@ -15,7 +15,6 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 using TimerSample;
 
 namespace GroupCoffeeTimer {
@@ -24,7 +23,6 @@ namespace GroupCoffeeTimer {
             TimerClient myClient = new TimerClient();
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         public TimerClient() {
             // Registers the HTTP Channel so that this client can receive
             // events from the remote service.
@@ -63,7 +61,6 @@ namespace GroupCoffeeTimer {
             Console.WriteLine("TimerHelper.OnTimerExpired: {0}", e.Message);
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         public TimeSpan Renewal(ILease lease) {
             Console.WriteLine("TimerClient: Renewal called.");
             return TimeSpan.FromMinutes(0.5);

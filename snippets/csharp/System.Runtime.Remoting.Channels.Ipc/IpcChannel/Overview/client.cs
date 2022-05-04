@@ -1,11 +1,9 @@
 ﻿//<snippet20>
 using System;
 using System.Runtime.Remoting.Channels.Ipc;
-using System.Security.Permissions;
 
 public class Client
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         //<snippet21>

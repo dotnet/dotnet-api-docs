@@ -4,11 +4,9 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 
 public class Server
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         //<snippet2>

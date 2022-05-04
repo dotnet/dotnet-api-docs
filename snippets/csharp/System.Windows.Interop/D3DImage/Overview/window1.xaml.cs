@@ -15,7 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 namespace D3DHost
 {
@@ -214,7 +213,6 @@ namespace D3DHost
 
     public static class HRESULT
     {
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public static void Check(int hr)
         {
             Marshal.ThrowExceptionForHR(hr);

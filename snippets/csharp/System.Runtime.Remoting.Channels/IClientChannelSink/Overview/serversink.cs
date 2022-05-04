@@ -4,12 +4,10 @@ using System.Collections;
 using System.IO;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
 {
-
-    // This class inherits from BaseChannelSinkWithPropertes
+    // This class inherits from BaseChannelSinkWithProperties
     // to get an implementation of IChannelSinkBase.
 
 // <snippet61>
@@ -20,7 +18,6 @@ public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
 // <snippet62>
     public IServerChannelSink NextChannelSink
     {
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         get
         {
             return(nextSink);
@@ -29,7 +26,6 @@ public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
 // </snippet62>
 
 // <snippet63>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public Stream GetResponseStream (IServerResponseChannelSinkStack sinkStack,
                                      Object state,
                                      IMessage message,
@@ -40,7 +36,6 @@ public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
 // </snippet63>
 
 // <snippet64>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public ServerProcessing ProcessMessage (IServerChannelSinkStack sinkStack,
                                             IMessage requestMessage,
                                             ITransportHeaders requestHeaders,
@@ -71,7 +66,6 @@ public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
 // </snippet64>
 
 // <snippet65>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public void AsyncProcessResponse (IServerResponseChannelSinkStack sinkStack,
                                       Object state,
                                       IMessage message,
@@ -83,7 +77,6 @@ public class ServerSink : BaseChannelSinkWithProperties, IServerChannelSink
 // </snippet65>
 
     // Constructor
-    [SecurityPermission(SecurityAction.LinkDemand)]
     public ServerSink (IServerChannelSink sink) {
       if (sink == null) throw new ArgumentNullException("sink");
       nextSink = sink;
@@ -103,12 +96,10 @@ public class ServerSinkProvider : IServerChannelSinkProvider
 // <snippet72>
     public IServerChannelSinkProvider Next
     {
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         get
         {
             return(nextProvider);
         }
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         set
         {
             nextProvider = value;
@@ -117,10 +108,8 @@ public class ServerSinkProvider : IServerChannelSinkProvider
 // </snippet72>
 
 // <snippet73>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public IServerChannelSink CreateSink (IChannelReceiver channel)
     {
-
         Console.WriteLine("Creating ServerSink");
 
         // Create the next sink in the chain.
@@ -132,7 +121,6 @@ public class ServerSinkProvider : IServerChannelSinkProvider
 // </snippet73>
 
 // <snippet74>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public void GetChannelData (IChannelDataStore channelData) {}
 // </snippet74>
 

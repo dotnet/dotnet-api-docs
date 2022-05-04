@@ -1636,16 +1636,29 @@ The `Unbox<T>` method is simply a wrapper for the IL [unbox](xref:System.Reflect
 The `Unbox<T>` method has an important usage constraint that is not enforced by language compilers and that is the responsibility of the caller. The IL `unbox` instruction returns a controlled-mutability managed pointer. Because .NET and .NET language compilers cannot represent this constraint, the `Unbox<T>` method returns a normal mutable `ref T`. However developers **must not** mutate the returned reference unless they are certain that `T` is a mutable struct type. For example, because the numeric primitives such as <xref:System.Int32> are not mutable struct types, the following code is not suppported:
 
 ```csharp
+// The following line is NOT SUPPORTED.
 Unsafe.Unbox<int>(obj) = 30;
 ```
 
-In contrast, a type such as <xref:System.Drawing.Point?<displayProperty=nameWithType> is a mutable struct with public property setters, so the following code is supported:
+In contrast, a type such as <xref:System.Drawing.Point?<displayProperty=nameWithType> is a mutable struct with public property setters, so mutating the boxed value by calling the property setters is supported:
 
 ```csharp
+// The following lines are legal and supported.
 Unsafe.Unbox<System.Drawing.Point>(obj).X = 50;
+Unsafe.Unbox<System.Drawing.Point>(obj).Y = 70;
 ```
 
-For more information, see sections III.1.8.1.2.2 ("Controlled-muttability managed pointers") and III.4.32 ("unbox -- convert boxed value type to its raw form") in [ECMA-335: Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
+However, replacing the entire reference wholesale is not supported, even if the reference is to a mutable struct type.
+
+```csharp
+// Resetting the reference to default(T) is NOT SUPPORTED.
+Unsafe.Unbox<System.Drawing.Point>(obj) = default(System.Drawing.Point);
+
+// Setting the reference to a completely new value is NOT SUPPORTED.
+Unsafe.Unbox<System.Drawing.Point>(obj) = new System.Drawing.Point(50, 70);
+```
+
+For more information, including detailed discussion of the usage constraints of this instruction, see sections III.1.8.1.2.2 ("Controlled-mutability managed pointers") and III.4.32 ("unbox -- convert boxed value type to its raw form") in [ECMA-335: Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
 
          ]]></format>
         </remarks>

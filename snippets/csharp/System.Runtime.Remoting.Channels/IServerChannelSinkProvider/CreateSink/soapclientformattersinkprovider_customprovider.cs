@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Permissions;
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
+
 public class MyClientProvider : IClientChannelSinkProvider
 {
    private IClientChannelSinkProvider nextProvider = null;
@@ -41,7 +41,6 @@ public class MyClientProvider : IClientChannelSinkProvider
    }
 }
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 internal class MyClientChannelSink : BaseChannelObjectWithProperties, IClientChannelSink
 {
    private IClientChannelSink nextClientSink = null;
@@ -115,7 +114,6 @@ internal class MyClientChannelSink : BaseChannelObjectWithProperties, IClientCha
    }
 }
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 public class MyServerProvider : IServerChannelSinkProvider
 {
    private IServerChannelSinkProvider nextProvider = null;
@@ -160,7 +158,6 @@ public class MyServerProvider : IServerChannelSinkProvider
    }
 }
 
-[PermissionSet(SecurityAction.Demand, Name="FullTrust")]
 internal class MyServerChannelSink : BaseChannelObjectWithProperties, IServerChannelSink
 {
    private IServerChannelSink nextServerSink = null;

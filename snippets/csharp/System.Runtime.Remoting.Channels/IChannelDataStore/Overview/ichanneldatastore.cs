@@ -20,7 +20,6 @@ using System.Security.Permissions;
 
 public class ServerProcess
 {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main()
    {
 // <Snippet2>

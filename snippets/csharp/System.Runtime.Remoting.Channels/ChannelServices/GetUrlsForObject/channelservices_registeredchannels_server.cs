@@ -22,7 +22,6 @@ namespace RemotingSamples
 {
    public class MyChannelServices_Server
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          try

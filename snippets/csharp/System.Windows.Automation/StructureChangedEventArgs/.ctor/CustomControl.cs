@@ -362,7 +362,6 @@ namespace CustomControls
         /// <param name="msg">The Windows message.</param>
         /// <param name="keyData">Information about the key press.</param>
         /// <returns>true if successful.</returns>
-        [PermissionSetAttribute(SecurityAction.Demand, Unrestricted = true)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Down)
@@ -445,7 +444,6 @@ namespace CustomControls
         /// </summary>
         /// <param name="winMessage">Windows message.</param>
         /// <remarks>This method enables UI Automation to find the control.</remarks>
-        [PermissionSetAttribute(SecurityAction.Demand, Unrestricted = true)]
         protected override void WndProc(ref Message winMessage)
         {
             const int WM_GETOBJECT = 0x003D;

@@ -68,7 +68,6 @@ public class FieldBuilder_Sample
       return myType;
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       try
