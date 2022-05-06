@@ -1,5 +1,6 @@
 ﻿open System
 
+// <Snippet1>
 let showPopulation year newPopulation =
     printfn $"""{year,5}  {newPopulation,14:N0}  {"n/a",10:P2}"""
 
@@ -65,3 +66,4 @@ do
 //    1980       1,203,339     -2.04 %
 //    1990       1,027,974     -1.46 %
 //    2000         951,270     -0.75 %
+// </Snippet1>
