@@ -36,7 +36,7 @@ class ConcurrentBagDemo
                 if (cb.TryTake(out item))
                 {
                     Console.WriteLine(item);
-                    itemsInBag++;
+                    Interlocked.Increment(ref itemsInBag);
                 }
             }));
         }
