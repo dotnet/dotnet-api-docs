@@ -8,6 +8,7 @@ let numericStrings =
        "   33113684  "; "(0)"; "-0"; "-1" 
        "+1293617"; "18-"; "119870"; "31,024" 
        "  3127094 "; "00700000" |]
+
 for numericString in numericStrings do
     match UInt32.TryParse numericString with
     | true, number ->
