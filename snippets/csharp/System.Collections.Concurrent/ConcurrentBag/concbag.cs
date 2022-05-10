@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 class ConcurrentBagDemo
 {
@@ -36,7 +37,7 @@ class ConcurrentBagDemo
                 if (cb.TryTake(out item))
                 {
                     Console.WriteLine(item);
-                    itemsInBag++;
+                    Interlocked.Increment(ref itemsInBag);
                 }
             }));
         }
