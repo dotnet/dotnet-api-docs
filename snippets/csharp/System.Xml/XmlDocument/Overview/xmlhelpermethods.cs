@@ -106,7 +106,7 @@ namespace XMLProcessingApp
 
             settings.Schemas.Add(schema);
 
-            settings.ValidationEventHandler += settings_ValidationEventHandler;
+            settings.ValidationEventHandler += ValidationCallback;
             settings.ValidationFlags =
                 settings.ValidationFlags | XmlSchemaValidationFlags.ReportValidationWarnings;
             settings.ValidationType = ValidationType.Schema;
@@ -216,7 +216,7 @@ namespace XMLProcessingApp
                 doc.Schemas.Add(schema);
             }
 
-            // Use an event handler to validate the XML node against the schema.
+            // Use a callback to validate the XML node against the schema.
             doc.Validate(ValidationCallback);
         }
 
