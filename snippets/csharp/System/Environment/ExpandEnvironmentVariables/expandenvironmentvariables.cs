@@ -6,20 +6,17 @@ class Sample
 {
     public static void Main()
     {
-    String str;
-    String nl = Environment.NewLine;
+        // Keep this information secure!
+        string query = "My system drive is %SystemDrive% and my system root is %SystemRoot%";
 
-    Console.WriteLine();
-//  <-- Keep this information secure! -->
-    String query = "My system drive is %SystemDrive% and my system root is %SystemRoot%";
-    str = Environment.ExpandEnvironmentVariables(query);
-    Console.WriteLine("ExpandEnvironmentVariables: {0}  {1}", nl, str);
+        string str = Environment.ExpandEnvironmentVariables(query);
+
+        Console.WriteLine(str);
     }
 }
 /*
-This example produces the following results:
+This example prints:
 
-ExpandEnvironmentVariables:
-  My system drive is C: and my system root is C:\WINNT
+My system drive is C: and my system root is C:\WINDOWS
 */
 //</snippet1>
