@@ -154,7 +154,9 @@ These configuration options are not available starting with .NET 5.
 
  If <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> is set to `false`, all HTTP responses with an HTTP status code from 300 to 399 are  returned to the application.
 
- The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.
+ The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. No other headers are cleared. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.
+
+ If you are using cookies by specifically adding them to the `HttpRequestMessage.Headers` collection, these are not cleared when a redirect is followed, as the handler has no way of knowing what domain a cookie is allowed for. If you want to mimic browser behavior use the `CookieContainer` class which allows you to specify the target domain for a cookie.
 
 > [!NOTE]
 >  With <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> set to `true`, the .NET Framework will follow redirections even when being redirected to an HTTP URI from an HTTPS URI.
