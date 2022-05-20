@@ -12,17 +12,16 @@ The methods for manipulating zip archives and their file entries are spread acro
 |To open a stream to an individual file contained in a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Open%2A?displayProperty=nameWithType>|
 |Delete a file from a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Delete%2A?displayProperty=nameWithType>|
 
-If you reference the `System.IO.Compression.FileSystem` assembly in your project, you can access two extension methods for the <xref:System.IO.Compression.ZipArchiveEntry> class. Those methods are <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile%28System.IO.Compression.ZipArchiveEntry%2CSystem.String%29> and <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile%28System.IO.Compression.ZipArchiveEntry%2CSystem.String%2CSystem.Boolean%29>, and they enable you to decompress the contents of the entry to a file. The `System.IO.Compression.FileSystem` assembly is not available in Windows 8. In Windows 8.x Store apps, you can decompress the contents of an archive by using <xref:System.IO.Compression.DeflateStream> or <xref:System.IO.Compression.GZipStream>, or you can use the Windows Runtime types [Compressor](https://go.microsoft.com/fwlink/p/?LinkId=246357) and [Decompressor](https://go.microsoft.com/fwlink/?LinkId=246358) to compress and decompress files.
+If you reference the `System.IO.Compression.FileSystem` assembly in your project, you can access two extension methods for the <xref:System.IO.Compression.ZipArchiveEntry> class. Those methods are <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile%28System.IO.Compression.ZipArchiveEntry%2CSystem.String%29> and <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile%28System.IO.Compression.ZipArchiveEntry%2CSystem.String%2CSystem.Boolean%29>, and they enable you to decompress the contents of the entry to a file. The `System.IO.Compression.FileSystem` assembly is not available in Windows 8. In Windows 8.x Store apps, you can decompress the contents of an archive by using <xref:System.IO.Compression.DeflateStream> or <xref:System.IO.Compression.GZipStream>, or you can use the Windows Runtime types <xref:Windows.Storage.Compression.Compressor> and <xref:Windows.Storage.Compression.Decompressor> to compress and decompress files.
 
 ## Examples
 
 The first example shows how to create a new entry in a zip archive and write to it.
 
-[!code-csharp[System.IO.Compression.ZipArchiveMode#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/cs/program1.cs#1)]
-[!code-vb[System.IO.Compression.ZipArchiveMode#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb#1)]
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchivemode/vb/program1.vb" id="Snippet1":::
 
 The second example shows how to use the <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile%28System.IO.Compression.ZipArchiveEntry%2CSystem.String%29> extension method. You must reference the `System.IO.Compression.FileSystem` assembly in your project for the code to execute.
 
-[!code-csharp[System.IO.Compression.ZipArchive#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.io.compression.ziparchive/cs/program1.cs#1)]
-[!code-vb[System.IO.Compression.ZipArchive#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb#1)]
-
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb" id="Snippet1":::

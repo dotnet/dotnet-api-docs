@@ -1,6 +1,6 @@
 <Type Name="ClaimsPrincipal" FullName="System.Security.Claims.ClaimsPrincipal">
   <TypeSignature Language="C#" Value="public class ClaimsPrincipal : System.Security.Principal.IPrincipal" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ClaimsPrincipal extends System.Object implements class System.Security.Principal.IPrincipal" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.0;netstandard-2.1" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ClaimsPrincipal extends System.Object implements class System.Security.Principal.IPrincipal" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.0;netstandard-2.1" />
   <TypeSignature Language="DocId" Value="T:System.Security.Claims.ClaimsPrincipal" />
   <TypeSignature Language="VB.NET" Value="Public Class ClaimsPrincipal&#xA;Implements IPrincipal" />
   <TypeSignature Language="F#" Value="type ClaimsPrincipal = class&#xA;    interface IPrincipal" />
@@ -14,6 +14,8 @@
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
@@ -26,8 +28,9 @@
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Security.Claims" ToVersion="0.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Claims" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Claims" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Claims" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -53,7 +56,7 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks  
- Beginning with .NET Framework 4.5, Windows Identity Foundation (WIF) and claims-based identity have been fully integrated into the .NET Framework. This means that many classes that represent a principal in the .NET Framework now derive from <xref:System.Security.Claims.ClaimsPrincipal> rather than simply implementing the <xref:System.Security.Principal.IPrincipal> interface. In addition to implementing the <xref:System.Security.Principal.IPrincipal> interface, <xref:System.Security.Claims.ClaimsPrincipal> exposes properties and methods that are useful for working with claims.  
+ Beginning with .NET Framework 4.5, Windows Identity Foundation (WIF) and claims-based identity are fully integrated into .NET Framework. This means that many classes that represent a principal in the .NET Framework now derive from <xref:System.Security.Claims.ClaimsPrincipal> rather than simply implementing the <xref:System.Security.Principal.IPrincipal> interface. In addition to implementing the <xref:System.Security.Principal.IPrincipal> interface, <xref:System.Security.Claims.ClaimsPrincipal> exposes properties and methods that are useful for working with claims.  
   
  <xref:System.Security.Claims.ClaimsPrincipal> exposes a collection of identities, each of which is a <xref:System.Security.Claims.ClaimsIdentity>. In the common case, this collection, which is accessed through the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> property, will only have a single element.  
   
@@ -67,16 +70,14 @@
   
 -   Inline claims-based code access checks can be performed by configuring your application with a custom claims authorization manager and using either the <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class to perform imperative access checks or the <xref:System.IdentityModel.Services.ClaimsPrincipalPermissionAttribute> to perform declarative access checks. Claims-based code access checks are performed inline, outside of the processing pipeline, and so are available to all applications as long as a claims authorization manager is configured.  
   
- You can obtain a <xref:System.Security.Claims.ClaimsPrincipal> instance for the principal associated with a request in an RP application (or the principal under which a thread is executing) by casting the <xref:System.Threading.Thread.CurrentPrincipal%2A?displayProperty=nameWithType> property to <xref:System.Security.Claims.ClaimsPrincipal>. The claims associated with an <xref:System.Security.Claims.ClaimsPrincipal> object are available through its <xref:System.Security.Claims.ClaimsPrincipal.Claims%2A> property. The <xref:System.Security.Claims.ClaimsPrincipal.Claims%2A> property returns all of the claims contained by the identities associated with the principal. In the uncommon case in which the <xref:System.Security.Claims.ClaimsPrincipal> contains multiple <xref:System.Security.Claims.ClaimsIdentity> instances, you can use the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> property or you can access the primary identity by using the <xref:System.Security.Claims.ClaimsPrincipal.Identity%2A> property. <xref:System.Security.Claims.ClaimsPrincipal> provides several methods through which these claims may be searched and fully supports Language Integrated Query (LINQ). Identities can be added to the principal by using the <xref:System.Security.Claims.ClaimsPrincipal.AddIdentities%2A> or <xref:System.Security.Claims.ClaimsPrincipal.AddIdentity%2A> methods.  
+ You can obtain a <xref:System.Security.Claims.ClaimsPrincipal> instance for the principal associated with a request, or the principal under which a thread is executing, in a [relying party (RP) application](/archive/msdn-magazine/2010/august/federated-identity-passive-authentication-for-asp-net-with-wif) by casting the <xref:System.Threading.Thread.CurrentPrincipal%2A?displayProperty=nameWithType> property to <xref:System.Security.Claims.ClaimsPrincipal>. The claims associated with an <xref:System.Security.Claims.ClaimsPrincipal> object are available through its <xref:System.Security.Claims.ClaimsPrincipal.Claims%2A> property. The <xref:System.Security.Claims.ClaimsPrincipal.Claims%2A> property returns all of the claims contained by the identities associated with the principal. In the uncommon case in which the <xref:System.Security.Claims.ClaimsPrincipal> contains multiple <xref:System.Security.Claims.ClaimsIdentity> instances, you can use the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> property or you can access the primary identity by using the <xref:System.Security.Claims.ClaimsPrincipal.Identity%2A> property. <xref:System.Security.Claims.ClaimsPrincipal> provides several methods through which these claims may be searched and fully supports Language Integrated Query (LINQ). Identities can be added to the principal by using the <xref:System.Security.Claims.ClaimsPrincipal.AddIdentities%2A> or <xref:System.Security.Claims.ClaimsPrincipal.AddIdentity%2A> methods.  
   
 > [!NOTE]
 >  To add identities to the <xref:System.Security.Claims.ClaimsPrincipal>, a caller must have full trust.  
   
  By default, WIF prioritizes <xref:System.Security.Principal.WindowsIdentity> objects when selecting the primary identity to return through the <xref:System.Security.Claims.ClaimsPrincipal.Identity%2A> property. You can modify this behavior by supplying a delegate through the <xref:System.Security.Claims.ClaimsPrincipal.PrimaryIdentitySelector%2A> property to perform the selection. The <xref:System.Security.Claims.ClaimsPrincipal.ClaimsPrincipalSelector%2A> property provides similar functionality for the <xref:System.Security.Claims.ClaimsPrincipal.Current%2A> property.  
   
- In the claim-based model, whether a principal is in a specified role is determined by the claims presented by its underlying identities. The <xref:System.Security.Claims.ClaimsPrincipal.IsInRole%2A> method essentially examines each identity associated with the principal to determine whether it possesses a claim with the specified role value. The type of the claim (represented by its <xref:System.Security.Claims.Claim.Type%2A?displayProperty=nameWithType> property) used to determine which claims should be examined during role checks is specified on an identity through its <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType%2A?displayProperty=nameWithType> property. Thus, the claims examined during role checks can be of a different type for different identities associated with the principal.  
-  
-   
+ In the claim-based model, whether a principal is in a specified role is determined by the claims presented by its underlying identities. The <xref:System.Security.Claims.ClaimsPrincipal.IsInRole%2A> method essentially examines each identity associated with the principal to determine whether it possesses a claim with the specified role value. The type of the claim (represented by its <xref:System.Security.Claims.Claim.Type%2A?displayProperty=nameWithType> property) used to determine which claims should be examined during role checks is specified on an identity through its <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType%2A?displayProperty=nameWithType> property. Thus, the claims examined during role checks can be of a different type for different identities associated with the principal.
   
 ## Examples  
  The following example extracts the claims presented by a user in an HTTP request and writes them to the HTTP response. The current user is read from the <xref:System.Web.HttpContext> as a <xref:System.Security.Claims.ClaimsPrincipal>. The claims are then read from it and then are written to the response.  
@@ -125,6 +126,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -165,6 +168,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -210,6 +215,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -222,7 +229,7 @@ if (null != principal)
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="reader" Type="System.IO.BinaryReader" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="reader" Type="System.IO.BinaryReader" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="reader">A <see cref="T:System.IO.BinaryReader" /> pointing to a <see cref="T:System.Security.Claims.ClaimsPrincipal" />.</param>
@@ -255,6 +262,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -300,6 +309,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -353,6 +364,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
@@ -361,8 +374,8 @@ if (null != principal)
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="info" Type="System.Runtime.Serialization.SerializationInfo" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
-        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="info" Type="System.Runtime.Serialization.SerializationInfo" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="info">The serialized data.</param>
@@ -389,6 +402,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -443,6 +458,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -497,6 +514,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -510,12 +529,12 @@ if (null != principal)
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.6">
-          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal/&lt;get_Claims&gt;d__1))]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal/&lt;get_Claims&gt;d__1))&gt;]</AttributeName>
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal+&lt;get_Claims&gt;d__1))]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal+&lt;get_Claims&gt;d__1))&gt;]</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
-          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal/&lt;get_Claims&gt;d__37))]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal/&lt;get_Claims&gt;d__37))&gt;]</AttributeName>
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal+&lt;get_Claims&gt;d__37))]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.IteratorStateMachine(typeof(System.Security.Claims.ClaimsPrincipal+&lt;get_Claims&gt;d__37))&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -552,6 +571,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -602,6 +623,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -639,6 +662,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -654,7 +679,7 @@ if (null != principal)
         <ReturnType>System.Security.Claims.ClaimsIdentity</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="reader" Type="System.IO.BinaryReader" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="reader" Type="System.IO.BinaryReader" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="reader">The binary reader.</param>
@@ -672,7 +697,7 @@ if (null != principal)
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Current As ClaimsPrincipal" />
       <MemberSignature Language="F#" Value="member this.Current : System.Security.Claims.ClaimsPrincipal" Usage="System.Security.Claims.ClaimsPrincipal.Current" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Security::Claims::ClaimsPrincipal ^ Current { System::Security::Claims::ClaimsPrincipal ^ get(); };" />
-      <MemberSignature Language="C#" Value="public static System.Security.Claims.ClaimsPrincipal? Current { get; }" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public static System.Security.Claims.ClaimsPrincipal? Current { get; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Claims</AssemblyName>
@@ -682,6 +707,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -717,7 +744,7 @@ if (null != principal)
       <MemberSignature Language="VB.NET" Value="Protected Overridable ReadOnly Property CustomSerializationData As Byte()" />
       <MemberSignature Language="F#" Value="member this.CustomSerializationData : byte[]" Usage="System.Security.Claims.ClaimsPrincipal.CustomSerializationData" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual property cli::array &lt;System::Byte&gt; ^ CustomSerializationData { cli::array &lt;System::Byte&gt; ^ get(); };" />
-      <MemberSignature Language="C#" Value="protected virtual byte[]? CustomSerializationData { get; }" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="protected virtual byte[]? CustomSerializationData { get; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Claims</AssemblyName>
@@ -727,6 +754,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -773,6 +802,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -822,6 +853,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -872,7 +905,7 @@ if (null != principal)
       <MemberSignature Language="VB.NET" Value="Public Overridable Function FindFirst (match As Predicate(Of Claim)) As Claim" />
       <MemberSignature Language="F#" Value="abstract member FindFirst : Predicate&lt;System.Security.Claims.Claim&gt; -&gt; System.Security.Claims.Claim&#xA;override this.FindFirst : Predicate&lt;System.Security.Claims.Claim&gt; -&gt; System.Security.Claims.Claim" Usage="claimsPrincipal.FindFirst match" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::Claims::Claim ^ FindFirst(Predicate&lt;System::Security::Claims::Claim ^&gt; ^ match);" />
-      <MemberSignature Language="C#" Value="public virtual System.Security.Claims.Claim? FindFirst (Predicate&lt;System.Security.Claims.Claim&gt; match);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Security.Claims.Claim? FindFirst (Predicate&lt;System.Security.Claims.Claim&gt; match);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Claims</AssemblyName>
@@ -882,6 +915,8 @@ if (null != principal)
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -926,7 +961,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
       <MemberSignature Language="VB.NET" Value="Public Overridable Function FindFirst (type As String) As Claim" />
       <MemberSignature Language="F#" Value="abstract member FindFirst : string -&gt; System.Security.Claims.Claim&#xA;override this.FindFirst : string -&gt; System.Security.Claims.Claim" Usage="claimsPrincipal.FindFirst type" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Security::Claims::Claim ^ FindFirst(System::String ^ type);" />
-      <MemberSignature Language="C#" Value="public virtual System.Security.Claims.Claim? FindFirst (string type);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Security.Claims.Claim? FindFirst (string type);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Claims</AssemblyName>
@@ -936,6 +971,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -998,6 +1035,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
@@ -1009,8 +1048,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="info" Type="System.Runtime.Serialization.SerializationInfo" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
-        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="info" Type="System.Runtime.Serialization.SerializationInfo" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="info">The object to populate with data.</param>
@@ -1047,6 +1086,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1102,6 +1143,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1154,6 +1197,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1190,7 +1235,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Identity As IIdentity" />
       <MemberSignature Language="F#" Value="member this.Identity : System.Security.Principal.IIdentity" Usage="System.Security.Claims.ClaimsPrincipal.Identity" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Security::Principal::IIdentity ^ Identity { System::Security::Principal::IIdentity ^ get(); };" />
-      <MemberSignature Language="C#" Value="public virtual System.Security.Principal.IIdentity? Identity { get; }" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Security.Principal.IIdentity? Identity { get; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Property</MemberType>
       <Implements>
         <InterfaceMember>P:System.Security.Principal.IPrincipal.Identity</InterfaceMember>
@@ -1203,6 +1248,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1252,6 +1299,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1294,7 +1343,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
       <MemberSignature Language="VB.NET" Value="Public Shared Property PrimaryIdentitySelector As Func(Of IEnumerable(Of ClaimsIdentity), ClaimsIdentity)" />
       <MemberSignature Language="F#" Value="member this.PrimaryIdentitySelector : Func&lt;seq&lt;System.Security.Claims.ClaimsIdentity&gt;, System.Security.Claims.ClaimsIdentity&gt; with get, set" Usage="System.Security.Claims.ClaimsPrincipal.PrimaryIdentitySelector" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property Func&lt;System::Collections::Generic::IEnumerable&lt;System::Security::Claims::ClaimsIdentity ^&gt; ^, System::Security::Claims::ClaimsIdentity ^&gt; ^ PrimaryIdentitySelector { Func&lt;System::Collections::Generic::IEnumerable&lt;System::Security::Claims::ClaimsIdentity ^&gt; ^, System::Security::Claims::ClaimsIdentity ^&gt; ^ get(); void set(Func&lt;System::Collections::Generic::IEnumerable&lt;System::Security::Claims::ClaimsIdentity ^&gt; ^, System::Security::Claims::ClaimsIdentity ^&gt; ^ value); };" />
-      <MemberSignature Language="C#" Value="public static Func&lt;System.Collections.Generic.IEnumerable&lt;System.Security.Claims.ClaimsIdentity&gt;,System.Security.Claims.ClaimsIdentity?&gt; PrimaryIdentitySelector { get; set; }" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public static Func&lt;System.Collections.Generic.IEnumerable&lt;System.Security.Claims.ClaimsIdentity&gt;,System.Security.Claims.ClaimsIdentity?&gt; PrimaryIdentitySelector { get; set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Claims</AssemblyName>
@@ -1304,6 +1353,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1354,6 +1405,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1369,7 +1422,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="writer" Type="System.IO.BinaryWriter" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="writer" Type="System.IO.BinaryWriter" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="writer">The writer to use for data storage.</param>
@@ -1386,7 +1439,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
       <MemberSignature Language="VB.NET" Value="Protected Overridable Sub WriteTo (writer As BinaryWriter, userData As Byte())" />
       <MemberSignature Language="F#" Value="abstract member WriteTo : System.IO.BinaryWriter * byte[] -&gt; unit&#xA;override this.WriteTo : System.IO.BinaryWriter * byte[] -&gt; unit" Usage="claimsPrincipal.WriteTo (writer, userData)" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void WriteTo(System::IO::BinaryWriter ^ writer, cli::array &lt;System::Byte&gt; ^ userData);" />
-      <MemberSignature Language="C#" Value="protected virtual void WriteTo (System.IO.BinaryWriter writer, byte[]? userData);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="protected virtual void WriteTo (System.IO.BinaryWriter writer, byte[]? userData);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Security.Claims</AssemblyName>
@@ -1396,6 +1449,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1411,8 +1466,8 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="writer" Type="System.IO.BinaryWriter" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="userData" Type="System.Byte[]" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="writer" Type="System.IO.BinaryWriter" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="userData" Type="System.Byte[]" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="writer">The writer to use for data storage.</param>

@@ -12,6 +12,8 @@
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>System</AssemblyName>
@@ -27,13 +29,15 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Diagnostics.TraceSource" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Diagnostics.TraceSource" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Diagnostics.TraceSource" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Diagnostics.Switch</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-5.0;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+    <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <AttributeName Language="C#">[System.Diagnostics.SwitchLevel(typeof(System.Diagnostics.TraceLevel))]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Diagnostics.SwitchLevel(typeof(System.Diagnostics.TraceLevel))&gt;]</AttributeName>
     </Attribute>
@@ -44,11 +48,11 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- You can use a trace switch to filter out messages based on their importance. The <xref:System.Diagnostics.TraceSwitch> class provides the <xref:System.Diagnostics.TraceSwitch.TraceError%2A>, <xref:System.Diagnostics.TraceSwitch.TraceWarning%2A>, <xref:System.Diagnostics.TraceSwitch.TraceInfo%2A>, and <xref:System.Diagnostics.TraceSwitch.TraceVerbose%2A> properties to test the level of the switch. The <xref:System.Diagnostics.TraceSwitch.Level%2A> property gets or sets the switch's <xref:System.Diagnostics.TraceLevel>.  
-  
- You can set the level of a <xref:System.Diagnostics.TraceSwitch> through the application configuration file and then use the configured <xref:System.Diagnostics.TraceSwitch> level in your application. Alternately, you can create a <xref:System.Diagnostics.TraceSwitch> in your code and set the level directly to instrument a specific section of code.  
-  
- To configure a <xref:System.Diagnostics.TraceSwitch>, edit the configuration file for your application. In this file, you can add or remove a switch, set a switch's value, or clear all the switches previously set by the application. The configuration file should be formatted like the following example:  
+ You can use a trace switch to filter out messages based on their importance. The <xref:System.Diagnostics.TraceSwitch> class provides the <xref:System.Diagnostics.TraceSwitch.TraceError%2A>, <xref:System.Diagnostics.TraceSwitch.TraceWarning%2A>, <xref:System.Diagnostics.TraceSwitch.TraceInfo%2A>, and <xref:System.Diagnostics.TraceSwitch.TraceVerbose%2A> properties to test the level of the switch. The <xref:System.Diagnostics.TraceSwitch.Level%2A> property gets or sets the switch's <xref:System.Diagnostics.TraceLevel>.
+
+You can create a <xref:System.Diagnostics.TraceSwitch> in your code and set the level directly to instrument a specific section of code.
+
+In .NET Framework apps only, you can also set the level of a <xref:System.Diagnostics.TraceSwitch> through the application configuration file and then use the configured <xref:System.Diagnostics.TraceSwitch> level in your application. In the application configuration file, you can add or remove a switch, set a switch's value, or clear all the switches previously set by the application. The configuration file should be formatted like the following example:  
   
 ```xml  
 <configuration>  
@@ -63,38 +67,38 @@
  This configuration section defines a <xref:System.Diagnostics.TraceSwitch> with the <xref:System.Diagnostics.Switch.DisplayName%2A> set to `mySwitch`, and the <xref:System.Diagnostics.TraceSwitch.Level%2A> set to 1, which corresponds to the enumeration value <xref:System.Diagnostics.TraceLevel.Error?displayProperty=nameWithType>.  
   
 > [!NOTE]
->  In the .NET Framework version 2.0, you can use text to specify the value for a switch. For example, `true` for a <xref:System.Diagnostics.BooleanSwitch> or the text representing an enumeration value, such as `Error` for a <xref:System.Diagnostics.TraceSwitch>. The line `<add name="mySwitch" value="Error" />` is equivalent to `<add name="mySwitch" value="1" />`.  
+> You can also use text to specify the value for a switch. For example, `true` for a <xref:System.Diagnostics.BooleanSwitch>, or the text representing an enumeration value, such as `Error` for a <xref:System.Diagnostics.TraceSwitch>. The line `<add name="mySwitch" value="Error" />` is equivalent to `<add name="mySwitch" value="1" />`.  
   
  In your application, you can use the configured switch level by creating a <xref:System.Diagnostics.TraceSwitch> with the same name, as shown in the following example:  
   
- [!code-cpp[Classic TraceSwitch.TraceError Example#3](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/remarks.cpp#3)]
- [!code-csharp[Classic TraceSwitch.TraceError Example#3](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CS/remarks.cs#3)]
- [!code-vb[Classic TraceSwitch.TraceError Example#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/remarks.vb#3)]  
-  
- By default, the switch <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set using the value specified in the configuration file. If the <xref:System.Diagnostics.TraceSwitch.%23ctor%2A> constructor cannot find initial switch settings in the configuration file, the <xref:System.Diagnostics.TraceSwitch.Level%2A> of the new switch defaults to <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>.  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/remarks.cpp" id="Snippet3":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Overview/remarks.cs" id="Snippet3":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/remarks.vb" id="Snippet3":::
+
+In .NET Core and .NET 5+ apps, the <xref:System.Diagnostics.TraceSwitch.Level> of the new switch defaults to <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>.
+
+In .NET Framework apps, the switch <xref:System.Diagnostics.TraceSwitch.Level%2A> property defaults to the value specified in the configuration file. If the <xref:System.Diagnostics.TraceSwitch.%23ctor%2A> constructor cannot find initial switch settings in the configuration file, <xref:System.Diagnostics.TraceSwitch.Level> of the new switch defaults to <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>.
   
  You must enable tracing or debugging to use a switch. The following syntax is compiler specific. If you use compilers other than C# or Visual Basic, refer to the documentation for your compiler.  
   
--   To enable debugging in C#, add the `/d:DEBUG` flag to the compiler command line when you compile your code, or add `#define DEBUG` to the top of your file. In Visual Basic, add the `/d:DEBUG=True` flag to the compiler command line.  
+- To enable debugging in C#, add the `/d:DEBUG` flag to the compiler command line when you compile your code, or add `#define DEBUG` to the top of your file. In Visual Basic, add the `/d:DEBUG=True` flag to the compiler command line.  
   
--   To enable tracing in C#, add the `/d:TRACE` flag to the compiler command line when you compile your code, or add `#define TRACE` to the top of your file. In Visual Basic, add the `/d:TRACE=True` flag to the compiler command line.  
+- To enable tracing in C#, add the `/d:TRACE` flag to the compiler command line when you compile your code, or add `#define TRACE` to the top of your file. In Visual Basic, add the `/d:TRACE=True` flag to the compiler command line.  
   
 > [!NOTE]
->  These debug and trace compiler switches are not required when using the <xref:System.Diagnostics.TraceSwitch> class in isolation. They are only required in conjunction with <xref:System.Diagnostics.Trace> or <xref:System.Diagnostics.Debug> methods that are conditionally compiled.  
+> These debug and trace compiler switches are not required when using the <xref:System.Diagnostics.TraceSwitch> class in isolation. They are only required in conjunction with <xref:System.Diagnostics.Trace> or <xref:System.Diagnostics.Debug> methods that are conditionally compiled.  
   
  For more information on instrumenting your application, see <xref:System.Diagnostics.Debug> and <xref:System.Diagnostics.Trace>. For more information about configuring and using trace switches, see [Trace Switches](/dotnet/framework/debug-trace-profile/trace-switches).  
   
 > [!NOTE]
->  To improve performance, you can make <xref:System.Diagnostics.TraceSwitch> members `static` in your class.  
-  
-   
+> To improve performance, you can make <xref:System.Diagnostics.TraceSwitch> members `static` in your class.
   
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to print error messages. The switch is created at the class level. `MyMethod` writes the first error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Error?displayProperty=nameWithType> or higher. However, `MyMethod` does not write the second error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> is less than <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Overview/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
     </remarks>
@@ -116,7 +120,7 @@
       </Docs>
     </MemberGroup>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public TraceSwitch (string displayName, string? description);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public TraceSwitch (string displayName, string? description);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string displayName, string description) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (displayName As String, description As String)" />
@@ -131,6 +135,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -162,7 +168,8 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- To set the level of your <xref:System.Diagnostics.TraceSwitch>, edit the configuration file that corresponds to the name of your application. In this file, you can add a switch and set its value, remove a switch, or clear all the switches previously set by the application. The configuration file should be formatted like the following example:  
+
+For .NET Framework apps, to set the level of your <xref:System.Diagnostics.TraceSwitch>, edit the configuration file that corresponds to the name of your application. In this file, you can add a switch and set its value, remove a switch, or clear all the switches previously set by the application. The configuration file should be formatted like the following example:  
   
 ```xml  
 <configuration>  
@@ -174,30 +181,27 @@
 </configuration>  
 ```  
   
-> [!NOTE]
->  In the .NET Framework version 2.0, you can use text to specify the value for a switch. For example, `true` for a <xref:System.Diagnostics.BooleanSwitch> or the text representing an enumeration value, such as `Error` for a <xref:System.Diagnostics.TraceSwitch>. The line `<add name="mySwitch" value="Error" />` is equivalent to `<add name="mySwitch" value="1" />`.  
+You can also use text to specify the value for a switch. For example, `true` for a <xref:System.Diagnostics.BooleanSwitch> or the text representing an enumeration value, such as `Error` for a <xref:System.Diagnostics.TraceSwitch>. The line `<add name="mySwitch" value="Error" />` is equivalent to `<add name="mySwitch" value="1" />`.  
   
  In your application, you can use the configured switch level by creating a <xref:System.Diagnostics.TraceSwitch> with the same name, as shown in the following example:  
   
- [!code-cpp[Classic TraceSwitch.TraceError Example#3](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/remarks.cpp#3)]
- [!code-csharp[Classic TraceSwitch.TraceError Example#3](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CS/remarks.cs#3)]
- [!code-vb[Classic TraceSwitch.TraceError Example#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/remarks.vb#3)]  
-  
- When the <xref:System.Diagnostics.TraceSwitch.%23ctor%2A> constructor cannot find initial switch settings in the configuration file, the <xref:System.Diagnostics.TraceSwitch.Level%2A> property of the new switch is set to <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>.  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/remarks.cpp" id="Snippet3":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Overview/remarks.cs" id="Snippet3":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/remarks.vb" id="Snippet3":::  
+
+This constructor sets the <xref:System.Diagnostics.TraceSwitch.Level> property of the new switch to <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>. Or, for .NET Framework apps, the switch settings are obtained from the configuration file, if available.
   
  The <xref:System.Diagnostics.TraceSwitch> class provides the <xref:System.Diagnostics.TraceSwitch.TraceError%2A>, <xref:System.Diagnostics.TraceSwitch.TraceWarning%2A>, <xref:System.Diagnostics.TraceSwitch.TraceInfo%2A>, and <xref:System.Diagnostics.TraceSwitch.TraceVerbose%2A> properties to test the <xref:System.Diagnostics.TraceSwitch.Level%2A> of the switch. The <xref:System.Diagnostics.TraceSwitch.Level%2A> property gets or sets the switch's <xref:System.Diagnostics.TraceLevel>.  
   
 > [!NOTE]
->  To improve performance, you can make <xref:System.Diagnostics.TraceSwitch> members `static` in your class.  
-  
-   
+> To improve performance, you can make <xref:System.Diagnostics.TraceSwitch> members `static` in your class.
   
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to print error messages. The switch is created at the class level. `MyMethod` writes the first error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Error?displayProperty=nameWithType> or higher. However, `MyMethod` does not write the second error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> is less than <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Overview/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -209,7 +213,7 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public TraceSwitch (string displayName, string? description, string defaultSwitchValue);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="C#" Value="public TraceSwitch (string displayName, string? description, string defaultSwitchValue);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string displayName, string description, string defaultSwitchValue) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (displayName As String, description As String, defaultSwitchValue As String)" />
@@ -224,6 +228,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -243,9 +249,9 @@
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="displayName" Type="System.String" Index="0" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="description" Type="System.String" Index="1" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="defaultSwitchValue" Type="System.String" Index="2" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="displayName" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="description" Type="System.String" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="defaultSwitchValue" Type="System.String" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="displayName">The name to display on a user interface.</param>
@@ -277,6 +283,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -300,7 +308,8 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- To set the level of your <xref:System.Diagnostics.TraceSwitch>, edit the configuration file that corresponds to the name of your application. In this file, you can add a switch and set its value, remove a switch, or clear all the switches previously set by the application. The configuration file should be formatted like the following example:  
+
+For .NET Framework apps, to set the level of your <xref:System.Diagnostics.TraceSwitch>, edit the configuration file that corresponds to the name of your application. In this file, you can add a switch and set its value, remove a switch, or clear all the switches previously set by the application. The configuration file should be formatted like the following example:  
   
 ```xml  
 <configuration>  
@@ -315,21 +324,18 @@
 </configuration>  
 ```  
   
-> [!NOTE]
->  In the .NET Framework version 2.0, you can use text to specify the value for a switch. For example, `true` for a <xref:System.Diagnostics.BooleanSwitch> or the text representing an enumeration value, such as `Error` for a <xref:System.Diagnostics.TraceSwitch>. The line `<add name="mySwitch" value="Error" />` is equivalent to `<add name="mySwitch" value="1" />`.  
+You can also use text to specify the value for a switch. For example, `true` for a <xref:System.Diagnostics.BooleanSwitch> or the text representing an enumeration value, such as `Error` for a <xref:System.Diagnostics.TraceSwitch>. The line `<add name="mySwitch" value="Error" />` is equivalent to `<add name="mySwitch" value="1" />`.  
   
- When the <xref:System.Diagnostics.TraceSwitch.%23ctor%2A> constructor cannot find initial switch settings in the configuration file, the <xref:System.Diagnostics.TraceSwitch.Level%2A> property of the new switch is set to <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>.  
+The default value of the <xref:System.Diagnostics.TraceSwitch.Level> property is <xref:System.Diagnostics.TraceLevel.Off?displayProperty=nameWithType>. Or, for .NET Framework apps, the level is obtained from the configuration file, if available.  
   
- Setting this property updates the <xref:System.Diagnostics.TraceSwitch.TraceError%2A>, <xref:System.Diagnostics.TraceSwitch.TraceWarning%2A>, <xref:System.Diagnostics.TraceSwitch.TraceInfo%2A>, and <xref:System.Diagnostics.TraceSwitch.TraceVerbose%2A> properties to reflect the new value.  
-  
-   
+ Setting this property updates the <xref:System.Diagnostics.TraceSwitch.TraceError%2A>, <xref:System.Diagnostics.TraceSwitch.TraceWarning%2A>, <xref:System.Diagnostics.TraceSwitch.TraceInfo%2A>, and <xref:System.Diagnostics.TraceSwitch.TraceVerbose%2A> properties to reflect the new value.
   
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to print error messages. The switch is created at the class level. `MyMethod` writes the first error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Error?displayProperty=nameWithType> or higher. However, `MyMethod` does not write the second error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> is less than <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.Level Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.Level Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.Level Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.Level Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.Level Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.Level Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.Level Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Level/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.Level Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -357,6 +363,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -407,6 +415,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -453,6 +463,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -484,9 +496,9 @@
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to emit error messages. The switch is created at the class level. `MyMethod` writes the first error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Error?displayProperty=nameWithType> or higher. However, `MyMethod` does not write the second error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> is less than <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Overview/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -512,6 +524,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -543,9 +557,9 @@
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to emit error messages. The switch is created at the class level. `MyMethod` writes the first error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Info?displayProperty=nameWithType> or higher. However, `MyMethod` does not write the second error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> is less than <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.TraceInfo Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceInfo Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.TraceInfo Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceInfo Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.TraceInfo Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceInfo Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceInfo Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/TraceInfo/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceInfo Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -571,6 +585,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -602,9 +618,9 @@
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to emit error messages. The switch is created at the class level. `MyMethod` writes both error messages when the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.TraceError Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/Overview/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceError Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -630,6 +646,8 @@
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System</AssemblyName>
@@ -661,9 +679,9 @@
 ## Examples  
  The following code example creates a new <xref:System.Diagnostics.TraceSwitch> and uses the switch to determine whether to emit error messages. The switch is created at the class level. `MyMethod` writes the first error message if the <xref:System.Diagnostics.TraceSwitch.Level%2A> property is set to <xref:System.Diagnostics.TraceLevel.Warning?displayProperty=nameWithType> or higher. However, `MyMethod` does not write the second error message when the <xref:System.Diagnostics.TraceSwitch.Level%2A> is less than <xref:System.Diagnostics.TraceLevel.Verbose?displayProperty=nameWithType>.  
   
- [!code-cpp[Classic TraceSwitch.TraceWarning Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceWarning Example/CPP/source.cpp#1)]
- [!code-csharp[Classic TraceSwitch.TraceWarning Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceWarning Example/CS/source.cs#1)]
- [!code-vb[Classic TraceSwitch.TraceWarning Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceWarning Example/VB/source.vb#1)]  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceWarning Example/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/TraceSwitch/TraceWarning/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic TraceSwitch.TraceWarning Example/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
