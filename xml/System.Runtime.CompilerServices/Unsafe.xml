@@ -25,8 +25,19 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Contains generic, low-level functionality for manipulating pointers.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Contains generic, low-level functionality for manipulating managed and unmanaged pointers.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+> [!WARNING]
+> This type is intended for advanced pointer manipulation scenarios. Callers are assumed to be familiar with ECMA-335, Sec. II.14.4 and III.1.1.5, and with the [ECMA-335 CLI Specification Addendum](https://github.com/dotnet/runtime/blob/main/docs/design/specs/Ecma-335-Augments.md).
+>
+> Most APIs on this type do not perform any argument checking or validation. Incorrect use of these APIs could destabilize the .NET runtime.
+
+]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Add&lt;T&gt;">
@@ -60,12 +71,22 @@
         <Parameter Name="elementOffset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of void pointer.</typeparam>
-        <param name="source">The void pointer to add the offset to.</param>
+        <typeparam name="T">The type whose width will be used as a scale factor for `elementOffset`.</typeparam>
+        <param name="source">The unmanaged pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
-        <summary>Adds an element offset to the given void pointer.</summary>
-        <returns>A new void pointer that reflects the addition of offset to the specified pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Adds an element offset to the given unmanaged pointer.</summary>
+        <returns>A new unmanaged pointer that reflects the addition of offset to the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_, the call `Unsafe.Add<int>(ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Add&lt;T&gt;">
@@ -101,12 +122,22 @@
         <Parameter Name="elementOffset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-1.1;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to add the offset to.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
-        <summary>Adds an element offset to the given reference.</summary>
-        <returns>A new reference that reflects the addition of offset to pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Adds an offset to the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the addition of offset to the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Add&lt;T&gt;">
@@ -141,12 +172,22 @@
         <Parameter Name="elementOffset" Type="System.IntPtr" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to add the offset to.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
-        <summary>Adds an element offset to the given reference.</summary>
-        <returns>A new reference that reflects the addition of offset to pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Adds an element offset to the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the addition of offset to the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, (nint)20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Add&lt;T&gt;">
@@ -183,12 +224,22 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to add the offset to.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
-        <summary>Adds an element offset to the given reference.</summary>
-        <returns>A new reference that reflects the addition of offset to pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Adds an element offset to the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the addition of offset to the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes (= 10 elements \* 4 bytes per element) beyond _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddByteOffset&lt;T&gt;">
@@ -223,12 +274,22 @@
         <Parameter Name="byteOffset" Type="System.IntPtr" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to add the offset to.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to add the offset to.</param>
         <param name="byteOffset">The offset to add.</param>
-        <summary>Adds a byte offset to the given reference.</summary>
-        <returns>A new reference that reflects the addition of byte offset to pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Adds a byte offset to the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the addition of byte offset to the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `byteOffset` parameter is the number of bytes to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.AddByteOffset<int>(ref ptr, 20)` will return a new pointer whose address points 20 bytes beyond _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddByteOffset&lt;T&gt;">
@@ -265,12 +326,22 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to add the offset to.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to add the offset to.</param>
         <param name="byteOffset">The offset to add.</param>
-        <summary>Adds a byte offset to the given reference.</summary>
-        <returns>A new reference that reflects the addition of byte offset to pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Adds a byte offset to the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the addition of byte offset to the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `byteOffset` parameter is the number of bytes to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.AddByteOffset<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes beyond _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AreSame&lt;T&gt;">
@@ -320,10 +391,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="left">The first reference to compare.</param>
-        <param name="right">The second reference to compare.</param>
-        <summary>Determines whether the specified references point to the same location.</summary>
+        <typeparam name="T">The elemental type of the managed pointers.</typeparam>
+        <param name="left">The first managed pointer to compare.</param>
+        <param name="right">The second managed pointer to compare.</param>
+        <summary>Determines whether the specified managed pointers point to the same location.</summary>
         <returns>
           <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> point to the same location; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
@@ -370,8 +441,18 @@
         <typeparam name="T">The type which the object will be cast to.</typeparam>
         <param name="o">The object to cast.</param>
         <summary>Casts the given object to the specified type.</summary>
-        <returns>The original object, casted to the given type.</returns>
-        <remarks>To be added.</remarks>
+        <returns>The original object, cast to the given type.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API is used to cast an object to the given type, suppressing the runtime's normal type safety checks. It is the caller's responsibility to ensure that the cast is legal. No `InvalidCastException` will be thrown.
+
+The behavior of `Unsafe.As<T>(o)` is only well-defined if the typical "safe" casting operation `(T)o` would have succeeded. Use of this API to circumvent casts that would otherwise have failed is unsupported and could result in runtime instability.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="As&lt;TFrom,TTo&gt;">
@@ -407,12 +488,33 @@
         <Parameter Name="source" Type="TFrom" RefType="ref" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-1.1;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="TFrom">The type of reference to reinterpret.</typeparam>
-        <typeparam name="TTo">The desired type of the reference.</typeparam>
-        <param name="source">The reference to reinterpret.</param>
-        <summary>Reinterprets the given reference as a reference to a value of type <typeparamref name="TTo" />.</summary>
-        <returns>A reference to a value of type <typeparamref name="TTo" />.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TFrom">The type of managed pointer to reinterpret.</typeparam>
+        <typeparam name="TTo">The desired type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to reinterpret.</param>
+        <summary>Reinterprets the given managed pointer as a new managed pointer to a value of type <typeparamref name="TTo" />.</summary>
+        <returns>A managed pointer to a value of type <typeparamref name="TTo" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API is conceptually similar to C++'s `reinterpret_cast<>`. It is the caller's responsibility to ensure that the cast is legal. No runtime check will be performed.
+
+Only the managed pointer is reinterpreted. The referenced value itself will remain unchanged. Consider the example below.
+
+```cs
+int[] intArray = new int[] { 0x12345678 }; // a 1-element array
+ref int refToInt32 = ref intArray[0]; // managed pointer to first Int32 in array
+ref short refToInt16 = ref Unsafe.As<int, short>(ref refToInt32); // reinterpret as managed pointer to Int16
+Console.WriteLine(refToInt16);
+```
+
+The output of this program depends on the endianness of the current machine. On big-endian architectures this will output `0x1234`, and on little-endian architectures this will output `0x5678`.
+
+When casting a managed pointer from a narrower type to a wider type, the caller must ensure that dereferencing the pointer will not incur an out-of-bounds access. The caller is also responsible for ensuring that the resulting pointer is properly aligned for the referenced type.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AsPointer&lt;T&gt;">
@@ -447,11 +549,21 @@
         <Parameter Name="value" Type="T" RefType="ref" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of object.</typeparam>
-        <param name="value">The object whose pointer is obtained.</param>
-        <summary>Returns a pointer to the given by-ref parameter.</summary>
-        <returns>A pointer to the given value.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="value">The managed pointer to convert.</param>
+        <summary>Converts a managed pointer into an unmanaged pointer.</summary>
+        <returns>An unmanaged pointer corresponding to the original source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Unmanaged pointers are not tracked by the .NET garbage collector. If the original managed pointer points to a GC-managed object, it is the caller's responsibility to ensure that the source object is pinned.
+
+If the pointers reference memory in GC-owned address space, and if the source object is not pinned, the managed and unmanaged pointer values may eventually diverge due to GC relocation operations.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AsRef&lt;T&gt;">
@@ -486,10 +598,10 @@
         <Parameter Name="source" Type="System.Void*" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of the interpreted location.</typeparam>
-        <param name="source">The location of the value to reference.</param>
-        <summary>Reinterprets the given location as a reference to a value of type <typeparamref name="T" />.</summary>
-        <returns>A reference to a value of type <typeparamref name="T" />.</returns>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The unmanaged pointer to convert.</param>
+        <summary>Converts an unmanaged pointer into a managed pointer to a value of type <typeparamref name="T" />.</summary>
+        <returns>A managed pointer to a value of type <typeparamref name="T" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -531,10 +643,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
+        <typeparam name="T">The underlying type of the reference.</typeparam>
         <param name="source">The read-only reference to reinterpret.</param>
-        <summary>Reinterprets the given read-only reference as a reference.</summary>
-        <returns>A reference to a value of type <typeparamref name="T" />.</returns>
+        <summary>Reinterprets the given read-only reference as a mutable reference.</summary>
+        <returns>A mutable reference to a value of type <typeparamref name="T" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -584,12 +696,22 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="origin">The reference to origin.</param>
-        <param name="target">The reference to target.</param>
-        <summary>Determines the byte offset from origin to target from the given references.</summary>
+        <typeparam name="T">The elemental type of the managed pointers.</typeparam>
+        <param name="origin">The managed pointer to origin.</param>
+        <param name="target">The managed pointer to target.</param>
+        <summary>Determines the byte offset from origin to target from the given managed pointers.</summary>
         <returns>Byte offset from origin to target i.e. <paramref name="target" /> - <paramref name="origin" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The return value of this method is a moment-in-time result. If `origin` and `target` each reference different objects in GC-managed address space, the GC could relocate items between calls, causing the result of this method to change.
+
+The return value is guaranteed stable if `origin` and `target` point to the same managed object.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Copy&lt;T&gt;">
@@ -629,7 +751,25 @@
         <param name="destination">The location to copy to.</param>
         <param name="source">A reference to the value to copy.</param>
         <summary>Copies a value of type <typeparamref name="T" /> to the given location.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Both `destination` and `source` are assumed to be properly aligned for pointers to data of type `T`.
+
+This method is roughly equivalent to the following code.
+
+```cs
+static void Copy<T>(void* destination, ref T source)
+{
+  T data = source; // dereference source
+  *(T*)destination = data;
+}
+```
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Copy&lt;T&gt;">
@@ -669,7 +809,25 @@
         <param name="destination">The location to copy to.</param>
         <param name="source">A pointer to the value to copy.</param>
         <summary>Copies a value of type <typeparamref name="T" /> to the given location.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Both `destination` and `source` are assumed to be properly aligned for pointers to data of type `T`.
+
+This method is roughly equivalent to the following code.
+
+```cs
+static void Copy<T>(ref T destination, void* source)
+{
+  T data = *(T*)source; // cast source to T* and dereference
+  destination = data;
+}
+```
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyBlock">
@@ -702,11 +860,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="destination">The destination address to copy to.</param>
-        <param name="source">The source address to copy from.</param>
+        <param name="destination">The managed pointer corresponding to the destination address to copy to.</param>
+        <param name="source">The managed pointer corresponding to the source address to copy from.</param>
         <param name="byteCount">The number of bytes to copy.</param>
         <summary>Copies bytes from the source address to the destination address.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `cpblk` opcode.
+
+Both `destination` and `source` are assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyBlock">
@@ -740,11 +908,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="destination">The destination address to copy to.</param>
-        <param name="source">The source address to copy from.</param>
+        <param name="destination">The unmanaged pointer corresponding to the destination address to copy to.</param>
+        <param name="source">The unmanaged pointer corresponding to the source address to copy from.</param>
         <param name="byteCount">The number of bytes to copy.</param>
         <summary>Copies bytes from the source address to the destination address.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `cpblk` opcode.
+
+Both `destination` and `source` are assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyBlockUnaligned">
@@ -777,11 +955,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="destination">The destination address to copy to.</param>
-        <param name="source">The source address to copy from.</param>
+        <param name="destination">The managed pointer corresponding to the destination address to copy to.</param>
+        <param name="source">The managed pointer corresponding to the source address to copy from.</param>
         <param name="byteCount">The number of bytes to copy.</param>
         <summary>Copies bytes from the source address to the destination address without assuming architecture dependent alignment of the addresses.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `unaligned.1 cpblk` opcode sequence.
+
+No alignment assumptions are made about the `destination` or `source` pointers. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyBlockUnaligned">
@@ -813,11 +1001,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="destination">The destination address to copy to.</param>
-        <param name="source">The source address to copy from.</param>
+        <param name="destination">The unmanaged pointer corresponding to the destination address to copy to.</param>
+        <param name="source">The unmanaged pointer corresponding to the source address to copy from.</param>
         <param name="byteCount">The number of bytes to copy.</param>
         <summary>Copies bytes from the source address to the destination address without assuming architecture dependent alignment of the addresses.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `unaligned.1 cpblk` opcode sequence.
+
+No alignment assumptions are made about the `destination` or `source` pointers. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InitBlock">
@@ -850,11 +1048,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="startAddress">The address of the start of the memory block to initialize.</param>
-        <param name="value">The value to initialize the block to.</param>
+        <param name="startAddress">The managed pointer referencing the start of the memory block to initialize.</param>
+        <param name="value">The value to initialize all bytes of the memory block to.</param>
         <param name="byteCount">The number of bytes to initialize.</param>
         <summary>Initializes a block of memory at the given location with a given initial value.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `initblk` opcode.
+
+`startAddress` is assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.36 ("initblk - initialize a block of memory to a value") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InitBlock">
@@ -888,11 +1096,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="startAddress">The address of the start of the memory block to initialize.</param>
-        <param name="value">The value to initialize the block to.</param>
+        <param name="startAddress">The unmanaged pointer referencing the start of the memory block to initialize.</param>
+        <param name="value">The value to initialize all bytes of the memory block to.</param>
         <param name="byteCount">The number of bytes to initialize.</param>
         <summary>Initializes a block of memory at the given location with a given initial value.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `initblk` opcode.
+
+`startAddress` is assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.36 ("initblk - initialize a block of memory to a value") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InitBlockUnaligned">
@@ -925,11 +1143,21 @@
         <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <param name="startAddress">The address of the start of the memory block to initialize.</param>
-        <param name="value">The value to initialize the block to.</param>
+        <param name="startAddress">The managed pointer referencing the start of the memory block to initialize.</param>
+        <param name="value">The value to initialize all bytes of the memory block to.</param>
         <param name="byteCount">The number of bytes to initialize.</param>
         <summary>Initializes a block of memory at the given location with a given initial value without assuming architecture dependent alignment of the address.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `unaligned.1 initblk` opcode sequence.
+
+No alignment assumptions are made about the `startAddress` pointer. See ECMA-335, Sec. Sec. III.3.36 ("initblk - initialize a block of memory to a value") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InitBlockUnaligned">
@@ -956,16 +1184,21 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="startAddress" Type="System.Void*" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-        <Parameter Name="value" Type="System.Byte" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-        <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-      </Parameters>
-      <Docs>
-        <param name="startAddress">The address of the start of the memory block to initialize.</param>
-        <param name="value">The value to initialize the block to.</param>
+        <param name="startAddress">The unmanaged pointer referencing the start of the memory block to initialize.</param>
+        <param name="value">The value to initialize all bytes of the memory block to.</param>
         <param name="byteCount">The number of bytes to initialize.</param>
         <summary>Initializes a block of memory at the given location with a given initial value without assuming architecture dependent alignment of the address.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API corresponds to the `unaligned.1 initblk` opcode sequence.
+
+No alignment assumptions are made about the `startAddress` pointer. See ECMA-335, Sec. Sec. III.3.36 ("initblk - initialize a block of memory to a value") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsAddressGreaterThan&lt;T&gt;">
@@ -1014,10 +1247,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of the reference.</typeparam>
-        <param name="left">The first value to compare.</param>
-        <param name="right">The second value to compare.</param>
-        <summary>Returns a value that indicates whether a specified reference is greater than another specified reference.</summary>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="left">The first managed pointer to compare.</param>
+        <param name="right">The second managed pointer to compare.</param>
+        <summary>Returns a value that indicates whether a specified managed pointer is greater than another specified managed pointer.</summary>
         <returns>
           <see langword="true" /> if <paramref name="left" /> is greater than <paramref name="right" />; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1026,6 +1259,10 @@
 ## Remarks
 
 This check is conceptually similar to `(void*)(&left) > (void*)(&right)`.
+
+The return value of this method is a moment-in-time result. If `left` and `right` each reference different objects in GC-managed address space, the GC could relocate items between calls, causing the result of this method to change.
+
+The return value is guaranteed stable if `left` and `right` point to the same managed object.
 
           ]]></format>
         </remarks>
@@ -1077,10 +1314,10 @@ This check is conceptually similar to `(void*)(&left) > (void*)(&right)`.
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of the reference.</typeparam>
-        <param name="left">The first value to compare.</param>
-        <param name="right">The second value to compare.</param>
-        <summary>Returns a value that indicates whether a specified reference is less than another specified reference.</summary>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="left">The first managed pointer to compare.</param>
+        <param name="right">The second managed pointer to compare.</param>
+        <summary>Returns a value that indicates whether a specified managed pointer is less than another specified managed pointer.</summary>
         <returns>
           <see langword="true" /> if <paramref name="left" /> is less than <paramref name="right" />; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1089,6 +1326,10 @@ This check is conceptually similar to `(void*)(&left) > (void*)(&right)`.
 ## Remarks
 
 This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
+
+The return value of this method is a moment-in-time result. If `left` and `right` each reference different objects in GC-managed address space, the GC could relocate items between calls, causing the result of this method to change.
+
+The return value is guaranteed stable if `left` and `right` point to the same managed object.
 
           ]]></format>
         </remarks>
@@ -1121,9 +1362,9 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="source" Type="T" RefType="ref" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of the reference.</typeparam>
-        <param name="source">The reference to check.</param>
-        <summary>Determines if a given reference to a value of type <typeparamref name="T" /> is a null reference.</summary>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to check.</param>
+        <summary>Determines if a given managed pointer to a value of type <typeparamref name="T" /> is a null reference.</summary>
         <returns>
           <see langword="true" /> if <paramref name="source" /> is a null reference; otherwise, <see langword="false" />.</returns>
         <remarks>This check is conceptually similar to <code>(void*)(&amp;source) == nullptr</code>.</remarks>
@@ -1154,10 +1395,10 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
       </TypeParameters>
       <Parameters />
       <Docs>
-        <typeparam name="T">The type of the reference.</typeparam>
-        <summary>Returns a reference to a value of type <typeparamref name="T" /> that is a null reference.</summary>
-        <returns>A reference to a value of type <typeparamref name="T" /> that is a null reference.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <summary>Returns a null managed pointer to a value of type <typeparamref name="T" />.</summary>
+        <returns>A null managed pointer to a value of type <typeparamref name="T" />.</returns>
+        <remarks>The return value is conceptually similar to <code>ref *((T*)nullptr)</code>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Read&lt;T&gt;">
@@ -1192,12 +1433,20 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="source" Type="System.Void*" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type to read.</typeparam>
+        <typeparam name="T">The type of the value to read.</typeparam>
         <param name="source">The location to read from.</param>
         <summary>Reads a value of type <typeparamref name="T" /> from the given location.
          </summary>
-        <returns>An object of type <typeparamref name="T" /> read from the given location.</returns>
-        <remarks>To be added.</remarks>
+        <returns>A value of type <typeparamref name="T" /> read from the given location.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+`source` is assumed to be a properly aligned pointer to a value of type `T`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadUnaligned&lt;T&gt;">
@@ -1231,10 +1480,10 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="source" Type="System.Byte" RefType="ref" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type to read.</typeparam>
-        <param name="source">The location to read from.</param>
-        <summary>Reads a value of type <typeparamref name="T" /> from the given location without assuming architecture dependent alignment of the addresses.</summary>
-        <returns>An object of type <typeparamref name="T" /> read from the given location.</returns>
+        <typeparam name="T">The type of the value to read.</typeparam>
+        <param name="source">A managed pointer containing the address to read from.</param>
+        <summary>Reads a value of type <typeparamref name="T" /> from the given address without assuming architecture dependent alignment of the source address.</summary>
+        <returns>A value of type <typeparamref name="T" /> read from the given address.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1268,10 +1517,10 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="source" Type="System.Void*" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type to read.</typeparam>
+        <typeparam name="T">The type of the value to read.</typeparam>
         <param name="source">The location to read from.</param>
-        <summary>Reads a value of type <typeparamref name="T" /> from the given location without assuming architecture dependent alignment of the addresses.</summary>
-        <returns>An object of type <typeparamref name="T" /> read from the given location.</returns>
+        <summary>Reads a value of type <typeparamref name="T" /> from the given location without assuming architecture dependent alignment of the source address.</summary>
+        <returns>A value of type <typeparamref name="T" /> read from the given location.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1306,10 +1555,23 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
       </TypeParameters>
       <Parameters />
       <Docs>
-        <typeparam name="T">The type of object whose size is retrieved.</typeparam>
-        <summary>Returns the size of an object of the given type parameter.</summary>
-        <returns>The size of an object of type <typeparamref name="T" />.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The type whose size is retrieved.</typeparam>
+        <summary>Returns the size of a value of the given type parameter.</summary>
+        <returns>The size (in bytes) of a value of type <typeparamref name="T" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!CAUTION]
+> This API returns the size of the _managed_ view of the type. For the size of the _unmanaged_ view of the type, such as for interop purposes, use <xref:System.Runtime.InteropServices.Marshal.SizeOf%2A>.
+
+This API corresponds to the `sizeof` opcode.
+
+If `T` is a reference type, the return value is the size of the reference itself, or `IntPtr.Size`. See ECMA-335, Sec. Sec. III.4.25  ("sizeof - load the size, in bytes, of a type") for more information.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SkipInit&lt;T&gt;">
@@ -1339,10 +1601,69 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="value" Type="T" RefType="out" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of the uninitialized object.</typeparam>
-        <param name="value">The uninitialized object.</param>
-        <summary>Bypasses definite assignment rules for a given value.</summary>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The type of the reference.</typeparam>
+        <param name="value">The reference whose initialization should be skipped.</param>
+        <summary>Bypasses definite assignment rules for a given reference.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This is typically used to avoid double-assignment when initializing union-type structs. Consider the following example, which produces a C# compiler error.
+
+```cs
+using System;
+using System.Runtime.InteropServices;
+
+public static MyUnionStruct MyMethod() {
+    MyUnionStruct value;
+    value.SomeIntField = 42;
+    return value; // CS0165: Use of unassigned local variable 'value'
+}
+  
+[StructLayout(LayoutKind.Explicit)]
+public struct MyUnionStruct
+{
+    [FieldOffset(0)]
+    public int SomeIntField;
+    
+    [FieldOffset(0)]
+    public byte SomeByteField;
+}
+```
+
+This error occurs because the compiler expects _all_ fields of the struct to be initialized before the struct is used or returned to the caller.
+
+One way to avoid this compiler error is to ensure the entire struct is zero-inited before individual fields are set, as shown in the below example.
+
+```cs
+// This sample compiles successfully.
+public static MyUnionStruct MyMethod() {
+    MyUnionStruct value = default; // the struct is now guaranteed assigned
+    value.SomeIntField = 42;
+    return value;
+}
+```
+
+For developers who don't want to avoid the initial zero-init assignment, the `SkipInit` method can be used to suppress the compiler warning.
+
+```cs
+using System.Runtime.CompilerServices;
+
+// This sample also compiles successfully.
+public static MyUnionStruct MyMethod() {
+    MyUnionStruct value;
+    Unsafe.SkipInit(out value); // compiler believes the struct has been guaranteed assigned
+    value.SomeIntField = 42;
+    return value;
+}
+```
+
+> [!WARNING]
+> The developer must take care to ensure that the struct has been initialized appropriately, otherwise the struct's fields could contain uninitialized data from the stack.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Subtract&lt;T&gt;">
@@ -1376,12 +1697,22 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="elementOffset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of the void pointer.</typeparam>
-        <param name="source">The void pointer to subtract the offset from.</param>
+        <typeparam name="T">The type whose width will be used as a scale factor for `elementOffset`.</typeparam>
+        <param name="source">The unmanaged pointer to subtract the offset froms.</param>
         <param name="elementOffset">The offset to subtract.</param>
-        <summary>Subtracts an element offset from the given void pointer.</summary>
-        <returns>A new void pointer that reflects the subtraction of offset from the specified pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Subtracts an element offset from the given unmanaged pointer.</summary>
+        <returns>A new unmanaged pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to remove from the `source` pointer. For example, given a source pointer _ptr_, the call `Unsafe.Subtract<int>(ptr, 10)` will return a new pointer whose address points 40 bytes (= 10 elements \* 4 bytes per element) before _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Subtract&lt;T&gt;">
@@ -1417,12 +1748,22 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="elementOffset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-1.1;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to subtract the offset from.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
-        <summary>Subtracts an element offset from the given reference.</summary>
-        <returns>A new reference that reflects the subtraction of offset from pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Subtracts an offset from the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) before _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Subtract&lt;T&gt;">
@@ -1457,12 +1798,22 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="elementOffset" Type="System.IntPtr" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to subtract the offset from.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
-        <summary>Subtracts an element offset from the given reference.</summary>
-        <returns>A new reference that reflects the subtraction of offset from pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Subtracts an element offset from the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, (nint)20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) before _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Subtract&lt;T&gt;">
@@ -1499,12 +1850,22 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to subtract the offset from.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
-        <summary>Subtracts an element offset from the given reference.</summary>
-        <returns>A new reference that reflects the subraction of offset from pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Subtracts an element offset from the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes (= 10 elements \* 4 bytes per element) before _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SubtractByteOffset&lt;T&gt;">
@@ -1539,12 +1900,22 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         <Parameter Name="byteOffset" Type="System.IntPtr" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to subtract the offset from.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="byteOffset">The offset to subtract.</param>
-        <summary>Subtracts a byte offset from the given reference.</summary>
-        <returns>A new reference that reflects the subtraction of byte offset from pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Subtracts a byte offset from the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the subtraction of byte offset from the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `byteOffset` parameter is the number of bytes to remove from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.SubtractByteOffset<int>(ref ptr, 20)` will return a new pointer whose address points 20 bytes before _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SubtractByteOffset&lt;T&gt;">
@@ -1581,12 +1952,22 @@ This check is conceptually similar to `(void*)(&left) < (void*)(&right)`.
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of reference.</typeparam>
-        <param name="source">The reference to subtract the offset from.</param>
+        <typeparam name="T">The elemental type of the managed pointer.</typeparam>
+        <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="byteOffset">The offset to subtract.</param>
-        <summary>Subtracts a byte offset from the given reference.</summary>
-        <returns>A new reference that reflects the subraction of byte offset from pointer.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Subtracts a byte offset from the given managed pointer.</summary>
+        <returns>A new managed pointer that reflects the subtraction of byte offset from the source pointer.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+The `byteOffset` parameter is the number of bytes to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.SubtractByteOffset<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes before _ptr_.
+
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Unbox&lt;T&gt;">
@@ -1695,11 +2076,19 @@ For more information, see sections III.1.8.1.2.2 ("Controlled-muttability manage
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of value to write.</typeparam>
+        <typeparam name="T">The type of the value to write.</typeparam>
         <param name="destination">The location to write to.</param>
         <param name="value">The value to write.</param>
         <summary>Writes a value of type <typeparamref name="T" /> to the given location.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+`destination` is assumed to be a properly aligned pointer to a value of type `T`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteUnaligned&lt;T&gt;">
@@ -1734,10 +2123,10 @@ For more information, see sections III.1.8.1.2.2 ("Controlled-muttability manage
         <Parameter Name="value" Type="T" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of value to write.</typeparam>
-        <param name="destination">The location to write to.</param>
+        <typeparam name="T">The type of the value to write.</typeparam>
+        <param name="destination">A managed pointer containing the address to write to.</param>
         <param name="value">The value to write.</param>
-        <summary>Writes a value of type <typeparamref name="T" /> to the given location without assuming architecture dependent alignment of the addresses.</summary>
+        <summary>Writes a value of type <typeparamref name="T" /> to the given location without assuming architecture dependent alignment of the destination address.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1772,10 +2161,10 @@ For more information, see sections III.1.8.1.2.2 ("Controlled-muttability manage
         <Parameter Name="value" Type="T" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type of value to write.</typeparam>
-        <param name="destination">The location to write to.</param>
+        <typeparam name="T">The type of the value to write.</typeparam>
+        <param name="destination">A managed pointer containing the address to write to.</param>
         <param name="value">The value to write.</param>
-        <summary>Writes a value of type <typeparamref name="T" /> to the given location without assuming architecture dependent alignment of the addresses.</summary>
+        <summary>Writes a value of type <typeparamref name="T" /> to the given location without assuming architecture dependent alignment of the destination address.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
