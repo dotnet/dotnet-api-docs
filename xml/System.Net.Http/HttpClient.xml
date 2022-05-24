@@ -42,7 +42,7 @@ The <xref:System.Net.Http.HttpClient> class instance acts as a session to send H
 
 ### Instancing
 
-<xref:System.Net.Http.HttpClient> is intended to be instantiated once and reused throughout the life of an application. HttpClient pools connections and reuses a connection across multiple requests. If you instantiate an HttpClient class for every request, the number of sockets available under heavy loads will be exhausted. This exhaustion will result in <xref:System.Net.Sockets.SocketException> errors.
+<xref:System.Net.Http.HttpClient> is intended to be instantiated once and reused throughout the life of an application. In .NET Core and .NET 5+, HttpClient pools connections inside the handler instance and reuses a connection across multiple requests. If you instantiate an HttpClient class for every request, the number of sockets available under heavy loads will be exhausted. This exhaustion will result in <xref:System.Net.Sockets.SocketException> errors.
 
 You can configure additional options by passing in a "handler", such as <xref:System.Net.Http.HttpClientHandler> (or <xref:System.Net.Http.SocketsHttpHandler> in .NET Core 2.1 or later), as part of the constructor. The connection properties on the handler cannot be changed once a request has been submitted, so one reason to create a new HttpClient instance would be if you need to change the connection properties. If different requests require different settings, this may also lead to an application having multiple <xref:System.Net.Http.HttpClient> instances, where each instance is configured appropriately, and then requests are issued on the relevant client.
 
@@ -121,7 +121,7 @@ Connection pool properties can be configured on a <xref:System.Net.Http.HttpClie
 Disposing of the HttpClient instance closes the open connections and cancels any pending requests.
 
 > [!NOTE]
-> If you later send a request to the same server, a new connection is created. If the rate of requests is high, or if there are any firewall limitations, that can exhaust the available sockets because of default TCP cleanup timers.
+> If you concurrently send HTTP/1.1 requests to the same server, new connections can be created. Even if you reuse the `HttpClient` instance, if the rate of requests is high, or if there are any firewall limitations, that can exhaust the available sockets because of default TCP cleanup timers. To limit the number of concurrent connections, you can set the `MaxConnectionsPerServer` property. By default, the number of concurrent HTTP/1.1 connections is unlimited.
 
 ### Buffering and request lifetime
 
