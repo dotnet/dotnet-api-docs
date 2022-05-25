@@ -32,9 +32,51 @@
 ## Remarks
 
 > [!WARNING]
-> This type is intended for advanced pointer manipulation scenarios. Callers are assumed to be familiar with ECMA-335, Sec. II.14.4 and III.1.1.5, and with the [ECMA-335 CLI Specification Addendum](https://github.com/dotnet/runtime/blob/main/docs/design/specs/Ecma-335-Augments.md).
+> This type is intended for advanced pointer manipulation scenarios. Callers are assumed to be familiar with [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. II.14.4 and III.1.1.5, and with the [ECMA-335 CLI Specification Addendum](https://github.com/dotnet/runtime/blob/main/docs/design/specs/Ecma-335-Augments.md).
 >
-> Most APIs on this type do not perform any argument checking or validation. Incorrect use of these APIs could destabilize the .NET runtime.
+> Most APIs on this type do not perform any argument checking or validation. Incorrect use of these APIs could corrupt process memory or destabilize the .NET runtime.
+
+This type is typically used by low-level library authors who want to write high-performance code and are willing to suppress .NET's typical type safety checks to meet their performance goals. Consider the following sample, which reverses all elements in a `Span<T>`.
+
+```cs
+// Safe, verifiable way to reverse a Span<T>.
+static void Reverse<T>(Span<T> span)
+{
+  while (span.Length > 1)
+  {
+    T firstElement = span[0];
+    T lastElement = span[^1];
+    span[0] = lastElement;
+    span[^1] = firstElement;
+    span = span[1..^1];
+  }
+}
+```
+
+This method is fully type-safe and the .NET runtime may insert bounds checks to help enforce safety. However, low-level library authors may want to suppress .NET's normal safety checks in order to improve the performance of their own code. Such developers would typically rely on static analysis tools or their own code reviews to help enforce correctness. The `Unsafe` APIs allow a developer to rewrite this code using unverifiable constructs, as shown below.
+
+```cs
+// Unverifiable way to reverse a Span<T>.
+static void Reverse<T>(Span<T> span)
+{
+  if (span.Length > 1)
+  {
+    ref T refLeft = ref MemoryMarshal.GetReference(span);
+    ref T refRight = ref Unsafe.Add(ref refLeft, span.Length - 1);
+    do
+    {
+      T leftElement = refLeft;
+      T rightElement = refRight;
+      refLeft = rightElement;
+      refRight = leftElement;
+      refLeft = ref Unsafe.Add(ref refLeft, 1);
+      refRight = ref Unsafe.Subtract(ref refRight, 1);
+    } while (Unsafe.IsAddressLessThan(ref refLeft, ref refRight));
+  }
+}
+```
+
+Since the `Unsafe` APIs suppress typical type-safety validation, it is up to callers to ensure that the code they're writing is legal. Misuse of these APIs could cause access violations, create GC holes, produce incorrect codegen, or otherwise induce undefined and destabilizing behaviors within the .NET runtime.
 
 ]]></format>
     </remarks>
@@ -71,11 +113,11 @@
         <Parameter Name="elementOffset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type whose width will be used as a scale factor for `elementOffset`.</typeparam>
+        <typeparam name="T">The type whose size will be used as a scale factor for <paramref name="elementOffset" />.</typeparam>
         <param name="source">The unmanaged pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
         <summary>Adds an element offset to the given unmanaged pointer.</summary>
-        <returns>A new unmanaged pointer that reflects the addition of offset to the source pointer.</returns>
+        <returns>A new unmanaged pointer that reflects the addition of the specified offset to the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -83,7 +125,7 @@
 
 The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_, the call `Unsafe.Add<int>(ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Add<int>(ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `Int32`.
 
 ]]></format>
         </remarks>
@@ -126,7 +168,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
         <summary>Adds an offset to the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the addition of offset to the source pointer.</returns>
+        <returns>A new managed pointer that reflects the addition of the specified offset to the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -134,7 +176,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Add<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `Int32`.
 
 ]]></format>
         </remarks>
@@ -176,7 +218,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
         <summary>Adds an element offset to the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the addition of offset to the source pointer.</returns>
+        <returns>A new managed pointer that reflects the addition of the specified offset to the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -184,7 +226,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, (nint)20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Add<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `IntPtr`.
 
 ]]></format>
         </remarks>
@@ -228,15 +270,15 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to add the offset to.</param>
         <param name="elementOffset">The offset to add.</param>
         <summary>Adds an element offset to the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the addition of offset to the source pointer.</returns>
+        <returns>A new managed pointer that reflects the addition of the specified offset to the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
 ## Remarks
 
-The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes (= 10 elements \* 4 bytes per element) beyond _ptr_.
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Add<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) beyond _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Add<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `UIntPtr`.
 
 ]]></format>
         </remarks>
@@ -278,7 +320,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to add the offset to.</param>
         <param name="byteOffset">The offset to add.</param>
         <summary>Adds a byte offset to the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the addition of byte offset to the source pointer.</returns>
+        <returns>A new managed pointer that reflects the addition of the specified byte offset to the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -286,7 +328,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `byteOffset` parameter is the number of bytes to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.AddByteOffset<int>(ref ptr, 20)` will return a new pointer whose address points 20 bytes beyond _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `byteOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.AddByteOffset<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `IntPtr`.
 
 ]]></format>
         </remarks>
@@ -330,7 +372,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to add the offset to.</param>
         <param name="byteOffset">The offset to add.</param>
         <summary>Adds a byte offset to the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the addition of byte offset to the source pointer.</returns>
+        <returns>A new managed pointer that reflects the addition of the specified byte offset to the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -338,7 +380,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `byteOffset` parameter is the number of bytes to add to the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.AddByteOffset<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes beyond _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `byteOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.AddByteOffset<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `UIntPtr`.
 
 ]]></format>
         </remarks>
@@ -451,6 +493,39 @@ This API is used to cast an object to the given type, suppressing the runtime's 
 
 The behavior of `Unsafe.As<T>(o)` is only well-defined if the typical "safe" casting operation `(T)o` would have succeeded. Use of this API to circumvent casts that would otherwise have failed is unsupported and could result in runtime instability.
 
+To help enforce correct usage, developers might consider using a standard cast or a debug-only assert in their code, as shown in the following examples.
+
+```cs
+void ReinterpretCastAndUse_Sample1(object o)
+{
+  // Assume that we know through some other means that 'o' is a string,
+  // and we want our library's debug builds to verify this.
+  // One way to do this is through a standard-style cast.
+  // A standard-style cast will throw InvalidCastException at runtime if the cast fails.
+  // n.b. Casts of null objects to reference types will succeed.
+
+#if DEBUG
+  string s = (string)o;
+#else
+  string s = Unsafe.As<string>(o);
+#endif
+
+  DoSomethingWith(s);
+}
+
+void ReinterpretCastAndUse_Sample2(object o)
+{
+  // Another way to check this is through a debug-only assert.
+  // Failed assertions will trigger attached debuggers or terminate the application immediately.
+  // Calls to Debug.Assert are removed from release builds.
+
+  Debug.Assert(o is null or string, "Unsafe.As call below is illegal!");
+  string s = Unsafe.As<string>(s);
+
+  DoSomethingWith(s);
+}
+```
+
 ]]></format>
         </remarks>
       </Docs>
@@ -500,20 +575,20 @@ The behavior of `Unsafe.As<T>(o)` is only well-defined if the typical "safe" cas
 
 This API is conceptually similar to C++'s `reinterpret_cast<>`. It is the caller's responsibility to ensure that the cast is legal. No runtime check will be performed.
 
-Only the managed pointer is reinterpreted. The referenced value itself will remain unchanged. Consider the example below.
+Only the managed pointer is reinterpreted. The referenced value itself will remain unchanged. Consider the following example.
 
 ```cs
-int[] intArray = new int[] { 0x12345678 }; // a 1-element array
+int[] intArray = new int[] { 0x1234_5678 }; // a 1-element array
 ref int refToInt32 = ref intArray[0]; // managed pointer to first Int32 in array
 ref short refToInt16 = ref Unsafe.As<int, short>(ref refToInt32); // reinterpret as managed pointer to Int16
 Console.WriteLine(refToInt16);
 ```
 
-The output of this program depends on the endianness of the current machine. On big-endian architectures this will output `0x1234`, and on little-endian architectures this will output `0x5678`.
+The output of this program depends on the endianness of the current machine. On big-endian architectures, this code outputs `0x1234`. On little-endian architectures, this code outputs `0x5678`.
 
-When casting a managed pointer from a narrower type to a wider type, the caller must ensure that dereferencing the pointer will not incur an out-of-bounds access. The caller is also responsible for ensuring that the resulting pointer is properly aligned for the referenced type.
+When casting a managed pointer from a narrower type to a wider type, the caller must ensure that dereferencing the pointer will not incur an out-of-bounds access. The caller is also responsible for ensuring that the resulting pointer is properly aligned for the referenced type. For more information on alignment assumptions, see [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. I.12.6.2 ("Alignment").
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -558,11 +633,9 @@ When casting a managed pointer from a narrower type to a wider type, the caller 
 
 ## Remarks
 
-Unmanaged pointers are not tracked by the .NET garbage collector. If the original managed pointer points to a GC-managed object, it is the caller's responsibility to ensure that the source object is pinned.
+Unmanaged pointers are not tracked by the .NET garbage collector. If the original managed pointer points within a GC-managed object, the caller must ensure that the source object is pinned. If the source object is not pinned and the GC relocates the object, dereferencing the unmanaged pointer could cause an access violation.
 
-If the pointers reference memory in GC-owned address space, and if the source object is not pinned, the managed and unmanaged pointer values may eventually diverge due to GC relocation operations.
-
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -602,7 +675,15 @@ If the pointers reference memory in GC-owned address space, and if the source ob
         <param name="source">The unmanaged pointer to convert.</param>
         <summary>Converts an unmanaged pointer into a managed pointer to a value of type <typeparamref name="T" />.</summary>
         <returns>A managed pointer to a value of type <typeparamref name="T" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The caller is responsible for ensuring that the resulting managed pointer is properly aligned for the referenced type. For more information on alignment requirements, see [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. I.12.6.2 ("Alignment").
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AsRef&lt;T&gt;">
@@ -647,7 +728,41 @@ If the pointers reference memory in GC-owned address space, and if the source ob
         <param name="source">The read-only reference to reinterpret.</param>
         <summary>Reinterprets the given read-only reference as a mutable reference.</summary>
         <returns>A mutable reference to a value of type <typeparamref name="T" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This API is conceptually similar to C++'s `const_cast<>`. It is the caller's responsibility to ensure that no data is written to the referenced location. The runtime contains internal logic predicated on the assumption that readonly references truly are immutable, and callers who violate this invariant may trigger undefined behavior within the runtime.
+
+`AsRef` is typically used for passing a readonly reference into methods like <xref:System.Runtime.CompilerServices.Unsafe.Add%2A>, which accept mutable managed pointers as arguments. Consider the following example.
+
+```cs
+int ComputeSumOfElements(ref int refToFirstElement, nint numElements)
+{
+  int sum = 0;
+  for (nint i = 0; i < numElements; i++)
+  {
+    sum += Unsafe.Add(ref refToFirstElement, i);
+  }
+}
+```
+
+If the input parameter is `ref readonly int refToFirstElement` instead of `ref int refToFirstElement`, the previous example will not compile, since readonly references cannot be used as arguments to `Add`. Instead, `AsRef` can be used to remove the immutability constraint and allow compilation to succeed, as shown in the following example.
+
+```cs
+int ComputeSumOfElements(ref readonly int refToFirstElement, nint numElements)
+{
+  int sum = 0;
+  for (nint i = 0; i < numElements; i++)
+  {
+    sum += Unsafe.Add(ref Unsafe.AsRef(ref refToFirstElement), i);
+  }
+}
+```
+
+]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ByteOffset&lt;T&gt;">
@@ -697,10 +812,10 @@ If the pointers reference memory in GC-owned address space, and if the source ob
       </Parameters>
       <Docs>
         <typeparam name="T">The elemental type of the managed pointers.</typeparam>
-        <param name="origin">The managed pointer to origin.</param>
-        <param name="target">The managed pointer to target.</param>
+        <param name="origin">The managed pointer to the origin.</param>
+        <param name="target">The managed pointer to the target.</param>
         <summary>Determines the byte offset from origin to target from the given managed pointers.</summary>
-        <returns>Byte offset from origin to target i.e. <paramref name="target" /> - <paramref name="origin" />.</returns>
+        <returns>The byte offset from origin to target, that is, <paramref name="target" /> - <paramref name="origin" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -710,7 +825,7 @@ The return value of this method is a moment-in-time result. If `origin` and `tar
 
 The return value is guaranteed stable if `origin` and `target` point to the same managed object.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -756,7 +871,7 @@ The return value is guaranteed stable if `origin` and `target` point to the same
 
 ## Remarks
 
-Both `destination` and `source` are assumed to be properly aligned for pointers to data of type `T`.
+Both `destination` and `source` are assumed to be properly aligned for pointers to data of type `T`. For more information on alignment assumptions, see [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. I.12.6.2 ("Alignment").
 
 This method is roughly equivalent to the following code.
 
@@ -768,7 +883,7 @@ static void Copy<T>(void* destination, ref T source)
 }
 ```
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -814,19 +929,19 @@ static void Copy<T>(void* destination, ref T source)
 
 ## Remarks
 
-Both `destination` and `source` are assumed to be properly aligned for pointers to data of type `T`.
+Both `destination` and `source` are assumed to be properly aligned for pointers to data of type `T`. For more information on alignment assumptions, see [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. I.12.6.2 ("Alignment").
 
 This method is roughly equivalent to the following code.
 
 ```cs
 static void Copy<T>(ref T destination, void* source)
 {
-  T data = *(T*)source; // cast source to T* and dereference
+  T data = *(T*)source; // reinterpret cast source as T* and dereference
   destination = data;
 }
 ```
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -869,11 +984,12 @@ static void Copy<T>(ref T destination, void* source)
 
 ## Remarks
 
-This API corresponds to the `cpblk` opcode.
+This API corresponds to the `cpblk` opcode. Both the `destination` and `source` pointers are assumed to be pointer-aligned. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.30 ("cpblk - copy data from memory to memory") for more information.
 
-Both `destination` and `source` are assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") for more information.
+> [!CAUTION]
+> This API is not intended for copying arbitrary-length runs of memory. Consider instead using <xref:System.Buffer.MemoryCopy> or <xref:System.Span%601.CopyTo%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -917,11 +1033,12 @@ Both `destination` and `source` are assumed to be aligned to the machine's natur
 
 ## Remarks
 
-This API corresponds to the `cpblk` opcode.
+This API corresponds to the `cpblk` opcode. Both the `destination` and `source` pointers are assumed to be pointer-aligned. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.30 ("cpblk - copy data from memory to memory") for more information.
 
-Both `destination` and `source` are assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") for more information.
+> [!CAUTION]
+> This API is not intended for copying arbitrary-length runs of memory. Consider instead using <xref:System.Buffer.MemoryCopy> or <xref:System.Span%601.CopyTo%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -964,11 +1081,12 @@ Both `destination` and `source` are assumed to be aligned to the machine's natur
 
 ## Remarks
 
-This API corresponds to the `unaligned.1 cpblk` opcode sequence.
+This API corresponds to the `unaligned.1 cpblk` opcode sequence. No alignment assumptions are made about the `destination` or `source` pointers. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.30 ("cpblk - copy data from memory to memory") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
 
-No alignment assumptions are made about the `destination` or `source` pointers. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+> [!CAUTION]
+> This API is not intended for copying arbitrary-length runs of memory. Consider instead using <xref:System.Buffer.MemoryCopy> or <xref:System.Span%601.CopyTo%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1010,11 +1128,12 @@ No alignment assumptions are made about the `destination` or `source` pointers. 
 
 ## Remarks
 
-This API corresponds to the `unaligned.1 cpblk` opcode sequence.
+This API corresponds to the `unaligned.1 cpblk` opcode sequence. No alignment assumptions are made about the `destination` or `source` pointers. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.30 ("cpblk - copy data from memory to memory") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
 
-No alignment assumptions are made about the `destination` or `source` pointers. See ECMA-335, Sec. III.3.30 ("cpblk - copy data from memory to memory") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+> [!CAUTION]
+> This API is not intended for copying arbitrary-length runs of memory. Consider instead using <xref:System.Buffer.MemoryCopy> or <xref:System.Span%601.CopyTo%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1057,11 +1176,12 @@ No alignment assumptions are made about the `destination` or `source` pointers. 
 
 ## Remarks
 
-This API corresponds to the `initblk` opcode.
+This API corresponds to the `initblk` opcode. The `startAddress` pointer is assumed to be pointer-aligned. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.36 ("initblk - initialize a block of memory to a value") for more information.
 
-`startAddress` is assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.36 ("initblk - initialize a block of memory to a value") for more information.
+> [!CAUTION]
+> This API is not intended for initializing arbitrary-length runs of memory. Consider instead using <xref:System.Span%601.Fill%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1105,11 +1225,12 @@ This API corresponds to the `initblk` opcode.
 
 ## Remarks
 
-This API corresponds to the `initblk` opcode.
+This API corresponds to the `initblk` opcode. The `startAddress` pointer is assumed to be pointer-aligned. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.36 ("initblk - initialize a block of memory to a value") for more information.
 
-`startAddress` is assumed to be aligned to the machine's natural word size. See ECMA-335, Sec. III.3.36 ("initblk - initialize a block of memory to a value") for more information.
+> [!CAUTION]
+> This API is not intended for initializing arbitrary-length runs of memory. Consider instead using <xref:System.Span%601.Fill%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1152,11 +1273,12 @@ This API corresponds to the `initblk` opcode.
 
 ## Remarks
 
-This API corresponds to the `unaligned.1 initblk` opcode sequence.
+This API corresponds to the `unaligned.1 initblk` opcode sequence. No alignment assumption is made about the `startAddress` pointer. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.36 ("initblk - initialize a block of memory to a value") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
 
-No alignment assumptions are made about the `startAddress` pointer. See ECMA-335, Sec. Sec. III.3.36 ("initblk - initialize a block of memory to a value") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+> [!CAUTION]
+> This API is not intended for initializing arbitrary-length runs of memory. Consider instead using <xref:System.Span%601.Fill%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1184,7 +1306,7 @@ No alignment assumptions are made about the `startAddress` pointer. See ECMA-335
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="startAddress" Type="System.Byte" RefType="ref" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="startAddress" Type="System.Void*" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
         <Parameter Name="value" Type="System.Byte" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
         <Parameter Name="byteCount" Type="System.UInt32" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
@@ -1198,11 +1320,12 @@ No alignment assumptions are made about the `startAddress` pointer. See ECMA-335
 
 ## Remarks
 
-This API corresponds to the `unaligned.1 initblk` opcode sequence.
+This API corresponds to the `unaligned.1 initblk` opcode sequence. No alignment assumption is made about the `startAddress` pointer. See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.3.36 ("initblk - initialize a block of memory to a value") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
 
-No alignment assumptions are made about the `startAddress` pointer. See ECMA-335, Sec. Sec. III.3.36 ("initblk - initialize a block of memory to a value") and Sec. III.2.5 ("unaligned. (prefix) - pointer instruction might be unaligned") for more information.
+> [!CAUTION]
+> This API is not intended for initializing arbitrary-length runs of memory. Consider instead using <xref:System.Span%601.Fill%2A> for this scenario.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1269,7 +1392,7 @@ The return value of this method is a moment-in-time result. If `left` and `right
 
 The return value is guaranteed stable if `left` and `right` point to the same managed object.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1336,7 +1459,7 @@ The return value of this method is a moment-in-time result. If `left` and `right
 
 The return value is guaranteed stable if `left` and `right` point to the same managed object.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1403,7 +1526,7 @@ The return value is guaranteed stable if `left` and `right` point to the same ma
         <typeparam name="T">The elemental type of the managed pointer.</typeparam>
         <summary>Returns a null managed pointer to a value of type <typeparamref name="T" />.</summary>
         <returns>A null managed pointer to a value of type <typeparamref name="T" />.</returns>
-        <remarks>The return value is conceptually similar to <code>ref *((T*)nullptr)</code>.</remarks>
+        <remarks>The return value is conceptually similar to <code>ref *((T*)null)</code>.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Read&lt;T&gt;">
@@ -1439,7 +1562,7 @@ The return value is guaranteed stable if `left` and `right` point to the same ma
       </Parameters>
       <Docs>
         <typeparam name="T">The type of the value to read.</typeparam>
-        <param name="source">The location to read from.</param>
+        <param name="source">An unmanaged pointer containing the address to read from.</param>
         <summary>Reads a value of type <typeparamref name="T" /> from the given location.
          </summary>
         <returns>A value of type <typeparamref name="T" /> read from the given location.</returns>
@@ -1448,9 +1571,12 @@ The return value is guaranteed stable if `left` and `right` point to the same ma
 
 ## Remarks
 
-`source` is assumed to be a properly aligned pointer to a value of type `T`.
+> [!CAUTION]
+> The caller must ensure that there are `SizeOf<T>()` bytes of readable memory available starting at the location pointed to by `source`. Access violations may occur if this requirement is not met.
 
-          ]]></format>
+`source` is assumed to be a properly aligned pointer to a value of type `T`. For more information on alignment assumptions, see [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. I.12.6.2 ("Alignment").
+
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1489,7 +1615,15 @@ The return value is guaranteed stable if `left` and `right` point to the same ma
         <param name="source">A managed pointer containing the address to read from.</param>
         <summary>Reads a value of type <typeparamref name="T" /> from the given address without assuming architecture dependent alignment of the source address.</summary>
         <returns>A value of type <typeparamref name="T" /> read from the given address.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!CAUTION]
+> The caller must ensure that there are `SizeOf<T>()` bytes of readable memory available starting at the location pointed to by `source`. Access violations may occur if this requirement is not met.
+
+]]></format>
       </Docs>
     </Member>
     <Member MemberName="ReadUnaligned&lt;T&gt;">
@@ -1523,10 +1657,18 @@ The return value is guaranteed stable if `left` and `right` point to the same ma
       </Parameters>
       <Docs>
         <typeparam name="T">The type of the value to read.</typeparam>
-        <param name="source">The location to read from.</param>
+        <param name="source">An unmanaged pointer containing the address to read from.</param>
         <summary>Reads a value of type <typeparamref name="T" /> from the given location without assuming architecture dependent alignment of the source address.</summary>
         <returns>A value of type <typeparamref name="T" /> read from the given location.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!CAUTION]
+> The caller must ensure that there are `SizeOf<T>()` bytes of readable memory available starting at the location pointed to by `source`. Access violations may occur if this requirement is not met.
+
+]]></format>
       </Docs>
     </Member>
     <Member MemberName="SizeOf&lt;T&gt;">
@@ -1560,22 +1702,20 @@ The return value is guaranteed stable if `left` and `right` point to the same ma
       </TypeParameters>
       <Parameters />
       <Docs>
-        <typeparam name="T">The type whose size is retrieved.</typeparam>
+        <typeparam name="T">The type whose size is to be retrieved.</typeparam>
         <summary>Returns the size of a value of the given type parameter.</summary>
-        <returns>The size (in bytes) of a value of type <typeparamref name="T" />.</returns>
+        <returns>The size, in bytes, of a value of type <typeparamref name="T" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
+This API corresponds to the `sizeof` opcode. If `T` is a reference type, the return value is the size of the reference itself (equal to `sizeof(void*)`). See [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. III.4.25  ("sizeof - load the size, in bytes, of a type") for more information.
+
 > [!CAUTION]
-> This API returns the size of the _managed_ view of the type. For the size of the _unmanaged_ view of the type, such as for interop purposes, use <xref:System.Runtime.InteropServices.Marshal.SizeOf%2A>.
+> This API returns the size of the _managed_ view of the type. For the size of the _unmanaged_ view of the type, such as needed for interop purposes, use <xref:System.Runtime.InteropServices.Marshal.SizeOf%2A>.
 
-This API corresponds to the `sizeof` opcode.
-
-If `T` is a reference type, the return value is the size of the reference itself, or `IntPtr.Size`. See ECMA-335, Sec. Sec. III.4.25  ("sizeof - load the size, in bytes, of a type") for more information.
-
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1614,7 +1754,7 @@ If `T` is a reference type, the return value is the size of the reference itself
 
 ## Remarks
 
-This is typically used to avoid double-assignment when initializing union-type structs. Consider the following example, which produces a C# compiler error.
+This method is typically used to avoid double-initialization when initializing union-type structs. Consider the following example, which produces a C# compiler error.
 
 ```cs
 using System;
@@ -1639,7 +1779,7 @@ public struct MyUnionStruct
 
 This error occurs because the compiler expects _all_ fields of the struct to be initialized before the struct is used or returned to the caller.
 
-One way to avoid this compiler error is to ensure the entire struct is zero-inited before individual fields are set, as shown in the below example.
+One way to avoid this compiler error is to ensure the entire struct is zero-initialized before individual fields are set, as shown in the following example.
 
 ```cs
 // This sample compiles successfully.
@@ -1650,7 +1790,7 @@ public static MyUnionStruct MyMethod() {
 }
 ```
 
-For developers who don't want to avoid the initial zero-init assignment, the `SkipInit` method can be used to suppress the compiler warning.
+If you want to avoid the initial zero-initialization, you can call the `SkipInit` method can be used to suppress the compiler warning.
 
 ```cs
 using System.Runtime.CompilerServices;
@@ -1665,9 +1805,9 @@ public static MyUnionStruct MyMethod() {
 ```
 
 > [!WARNING]
-> The developer must take care to ensure that the struct has been initialized appropriately, otherwise the struct's fields could contain uninitialized data from the stack.
+> Take care to ensure that the struct has been initialized appropriately, otherwise the struct's fields could contain uninitialized data from the stack.
 
-          ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1702,19 +1842,19 @@ public static MyUnionStruct MyMethod() {
         <Parameter Name="elementOffset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
-        <typeparam name="T">The type whose width will be used as a scale factor for `elementOffset`.</typeparam>
-        <param name="source">The unmanaged pointer to subtract the offset froms.</param>
+        <typeparam name="T">The type whose size will be used as a scale factor for <paramref name="elementOffset" />.</typeparam>
+        <param name="source">The unmanaged pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
         <summary>Subtracts an element offset from the given unmanaged pointer.</summary>
-        <returns>A new unmanaged pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <returns>A new unmanaged pointer that reflects the subtraction of the specified offset from the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
 ## Remarks
 
-The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to remove from the `source` pointer. For example, given a source pointer _ptr_, the call `Unsafe.Subtract<int>(ptr, 10)` will return a new pointer whose address points 40 bytes (= 10 elements \* 4 bytes per element) before _ptr_.
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to remove from the `source` pointer. For example, given a source pointer _ptr_, the call `Unsafe.Subtract<int>(ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) before _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Subtract<int>(ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `Int32`.
 
 ]]></format>
         </remarks>
@@ -1757,7 +1897,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
         <summary>Subtracts an offset from the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <returns>A new managed pointer that reflects the subtraction of the specified offset from the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -1765,7 +1905,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, 20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) before _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Subtract<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `Int32`.
 
 ]]></format>
         </remarks>
@@ -1807,7 +1947,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
         <summary>Subtracts an element offset from the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <returns>A new managed pointer that reflects the subtraction of the specified offset from the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -1815,7 +1955,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, (nint)20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) before _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Subtract<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `IntPtr`.
 
 ]]></format>
         </remarks>
@@ -1859,15 +1999,15 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="elementOffset">The offset to subtract.</param>
         <summary>Subtracts an element offset from the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the subtraction of offset from the source pointer.</returns>
+        <returns>A new managed pointer that reflects the subtraction of the specified offset from the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
 ## Remarks
 
-The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes (= 10 elements \* 4 bytes per element) before _ptr_.
+The `elementOffset` parameter is the number of `T`-sized elements (not bytes) to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.Subtract<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 80 bytes (= 20 elements \* 4 bytes per element) before _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.Subtract<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `UIntPtr`.
 
 ]]></format>
         </remarks>
@@ -1909,7 +2049,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="byteOffset">The offset to subtract.</param>
         <summary>Subtracts a byte offset from the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the subtraction of byte offset from the source pointer.</returns>
+        <returns>A new managed pointer that reflects the subtraction of the specified byte offset from the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -1917,7 +2057,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `byteOffset` parameter is the number of bytes to remove from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.SubtractByteOffset<int>(ref ptr, 20)` will return a new pointer whose address points 20 bytes before _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `byteOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.SubtractByteOffset<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `IntPtr`.
 
 ]]></format>
         </remarks>
@@ -1961,7 +2101,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
         <param name="source">The managed pointer to subtract the offset from.</param>
         <param name="byteOffset">The offset to subtract.</param>
         <summary>Subtracts a byte offset from the given managed pointer.</summary>
-        <returns>A new managed pointer that reflects the subtraction of byte offset from the source pointer.</returns>
+        <returns>A new managed pointer that reflects the subtraction of the specified byte offset from the source pointer.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
 
@@ -1969,7 +2109,7 @@ If `elementOffset` is a calculated value rather than a hardcoded literal, caller
 
 The `byteOffset` parameter is the number of bytes to subtract from the `source` pointer. For example, given a source pointer _ptr_ of type `ref int`, the call `Unsafe.SubtractByteOffset<int>(ref ptr, (nuint)20)` will return a new pointer whose address points 20 bytes before _ptr_.
 
-If `elementOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow and should take appropriate precautions.
+If `byteOffset` is a calculated value rather than a hardcoded literal, callers should consider the possibility of integer overflow. For example, in the call `Unsafe.SubtractByteOffset<int>(ref ptr, a * b)`, the caller must ensure the intermediate value `a * b` does not overflow the bounds of `UIntPtr`.
 
 ]]></format>
         </remarks>
@@ -2033,7 +2173,7 @@ Unsafe.Unbox<System.Drawing.Point>(obj).X = 50;
 
 For more information, see sections III.1.8.1.2.2 ("Controlled-muttability managed pointers") and III.4.32 ("unbox -- convert boxed value type to its raw form") in [ECMA-335: Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
 
-         ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.NullReferenceException">
           <paramref name="box" /> is <see langword="null" />, and <typeparamref name="T" /> is a non-nullable value type.</exception>
@@ -2090,9 +2230,12 @@ For more information, see sections III.1.8.1.2.2 ("Controlled-muttability manage
 
 ## Remarks
 
-`destination` is assumed to be a properly aligned pointer to a value of type `T`.
+> [!CAUTION]
+> The caller must ensure that there are `SizeOf<T>()` bytes of writable memory available starting at the location pointed to by `destination`. Access violations may occur if this requirement is not met.
 
-          ]]></format>
+`destination` is assumed to be a properly aligned pointer to a value of type `T`. For more information on alignment assumptions, see [ECMA-335](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/), Sec. I.12.6.2 ("Alignment").
+
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -2132,7 +2275,15 @@ For more information, see sections III.1.8.1.2.2 ("Controlled-muttability manage
         <param name="destination">A managed pointer containing the address to write to.</param>
         <param name="value">The value to write.</param>
         <summary>Writes a value of type <typeparamref name="T" /> to the given location without assuming architecture dependent alignment of the destination address.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!CAUTION]
+> The caller must ensure that there are `SizeOf<T>()` bytes of writable memory available starting at the location pointed to by `destination`. Access violations may occur if this requirement is not met.
+
+]]></format>
       </Docs>
     </Member>
     <Member MemberName="WriteUnaligned&lt;T&gt;">
@@ -2170,7 +2321,15 @@ For more information, see sections III.1.8.1.2.2 ("Controlled-muttability manage
         <param name="destination">A managed pointer containing the address to write to.</param>
         <param name="value">The value to write.</param>
         <summary>Writes a value of type <typeparamref name="T" /> to the given location without assuming architecture dependent alignment of the destination address.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!CAUTION]
+> The caller must ensure that there are `SizeOf<T>()` bytes of writable memory available starting at the location pointed to by `destination`. Access violations may occur if this requirement is not met.
+
+]]></format>
       </Docs>
     </Member>
   </Members>
