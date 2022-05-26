@@ -10,10 +10,8 @@ class HttpClientHandler_SecureExample
     // <Snippet1>
     static async Task Main()
     {
-        // Create an HttpClientHandler object and set to use default credentials
         using SocketsHttpHandler handler = new SocketsHttpHandler();
 
-        // Set custom server validation callback
         handler.ConnectCallback = async (ctx, ct) =>
         {
             var s = new Socket(SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
