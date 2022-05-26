@@ -36,10 +36,15 @@
 >
 > Most APIs on this type do not perform any argument checking or validation. Incorrect use of these APIs could corrupt process memory or destabilize the .NET runtime.
 
-This type is typically used by low-level library authors who want to write high-performance code and are willing to suppress .NET's typical type safety checks to meet their performance goals. Consider the following sample, which reverses all elements in a `Span<T>`.
+This type is typically used by low-level library authors who want to write high-performance code and are willing to suppress .NET's typical type safety checks to meet their performance goals.
+
+Consider the following example, which reverses the elements within a `Span<T>`.
+
+> [!NOTE]
+> These examples exist simply for demonstration purposes. In real-world applications, developers should instead use helper functions like <xref:System.MemoryExtensions.Reverse%2A>, which are better optimized than even these examples.
 
 ```cs
-// Safe, verifiable way to reverse a Span<T>.
+// A safe, verifiable way to reverse a Span<T>.
 static void Reverse<T>(Span<T> span)
 {
   while (span.Length > 1)
@@ -53,10 +58,10 @@ static void Reverse<T>(Span<T> span)
 }
 ```
 
-This method is fully type-safe and the .NET runtime may insert bounds checks to help enforce safety. However, low-level library authors may want to suppress .NET's normal safety checks in order to improve the performance of their own code. Such developers would typically rely on static analysis tools or their own code reviews to help enforce correctness. The `Unsafe` APIs allow a developer to rewrite this code using unverifiable constructs, as shown below.
+This method is fully type-safe and the .NET runtime may insert bounds checks to help enforce safety. However, low-level library authors may want to suppress .NET's normal safety checks in order to improve the performance of their own code. Such developers would typically rely on static analysis tools or their own code reviews to help enforce correctness. The `Unsafe` APIs allow a developer to rewrite this code using unverifiable constructs, as the following example shows.
 
 ```cs
-// Unverifiable way to reverse a Span<T>.
+// A correct but unverifiable way to reverse a Span<T>.
 static void Reverse<T>(Span<T> span)
 {
   if (span.Length > 1)
