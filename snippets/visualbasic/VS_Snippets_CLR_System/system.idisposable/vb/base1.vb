@@ -5,7 +5,7 @@ Option Strict On
 Imports System.IO
 Imports System.Runtime.InteropServices
 
-Class BaseClass : Implements IDisposable
+Class BaseClass1 : Implements IDisposable
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
    ' Instantiate a FileStream instance.
