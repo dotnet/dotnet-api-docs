@@ -47,7 +47,7 @@ Public Class WordCount2
 End Class
 ' </Snippet2>
 
-Public Module Example
+Public Module Example2
    Public Sub Main()
       Dim wc As New WordCount2("C:\users\ronpet\documents\Fr_Mike_Mass.txt")
       Console.WriteLine("File {0} ({1}) has {2} words", 
