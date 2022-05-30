@@ -2,21 +2,21 @@
 Option Strict On
 
 ' <Snippet4>
-Imports Microsoft.Win32.SafeHandles
+Imports System.IO
 Imports System.Runtime.InteropServices
 
 Class DerivedClass : Inherits BaseClass
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
    ' Instantiate a SafeHandle instance.
-   Dim handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
+   Dim fs As FileStream = New FileStream("test.txt", FileMode.OpenOrCreate)
 
    ' Protected implementation of Dispose pattern.
    Protected Overrides Sub Dispose(disposing As Boolean)
       If disposed Then Return
 
       If disposing Then
-         handle.Dispose()
+         fs.Dispose()
          ' Free any other managed objects here.
          '
       End If
