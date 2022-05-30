@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 Class DerivedClass : Inherits BaseClass
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
-   ' Instantiate a SafeHandle instance.
+   ' Instantiate a FileStream instance.
    Dim fs As FileStream = New FileStream("test.txt", FileMode.OpenOrCreate)
 
    ' Protected implementation of Dispose pattern.
