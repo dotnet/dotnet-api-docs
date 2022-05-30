@@ -5,7 +5,7 @@ Option Strict On
 Imports System.IO
 Imports System.Runtime.InteropServices
 
-Class DerivedClass : Inherits BaseClass
+Class DerivedClass2 : Inherits BaseClass2
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
    ' Instantiate a FileStream instance.
@@ -31,7 +31,7 @@ Class DerivedClass : Inherits BaseClass
 End Class
 ' </Snippet4>
 
-Class BaseClass : Implements IDisposable
+Class BaseClass2 : Implements IDisposable
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
 
