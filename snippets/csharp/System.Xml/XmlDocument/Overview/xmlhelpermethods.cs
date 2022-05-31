@@ -45,10 +45,24 @@ namespace XMLProcessingApp
 
         //************************************************************************************
         //
+        //  Loads XML from a file. If the file is not found, load XML from a string.
+        //
+        //************************************************************************************
+        public void SaveXML(XmlDocument doc)
+        {
+            doc.Save(Constants.booksFileName);
+        }
+        #endregion
+
+        #region Validate XML against a Schema
+
+        //<Snippet2>
+
+        //************************************************************************************
+        //
         //  Helper method that generates an XML string.
         //
         //************************************************************************************
-
         private string generateXMLString()
         {
             string xml = "<?xml version=\"1.0\"?> \n" +
@@ -68,22 +82,7 @@ namespace XMLProcessingApp
                 "</books>";
             return xml;
         }
-
-        //************************************************************************************
-        //
-        //  Loads XML from a file. If the file is not found, load XML from a string.
-        //
-        //************************************************************************************
-        public void SaveXML(XmlDocument doc)
-        {
-            doc.Save(Constants.booksFileName);
-        }
-        #endregion
-
-        #region Validate XML against a Schema
-
-        //<Snippet2>
-
+            
         //************************************************************************************
         //
         //  Associate the schema with XML. Then, load the XML and validate it against
