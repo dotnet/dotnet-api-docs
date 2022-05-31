@@ -2,7 +2,7 @@
 Option Strict On
 
 ' <Snippet6>
-Class DerivedClass : Inherits BaseClass
+Class DerivedClass : Inherits BaseClass3
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
 
@@ -29,7 +29,7 @@ Class DerivedClass : Inherits BaseClass
 End Class
 ' </Snippet6>
 
-Class BaseClass : Implements IDisposable
+Class BaseClass3 : Implements IDisposable
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
 
