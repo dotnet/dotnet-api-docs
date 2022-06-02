@@ -452,7 +452,88 @@ For similar types in other programming languages, see [Rust's primitive `char` t
 
 ## Remarks
 
-The general convention is to call this method in a loop, slicing the `source` buffer by `charsConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if the data was successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data was not successfully decoded. This pattern provides convenient automatic U+FFFD substitution of invalid sequences while iterating through the loop.
+The general convention is to call this method in a loop, slicing the `source` buffer by `charsConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data could not be successfully decoded. This pattern provides convenient automatic `U+FFFD` substitution of invalid sequences while iterating through the loop.
+
+> [!CAUTION]
+> When calling this method in a loop and slicing the `source` span, use the returned `charsConsumed` value instead of the returned `result`'s <xref:System.Text.Rune.Utf16SequenceLength> property.
+>
+> While these two values will be identical for UTF-16 scenarios, they are not guaranteed to be identical for UTF-8 scenarios. This could cause subtle bugs in applications which initially call `DecodeFromUtf16` but which are refactored to eventually call `DecodeFromUtf8`. Using `charsConsumed` as an argument to the slice routine helps avoid this pitfall. See the Remarks section in <xref:System.Text.Rune.DecodeFromUtf8> for more information.
+
+The following sample demonstrates calling this method in a loop, printing each <xref:System.Text.Rune> present in the input.
+
+```cs
+using System.Buffers;
+using System.Text;
+
+char[] fullInput = new char[]
+{
+    '\u0050', // U+0050 LATIN CAPITAL LETTER P
+    '\uD83D', '\uDC36', // U+1F436 DOG FACE
+    '\u00E4', // U+00E4 LATIN SMALL LETTER A WITH DIAERESIS
+    '\uD800', // <invalid sequence: standalone high surrogate char>
+    '\u00C0', // U+00C0 LATIN CAPITAL LETTER A WITH GRAVE
+    '\uDFFF', // <invalid sequence: standalone low surrogate char>
+    '\u2673', // U+2673 RECYCLING SYMBOL FOR TYPE-1 PLASTICS
+};
+
+ReadOnlySpan<char> remainingInput = fullInput;
+while (!remainingInput.IsEmpty)
+{
+    // Decode
+    OperationStatus opStatus = Rune.DecodeFromUtf16(remainingInput, out Rune result, out int charsConsumed);
+
+    // Print information
+    Console.WriteLine($"Read {charsConsumed} char(s): {CharsToEscapedString(remainingInput.Slice(0, charsConsumed))}");
+    Console.WriteLine($">> OperationStatus = {opStatus}");
+    Console.WriteLine($">> Rune = U+{result.Value:X4} ({result})");
+    Console.WriteLine();
+
+    // Slice and loop again
+    remainingInput = remainingInput.Slice(charsConsumed);
+}
+
+string CharsToEscapedString(ReadOnlySpan<char> chars)
+{
+    StringBuilder builder = new StringBuilder();
+    builder.Append("[ ");
+    foreach (char ch in chars)
+    {
+        builder.Append($"'\\u{(int)ch:X4}' ");
+    }
+    builder.Append(']');
+    return builder.ToString();
+}
+
+// Prints:
+//
+// Read 1 char(s): [ '\u0050' ]
+// >> OperationStatus = Done
+// >> Rune = U+0050 (P)
+// 
+// Read 2 char(s): [ '\uD83D' '\uDC36' ]
+// >> OperationStatus = Done
+// >> Rune = U+1F436 (🐶)
+// 
+// Read 1 char(s): [ '\u00E4' ]
+// >> OperationStatus = Done
+// >> Rune = U+00E4 (ä)
+// 
+// Read 1 char(s): [ '\uD800' ]
+// >> OperationStatus = InvalidData
+// >> Rune = U+FFFD (�)
+// 
+// Read 1 char(s): [ '\u00C0' ]
+// >> OperationStatus = Done
+// >> Rune = U+00C0 (À)
+// 
+// Read 1 char(s): [ '\uDFFF' ]
+// >> OperationStatus = InvalidData
+// >> Rune = U+FFFD (�)
+// 
+// Read 1 char(s): [ '\u2673' ]
+// >> OperationStatus = Done
+// >> Rune = U+2673 (♳)
+```
 
           ]]></format>
         </remarks>
@@ -499,7 +580,88 @@ The general convention is to call this method in a loop, slicing the `source` bu
 
 ## Remarks
 
-The general convention is to call this method in a loop, slicing the `source` buffer by `bytesConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data could not be successfully decoded. This pattern provides convenient automatic U+FFFD substitution of invalid sequences while iterating through the loop.
+The general convention is to call this method in a loop, slicing the `source` buffer by `bytesConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data could not be successfully decoded. This pattern provides convenient automatic `U+FFFD` substitution of invalid sequences while iterating through the loop.
+
+> [!CAUTION]
+> When calling this method in a loop and slicing the `source` span, use the returned `bytesConsumed` value instead of the returned `result`'s <xref:System.Text.Rune.Utf8SequenceLength> property.
+>
+> This is because invalid UTF-8 sequences are on-the-fly substituted with <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType>, and the replacement character's <xref:System.Text.Rune.Utf8SequenceLength> property always returns `3`, corresponding to the replacement sequence `[ EF BF BD ]`. However, the invalid UTF-8 byte sequence as present in the input span can be anywhere from 1 - 3 bytes in length. The returned `bytesConsumed` value will always contain the actual number of bytes consumed from the input span.
+
+The following sample demonstrates calling this method in a loop, printing each <xref:System.Text.Rune> present in the input.
+
+```cs
+using System.Buffers;
+using System.Text;
+
+byte[] fullInput = new byte[]
+{
+    0x50, // U+0050 LATIN CAPITAL LETTER P
+    0xF0, 0x9F, 0x90, 0xB6, // U+1F436 DOG FACE
+    0xC3, 0xA4, // U+00E4 LATIN SMALL LETTER A WITH DIAERESIS
+    0xFF, // <single-byte invalid sequence>
+    0xC3, 0x80, // U+00C0 LATIN CAPITAL LETTER A WITH GRAVE
+    0xE1, 0x80, // <two-byte invalid sequence>
+    0xE2, 0x99, 0xB3 // U+2673 RECYCLING SYMBOL FOR TYPE-1 PLASTICS
+};
+
+ReadOnlySpan<byte> remainingInput = fullInput;
+while (!remainingInput.IsEmpty)
+{
+    // Decode
+    OperationStatus opStatus = Rune.DecodeFromUtf8(remainingInput, out Rune result, out int bytesConsumed);
+
+    // Print information
+    Console.WriteLine($"Read {bytesConsumed} byte(s): {BytesToHexString(remainingInput.Slice(0, bytesConsumed))}");
+    Console.WriteLine($">> OperationStatus = {opStatus}");
+    Console.WriteLine($">> Rune = U+{result.Value:X4} ({result})");
+    Console.WriteLine();
+
+    // Slice and loop again
+    remainingInput = remainingInput.Slice(bytesConsumed);
+}
+
+string BytesToHexString(ReadOnlySpan<byte> bytes)
+{
+    StringBuilder builder = new StringBuilder();
+    builder.Append("[ ");
+    foreach (byte b in bytes)
+    {
+        builder.Append($"{b:X2} ");
+    }
+    builder.Append(']');
+    return builder.ToString();
+}
+
+// Prints:
+//
+// Read 1 byte(s): [ 50 ]
+// >> OperationStatus = Done
+// >> Rune = U+0050 (P)
+// 
+// Read 4 byte(s): [ F0 9F 90 B6 ]
+// >> OperationStatus = Done
+// >> Rune = U+1F436 (🐶)
+// 
+// Read 2 byte(s): [ C3 A4 ]
+// >> OperationStatus = Done
+// >> Rune = U+00E4 (ä)
+// 
+// Read 1 byte(s): [ FF ]
+// >> OperationStatus = InvalidData
+// >> Rune = U+FFFD (�)
+// 
+// Read 2 byte(s): [ C3 80 ]
+// >> OperationStatus = Done
+// >> Rune = U+00C0 (À)
+// 
+// Read 2 byte(s): [ E1 80 ]
+// >> OperationStatus = InvalidData
+// >> Rune = U+FFFD (�)
+// 
+// Read 3 byte(s): [ E2 99 B3 ]
+// >> OperationStatus = Done
+// >> Rune = U+2673 (♳)
+```
 
           ]]></format>
         </remarks>
@@ -546,7 +708,90 @@ The general convention is to call this method in a loop, slicing the `source` bu
 
 ## Remarks
 
-This method is very similar to <xref:System.Text.Rune.DecodeFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)>, except it allows the caller to loop backward instead of forward. The typical calling convention is that on each iteration of the loop, the caller should slice off the final `charsConsumed` elements of the `source` buffer.
+This method is very similar to <xref:System.Text.Rune.DecodeFromUtf16(System.ReadOnlySpan{System.Char},System.Text.Rune@,System.Int32@)>, except it allows the caller to loop backward instead of forward.
+
+The general convention is to call this method in a loop, slicing the `source` buffer by `charsConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data could not be successfully decoded. This pattern provides convenient automatic `U+FFFD` substitution of invalid sequences while iterating through the loop.
+
+> [!CAUTION]
+> When calling this method in a loop and slicing the `source` span, use the returned `charsConsumed` value instead of the returned `result`'s <xref:System.Text.Rune.Utf16SequenceLength> property.
+>
+> While these two values will be identical for UTF-16 scenarios, they are not guaranteed to be identical for UTF-8 scenarios. This could cause subtle bugs in applications which initially call `DecodeLastFromUtf16` but which are refactored to eventually call `DecodeLastFromUtf8`. Using `charsConsumed` as an argument to the slice routine helps avoid this pitfall. See the Remarks section in <xref:System.Text.Rune.DecodeLastFromUtf8> for more information.
+
+The following sample demonstrates calling this method in a loop, printing each <xref:System.Text.Rune> present in the input.
+
+```cs
+using System.Buffers;
+using System.Text;
+
+char[] fullInput = new char[]
+{
+    '\u0050', // U+0050 LATIN CAPITAL LETTER P
+    '\uD83D', '\uDC36', // U+1F436 DOG FACE
+    '\u00E4', // U+00E4 LATIN SMALL LETTER A WITH DIAERESIS
+    '\uD800', // <invalid sequence: standalone high surrogate char>
+    '\u00C0', // U+00C0 LATIN CAPITAL LETTER A WITH GRAVE
+    '\uDFFF', // <invalid sequence: standalone low surrogate char>
+    '\u2673', // U+2673 RECYCLING SYMBOL FOR TYPE-1 PLASTICS
+};
+
+ReadOnlySpan<char> remainingInput = fullInput;
+while (!remainingInput.IsEmpty)
+{
+    // Decode
+    OperationStatus opStatus = Rune.DecodeLastFromUtf16(remainingInput, out Rune result, out int charsConsumed);
+
+    // Print information
+    Console.WriteLine($"Read {charsConsumed} char(s): {CharsToEscapedString(remainingInput[^charsConsumed..])}");
+    Console.WriteLine($">> OperationStatus = {opStatus}");
+    Console.WriteLine($">> Rune = U+{result.Value:X4} ({result})");
+    Console.WriteLine();
+
+    // Slice and loop again
+    remainingInput = remainingInput[..^charsConsumed];
+}
+
+string CharsToEscapedString(ReadOnlySpan<char> chars)
+{
+    StringBuilder builder = new StringBuilder();
+    builder.Append("[ ");
+    foreach (char ch in chars)
+    {
+        builder.Append($"'\\u{(int)ch:X4}' ");
+    }
+    builder.Append(']');
+    return builder.ToString();
+}
+
+// Prints:
+//
+// Read 1 char(s): [ '\u2673' ]
+// >> OperationStatus = Done
+// >> Rune = U+2673 (♳)
+// 
+// Read 1 char(s): [ '\uDFFF' ]
+// >> OperationStatus = InvalidData
+// >> Rune = U+FFFD (�)
+// 
+// Read 1 char(s): [ '\u00C0' ]
+// >> OperationStatus = Done
+// >> Rune = U+00C0 (À)
+// 
+// Read 1 char(s): [ '\uD800' ]
+// >> OperationStatus = NeedMoreData
+// >> Rune = U+FFFD (�)
+// 
+// Read 1 char(s): [ '\u00E4' ]
+// >> OperationStatus = Done
+// >> Rune = U+00E4 (ä)
+// 
+// Read 2 char(s): [ '\uD83D' '\uDC36' ]
+// >> OperationStatus = Done
+// >> Rune = U+1F436 (🐶)
+// 
+// Read 1 char(s): [ '\u0050' ]
+// >> OperationStatus = Done
+// >> Rune = U+0050 (P)
+```
 
           ]]></format>
         </remarks>
@@ -593,7 +838,90 @@ This method is very similar to <xref:System.Text.Rune.DecodeFromUtf16(System.Rea
 
 ## Remarks
 
-This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)>, except it allows the caller to loop backward instead of forward. The typical calling convention is that on each iteration of the loop, the caller should slice off the final `bytesConsumed` elements of the `source` buffer.
+This method is very similar to <xref:System.Text.Rune.DecodeFromUtf8(System.ReadOnlySpan{System.Byte},System.Text.Rune@,System.Int32@)>, except it allows the caller to loop backward instead of forward.
+
+The general convention is to call this method in a loop, slicing the `source` buffer by `bytesConsumed` elements on each iteration of the loop. On each iteration of the loop, `result` contains the real scalar value if successfully decoded, or it contains <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> if the data could not be successfully decoded. This pattern provides convenient automatic `U+FFFD` substitution of invalid sequences while iterating through the loop.
+
+> [!CAUTION]
+> When calling this method in a loop and slicing the `source` span, use the returned `bytesConsumed` value instead of the returned `result`'s <xref:System.Text.Rune.Utf8SequenceLength> property.
+>
+> This is because invalid UTF-8 sequences are on-the-fly substituted with <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType>, and the replacement character's <xref:System.Text.Rune.Utf8SequenceLength> property always returns `3`, corresponding to the replacement sequence `[ EF BF BD ]`. However, the invalid UTF-8 byte sequence as present in the input span can be anywhere from 1 - 3 bytes in length. The returned `bytesConsumed` value will always contain the actual number of bytes consumed from the input span.
+
+The following sample demonstrates calling this method in a loop, printing each <xref:System.Text.Rune> present in the input.
+
+```cs
+using System.Buffers;
+using System.Text;
+
+byte[] fullInput = new byte[]
+{
+    0x50, // U+0050 LATIN CAPITAL LETTER P
+    0xF0, 0x9F, 0x90, 0xB6, // U+1F436 DOG FACE
+    0xC3, 0xA4, // U+00E4 LATIN SMALL LETTER A WITH DIAERESIS
+    0xFF, // <single-byte invalid sequence>
+    0xC3, 0x80, // U+00C0 LATIN CAPITAL LETTER A WITH GRAVE
+    0xE1, 0x80, // <two-byte invalid sequence>
+    0xE2, 0x99, 0xB3 // U+2673 RECYCLING SYMBOL FOR TYPE-1 PLASTICS
+};
+
+ReadOnlySpan<byte> remainingInput = fullInput;
+while (!remainingInput.IsEmpty)
+{
+    // Decode
+    OperationStatus opStatus = Rune.DecodeLastFromUtf8(remainingInput, out Rune result, out int bytesConsumed);
+
+    // Print information
+    Console.WriteLine($"Read {bytesConsumed} byte(s): {BytesToHexString(remainingInput[^bytesConsumed..])}");
+    Console.WriteLine($">> OperationStatus = {opStatus}");
+    Console.WriteLine($">> Rune = U+{result.Value:X4} ({result})");
+    Console.WriteLine();
+
+    // Slice and loop again
+    remainingInput = remainingInput[..^bytesConsumed];
+}
+
+string BytesToHexString(ReadOnlySpan<byte> bytes)
+{
+    StringBuilder builder = new StringBuilder();
+    builder.Append("[ ");
+    foreach (byte b in bytes)
+    {
+        builder.Append($"{b:X2} ");
+    }
+    builder.Append(']');
+    return builder.ToString();
+}
+
+// Prints:
+//
+// Read 3 byte(s): [ E2 99 B3 ]
+// >> OperationStatus = Done
+// >> Rune = U+2673 (♳)
+// 
+// Read 2 byte(s): [ E1 80 ]
+// >> OperationStatus = NeedMoreData
+// >> Rune = U+FFFD (�)
+// 
+// Read 2 byte(s): [ C3 80 ]
+// >> OperationStatus = Done
+// >> Rune = U+00C0 (À)
+// 
+// Read 1 byte(s): [ FF ]
+// >> OperationStatus = InvalidData
+// >> Rune = U+FFFD (�)
+// 
+// Read 2 byte(s): [ C3 A4 ]
+// >> OperationStatus = Done
+// >> Rune = U+00E4 (ä)
+// 
+// Read 4 byte(s): [ F0 9F 90 B6 ]
+// >> OperationStatus = Done
+// >> Rune = U+1F436 (🐶)
+// 
+// Read 1 byte(s): [ 50 ]
+// >> OperationStatus = Done
+// >> Rune = U+0050 (P)
+```
 
           ]]></format>
         </remarks>
@@ -1778,7 +2106,76 @@ For more information, see <xref:System.Char.IsWhiteSpace%2A?displayProperty=name
       <Docs>
         <summary>Gets a <see cref="T:System.Text.Rune" /> instance that represents the Unicode replacement character U+FFFD.</summary>
         <value>A <see cref="T:System.Text.Rune" /> instance that represents the Unicode replacement character U+FFFD.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The Unicode replacement character, `U+FFFD`, is commonly used by transforms as a substitution character when the source input contains ill-formed data. `U+FFFD` is represented in UTF-16 by the single char `'\uFFFD'` and in UTF-8 by the three-byte sequence `[ EF BF BD ]`.
+
+The following example demonstrates how the replacement character is used as a substitution during transcoding operations from UTF-16 to UTF-8.
+
+```cs
+//
+// Transcode ill-formed UTF-16 data to UTF-8
+//
+
+string originalInput = "AB\ud800YZ";
+byte[] output = Encoding.UTF8.GetBytes(originalInput);
+for (int i = 0; i < output.Length; i++)
+{
+    Console.WriteLine($"output[{i}] = 0x{output[i]:X2}");
+}
+
+// Prints to the console:
+// output[0] = 0x41
+// output[1] = 0x42
+// output[2] = 0xEF
+// output[3] = 0xBF
+// output[4] = 0xBD
+// output[5] = 0x59
+// output[6] = 0x5A
+```
+
+In the output, the leading `"AB"` is successfully transcoded into its UTF-8 representation `[ 41 42 ]`. However, the standalone high surrogate char `'\ud800'` cannot be represented in UTF-8, so the replacement character sequence `[ EF BF BD ]` is output instead. Finally, the trailing `"YZ"` does transcode successfully to `[ 59 5A ]` and is written to the output.
+
+This can also be observed the other direction, transcoding from UTF-8 to UTF-16, as shown in the following example.
+
+```cs
+//
+// Transcode ill-formed UTF-8 data to UTF-16
+//
+
+byte[] originalInput = new byte[] { 0x41, 0x42, 0xC1, 0x59, 0x5A };
+string output = Encoding.UTF8.GetString(originalInput);
+Console.WriteLine($"Output: {output}");
+for (int i = 0; i < output.Length; i++)
+{
+    Console.WriteLine($"output[{i}] = '\\u{(int)output[i]:X4}'");
+}
+
+// Prints to the console:
+// Output: AB�YZ
+// output[0] = '\u0041'
+// output[1] = '\u0042'
+// output[2] = '\uFFFD'
+// output[3] = '\u0059'
+// output[4] = '\u005A'
+```
+
+As with the earlier example, the UTF-8 sequences `[ 41 42 ]` and `[ 59 5A ]` decode successfully back into the UTF-16 representations `"AB"` and `"YZ"`. However, the standalone byte `[ C1 ]` is invalid UTF-8, and it is substituted with the replacement character `'\UFFFD'` in the output.
+
+When printed to the console or displayed on a web page, the replacement character is usually denoted by a white question mark within a black diamond. The [Unicode Standard code charts](https://www.unicode.org/charts/PDF/UFFF0.pdf) provide a sample representation.
+
+> [!NOTE]
+> When a substitution occurs, it results in data loss. For example, _both_ the invalid UTF-8 sequence `[ 41 42 C0 59 5A ]` _and_ the invalid UTF-8 sequence `[ 41 42 C1 59 5A ]` will, upon transcoding to UTF-16 with substitution, result in the exact same output string `"AB\ufffdYZ"`. There is no mechanism to reverse this and recover the original invalid bytes.
+>
+> The mere presence of `'\uFFFD'` in a UTF-16 string or `[ EF BF BD ]` in a UTF-8 string should not be construed as evidence that the original input was ill-formed. It's perfectly legal for an input UTF-16 string to already contain the replacement character `'\uFFFD'` or for an input UTF-8 string to already contain `[ EF BF BD ]`, and they will freely and losslessly convert between each other.
+
+For more information on use of `U+FFFD` as a substitution character for ill-formed input sequences, see [the Unicode Standard, Ch. 3](https://www.unicode.org/versions/latest/ch03.pdf).
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.IComparable.CompareTo">

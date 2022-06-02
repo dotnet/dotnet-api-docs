@@ -54,7 +54,7 @@
         <param name="charsRead">When the method returns, the number of characters read from <paramref name="source" />.</param>
         <param name="bytesWritten">When the method returns, the number of bytes written to <paramref name="destination" />.</param>
         <param name="replaceInvalidSequences">
-          <see langword="true" /> to replace invalid UTF-16 sequences in <paramref name="source" /> with U+FFFD; <see langword="false" /> to return <see cref="F:System.Buffers.OperationStatus.InvalidData" /> if invalid characters are found in <paramref name="source" />.</param>
+          <see langword="true" /> to replace invalid UTF-16 sequences in <paramref name="source" /> with the Unicode replacement character <code>U+FFFD</code> in <paramref name="destination" />; <see langword="false" /> to return <see cref="F:System.Buffers.OperationStatus.InvalidData" /> if invalid UTF-16 sequences are found in <paramref name="source" />.</param>
         <param name="isFinalBlock">
           <see langword="true" /> if the method should not return <see cref="F:System.Buffers.OperationStatus.NeedMoreData" />; otherwise, <see langword="false" />.</param>
         <summary>Converts a UTF-16 character span to a UTF-8 encoded byte span.</summary>
@@ -64,13 +64,247 @@
 
 ## Remarks
 
-This method corresponds to the [UTF8Encoding.GetBytes](xref:System.Text.UTF8Encoding.GetBytes%2A) method, except that it has a different calling convention, different error handling mechanisms, and different performance characteristics. 
+This method corresponds to the [UTF8Encoding.GetBytes](xref:System.Text.UTF8Encoding.GetBytes%2A) method, except that it uses an <xref:System.Buffers.OperationStatus>-based calling convention and has different error handling mechanisms.
 
-If 'replaceInvalidSequences' is `true`, the method replaces any ill-formed subsequences in `source` with U+FFFD in `destination` and continues processing the remainder of the buffer. Otherwise, the method returns <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType> if it encounters any ill-formed sequences.
+The following sample shows how to use this to transcode a UTF-16 input buffer to a UTF-8 destination buffer, then from UTF-8 back to a UTF-16 destination buffer.
 
-If the method returns an error code, the out parameters indicate how much of the data was successfully transcoded, and the location of the ill-formed subsequence can be deduced from these values.
+```cs
+/*
+ * First, transcode UTF-16 to UTF-8.
+ */
 
-If 'replaceInvalidSequences' is `true`, the method never returns <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>. If 'isFinalBlock' is `true`, the method never returns <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>.
+Span<byte> utf8DestinationBytes = new byte[64];
+string utf16InputChars = "¿Cómo estás?"; // "How are you?" in Spanish
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+if (opStatus != OperationStatus.Done)
+{
+    throw new Exception("Couldn't convert the entire buffer!");
+}
+
+Span<byte> slicedUtf8Bytes = utf8DestinationBytes.Slice(0, bytesWritten);
+
+// Prints this output:
+// Operation status: Done
+// 12 chars read; 15 bytes written.
+
+/*
+ * You can also use APIs like Encoding.UTF8 to convert it back from UTF-8 to UTF-16.
+ */
+
+string convertedBackToUtf16 = Encoding.UTF8.GetString(slicedUtf8Bytes);
+Console.WriteLine($"Converted back: {convertedBackToUtf16}");
+
+// Prints this output:
+// Converted back: ¿Cómo estás?
+```
+
+In this example, the `FromUtf16` method returns <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType> because it consumes all 12 input chars and transcodes them to the destination buffer. It reports that it writes 15 bytes to the destination buffer, so the caller must slice the destination buffer to this size before operating on its contents. The remainder of the destination buffer beyond these 15 bytes does not contain useful data.
+
+> [!NOTE]
+> This demonstrates a key concept in UTF-16 to UTF-8 transcoding: the data might expand during the conversion. That is, the number of bytes required in `destination` might be greater than the number of input chars in `source`.
+>
+> For the `FromUtf16` method, the worst-case expansion is that every input char from `source` might result in 3 bytes being written to `destination`. That is, as long as `destination.Length >= checked(source.Length * 3)` holds, this method will never return <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>.
+
+### Handling inadequately sized destination buffers
+
+If the destination buffer is not large enough to hold the transcoded contents of the source buffer, `FromUtf16` returns <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>. The following example demonstrates this scenario.
+
+```cs
+// Intentionally allocate a too-small destination buffer.
+Span<byte> utf8DestinationBytes = new byte[12];
+string utf16InputChars = "¿Cómo estás?"; // "How are you?" in Spanish
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+// Prints this output:
+// Operation status: DestinationTooSmall
+// 9 chars read; 11 bytes written.
+```
+
+In this case, `FromUtf16` was successfully able to transcode the first 9 chars of the input (`"¿Cómo est"`) into 11 bytes and place them in the destination buffer. The last unused byte in the destination buffer does not contain useful data. Transcoding the next character (`'á'`) cannot take place because it would require an additional 2 bytes in the destination buffer, and there is insufficient space available.
+
+A typical code pattern here is to call this method in a loop, writing it to a stream in chunks. The following example demonstrates this process.
+
+```cs
+MemoryStream outputStream = new MemoryStream();
+string stringToWrite = "Hello world!";
+await WriteStringToStreamAsync(stringToWrite, outputStream);
+
+async Task WriteStringToStreamAsync(string dataToWrite, Stream outputStream)
+{
+    // For this example we'll use a 1024-byte scratch buffer, but you can
+    // use pooled arrays or a differently-sized buffer depending on your
+    // use cases. As long as the buffer is >= 4 bytes in length, it will
+    // make forward progress on every iteration.
+    byte[] scratchBuffer = new byte[1024];
+
+    ReadOnlyMemory<char> remainingData = dataToWrite.AsMemory();
+    while (!remainingData.IsEmpty)
+    {
+        OperationStatus opStatus = Utf8.FromUtf16(remainingData.Span, scratchBuffer, out int charsRead, out int bytesWritten);
+        Debug.Assert(opStatus == OperationStatus.Done || opStatus == OperationStatus.DestinationTooSmall);
+        Debug.Assert(bytesWritten > 0, "Scratch buffer is too small for loop to make forward progress.");
+
+        await outputStream.WriteAsync(scratchBuffer.AsMemory(0, bytesWritten));
+        remainingData = remainingData.Slice(charsRead);
+    }
+}
+```
+
+### Handling invalid UTF-16 input data
+
+The `replaceInvalidSequences` argument controls whether `FromUtf16` fixes up invalid UTF-16 sequences in the source buffer. The `replaceInvalidSequences` argument defaults to `true`. This means that by default, any invalid UTF-16 sequences in the source are replaced with the 3-byte UTF-8 sequence `[ EF BF BD ]` in the destination buffer. See <xref:System.Text.Rune.ReplacementChar?displayProperty=nameWithType> for more information.
+
+The following example demonstrates this replace-by-default behavior.
+
+```cs
+Span<byte> utf8DestinationBytes = new byte[128];
+string utf16InputChars = "AB\ud800YZ";
+
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+utf8DestinationBytes = utf8DestinationBytes.Slice(0, bytesWritten);
+for (int i = 0; i < utf8DestinationBytes.Length; i++)
+{
+    Console.WriteLine($"utf8DestinationBytes[{i}] = 0x{utf8DestinationBytes[i]:X2}");
+}
+
+// Prints this output:
+// Operation status: Done
+// 5 chars read; 7 bytes written.
+// utf8DestinationBytes[0] = 0x41
+// utf8DestinationBytes[1] = 0x42
+// utf8DestinationBytes[2] = 0xEF
+// utf8DestinationBytes[3] = 0xBF
+// utf8DestinationBytes[4] = 0xBD
+// utf8DestinationBytes[5] = 0x59
+// utf8DestinationBytes[6] = 0x5A
+```
+
+In the output, the leading `"AB"` is successfully transcoded into its UTF-8 representation `[ 41 42 ]`. However, the standalone high surrogate char `'\ud800'` cannot be represented in UTF-8, so the replacement character sequence `[ EF BF BD ]` is written to the destination instead. Finally, the trailing `"YZ"` does transcode successfully to `[ 59 5A ]` and is written to the destination.
+
+If you set `replaceInvalidSequences` to `false`, substitution of ill-formed input data not take place. Instead, the `ToUtf8` method will stop processing input immediately upon seeing ill-formed input data and return <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>, as shown in the following example.
+
+```cs
+Span<byte> utf8DestinationBytes = new byte[128];
+string utf16InputChars = "AB\ud800YZ";
+
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten, replaceInvalidSequences: false);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+utf8DestinationBytes = utf8DestinationBytes.Slice(0, bytesWritten);
+for (int i = 0; i < utf8DestinationBytes.Length; i++)
+{
+    Console.WriteLine($"utf8DestinationBytes[{i}] = 0x{utf8DestinationBytes[i]:X2}");
+}
+
+// Prints this output:
+// Operation status: InvalidData
+// 2 chars read; 2 bytes written.
+// utf8DestinationBytes[0] = 0x41
+// utf8DestinationBytes[1] = 0x42
+```
+
+This demonstrates that the `FromUtf16` method was able to process 2 chars from the input (writing 2 bytes to the destination) before it encountered ill-formed input. The caller may fix up the input, throw an exception, or take any other appropriate action.
+
+> [!NOTE]
+> When `replaceInvalidSequences` is set to its default value of `true`, the `FromUtf16` method will never return <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>.
+
+### Handling input data split across discontiguous buffers
+
+The `isFinalBlock` argument controls whether `FromUtf16` treats the entire input as fully self-contained. The `isFinalBlock` argument defaults to `true`. This means that by default, any incomplete UTF-16 data (a standalone high surrogate) at the end of the input buffer is treated as invalid. This will go through `U+FFFD` substitution or cause `FromUtf16` to return <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType> depending on the value of the `replaceInvalidSequences` argument, as described earlier.
+
+The following example demonstrates the default behavior, where both `isFinalBlock` and `replaceInvalidSequences` are `true`.
+
+```cs
+Span<byte> utf8DestinationBytes = new byte[128];
+string utf16InputChars = "AB\ud800";
+
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+utf8DestinationBytes = utf8DestinationBytes.Slice(0, bytesWritten);
+for (int i = 0; i < utf8DestinationBytes.Length; i++)
+{
+    Console.WriteLine($"utf8DestinationBytes[{i}] = 0x{utf8DestinationBytes[i]:X2}");
+}
+
+// Prints this output:
+// Operation status: Done
+// 3 chars read; 5 bytes written.
+// utf8DestinationBytes[0] = 0x41
+// utf8DestinationBytes[1] = 0x42
+// utf8DestinationBytes[2] = 0xEF
+// utf8DestinationBytes[3] = 0xBF
+// utf8DestinationBytes[4] = 0xBD
+```
+
+In the output, the leading `"AB"` is successfully transcoded to its UTF-8 representation `[ 41 42 ]`. There's a standalone high surrogate char at the end of the input. However, since `isFinalBlock` defaults to `true`, this indicates to the `FromUtf16` method that there's no more data in the input - no future call will supply the matching low surrogate char. `FromUtf16` then treats this as an invalid UTF-16 sequence, and since `replaceInvalidSequences` also defaults to `true`, the substitution sequence `[ EF BF BD ]` is written to the destination.
+
+If `isFinalBlock` keeps its default value of `true` but `replaceInvalidSequences` is set to `false`, then a standalone high surrogate char at the end of the input will cause `FromUtf16` to return <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>, as the following example shows.
+
+```cs
+Span<byte> utf8DestinationBytes = new byte[128];
+string utf16InputChars = "AB\ud800";
+
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten, replaceInvalidSequences: false);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+utf8DestinationBytes = utf8DestinationBytes.Slice(0, bytesWritten);
+for (int i = 0; i < utf8DestinationBytes.Length; i++)
+{
+    Console.WriteLine($"utf8DestinationBytes[{i}] = 0x{utf8DestinationBytes[i]:X2}");
+}
+
+// Prints this output:
+// Operation status: InvalidData
+// 2 chars read; 2 bytes written.
+// utf8DestinationBytes[0] = 0x41
+// utf8DestinationBytes[1] = 0x42
+```
+
+This demonstrates that the `FromUtf16` method was able to process 2 chars from the input (writing 2 bytes to the destination) before it encountered the standalone high surrogate char at the end of the input. The caller may fix up the input, throw an exception, or take any other appropriate action.
+
+Sometimes the application doesn't have all of the input text in a single contiguous buffer. Perhaps the app is dealing with gigantic documents, and it would rather represent this data through an array of buffers (a `char[][]`, perhaps) instead of a single giant `string` instance.
+
+If `isFinalBlock` is set to `false`, this tells `FromUtf16` that the input argument doesn't represent the entirety of the remaining data. The `FromUtf16` method shouldn't treat a high surrogate char at the end of the input as invalid, as the next portion of the buffer could begin with a matching low surrogate char. In this case, the method returns <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>, as the following example shows.
+
+```cs
+Span<byte> utf8DestinationBytes = new byte[128];
+string utf16InputChars = "AB\ud800";
+
+OperationStatus opStatus = Utf8.FromUtf16(utf16InputChars, utf8DestinationBytes, out int charsRead, out int bytesWritten, isFinalBlock: false);
+Console.WriteLine($"Operation status: {opStatus}");
+Console.WriteLine($"{charsRead} chars read; {bytesWritten} bytes written.");
+
+utf8DestinationBytes = utf8DestinationBytes.Slice(0, bytesWritten);
+for (int i = 0; i < utf8DestinationBytes.Length; i++)
+{
+    Console.WriteLine($"utf8DestinationBytes[{i}] = 0x{utf8DestinationBytes[i]:X2}");
+}
+
+// Prints this output:
+// Operation status: NeedMoreData
+// 2 chars read; 2 bytes written.
+// utf8DestinationBytes[0] = 0x41
+// utf8DestinationBytes[1] = 0x42
+```
+
+In this example, `FromUtf16` was able to process 2 input chars and generate 2 output bytes, but then it encountered partial data (a standalone high surrogate) at the end of the input buffer. More input is needed before a determination can be made as to whether this data is valid or invalid.
+
+> [!NOTE]
+> The `FromUtf16` method is stateless, meaning it does not keep track of input buffer contents between calls. If this method returns <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>, it is up to the caller to stitch together the remainder of the current input buffer with the contents of the next input buffer before calling `FromUtf16` again.
+>
+> When `isFinalBlock` is set to its default value of `true`, the `FromUtf16` method will never return <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>.
 
           ]]></format>
         </remarks>
