@@ -18,7 +18,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Reads a tar archive from a stream.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -38,10 +38,13 @@
         <Parameter Name="leaveOpen" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="archiveStream">To be added.</param>
-        <param name="leaveOpen">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="archiveStream">The stream to read from.</param>
+        <param name="leaveOpen">
+          <see langword="false" /> to dispose the <paramref name="archiveStream" /> when this instance is disposed; <see langword="true" /> to leave the stream open.</param>
+        <summary>Initializes a <see cref="T:System.Formats.Tar.TarReader" /> instance that can read tar entries from the specified stream, and can optionally leave the stream open upon disposal of this instance.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="archiveStream" /> is unreadable.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -64,8 +67,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Disposes the current <see cref="T:System.Formats.Tar.TarReader" /> instance, and disposes the streams of all the entries that were read from the archive.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The <xref:System.Formats.Tar.TarEntry.DataStream> property of any entry can be replaced with a new stream. If the user decides to replace it on a <xref:System.Formats.Tar.TarEntry> instance that was obtained using a <xref:System.Formats.Tar.TarReader>, the underlying stream gets disposed immediately, freeing the <xref:System.Formats.Tar.TarReader> of origin from the responsibility of having to dispose it.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Format">
@@ -84,7 +95,7 @@
         <ReturnType>System.Formats.Tar.TarFormat</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The format of the archive. It is initially <see cref="F:System.Formats.Tar.TarFormat.Unknown" />. The archive format is detected after the first call to <see cref="M:System.Formats.Tar.TarReader.GetNextEntry(System.Boolean)" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -107,10 +118,29 @@
         <Parameter Name="copyData" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="copyData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="copyData">
+          <para>Set it to <see langword="true" /> to copy the data of the entry into a new <see cref="T:System.IO.MemoryStream" />. This is helpful when the underlying archive stream is unseekable, and the data needs to be accessed later.</para>
+          <para>Set it to <see langword="false" /> if the data should not be copied into a new stream. If the underlying stream is unseekable, the user has the responsibility of reading and processing the <see cref="P:System.Formats.Tar.TarEntry.DataStream" /> immediately after calling this method.</para>
+          <para>The default value is <see langword="false" />.</para>
+        </param>
+        <summary>Retrieves the next entry from the archive stream.</summary>
+        <returns>A <see cref="T:System.Formats.Tar.TarEntry" /> instance if a valid entry was found, or <see langword="null" /> if the end of the archive has been reached.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.FormatException">
+The archive is malformed.
+
+-or-
+
+The archive contains entries in different formats.
+
+-or-
+
+More than one Global Extended Attributes Entry was found in the current <see cref="F:System.Formats.Tar.TarFormat.Pax" /> archive.
+
+-or-
+
+Two or more Extended Attributes entries were found consecutively in the current <see cref="F:System.Formats.Tar.TarFormat.Pax" /> archive.</exception>
+        <exception cref="T:System.IO.IOException">An I/O problem ocurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="GlobalExtendedAttributes">
@@ -129,7 +159,11 @@
         <ReturnType>System.Collections.Generic.IReadOnlyDictionary&lt;System.String,System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+          <para>If the archive format is <see cref="F:System.Formats.Tar.TarFormat.Pax" />, returns a read-only dictionary containing the string key-value pairs of the Global Extended Attributes in the first entry of the archive.</para>
+          <para>If there is no Global Extended Attributes entry at the beginning of the archive, this returns an empty read-only dictionary.</para>
+          <para>If the first entry has not been read by calling <see cref="M:System.Formats.Tar.TarReader.GetNextEntry(System.Boolean)" />, this returns <see langword="null" />.</para>
+        </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

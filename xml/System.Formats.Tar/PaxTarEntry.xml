@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents a tar entry from an archive of the PAX format.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -35,10 +35,41 @@
         <Parameter Name="entryName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="entryType">To be added.</param>
-        <param name="entryName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="entryType">The type of the entry.</param>
+        <param name="entryName">A string with the path and file name of this entry.</param>
+        <summary>Initializes a new <see cref="T:System.Formats.Tar.PaxTarEntry" /> instance with the specified entry type, entry name, and the default extended attributes.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When creating an instance using the <xref:System.Formats.Tar.PaxTarEntry.#ctor(System.Formats.Tar.TarEntryType,System.String)> constructor, only the following entry types are supported:
+
+<list type="bullet">
+  <item>In all platforms: <xref:System.Formats.Tar.TarEntryType.Directory>, <xref:System.Formats.Tar.TarEntryType.HardLink>, <xref:System.Formats.Tar.TarEntryType.SymbolicLink>, <xref:System.Formats.Tar.TarEntryType.RegularFile>.</item>
+  <item>In Unix platforms only: <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice> and <xref:System.Formats.Tar.TarEntryType.Fifo>.</item>
+</list>Use the <xref:System.Formats.Tar.PaxTarEntry.#ctor(System.Formats.Tar.TarEntryType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})> constructor to include additional extended attributes when creating the entry.
+
+The following entries are always found in the Extended Attributes dictionary of any PAX entry:
+
+<list type="bullet">
+  <item>Modification time, under the name `mtime`, as a <xref:System.Double> number.</item>
+  <item>Access time, under the name `atime`, as a <xref:System.Double> number.</item>
+  <item>Change time, under the name `ctime`, as a <xref:System.Double> number.</item>
+  <item>Path, under the name `path`, as a string.</item>
+</list>The following entries are only found in the Extended Attributes dictionary of a PAX entry if certain conditions are met:
+
+<list type="bullet">
+  <item>Group name, under the name `gname`, as a string, if it is larger than 32 bytes.</item>
+  <item>User name, under the name `uname`, as a string, if it is larger than 32 bytes.</item>
+  <item>File length, under the name `size`, as an <xref:System.Int32>, if the string representation of the number is larger than 12 bytes.</item>
+</list>
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="entryName" /> is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.InvalidOperationException">The entry type is not supported for creating an entry.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -59,11 +90,43 @@
         <Parameter Name="extendedAttributes" Type="System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;System.String,System.String&gt;&gt;" />
       </Parameters>
       <Docs>
-        <param name="entryType">To be added.</param>
-        <param name="entryName">To be added.</param>
-        <param name="extendedAttributes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="entryType">The type of the entry.</param>
+        <param name="entryName">A string with the path and file name of this entry.</param>
+        <param name="extendedAttributes">An enumeration of string key-value pairs that represents the metadata to include in the Extended Attributes entry that precedes the current entry.</param>
+        <summary>Initializes a new <see cref="T:System.Formats.Tar.PaxTarEntry" /> instance with the specified entry type, entry name and Extended Attributes enumeration.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When creating an instance using the <xref:System.Formats.Tar.PaxTarEntry.#ctor(System.Formats.Tar.TarEntryType,System.String)> constructor, only the following entry types are supported:
+            <list type="bullet">
+  <item>In all platforms: <xref:System.Formats.Tar.TarEntryType.Directory>, <xref:System.Formats.Tar.TarEntryType.HardLink>, <xref:System.Formats.Tar.TarEntryType.SymbolicLink>, <xref:System.Formats.Tar.TarEntryType.RegularFile>.</item>
+  <item>In Unix platforms only: <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice> and <xref:System.Formats.Tar.TarEntryType.Fifo>.</item>
+</list>
+            The specified `extendedAttributes` get appended to the default attributes, unless the specified enumeration overrides any of them.
+            The following entries are always found in the Extended Attributes dictionary of any PAX entry:
+
+<list type="bullet">
+  <item>Modification time, under the name `mtime`, as a <xref:System.Double> number.</item>
+  <item>Access time, under the name `atime`, as a <xref:System.Double> number.</item>
+  <item>Change time, under the name `ctime`, as a <xref:System.Double> number.</item>
+  <item>Path, under the name `path`, as a string.</item>
+</list>The following entries are only found in the Extended Attributes dictionary of a PAX entry if certain conditions are met:
+
+<list type="bullet">
+  <item>Group name, under the name `gname`, as a string, if it is larger than 32 bytes.</item>
+  <item>User name, under the name `uname`, as a string, if it is larger than 32 bytes.</item>
+  <item>File length, under the name `size`, as an <xref:System.Int32>, if the string representation of the number is larger than 12 bytes.</item>
+</list>
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="extendedAttributes" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="entryName" /> is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.InvalidOperationException">The entry type is not supported for creating an entry.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtendedAttributes">
@@ -82,9 +145,31 @@
         <ReturnType>System.Collections.Generic.IReadOnlyDictionary&lt;System.String,System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the extended attributes for this entry.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The extended attributes are specified when constructing an entry. Use <xref:System.Formats.Tar.PaxTarEntry.#ctor(System.Formats.Tar.TarEntryType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})> to append your own enumeration of extended attributes to the current entry on top of the default ones. Use <xref:System.Formats.Tar.PaxTarEntry.#ctor(System.Formats.Tar.TarEntryType,System.String)> to only use the default extended attributes.
+            The following entries are always found in the Extended Attributes dictionary of any PAX entry:
+
+<list type="bullet">
+  <item>Modification time, under the name `mtime`, as a <xref:System.Double> number.</item>
+  <item>Access time, under the name `atime`, as a <xref:System.Double> number.</item>
+  <item>Change time, under the name `ctime`, as a <xref:System.Double> number.</item>
+  <item>Path, under the name `path`, as a string.</item>
+</list>The following entries are only found in the Extended Attributes dictionary of a PAX entry if certain conditions are met:
+
+<list type="bullet">
+  <item>Group name, under the name `gname`, as a string, if it is larger than 32 bytes.</item>
+  <item>User name, under the name `uname`, as a string, if it is larger than 32 bytes.</item>
+  <item>File length, under the name `size`, as an <xref:System.Int32>, if the string representation of the number is larger than 12 bytes.</item>
+</list>
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

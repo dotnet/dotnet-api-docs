@@ -18,7 +18,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Writes a tar archive into a stream.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -39,10 +39,11 @@
         <Parameter Name="leaveOpen" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="archiveStream">To be added.</param>
-        <param name="globalExtendedAttributes">To be added.</param>
-        <param name="leaveOpen">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="archiveStream">The stream to write to.</param>
+        <param name="globalExtendedAttributes">An optional enumeration of string key-value pairs that represent Global Extended Attributes metadata that should apply to all subsquent entries. If <see langword="null" />, then no Global Extended Attributes entry is written. If an empty instance is passed, a Global Extended Attributes entry is written with default values.</param>
+        <param name="leaveOpen">
+          <see langword="false" /> to dispose the <paramref name="archiveStream" /> when this instance is disposed; <see langword="true" /> to leave the stream open.</param>
+        <summary>Initializes a <see cref="T:System.Formats.Tar.TarWriter" /> instance that can write tar entries to the specified stream, optionally leave the stream open upon disposal of this instance, and can optionally add a Global Extended Attributes entry at the beginning of the archive. When using this constructor, the format of the resulting archive is <see cref="F:System.Formats.Tar.TarFormat.Pax" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -63,11 +64,28 @@
         <Parameter Name="leaveOpen" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="archiveStream">To be added.</param>
-        <param name="archiveFormat">To be added.</param>
-        <param name="leaveOpen">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="archiveStream">The stream to write to.</param>
+        <param name="archiveFormat">The format of the archive.</param>
+        <param name="leaveOpen">
+          <see langword="false" /> to dispose the <paramref name="archiveStream" /> when this instance is disposed; <see langword="true" /> to leave the stream open.</param>
+        <summary>Initializes a <see cref="T:System.Formats.Tar.TarWriter" /> instance that can write tar entries to the specified stream, optionally leave the stream open upon disposal of this instance, and can specify the format of the underlying archive.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the selected `archiveFormat` is <xref:System.Formats.Tar.TarFormat.Pax>, no Global Extended Attributes entry is written. To write a PAX archive with a Global Extended Attributes entry inserted at the beginning of the archive, use the <xref:System.Formats.Tar.TarWriter.#ctor(System.IO.Stream,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Boolean)> constructor instead.
+
+The recommended format is <xref:System.Formats.Tar.TarFormat.Pax> for its flexibility.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="archiveStream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="archiveStream" /> is unwritable.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="archiveFormat" /> is either <see cref="F:System.Formats.Tar.TarFormat.Unknown" />, or not one of the other enum values.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -90,7 +108,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Disposes the current <see cref="T:System.Formats.Tar.TarWriter" /> instance, and closes the archive stream if the <c>leaveOpen</c> argument was set to <see langword="false" /> in the constructor.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -110,7 +128,7 @@
         <ReturnType>System.Formats.Tar.TarFormat</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The format of the archive.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -134,9 +152,75 @@
         <Parameter Name="entry" Type="System.Formats.Tar.TarEntry" />
       </Parameters>
       <Docs>
-        <param name="entry">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="entry">The tar entry to write.</param>
+        <summary>Writes the specified entry into the archive stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Before writing an entry to the archive, if you wrote data into the entry's <xref:System.Formats.Tar.TarEntry.DataStream>, make sure to rewind it to the desired start position.
+
+These are the entry types supported for writing on each format:
+
+<list type="bullet">
+  <item>
+    
+      <xref:System.Formats.Tar.TarFormat.V7>
+    
+
+
+    <list type="bullet">
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.Directory>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.HardLink>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.SymbolicLink>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.V7RegularFile>
+      </item>
+    </list>
+  </item>
+  <item>
+    
+      <xref:System.Formats.Tar.TarFormat.Ustar>, <xref:System.Formats.Tar.TarFormat.Pax> and <xref:System.Formats.Tar.TarFormat.Gnu>
+
+
+    <list type="bullet">
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.BlockDevice>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.CharacterDevice>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.Directory>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.Fifo>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.HardLink>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.RegularFile>
+      </item>
+      <item>
+        <xref:System.Formats.Tar.TarEntryType.SymbolicLink>
+      </item>
+    </list>
+  </item>
+</list>
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ObjectDisposedException">The archive stream is disposed.</exception>
+        <exception cref="T:System.InvalidOperationException">The entry type of the <paramref name="entry" /> is not supported for writing.</exception>
+        <exception cref="T:System.IO.IOException">An I/O problem ocurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteEntry">
@@ -159,10 +243,14 @@
         <Parameter Name="entryName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="fileName">To be added.</param>
-        <param name="entryName">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="fileName">The path to the file to write to the archive.</param>
+        <param name="entryName">The name of the file as it should be represented in the archive. It should include the optional relative path and the filename.</param>
+        <summary>Writes the specified file into the archive stream as a tar entry.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">The archive stream is disposed.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="fileName" /> or <paramref name="entryName" /> is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.IO.IOException">An I/O problem ocurred.</exception>
       </Docs>
     </Member>
   </Members>

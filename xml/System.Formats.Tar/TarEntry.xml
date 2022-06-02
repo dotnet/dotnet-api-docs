@@ -14,8 +14,16 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Abstract class that represents a tar entry from an archive.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+All the properties exposed by this class are supported by the <xref:System.Formats.Tar.TarFormat.V7>, <xref:System.Formats.Tar.TarFormat.Ustar>, <xref:System.Formats.Tar.TarFormat.Pax> and <xref:System.Formats.Tar.TarFormat.Gnu> formats.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Checksum">
@@ -34,7 +42,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The checksum of all the fields in this entry. The value is non-zero either when the entry is read from an existing archive, or after the entry is written to a new archive.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -55,9 +63,27 @@
         <ReturnType>System.IO.Stream</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>The data section of this entry. If the <see cref="P:System.Formats.Tar.TarEntry.EntryType" /> does not support containing data, then returns <see langword="null" />.</summary>
+        <value>
+          <para>Gets a stream that represents the data section of this entry.</para>
+          <para>Sets a new stream that represents the data section, if it makes sense for the <see cref="P:System.Formats.Tar.TarEntry.EntryType" /> to contain data; if a stream already existed, the old stream gets disposed before substituting it with the new stream. Setting a <see langword="null" /> stream is allowed.</para>
+        </value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If you write data to this data stream, make sure to rewind it to the desired start position before writing this entry into an archive using <xref:System.Formats.Tar.TarWriter.WriteEntry(System.Formats.Tar.TarEntry)>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Setting a data section is not supported because the <see cref="P:System.Formats.Tar.TarEntry.EntryType" /> is not <see cref="F:System.Formats.Tar.TarEntryType.RegularFile" /> (or <see cref="F:System.Formats.Tar.TarEntryType.V7RegularFile" /> for an archive of <see cref="F:System.Formats.Tar.TarFormat.V7" /> format).</exception>
+        <exception cref="T:System.IO.IOException">
+Cannot set an unreadable stream.
+
+-or-
+
+An I/O problem occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="EntryType">
@@ -76,7 +102,7 @@
         <ReturnType>System.Formats.Tar.TarEntryType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The type of filesystem object represented by this entry.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -101,10 +127,43 @@
         <Parameter Name="overwrite" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="destinationFileName">To be added.</param>
-        <param name="overwrite">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="destinationFileName">The path to the destination file.</param>
+        <param name="overwrite">
+          <see langword="true" /> if this method should overwrite any existing filesystem object located in the <paramref name="destinationFileName" /> path; <see langword="false" /> to prevent overwriting.</param>
+        <summary>Extracts the current file or directory to the filesystem. Symbolic links and hard links are not extracted.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Files of type <xref:System.Formats.Tar.TarEntryType.BlockDevice>, <xref:System.Formats.Tar.TarEntryType.CharacterDevice> or <xref:System.Formats.Tar.TarEntryType.Fifo> can only be extracted in Unix platforms.
+
+Elevation is required to extract a <xref:System.Formats.Tar.TarEntryType.BlockDevice> or <xref:System.Formats.Tar.TarEntryType.CharacterDevice> to disk.
+
+Symbolic links can be recreated using <xref:System.IO.File.CreateSymbolicLink(System.String,System.String)>, <xref:System.IO.Directory.CreateSymbolicLink(System.String,System.String)> or <xref:System.IO.FileSystemInfo.CreateAsSymbolicLink(System.String)>.
+
+Hard links can only be extracted when using <xref:System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Boolean)> or <xref:System.Formats.Tar.TarFile.ExtractToDirectory(System.String,System.String,System.Boolean)>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destinationFileName" /> is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.IO.IOException">
+The parent directory of <paramref name="destinationFileName" /> does not exist.
+
+-or-
+
+<paramref name="overwrite" /> is <see langword="false" /> and a file already exists in <paramref name="destinationFileName" />.
+
+-or-
+
+A directory exists with the same name as <paramref name="destinationFileName" />.
+
+-or-
+
+An I/O problem occurred.</exception>
+        <exception cref="T:System.InvalidOperationException">Attempted to extract a symbolic link, a hard link or an unsupported entry type.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">Operation not permitted due to insufficient permissions.</exception>
       </Docs>
     </Member>
     <Member MemberName="Gid">
@@ -123,9 +182,17 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The ID of the group that owns the file represented by this entry.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This field is only supported in Unix platforms.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -144,9 +211,17 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>When the <see cref="P:System.Formats.Tar.TarEntry.EntryType" /> indicates an entry that can contain data, this property returns the length in bytes of such data.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The entry type that commonly contains data is <xref:System.Formats.Tar.TarEntryType.RegularFile> (or <xref:System.Formats.Tar.TarEntryType.V7RegularFile> in the <xref:System.Formats.Tar.TarFormat.V7> format). Other uncommon entry types that can also contain data are: <xref:System.Formats.Tar.TarEntryType.ContiguousFile>, <xref:System.Formats.Tar.TarEntryType.DirectoryList>, <xref:System.Formats.Tar.TarEntryType.MultiVolume> and <xref:System.Formats.Tar.TarEntryType.SparseFile>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="LinkName">
@@ -165,9 +240,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>When the <see cref="P:System.Formats.Tar.TarEntry.EntryType" /> indicates a <see cref="F:System.Formats.Tar.TarEntryType.SymbolicLink" /> or a <see cref="F:System.Formats.Tar.TarEntryType.HardLink" />, this property returns the link target path of such link.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Cannot set the link name if the entry type is not <see cref="F:System.Formats.Tar.TarEntryType.HardLink" /> or <see cref="F:System.Formats.Tar.TarEntryType.SymbolicLink" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Mode">
@@ -186,9 +262,17 @@
         <ReturnType>System.Formats.Tar.TarFileMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the Unix file permissions of the file represented by this entry.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The value in this field has no effect on Windows platforms.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ModificationTime">
@@ -207,9 +291,17 @@
         <ReturnType>System.DateTimeOffset</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A timestamps that represents the last time the contents of the file represented by this entry were modified.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+In Unix platforms, this timestamp is commonly known as `mtime`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -228,7 +320,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Represents the name of the entry, which includes the relative path and the filename.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -250,8 +342,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>A string that represents the current entry.</summary>
+        <returns>The <see cref="P:System.Formats.Tar.TarEntry.Name" /> of the current entry.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -271,9 +363,17 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The ID of the user that owns the file represented by this entry.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This field is only supported in Unix platforms.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
