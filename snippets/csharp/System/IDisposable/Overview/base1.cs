@@ -1,14 +1,14 @@
 ﻿// <Snippet3>
-using Microsoft.Win32.SafeHandles;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 class BaseClass1 : IDisposable
 {
     // Flag: Has Dispose already been called?
     bool disposed = false;
-    // Instantiate a SafeHandle instance.
-    SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+    // Instantiate a FileStream instance.
+    FileStream fs = new FileStream("test.txt", FileMode.OpenOrCreate);
 
     // Public implementation of Dispose pattern callable by consumers.
     public void Dispose()
@@ -25,7 +25,7 @@ class BaseClass1 : IDisposable
 
         if (disposing)
         {
-            handle.Dispose();
+            fs.Dispose();
             // Free any other managed objects here.
             //
         }
