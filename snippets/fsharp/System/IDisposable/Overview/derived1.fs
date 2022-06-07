@@ -1,5 +1,6 @@
 ﻿module derived1
 open System
+open System.IO
 
 type MyBaseClass() =
     // Flag: Has Dispose already been called?
@@ -30,14 +31,14 @@ type MyDerivedClass() =
     
     // Flag: Has Dispose already been called?
     let mutable disposed = false
-    // Instantiate a SafeHandle instance.
-    let handle = new SafeFileHandle(IntPtr.Zero, true)
+    // Instantiate a FileStream instance.
+    let fs = new FileStream("test.txt", FileMode.OpenOrCreate)
 
     // Implementation of Dispose pattern.
     override _.Dispose(disposing) =
         if not disposed then
             if disposing then
-                handle.Dispose()
+                fs.Dispose()
                 // Free any other managed objects here.
 
             // Free any unmanaged objects here.

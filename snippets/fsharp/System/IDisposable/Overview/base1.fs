@@ -1,15 +1,15 @@
 ﻿module base1
 
 // <Snippet3>
-open Microsoft.Win32.SafeHandles
 open System
+open System.IO
 
 type BaseClass1() =
     // Flag: Has Dispose already been called?
     let mutable disposed = false
 
-    // Instantiate a SafeHandle instance.
-    let handle = new SafeFileHandle(IntPtr.Zero, true)
+    // Instantiate a FileStream instance.
+    let fs = new FileStream("test.txt", FileMode.OpenOrCreate)
 
     interface IDisposable with
         // Public implementation of Dispose pattern callable by consumers.
@@ -22,7 +22,7 @@ type BaseClass1() =
     override _.Dispose(disposing) =
         if not disposed then
             if disposing then
-                handle.Dispose()
+                fs.Dispose()
                 // Free any other managed objects here.
             disposed <- true
 
