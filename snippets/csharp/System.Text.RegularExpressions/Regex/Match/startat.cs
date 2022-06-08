@@ -5,7 +5,7 @@ namespace Examples
 {
     public class Example3
     {
-        public static void LookbehindStartat()
+        public static void Main()
         {
             string input = "Zip code: 98052";
             var regex = new Regex(@"(?<=Zip code: )\d{5}");

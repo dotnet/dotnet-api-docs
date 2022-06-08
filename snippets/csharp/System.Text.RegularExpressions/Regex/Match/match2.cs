@@ -6,7 +6,7 @@ namespace Examples
 {
     public class Example2
     {
-        public static void MatchIgnoreCase()
+        public static void Main()
         {
             string pattern = @"\ba\w*\b";
             string input = "An extraordinary day dawns with each new day.";

@@ -6,7 +6,7 @@ namespace Examples
 {
     public class Example
     {
-        public static void MatchWordsWithZ()
+        public static void Main()
         {
             string input = "ablaze beagle choral dozen elementary fanatic " +
                            "glaze hunger inept jazz kitchen lemon minus " +
