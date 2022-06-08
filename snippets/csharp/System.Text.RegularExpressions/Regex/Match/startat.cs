@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-string input = "Zip code: 98052";
-var regex = new Regex(@"(?<=Zip code: )\d{5}");
-Match match = regex.Match(input, 5);
-if (match.Success)
-    Console.WriteLine("Match found: {0}", match.Value);
+namespace Examples
+{
+    public class Example3
+    {
+        public static void LookbehindStartat()
+        {
+            string input = "Zip code: 98052";
+            var regex = new Regex(@"(?<=Zip code: )\d{5}");
+            Match match = regex.Match(input, 5);
+            if (match.Success)
+                Console.WriteLine("Match found: {0}", match.Value);
+        }
+    }
+}
 
 // This code prints the following output:
 // Match found: 98052
