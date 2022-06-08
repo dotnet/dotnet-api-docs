@@ -2,14 +2,14 @@
 Option Strict On
 
 ' <Snippet3>
-Imports Microsoft.Win32.SafeHandles
+Imports System.IO
 Imports System.Runtime.InteropServices
 
-Class BaseClass : Implements IDisposable
+Class BaseClass1 : Implements IDisposable
    ' Flag: Has Dispose already been called?
    Dim disposed As Boolean = False
-   ' Instantiate a SafeHandle instance.
-   Dim handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
+   ' Instantiate a FileStream instance.
+   Dim fs As FileStream = New FileStream("test.txt", FileMode.OpenOrCreate)
 
    ' Public implementation of Dispose pattern callable by consumers.
    Public Sub Dispose() _
@@ -23,7 +23,7 @@ Class BaseClass : Implements IDisposable
       If disposed Then Return
 
       If disposing Then
-         handle.Dispose()
+         fs.Dispose()
          ' Free any other managed objects here.
          '
       End If
