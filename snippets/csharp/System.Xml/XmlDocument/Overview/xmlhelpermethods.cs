@@ -105,7 +105,7 @@ namespace XMLProcessingApp
 
             settings.Schemas.Add(schema);
 
-            settings.ValidationEventHandler += settings_ValidationEventHandler;
+            settings.ValidationEventHandler += ValidationCallback;
             settings.ValidationFlags =
                 settings.ValidationFlags | XmlSchemaValidationFlags.ReportValidationWarnings;
             settings.ValidationType = ValidationType.Schema;
@@ -215,8 +215,8 @@ namespace XMLProcessingApp
                 doc.Schemas.Add(schema);
             }
 
-            // Use an event handler to validate the XML node against the schema.
-            doc.Validate(settings_ValidationEventHandler);
+            // Use a callback to validate the XML node against the schema.
+            doc.Validate(ValidationCallback);
         }
 
         //************************************************************************************
@@ -224,19 +224,18 @@ namespace XMLProcessingApp
         //  Event handler that is raised when XML doesn't validate against the schema.
         //
         //************************************************************************************
-        void settings_ValidationEventHandler(object sender,
+        void ValidationCallback(object sender,
             System.Xml.Schema.ValidationEventArgs e)
         {
             if (e.Severity == XmlSeverityType.Warning)
             {
-                System.Windows.Forms.MessageBox.Show
+                Console.WriteLine
                     ("The following validation warning occurred: " + e.Message);
             }
             else if (e.Severity == XmlSeverityType.Error)
             {
-                System.Windows.Forms.MessageBox.Show
+                Console.WriteLine
                     ("The following critical validation errors occurred: " + e.Message);
-                Type objectType = sender.GetType();
             }
         }
         //</Snippet2>
