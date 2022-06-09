@@ -37,8 +37,8 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
+    <typeparam name="T">Array element pointer type</typeparam>
+    <summary>Marshaller for arrays of pointers</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -58,8 +58,8 @@
         <Parameter Name="sizeOfNativeElement" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="sizeOfNativeElement">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="sizeOfNativeElement">Size of the native element in bytes.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.PointerArrayMarshaller`1" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -79,9 +79,9 @@
         <Parameter Name="sizeOfNativeElement" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="sizeOfNativeElement">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="array">Array to be marshalled.</param>
+        <param name="sizeOfNativeElement">Size of the native element in bytes.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.PointerArrayMarshaller`1" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -102,11 +102,21 @@
         <Parameter Name="sizeOfNativeElement" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="buffer">To be added.</param>
-        <param name="sizeOfNativeElement">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">Array to be marshalled.</param>
+        <param name="buffer">Buffer that may be used for marshalling.</param>
+        <param name="sizeOfNativeElement">Size of the native element in bytes.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.PointerArrayMarshaller`1" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The `buffer` must not be movable - that is, it should not be
+            on the managed heap or it should be pinned.
+
+          ]]></format>
+        </remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerFeatures.CallerAllocatedBuffer"/>
       </Docs>
     </Member>
     <Member MemberName="FreeNative">
@@ -126,8 +136,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Frees native resources.</summary>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerFeatures.UnmanagedResources"/>
       </Docs>
     </Member>
     <Member MemberName="FromNativeValue">
@@ -148,9 +159,10 @@
         <Parameter Name="value" Type="System.Byte*" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The native value.</param>
+        <summary>Sets the native value representing the array.</summary>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerFeatures.TwoStageMarshalling"/>
       </Docs>
     </Member>
     <Member MemberName="GetManagedValuesDestination">
@@ -172,10 +184,11 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="length">Length of the array.</param>
+        <summary>Gets a span that points to the memory where the unmarshalled managed values of the array should be stored.</summary>
+        <returns>Span where managed values of the array should be stored.</returns>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerDirection.Out"/>
       </Docs>
     </Member>
     <Member MemberName="GetManagedValuesSource">
@@ -195,9 +208,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets a span that points to the memory where the managed values of the array are stored.</summary>
+        <returns>Span over managed values of the array.</returns>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerDirection.In"/>
       </Docs>
     </Member>
     <Member MemberName="GetNativeValuesDestination">
@@ -217,9 +231,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns a span that points to the memory where the native values of the array should be stored.</summary>
+        <returns>Span where native values of the array should be stored.</returns>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerDirection.In"/>
       </Docs>
     </Member>
     <Member MemberName="GetNativeValuesSource">
@@ -241,10 +256,11 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="length">Length of the array.</param>
+        <summary>Returns a span that points to the memory where the native values of the array are stored after the native call.</summary>
+        <returns>Span over the native values of the array.</returns>
         <remarks>To be added.</remarks>
+        <sealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerDirection.Out"/>
       </Docs>
     </Member>
     <Member MemberName="GetPinnableReference">
@@ -264,7 +280,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns a reference to the marshalled array.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -285,9 +301,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the managed array.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerDirection.Out"/>
       </Docs>
     </Member>
     <Member MemberName="ToNativeValue">
@@ -306,9 +323,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the native value representing the array.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <seealso cref="F:System.Runtime.InteropServices.CustomTypeMarshallerFeatures.TwoStageMarshalling"/>
       </Docs>
     </Member>
   </Members>
