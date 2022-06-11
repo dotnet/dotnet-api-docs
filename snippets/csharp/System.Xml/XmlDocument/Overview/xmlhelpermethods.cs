@@ -82,7 +82,7 @@ namespace XMLProcessingApp
                 "</books>";
             return xml;
         }
-            
+
         //************************************************************************************
         //
         //  Associate the schema with XML. Then, load the XML and validate it against
@@ -98,11 +98,6 @@ namespace XMLProcessingApp
             // Helper method to retrieve schema.
             XmlSchema schema = getSchema(generateSchema);
 
-            if (schema == null)
-            {
-                return null;
-            }
-
             settings.Schemas.Add(schema);
 
             settings.ValidationEventHandler += ValidationCallback;
@@ -110,23 +105,17 @@ namespace XMLProcessingApp
                 settings.ValidationFlags | XmlSchemaValidationFlags.ReportValidationWarnings;
             settings.ValidationType = ValidationType.Schema;
 
-            try
+            if (generateXML)
+            {
+                string xml = generateXMLString();
+                StringReader stringReader = new StringReader(xml);
+
+                reader = XmlReader.Create(stringReader, settings);
+            }
+
+            else
             {
                 reader = XmlReader.Create("booksData.xml", settings);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                if (generateXML)
-                {
-                    string xml = generateXMLString();
-                    byte[] byteArray = Encoding.UTF8.GetBytes(xml);
-                    MemoryStream stream = new MemoryStream(byteArray);
-                    reader = XmlReader.Create(stream, settings);
-                }
-                else
-                {
-                    return null;
-                }
             }
 
             XmlDocument doc = new XmlDocument();
@@ -179,25 +168,21 @@ namespace XMLProcessingApp
         {
             XmlSchemaSet xs = new XmlSchemaSet();
             XmlSchema schema;
-            try
+
+            if (generateSchema)
+            {
+                string xmlSchemaString = generateXMLSchema();
+                StringReader stringReader = new StringReader(xmlSchemaString);
+                XmlReader reader = XmlReader.Create(stringReader);
+
+                schema = xs.Add("http://www.contoso.com/books", reader);
+            }
+
+            else
             {
                 schema = xs.Add("http://www.contoso.com/books", "booksData.xsd");
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                if (generateSchema)
-                {
-                    string xmlSchemaString = generateXMLSchema();
-                    byte[] byteArray = Encoding.UTF8.GetBytes(xmlSchemaString);
-                    MemoryStream stream = new MemoryStream(byteArray);
-                    XmlReader reader = XmlReader.Create(stream);
-                    schema = xs.Add("http://www.contoso.com/books", reader);
-                }
-                else
-                {
-                    return null;
-                }
-            }
+
             return schema;
         }
 
