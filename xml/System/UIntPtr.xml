@@ -248,22 +248,24 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>A platform-specific type that is used to represent a pointer or a handle.</summary>
+    <summary>Represents an unsigned integer where the bit-width is the same as a pointer.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
- The <xref:System.UIntPtr> type is designed to be an integer whose size is platform-specific. That is, an instance of this type is expected to be 32-bits on 32-bit hardware and operating systems, and 64-bits on 64-bit hardware and operating systems.
-
-> [!IMPORTANT]
-> The <xref:System.IntPtr> type is CLS-compliant, while the <xref:System.UIntPtr> type is not. Only the <xref:System.IntPtr> type is used in the common language runtime. The <xref:System.UIntPtr> type is provided mostly to maintain architectural symmetry with the <xref:System.IntPtr> type.
+ The <xref:System.UIntPtr> type is designed to be an integer whose size is the same as a pointer. That is, an instance of this type is expected to be 32-bits in a 32-bit process and 64-bits in a 64-bit process.
 
  The <xref:System.UIntPtr> type can be used by languages that support pointers, and as a common means of referring to data between languages that do and do not support pointers. <xref:System.UIntPtr> objects can also be used to hold handles.
 
- This type implements the <xref:System.Runtime.Serialization.ISerializable>, and, in .NET 5 and later, the <xref:System.IFormattable> interfaces.
+ > [!NOTE]
+ > Using <xref:System.UIntPtr> as a pointer or a handle is error prone and unsafe. It is simply an integer type that can be used as an interchange format for pointers and handles due to being the same size. Outside of specific interchange requirements, such as for passing data to a language that doesn't support pointers, a correctly typed pointer should be used to represent pointers and <xref:System.Runtime.InteropServices.SafeHandle> should be used to represent handles.
+
+ This type implements the <xref:System.Runtime.Serialization.ISerializable>. In .NET 5 and later versions, this type also implements the <xref:System.IFormattable> interfaces. In .NET 7 and later versions, this type also implements the <xref:System.Numerics.IBinaryInteger%601>, <xref:System.Numerics.IMinMaxValue%601>, and <xref:System.Numerics.IUnsignedNumber%601> interfaces.
 
  In C# starting from version 9.0, you can use the built-in `nuint` type to define native-sized integers. This type is represented by the <xref:System.UIntPtr> type internally and provides operations and conversions that are appropriate for integer types. For more information, see [nint and nuint types](/dotnet/csharp/language-reference/builtin-types/nint-nuint).
+
+ In C# starting from version 11 and when targeting the .NET 7 or later runtime, `nuint` is an alias for <xref:System.UIntPtr> in the same way that `uint` is an alias for <xref:System.UInt32>.
 
  ]]></format>
     </remarks>
@@ -327,8 +329,8 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="value">A pointer or handle contained in a 32-bit unsigned integer.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.UIntPtr" /> structure using the specified 32-bit pointer or handle.</summary>
+        <param name="value">A 32-bit unsigned integer.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.UIntPtr" /> structure using the specified 32-bit unsigned integer.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -375,17 +377,17 @@
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="value">A pointer or handle contained in a 64-bit unsigned integer.</param>
-        <summary>Initializes a new instance of <see cref="T:System.UIntPtr" /> using the specified 64-bit pointer or handle.</summary>
+        <param name="value">A 64-bit unsigned integer.</param>
+        <summary>Initializes a new instance of <see cref="T:System.UIntPtr" /> using the specified 64-bit unsigned integer.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- An exception is only thrown if the value of `value` requires more bits than the current platform supports.
+ An exception is only thrown if the value of `value` requires more bits than the executing process supports.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.OverflowException">On a 32-bit platform, <paramref name="value" /> is too large to represent as an <see cref="T:System.UIntPtr" />.</exception>
+        <exception cref="T:System.OverflowException">In a 32-bit process, <paramref name="value" /> is too large to represent as an <see cref="T:System.UIntPtr" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -485,17 +487,17 @@
         <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="pointer">The unsigned pointer to add the offset to.</param>
+        <param name="pointer">The unsigned integer to add the offset to.</param>
         <param name="offset">The offset to add.</param>
-        <summary>Adds an offset to the value of an unsigned pointer.</summary>
-        <returns>A new unsigned pointer that reflects the addition of <paramref name="offset" /> to <paramref name="pointer" />.</returns>
+        <summary>Adds an offset to an unsigned integer.</summary>
+        <returns>A new unsigned integer that reflects the addition of <paramref name="offset" /> to <paramref name="pointer" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IntPtr.Add%2A> method does not throw an exception if the result is too large to represent as a pointer on the specified platform. Instead, the addition operation is performed in an unchecked context.
+ The <xref:System.UIntPtr.Add%2A> method does not throw an exception if the result is too large to represent as an unsigned integer in the executing process. Instead, the addition operation is performed in an unchecked context.
 
- Languages that do not support operator overloading or custom operators can use this method to add an offset to the value of an unsigned pointer.
+ Languages that do not support operator overloading or custom operators can use this method to add an offset to the value of a pointer.
 
 ## Examples
  The following example instantiates a <xref:System.UIntPtr> object that points to the beginning of a ten-element array, and then calls the <xref:System.UIntPtr.Add%2A> method to iterate the elements in the array.
@@ -857,10 +859,10 @@
         <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="pointer">The unsigned pointer to add the offset to.</param>
+        <param name="pointer">The unsigned integer to add the offset to.</param>
         <param name="offset">The offset to add.</param>
-        <summary>Adds an offset to the value of an unsigned pointer.</summary>
-        <returns>A new unsigned pointer that reflects the addition of <paramref name="offset" /> to <paramref name="pointer" />.</returns>
+        <summary>Adds an offset to an unsigned integer.</summary>
+        <returns>A new unsigned integer that reflects the addition of <paramref name="offset" /> to <paramref name="pointer" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -873,7 +875,9 @@
 
  Languages that do not support custom operators can call the <xref:System.UIntPtr.Add%2A> method instead.
 
- The addition operation does not throw an exception if the result is too large to represent as a pointer on the specified platform. Instead, it is performed in an unchecked context.
+ The addition operation does not throw an exception if the result is too large to represent as an unsigned integer in the executing process. Instead, it is performed in an unchecked context.
+ 
+ In C# starting from version 11 and when targeting the .NET 7 or later runtime, this API is only accessible via reflection. The addition operator is directly recognized by the language and will follow the normal language behavior for addition operations, including overflowing in a `checked` context if the result is too large to represent.
 
  The equivalent method for this operator is <xref:System.UIntPtr.Add%28System.UIntPtr%2CSystem.Int32%29?displayProperty=nameWithType>. ]]></format>
         </remarks>
@@ -931,8 +935,8 @@
         <Parameter Name="value2" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="value1">The first pointer or handle to compare.</param>
-        <param name="value2">The second pointer or handle to compare.</param>
+        <param name="value1">The first unsigned integer to compare.</param>
+        <param name="value2">The second unsigned integer to compare.</param>
         <summary>Determines whether two specified instances of <see cref="T:System.UIntPtr" /> are equal.</summary>
         <returns>
           <see langword="true" /> if <paramref name="value1" /> equals <paramref name="value2" />; otherwise, <see langword="false" />.</returns>
@@ -1032,7 +1036,7 @@
         <summary>Converts the value of a 64-bit unsigned integer to an <see cref="T:System.UIntPtr" />.</summary>
         <returns>A new instance of <see cref="T:System.UIntPtr" /> initialized to <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.OverflowException">On a 32-bit platform, <paramref name="value" /> is too large to represent as an <see cref="T:System.UIntPtr" />.</exception>
+        <exception cref="T:System.OverflowException">In a 32-bit process, <paramref name="value" /> is too large to represent as an <see cref="T:System.UIntPtr" />.</exception>
         <altmember cref="Overload:System.UIntPtr.#ctor" />
       </Docs>
     </Member>
@@ -1082,17 +1086,17 @@
         <Parameter Name="value" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">The pointer or handle to convert.</param>
+        <param name="value">The unsigned integer to convert.</param>
         <summary>Converts the value of the specified <see cref="T:System.UIntPtr" /> to a 32-bit unsigned integer.</summary>
         <returns>The contents of <paramref name="value" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- An exception is only thrown if the value of `value` requires more bits than the current platform supports.
+ An exception is only thrown if the value of `value` requires more bits than the executing process supports.
  ]]></format>
         </remarks>
-        <exception cref="T:System.OverflowException">On a 64-bit platform, the value of <paramref name="value" /> is too large to represent as a 32-bit unsigned integer.</exception>
+        <exception cref="T:System.OverflowException">In a 64-bit process, the value of <paramref name="value" /> is too large to represent as a 32-bit unsigned integer.</exception>
         <altmember cref="M:System.UIntPtr.ToUInt32" />
       </Docs>
     </Member>
@@ -1142,7 +1146,7 @@
         <Parameter Name="value" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">The pointer or handle to convert.</param>
+        <param name="value">The unsigned integer to convert.</param>
         <summary>Converts the value of the specified <see cref="T:System.UIntPtr" /> to a 64-bit unsigned integer.</summary>
         <returns>The contents of <paramref name="value" />.</returns>
         <remarks>To be added.</remarks>
@@ -1198,7 +1202,7 @@
         <Parameter Name="value" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">The pointer or handle to convert.</param>
+        <param name="value">The unsigned integer to convert.</param>
         <summary>Converts the value of the specified <see cref="T:System.UIntPtr" /> to a pointer to an unspecified type.
 
  This API is not CLS-compliant.</summary>
@@ -1316,8 +1320,8 @@
         <Parameter Name="value2" Type="System.UIntPtr" />
       </Parameters>
       <Docs>
-        <param name="value1">The first pointer or handle to compare.</param>
-        <param name="value2">The second pointer or handle to compare.</param>
+        <param name="value1">The first unsigned integer to compare.</param>
+        <param name="value2">The second unsigned integer to compare.</param>
         <summary>Determines whether two specified instances of <see cref="T:System.UIntPtr" /> are not equal.</summary>
         <returns>
           <see langword="true" /> if <paramref name="value1" /> does not equal <paramref name="value2" />; otherwise, <see langword="false" />.</returns>
@@ -1371,10 +1375,10 @@
         <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="pointer">The unsigned pointer to subtract the offset from.</param>
+        <param name="pointer">The unsigned integer to subtract the offset from.</param>
         <param name="offset">The offset to subtract.</param>
-        <summary>Subtracts an offset from the value of an unsigned pointer.</summary>
-        <returns>A new unsigned pointer that reflects the subtraction of <paramref name="offset" /> from <paramref name="pointer" />.</returns>
+        <summary>Subtracts an offset from an unsigned integer.</summary>
+        <returns>A new unsigned integer that reflects the subtraction of <paramref name="offset" /> from <paramref name="pointer" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1387,7 +1391,9 @@
 
  Languages that do not support custom operators can call the <xref:System.UIntPtr.Subtract%2A> method instead.
 
- The subtraction operation does not throw an exception if the result is too small to represent as a pointer on the specified platform. Instead, it is performed in an unchecked context.
+ The subtraction operation does not throw an exception if the result is too small to represent as an unsigned integer in the executing process. Instead, it is performed in an unchecked context.
+
+ In C# starting from version 11 and when targeting the .NET 7 or later runtime, this API is only accessible via reflection. The subtraction operator is directly recognized by the language and will follow the normal language behavior for subtraction operations, including overflowing in a `checked` context if the result is too small to represent.
 
  ]]></format>
         </remarks>
@@ -1688,7 +1694,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the size of this instance.</summary>
-        <value>The size of a pointer or handle on this platform, measured in bytes. The value of this property is 4 on a 32-bit platform, and 8 on a 64-bit platform.</value>
+        <value>The size of an unsigned integer in the executing process, measured in bytes. The value of this property is 4 in a 32-bit process, and 8 in a 64-bit process. You can define the process type by setting the <see langword="/platform" /> switch when you compile your code with the C# and Visual Basic compilers.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1737,17 +1743,17 @@
         <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="pointer">The unsigned pointer to subtract the offset from.</param>
+        <param name="pointer">The unsigned integer to subtract the offset from.</param>
         <param name="offset">The offset to subtract.</param>
-        <summary>Subtracts an offset from the value of an unsigned pointer.</summary>
-        <returns>A new unsigned pointer that reflects the subtraction of <paramref name="offset" /> from <paramref name="pointer" />.</returns>
+        <summary>Subtracts an offset from an unsigned integer.</summary>
+        <returns>A new unsigned integer that reflects the subtraction of <paramref name="offset" /> from <paramref name="pointer" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IntPtr.Subtract%2A> method does not throw an exception if the result is too small to represent as a pointer on the specified platform. Instead, the subtraction operation is performed in an unchecked context.
+ The <xref:System.IntPtr.Subtract%2A> method does not throw an exception if the result is too small to represent as an unsigned integer in the executing process. Instead, the subtraction operation is performed in an unchecked context.
 
- Languages that do not support operator overloading or custom operators can use this method to subtract an offset from the value of an unsigned pointer.
+ Languages that do not support operator overloading or custom operators can use this method to subtract an offset from the value of a pointer.
 
 ## Examples
  The following example instantiates an <xref:System.IntPtr> object that points to the end of a ten-element array, and then calls the <xref:System.IntPtr.Subtract%2A> method to iterate the elements in the array in reverse order.
@@ -1793,8 +1799,8 @@
         <Parameter Name="other" Type="System.UIntPtr" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0" />
       </Parameters>
       <Docs>
-        <param name="other">An unsigned integer pointer to compare with this instance.</param>
-        <summary>Returns a value that indicates whether this instance is equal to another unsigned integer pointer.</summary>
+        <param name="other">An unsigned integer to compare with this instance.</param>
+        <summary>Returns a value that indicates whether this instance is equal to another unsigned integer.</summary>
         <returns>
           <see langword="true" /> if <paramref name="other" /> equals the value of this instance; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -2250,11 +2256,11 @@ This member is an explicit interface member implementation. It can be used only 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- An exception is only thrown if the value of `value` requires more bits than the current platform supports.
+ An exception is only thrown if the value of `value` requires more bits than the executing process supports.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.OverflowException">On a 64-bit platform, the value of this instance is too large to represent as a 32-bit unsigned integer.</exception>
+        <exception cref="T:System.OverflowException">In a 64-bit process, the value of this instance is too large to represent as a 32-bit unsigned integer.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToUInt64">
@@ -2634,7 +2640,7 @@ This member is an explicit interface member implementation. It can be used only 
         <ReturnType>System.UIntPtr</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>A read-only field that represents a pointer or handle that has been initialized to zero.</summary>
+        <summary>A read-only field that represents an unsigned integer that has been initialized to zero.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
