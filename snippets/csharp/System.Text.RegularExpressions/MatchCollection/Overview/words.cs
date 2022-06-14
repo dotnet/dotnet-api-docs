@@ -4,10 +4,8 @@ using System.Text.RegularExpressions;
 
 public class Test
 {
-
     public static void Main ()
     {
-
 // <snippet1>
         // Define a regular expression for repeated words.
         Regex rx = new Regex(@"\b(?<word>\w+)\s+(\k<word>)\b",
@@ -42,6 +40,7 @@ public class Test
 // </snippet4>
     }
 }
+
 // The example produces the following output to the console:
 //       3 matches found in:
 //          The the quick brown fox  fox jumps over the lazy dog dog.

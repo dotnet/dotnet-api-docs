@@ -2641,11 +2641,11 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Text.RegularExpressions.Regex.IsMatch%2A> method is typically used to validate a string or to ensure that a string conforms to a particular pattern without retrieving that string for subsequent manipulation. If you want to determine whether one or more strings match a regular expression pattern and then retrieve them for subsequent manipulation, call the <xref:System.Text.RegularExpressions.Regex.Match%2A> or <xref:System.Text.RegularExpressions.Regex.Matches%2A> method.  
+ The <xref:System.Text.RegularExpressions.Regex.IsMatch%2A> method is typically used to validate a string or to ensure that a string conforms to a particular pattern without retrieving that string for subsequent manipulation. If you want to determine whether one or more strings match a regular expression pattern and then retrieve them for subsequent manipulation, call the <xref:System.Text.RegularExpressions.Regex.Match%2A> or <xref:System.Text.RegularExpressions.Regex.Matches%2A> method.
+
+For more details about `startat`, see the Remarks section of <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)>.
   
- The <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception is thrown if the execution time of the matching operation exceeds the time-out interval specified by the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)?displayProperty=nameWithType> constructor. If you do not set a time-out interval when you call the constructor, the exception is thrown if the operation exceeds any time-out value established for the application domain in which the <xref:System.Text.RegularExpressions.Regex> object is created. If no time-out is defined in the <xref:System.Text.RegularExpressions.Regex> constructor call or in the application domain's properties, or if the time-out value is <xref:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout?displayProperty=nameWithType>, no exception is thrown.  
-  
-   
+ The <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception is thrown if the execution time of the matching operation exceeds the time-out interval specified by the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)?displayProperty=nameWithType> constructor. If you do not set a time-out interval when you call the constructor, the exception is thrown if the operation exceeds any time-out value established for the application domain in which the <xref:System.Text.RegularExpressions.Regex> object is created. If no time-out is defined in the <xref:System.Text.RegularExpressions.Regex> constructor call or in the application domain's properties, or if the time-out value is <xref:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout?displayProperty=nameWithType>, no exception is thrown.
   
 ## Examples  
  The following example illustrates the use of the <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String,System.Int32)> method to determine whether a string is a valid part number. It searches for a part number that follows a colon (:) character in a string. The <xref:System.String.IndexOf(System.Char)> method is used to determine the position of the colon character, which is then passed to the <xref:System.Text.RegularExpressions.Regex.IsMatch(System.String,System.Int32)> method. The regular expression assumes that the part number has a specific format that consists of three sets of characters separated by hyphens. The first set, which contains four characters, must consist of an alphanumeric character followed by two numeric characters followed by an alphanumeric character. The second set, which consists of three characters, must be numeric. The third set, which consists of four characters, must have three numeric characters followed by an alphanumeric character.  
@@ -3275,18 +3275,43 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)> method returns the first substring that matches a regular expression pattern, starting at or after the `startat` character position, in an input string. For information about the language elements used to build a regular expression pattern, see [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+## Remarks
+
+The <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)> method returns the first substring that matches a regular expression pattern, starting at or after the `startat` character position, in an input string. The regular expression pattern for which the <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)> method searches is defined by the call to one of the <xref:System.Text.RegularExpressions.Regex> class constructors. For information about the language elements used to build a regular expression pattern, see [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).
+
+### The `startat` parameter
   
- The regular expression pattern for which the <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)> method searches is defined by the call to one of the <xref:System.Text.RegularExpressions.Regex> class constructors. For more information about the elements that can form a regular expression pattern, see [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ You can optionally specify a starting position in the string by using the `startat` parameter. Any matches starting before `startat` in the string are ignored. If you don't specify a starting position, the search begins at the default position, which is the left end of `input` in a left-to-right search, and the right end of `input` in a right-to-left search. Despite starting at `startat`, the index of any returned match is relative to the start of the string.
+
+ Although the regular expression engine doesn't return any match starting before `startat`, it doesn't ignore the string before `startat`. This means that assertions such as [anchors](/dotnet/standard/base-types/anchors-in-regular-expressions) or [lookbehind assertions](/dotnet/standard/base-types/backtracking-in-regular-expressions#lookbehind-assertions) still apply to the input as a whole. For example, the following code includes a pattern with a lookbehind assertion that's satisfied even though it occurs before the `startat` index of 5 in the input string.
+
+:::code language="csharp" source="~/snippets/csharp/System.Text.RegularExpressions/Regex/Match/startat.cs" interactive="try-dotnet":::
+
+> [!TIP]
+>
+> - If a pattern starts with the `^` anchor but `startat` is greater than 0, no matches will ever be found in a single-line search since they are constrained by `^` to start at index 0.
+> - The [`\G` anchor](/dotnet/standard/base-types/anchors-in-regular-expressions#contiguous-matches-g) is satisfied at `startat`. Because of this, if you want to restrict a match so that it begins exactly at a particular character position in the string, anchor the regular expression with a `\G` on the left for a left-to-right pattern. This restricts the match so it must start exactly at `startat` (or, when multiple matches are desired, so the matches are contiguous).
+
+### Right-to-left searches
+
+A right-to-left search, that is, when the regular expression pattern is constructed with the <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft?displayProperty=nameWithType> option, behaves in the following ways:
+
+- The scan moves in the opposite direction and the pattern is matched from back (right) to front (left).
+- The default starting position is the right end of the input string.
+- If `startat` is specified, the right-to-left scan begins at the character at `startat` - 1 (not `startat`).
+- When the `\G` anchor is specified at the right end of a pattern, it restricts the (first) match to end exactly at `startat` - 1.
+
+For more information about right-to-left searches, see [Right-to-left mode](/dotnet/standard/base-types/regular-expression-options#right-to-left-mode).
+
+### Determine whether a match is found
   
- You can optionally specify a starting position in the string by using the `startat` parameter. When the regular expression engine parses from left to right (the default), the match and the scan move rightward, starting at the character specified in `startat`. When the regular expression engine parses from right to left (when the regular expression pattern is constructed with the <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft?displayProperty=nameWithType> option), the match and scan move in the opposite direction and begin with the character at `startat` -1. If you do not specify a starting position, the search begins at the default `startat` position. If the regular expression searches from left to right, the default `startat` position is at the left end of `input`; if it searches from right to left, the default `startat` position is at the right end of `input`.  
+ You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Group.Success%2A> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Capture.Value%2A> property contains the substring from `input` that matches the regular expression pattern. If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.
+
+### First or multiple matches
   
- If you want to restrict a match so that it begins at a particular character position in the string and the regular expression engine does not scan the remainder of the string for a match, anchor the regular expression with a `\G` (at the left for a left-to-right pattern, or at the right for a right-to-left pattern). This restricts the match so it must start exactly at `startat`.  
-  
- You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Group.Success%2A> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Capture.Value%2A> property contains the substring from `input` that matches the regular expression pattern. If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.  
-  
- This method returns the first substring found at or after the `startat` character position in `input` that matches the regular expression pattern. You can retrieve subsequent matches by repeatedly calling the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Match.NextMatch%2A?displayProperty=nameWithType> method. You can also retrieve all matches in a single method call by calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)?displayProperty=nameWithType> method.  
+ This method returns the first substring found at or after the `startat` character position in `input` that matches the regular expression pattern. You can retrieve subsequent matches by repeatedly calling the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Match.NextMatch%2A?displayProperty=nameWithType> method. You can also retrieve all matches in a single method call by calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)?displayProperty=nameWithType> method.
+
+### Time-out exceptions
   
  The <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> exception is thrown if the execution time of the matching operation exceeds the time-out interval specified by the <xref:System.Text.RegularExpressions.Regex.%23ctor(System.String,System.Text.RegularExpressions.RegexOptions,System.TimeSpan)?displayProperty=nameWithType> constructor. If you do not set a time-out interval when you call the constructor, the exception is thrown if the operation exceeds any time-out value established for the application domain in which the <xref:System.Text.RegularExpressions.Regex> object is created. If no time-out is defined in the <xref:System.Text.RegularExpressions.Regex> constructor call or in the application domain's properties, or if the time-out value is <xref:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout?displayProperty=nameWithType>, no exception is thrown.  
   
@@ -3455,7 +3480,11 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
   
  The regular expression pattern for which the <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32,System.Int32)> method searches is defined by the call to one of the <xref:System.Text.RegularExpressions.Regex> class constructors. For more information about the elements that can form a regular expression pattern, see [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
   
- The <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32,System.Int32)> method searches the portion of `input` defined by the `beginning` and `length` parameters for the regular expression pattern. `beginning` always defines the index of the leftmost character to include in the search, and `length` defines the maximum number of characters to search. Together, they define the range of the search. If the search proceeds from left to right (the default), the regular expression engine searches from the character at index `beginning` to the character at index `beginning` + `length` - 1. If the regular expression engine was instantiated by using the <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft?displayProperty=nameWithType> option so that the search proceeds from right to left, the regular expression engine searches from the character at index `beginning` + `length` - 1 to the character at index `beginning`. This method returns the first match that it finds within this range. You can retrieve subsequent matches by repeatedly calling the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Match.NextMatch%2A?displayProperty=nameWithType> method.  
+ The <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32,System.Int32)> method searches the portion of `input` defined by the `beginning` and `length` parameters for the regular expression pattern. `beginning` always defines the index of the leftmost character to include in the search, and `length` defines the maximum number of characters to search. Together, they define the range of the search. The behavior is exactly as if the `input` was effectively `input.Substring(beginning, length)`, except that the index of any match is counted relative to the start of `input`. This means that any anchors or zero-width assertions at the start or end of the pattern behave as if there is no `input` outside of this range. For example the anchors `^`, `\G`, and `\A` will be satisfied at `beginning` and `$` and `\z` will be satisfied at `beginning + length - 1`.  
+
+ If the search proceeds from left to right (the default), the regular expression engine searches from the character at index `beginning` to the character at index `beginning + length - 1`. If the regular expression engine was instantiated by using the <xref:System.Text.RegularExpressions.RegexOptions.RightToLeft?displayProperty=nameWithType> option so that the search proceeds from right to left, the regular expression engine searches from the character at index `beginning + length - 1` to the character at index `beginning`.
+
+ This method returns the first match that it finds within this range. You can retrieve subsequent matches by repeatedly calling the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Match.NextMatch%2A?displayProperty=nameWithType> method.  
   
  You can determine whether the regular expression pattern has been found in the input string by checking the value of the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Group.Success%2A> property. If a match is found, the returned <xref:System.Text.RegularExpressions.Match> object's <xref:System.Text.RegularExpressions.Capture.Value%2A> property contains the substring from `input` that matches the regular expression pattern. If no match is found, its value is <xref:System.String.Empty?displayProperty=nameWithType>.  
   
@@ -3836,7 +3865,9 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
  :::code language="csharp" source="~/snippets/csharp/System.Text.RegularExpressions/Regex/Matches/matchespattern.cs" id="Snippet6":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.text.regularexpressions.regex.matches/vb/matchespattern.vb" id="Snippet6":::  
   
- The regular expression pattern for which the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)> method searches is defined by the call to one of the <xref:System.Text.RegularExpressions.Regex> class constructors. For more information about the elements that can form a regular expression pattern, see [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).  
+ The regular expression pattern for which the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)> method searches is defined by the call to one of the <xref:System.Text.RegularExpressions.Regex> class constructors. For more information about the elements that can form a regular expression pattern, see [Regular Expression Language - Quick Reference](/dotnet/standard/base-types/regular-expression-language-quick-reference).
+
+For more details about `startat`, see the Remarks section of <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)>. 
   
  The <xref:System.Text.RegularExpressions.Regex.Matches%2A> method uses lazy evaluation to populate the returned <xref:System.Text.RegularExpressions.MatchCollection> object. Accessing members of this collection such as <xref:System.Text.RegularExpressions.MatchCollection.Count%2A?displayProperty=nameWithType> and <xref:System.Text.RegularExpressions.MatchCollection.CopyTo%2A?displayProperty=nameWithType> causes the collection to be populated immediately. To take advantage of lazy evaluation, you should iterate the collection by using a construct such as `foreach` in C# and `For Each`...`Next` in Visual Basic.  
   
@@ -4991,7 +5022,9 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The search for matches starts in the `input` string at the position specified by the `startat` parameter. The regular expression is the pattern defined by the constructor for the current <xref:System.Text.RegularExpressions.Regex> object. If `count` is negative, replacements continue to the end of the string. If `count` exceeds the number of matches, all matches are replaced.  
+ The search for matches starts in the `input` string at the position specified by the `startat` parameter. The regular expression is the pattern defined by the constructor for the current <xref:System.Text.RegularExpressions.Regex> object. If `count` is negative, replacements continue to the end of the string. If `count` exceeds the number of matches, all matches are replaced.
+
+For more details about `startat`, see the Remarks section of <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)>. 
   
  The `replacement` parameter specifies the string that is to replace each match in `input`. `replacement` can consist of any combination of literal text and [substitutions](/dotnet/standard/base-types/substitutions-in-regular-expressions). For example, the replacement pattern `a*${test}b` inserts the string "a*" followed by the substring that is matched by the `test` capturing group, if any, followed by the string "b". The * character is not recognized as a metacharacter within a replacement pattern.  
   
@@ -5307,13 +5340,13 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
 ## Remarks  
  The <xref:System.Text.RegularExpressions.Regex.Replace(System.String,System.Text.RegularExpressions.MatchEvaluator,System.Int32,System.Int32)?displayProperty=nameWithType> method is useful for replacing a regular expression match if any of the following conditions is true:  
   
--   The replacement string cannot readily be specified by a regular expression replacement pattern.  
+- The replacement string cannot readily be specified by a regular expression replacement pattern.  
+- The replacement string results from some processing done on the matched string.  
+- The replacement string results from conditional processing.
   
--   The replacement string results from some processing done on the matched string.  
-  
--   The replacement string results from conditional processing.  
-  
- The method is equivalent to calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)?displayProperty=nameWithType> method and passing the first `count` <xref:System.Text.RegularExpressions.Match> objects in the returned <xref:System.Text.RegularExpressions.MatchCollection> collection to the `evaluator` delegate.  
+ The method is equivalent to calling the <xref:System.Text.RegularExpressions.Regex.Matches(System.String,System.Int32)?displayProperty=nameWithType> method and passing the first `count` <xref:System.Text.RegularExpressions.Match> objects in the returned <xref:System.Text.RegularExpressions.MatchCollection> collection to the `evaluator` delegate.
+
+For more details about `startat`, see the Remarks section of <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)>.
   
  The regular expression is the pattern defined by the constructor for the current <xref:System.Text.RegularExpressions.Regex> object.  
   
@@ -6017,7 +6050,9 @@ Allows an <see cref="T:System.Object" /> to attempt to free resources and perfor
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> methods are similar to the <xref:System.String.Split%2A?displayProperty=nameWithType> method, except that <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> splits the string at a delimiter determined by a regular expression instead of a set of characters. The `count` parameter specifies the maximum number of substrings into which the `input` string is split; the last string contains the unsplit remainder of the string. A `count` value of zero provides the default behavior of splitting as many times as possible. The `startat` parameter defines the point at which the search for the first delimiter begins (this can be used for skipping leading white space).  
+ The <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> methods are similar to the <xref:System.String.Split%2A?displayProperty=nameWithType> method, except that <xref:System.Text.RegularExpressions.Regex.Split%2A?displayProperty=nameWithType> splits the string at a delimiter determined by a regular expression instead of a set of characters. The `count` parameter specifies the maximum number of substrings into which the `input` string is split; the last string contains the unsplit remainder of the string. A `count` value of zero provides the default behavior of splitting as many times as possible. The `startat` parameter defines the point at which the search for the first delimiter begins (this can be used for skipping leading white space). 
+
+For more details about `startat`, see the Remarks section of <xref:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)>.
   
  If no matches are found from the `count`+1 position in the string, the method returns a one-element array that contains the `input` string. If one or more matches are found, the first element of the returned array contains the first portion of the string from the first character up to one character before the match.  
   
