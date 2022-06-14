@@ -22,7 +22,7 @@ Module Module1
             Dim transaction As SqlTransaction
 
             ' Start a local transaction
-            transaction = connection.BeginTransaction("SampleTransaction")
+            transaction = connection.BeginTransaction()
 
             ' Must assign both transaction object and connection
             ' to Command object for a pending local transaction.
