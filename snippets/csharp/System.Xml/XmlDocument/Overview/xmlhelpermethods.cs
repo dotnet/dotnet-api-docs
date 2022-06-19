@@ -107,7 +107,6 @@ namespace XMLProcessingApp
                 {
                     reader = XmlReader.Create("booksData.xml", settings);
                 }
-
                 catch (FileNotFoundException ex)
                 {
                     Console.WriteLine(
