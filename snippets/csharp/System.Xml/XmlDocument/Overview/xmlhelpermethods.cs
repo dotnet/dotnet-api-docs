@@ -57,7 +57,7 @@ namespace XMLProcessingApp
         #region Validate XML against a Schema
 
         //<Snippet2>
-
+            
         //************************************************************************************
         //
         //  Helper method that generates an XML string.
@@ -91,19 +91,30 @@ namespace XMLProcessingApp
         //************************************************************************************
         public XmlDocument LoadDocumentWithSchemaValidation(bool generateXML, bool generateSchema)
         {
-            XmlReader reader;
-
+            XmlReader reader = null;
             XmlReaderSettings settings = new XmlReaderSettings();
-
             // Helper method to retrieve schema.
             XmlSchema schema = getSchema(generateSchema);
 
             settings.Schemas.Add(schema);
-
             settings.ValidationEventHandler += ValidationCallback;
             settings.ValidationFlags =
                 settings.ValidationFlags | XmlSchemaValidationFlags.ReportValidationWarnings;
             settings.ValidationType = ValidationType.Schema;
+            if (!generateXML)
+            {
+                try
+                {
+                    reader = XmlReader.Create("booksData.xml", settings);
+                }
+
+                catch (FileNotFoundException ex)
+                {
+                    Console.WriteLine(
+                        $"XML file not found so generating: {ex.Message}");
+                    generateXML = true;
+                }
+            }
 
             if (generateXML)
             {
@@ -113,12 +124,8 @@ namespace XMLProcessingApp
                 reader = XmlReader.Create(stringReader, settings);
             }
 
-            else
-            {
-                reader = XmlReader.Create("booksData.xml", settings);
-            }
-
             XmlDocument doc = new XmlDocument();
+
             doc.PreserveWhitespace = true;
             doc.Load(reader);
             reader.Close();
@@ -167,7 +174,22 @@ namespace XMLProcessingApp
         private XmlSchema getSchema(bool generateSchema)
         {
             XmlSchemaSet xs = new XmlSchemaSet();
-            XmlSchema schema;
+            XmlSchema schema = null;
+
+            if (!generateSchema)
+            {
+                try
+                {
+                    schema = xs.Add("http://www.contoso.com/books", "booksData.xsd");
+                }
+
+                catch (FileNotFoundException ex)
+                {
+                    Console.WriteLine(
+                        $"XSD file not found so generating: {ex.Message}");
+                    generateSchema = true;
+                }
+            }
 
             if (generateSchema)
             {
@@ -176,11 +198,6 @@ namespace XMLProcessingApp
                 XmlReader reader = XmlReader.Create(stringReader);
 
                 schema = xs.Add("http://www.contoso.com/books", reader);
-            }
-
-            else
-            {
-                schema = xs.Add("http://www.contoso.com/books", "booksData.xsd");
             }
 
             return schema;
