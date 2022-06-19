@@ -57,7 +57,6 @@ namespace XMLProcessingApp
         #region Validate XML against a Schema
 
         //<Snippet2>
-            
         //************************************************************************************
         //
         //  Helper method that generates an XML string.
