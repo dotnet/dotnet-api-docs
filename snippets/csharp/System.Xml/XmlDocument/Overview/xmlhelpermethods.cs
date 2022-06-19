@@ -181,7 +181,6 @@ namespace XMLProcessingApp
                 {
                     schema = xs.Add("http://www.contoso.com/books", "booksData.xsd");
                 }
-
                 catch (FileNotFoundException ex)
                 {
                     Console.WriteLine(
