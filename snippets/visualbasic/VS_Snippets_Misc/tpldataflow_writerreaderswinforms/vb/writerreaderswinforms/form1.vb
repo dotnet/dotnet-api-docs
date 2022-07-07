@@ -3,6 +3,7 @@
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports System.Threading.Tasks.Dataflow
+Imports System.Windows.Forms
 
 ' </snippet1>
 
