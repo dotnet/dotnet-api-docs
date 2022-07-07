@@ -10,7 +10,7 @@ using System.Windows.Markup;
 
 namespace Microsoft.Samples.Activities.Statements
 {
-    [Designer(typeof(Microsoft.Samples.Activities.Statements.Presentation.ParallelForEachDesigner))]
+    [Designer(typeof(Presentation.ParallelForEachDesigner))]
     [ContentProperty("Body")]
     public sealed class ParallelForEach : NativeActivity
     {
@@ -69,7 +69,7 @@ namespace Microsoft.Samples.Activities.Statements
 
             metadata.AddDelegate(this.Body);
         }
-//<Snippet1>
+        //<Snippet1>
         protected override void Execute(NativeActivityContext context)
         {
             IEnumerable values = this.Values.Get(context);
@@ -94,8 +94,8 @@ namespace Microsoft.Samples.Activities.Statements
                 disposable.Dispose();
             }
         }
-//</Snippet1>
-//<Snippet2>
+        //</Snippet1>
+        //<Snippet2>
         protected override void Cancel(NativeActivityContext context)
         {
             // If we don't have a completion condition then we can just
@@ -109,7 +109,7 @@ namespace Microsoft.Samples.Activities.Statements
                 context.CancelChildren();
             }
         }
-//</Snippet2>
+        //</Snippet2>
         void OnBodyComplete(NativeActivityContext context, ActivityInstance completedInstance)
         {
             // for the completion condition, we handle cancelation ourselves
