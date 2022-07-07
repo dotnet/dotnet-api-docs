@@ -2262,12 +2262,27 @@
         <Parameter Name="throwOnEndOfStream" Type="System.Boolean" Index="2" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="minimumBytes">To be added.</param>
-        <param name="throwOnEndOfStream">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A region of memory. When this method returns, the contents of this region are replaced by the bytes read from the current stream.</param>
+        <param name="minimumBytes">The minimum number of bytes to read into the buffer.</param>
+        <param name="throwOnEndOfStream">
+          <see langword="true" /> to throw an exception if the end of the stream is reached before reading <paramref name="minimumBytes" /> of bytes; <see langword="false" /> to return less than <paramref name="minimumBytes" /> when the end of the stream is reached.
+            The default is <see langword="true" />.</param>
+        <summary>Reads at least a minimum number of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
+        <returns>The total number of bytes read into the buffer. This is guaranteed to be greater than or equal to <paramref name="minimumBytes" /> when <paramref name="throwOnEndOfStream" /> is <see langword="true" />. This will be less than <paramref name="minimumBytes" /> when the end of the stream is reached and <paramref name="throwOnEndOfStream" /> is <see langword="false" />. This can be less than the number of bytes allocated in the buffer if that many bytes are not currently available.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `minimumBytes` is 0 (zero), this read operation will be completed without waiting for available data in the stream.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="minimumBytes" /> is negative, or is greater than the length of <paramref name="buffer" />.</exception>
+        <exception cref="T:System.IO.EndOfStreamException">
+          <paramref name="throwOnEndOfStream" /> is <see langword="true" /> and the end of the stream is reached before reading
+            <paramref name="minimumBytes" /> bytes of data.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadAtLeastAsync">
@@ -2300,13 +2315,28 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="minimumBytes">To be added.</param>
-        <param name="throwOnEndOfStream">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The region of memory to write the data into.</param>
+        <param name="minimumBytes">The minimum number of bytes to read into the buffer.</param>
+        <param name="throwOnEndOfStream">
+          <see langword="true" /> to throw an exception if the end of the stream is reached before reading <paramref name="minimumBytes" /> of bytes; <see langword="false" /> to return less than <paramref name="minimumBytes" /> when the end of the stream is reached.
+            The default is <see langword="true" />.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Asynchronously reads at least a minimum number of bytes from the current stream, advances the position within the stream by the number of bytes read, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.ValueTask`1.Result" /> property contains the total number of bytes read into the buffer. This is guaranteed to be greater than or equal to <paramref name="minimumBytes" /> when <paramref name="throwOnEndOfStream" /> is <see langword="true" />. This will be less than <paramref name="minimumBytes" /> when the end of the stream is reached and <paramref name="throwOnEndOfStream" /> is <see langword="false" />. This can be less than the number of bytes allocated in the buffer if that many bytes are not currently available.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `minimumBytes` is 0 (zero), this read operation will be completed without waiting for available data in the stream.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="minimumBytes" /> is negative, or is greater than the length of <paramref name="buffer" />.</exception>
+        <exception cref="T:System.IO.EndOfStreamException">
+          <paramref name="throwOnEndOfStream" /> is <see langword="true" /> and the end of the stream is reached before reading
+            <paramref name="minimumBytes" /> bytes of data.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadByte">
@@ -2405,9 +2435,18 @@
         <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="buffer">A region of memory. When this method returns, the contents of this region are replaced by the bytes read from the current stream.</param>
+        <summary>Reads bytes from the current stream and advances the position within the stream until the <paramref name="buffer" /> is filled.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `buffer` is empty, this read operation will be completed without waiting for available data in the stream.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.EndOfStreamException">The end of the stream is reached before filling the <paramref name="buffer" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadExactly">
@@ -2440,11 +2479,33 @@
         <Parameter Name="count" Type="System.Int32" Index="2" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values between <paramref name="offset" /> and (<paramref name="offset" /> + <paramref name="count" /> - 1) replaced by the bytes read from the current stream.</param>
+        <param name="offset">The byte offset in <paramref name="buffer" /> at which to begin storing the data read from the current stream.</param>
+        <param name="count">The number of bytes to be read from the current stream.</param>
+        <summary>Reads <paramref name="count" /> number of bytes from the current stream and advances the position within the stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `count` is 0 (zero), this read operation will be completed without waiting for available data in the stream.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="buffer" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="offset" /> is outside the bounds of <paramref name="buffer" />.
+
+-or-
+
+<paramref name="count" /> is negative.
+
+-or-
+
+The range specified by the combination of <paramref name="offset" /> and <paramref name="count" /> exceeds the
+            length of <paramref name="buffer" />.</exception>
+        <exception cref="T:System.IO.EndOfStreamException">The end of the stream is reached before reading <paramref name="count" /> number of bytes.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadExactlyAsync">
@@ -2475,11 +2536,20 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to write the data into.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Asynchronously reads bytes from the current stream, advances the position within the stream until the <paramref name="buffer" /> is filled, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `buffer` is empty, this read operation will be completed without waiting for available data in the stream.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.EndOfStreamException">The end of the stream is reached before filling the <paramref name="buffer" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadExactlyAsync">
@@ -2512,13 +2582,35 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="buffer">The buffer to write the data into.</param>
+        <param name="offset">The byte offset in <paramref name="buffer" /> at which to begin writing data from the stream.</param>
+        <param name="count">The number of bytes to be read from the current stream.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        <summary>Asynchronously reads <paramref name="count" /> number of bytes from the current stream, advances the position within the stream, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When `count` is 0 (zero), this read operation will be completed without waiting for available data in the stream.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="buffer" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="offset" /> is outside the bounds of <paramref name="buffer" />.
+
+-or-
+
+<paramref name="count" /> is negative.
+
+-or-
+
+The range specified by the combination of <paramref name="offset" /> and <paramref name="count" /> exceeds the
+            length of <paramref name="buffer" />.</exception>
+        <exception cref="T:System.IO.EndOfStreamException">The end of the stream is reached before reading <paramref name="count" /> number of bytes.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadTimeout">
