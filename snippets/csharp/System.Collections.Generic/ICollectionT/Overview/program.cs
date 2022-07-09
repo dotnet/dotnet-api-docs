@@ -198,7 +198,7 @@ public class BoxCollection : ICollection<Box>
            throw new ArgumentNullException("The array cannot be null.");
         if (arrayIndex < 0)
            throw new ArgumentOutOfRangeException("The starting array index cannot be negative.");
-        if (Count > array.Length - arrayIndex + 1)
+        if (Count > array.Length - arrayIndex)
            throw new ArgumentException("The destination array has fewer elements than the collection.");
 
         for (int i = 0; i < innerCol.Count; i++) {
