@@ -433,7 +433,7 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Reads the next event that is returned from the event query in this object.</summary>
+        <summary>Reads and returns the next event from the event query results - or null if the end of the results has been reached.</summary>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671205(v=vs.90)">Technology Summary for Reading and Managing Event Logs</related>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671204(v=vs.90)">Event Log Scenarios</related>
       </Docs>
@@ -464,14 +464,35 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Reads the next event that is returned from the event query in this object.</summary>
-        <returns>Returns an <see cref="T:System.Diagnostics.Eventing.Reader.EventRecord" /> object.</returns>
+        <summary>Reads and returns the next event from the event query results - or null if the end of the results has been reached.</summary>
+        <returns>Returns an <see cref="T:System.Diagnostics.Eventing.Reader.EventRecord" /> object - or a null reference.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- For example code using this class, see [How To: Query for Events](https://docs.microsoft.com/previous-versions/bb671200(v=vs.90)).  
-  
+          <format type="text/markdown"><![CDATA[
+public static IEnumerable<(String logPath, DateTime dateTime, String level, String description)> GetEvents(String logPath)
+{
+    if (logPath is null) throw new ArgumentNullException(nameof(logPath));
+
+    using (EventLogReader rdr = new EventLogReader(path: logPath))
+    {
+        for (EventRecord? e = rdr.ReadEvent(); e != null; e = rdr.ReadEvent())
+        {
+            try
+            {
+                EventLogRecord rec = (EventLogRecord)e;
+                yield return (
+                    logPath    : logPath,
+                    dateTime   : rec.TimeCreated ?? default,
+                    level      : rec.LevelDisplayName,
+                    description: rec.FormatDescription()
+                );
+            }
+            finally
+            {
+                e.Dispose();
+            }
+        }
+    }
+}
  ]]></format>
         </remarks>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671205(v=vs.90)">Technology Summary for Reading and Managing Event Logs</related>
