@@ -4,7 +4,7 @@ using System.Data;
 using System.Xml;
 using System.Configuration;
 
-namespace AdvancedInkInputSemples
+namespace AdvancedInkInputSamples
 {
     /// <summary>
     /// Interaction logic for MyApp.xaml

@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 
-namespace AdvancedInkInputSemples
+namespace AdvancedInkInputSamples
 {
     /// <summary>
     /// Interaction logic for Window2.xaml

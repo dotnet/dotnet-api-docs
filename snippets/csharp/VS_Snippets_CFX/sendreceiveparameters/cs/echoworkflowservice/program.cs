@@ -6,7 +6,6 @@ using System;
 using System.Activities;
 using System.Activities.Statements;
 using System.ServiceModel.Activities;
-using Microsoft.Samples.WorkflowServicesSamples.Common;
 
 namespace Microsoft.Samples.WorkflowServicesSamples.EchoWorkflowService
 {
@@ -87,7 +86,7 @@ namespace Microsoft.Samples.WorkflowServicesSamples.EchoWorkflowService
             // <Snippet03>
             Console.WriteLine("Starting up...");
             WorkflowService service = CreateService();
-            Uri address = new Uri(Constants.ServiceBaseAddress);
+            Uri address = new Uri("servicebaseaddress");
             WorkflowServiceHost host = new WorkflowServiceHost(service, address);
 
             try
