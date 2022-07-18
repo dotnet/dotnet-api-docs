@@ -32,9 +32,9 @@ let showCultureSpecificFullDateAndTime () =
 
 let showIso8601Format () =
     // <Snippet5>
-    let date1 = DateTime(2008, 3, 1, 7, 0, 0)
-    printfn $"""{date1.ToString "yyyyMMddTHH:mm:ssZ"}"""
-    // Displays 20080301T07:00:00Z
+    let date1 = DateTime(2008, 3, 1, 7, 0, 0, DateTimeKind.Utc)
+    printfn $"""{date1.ToString("yyyy-MM-ddTHH:mm:sszzz", System.Globalization.CultureInfo.InvariantCulture)}"""
+    // Displays 2008-03-01T07:00:00+00:00
     // </Snippet5>
 
 showDefaultToString ()
