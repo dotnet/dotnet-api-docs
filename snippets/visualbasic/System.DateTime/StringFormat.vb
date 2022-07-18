@@ -41,7 +41,7 @@
 
     Private Sub ShowIsoDateTime()
         ' <Snippet5>
-        Dim date1 As Date = #3/1/2008 7:00AM#
+        Dim date1 As DateTime = New DateTime(2008, 3, 1, 7, 0, 0, DateTimeKind.Utc)
         Console.WriteLine(date1.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture))
         ' Displays 2008-03-01T07:00:00+00:00
         ' </Snippet5>
