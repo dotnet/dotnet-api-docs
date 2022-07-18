@@ -53,8 +53,8 @@ namespace SystemDateTimeReference
         {
             // <Snippet5>
             var date1 = new DateTime(2008, 3, 1, 7, 0, 0);
-            Console.WriteLine(date1.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-            // Displays 2008-03-01T07:00:00Z
+            Console.WriteLine(date1.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
+            // Displays 2008-03-01T07:00:00zzz
             // </Snippet5>
         }
     }
