@@ -43,7 +43,7 @@
         ' <Snippet5>
         Dim date1 As Date = #3/1/2008 7:00AM#
         Console.WriteLine(date1.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture))
-        ' Displays 2008-03-01T07:00:00zzz
+        ' Displays 2008-03-01T07:00:00+00:00
         ' </Snippet5>
     End Sub
 

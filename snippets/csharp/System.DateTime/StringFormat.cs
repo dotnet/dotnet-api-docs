@@ -52,9 +52,9 @@ namespace SystemDateTimeReference
         private static void ShowIso8601Format()
         {
             // <Snippet5>
-            var date1 = new DateTime(2008, 3, 1, 7, 0, 0);
+            var date1 = new DateTime(2008, 3, 1, 7, 0, 0, DateTimeKind.Utc);
             Console.WriteLine(date1.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
-            // Displays 2008-03-01T07:00:00zzz
+            // Displays 2008-03-01T07:00:00+00:00
             // </Snippet5>
         }
     }
