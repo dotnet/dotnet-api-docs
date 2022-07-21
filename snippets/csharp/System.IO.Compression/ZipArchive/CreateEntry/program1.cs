@@ -11,13 +11,14 @@ namespace ConsoleApplication
         {
             using (FileStream zipToOpen = new FileStream(@"c:\users\exampleuser\release.zip", FileMode.Open))
             {
-                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
+                // Note: Create mode will append entries to an existing archive
+                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create))
                 {
                     ZipArchiveEntry readmeEntry = archive.CreateEntry("Readme.txt");
                     using (StreamWriter writer = new StreamWriter(readmeEntry.Open()))
                     {
-                            writer.WriteLine("Information about this package.");
-                            writer.WriteLine("========================");
+                        writer.WriteLine("Information about this package.");
+                        writer.WriteLine("========================");
                     }
                 }
             }
