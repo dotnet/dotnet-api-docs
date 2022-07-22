@@ -47,9 +47,19 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Text.Json.Serialization.JsonConverter</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="T:System.Text.Json.Serialization.JsonConverter" /> associated with the current type.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The <xref:System.Text.Json.Serialization.JsonConverter> associated with the type determines the value of <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind>,
+            and by extension the types of metadata that are configurable in the current JSON contract.
+            As such, the value of the converter cannot be changed once a <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo> instance has been created.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateJsonPropertyInfo">
@@ -72,11 +82,15 @@ This API is intended for use by the output of the System.Text.Json source genera
         <Parameter Name="name" Type="System.String" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="propertyType">To be added.</param>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="propertyType">The declared type for the property.</param>
+        <param name="name">The property name used in JSON serialization and deserialization.</param>
+        <summary>Creates a blank <see cref="T:System.Text.Json.Serialization.Metadata.JsonPropertyInfo" /> instance for the current <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" />.</summary>
+        <returns>A blank <see cref="T:System.Text.Json.Serialization.Metadata.JsonPropertyInfo" /> instance.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="propertyType" /> or <paramref name="name" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="propertyType" /> cannot be used for serialization.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateJsonTypeInfo">
@@ -109,11 +123,30 @@ This API is intended for use by the output of the System.Text.Json source genera
         <Parameter Name="options" Type="System.Text.Json.JsonSerializerOptions" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="type">The type for which contract metadata is specified.</param>
+        <param name="options">The <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance the metadata is associated with.</param>
+        <summary>Creates a blank <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance.</summary>
+        <returns>A blank <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The returned <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo> will be blank, with the exception of the
+             <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Converter> property which will be resolved either from
+             <xref:System.Text.Json.JsonSerializerOptions.Converters> or the built-in converters for the type.
+             Any converters specified via <xref:System.Text.Json.Serialization.JsonConverterAttribute> on the type declaration
+             will not be resolved by this method.
+            
+Which converter gets resolved influences the value of <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind>,
+             which constrains the type of metadata that can be modified in the <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo> instance.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="type" /> or <paramref name="options" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="type" /> cannot be used for serialization.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateJsonTypeInfo&lt;T&gt;">
@@ -148,11 +181,28 @@ This API is intended for use by the output of the System.Text.Json source genera
         <Parameter Name="options" Type="System.Text.Json.JsonSerializerOptions" Index="0" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The type for which contract metadata is specified.</typeparam>
+        <param name="options">The <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance the metadata is associated with.</param>
+        <summary>Creates a blank <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo`1" /> instance.</summary>
+        <returns>A blank <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo`1" /> instance.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The returned <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo`1> will be blank, with the exception of the
+             <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Converter> property, which will be resolved either from
+             <xref:System.Text.Json.JsonSerializerOptions.Converters> or the built-in converters for the type.
+             Any converters specified via <xref:System.Text.Json.Serialization.JsonConverterAttribute> on the type declaration
+             will not be resolved by this method.
+            
+Which converter gets resolved influences the value of <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind>,
+             which constrains the type of metadata that can be modified in the <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo> instance.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="options" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateObject">
@@ -171,9 +221,26 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Func&lt;System.Object&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets a parameterless factory to be used on deserialization.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If set to `null`, any attempt to deserialize instances of the given type will result in an exception.
+            
+For contracts originating from <xref:System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver> or <xref:System.Text.Json.Serialization.JsonSerializerContext>,
+             types with a single default constructor or default constructors annotated with <xref:System.Text.Json.Serialization.JsonConstructorAttribute>
+             will be mapped to this delegate.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.
+
+-or-
+
+A parameterless factory is not supported for the current metadata <see cref="P:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Kind">
@@ -192,9 +259,24 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Text.Json.Serialization.Metadata.JsonTypeInfoKind</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value that describes the kind of contract metadata that the current instance specifies.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The value of <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind> determines what aspects of the JSON contract are configurable.
+             For example, it is only possible to configure the <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Properties> list for metadata
+             of kind <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.Object>.
+            
+The value of <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind> is determined exclusively by the <xref:System.Text.Json.Serialization.JsonConverter>
+             resolved for the current type, and cannot be changed once resolution has happened.
+             User-defined custom converters (specified either via <xref:System.Text.Json.Serialization.JsonConverterAttribute> or <xref:System.Text.Json.JsonSerializerOptions.Converters>)
+             are metadata-agnostic and thus always resolve to <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.None>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="NumberHandling">
@@ -213,9 +295,19 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Nullable&lt;System.Text.Json.Serialization.JsonNumberHandling&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the type-level <see cref="P:System.Text.Json.JsonSerializerOptions.NumberHandling" /> override.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+For contracts originating from <xref:System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver> or <xref:System.Text.Json.Serialization.JsonSerializerContext>,
+            the value of this callback will be mapped from any <xref:System.Text.Json.Serialization.JsonNumberHandling> annotations.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.</exception>
       </Docs>
     </Member>
     <Member MemberName="Options">
@@ -234,7 +326,7 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Text.Json.JsonSerializerOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="T:System.Text.Json.JsonSerializerOptions" /> value associated with the current <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -255,9 +347,25 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Collections.Generic.IList&lt;System.Text.Json.Serialization.Metadata.JsonPropertyInfo&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the list of <see cref="T:System.Text.Json.Serialization.Metadata.JsonPropertyInfo" /> metadata corresponding to the current type.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This property is only applicable to metadata of kind <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.Object>.
+             For other kinds, an empty, read-only list will be returned.
+            
+The order of <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo> entries in the list determines the serialization order,
+             unless either of the entries specifies a non-zero <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo.Order> value,
+             in which case the properties will be stable sorted by <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo.Order>.
+            
+It's required that added <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo> entries are unique up to <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo.Name>,
+             however this will only be validated on serialization, once the metadata instance gets locked for further modification.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -276,7 +384,7 @@ This API is intended for use by the output of the System.Text.Json source genera
         <ReturnType>System.Type</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="P:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Type" /> for which the JSON serialization contract is being defined.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
