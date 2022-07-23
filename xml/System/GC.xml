@@ -263,13 +263,18 @@ If pinned is set to `true`, `T` must not be a reference type or a type that cont
         <param name="length">Specifies the length of the array.</param>
         <param name="pinned">Specifies whether the allocated array must be pinned.</param>
         <summary>Allocates an array while skipping zero-initialization, if possible.</summary>
-        <returns>An array object with uninitialized memory except if it contains references or if it's too small for unpinned.</returns>
+        <returns>An array object with uninitialized memory.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
 If pinned is set to `true`, `T` must not be a reference type or a type that contains object references.
+
+Skipping zero-initialization is a security risk. The unitialized array can contain invalid valuetype instances or sensitive information created by other parts of the application.
+The code operating on unitialized arrays should be heavily scrutinized to ensure that the unitialized data is never read.
+
+Skipping zero-initialization using this API only has a material performance benefit for large arrays, such as buffers of several kilobytes or more.
 
           ]]></format>
         </remarks>
