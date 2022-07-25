@@ -73,7 +73,6 @@ namespace ControlFlowBuilderSnippets
                 sigBlobIndex2);
 
             // Get reference to System.DivideByZeroException
-
             TypeReferenceHandle exceptionTypeRefHandle = metadata.AddTypeReference(
                 corlibAssemblyRef,
                 metadata.GetOrAddString("System"),
