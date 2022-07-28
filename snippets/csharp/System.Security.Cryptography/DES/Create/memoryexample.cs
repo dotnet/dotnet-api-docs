@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 
-class DESSample
+class DESSample2
 {
     static void Main()
     {
