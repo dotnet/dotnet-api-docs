@@ -13,7 +13,7 @@ using namespace System::IO;
 int main()
 {
    array<String^>^args = Environment::GetCommandLineArgs();
-   HttpWebRequest^ request = dynamic_cast<HttpWebRequest^>(WebRequest::Create(args[ 1 ]));
+   HttpWebRequest^ request = dynamic_cast<HttpWebRequest^>(WebRequest::Create(args[1]));
 
    // Set some reasonable limits on resources used by this request
    request->MaximumAutomaticRedirections = 4;
@@ -29,7 +29,7 @@ int main()
    Stream^ receiveStream = response->GetResponseStream();
 
    // Pipes the stream to a higher level stream reader with the required encoding format.
-   StreamReader^ readStream = gcnew StreamReader(receiveStream,Encoding::UTF8);
+   StreamReader^ readStream = gcnew StreamReader(receiveStream, Encoding::UTF8);
    Console::WriteLine("Response stream received.");
    Console::WriteLine(readStream->ReadToEnd());
    response->Close();
