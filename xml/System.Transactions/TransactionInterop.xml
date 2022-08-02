@@ -40,37 +40,35 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This class provides methods for transaction propagation. For more information on how this process works, see [Transaction Propagation](https://docs.microsoft.com/previous-versions/windows/desktop/ms685946(v=vs.85)).  
+ This class provides methods for transaction propagation. For more information on how this process works, see [Transaction Propagation](/previous-versions/windows/desktop/ms685946(v=vs.85)).  
   
  Using the methods provided by this class, you can engage in two types of transaction propagations, Export/Import (push model) and Transmitter/Receiver (pull model).  
   
- The Export/Import (push model) propagation involves these steps,  
+ The Export/Import (push model) propagation involves the following steps:
   
 1.  On the remote machine, obtain the "whereabouts" of the transaction manager of that machine by calling the <xref:System.Transactions.TransactionInterop.GetWhereabouts%2A> method. You can then cache this piece of information on the client machine for future usage.  
   
-2.  Send the data containing the whereabouts to the client machine using any preferred method  
+2.  Send the data containing the whereabouts to the client machine using any preferred method.
   
 3.  On the client machine, use the whereabouts to "export" the transaction to the remote machine and generate a transaction "cookie".  This is done by calling <xref:System.Transactions.TransactionInterop.GetExportCookie%2A> and passing in the remote machine's whereabouts.  
   
-4.  Send the data containing the transaction "cookie" to the remote machine using any preferred method  
+4.  Send the data containing the transaction "cookie" to the remote machine using any preferred method.
   
 5.  On the remote machine, use the transaction "cookie" to obtain a clone of the client transaction by calling the <xref:System.Transactions.TransactionInterop.GetTransactionFromExportCookie%2A> method.  
   
 6.  On the remote machine, use the clone transaction to enlist the resource manager using the <xref:System.Transactions.Transaction.EnlistVolatile%2A> or <xref:System.Transactions.Transaction.EnlistDurable%2A> methods of the <xref:System.Transactions.Transaction> class.  
   
- The Transmitter/Receiver (pull model) propagation involves these steps,  
+ The Transmitter/Receiver (pull model) propagation involves the following steps:
   
--   On the client machine, using the transaction generates a corresponding "propagation token" by calling <xref:System.Transactions.TransactionInterop.GetTransmitterPropagationToken%2A>  
+-   On the client machine, using the transaction generates a corresponding "propagation token" by calling <xref:System.Transactions.TransactionInterop.GetTransmitterPropagationToken%2A>.  
   
--   Send the data containing the "propagation token" of the transaction to the remote machine using any preferred method  
+-   Send the data containing the "propagation token" of the transaction to the remote machine using any preferred method.
   
--   On the remote machine, use the "propagation token" to obtain a clone of the client transaction by calling <xref:System.Transactions.TransactionInterop.GetTransactionFromTransmitterPropagationToken%2A>  
+-   On the remote machine, use the "propagation token" to obtain a clone of the client transaction by calling <xref:System.Transactions.TransactionInterop.GetTransactionFromTransmitterPropagationToken%2A.
   
  The Transmitter/Receiver model provides better performance in scenarios where the transaction token is sent to a remote machine, but the remote machine may not use it to obtain the transaction.  This is because the transaction is not propagated until <xref:System.Transactions.TransactionInterop.GetTransactionFromTransmitterPropagationToken%2A> is called. Another advantage is that the propagation token can be sent to any remote machine, while the export cookie can be used only on the machine that provided the whereabouts.  
   
- However, you should also note that the whereabouts of remote transaction managers are encapsulated in all the propagation tokens, making them bigger than the corresponding transaction cookies from the Export/Import model.  
-  
- **Note** This type uses <xref:System.Security.Permissions.SecurityAction.LinkDemand> to prevent it from being called from untrusted code; however, only the immediate caller is required to possess the `FullTrust` permission set.  
+ However, you should also note that the whereabouts of remote transaction managers are encapsulated in all the propagation tokens, making them bigger than the corresponding transaction cookies from the Export/Import model.
   
  ]]></format>
     </remarks>
