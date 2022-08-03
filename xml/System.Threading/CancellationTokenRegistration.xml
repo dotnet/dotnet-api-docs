@@ -123,18 +123,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Releases all resources used by the current instance of the <see cref="T:System.Threading.CancellationTokenRegistration" /> class.</summary>
+        <summary>Disposes of the registration and unregisters the target callback from the associated <see cref="T:System.Threading.CancellationToken" />.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Call `Dispose` when you are finished using the <xref:System.Threading.CancellationTokenRegistration>. The `Dispose` method leaves the <xref:System.Threading.CancellationTokenRegistration> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Threading.CancellationTokenRegistration> so the garbage collector can reclaim the memory that the <xref:System.Threading.CancellationTokenRegistration> was occupying.  
-  
- For more information, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).  
-  
-> [!NOTE]
->  Always call `Dispose` before you release your last reference to the <xref:System.Threading.CancellationTokenRegistration>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Threading.CancellationTokenRegistration> object's `Finalize` method.  
-  
+ `Dispose` returns once the associated callback is unregistered without having executed or once it's finished executing, except in the degenerate case where the callback is unregistering itself.
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/threading/how-to-register-callbacks-for-cancellation-requests">How to: Register Callbacks for Cancellation Requests</related>
@@ -533,7 +527,7 @@ had cancellation requested, the registration may not be associated with the toke
             <see cref="T:System.Threading.CancellationToken" />.</summary>
         <returns>
           <see langword="true" /> if the method succeeds; otherwise, <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>Unlike `Dispose`, if the associated callback is currently executing, `Unregister` does not wait for it to complete before returning.</remarks>
       </Docs>
     </Member>
   </Members>
