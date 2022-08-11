@@ -1,10 +1,10 @@
 <Type Name="TarWriter" FullName="System.Formats.Tar.TarWriter">
-  <TypeSignature Language="C#" Value="public sealed class TarWriter : IDisposable" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit TarWriter extends System.Object implements class System.IDisposable" />
+  <TypeSignature Language="C#" Value="public sealed class TarWriter : IAsyncDisposable, IDisposable" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit TarWriter extends System.Object implements class System.IAsyncDisposable, class System.IDisposable" />
   <TypeSignature Language="DocId" Value="T:System.Formats.Tar.TarWriter" />
-  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class TarWriter&#xA;Implements IDisposable" />
-  <TypeSignature Language="F#" Value="type TarWriter = class&#xA;    interface IDisposable" />
-  <TypeSignature Language="C++ CLI" Value="public ref class TarWriter sealed : IDisposable" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class TarWriter&#xA;Implements IAsyncDisposable, IDisposable" />
+  <TypeSignature Language="F#" Value="type TarWriter = class&#xA;    interface IAsyncDisposable&#xA;    interface IDisposable" />
+  <TypeSignature Language="C++ CLI" Value="public ref class TarWriter sealed : IAsyncDisposable, IDisposable" />
   <AssemblyInfo>
     <AssemblyName>System.Formats.Tar</AssemblyName>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
@@ -13,6 +13,9 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces>
+    <Interface>
+      <InterfaceName>System.IAsyncDisposable</InterfaceName>
+    </Interface>
     <Interface>
       <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
@@ -117,7 +120,7 @@ When using this constructor, <xref:System.Formats.Tar.TarEntryFormat.Pax> is use
       </Parameters>
       <Docs>
         <param name="archiveStream">The stream to write to.</param>
-        <param name="archiveFormat">The format of the archive.</param>
+        <param name="format">To be added.</param>
         <param name="leaveOpen">
           <see langword="false" /> to dispose the <paramref name="archiveStream" /> when this instance is disposed; <see langword="true" /> to leave the stream open.</param>
         <summary>Initializes a <see cref="T:System.Formats.Tar.TarWriter" /> instance that can write tar entries to the specified stream, optionally leave the stream open upon disposal of this instance, and specify the format of the underlying archive.</summary>
@@ -159,6 +162,31 @@ The recommended format is <xref:System.Formats.Tar.TarEntryFormat.Pax> for its f
       <Parameters />
       <Docs>
         <summary>Disposes the current <see cref="T:System.Formats.Tar.TarWriter" /> instance, and closes the archive stream if the <c>leaveOpen</c> argument was set to <see langword="false" /> in the constructor.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DisposeAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask DisposeAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance valuetype System.Threading.Tasks.ValueTask DisposeAsync() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Formats.Tar.TarWriter.DisposeAsync" />
+      <MemberSignature Language="VB.NET" Value="Public Function DisposeAsync () As ValueTask" />
+      <MemberSignature Language="F#" Value="abstract member DisposeAsync : unit -&gt; System.Threading.Tasks.ValueTask&#xA;override this.DisposeAsync : unit -&gt; System.Threading.Tasks.ValueTask" Usage="tarWriter.DisposeAsync " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Threading::Tasks::ValueTask DisposeAsync();" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.IAsyncDisposable.DisposeAsync</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>System.Formats.Tar</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -265,6 +293,60 @@ These are the entry types supported for writing on each format:
         <exception cref="T:System.ArgumentException">
           <paramref name="fileName" /> or <paramref name="entryName" /> is <see langword="null" /> or empty.</exception>
         <exception cref="T:System.IO.IOException">An I/O problem ocurred.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteEntryAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task WriteEntryAsync (System.Formats.Tar.TarEntry entry, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task WriteEntryAsync(class System.Formats.Tar.TarEntry entry, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Formats.Tar.TarWriter.WriteEntryAsync(System.Formats.Tar.TarEntry,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function WriteEntryAsync (entry As TarEntry, Optional cancellationToken As CancellationToken = Nothing) As Task" />
+      <MemberSignature Language="F#" Value="member this.WriteEntryAsync : System.Formats.Tar.TarEntry * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="tarWriter.WriteEntryAsync (entry, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Formats.Tar</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="entry" Type="System.Formats.Tar.TarEntry" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
+      </Parameters>
+      <Docs>
+        <param name="entry">To be added.</param>
+        <param name="cancellationToken">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteEntryAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task WriteEntryAsync (string fileName, string? entryName, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task WriteEntryAsync(string fileName, string entryName, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Formats.Tar.TarWriter.WriteEntryAsync(System.String,System.String,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function WriteEntryAsync (fileName As String, entryName As String, Optional cancellationToken As CancellationToken = Nothing) As Task" />
+      <MemberSignature Language="F#" Value="member this.WriteEntryAsync : string * string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="tarWriter.WriteEntryAsync (fileName, entryName, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Formats.Tar</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fileName" Type="System.String" />
+        <Parameter Name="entryName" Type="System.String" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
+      </Parameters>
+      <Docs>
+        <param name="fileName">To be added.</param>
+        <param name="entryName">To be added.</param>
+        <param name="cancellationToken">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>
