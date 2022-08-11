@@ -34,14 +34,14 @@ class WebRequest_Preauthenticate
 // <Snippet1>
 // <Snippet2>
 
-                     // Create a new webrequest to the mentioned URL.
+            // Create a new webrequest to the mentioned URL.
 			WebRequest myWebRequest=WebRequest.Create(url);
 
 			// Set 'Preauthenticate'  property to true.  Credentials will be sent with the request.
 			myWebRequest.PreAuthenticate=true;
 
 			Console.WriteLine("\nPlease enter your credentials for the requested Url");
-                     Console.WriteLine("UserName");
+            Console.WriteLine("UserName");
 			string UserName=Console.ReadLine();
 			Console.WriteLine("Password");
 			string Password=Console.ReadLine();
