@@ -14,8 +14,50 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a QUIC stream, see <see href="https://www.rfc-editor.org/rfc/rfc9000.html#name-streams">RFC 9000: Streams</see> for more details.
+            <see cref="T:System.Net.Quic.QuicStream" /> can be <see cref="F:System.Net.Quic.QuicStreamType.Unidirectional">unidirectional</see>, i.e.: write-only for the opening side, or <see cref="F:System.Net.Quic.QuicStreamType.Bidirectional">bidirectional</see> which allows both side to write.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Net.Quic.QuicStream> can be used in a same way as any other <xref:System.IO.Stream>.
+            Apart from stream API, <xref:System.Net.Quic.QuicStream> also exposes QUIC specific features:
+            <list type="bullet">
+  <item>
+    <term>
+      <xref:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)>
+    </term>
+    <description>Allows to close the writing side of the stream as a single operation with the write itself.</description>
+  </item>
+  <item>
+    <term>
+      <xref:System.Net.Quic.QuicStream.CompleteWrites>
+    </term>
+    <description>Close the writing side of the stream.</description>
+  </item>
+  <item>
+    <term>
+      <xref:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)>
+    </term>
+    <description>Aborts either the writing or the reading side of the stream.</description>
+  </item>
+  <item>
+    <term>
+      <xref:System.Net.Quic.QuicStream.WritesClosed>
+    </term>
+    <description>A <xref:System.Threading.Tasks.Task> that will get completed when the stream writing side has been closed (gracefully or abortively).</description>
+  </item>
+  <item>
+    <term>
+      <xref:System.Net.Quic.QuicStream.ReadsClosed>
+    </term>
+    <description>A <xref:System.Threading.Tasks.Task> that will get completed when the stream reading side has been closed (gracefully or abortively).</description>
+  </item>
+</list>
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Abort">
@@ -38,10 +80,19 @@
         <Parameter Name="errorCode" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="abortDirection">To be added.</param>
-        <param name="errorCode">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="abortDirection">The direction of the stream to abort.</param>
+        <param name="errorCode">The error code with which to abort the stream, this value is application protocol (layer above QUIC) dependent.</param>
+        <summary>Aborts either <see cref="F:System.Net.Quic.QuicAbortDirection.Read">reading</see>, <see cref="F:System.Net.Quic.QuicAbortDirection.Write">writing</see> or <see cref="F:System.Net.Quic.QuicAbortDirection.Both">both</see> sides of the stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Corresponds to <see href="https://www.rfc-editor.org/rfc/rfc9000.html#frame-stop-sending">STOP_SENDING</see>
+            and <see href="https://www.rfc-editor.org/rfc/rfc9000.html#frame-reset-stream">RESET_STREAM</see> QUIC frames.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="BeginRead">
@@ -211,8 +262,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gracefully completes the writing side of the stream.
+            Equivalent to using <see cref="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)" /> with <c>completeWrites: true</c>.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Corresponds to an empty <see href="https://www.rfc-editor.org/rfc/rfc9000.html#frame-stream">STREAM</see> frame with `FIN` flag set to `true`.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -256,8 +316,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>If the read side is not fully consumed, i.e.: <see cref="P:System.Net.Quic.QuicStream.ReadsClosed" /> is not completed and/or <see cref="M:System.Net.Quic.QuicStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)" /> hasn't returned <c>0</c>, dispose will abort the read side with provided <see cref="P:System.Net.Quic.QuicConnectionOptions.DefaultStreamErrorCode" />.
+            If the write side hasn't been closed, it'll be closed gracefully as if <see cref="M:System.Net.Quic.QuicStream.CompleteWrites" /> was called.
+            Finally, all resources associated with the stream will be released.</summary>
+        <returns>A task that represents the asynchronous dispose operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -371,7 +433,7 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Stream id, see <see href="https://www.rfc-editor.org/rfc/rfc9000.html#name-stream-types-and-identifier" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -566,7 +628,8 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A <see cref="T:System.Threading.Tasks.Task" /> that will get completed once reading side has been closed.
+            Which might be by reading till end of stream (<see cref="M:System.Net.Quic.QuicStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)" /> will return <c>0</c>), or when <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> for <see cref="F:System.Net.Quic.QuicAbortDirection.Read" /> is called, or when the peer called <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> for <see cref="F:System.Net.Quic.QuicAbortDirection.Write" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -659,7 +722,7 @@
         <ReturnType>System.Net.Quic.QuicStreamType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Stream type, see <see href="https://www.rfc-editor.org/rfc/rfc9000.html#name-stream-types-and-identifier" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -762,9 +825,9 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="completeWrites">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
+        <param name="buffer">The region of memory to write data from.</param>
+        <param name="completeWrites">Notifies the peer about gracefully closing the write side, i.e.: sends FIN flag with the data.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
@@ -840,7 +903,8 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A <see cref="T:System.Threading.Tasks.Task" /> that will get completed once writing side has been closed.
+            Which might be by closing the write side via <see cref="M:System.Net.Quic.QuicStream.CompleteWrites" /> or <see cref="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)" /> with <c>completeWrites: true</c> and getting acknowledgement from the peer for it, or when <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> for <see cref="F:System.Net.Quic.QuicAbortDirection.Write" /> is called, or when the peer called <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> for <see cref="F:System.Net.Quic.QuicAbortDirection.Read" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
