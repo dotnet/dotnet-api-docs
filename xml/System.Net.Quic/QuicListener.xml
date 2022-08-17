@@ -18,18 +18,17 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>Represents a listener that listens for incoming QUIC connections, see <see href="https://www.rfc-editor.org/rfc/rfc9000.html#name-connections">RFC 9000: Connections</see> for more details.
-            <see cref="T:System.Net.Quic.QuicListener" /> allows accepting multiple <see cref="T:System.Net.Quic.QuicConnection" />.</summary>
+    <summary>Represents a listener that listens for incoming QUIC connections. <see cref="T:System.Net.Quic.QuicListener" /> can accept multiple <see cref="T:System.Net.Quic.QuicConnection">Quic connections</see>.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-Unlike the connection and stream, <xref:System.Net.Quic.QuicListener> lifetime is not linked to any of the accepted connections.
-            It can be safely disposed while keeping the accepted connection alive. The <xref:System.Net.Quic.QuicListener.DisposeAsync> will only stop listening for any other inbound connections.
+Unlike the connection and stream, the lifetime of a <xref:System.Net.Quic.QuicListener> isn't linked to any of the accepted connections. It can be safely disposed while keeping the accepted connection alive. Calling <xref:System.Net.Quic.QuicListener.DisposeAsync> will only cause the listener to stop listening for any other inbound connections.
 
       ]]></format>
     </remarks>
+    <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#name-connections">RFC 9000: Connections</related>
   </Docs>
   <Members>
     <Member MemberName="AcceptConnectionAsync">
@@ -52,17 +51,15 @@ Unlike the connection and stream, <xref:System.Net.Quic.QuicListener> lifetime i
       <Docs>
         <param name="cancellationToken">To be added.</param>
         <summary>Accepts an inbound <see cref="T:System.Net.Quic.QuicConnection" />.</summary>
-        <returns>A task that will contain a fully connected <see cref="T:System.Net.Quic.QuicConnection" /> which successfully finished the handshake and is ready to be used.</returns>
+        <returns>A task that contains a fully connected <see cref="T:System.Net.Quic.QuicConnection" /> that successfully finished the handshake and is ready to be used.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-Note that <xref:System.Net.Quic.QuicListener> doesn't have a mechanism to report inbound connections that fail the handshake process.
-             Such connections are only logged by the listener and never surfaced on the outside.
+<xref:System.Net.Quic.QuicListener> doesn't have a mechanism to report inbound connections that fail the handshake process. Such connections are only logged by the listener and never surfaced on the outside.
             
-             Propagates exceptions from <xref:System.Net.Quic.QuicListenerOptions.ConnectionOptionsCallback>, including validation errors from misconfigured <xref:System.Net.Quic.QuicServerConnectionOptions>, e.g. <xref:System.ArgumentException>.
-             Also propagates exceptions from failed connection handshake, e.g. <xref:System.Security.Authentication.AuthenticationException>, <xref:System.Net.Quic.QuicException>.
+This method propagates exceptions from <xref:System.Net.Quic.QuicListenerOptions.ConnectionOptionsCallback>, including validation errors from misconfigured <xref:System.Net.Quic.QuicServerConnectionOptions>, for example, <xref:System.ArgumentException>. It also propagates exceptions from failed connection handshakes, for example, <xref:System.Security.Authentication.AuthenticationException> and <xref:System.Net.Quic.QuicException>.
 
           ]]></format>
         </remarks>
@@ -109,18 +106,10 @@ Note that <xref:System.Net.Quic.QuicListener> doesn't have a mechanism to report
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns <see langword="true" /> if QUIC is supported on the current machine and can be used; otherwise, <see langword="false" />.</summary>
-        <value>To be added.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The current implementation depends on [MsQuic](https://github.com/microsoft/msquic) native library, this property checks its presence (Linux machines).
-            It also checks whether TLS 1.3, requirement for QUIC protocol, is available and enabled (Windows machines).
-
-          ]]></format>
-        </remarks>
+        <summary>Gets a value that indicates whether QUIC is supported on the current machine.</summary>
+        <value>
+          <see langword="true" /> if QUIC is supported on the current machine and can be used; otherwise, <see langword="false" />.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ListenAsync">
@@ -165,7 +154,7 @@ The current implementation depends on [MsQuic](https://github.com/microsoft/msqu
         <ReturnType>System.Net.IPEndPoint</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The actual listening endpoint.</summary>
+        <summary>Gets the actual listening endpoint.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
