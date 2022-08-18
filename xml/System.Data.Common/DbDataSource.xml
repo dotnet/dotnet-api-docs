@@ -21,8 +21,8 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a data source which can be used to obtain open connections, and against which commands can be executed directly.</summary>
+    <remarks>Unlike <see cref="T:System.Data.Common.DbProviderFactory" />, which is purely a factory for provider-specific objects such as <see cref="T:System.Data.Common.DbConnection" />, <see cref="T:System.Data.Common.DbDataSource" /> hands out open connections to specific databases, encapsulating all the information needed to connect to a database. Depending on how the <see cref="T:System.Data.Common.DbDataSource" /> was configured, the connections it hands out may be pooled.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -38,7 +38,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Data.Common.DbDataSource" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -58,8 +58,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the connection string of the database represented by this <see cref="T:System.Data.Common.DbDataSource" />. The exact contents of the connection string depend on the specific data source for this connection.</summary>
+        <value>The connection string of the database represented by this <see cref="T:System.Data.Common.DbDataSource" />. The exact contents of the connection string depend on the specific data source for this connection.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -80,9 +80,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns a <see cref="T:System.Data.Common.DbBatch" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbBatch" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Batches returned from this method are already configured to execute against their originating <xref:System.Data.Common.DbDataSource>; their <xref:System.Data.Common.DbBatch.Connection%2A> does not need to be set, and doing so will throw an exception.
+
+ Since these batches have no explicitly-managed connection, it is not possible to use them with transactions, and trying to set <xref:System.Data.Common.DbBatch.Transaction%2A> will throw an exception. To use a transaction, get a connection from <xref:System.Data.Common.DbDataSource.OpenConnection%2A> and create a command against it.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateCommand">
@@ -103,10 +112,19 @@
         <Parameter Name="commandText" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="commandText">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="commandText">The text command with which to initialize the <see cref="T:System.Data.Common.DbCommand" /> that this method returns.</param>
+        <summary>Returns a <see cref="T:System.Data.Common.DbCommand" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbCommand" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Commands returned from this method are already configured to execute against their originating <xref:System.Data.Common.DbDataSource>; their <xref:System.Data.Common.DbCommand.Connection%2A> does not need to be set, and doing so will throw an exception.
+
+ Since these commands have no explicitly-managed connection, it is not possible to use them with transactions, and trying to set <xref:System.Data.Common.DbCommand.Transaction%2A> will throw an exception. To use a transaction, get a connection from <xref:System.Data.Common.DbDataSource.OpenConnection%2A> and create a command against it.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateConnection">
@@ -126,9 +144,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns a <see cref="T:System.Data.Common.DbBatch" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbBatch" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ Batches returned from this method are already configured to execute against their originating <xref:System.Data.Common.DbDataSource>; their <xref:System.Data.Common.DbBatch.Connection%2A> does not need to be set, and doing so will throw an exception.
+
+ Since these batches have no explicitly-managed connection, it is not possible to use them with transactions, and trying to set <xref:System.Data.Common.DbBatch.Transaction%2A> will throw an exception.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateDbBatch">
@@ -148,9 +175,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns a new, closed connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A new, closed connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateDbCommand">
@@ -171,10 +205,17 @@
         <Parameter Name="commandText" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="commandText">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="commandText">The text command with which to initialize the <see cref="T:System.Data.Common.DbCommand" /> that this method returns.</param>
+        <summary>Returns a <see cref="T:System.Data.Common.DbCommand" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbCommand" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateDbConnection">
@@ -194,9 +235,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns a <see cref="T:System.Data.Common.DbBatch" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A <see cref="T:System.Data.Common.DbBatch" /> that's ready for execution against the <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -219,8 +267,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If the current instance of <xref:System.Data.Common.DbDataSource> represents a connection pool, disposing it should close all idle connections, and arrange for busy connections to be closed as soon as possible.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -242,9 +297,16 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+        <summary>Called by the Dispose() and Finalize() methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Data.Common.DbDataSource" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DisposeAsync">
@@ -269,7 +331,14 @@
       <Docs>
         <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously.</summary>
         <returns>A task that represents the asynchronous dispose operation.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ If the current instance of <xref:System.Data.Common.DbDataSource> represents a connection pool, disposing it should close all idle connections, and arrange for busy connections to be closed as soon as possible.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DisposeAsyncCore">
@@ -289,9 +358,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting managed resources asynchronously.</summary>
+        <returns>A task that represents the asynchronous dispose operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenConnection">
@@ -311,9 +387,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns a new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned connection is already open, and is ready for immediate use.
+
+ It is the responsibility of the caller to properly dispose the connection returned by this method. Failure to do so may result in a connection leak.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenConnectionAsync">
@@ -334,10 +419,19 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Asynchronously returns a new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The returned connection is already open, and is ready for immediate use.
+
+ It is the responsibility of the caller to properly dispose the connection returned by this method. Failure to do so may result in a connection leak.
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenDbConnection">
@@ -357,9 +451,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Returns a new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OpenDbConnectionAsync">
@@ -380,10 +481,17 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        <summary>Asynchronously returns a new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</summary>
+        <returns>A new, open connection to the database represented by this <see cref="T:System.Data.Common.DbDataSource" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ This method is meant to be overridden by implementing ADO.NET providers, and is not a user-facing API.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
