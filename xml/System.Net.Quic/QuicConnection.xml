@@ -85,7 +85,7 @@ Each connection can then open an outbound stream using <xref:System.Net.Quic.Qui
 
 ## Remarks
 
-Closing the connection is not graceful in regards to its streams. Calling <xref:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading.CancellationToken)> will immediately abort all streams associated with this connection. Make sure that all streams have been closed and all their data consumed before calling this method. Otherwise, all the data that was received but not yet consumed will be lost.
+Closing the connection is not graceful in regards to its streams. Calling <xref:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading.CancellationToken)> will immediately close all streams associated with this connection. Make sure that all streams have been closed and all their data consumed before calling this method. Otherwise, all the data that was received but not yet consumed will be lost.
 
 If <xref:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading.CancellationToken)> is not called before [disposing](xref:System.Net.Quic.QuicConnection.DisposeAsync) the connection, the <xref:System.Net.Quic.QuicConnectionOptions.DefaultCloseErrorCode> will be used by <xref:System.Net.Quic.QuicConnection.DisposeAsync> to close the connection.
 
@@ -232,7 +232,7 @@ If <xref:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading
         <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
         <summary>Creates an outbound unidirectional or bidirectional <see cref="T:System.Net.Quic.QuicStream" />.</summary>
         <returns>An asynchronous task that completes with the opened <see cref="T:System.Net.Quic.QuicStream" />.</returns>
-        <remarks>If the connection doesn't have any available stream capacity, that is, the peer limits the concurrent stream count, the operation pends until the stream can be opened (that is, when the other stream is closed or the peer increases the limit).</remarks>
+        <remarks>If the connection doesn't have any available stream capacity, that is, the peer limits the concurrent stream count, the operation pends until the peer increases the stream limit.</remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoteCertificate">
