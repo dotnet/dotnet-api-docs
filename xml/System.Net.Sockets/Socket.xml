@@ -7441,11 +7441,22 @@ The maximum length of the pending connections queue is determined automatically.
         <Parameter Name="mode" Type="System.Net.Sockets.SelectMode" Index="1" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="timeout">To be added.</param>
-        <param name="mode">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="timeout">The time to wait for a response.</param>
+        <param name="mode">One of the <see cref="T:System.Net.Sockets.SelectMode" /> values.</param>
+        <summary>Determines the status of the <see cref="T:System.Net.Sockets.Socket" />.</summary>
+        <returns>The status of the <see cref="T:System.Net.Sockets.Socket" /> based on the polling mode value passed in the <paramref name="mode" /> parameter.
+            <ul>
+                <li>For <see cref="F:System.Net.Sockets.SelectMode.SelectRead" />, it returns <see langword="true" /> if <see cref="M:System.Net.Sockets.Socket.Listen" /> has been called and a connection is pending, if data is available for reading, or if the connection has been closed, reset, or terminated.</li>
+                <li>For <see cref="F:System.Net.Sockets.SelectMode.SelectWrite" />, it returns <see langword="true" /> if processing a <see cref="Overload:System.Net.Sockets.Socket.Connect" /> and the connection has succeeded or if data can be sent.</li>
+                <li>For <see cref="F:System.Net.Sockets.SelectMode.SelectError" />, it returns <see langword="true" /> if processing a <see cref="Overload:System.Net.Sockets.Socket.Connect" /> that does not block and the connection has failed, or if <see cref="F:System.Net.Sockets.SocketOptionName.OutOfBandInline"/> is not set and out-of-band data is available.</li>
+                <li>Otherwise, it returns <see langword="false" />.</li>
+            </ul>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" /> is less than -1 milliseconds or greater than <see cref="F:System.Int32.MaxValue" /> milliseconds.</exception>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ProtocolType">
@@ -10341,6 +10352,7 @@ You must call the Bind method before performing this operation.</exception>
         <altmember cref="M:System.Net.Sockets.Socket.Accept" />
         <altmember cref="M:System.Net.Sockets.Socket.Connect(System.Net.EndPoint)" />
         <altmember cref="M:System.Net.Sockets.Socket.Poll(System.Int32,System.Net.Sockets.SelectMode)" />
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="checkRead" />, <paramref name="checkWrite" />, or <paramref name="checkError" /> parameter contains too many sockets.</exception>
       </Docs>
     </Member>
     <Member MemberName="Select">
@@ -10374,12 +10386,17 @@ You must call the Bind method before performing this operation.</exception>
         <Parameter Name="timeout" Type="System.TimeSpan" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="checkRead">To be added.</param>
-        <param name="checkWrite">To be added.</param>
-        <param name="checkError">To be added.</param>
-        <param name="timeout">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="checkRead">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Net.Sockets.Socket" /> instances to check for readability.</param>
+        <param name="checkWrite">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Net.Sockets.Socket" /> instances to check for writability.</param>
+        <param name="checkError">An <see cref="T:System.Collections.IList" /> of <see cref="T:System.Net.Sockets.Socket" /> instances to check for errors.</param>
+        <param name="timeout">The timeout value. A value equal to -1 microseconds indicates an infinite timeout.</param>
+        <summary>Determines the status of one or more sockets.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="checkRead" />, <paramref name="checkWrite" />, or <paramref name="checkError" /> parameter is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="checkRead" />, <paramref name="checkWrite" />, or <paramref name="checkError" /> parameter contains too many sockets.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="timeout" /> was less than -1 microseconds or greater than <see cref="F:System.Int32.MaxValue" /> microseconds</exception>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">One or more sockets was disposed.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Send">

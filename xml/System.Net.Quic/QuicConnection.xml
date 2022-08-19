@@ -18,8 +18,19 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a QUIC connection, which doesn't send or receive data itself but rather allows opening or accepting multiple <see cref="T:System.Net.Quic.QuicStream">streams</see>.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A <xref:System.Net.Quic.QuicConnection> can either be accepted from <xref:System.Net.Quic.QuicListener.AcceptConnectionAsync(System.Threading.CancellationToken)> (inbound connection) or created with the static method <xref:System.Net.Quic.QuicConnection.ConnectAsync(System.Net.Quic.QuicClientConnectionOptions,System.Threading.CancellationToken)>(outbound connection).
+
+Each connection can then open an outbound stream using <xref:System.Net.Quic.QuicConnection.OpenOutboundStreamAsync(System.Net.Quic.QuicStreamType,System.Threading.CancellationToken)> or accept an inbound stream using <xref:System.Net.Quic.QuicConnection.AcceptInboundStreamAsync(System.Threading.CancellationToken)>.
+
+      ]]></format>
+    </remarks>
+    <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#name-connections">RFC 9000: Connections</related>
   </Docs>
   <Members>
     <Member MemberName="AcceptInboundStreamAsync">
@@ -40,9 +51,9 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+        <summary>Accepts an inbound <see cref="T:System.Net.Quic.QuicStream" />.</summary>
+        <returns>An asynchronous task that completes with the accepted <see cref="T:System.Net.Quic.QuicStream" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -65,11 +76,22 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="errorCode">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="errorCode">An application-provided code with the reason for closure.</param>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+        <summary>Closes the connection with the application provided-code.</summary>
+        <returns>An asynchronous task that completes when the connection is closed.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Closing the connection is not graceful in regards to its streams. Calling <xref:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading.CancellationToken)> will immediately close all streams associated with this connection. Make sure that all streams have been closed and all their data consumed before calling this method. Otherwise, all the data that was received but not yet consumed will be lost.
+
+If <xref:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading.CancellationToken)> is not called before [disposing](xref:System.Net.Quic.QuicConnection.DisposeAsync) the connection, the <xref:System.Net.Quic.QuicConnectionOptions.DefaultCloseErrorCode> will be used by <xref:System.Net.Quic.QuicConnection.DisposeAsync> to close the connection.
+
+          ]]></format>
+        </remarks>
+        <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#immediate-close">RFC 9000: Connection Termination</related>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -91,10 +113,10 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="options">Options for the connection.</param>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+        <summary>Creates a new <see cref="T:System.Net.Quic.QuicConnection" /> and connects it to the peer.</summary>
+        <returns>An asynchronous task that completes with the connected connection.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -118,8 +140,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>If not closed explicitly by <see cref="M:System.Net.Quic.QuicConnection.CloseAsync(System.Int64,System.Threading.CancellationToken)" />, closes the connection silently (leading to idle timeout on the peer side) and releases all resources associated with the connection.</summary>
+        <returns>A task that represents the asynchronous dispose operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -139,8 +161,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether QUIC is supported on the current machine.</summary>
+        <value>
+          <see langword="true" /> if QUIC is supported on the current machine and can be used; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -160,7 +183,7 @@
         <ReturnType>System.Net.IPEndPoint</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the local endpoint used for this connection.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -181,7 +204,7 @@
         <ReturnType>System.Net.Security.SslApplicationProtocol</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the final, negotiated application protocol.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -205,11 +228,11 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="type">The type of the stream, either unidirectional or bidirectional.</param>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+        <summary>Creates an outbound unidirectional or bidirectional <see cref="T:System.Net.Quic.QuicStream" />.</summary>
+        <returns>An asynchronous task that completes with the opened <see cref="T:System.Net.Quic.QuicStream" />.</returns>
+        <remarks>If the connection doesn't have any available stream capacity, that is, the peer limits the concurrent stream count, the operation pends until the peer increases the stream limit.</remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoteCertificate">
@@ -228,9 +251,9 @@
         <ReturnType>System.Security.Cryptography.X509Certificates.X509Certificate</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the certificate provided by the peer.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>An outbound/client connection will always have the peer's (server) certificate. For an inbound/server connection, this property only returns a certificate if the connection requested one and the peer (client) provided one.</remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoteEndPoint">
@@ -249,7 +272,7 @@
         <ReturnType>System.Net.IPEndPoint</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the remote endpoint used for this connection.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

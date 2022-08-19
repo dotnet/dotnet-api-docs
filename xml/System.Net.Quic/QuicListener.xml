@@ -18,8 +18,17 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a listener that listens for incoming QUIC connections. <see cref="T:System.Net.Quic.QuicListener" /> can accept multiple <see cref="T:System.Net.Quic.QuicConnection">Quic connections</see>.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Unlike the connection and stream, the lifetime of a <xref:System.Net.Quic.QuicListener> isn't linked to any of the accepted connections. It can be safely disposed while keeping the accepted connection alive. Calling <xref:System.Net.Quic.QuicListener.DisposeAsync> will only cause the listener to stop listening for any other inbound connections.
+
+      ]]></format>
+    </remarks>
+    <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#name-connections">RFC 9000: Connections</related>
   </Docs>
   <Members>
     <Member MemberName="AcceptConnectionAsync">
@@ -41,9 +50,19 @@
       </Parameters>
       <Docs>
         <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Accepts an inbound <see cref="T:System.Net.Quic.QuicConnection" />.</summary>
+        <returns>A task that contains a fully connected <see cref="T:System.Net.Quic.QuicConnection" /> that successfully finished the handshake and is ready to be used.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.Net.Quic.QuicListener> doesn't have a mechanism to report inbound connections that fail the handshake process. Such connections are only logged by the listener and never surfaced on the outside.
+            
+This method propagates exceptions from <xref:System.Net.Quic.QuicListenerOptions.ConnectionOptionsCallback>, including validation errors from misconfigured <xref:System.Net.Quic.QuicServerConnectionOptions>, for example, <xref:System.ArgumentException>. It also propagates exceptions from failed connection handshakes, for example, <xref:System.Security.Authentication.AuthenticationException> and <xref:System.Net.Quic.QuicException>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DisposeAsync">
@@ -66,8 +85,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Stops listening for new connections and releases all resources associated with the listener.</summary>
+        <returns>A task that represents the asynchronous dispose operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -87,8 +106,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether QUIC is supported on the current machine.</summary>
+        <value>
+          <see langword="true" /> if QUIC is supported on the current machine and can be used; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -111,10 +131,10 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="options">Options for the listener.</param>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+        <summary>Creates a new <see cref="T:System.Net.Quic.QuicListener" /> and starts listening for new connections.</summary>
+        <returns>An asynchronous task that completes with the started listener.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -134,7 +154,7 @@
         <ReturnType>System.Net.IPEndPoint</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the actual listening endpoint.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
