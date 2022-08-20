@@ -118,11 +118,11 @@
 ## Remarks
 
 When initiating the authentication exchange, one of the parties starts with an empty incomingBlob parameter.
-            
+
 Successful authentication returns either the <xref:System.Net.Security.NegotiateAuthenticationStatusCode.Completed>
              or <xref:System.Net.Security.NegotiateAuthenticationStatusCode.ContinueNeeded> status code.
              Any other status code indicates an unrecoverable error.
-            
+
 When <xref:System.Net.Security.NegotiateAuthenticationStatusCode.ContinueNeeded> is returned, the
              return value is an authentication token to be transported to the other party.
 
@@ -161,11 +161,11 @@ When <xref:System.Net.Security.NegotiateAuthenticationStatusCode.ContinueNeeded>
 
 When initiating the authentication exchange, one of the parties starts
              with an empty incomingBlob parameter.
-            
+
 Successful authentication returns either the <xref:System.Net.Security.NegotiateAuthenticationStatusCode.Completed>
              or <xref:System.Net.Security.NegotiateAuthenticationStatusCode.ContinueNeeded> status code.
              Any other status code indicates an unrecoverable error.
-            
+
 When <xref:System.Net.Security.NegotiateAuthenticationStatusCode.ContinueNeeded> is returned, the
              return value is an authentication token to be transported to the other party.
 
@@ -189,7 +189,7 @@ When <xref:System.Net.Security.NegotiateAuthenticationStatusCode.ContinueNeeded>
         <ReturnType>System.Security.Principal.TokenImpersonationLevel</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value that indicates the negotiated level of impersonation.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -328,7 +328,7 @@ The negotiated authentication package is only available when the session
              returns the initial authentication package name specified in
              <xref:System.Net.Security.NegotiateAuthenticationClientOptions.Package> or
              <xref:System.Net.Security.NegotiateAuthenticationServerOptions.Package>.
-            
+
 If the Negotiate package was used for authentication, the value of this
              property will be Kerberos, NTLM, or any other specific protocol that was
              negotiated between both sides of the authentication.
@@ -418,7 +418,7 @@ The negotiated level of protection is only available when the session
 
 For the server side of the authentication, the property returns the target name
              specified by the client after successful authentication (see <xref:System.Net.Security.NegotiateAuthentication.IsAuthenticated>).
-            
+
 For the client side of the authentication, the property returns the target name
              specified in <xref:System.Net.Security.NegotiateAuthenticationClientOptions.TargetName>.
 
@@ -447,12 +447,20 @@ For the client side of the authentication, the property returns the target name
         <Parameter Name="wasEncrypted" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="outputWriter">To be added.</param>
-        <param name="wasEncrypted">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="input">Input message to be unwrapped.</param>
+        <param name="outputWriter">Buffer writter where the unwrapped message is written.</param>
+        <param name="wasEncrypted">When this method returns, contains a value that indicates whether the wrapped message had encryption applied.</param>
+        <summary>Unwraps an input message with signature or encryption applied by the other party.</summary>
+        <returns>
+            <ul>
+                <li><see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.Completed" /> on success.</li>
+                <li><see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.MessageAltered" /> if the message signature was invalid.</li>
+                <li><see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.InvalidToken" /> if the wrapped message was in invalid format.</li>
+                <li>Other <see cref="T:System.Net.Security.NegotiateAuthenticationStatusCode" /> values on failure.</li>
+            </ul>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Authentication failed or has not occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="UnwrapInPlace">
@@ -477,13 +485,21 @@ For the client side of the authentication, the property returns the target name
         <Parameter Name="wasEncrypted" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="unwrappedOffset">To be added.</param>
-        <param name="unwrappedLength">To be added.</param>
-        <param name="wasEncrypted">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="input">The input message to be unwrapped. When this method returns, contains the decoded data.</param>
+        <param name="unwrappedOffset">When this method returns, contains the offset in the input buffer where the unwrapped message was written.</param>
+        <param name="unwrappedLength">When this method returns, contains the length of the unwrapped message.</param>
+        <param name="wasEncrypted">When this method returns, contains a value that specifies whether the wrapped message had encryption applied.</param>
+        <summary>Unwraps, in place, an input message with signature or encryption applied by the other party.</summary>
+        <returns>
+            <ul>
+                <li><see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.Completed" /> on success.</li>
+                <li><see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.MessageAltered" /> if the message signature was invalid.</li>
+                <li><see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.InvalidToken" /> if the wrapped message was in invalid format.</li>
+                <li>Other <see cref="T:System.Net.Security.NegotiateAuthenticationStatusCode" /> values on failure.</li>
+            </ul>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Authentication failed or has not occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="Wrap">
@@ -508,13 +524,24 @@ For the client side of the authentication, the property returns the target name
         <Parameter Name="isEncrypted" Type="System.Boolean" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="input">To be added.</param>
-        <param name="outputWriter">To be added.</param>
-        <param name="requestEncryption">To be added.</param>
-        <param name="isEncrypted">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="input">Input message to be wrapped.</param>
+        <param name="outputWriter">Buffer writter where the wrapped message is written.</param>
+        <param name="requestEncryption">
+          <see langword="true" /> to request encryption; otherwise, <see langword="false" />.</param>
+        <param name="isEncrypted">When this method returns, contains a value that indicates whether encryption was applied in the wrapping.</param>
+        <summary>Wraps an input message with a signature and optionally an encryption.</summary>
+        <returns>
+          <see cref="F:System.Net.Security.NegotiateAuthenticationStatusCode.Completed" /> on success, or other <see cref="T:System.Net.Security.NegotiateAuthenticationStatusCode" /> values on failure.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Like the [GSS_Wrap](https://datatracker.ietf.org/doc/html/rfc2743#page-65) API, the authentication protocol implementation may choose to override the requested value in the requestEncryption parameter. This may result in either downgrade or upgrade of the protection level.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Authentication failed or has not occurred.</exception>
       </Docs>
     </Member>
   </Members>
