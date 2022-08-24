@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides signing information to be used with sign operations in <see cref="T:System.Security.Cryptography.Cose.CoseSign1Message" /> and <see cref="T:System.Security.Cryptography.Cose.CoseMultiSignMessage" />.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -36,12 +36,30 @@
         <Parameter Name="unprotectedHeaders" Type="System.Security.Cryptography.Cose.CoseHeaderMap" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="protectedHeaders">To be added.</param>
-        <param name="unprotectedHeaders">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">The private key to use for signing.</param>
+        <param name="hashAlgorithm">The hash algorithm to use to create the hash value for signing.</param>
+        <param name="protectedHeaders">The collection of protected header parameters to append to the message when signing.</param>
+        <param name="unprotectedHeaders">The collection of unprotected header parameters to append to the message when signing.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Cose.CoseSigner" /> class.</summary>
+        <remarks>For sign operations in <see cref="T:System.Security.Cryptography.Cose.CoseSign1Message" />, <paramref name="protectedHeaders" /> and <paramref name="unprotectedHeaders" /> are used as the buckets of the content (and only) layer.
+            For sign operations in <see cref="T:System.Security.Cryptography.Cose.CoseMultiSignMessage" />, <paramref name="protectedHeaders" /> and <paramref name="unprotectedHeaders" /> are used as the buckets of the signature layer.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="key" /> is <see cref="T:System.Security.Cryptography.RSA" />, use <see cref="M:System.Security.Cryptography.Cose.CoseSigner.#ctor(System.Security.Cryptography.RSA,System.Security.Cryptography.RSASignaturePadding,System.Security.Cryptography.HashAlgorithmName,System.Security.Cryptography.Cose.CoseHeaderMap,System.Security.Cryptography.Cose.CoseHeaderMap)" /> to specify a signature padding.
+
+-or-
+
+<paramref name="key" /> is of an unsupported type.
+
+-or-
+
+<paramref name="protectedHeaders" /> contains a value with the <see cref="P:System.Security.Cryptography.Cose.CoseHeaderLabel.Algorithm" /> label, but the value was incorrect based on the <paramref name="key" /> and <paramref name="hashAlgorithm" />.
+
+-or-
+
+<paramref name="unprotectedHeaders" /> specifies a value with the <see cref="P:System.Security.Cryptography.Cose.CoseHeaderLabel.Algorithm" /> label.
+              </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -63,13 +81,23 @@
         <Parameter Name="unprotectedHeaders" Type="System.Security.Cryptography.Cose.CoseHeaderMap" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="signaturePadding">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="protectedHeaders">To be added.</param>
-        <param name="unprotectedHeaders">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">The private key to use for signing.</param>
+        <param name="signaturePadding">The padding mode to use when signing.</param>
+        <param name="hashAlgorithm">The hash algorithm to use to create the hash value for signing.</param>
+        <param name="protectedHeaders">The collection of protected header parameters to append to the message when signing.</param>
+        <param name="unprotectedHeaders">The collection of unprotected header parameters to append to the message when signing.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Cose.CoseSigner" /> class.</summary>
+        <remarks>For sign operations in <see cref="T:System.Security.Cryptography.Cose.CoseSign1Message" />, <paramref name="protectedHeaders" /> and <paramref name="unprotectedHeaders" /> are used as the header parameters of the content layer.
+            For sign operations in <see cref="T:System.Security.Cryptography.Cose.CoseMultiSignMessage" />, <paramref name="protectedHeaders" /> and <paramref name="unprotectedHeaders" /> are used as the header parameters of the signature layer.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="protectedHeaders" /> contains a value with the <see cref="P:System.Security.Cryptography.Cose.CoseHeaderLabel.Algorithm" /> label, but the value was incorrect based on the <paramref name="key" />, <paramref name="signaturePadding" /> and <paramref name="hashAlgorithm" />.
+
+-or-
+
+<paramref name="unprotectedHeaders" /> specifies a value with the <see cref="P:System.Security.Cryptography.Cose.CoseHeaderLabel.Algorithm" /> label.
+              </exception>
       </Docs>
     </Member>
     <Member MemberName="HashAlgorithm">
@@ -88,8 +116,8 @@
         <ReturnType>System.Security.Cryptography.HashAlgorithmName</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the hash algorithm to use to create the hash value for signing.</summary>
+        <value>The hash algorithm to use to create the hash value for signing.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -109,8 +137,8 @@
         <ReturnType>System.Security.Cryptography.AsymmetricAlgorithm</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the private key to use during signing.</summary>
+        <value>The private key to use during signing.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -130,8 +158,8 @@
         <ReturnType>System.Security.Cryptography.Cose.CoseHeaderMap</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the protected header parameters to append to the message when signing.</summary>
+        <value>A collection of protected header parameters to append to the message when signing.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -151,8 +179,8 @@
         <ReturnType>System.Security.Cryptography.RSASignaturePadding</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the padding mode to use when signing.</summary>
+        <value>The padding mode to use when signing.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -172,8 +200,8 @@
         <ReturnType>System.Security.Cryptography.Cose.CoseHeaderMap</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the unprotected header parameters to append to the message when signing.</summary>
+        <value>A collection of unprotected header parameters to append to the message when signing.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
