@@ -233,7 +233,7 @@ namespace AsyncSocketSample
             // post accepts on the listening socket
             SocketAsyncEventArgs acceptEventArg = new SocketAsyncEventArgs();
             acceptEventArg.Completed += new EventHandler<SocketAsyncEventArgs>(AcceptEventArg_Completed);
-            StartAccept(null);
+            StartAccept(acceptEventArg);
 
             //Console.WriteLine("{0} connected sockets with one outstanding receive posted to each....press any key", m_outstandingReadCount);
             Console.WriteLine("Press any key to terminate the server process....");
@@ -254,7 +254,7 @@ namespace AsyncSocketSample
             while (!willRaiseEvent)
             {
                 m_maxNumberAcceptedClients.WaitOne();
-                bool willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
+                willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
                 if (!willRaiseEvent)
                 {
                     ProcessAccept(acceptEventArg);
