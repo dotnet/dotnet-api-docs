@@ -231,6 +231,8 @@ namespace AsyncSocketSample
             listenSocket.Listen(100);
 
             // post accepts on the listening socket
+            SocketAsyncEventArgs acceptEventArg = new SocketAsyncEventArgs();
+            acceptEventArg.Completed += new EventHandler<SocketAsyncEventArgs>(AcceptEventArg_Completed);
             StartAccept(null);
 
             //Console.WriteLine("{0} connected sockets with one outstanding receive posted to each....press any key", m_outstandingReadCount);
@@ -244,22 +246,19 @@ namespace AsyncSocketSample
         // the accept operation on the server's listening socket</param>
         public void StartAccept(SocketAsyncEventArgs acceptEventArg)
         {
-            if (acceptEventArg == null)
+            // socket must be cleared since the context object is being reused
+            acceptEventArg.AcceptSocket = null;
+            
+            // loop while the method completes synchronously
+            bool willRaiseEvent = false;
+            while (!willRaiseEvent)
             {
-                acceptEventArg = new SocketAsyncEventArgs();
-                acceptEventArg.Completed += new EventHandler<SocketAsyncEventArgs>(AcceptEventArg_Completed);
-            }
-            else
-            {
-                // socket must be cleared since the context object is being reused
-                acceptEventArg.AcceptSocket = null;
-            }
-
-            m_maxNumberAcceptedClients.WaitOne();
-            bool willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
-            if (!willRaiseEvent)
-            {
-                ProcessAccept(acceptEventArg);
+                m_maxNumberAcceptedClients.WaitOne();
+                bool willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
+                if (!willRaiseEvent)
+                {
+                    ProcessAccept(acceptEventArg);
+                }
             }
         }
 
@@ -269,6 +268,9 @@ namespace AsyncSocketSample
         void AcceptEventArg_Completed(object sender, SocketAsyncEventArgs e)
         {
             ProcessAccept(e);
+            
+            // Accept the next connection request
+            StartAccept(e);
         }
 
         private void ProcessAccept(SocketAsyncEventArgs e)
@@ -284,12 +286,10 @@ namespace AsyncSocketSample
 
             // As soon as the client is connected, post a receive to the connection
             bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(readEventArgs);
-            if(!willRaiseEvent){
+            if(!willRaiseEvent)
+            {
                 ProcessReceive(readEventArgs);
             }
-
-            // Accept the next connection request
-            StartAccept(e);
         }
 
         // This method is called whenever a receive or send operation is completed on a socket
