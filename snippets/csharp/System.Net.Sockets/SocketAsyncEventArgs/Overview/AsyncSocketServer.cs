@@ -246,14 +246,14 @@ namespace AsyncSocketSample
         // the accept operation on the server's listening socket</param>
         public void StartAccept(SocketAsyncEventArgs acceptEventArg)
         {
-            // socket must be cleared since the context object is being reused
-            acceptEventArg.AcceptSocket = null;
-            
             // loop while the method completes synchronously
             bool willRaiseEvent = false;
             while (!willRaiseEvent)
             {
                 m_maxNumberAcceptedClients.WaitOne();
+
+                // socket must be cleared since the context object is being reused
+                acceptEventArg.AcceptSocket = null;            
                 willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
                 if (!willRaiseEvent)
                 {
