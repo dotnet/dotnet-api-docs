@@ -286,7 +286,7 @@ namespace AsyncSocketSample
 
             // As soon as the client is connected, post a receive to the connection
             bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(readEventArgs);
-            if(!willRaiseEvent)
+            if (!willRaiseEvent)
             {
                 ProcessReceive(readEventArgs);
             }
