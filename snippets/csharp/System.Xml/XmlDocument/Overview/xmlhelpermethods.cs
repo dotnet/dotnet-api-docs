@@ -57,7 +57,6 @@ namespace XMLProcessingApp
         #region Validate XML against a Schema
 
         //<Snippet2>
-
         //************************************************************************************
         //
         //  Helper method that generates an XML string.
@@ -82,7 +81,7 @@ namespace XMLProcessingApp
                 "</books>";
             return xml;
         }
-            
+
         //************************************************************************************
         //
         //  Associate the schema with XML. Then, load the XML and validate it against
@@ -91,45 +90,40 @@ namespace XMLProcessingApp
         //************************************************************************************
         public XmlDocument LoadDocumentWithSchemaValidation(bool generateXML, bool generateSchema)
         {
-            XmlReader reader;
-
+            XmlReader reader = null;
             XmlReaderSettings settings = new XmlReaderSettings();
-
             // Helper method to retrieve schema.
             XmlSchema schema = getSchema(generateSchema);
 
-            if (schema == null)
-            {
-                return null;
-            }
-
             settings.Schemas.Add(schema);
-
             settings.ValidationEventHandler += ValidationCallback;
             settings.ValidationFlags =
                 settings.ValidationFlags | XmlSchemaValidationFlags.ReportValidationWarnings;
             settings.ValidationType = ValidationType.Schema;
-
-            try
+            if (!generateXML)
             {
-                reader = XmlReader.Create("booksData.xml", settings);
+                try
+                {
+                    reader = XmlReader.Create("booksData.xml", settings);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Console.WriteLine(
+                        $"XML file not found so generating: {ex.Message}");
+                    generateXML = true;
+                }
             }
-            catch (System.IO.FileNotFoundException)
+
+            if (generateXML)
             {
-                if (generateXML)
-                {
-                    string xml = generateXMLString();
-                    byte[] byteArray = Encoding.UTF8.GetBytes(xml);
-                    MemoryStream stream = new MemoryStream(byteArray);
-                    reader = XmlReader.Create(stream, settings);
-                }
-                else
-                {
-                    return null;
-                }
+                string xml = generateXMLString();
+                StringReader stringReader = new StringReader(xml);
+
+                reader = XmlReader.Create(stringReader, settings);
             }
 
             XmlDocument doc = new XmlDocument();
+
             doc.PreserveWhitespace = true;
             doc.Load(reader);
             reader.Close();
@@ -178,26 +172,31 @@ namespace XMLProcessingApp
         private XmlSchema getSchema(bool generateSchema)
         {
             XmlSchemaSet xs = new XmlSchemaSet();
-            XmlSchema schema;
-            try
+            XmlSchema schema = null;
+
+            if (!generateSchema)
             {
-                schema = xs.Add("http://www.contoso.com/books", "booksData.xsd");
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                if (generateSchema)
+                try
                 {
-                    string xmlSchemaString = generateXMLSchema();
-                    byte[] byteArray = Encoding.UTF8.GetBytes(xmlSchemaString);
-                    MemoryStream stream = new MemoryStream(byteArray);
-                    XmlReader reader = XmlReader.Create(stream);
-                    schema = xs.Add("http://www.contoso.com/books", reader);
+                    schema = xs.Add("http://www.contoso.com/books", "booksData.xsd");
                 }
-                else
+                catch (FileNotFoundException ex)
                 {
-                    return null;
+                    Console.WriteLine(
+                        $"XSD file not found so generating: {ex.Message}");
+                    generateSchema = true;
                 }
             }
+
+            if (generateSchema)
+            {
+                string xmlSchemaString = generateXMLSchema();
+                StringReader stringReader = new StringReader(xmlSchemaString);
+                XmlReader reader = XmlReader.Create(stringReader);
+
+                schema = xs.Add("http://www.contoso.com/books", reader);
+            }
+
             return schema;
         }
 
