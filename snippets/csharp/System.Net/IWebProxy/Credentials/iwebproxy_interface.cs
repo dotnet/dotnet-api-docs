@@ -15,9 +15,7 @@ using System.Net;
 // <Snippet2>
 // <snippet3>
 public class WebProxy_Interface : IWebProxy
-
 {
-
 	// The credentials to be used with the web proxy.
 	private ICredentials iCredentials;
 
@@ -26,7 +24,7 @@ public class WebProxy_Interface : IWebProxy
 
 	public WebProxy_Interface(Uri proxyUri) {
 
-		webProxyUri = proxyUri;	
+		webProxyUri = proxyUri;
 	}
 
 	// Get and Set the Credentials property.
@@ -41,7 +39,7 @@ public class WebProxy_Interface : IWebProxy
 	}
 
 	// Return the web proxy for the specified destination(destUri).
-	public Uri GetProxy(Uri destUri) {
+	public Uri? GetProxy(Uri destUri) {
 
 		// Always use the same proxy.
 		return webProxyUri;
@@ -53,7 +51,7 @@ public class WebProxy_Interface : IWebProxy
 		// Never bypass the proxy.
 		return false;
 	}
-};
+}
 // </Snippet3>
 // </Snippet2>
 // </Snippet1>
@@ -66,14 +64,28 @@ public class WebProxy_Example {
 
 		webProxy_Interface.Credentials = new NetworkCredential("myusername", "mypassword");
 
-		Console.WriteLine("The web proxy is : {0}", webProxy_Interface.GetProxy(new Uri("http://www.contoso.com")));
+        Uri testUri = new Uri("http://www.contoso.com");
 
 		// Determine whether the Web proxy can be bypassed for the site "http://www.contoso.com".
-		if(webProxy_Interface.IsBypassed(new Uri("http://www.contoso.com")))
+		if(webProxy_Interface.IsBypassed(testUri))
+        {
 			Console.WriteLine("Web Proxy is by passed");
+        }
 		else
-			Console.WriteLine("Web Proxy is not by passed");
+        {
+            Uri? webProxyServer = webProxy_Interface.GetProxy(testUri);
+
+            if (webProxyServer is null || webProxyServer! == testUri)
+            {
+                Console.WriteLine("Web Proxy is by passed");
+            }
+            else
+            {
+                Console.WriteLine("Web Proxy is not by passed");
+                Console.WriteLine("The web proxy is : {0}", webProxyServer!);
+            }
+        }
 
       //</Snippet4>
 	}
-};
+}
