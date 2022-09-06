@@ -77,12 +77,12 @@ public class WebProxy_Example {
 
             if (webProxyServer is null || webProxyServer! == testUri)
             {
-                Console.WriteLine("Web Proxy is by passed");
+                Console.WriteLine("Web proxy is bypassed");
             }
             else
             {
-                Console.WriteLine("Web Proxy is not by passed");
-                Console.WriteLine("The web proxy is : {0}", webProxyServer!);
+                Console.WriteLine("Web proxy is not bypassed");
+                Console.WriteLine($"The web proxy is: {webProxyServer!}");
             }
         }
 
