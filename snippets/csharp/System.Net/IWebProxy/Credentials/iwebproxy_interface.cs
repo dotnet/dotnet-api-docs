@@ -74,7 +74,8 @@ public class WebProxy_Example {
 		else
         {
             Uri? webProxyServer = webProxy_Interface.GetProxy(testUri);
-
+            // In general, we wouldn't expect the condition (`webProxyServer! == testUri`) true here, if  IsBypassed returns `false`.
+            // However, technically our interface can allow that.
             if (webProxyServer is null || webProxyServer! == testUri)
             {
                 Console.WriteLine("Web proxy is bypassed");
