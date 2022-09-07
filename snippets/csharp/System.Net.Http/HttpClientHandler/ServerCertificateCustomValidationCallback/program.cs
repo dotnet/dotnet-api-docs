@@ -44,7 +44,7 @@ class HttpClientHandler_SecureExample
 
     private static bool ServerCertificateCustomValidation(HttpRequestMessage requestMessage, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslErrors)
     {
-        // It is possible inpect the certificate provided by server
+        // It is possible inspect the certificate provided by server
         Console.WriteLine($"Requested URI: {requestMessage.RequestUri}");
         Console.WriteLine($"Effective date: {certificate.GetEffectiveDateString()}");
         Console.WriteLine($"Exp date: {certificate.GetExpirationDateString()}");
