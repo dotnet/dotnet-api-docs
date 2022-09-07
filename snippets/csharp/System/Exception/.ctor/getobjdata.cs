@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
 
 // Define a serializable derived exception class.
-[Serializable()]
+[Serializable]
 class SecondLevelException : Exception, ISerializable
 {
     // This public constructor is used by class instantiators.
