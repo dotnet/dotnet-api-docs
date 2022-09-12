@@ -18,7 +18,7 @@ public class Example
         // so that the entire semaphore count is initially
         // owned by the main program thread.
         //
-        _pool = new Semaphore(0, 3);
+        _pool = new Semaphore(initialCount: 0, maximumCount: 3);
 
         // Create and start five numbered threads. 
         //
@@ -43,7 +43,7 @@ public class Example
         // up to three at a time.
         //
         Console.WriteLine("Main thread calls Release(3).");
-        _pool.Release(3);
+        _pool.Release(releaseCount: 3);
 
         Console.WriteLine("Main thread exits.");
     }
