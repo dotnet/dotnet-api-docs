@@ -1,102 +1,86 @@
 ﻿' <SNIPPET1>
+Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
-Imports System.IO
 
 Module TripleDESSample
 
     Sub Main()
         Try
+            Dim key As Byte()
+            Dim iv As Byte()
+
             ' Create a new TripleDES object to generate a key
             ' and initialization vector (IV).
-            Using TripleDESalg As TripleDES = TripleDES.Create
-
-                ' Create a string to encrypt.
-                Dim sData As String = "Here is some data to encrypt."
-                Dim FileName As String = "CText.txt"
-
-                ' Encrypt text to a file using the file name, key, and IV.
-                EncryptTextToFile(sData, FileName, TripleDESalg.Key, TripleDESalg.IV)
-
-                ' Decrypt the text from a file using the file name, key, and IV.
-                Dim Final As String = DecryptTextFromFile(FileName, TripleDESalg.Key, TripleDESalg.IV)
-
-                ' Display the decrypted string to the console.
-                Console.WriteLine(Final)
+            Using tripleDes As TripleDES = TripleDES.Create
+                key = tripleDes.Key
+                iv = tripleDes.IV
             End Using
+
+            ' Create a string to encrypt.
+            Dim original As String = "Here is some data to encrypt."
+            ' The name/path of the file to write.
+            Dim filename As String = "CText.enc"
+
+            ' Encrypt the string to a file.
+            EncryptTextToFile(original, filename, key, iv)
+
+            ' Decrypt the file back to a string.
+            Dim decrypted As String = DecryptTextFromFile(filename, key, iv)
+
+            ' Display the decrypted string to the console.
+            Console.WriteLine(decrypted)
         Catch e As Exception
             Console.WriteLine(e.Message)
         End Try
     End Sub
 
 
-    Sub EncryptTextToFile(ByVal Data As String, ByVal FileName As String,
-ByVal Key() As Byte, ByVal IV() As Byte)
+    Sub EncryptTextToFile(text As String, path As String, key As Byte(), iv As Byte())
         Try
             ' Create or open the specified file.
-            Using fStream As FileStream = File.Open(FileName, FileMode.OpenOrCreate)
+            ' Create a new TripleDES object,
+            ' Create a TripleDES encryptor from the key and IV,
+            ' Create a CryptoStream using the MemoryStream And encryptor
+            Using fStream As FileStream = File.Open(path, FileMode.Create),
+                tripleDes As TripleDES = TripleDES.Create,
+                encryptor As ICryptoTransform = tripleDes.CreateEncryptor(key, iv),
+                cStream = New CryptoStream(fStream, encryptor, CryptoStreamMode.Write)
 
-                ' Create a new TripleDES object.
-                Using TripleDESalg As TripleDES = TripleDES.Create
+                ' Convert the passed string to a byte array.
+                Dim toEncrypt As Byte() = Encoding.UTF8.GetBytes(text)
 
-                    ' Create a CryptoStream using the FileStream 
-                    ' and the passed key and initialization vector (IV).
-                    Using cStream As New CryptoStream(fStream, _
-                        TripleDESalg.CreateEncryptor(Key, IV), _
-                        CryptoStreamMode.Write)
-
-                        ' Create a StreamWriter using the CryptoStream.
-                        Using sWriter As New StreamWriter(cStream)
-
-                            ' Write the data to the stream 
-                            ' to encrypt it.
-                            sWriter.WriteLine(Data)
-
-                        End Using
-                    End Using
-                End Using
+                ' Write the byte array to the crypto stream.
+                cStream.Write(toEncrypt, 0, toEncrypt.Length)
             End Using
-
 
         Catch e As CryptographicException
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message)
-        Catch e As UnauthorizedAccessException
-            Console.WriteLine("A file access error occurred: {0}", e.Message)
+            Throw
         End Try
     End Sub
 
 
-    Function DecryptTextFromFile(ByVal FileName As String, ByVal Key() As Byte, ByVal IV() As Byte) As String
+    Function DecryptTextFromFile(path As String, key As Byte(), iv As Byte()) As String
         Try
-            Dim retVal As String
-            ' Create or open the specified file. 
-            Using fStream As FileStream = File.Open(FileName, FileMode.OpenOrCreate)
+            ' Open the specified file
+            ' Create a new TripleDES object.
+            ' Create a TripleDES decryptor from the key and IV
+            ' Create a CryptoStream using the MemoryStream and decryptor
+            ' Create a StreamReader to turn the bytes back into text
+            Using mStream As FileStream = File.OpenRead(path),
+                tripleDes As TripleDES = TripleDES.Create,
+                decryptor As ICryptoTransform = tripleDes.CreateDecryptor(key, iv),
+                cStream = New CryptoStream(mStream, decryptor, CryptoStreamMode.Read),
+                reader = New StreamReader(cStream, Encoding.UTF8)
 
-                ' Create a new TripleDES object.
-                Using TripleDESalg As TripleDES = TripleDES.Create
-
-                    ' Create a CryptoStream using the FileStream 
-                    ' and the passed key and initialization vector (IV).
-                    Using cStream As New CryptoStream(fStream, _
-                        TripleDESalg.CreateDecryptor(Key, IV), CryptoStreamMode.Read)
-
-                        ' Create a StreamReader using the CryptoStream.
-                        Using sReader As New StreamReader(cStream)
-
-                            ' Read the data from the stream 
-                            ' to decrypt it.
-                            retVal = sReader.ReadLine()
-                        End Using
-                    End Using
-                End Using
+                ' Read back all of the text from the StreamReader, which receives
+                ' the decrypted bytes from the CryptoStream, which receives the
+                ' encrypted bytes from the FileStream.
+                Return reader.ReadToEnd()
             End Using
-
-            Return retVal
         Catch e As CryptographicException
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message)
-            Return Nothing
-        Catch e As UnauthorizedAccessException
-            Console.WriteLine("A file access error occurred: {0}", e.Message)
             Return Nothing
         End Try
     End Function
