@@ -3630,9 +3630,10 @@ The following table lists Windows Forms controls and which event (<xref:System.W
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the data context for the purpose of data binding.
+             This is an ambient property.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Data context is a concept that allows elements to inherit information from their parent elements about the data source that is used for binding. It's the duty of deriving controls which inherit from this class to handle the provided data source accordingly. For example, UserControls, which use <see cref="T:System.Windows.Forms.BindingSource" /> components for data binding scenarios could either handle the <see cref="E:System.Windows.Forms.Control.DataContextChanged" /> event or override <see cref="M:System.Windows.Forms.Control.OnDataContextChanged(System.EventArgs)" /> to provide the relevant data from the data context to a BindingSource component's <see cref="P:System.Windows.Forms.BindingSource.DataSource" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="DataContextChanged">
@@ -3661,7 +3662,7 @@ The following table lists Windows Forms controls and which event (<xref:System.W
         <ReturnType>System.EventHandler</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Occurs when the value of the <see cref="P:System.Windows.Forms.Control.DataContext" /> property changes.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -4609,9 +4610,12 @@ The following table lists Windows Forms controls and which event (<xref:System.W
         <param name="dragImage">To be added.</param>
         <param name="cursorOffset">To be added.</param>
         <param name="useDefaultDragImage">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Begins a drag operation. The <paramref name="allowedEffects" /> determine which drag operations can occur. If the drag operation needs to interop with applications in another process, <paramref name="data" /> should either be a base managed class (<see cref="T:System.String" />, <see cref="T:System.Drawing.Bitmap" />, or <see cref="T:System.Drawing.Imaging.Metafile" />) or some <see cref="T:System.Object" /> that implements <see cref="T:System.Runtime.Serialization.ISerializable" />. <paramref name="data" /> can also be any <see cref="T:System.Object" /> that implements <see cref="T:System.Windows.Forms.IDataObject" />. <paramref name="dragImage" /> is the bitmap that will be displayed during the  drag operation and <paramref name="cursorOffset" /> specifies the location of the cursor within <paramref name="dragImage" />, which is an offset from the upper-left corner. Specify <see langword="true" /> for <paramref name="useDefaultDragImage" /> to use a layered window drag image with a size of 96x96; otherwise <see langword="false" />. Note the outer edges of <paramref name="dragImage" /> are blended out if the image width or height exceeds 300 pixels.</summary>
+        <returns>A value from the <see cref="T:System.Windows.Forms.DragDropEffects" /> enumeration that represents the final effect that was performed during the drag-and-drop operation.</returns>
+        <remarks>
+          <para> Because <see cref="M:System.Windows.Forms.Control.DoDragDrop(System.Object,System.Windows.Forms.DragDropEffects,System.Drawing.Bitmap,System.Drawing.Point,System.Boolean)" /> always performs the RGB multiplication step in calculating the alpha value, you should always pass a <see cref="T:System.Drawing.Bitmap" /> without premultiplied alpha blending. Note that no error will result from passing a <see cref="T:System.Drawing.Bitmap" /> with premultiplied alpha blending, but this method will multiply it again, doubling the resulting alpha value.
+             </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DoubleBuffered">
@@ -15138,7 +15142,11 @@ MyControl.Font = New Font(MyControl.Font, _
         <param name="msg">A <see cref="T:System.Windows.Forms.Message" /> that represents the message to process.</param>
         <summary>Preprocesses keyboard or input messages within the message loop before they are dispatched.</summary>
         <returns>One of the <see cref="T:System.Windows.Forms.PreProcessControlState" /> values, depending on whether <see cref="M:System.Windows.Forms.Control.PreProcessMessage(System.Windows.Forms.Message@)" /> is <see langword="true" /> or <see langword="false" /> and whether <see cref="M:System.Windows.Forms.Control.IsInputKey(System.Windows.Forms.Keys)" /> or <see cref="M:System.Windows.Forms.Control.IsInputChar(System.Char)" /> are <see langword="true" /> or <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para> This is the method that is called directly by the <see cref="T:System.Windows.Forms.Application" />'s message loop.
+              See <see cref="M:System.Windows.Forms.Application.ThreadContext.PreTranslateMessage(Interop.User32.MSG@)" />.
+             </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PreProcessMessage">
