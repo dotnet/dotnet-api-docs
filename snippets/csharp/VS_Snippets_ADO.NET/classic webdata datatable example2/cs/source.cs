@@ -87,12 +87,12 @@ class Program
         // Define all the columns once.
         DataColumn[] cols =
         {
-            new DataColumn("OrderDetailId",typeof(Int32)),
-            new DataColumn("OrderId",typeof(String)),
-            new DataColumn("Product",typeof(String)),
-            new DataColumn("UnitPrice",typeof(Decimal)),
-            new DataColumn("OrderQty",typeof(Int32)),
-            new DataColumn("LineTotal",typeof(Decimal),"UnitPrice*OrderQty")
+            new DataColumn("OrderDetailId", typeof(Int32)),
+            new DataColumn("OrderId", typeof(String)),
+            new DataColumn("Product", typeof(String)),
+            new DataColumn("UnitPrice", typeof(Decimal)),
+            new DataColumn("OrderQty", typeof(Int32)),
+            new DataColumn("LineTotal", typeof(Decimal), "UnitPrice*OrderQty")
         };
 
         orderDetailTable.Columns.AddRange(cols);
@@ -125,13 +125,13 @@ class Program
         // Values in the array are matched sequentially to the columns, based on the order in which they appear in the table.
         Object[] rows =
         {
-            new Object[]{1,"O0001","Mountain Bike",1419.5,36},
-            new Object[]{2,"O0001","Road Bike",1233.6,16},
-            new Object[]{3,"O0001","Touring Bike",1653.3,32},
-            new Object[]{4,"O0002","Mountain Bike",1419.5,24},
-            new Object[]{5,"O0002","Road Bike",1233.6,12},
-            new Object[]{6,"O0003","Mountain Bike",1419.5,48},
-            new Object[]{7,"O0003","Touring Bike",1653.3,8},
+            new Object[] { 1, "O0001", "Mountain Bike", 1419.5, 36 },
+            new Object[] { 2, "O0001", "Road Bike", 1233.6, 16 },
+            new Object[] { 3, "O0001", "Touring Bike", 1653.3, 32 },
+            new Object[] { 4, "O0002", "Mountain Bike", 1419.5, 24 },
+            new Object[] { 5, "O0002", "Road Bike", 1233.6, 12 },
+            new Object[] { 6, "O0003", "Mountain Bike", 1419.5, 48 },
+            new Object[] { 7, "O0003", "Touring Bike", 1653.3, 8 },
         };
 
         foreach (Object[] row in rows)
