@@ -39,14 +39,35 @@
   <Docs>
     <summary>Contains methods for performing volatile memory operations.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
+      <format type="text/markdown">
+   <![CDATA[  
   
 ## Remarks  
- On a multiprocessor system, due to performance optimizations in the compiler or processor, regular memory operations may appear to be reordered when multiple processors are operating on the same memory. Volatile memory operations prevent certain types of reordering with respect to the operation. A volatile write operation prevents earlier memory operations from being reordered to occur after the volatile write. A volatile read operation prevents later memory operations from being reordered to occur before the volatile read. These operations might involve memory barriers on some processors, which can affect performance.  
+ On a multiprocessor system, due to performance optimizations in the compiler or processor, regular memory operations may appear to be reordered when multiple processors are operating on the same memory. Volatile memory operations prevent certain types of reordering with respect to the operation. A volatile write operation prevents earlier memory operations on the thread from being reordered to occur after the volatile write. A volatile read operation prevents later memory operations on the thread from being reordered to occur before the volatile read. These operations might involve memory barriers on some processors, which can affect performance.
+  
+ For example, consider the following scenario with two threads and two <xref:System.Int32> fields `x` and `y` that are initially zero:
+  
+ | Thread 1 | Thread 2 |
+ | - | - |
+ | `x = 1;` | `int y2 = Volatile.Read(ref y);` |
+ | `Volatile.Write(ref y, 1);` | `int x2 = x;` |
+  
+ Regardless of the order in which these operations actually occur, even on a multiprocessor system where the threads may run on different processors, the volatile operations guarantee that thread 2 would not see `y2 == 1` and `x2 == 0`. On thread 1 the write to `x` must appear to occur before the volatile write to `y`, and on thread 2 the read of `x` must appear to occur after the volatile read of `y`. So if thread 2 sees `y2 == 1`, it must also see `x2 == 1`.
+  
+ However, consider the same scenario as above with a specific sequence in which the operations occur:
+  
+ | Sequence | Thread 1 | Thread 2 |
+ | -: | - | - |
+ | 1 | `x = 1;` | `...` |
+ | 2 | `Volatile.Write(ref y, 1);` | `...` |
+ | 3 | `...` | `int y2 = Volatile.Read(ref y);` |
+ | 4 | `...` | `int x2 = x;` |
+  
+ Even though the volatile write to `y` on thread 1 occurred before the volatile read of `y` on thread 2, thread 2 may still see `y2 == 0`. Volatile operations may not be sufficient to guarantee the sequential consistency of operations between processors, for which the <xref:System.Threading.Interlocked> class should be used instead.
   
 > [!NOTE]
-> - On a multiprocessor system, a volatile read operation is not guaranteed to obtain the latest value written to that memory location by any processor. Similarly, a volatile write operation does not guarantee that the value written would be immediately visible to other processors.
-> - On a uniprocessor system, volatile reads and writes ensure that a value is read or written to memory and not cached (for example, in a processor register). Thus, you can use these operations to synchronize access to a field that can be updated by another thread or by hardware.  
+> - Volatile reads and writes ensure that a value is read or written to memory and not cached (for example, in a processor register). Thus, you can use these operations to synchronize access to a field that can be updated by another thread or by hardware.  
+> - The <xref:System.Threading.Volatile> class also provides read and write operations for some 64-bit types such as <xref:System.Int64> and <xref:System.Double>. Volatile reads and writes on such 64-bit memory are atomic even on 32-bit processors, unlike regular reads and writes.
   
  Volatile memory operations are for special cases of synchronization, where normal locking is not an acceptable alternative. Under normal circumstances, the C# `lock` statement, the Visual Basic `SyncLock` statement, and the <xref:System.Threading.Monitor> class provide the easiest and least error-prone way of synchronizing access to data, and the <xref:System.Lazy%601> class provides a simple way to write lazy initialization code without directly using double-checked locking.  
   
