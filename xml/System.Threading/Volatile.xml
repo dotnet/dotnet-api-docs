@@ -52,7 +52,7 @@
  | `x = 1;` | `int y2 = Volatile.Read(ref y);` |
  | `Volatile.Write(ref y, 1);` | `int x2 = x;` |
   
- Regardless of the order in which these operations actually occur, even on a multiprocessor system where the threads may run on different processors, the volatile operations guarantee that thread 2 would not see `y2 == 1` and `x2 == 0`. On thread 1 the write to `x` must appear to occur before the volatile write to `y`, and on thread 2 the read of `x` must appear to occur after the volatile read of `y`. So if thread 2 sees `y2 == 1`, it must also see `x2 == 1`.
+ The volatile read and write prevent reordering of the two operations within each thread, such as by the compiler or by the processor. Regardless of the order in which these operations actually occur on one thread relative to the other thread, even on a multiprocessor system where the threads may run on different processors, the volatile operations guarantee that thread 2 would not see `y2 == 1` and `x2 == 0`. On thread 1 the write to `x` must appear to occur before the volatile write to `y`, and on thread 2 the read of `x` must appear to occur after the volatile read of `y`. So if thread 2 sees `y2 == 1`, it must also see `x2 == 1`.
   
  However, consider the same scenario as above with a specific sequence in which the operations occur:
   
