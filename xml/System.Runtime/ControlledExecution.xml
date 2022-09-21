@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Allows to run code and abort it asynchronously.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -44,10 +44,18 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="action">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="action">The delegate that represents the code to execute.</param>
+        <param name="cancellationToken">The cancellation token that may be used to abort execution.</param>
+        <summary>Runs code that may be aborted asynchronously.</summary>
+        <remarks>
+          <para>This method enables aborting arbitrary managed code in a non-cooperative manner by throwing an exception in the thread executing that code.  While the exception may be caught by the code, it is re-thrown at the end of <c>catch</c> blocks until the execution flow returns to the <c>ControlledExecution.Run</c> method.</para>
+          <para>Execution of the code is not guaranteed to abort immediately, or at all.  This situation can occur, for example, if a thread is stuck executing unmanaged code or the <c>catch</c> and <c>finally</c> blocks that are called as part of the abort procedure, thereby indefinitely delaying the abort.  Furthermore, execution may not be aborted immediately if the thread is currently executing a <c>catch</c> or <c>finally</c> block.</para>
+          <para>Aborting code at an unexpected location may corrupt the state of data structures in the process and lead to unpredictable results.  For that reason, this method should not be used in production code and calling it produces a compile-time warning.</para>
+        </remarks>
+        <exception cref="T:System.PlatformNotSupportedException">The method is not supported on this platform.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="action" /> argument is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The current thread is already running the <see cref="M:System.Runtime.ControlledExecution.Run(System.Action,System.Threading.CancellationToken)" /> method.</exception>
+        <exception cref="T:System.OperationCanceledException">The execution was aborted.</exception>
       </Docs>
     </Member>
   </Members>
