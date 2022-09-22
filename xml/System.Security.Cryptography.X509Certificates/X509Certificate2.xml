@@ -2748,22 +2748,22 @@ The certificate is encoded according to the IETF RFC 7468 "strict"
           <see langword="true" /> to allow wildcard matching for <c>dNSName</c> values in the Subject Alternative Name extension; otherwise, <see langword="false" />.</param>
         <param name="allowCommonName">
           <see langword="true" /> to allow matching against the subject Common Name value; otherwise, <see langword="false" />.</param>
-        <summary>Checks to see if the certificate matches the provided hostname.</summary>
+        <summary>Checks to see if the certificate matches the provided host name.</summary>
         <returns>
           <see langword="true" /> if the certificate is a match for the requested hostname; otherwise, <see langword="false" /></returns>
         <remarks>
           <para> This method is a platform neutral implementation of IETF RFC 6125 host matching logic.
-                The SslStream class uses the hostname validator from the operating system, which may result in different values from this implementation.
+                The SslStream class uses the host name validator from the operating system, which may result in different values from this implementation.
               </para>
           <para> The logical flow of this method is:
-                <list type="bullet"><item> If the hostname parses as an <see cref="T:System.Net.IPAddress" /> then IPAddress matching is done; otherwise, DNS Name matching is done.
+                <list type="bullet"><item> If the host name parses as an <see cref="T:System.Net.IPAddress" /> then IPAddress matching is done; otherwise, DNS Name matching is done.
                   </item><item> For IPAddress matching, the value must be an exact match against an <c>iPAddress</c> value in an entry of the Subject Alternative Name extension.
                   </item><item> For DNS Name matching, the value must be an exact match against a <c>dNSName</c> value in an entry of the Subject Alternative Name extension, or a wildcard match against the same.
                   </item><item> For wildcard matching, the wildcard must be the first character in the <c>dNSName</c> entry, the second character must be a period (.), and the entry must have a length greater than two.
-                    The wildcard will only match the <paramref name="hostname" /> value up to the first period (.), remaining characters must be an exact match.
+                    The wildcard will only match the <paramref name="hostname" /> value up to the first period (.). Any remaining characters must be an exact match.
                   </item><item> If there is no Subject Alternative Name extension, or the extension does not have any entries of the appropriate type, then Common Name matching is used as a fallback.
-                  </item><item> For Common Name matching, if the Subject Name contains a single Common Name, and that attribute is not defined as part of a multi-valued Relative Distinguished Name, then the hostname is matched against the Common Name attribute's value.
-                    Note that wildcards are not used in Common Name matching.
+                  </item><item> For Common Name matching, if the Subject Name contains a single Common Name, and that attribute is not defined as part of a multi-valued Relative Distinguished Name, then the host name is matched against the Common Name attribute's value.
+                    Wildcards are not used in Common Name matching.
                   </item></list></para>
           <para> This implementation considers <c>SRV-ID</c> values or <c>URI-ID</c> values as out-of-scope, and will not use their presence as a reason to stop the fallback from <c>DNS-ID</c> matching to the <c>CN-ID</c>.
               </para>
