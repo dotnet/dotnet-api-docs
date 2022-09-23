@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Facilitates building a Certificate Revocation List (CRL).</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -31,7 +31,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.X509Certificates.CertificateRevocationListBuilder" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -55,11 +55,19 @@
         <Parameter Name="reason" Type="System.Nullable&lt;System.Security.Cryptography.X509Certificates.X509RevocationReason&gt;" />
       </Parameters>
       <Docs>
-        <param name="serialNumber">To be added.</param>
-        <param name="revocationTime">To be added.</param>
-        <param name="reason">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="serialNumber">The serial number of the certificate to revoke.</param>
+        <param name="revocationTime">The time the certificate was revoked, or <see langword="null" /> to use the current system time.
+              The default is <see langword="null" />.</param>
+        <param name="reason">The reason why the certificate was revoked, or <see langword="null" /> to not include a reason.
+              The default is <see langword="null" />.</param>
+        <summary>Adds the specified serial number to the revocation list with an optional revocation time and an optional revocation reason.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="serialNumber" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="reason" /> is not a supported revocation reason.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="serialNumber" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddEntry">
@@ -82,11 +90,17 @@
         <Parameter Name="reason" Type="System.Nullable&lt;System.Security.Cryptography.X509Certificates.X509RevocationReason&gt;" />
       </Parameters>
       <Docs>
-        <param name="serialNumber">To be added.</param>
-        <param name="revocationTime">To be added.</param>
-        <param name="reason">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="serialNumber">The serial number of the certificate to revoke.</param>
+        <param name="revocationTime">The time the certificate was revoked, or <see langword="null" /> to use the current system time.
+              The default is <see langword="null" />.</param>
+        <param name="reason">The reason why the certificate was revoked, or <see langword="null" /> to not include a reason.
+              The default is <see langword="null" />.</param>
+        <summary>Adds the specified serial number to the revocation list with an optional revocation time and an optional revocation reason.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="reason" /> is not a supported revocation reason.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="serialNumber" /> is empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddEntry">
@@ -109,11 +123,17 @@
         <Parameter Name="reason" Type="System.Nullable&lt;System.Security.Cryptography.X509Certificates.X509RevocationReason&gt;" />
       </Parameters>
       <Docs>
-        <param name="certificate">To be added.</param>
-        <param name="revocationTime">To be added.</param>
-        <param name="reason">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="certificate">The certificate to revoke.</param>
+        <param name="revocationTime">The time the certificate was revoked, or <see langword="null" /> to use the current system time.
+              The default is <see langword="null" />.</param>
+        <param name="reason">The reason why the certificate was revoked, or <see langword="null" /> to not include a reason.
+              The default is <see langword="null" />.</param>
+        <summary>Adds the specified certificate to the revocation list with an optional revocation time and an optional revocation reason.</summary>
+        <remarks>This method does not check that the certificate issuer is appropriate for the CRL that is being built, the certificate is just used for extracting the serial number.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="certificate" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="reason" /> is not a supported revocation reason.</exception>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -139,15 +159,73 @@
         <Parameter Name="thisUpdate" Type="System.Nullable&lt;System.DateTimeOffset&gt;" />
       </Parameters>
       <Docs>
-        <param name="issuerCertificate">To be added.</param>
-        <param name="crlNumber">To be added.</param>
-        <param name="nextUpdate">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="rsaSignaturePadding">To be added.</param>
-        <param name="thisUpdate">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="issuerCertificate">The certificate representing the Certificate Authority (CA) that is creating this Certificate Revocation List.</param>
+        <param name="crlNumber">The sequence number for this CRL.  Per IETF RFC 5280, this value must always increase from one CRL to the next for a given CA.</param>
+        <param name="nextUpdate">The latest possible time before the CA will publish a newer CRL, generally treated as an expiration date for this CRL.</param>
+        <param name="hashAlgorithm">The hash algorithm to use when signing the CRL.</param>
+        <param name="rsaSignaturePadding">For Certificate Authorities with RSA keys, this parameter is required and specifies the RSA signature padding mode to use when signing the CRL.
+              For all other algorithms, this parameter is ignored.
+              The default is <see langword="null" />.</param>
+        <param name="thisUpdate">An optional value that specifies when this CRL was created, or <see langword="null" /> to use the current system time.
+              The default is <see langword="null" />.</param>
+        <summary>Builds a Certificate Revocation List (CRL) signed by the specified certificate.</summary>
+        <returns>An array that contains the bytes of the signed CRL.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="issuerCertificate" /> is <see langword="null" />.
+
+-or-
+
+<paramref name="hashAlgorithm" /> has <see langword="null" /> as the value of
+                <see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" />.
+              </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="issuerCertificate" /> does not have an associated private key.
+
+-or-
+
+<paramref name="issuerCertificate" /> uses a public key algorithm that is unknown,
+                or not supported by this implementation.
+
+-or-
+
+<paramref name="issuerCertificate" /> does not have a Basic Constraints extension.
+
+-or-
+
+<paramref name="issuerCertificate" /> has a Basic Constraints extension that indicates
+                it is not a valid Certificate Authority certificate.
+
+-or-
+
+<paramref name="issuerCertificate" /> has a Key Usage extension that lacks the
+                <see cref="F:System.Security.Cryptography.X509Certificates.X509KeyUsageFlags.CrlSign" /> usage.
+
+-or-
+
+<paramref name="issuerCertificate" /> has an RSA private key but
+                <paramref name="rsaSignaturePadding" /> is <see langword="null" />.
+
+-or-
+
+<paramref name="issuerCertificate" /> has an unknown key algorithm.
+
+-or-
+
+<paramref name="nextUpdate" /> is older than <paramref name="thisUpdate" />.
+
+-or-
+
+<paramref name="hashAlgorithm" /> has the empty string as the value of
+                <see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" />.
+
+-or-
+
+<paramref name="rsaSignaturePadding" /> was not recognized.
+              </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="crlNumber" /> is negative.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">an error occurred during signing.</exception>
       </Docs>
     </Member>
     <Member MemberName="Build">
@@ -174,16 +252,37 @@
         <Parameter Name="thisUpdate" Type="System.Nullable&lt;System.DateTimeOffset&gt;" />
       </Parameters>
       <Docs>
-        <param name="issuerName">To be added.</param>
-        <param name="generator">To be added.</param>
-        <param name="crlNumber">To be added.</param>
-        <param name="nextUpdate">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="authorityKeyIdentifier">To be added.</param>
-        <param name="thisUpdate">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="issuerName">The subject name of the certificate for the Certificate Authority (CA) that is issuing this CRL.</param>
+        <param name="generator">A signature generator to produce the CA signature for this CRL.</param>
+        <param name="crlNumber">The sequence number for this CRL.  Per IETF RFC 5280, this value must always increase from one CRL to the next for a given CA.</param>
+        <param name="nextUpdate">The latest possible time before the CA will publish a newer CRL, generally treated as an expiration date for this CRL.</param>
+        <param name="hashAlgorithm">The hash algorithm to use when signing the CRL.</param>
+        <param name="authorityKeyIdentifier">The Authority Key Identifier to use in this CRL, identifying the CA certificate.</param>
+        <param name="thisUpdate">An optional value that specifies when this CRL was created, or <see langword="null" /> to use the current system time.
+              The default is <see langword="null" />.</param>
+        <summary>Builds a Certificate Revocation List (CRL).</summary>
+        <returns>An array that contains the bytes of the signed CRL.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="issuerName" />, <paramref name="generator" />, or
+                <paramref name="authorityKeyIdentifier" /> is <see langword="null" />.
+
+-or-
+
+<paramref name="hashAlgorithm" /> has <see langword="null" /> as the value of
+                <see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" />.
+              </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="nextUpdate" /> is older than <paramref name="thisUpdate" />.
+
+-or-
+
+<paramref name="hashAlgorithm" /> has the empty string as the value of
+                <see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" />.
+              </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="crlNumber" /> is negative.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">an error occurred during signing.</exception>
       </Docs>
     </Member>
     <Member MemberName="BuildCrlDistributionPointExtension">
@@ -205,11 +304,25 @@
         <Parameter Name="critical" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="uris">To be added.</param>
-        <param name="critical">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="uris">The URIs to include as distribution points for the relevant Certificate Revocation List (CRL).</param>
+        <param name="critical">
+          <see langword="true" /> to mark the extension as critical; otherwise, <see langword="false" />.
+              The default is <see langword="false" />.</param>
+        <summary>Builds a CRL Distribution Point Extension with the specified retrieval URIs.</summary>
+        <returns>An object suitable for use as a CRL Distribution Point Extension.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="uris" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="uris" /> contains a <see langword="null" /> value.
+
+-or-
+
+<paramref name="uris" /> is empty.
+              </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">One of the values in <paramref name="uris" />
+              contains characters outside of the International Alphabet 5 (IA5) character space
+              (which is equivalent to 7-bit US-ASCII).</exception>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -232,11 +345,22 @@
         <Parameter Name="currentCrlNumber" Type="System.Numerics.BigInteger" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="currentCrl">To be added.</param>
-        <param name="currentCrlNumber">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="currentCrl">The DER-encoded CRL to decode.</param>
+        <param name="currentCrlNumber">When this method returns, contains the CRL sequence number from the decoded CRL.
+              This parameter is treated as uninitialized.</param>
+        <summary>Decodes the specified Certificate Revocation List (CRL) and produces a <see cref="T:System.Security.Cryptography.X509Certificates.CertificateRevocationListBuilder" /> with all of the revocation entries from the decoded CRL.</summary>
+        <returns>A new builder that has the same revocation entries as the decoded CRL.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="currentCrl" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="currentCrl" /> could not be decoded.
+
+-or-
+
+<paramref name="currentCrl" /> decoded successfully, but decoding did not
+                need all of the bytes provided in the array.
+              </exception>
       </Docs>
     </Member>
     <Member MemberName="Load">
@@ -260,12 +384,15 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="currentCrl">To be added.</param>
-        <param name="currentCrlNumber">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="currentCrl">The DER-encoded CRL to decode.</param>
+        <param name="currentCrlNumber">When this method returns, contains the CRL sequence number from the decoded CRL.
+              This parameter is treated as uninitialized.</param>
+        <param name="bytesConsumed">When this method returns, contains the number of bytes that were read from <paramref name="currentCrl" /> while decoding.</param>
+        <summary>Decodes the specified Certificate Revocation List (CRL) and produces a <see cref="T:System.Security.Cryptography.X509Certificates.CertificateRevocationListBuilder" /> with all of the revocation entries from the decoded CRL.</summary>
+        <returns>A new builder that has the same revocation entries as the decoded CRL.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="currentCrl" /> could not be decoded.</exception>
       </Docs>
     </Member>
     <Member MemberName="LoadPem">
@@ -288,11 +415,20 @@
         <Parameter Name="currentCrlNumber" Type="System.Numerics.BigInteger" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="currentCrl">To be added.</param>
-        <param name="currentCrlNumber">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="currentCrl">The PEM-encoded CRL to decode.</param>
+        <param name="currentCrlNumber">When this method returns, contains the CRL sequence number from the decoded CRL.
+              This parameter is treated as uninitialized.</param>
+        <summary>Decodes the specified Certificate Revocation List (CRL) and produces a <see cref="T:System.Security.Cryptography.X509Certificates.CertificateRevocationListBuilder" /> with all of the revocation entries from the decoded CRL.</summary>
+        <returns>A new builder that has the same revocation entries as the decoded CRL.</returns>
+        <remarks>This loads the first well-formed PEM found with an <c>X509 CRL</c> label.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="currentCrl" /> did not contain a well-formed PEM payload with
+                an <c>X509 CRL</c> label.
+
+-or-
+
+<paramref name="currentCrl" /> could not be decoded.
+              </exception>
       </Docs>
     </Member>
     <Member MemberName="LoadPem">
@@ -315,11 +451,22 @@
         <Parameter Name="currentCrlNumber" Type="System.Numerics.BigInteger" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="currentCrl">To be added.</param>
-        <param name="currentCrlNumber">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="currentCrl">The PEM-encoded CRL to decode.</param>
+        <param name="currentCrlNumber">When this method returns, contains the CRL sequence number from the decoded CRL.
+              This parameter is treated as uninitialized.</param>
+        <summary>Decodes the specified Certificate Revocation List (CRL) and produces a <see cref="T:System.Security.Cryptography.X509Certificates.CertificateRevocationListBuilder" /> with all of the revocation entries from the decoded CRL.</summary>
+        <returns>A new builder that has the same revocation entries as the decoded CRL.</returns>
+        <remarks>This loads the first well-formed PEM found with an <c>X509 CRL</c> label.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="currentCrl" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <paramref name="currentCrl" /> did not contain a well-formed PEM payload with
+                an <c>X509 CRL</c> label.
+
+-or-
+
+<paramref name="currentCrl" /> could not be decoded.
+              </exception>
       </Docs>
     </Member>
     <Member MemberName="RemoveEntry">
@@ -341,10 +488,13 @@
         <Parameter Name="serialNumber" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="serialNumber">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="serialNumber">The serial number to remove.</param>
+        <summary>Removes the specified serial number from the revocation list.</summary>
+        <returns>
+          <see langword="true" /> if the serial number was found in the list and was removed; otherwise, <see langword="false" />.</returns>
+        <remarks>This method assumes that the same serial number is not present on the list more than once, and thus stops at the first match.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="serialNumber" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="RemoveEntry">
@@ -366,10 +516,11 @@
         <Parameter Name="serialNumber" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="serialNumber">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="serialNumber">The serial number to remove.</param>
+        <summary>Removes the specified serial number from the revocation list.</summary>
+        <returns>
+          <see langword="true" /> if the serial number was found in the list and was removed; otherwise, <see langword="false" />.</returns>
+        <remarks>This method assumes that the same serial number is not present on the list more than once, and thus stops at the first match.</remarks>
       </Docs>
     </Member>
   </Members>

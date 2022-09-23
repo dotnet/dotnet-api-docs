@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Xml;
 using System.Data;
 using System.Data.Common;
 using System.Windows.Forms;
 
-public class Form1: Form
+public class Form1 : Form
 {
     protected DataSet DataSet1;
-    protected DataGrid dataGrid1;
+    protected DataGrid DataGrid1;
 
     // <Snippet1>
     // Put the next line into the Declarations section.
@@ -63,7 +63,7 @@ public class Form1: Form
 
         // Create three new DataRow objects and add
         // them to the DataTable
-        for (int i = 0; i<= 2; i++)
+        for (int i = 0; i <= 2; i++)
         {
             row = table.NewRow();
             row["id"] = i;
@@ -81,7 +81,7 @@ public class Form1: Form
 
         // Create first column and add to the DataTable.
         column = new DataColumn();
-        column.DataType= System.Type.GetType("System.Int32");
+        column.DataType = System.Type.GetType("System.Int32");
         column.ColumnName = "ChildID";
         column.AutoIncrement = true;
         column.Caption = "ID";
@@ -93,7 +93,7 @@ public class Form1: Form
 
         // Create second column.
         column = new DataColumn();
-        column.DataType= System.Type.GetType("System.String");
+        column.DataType = System.Type.GetType("System.String");
         column.ColumnName = "ChildItem";
         column.AutoIncrement = false;
         column.Caption = "ChildItem";
@@ -103,7 +103,7 @@ public class Form1: Form
 
         // Create third column.
         column = new DataColumn();
-        column.DataType= System.Type.GetType("System.Int32");
+        column.DataType = System.Type.GetType("System.Int32");
         column.ColumnName = "ParentID";
         column.AutoIncrement = false;
         column.Caption = "ParentID";
@@ -115,28 +115,28 @@ public class Form1: Form
 
         // Create three sets of DataRow objects,
         // five rows each, and add to DataTable.
-        for(int i = 0; i <= 4; i ++)
+        for (int i = 0; i <= 4; i++)
         {
             row = table.NewRow();
             row["childID"] = i;
             row["ChildItem"] = "Item " + i;
-            row["ParentID"] = 0 ;
+            row["ParentID"] = 0;
             table.Rows.Add(row);
         }
-        for(int i = 0; i <= 4; i ++)
+        for (int i = 0; i <= 4; i++)
         {
             row = table.NewRow();
             row["childID"] = i + 5;
             row["ChildItem"] = "Item " + i;
-            row["ParentID"] = 1 ;
+            row["ParentID"] = 1;
             table.Rows.Add(row);
         }
-        for(int i = 0; i <= 4; i ++)
+        for (int i = 0; i <= 4; i++)
         {
             row = table.NewRow();
             row["childID"] = i + 10;
             row["ChildItem"] = "Item " + i;
-            row["ParentID"] = 2 ;
+            row["ParentID"] = 2;
             table.Rows.Add(row);
         }
     }
@@ -158,7 +158,7 @@ public class Form1: Form
     {
         // Instruct the DataGrid to bind to the DataSet, with the
         // ParentTable as the topmost DataTable.
-        dataGrid1.SetDataBinding(dataSet,"ParentTable");
+        DataGrid1.SetDataBinding(dataSet, "ParentTable");
     }
     // </Snippet1>
 }
