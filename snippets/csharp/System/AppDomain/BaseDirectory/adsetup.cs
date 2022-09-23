@@ -10,9 +10,7 @@ class ADSetup
     {
         // Create application domain setup information
         var domaininfo = new AppDomainSetup();
-        domaininfo.ConfigurationFile = System.Environment.CurrentDirectory +
-                                       Path.DirectorySeparatorChar +
-                                       "ADSetup.exe.config";
+        domaininfo.ConfigurationFile = Path.Combine(System.Environment.CurrentDirectory, "ADSetup.exe.config");
         domaininfo.ApplicationBase = System.Environment.CurrentDirectory;
 
         //Create evidence for the new appdomain from evidence of the current application domain
