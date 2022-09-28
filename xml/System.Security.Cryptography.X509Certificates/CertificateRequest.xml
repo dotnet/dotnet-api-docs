@@ -293,11 +293,11 @@
         <Parameter Name="rsaSignaturePadding" Type="System.Security.Cryptography.RSASignaturePadding" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="subjectName">To be added.</param>
-        <param name="publicKey">To be added.</param>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="rsaSignaturePadding">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="subjectName">The parsed representation of the subject name for the certificate or certificate request.</param>
+        <param name="publicKey">The encoded representation of the public key to include in the certificate or certificate request.</param>
+        <param name="hashAlgorithm">The hash algorithm to use when signing the certificate or certificate request.</param>
+        <param name="rsaSignaturePadding">The RSA signature padding to use when signing this request with an RSA certificate.</param>
+        <summary>Creates a CertificateRequest for the specified subject name, encoded public key, hash algorithm, and RSA signature padding.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -909,9 +909,34 @@ This object was created with a constructor that did not accept a signing key.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Creates a PEM-encoded PKCS#10 CertificationRequest representing the current state of this object using the provided signature generator.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.OtherRequestAttributes" /> contains a <see langword="null" /> value.
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.OtherRequestAttributes" /> contains an entry with a <see langword="null" /><see cref="P:System.Security.Cryptography.AsnEncodedData.Oid" /> value.
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.OtherRequestAttributes" /> contains an entry representing the PKCS#9
+                Extension Request Attribute (1.2.840.113549.1.9.14).
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.CertificateExtensions" /> contains a <see langword="null" /> value.
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.CertificateExtensions" /> contains an entry with a <see langword="null" /><see cref="P:System.Security.Cryptography.AsnEncodedData.Oid" /> value.
+
+-or-
+
+This object was created with a constructor that did not accept a signing key.
+              </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">A cryptographic error occurs while creating the signing request.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSigningRequestPem">
@@ -939,10 +964,37 @@ This object was created with a constructor that did not accept a signing key.
         <Parameter Name="signatureGenerator" Type="System.Security.Cryptography.X509Certificates.X509SignatureGenerator" Index="0" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="signatureGenerator">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="signatureGenerator">A <see cref="T:System.Security.Cryptography.X509Certificates.X509SignatureGenerator" /> with which to sign the request.</param>
+        <summary>Creates a PEM-encoded PKCS#10 CertificationRequest representing the current state of this object using the provided signature generator.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="signatureGenerator" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.OtherRequestAttributes" /> contains a <see langword="null" /> value.
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.OtherRequestAttributes" /> contains an entry with a <see langword="null" /><see cref="P:System.Security.Cryptography.AsnEncodedData.Oid" /> value.
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.OtherRequestAttributes" /> contains an entry representing the PKCS#9
+                Extension Request Attribute (1.2.840.113549.1.9.14).
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.CertificateExtensions" /> contains a <see langword="null" /> value.
+
+-or-
+
+<see cref="P:System.Security.Cryptography.X509Certificates.CertificateRequest.CertificateExtensions" /> contains an entry with a <see langword="null" /><see cref="P:System.Security.Cryptography.AsnEncodedData.Oid" /> value.
+
+-or-
+
+This object was created with a constructor which did not accept a signing key.
+              </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">A cryptographic error occurs while creating the signing request.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashAlgorithm">
@@ -1010,13 +1062,24 @@ This object was created with a constructor that did not accept a signing key.
         <Parameter Name="signerSignaturePadding" Type="System.Security.Cryptography.RSASignaturePadding" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="pkcs10">To be added.</param>
-        <param name="signerHashAlgorithm">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="signerSignaturePadding">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="pkcs10">The binary PKCS#10 signing request to load.</param>
+        <param name="signerHashAlgorithm">The hash algorithm to use when creating a certificate or new signing request.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies how to load the request.</param>
+        <param name="signerSignaturePadding">The RSA Signature Padding to use when creating a certificate from this request. For RSA signing certificates using the default signature generator, this parameter is required; otherwise, this parameter is ignored.</param>
+        <summary>Loads a binary PKCS#10 signing request as a new CertificateRequest instance.</summary>
+        <returns>A CertificateRequest instance which contains the information from the signing request.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="signerHashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="pkcs10" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="options"/> specifies a value that is not supported.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+            <paramref name="pkcs10"/> is not a valid PKCS#10 signing request.
+
+-or-
+
+<paramref name="pkcs10"/> contains a signature that could not be verified using its embedded public key.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="LoadSigningRequest">
@@ -1047,14 +1110,25 @@ This object was created with a constructor that did not accept a signing key.
         <Parameter Name="signerSignaturePadding" Type="System.Security.Cryptography.RSASignaturePadding" Index="4" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="pkcs10">To be added.</param>
-        <param name="signerHashAlgorithm">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="signerSignaturePadding">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="pkcs10">The binary PKCS#10 signing request to load.</param>
+        <param name="signerHashAlgorithm">The hash algorithm to use when creating a certificate or new signing request.</param>
+        <param name="bytesConsumed">When this method returns, contains a value that indicates the number of bytes read from <paramref name="source" />. This parameter is treated as uninitialized.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies how to load the request.</param>
+        <param name="signerSignaturePadding">The RSA Signature Padding to use when creating a certificate from this request. For RSA signing certificates using the default signature generator, this parameter is required; otherwise, this parameter is ignored.</param>
+        <summary>Loads a binary PKCS#10 signing request as a new CertificateRequest instance.</summary>
+        <returns>A CertificateRequest instance which contains the information from the signing request.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="signerHashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="pkcs10" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="options"/> specifies a value that is not supported.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+            <paramref name="pkcs10"/> is not a valid PKCS#10 signing request.
+
+-or-
+
+<paramref name="pkcs10"/> contains a signature that could not be verified using its embedded public key.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="LoadSigningRequestPem">
@@ -1084,13 +1158,28 @@ This object was created with a constructor that did not accept a signing key.
         <Parameter Name="signerSignaturePadding" Type="System.Security.Cryptography.RSASignaturePadding" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="pkcs10Pem">To be added.</param>
-        <param name="signerHashAlgorithm">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="signerSignaturePadding">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="pkcs10Pem">The PEM-encoded PKCS#10 signing request to load.</param>
+        <param name="signerHashAlgorithm">The hash algorithm to use when creating a certificate or new signing request.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies how to load the request.</param>
+        <param name="signerSignaturePadding">The RSA Signature Padding to use when creating a certificate from this request. For RSA signing certificates using the default signature generator, this parameter is required; otherwise, this parameter is ignored.</param>
+        <summary>Loads the first PEM-encoded PKCS#10 signing request from <paramref name="pkcs10Pem"/> as a new CertificateRequest instance.</summary>
+        <returns>A CertificateRequest instance which contains the information from the signing request.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="signerHashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="pkcs10" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="options"/> specifies a value that is not supported.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+            <paramref name="pkcs10Pem"/> does not contain a PKCS#10 signing request.
+                
+-or-
+
+<paramref name="pkcs10Pem"/> is not a valid PKCS#10 signing request.
+
+-or-
+
+<paramref name="pkcs10Pem"/> contains a signature that could not be verified using its embedded public key.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="LoadSigningRequestPem">
@@ -1120,13 +1209,28 @@ This object was created with a constructor that did not accept a signing key.
         <Parameter Name="signerSignaturePadding" Type="System.Security.Cryptography.RSASignaturePadding" Index="3" FrameworkAlternate="net-7.0" />
       </Parameters>
       <Docs>
-        <param name="pkcs10Pem">To be added.</param>
-        <param name="signerHashAlgorithm">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="signerSignaturePadding">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="pkcs10Pem">The PEM-encoded PKCS#10 signing request to load.</param>
+        <param name="signerHashAlgorithm">The hash algorithm to use when creating a certificate or new signing request.</param>
+        <param name="options">A bitwise combination of the enumeration values that specifies how to load the request.</param>
+        <param name="signerSignaturePadding">The RSA Signature Padding to use when creating a certificate from this request. For RSA signing certificates using the default signature generator, this parameter is required; otherwise, this parameter is ignored.</param>
+        <summary>Loads the first PEM-encoded PKCS#10 signing request from <paramref name="pkcs10Pem"/> as a new CertificateRequest instance.</summary>
+        <returns>A CertificateRequest instance which contains the information from the signing request.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="signerHashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.ArgumentNullException"><paramref name="pkcs10" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="options"/> specifies a value that is not supported.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+            <paramref name="pkcs10Pem"/> does not contain a PKCS#10 signing request.
+                
+-or-
+
+<paramref name="pkcs10Pem"/> is not a valid PKCS#10 signing request.
+
+-or-
+
+<paramref name="pkcs10Pem"/> contains a signature that could not be verified using its embedded public key.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="OtherRequestAttributes">
@@ -1151,8 +1255,8 @@ This object was created with a constructor that did not accept a signing key.
         <ReturnType>System.Collections.ObjectModel.Collection&lt;System.Security.Cryptography.AsnEncodedData&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a collection representing attributes, other than the extension request attribute, to include in a certificate request.</summary>
+        <value>A collection representing attributes, other than the extension request attribute, to include in a certificate request</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
