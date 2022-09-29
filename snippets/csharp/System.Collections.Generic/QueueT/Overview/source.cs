@@ -71,7 +71,7 @@ Dequeuing 'one'
 Peek at next item to dequeue: two
 Dequeuing 'two'
 
-Contents of the copy:
+Contents of the first copy:
 three
 four
 five
