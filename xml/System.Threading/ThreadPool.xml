@@ -1265,7 +1265,8 @@ If a thread pool implementation may have different types of work items, the coun
   
  If you specify a negative number or a number larger than the maximum number of active thread pool threads (obtained using <xref:System.Threading.ThreadPool.GetMaxThreads%2A>), <xref:System.Threading.ThreadPool.SetMinThreads%2A> returns `false` and does not change either of the minimum values.  
   
- By default, the minimum number of threads is set to the processor count. <xref:System.Threading.ThreadPool.SetMinThreads%2A> may be used to increase the minimum number of threads, such as to temporarily work around issues where some queued work items or tasks block thread pool threads, which sometimes may lead to a situation where all worker or I/O completion threads are blocked (starvation). However, increasing the minimum number of threads may degrade performance in other ways, such as:
+ By default, the minimum number of threads is set to the processor count. You can use <xref:System.Threading.ThreadPool.SetMinThreads%2A> to increase the minimum number of threads, such as to temporarily work around issues where some queued work items or tasks block thread pool threads. Those blockages sometimes lead to a situation where all worker or I/O completion threads are blocked (starvation). However, increasing the minimum number of threads might degrade performance in other ways, such as:
+ 
  - The thread pool may schedule more worker threads, even when the worker threads are not getting blocked. The oversubscription can cause threads that get scheduled-out to be significantly delayed as they wait in a long queue to get another time slice, which may lead to some work items or tasks being delayed.
  - Worker threads may take more CPU time in dequeuing work items due to there being more threads to scan for work-stealing.
  - Context switching between threads may increase CPU usage.
