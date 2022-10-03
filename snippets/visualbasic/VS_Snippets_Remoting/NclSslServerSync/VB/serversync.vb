@@ -19,7 +19,7 @@ Namespace Examples.System.Net
         Public Shared Sub RunServer(certificate As String)
             serverCertificate = X509Certificate.CreateFromCertFile(certificate)
             ' Create a TCP/IP (IPv4) socket And listen for incoming connections.
-            Dim listener = New TcpListener(IPAddress.Any, 8080)
+            Dim listener = New TcpListener(IPAddress.Any, 5000)
             listener.Start()
 
             While True
