@@ -40,7 +40,7 @@ void Connect( String^ server, String^ message )
       // connected to the same address as specified by the server, port
       // combination.
       Int32 port = 13000;
-      client = gcnew TcpClient( server,port );
+      client = gcnew TcpClient(server, port);
       
       // Translate the passed message into ASCII and store it as a Byte array.
       array<Byte>^data = Text::Encoding::ASCII->GetBytes( message );
