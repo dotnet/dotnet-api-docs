@@ -524,8 +524,8 @@ namespace Examples
 
                 Console.WriteLine();
             }
-            //</Snippet12>
         }
+        //</Snippet12>
         //<Snippet16>
         public static void ShowInterfaceSummary()
         {
