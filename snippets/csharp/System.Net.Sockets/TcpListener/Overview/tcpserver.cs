@@ -24,7 +24,7 @@ class MyTcpListener
 {
   public static void Main()
   {
-    TcpListener server=null;
+    TcpListener server = null;
     try
     {
       // Set the TcpListener on port 13000.
@@ -48,7 +48,7 @@ class MyTcpListener
 
         // Perform a blocking call to accept requests.
         // You could also use server.AcceptSocket() here.
-        TcpClient client = server.AcceptTcpClient();
+        using TcpClient client = server.AcceptTcpClient();
         Console.WriteLine("Connected!");
 
         data = null;
@@ -75,7 +75,7 @@ class MyTcpListener
           Console.WriteLine("Sent: {0}", data);
         }
 
-        // Shutdown and end connection
+        // Shutdown and end the connection
         client.Close();
       }
     }
@@ -85,8 +85,7 @@ class MyTcpListener
     }
     finally
     {
-       // Stop listening for new clients.
-       server.Stop();
+      server.Stop();
     }
 
     Console.WriteLine("\nHit enter to continue...");
