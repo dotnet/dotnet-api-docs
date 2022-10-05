@@ -24,6 +24,7 @@ class MyTcpListener
 {
   public static void Main()
   {
+    TcpListener server = null;
     try
     {
       // Set the TcpListener on port 13000.
@@ -31,7 +32,7 @@ class MyTcpListener
       IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
       // TcpListener server = new TcpListener(port);
-      using TcpListener server = new TcpListener(localAddr, port);
+      server = new TcpListener(localAddr, port);
 
       // Start listening for client requests.
       server.Start();
@@ -81,6 +82,10 @@ class MyTcpListener
     catch(SocketException e)
     {
       Console.WriteLine("SocketException: {0}", e);
+    }
+    finally
+    {
+      server.Stop();
     }
 
     Console.WriteLine("\nHit enter to continue...");
