@@ -14,7 +14,7 @@ public class Form1
     // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
     HttpClient client = new HttpClient();
     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, siteUri);
-    HttpResponseMessage response = client->Send(request);
+    HttpResponseMessage response = client.Send(request);
     // </Snippet1>
     
     // <Snippet2>
