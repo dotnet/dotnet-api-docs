@@ -2238,7 +2238,25 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Note that this method accepts as valid an ipString value that can be parsed as an <xref:System.Int64>, and then treats that Int64 as the long value of an IP address in network byte order, similar to the way that the <xref:System.Net.IPAddress.%23ctor%2A> constructor does. This means that this method returns true if the Int64 is parsed successfully, even if it represents an address that's not a valid IP address. For example, if ipString is "1", this method returns true even though "1" (or 0.0.0.1) is not a valid IP address and you might expect this method to return false. Fixing this bug would break existing apps, so the current behavior will not be changed. Your code can avoid this behavior by ensuring that it only uses this method to parse IP addresses in dotted-decimal format.  
+ The static <xref:System.Net.IPAddress.TryParse%2A> method creates an <xref:System.Net.IPAddress> instance from an IP address expressed in dotted-quad notation for IPv4 and in colon-hexadecimal notation for IPv6.  
+  
+ The number of parts (each part is separated by a period) in `ipString` determines how the IP address is constructed. A one part address is stored directly in the network address. A two part address, convenient for specifying a class A address, puts the leading part in the first byte and the trailing part in the right-most three bytes of the network address. A three part address, convenient for specifying a class B address, puts the first part in the first byte, the second part in the second byte, and the final part in the right-most two bytes of the network address. For example:  
+  
+|Number of parts and example `ipString`|IPv4 address for IPAddress|  
+|--------------------------------------------|--------------------------------|  
+|1 -- "65535"|0.0.255.255|  
+|2 -- "20.2"|20.0.0.2|  
+|2 -- "20.65535"|20.0.255.255|  
+|3 -- "128.1.2"|128.1.0.2|  
+  
+   
+  
+## Examples  
+ The following code converts a string that contains an IP address, in dotted-quad notation for IPv4 or in colon-hexadecimal notation for IPv6, into an instance of the <xref:System.Net.IPAddress> class. Then it uses the overloaded <xref:System.Net.IPAddress.ToString%2A> method to display the address in standard notation.  
+  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.IPAddress.Parse/CPP/parse.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Net/IPAddress/Parse/parse.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/System.Net.IPAddress.Parse/VB/parse.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
