@@ -1,11 +1,9 @@
 ﻿Imports System.Data
 Imports System.Net
-Imports System.Windows.Forms
 
-Public Class Form1
-    Inherits Form
+Public Class Program
 
-    Protected Sub Method()
+    Public Shared Sub Main()
 ' <Snippet1>
 Dim siteUri As New Uri("http://www.contoso.com/")
 
