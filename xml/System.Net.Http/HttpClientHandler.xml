@@ -207,6 +207,12 @@ These configuration options are not available starting with .NET 5.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+ Automatic decompression works only on the top most compression. So if the content is compressed mutliple times, only the last compression will be decompressed.
+ For example, for a reponse with `Content-Encoding: gzip, br` header, the content will only be decompressed using Brotli, leaving the still gzipped content in the <xref:System.Net.Http.HttpResponseMessage.Content>.
+
+ Setting automatic decompression to anything else than <xref:System.Net.DecompressionMethods.None> will cause adding `Accept-Encoding` header with the set values into every outgoing <xref:System.Net.Http.HttpRequestMessage>.
+
+
 For the .NET Framework 4.x `System.Net.Http` binary in the Global Assembly Cache (GAC), the default value is <xref:System.Net.DecompressionMethods.None>.
 
 When the [`System.Net.Http` NuGet package](https://www.nuget.org/packages/System.Net.Http/) v4.1.0 to v4.3.2 is used, the default is <xref:System.Net.DecompressionMethods.GZip> and <xref:System.Net.DecompressionMethods.Deflate>.
