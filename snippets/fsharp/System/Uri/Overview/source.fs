@@ -7,9 +7,9 @@ let siteUri = Uri "http://www.contoso.com/"
 
 // HttpClient lifecycle management best practices:
 // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
-let client = HttpClient ()
-let request = HttpRequestMessage (HttpMethod::Get, siteUri)
-let response = client.Send request
+use client = new HttpClient ()
+use request = new HttpRequestMessage (HttpMethod.Get, siteUri)
+use response = client.Send request
 // </Snippet1>
 
 // <Snippet2>
