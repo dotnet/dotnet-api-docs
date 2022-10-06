@@ -12,12 +12,15 @@ dim SecurelyStoredDomain as String = ""
         
  Dim myCache As New CredentialCache()
         
- myCache.Add(New Uri("www.contoso.com"), "Basic", myCred)
- myCache.Add(New Uri("app.contoso.com"), "Basic", myCred)
+ myCache.Add(New Uri("http://www.contoso.com"), "Basic", myCred)
+ myCache.Add(New Uri("http://app.contoso.com"), "Basic", myCred)
         
- Dim wr As WebRequest = WebRequest.Create("www.contoso.com")
- wr.Credentials = myCache
-
+' HttpClient lifecycle management best practices:
+' https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+Dim client As New HttpClient(New HttpClientHandlers With
+{
+    .Credentials = myCache
+});
 ' </Snippet1>
     End Sub
 End Class
