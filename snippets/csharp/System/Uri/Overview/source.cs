@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Http;
 
 
 public class Form1
@@ -7,9 +8,13 @@ public class Form1
   protected void Method()
   {
     // <Snippet1>
-    Uri contoso = new Uri("http://www.contoso.com/");
+    Uri siteUri = new Uri("http://www.contoso.com/");
 
-    WebRequest wr = WebRequest.Create(contoso);
+    // HttpClient lifecycle management best practices:
+    // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+    HttpClient client = new HttpClient();
+    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, siteUri);
+    HttpResponseMessage response = client->Send(request);
     // </Snippet1>
     
     // <Snippet2>
