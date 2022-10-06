@@ -2,11 +2,10 @@
 using System.Net;
 using System.Net.Http;
 using System.IO;
-using System.Windows.Forms;
 
-public class Form1: Form
+public class Program
 {
- public void Method()
+ public static void Main(string[] args)
  {
 string SecurelyStoredUserName = "";
 string SecurelyStoredPassword = "";

@@ -12,7 +12,7 @@ Public Class Sample
         Dim client As New HttpClient(New HttpClientHandlers With
         {
             .Proxy = proxyObject
-        });
+        })
         ' </Snippet1>
     End Sub
 End Class
