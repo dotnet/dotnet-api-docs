@@ -6,7 +6,7 @@ The 'Version10' field of the 'HttpVersion' class is assigned to the 'Version' pr
 The changed Version and the 'Version' of the response object are displayed.
 */
 
-#using < System.dll>
+#using <System.dll>
 
 using namespace System;
 using namespace System::IO;
