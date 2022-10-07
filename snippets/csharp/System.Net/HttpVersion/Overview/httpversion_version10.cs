@@ -1,15 +1,15 @@
 ﻿/*System.Net.HttpVersion.Version10
 This program demonstrates the  'Version10' field of the 'HttpVersion' Class.
-The 'ProtocolVersion'  property of 'HttpWebrequest' class identifies the Version of the Protocol being used.
-A new 'HttpWebRequest' object is created.
-Then the default value of 'ProtocolVersion' property is displayed to the console.
-The 'Version10' field of the 'HttpVersion' class is assigned to the 'ProtocolVersion' property of the 'HttpWebRequest' Class.
-The changed Version and the 'ProtocolVersion' of the response object are displayed.
+The 'Version'  property of 'HttpRequestMessage' class identifies the Version of HTTP being used.
+Then the default value of 'Version' property is displayed to the console.
+The 'Version10' field of the 'HttpVersion' class is assigned to the 'Version' property of the 'HttpRequestMessage' Class.
+The changed Version and the 'Version' of the response object are displayed.
 */
 
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 
 class HttpVersion_Version10
 {
@@ -18,28 +18,31 @@ class HttpVersion_Version10
 		try	
 		{
 // <Snippet1>
-			// Create a 'HttpWebRequest' object.
-			HttpWebRequest myHttpWebRequest=(HttpWebRequest)WebRequest.Create("http://www.microsoft.com");
-			Console.WriteLine("\nThe 'ProtocolVersion' of the protocol before assignment is :{0}",myHttpWebRequest.ProtocolVersion);
-			// Assign Version10 to ProtocolVersion.
-			myHttpWebRequest.ProtocolVersion=HttpVersion.Version10;
-			// Assign the response object of 'HttpWebRequest' to a 'HttpWebResponse' variable.
-			HttpWebResponse myHttpWebResponse=(HttpWebResponse)myHttpWebRequest.GetResponse();
-			Console.WriteLine("\nThe 'ProtocolVersion' of the protocol after  assignment is :{0}",myHttpWebRequest.ProtocolVersion);
-			Console.WriteLine("\nThe 'ProtocolVersion' of the response object is :{0}",myHttpWebResponse.ProtocolVersion);
+			// HttpClient lifecycle management best practices:
+			// https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+			HttpClient client = new HttpClient();
+
+			HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://www.microsoft.com");
+			Console.WriteLine("Default HTTP request version is {0}", request.Version);
+
+			request.Version = HttpVersion.Version10;
+			Console.WriteLine("Request version after assignment is {0}", request.Version);
+
+			HttpResponseMessage response = client.Send(request);
+			Console.WriteLine("Response HTTP version {0}", response.Version);
 // </Snippet1>
 			Console.WriteLine("\nPress 'Enter' Key to Continue..............");
 			Console.Read();			
 		}
-		catch(WebException e)
+		catch(HttpRequestException e)
 		{
-			Console.WriteLine("\nWebException Caught!");
+			Console.WriteLine("HttpRequestException Caught!");
 			Console.WriteLine("Message :{0} ",e.Message);
 			Console.WriteLine("Source  :{0} ",e.Source);
 		}
 		catch(Exception e)
 		{
-			Console.WriteLine("\nException Caught!");
+			Console.WriteLine("Exception Caught!");
 			Console.WriteLine("Source  :{0}" , e.Source);
 			Console.WriteLine("Message :{0}" , e.Message);
 		}

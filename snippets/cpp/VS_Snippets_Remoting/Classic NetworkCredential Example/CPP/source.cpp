@@ -4,6 +4,7 @@
 
 using namespace System;
 using namespace System::Net;
+using namespace System::Net::Http;
 using namespace System::IO;
 using namespace System::Windows::Forms;
 
@@ -22,11 +23,14 @@ public:
 
       CredentialCache^ myCache = gcnew CredentialCache;
 
-      myCache->Add( gcnew Uri( "www.contoso.com" ), "Basic", myCred );
-      myCache->Add( gcnew Uri( "app.contoso.com" ), "Basic", myCred );
+      myCache->Add( gcnew Uri( "http://www.contoso.com" ), "Basic", myCred );
+      myCache->Add( gcnew Uri( "http://app.contoso.com" ), "Basic", myCred );
 
-      WebRequest^ wr = WebRequest::Create( "www.contoso.com" );
-      wr->Credentials = myCache;
+      // HttpClient lifecycle management best practices:
+      // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+      HttpClientHandler^ handler = gcnew HttpClientHandler();
+      handler->Credentials = myCache;
+      HttpClient^ client = gcnew HttpClient(handler);
       // </Snippet1>
    }
 };
