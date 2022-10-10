@@ -28,7 +28,7 @@ class HttpVersion_Version10
             request.Version = HttpVersion.Version10;
             Console.WriteLine("Request version after assignment is {0}", request.Version);
 
-            HttpResponseMessage response = client.Send(request);
+            using HttpResponseMessage response = client.Send(request);
             Console.WriteLine("Response HTTP version {0}", response.Version);
             // </Snippet1>
             Console.WriteLine("\nPress 'Enter' Key to Continue..............");
