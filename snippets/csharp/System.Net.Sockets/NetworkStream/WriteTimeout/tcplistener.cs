@@ -12,7 +12,7 @@ namespace Examples.System.Net
         {
             // Create the server side connection and
             // start listening for clients.
-            using TcpListener tcpListener = new TcpListener(IPAddress.Any,11000);
+            TcpListener tcpListener = new TcpListener(IPAddress.Any,11000);
             tcpListener.Start();
             Console.WriteLine("Waiting for a connection....");
 

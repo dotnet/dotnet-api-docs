@@ -35,6 +35,5 @@ int main()
     // Dispose allocated resources.
     delete networkStream;
     delete tcpClient;
-    delete tcpListener;
 }
 //</snippet0>
