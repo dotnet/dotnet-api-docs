@@ -12,16 +12,16 @@ namespace Examples.System.Net
         {
             // Create the server side connection and
             // start listening for clients.
-            TcpListener tcpListener = new TcpListener(IPAddress.Any,11000);
+            using TcpListener tcpListener = new TcpListener(IPAddress.Any,11000);
             tcpListener.Start();
             Console.WriteLine("Waiting for a connection....");
 
             // Accept the pending client connection.
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
+            using TcpClient tcpClient = tcpListener.AcceptTcpClient();
             Console.WriteLine("Connection accepted.");
             // Get the stream to write the message
             // that will be sent to the client.
-            NetworkStream networkStream = tcpClient.GetStream();
+            using NetworkStream networkStream = tcpClient.GetStream();
             string responseString = "Hello.";
             // Set the write timeout to 10 millseconds.
             networkStream.WriteTimeout = 10;

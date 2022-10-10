@@ -31,5 +31,10 @@ int main()
     // Stop listening for incoming connections
     // and close the server.
     tcpListener->Stop();
+
+    // Dispose allocated resources.
+    delete networkStream;
+    delete tcpClient;
+    delete tcpListener;
 }
 //</snippet0>
