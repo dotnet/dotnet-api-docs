@@ -13,38 +13,38 @@ using System.Net.Http;
 
 class HttpVersion_Version10
 {
-	public static void Main()
-	{
-		try	
-		{
-// <Snippet1>
-			// HttpClient lifecycle management best practices:
-			// https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
-			HttpClient client = new HttpClient();
+    public static void Main()
+    {
+        try
+        {
+            // <Snippet1>
+            // HttpClient lifecycle management best practices:
+            // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+            using HttpClient client = new HttpClient();
 
-			HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://www.microsoft.com");
-			Console.WriteLine("Default HTTP request version is {0}", request.Version);
+            using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://www.microsoft.com");
+            Console.WriteLine("Default HTTP request version is {0}", request.Version);
 
-			request.Version = HttpVersion.Version10;
-			Console.WriteLine("Request version after assignment is {0}", request.Version);
+            request.Version = HttpVersion.Version10;
+            Console.WriteLine("Request version after assignment is {0}", request.Version);
 
-			HttpResponseMessage response = client.Send(request);
-			Console.WriteLine("Response HTTP version {0}", response.Version);
-// </Snippet1>
-			Console.WriteLine("\nPress 'Enter' Key to Continue..............");
-			Console.Read();			
-		}
-		catch(HttpRequestException e)
-		{
-			Console.WriteLine("HttpRequestException Caught!");
-			Console.WriteLine("Message :{0} ",e.Message);
-			Console.WriteLine("Source  :{0} ",e.Source);
-		}
-		catch(Exception e)
-		{
-			Console.WriteLine("Exception Caught!");
-			Console.WriteLine("Source  :{0}" , e.Source);
-			Console.WriteLine("Message :{0}" , e.Message);
-		}
-	}
+            HttpResponseMessage response = client.Send(request);
+            Console.WriteLine("Response HTTP version {0}", response.Version);
+            // </Snippet1>
+            Console.WriteLine("\nPress 'Enter' Key to Continue..............");
+            Console.Read();
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine("HttpRequestException Caught!");
+            Console.WriteLine("Message :{0} ", e.Message);
+            Console.WriteLine("Source  :{0} ", e.Source);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception Caught!");
+            Console.WriteLine("Source  :{0}", e.Source);
+            Console.WriteLine("Message :{0}", e.Message);
+        }
+    }
 }
