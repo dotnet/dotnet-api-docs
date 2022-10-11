@@ -1079,7 +1079,7 @@ The classes shown in the following table are used to construct email messages th
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="message" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has a <see cref="Overload:System.Net.Mail.SmtpClient.SendAsync" /> call in progress.  
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
   
  -or-  
   
@@ -1206,7 +1206,7 @@ The classes shown in the following table are used to construct email messages th
  -or-  
   
  <paramref name="recipients" /> is <see cref="F:System.String.Empty" />.</exception>
-        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has a <see cref="Overload:System.Net.Mail.SmtpClient.SendAsync" /> call in progress.  
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
   
  -or-  
   
@@ -1333,7 +1333,7 @@ The classes shown in the following table are used to construct email messages th
  -or-  
   
  <see cref="P:System.Net.Mail.MailMessage.From" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has a <see cref="Overload:System.Net.Mail.SmtpClient.SendAsync" /> call in progress.  
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
   
  -or-  
   
@@ -1664,12 +1664,51 @@ The classes shown in the following table are used to construct email messages th
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete once the message has been sent.  
-  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete once the message has been sent.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="message" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
+  
+ -or-  
+  
+ There are no recipients specified in <see cref="P:System.Net.Mail.MailMessage.To" />, <see cref="P:System.Net.Mail.MailMessage.CC" />, and <see cref="P:System.Net.Mail.MailMessage.Bcc" /> properties.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is <see langword="null" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is equal to the empty string ("").  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Port" /> is zero, a negative number, or greater than 65,535.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been disposed.</exception>
+        <exception cref="T:System.Net.Mail.SmtpException">The connection to the SMTP server failed.  
+  
+ -or-  
+  
+ Authentication failed.  
+  
+ -or-  
+  
+ The operation timed out.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true" /> but the <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory" /> or <see cref="F:System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true," /> but the SMTP mail server did not advertise STARTTLS in the response to the EHLO command.  
+  
+ -or-  
+  
+ The <paramref name="message" /> could not be delivered to one or more of the recipients in <see cref="P:System.Net.Mail.MailMessage.To" />, <see cref="P:System.Net.Mail.MailMessage.CC" />, or <see cref="P:System.Net.Mail.MailMessage.Bcc" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendMailAsync">
@@ -1711,6 +1750,49 @@ The classes shown in the following table are used to construct email messages th
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="message" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.MailMessage.From" /> is <see langword="null" />.  
+  
+ -or-  
+  
+ There are no recipients specified in <see cref="P:System.Net.Mail.MailMessage.To" />, <see cref="P:System.Net.Mail.MailMessage.CC" />, and <see cref="P:System.Net.Mail.MailMessage.Bcc" /> properties.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is <see langword="null" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is equal to the empty string ("").  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Port" /> is zero, a negative number, or greater than 65,535.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been disposed.</exception>
+        <exception cref="T:System.Net.Mail.SmtpException">The connection to the SMTP server failed.  
+  
+ -or-  
+  
+ Authentication failed.  
+  
+ -or-  
+  
+ The operation timed out.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true" /> but the <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory" /> or <see cref="F:System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true," /> but the SMTP mail server did not advertise STARTTLS in the response to the EHLO command.  
+  
+ -or-  
+  
+ The <paramref name="message" /> could not be delivered to one or more of the recipients in <see cref="P:System.Net.Mail.MailMessage.To" />, <see cref="P:System.Net.Mail.MailMessage.CC" />, or <see cref="P:System.Net.Mail.MailMessage.Bcc" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendMailAsync">
@@ -1777,6 +1859,45 @@ The classes shown in the following table are used to construct email messages th
  -or-  
   
  <paramref name="recipients" /> is <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.MailMessage.From" /> is <see langword="null" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is <see langword="null" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is equal to the empty string ("").  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Port" /> is zero, a negative number, or greater than 65,535.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been disposed.</exception>
+        <exception cref="T:System.Net.Mail.SmtpException">The connection to the SMTP server failed.  
+  
+ -or-  
+  
+ Authentication failed.  
+  
+ -or-  
+  
+ The operation timed out.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true" /> but the <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory" /> or <see cref="F:System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true," /> but the SMTP mail server did not advertise STARTTLS in the response to the EHLO command.  
+  
+ -or-  
+  
+ The <paramref name="message" /> could not be delivered to one or more of the recipients in <see cref="P:System.Net.Mail.MailMessage.To" />, <see cref="P:System.Net.Mail.MailMessage.CC" />, or <see cref="P:System.Net.Mail.MailMessage.Bcc" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendMailAsync">
@@ -1834,6 +1955,41 @@ The classes shown in the following table are used to construct email messages th
  -or-  
   
  <paramref name="recipients" /> is <see cref="F:System.String.Empty" />.</exception>
+        <exception cref="T:System.InvalidOperationException">This <see cref="T:System.Net.Mail.SmtpClient" /> has another send operation already in progress.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is <see langword="null" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Host" /> is equal to the empty string ("").  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.Network" /> and <see cref="P:System.Net.Mail.SmtpClient.Port" /> is zero, a negative number, or greater than 65,535.</exception>
+        <exception cref="T:System.ObjectDisposedException">This object has been disposed.</exception>
+        <exception cref="T:System.Net.Mail.SmtpException">The connection to the SMTP server failed.  
+  
+ -or-  
+  
+ Authentication failed.  
+  
+ -or-  
+  
+ The operation timed out.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true" /> but the <see cref="P:System.Net.Mail.SmtpClient.DeliveryMethod" /> property is set to <see cref="F:System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory" /> or <see cref="F:System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis" />.  
+  
+ -or-  
+  
+ <see cref="P:System.Net.Mail.SmtpClient.EnableSsl" /> is set to <see langword="true," /> but the SMTP mail server did not advertise STARTTLS in the response to the EHLO command.  
+  
+ -or-  
+  
+ The <paramref name="message" /> could not be delivered to one or more of the recipients in <see cref="P:System.Net.Mail.MailMessage.To" />, <see cref="P:System.Net.Mail.MailMessage.CC" />, or <see cref="P:System.Net.Mail.MailMessage.Bcc" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ServicePoint">
