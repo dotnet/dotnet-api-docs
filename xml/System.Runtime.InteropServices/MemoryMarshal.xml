@@ -12,6 +12,7 @@
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
@@ -20,6 +21,7 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Memory" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Memory" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Memory" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -45,6 +47,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -71,17 +74,20 @@
         <summary>Casts a <see cref="T:System.ReadOnlySpan`1" /> of one primitive type, <paramref name="T" />, to a <see langword="ReadOnlySpan&lt;Byte&gt;" />.</summary>
         <returns>A read-only span of type <see cref="T:System.Byte" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. `T` is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `AsBytes` method performs this check at runtime and throws `ArgumentException` if the check fails.
+
+> [!CAUTION]
+> This method provides a raw binary projection over the original span, including over any private instance fields and other implementation details of type `T`. Callers should ensure that their code is resilient to changes in the internal layout of `T`.
 
       ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="T" /> contains references or pointers.</exception>
-        <exception cref="T:System.OverflowException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue" /></exception>
+          <paramref name="T" /> contains managed object references.</exception>
+        <exception cref="T:System.OverflowException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see></exception>
       </Docs>
     </Member>
     <Member MemberName="AsBytes&lt;T&gt;">
@@ -99,6 +105,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -125,17 +132,20 @@
         <summary>Casts a <see cref="T:System.Span`1" /> of one primitive type, <paramref name="T" />, to a <see langword="Span&lt;Byte&gt;" />.</summary>
         <returns>A span of type <see cref="T:System.Byte" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. `T` is checked at runtime in order to preserve type safety.  
+## Remarks
 
-       ]]></format>
+`T` cannot contain managed object references. The `AsBytes` method performs this check at runtime and throws `ArgumentException` if the check fails.
+
+> [!CAUTION]
+> This method provides a raw binary projection over the original span, including over any private instance fields and other implementation details of type `T`. Callers should ensure that their code is resilient to changes in the internal layout of `T`.
+
+      ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="T" /> contains references or pointers.</exception>
-        <exception cref="T:System.OverflowException">The <see cref="P:System.Span`1.Length" /> property of the new <see cref="T:System.Span`1" /> would exceed <see cref="F:System.Int32.MaxValue" /></exception>
+          <paramref name="T" /> contains managed object references.</exception>
+        <exception cref="T:System.OverflowException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see></exception>
       </Docs>
     </Member>
     <Member MemberName="AsMemory&lt;T&gt;">
@@ -153,6 +163,7 @@
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -173,11 +184,12 @@
         <summary>Creates a <see cref="T:System.Memory`1" /> instance from a <see cref="T:System.ReadOnlyMemory`1" />.</summary>
         <returns>A memory block that represents the same memory as the <see cref="T:System.ReadOnlyMemory`1" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-This method must be used with extreme caution. <xref:System.ReadOnlyMemory%601> is used to represent immutable data and other memory that is not meant to be written to. <xref:System.Memory%601> instances created by this method should not be written to. The purpose of this method is to allow variables typed as <xref:System.Memory%601> but only used for reading to store a <xref:System.ReadOnlyMemory%601>. 
+## Remarks
+
+> [!CAUTION]
+> This method must be used with extreme caution. <xref:System.ReadOnlyMemory%601> is used to represent immutable data and other memory that is not meant to be written to. <xref:System.Memory%601> instances created by this method should not be written to. The purpose of this method is to allow variables typed as <xref:System.Memory%601> but only used for reading to store a <xref:System.ReadOnlyMemory%601>.
 
        ]]></format>
         </remarks>
@@ -197,6 +209,7 @@ This method must be used with extreme caution. <xref:System.ReadOnlyMemory%601> 
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -220,7 +233,7 @@ This method must be used with extreme caution. <xref:System.ReadOnlyMemory%601> 
         </TypeParameter>
       </TypeParameters>
       <Parameters>
-        <Parameter Name="span" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="span" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
         <typeparam name="T">The type of the returned reference.</typeparam>
@@ -228,16 +241,18 @@ This method must be used with extreme caution. <xref:System.ReadOnlyMemory%601> 
         <summary>Reinterprets a read-only span of bytes as a read-only reference to the structure of type <paramref name="T" />.</summary>
         <returns>The read-only reference to the structure of type <paramref name="T" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. It is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `AsRef` method performs this check at runtime and throws `ArgumentException` if the check fails.
 
 This method is supported only on platforms that support misaligned memory access or when the memory block is aligned by other means.
 
        ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> contains managed object references.</exception>
       </Docs>
     </Member>
     <Member MemberName="AsRef&lt;T&gt;">
@@ -254,6 +269,7 @@ This method is supported only on platforms that support misaligned memory access
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -271,7 +287,7 @@ This method is supported only on platforms that support misaligned memory access
         </TypeParameter>
       </TypeParameters>
       <Parameters>
-        <Parameter Name="span" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="span" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
         <typeparam name="T">The type of the returned reference.</typeparam>
@@ -279,16 +295,18 @@ This method is supported only on platforms that support misaligned memory access
         <summary>Reinterprets a span of bytes as a reference to the structure of type <paramref name="T" />.</summary>
         <returns>The reference to the structure of type <paramref name="T" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. It is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `AsRef` method performs this check at runtime and throws `ArgumentException` if the check fails.
 
 This method is supported only on platforms that support misaligned memory access or when the memory block is aligned by other means.
 
        ]]></format>
         </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="T" /> contains managed object references.</exception>
       </Docs>
     </Member>
     <Member MemberName="Cast&lt;TFrom,TTo&gt;">
@@ -306,6 +324,7 @@ This method is supported only on platforms that support misaligned memory access
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -340,18 +359,19 @@ This method is supported only on platforms that support misaligned memory access
         <summary>Casts a read-only span of one primitive type to a read-only span of another primitive type.</summary>
         <returns>The converted read-only span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-Neither `TFrom` nor `TTo` can contain pointers or references. `TFrom` and `TTo` are checked at runtime in order to preserve type safety.  
+## Remarks
+
+Neither `TFrom` nor `TTo` can contain managed object references. The `Cast` method performs this check at runtime and throws `ArgumentException` if the check fails.
 
 This method is supported only on platforms that support misaligned memory access or when the memory block is aligned by other means.
 
        ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="TFrom" /> or <paramref name="TTo" /> contains references or pointers.</exception>
+          <paramref name="TFrom" /> or <paramref name="TTo" /> contains managed object references.</exception>
+        <exception cref="T:System.OverflowException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Cast&lt;TFrom,TTo&gt;">
@@ -369,6 +389,7 @@ This method is supported only on platforms that support misaligned memory access
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -403,11 +424,11 @@ This method is supported only on platforms that support misaligned memory access
         <summary>Casts a span of one primitive type to a span of another primitive type.</summary>
         <returns>The converted span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-Neither `TFrom` nor `TTo` can contain pointers or references. `TFrom` and `TTo` are checked at runtime in order to preserve type safety.  
+## Remarks
+
+Neither `TFrom` nor `TTo` can contain managed object references. The `Cast` method performs this check at runtime and throws `ArgumentException` if the check fails.
 
 If the sizes of the two types are different, the cast combines or splits values, which leads to a change in length.
 
@@ -420,11 +441,12 @@ This method is supported only on platforms that support misaligned memory access
        ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="TFrom" /> or <paramref name="TTo" /> contains references or pointers.</exception>
+          <paramref name="TFrom" /> or <paramref name="TTo" /> contains managed object references.</exception>
+        <exception cref="T:System.OverflowException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromPinnedArray&lt;T&gt;">
-      <MemberSignature Language="C#" Value="public static Memory&lt;T&gt; CreateFromPinnedArray&lt;T&gt; (T[]? array, int start, int length);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static Memory&lt;T&gt; CreateFromPinnedArray&lt;T&gt; (T[]? array, int start, int length);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Memory`1&lt;!!T&gt; CreateFromPinnedArray&lt;T&gt;(!!T[] array, int32 start, int32 length) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.MemoryMarshal.CreateFromPinnedArray``1(``0[],System.Int32,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function CreateFromPinnedArray(Of T) (array As T(), start As Integer, length As Integer) As Memory(Of T)" />
@@ -439,6 +461,7 @@ This method is supported only on platforms that support misaligned memory access
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -463,9 +486,9 @@ This method is supported only on platforms that support misaligned memory access
         <summary>Creates a new memory buffer over the portion of the pre-pinned target array beginning at the <paramref name="start" /> index and consisting of <paramref name="length" /> items.</summary>
         <returns>A block of memory over the specified elements of <paramref name="array" />. If <paramref name="array" /> is <see langword="null" />, or if <paramref name="start" /> and <paramref name="length" /> are 0, the method returns a <see cref="T:System.Memory`1" /> instance of <see cref="P:System.Memory`1.Length" /> zero.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 The array must already be pinned before this method is called, and that array must not be unpinned while the <xref:System.Memory%601> buffer that it returns is still in use. Calling this method on an unpinned array could result in memory corruption.
 
@@ -491,6 +514,7 @@ The array must already be pinned before this method is called, and that array mu
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -513,14 +537,14 @@ The array must already be pinned before this method is called, and that array mu
         <summary>Creates a new read-only span over a portion of a regular managed object.</summary>
         <returns>A read-only span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-This method can be useful if part of a managed object represents a fixed array. 
+## Remarks
+
+This method can be useful if part of a managed object represents a fixed array.
 
 > [!WARNING]
-> This method should be used with caution. It is dangerous because the `length` argument is not checked. In addition, the lifetime of the returned span is not validated for safety by span-aware languages.
+> This method should be used with caution. It is dangerous because the `length` argument is not checked. Even though the `ref` is annotated as `scoped`, it will be stored into the returned span, and the lifetime of the returned span will not be validated for safety, even by span-aware languages.
 
        ]]></format>
         </remarks>
@@ -536,12 +560,13 @@ This method can be useful if part of a managed object represents a fixed array.
       <AssemblyInfo>
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
@@ -550,22 +575,22 @@ This method can be useful if part of a managed object represents a fixed array.
         <ReturnType>System.ReadOnlySpan&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="System.Byte*" Index="0" FrameworkAlternate="net-6.0" />
+        <Parameter Name="value" Type="System.Byte*" Index="0" FrameworkAlternate="net-6.0;net-7.0" />
       </Parameters>
       <Docs>
-        <param name="value">The pointer to the null-terminated string of bytes.</param>
-        <summary>Creates a new read-only span for a null-terminated UTF8 string.</summary>
-        <returns>A read-only span representing the specified null-terminated string, or an empty span if the pointer is <see langword="null" />.</returns>
+        <param name="value">The pointer to the null-terminated sequence of bytes.</param>
+        <summary>Creates a new read-only span for a null-terminated sequence of bytes.</summary>
+        <returns>A read-only span representing the specified sequence of bytes, or an empty span if the pointer is <see langword="null" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-The returned span does not include the `null` terminator, nor does it validate the well-formedness of the UTF8 data.
+This method is typically used with byte sequences representing narrow character strings, such as ANSI or UTF-8 strings. The returned span does not include the `null` terminator, nor does this API attempt to intepret the contents of the byte sequence in any form.
 
           ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The string is longer than <see cref="F:System.Int32.MaxValue" />.</exception>
+        <exception cref="T:System.ArgumentException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateReadOnlySpanFromNullTerminated">
@@ -578,12 +603,13 @@ The returned span does not include the `null` terminator, nor does it validate t
       <AssemblyInfo>
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
         </Attribute>
@@ -592,7 +618,7 @@ The returned span does not include the `null` terminator, nor does it validate t
         <ReturnType>System.ReadOnlySpan&lt;System.Char&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="System.Char*" Index="0" FrameworkAlternate="net-6.0" />
+        <Parameter Name="value" Type="System.Char*" Index="0" FrameworkAlternate="net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="value">The pointer to the null-terminated string of characters.</param>
@@ -607,7 +633,7 @@ The returned span does not include the `null` terminator.
 
           ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The string is longer than <see cref="F:System.Int32.MaxValue" />.</exception>
+        <exception cref="T:System.ArgumentException">The <see cref="P:System.ReadOnlySpan`1.Length" /> property of the new <see cref="T:System.ReadOnlySpan`1" /> would exceed <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSpan&lt;T&gt;">
@@ -625,6 +651,7 @@ The returned span does not include the `null` terminator.
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -647,14 +674,14 @@ The returned span does not include the `null` terminator.
         <summary>Creates a new span over a portion of a regular managed object.</summary>
         <returns>A span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-This method can be useful if part of a managed object represents a fixed array. 
+## Remarks
+
+This method can be useful if part of a managed object represents a fixed array.
 
 > [!WARNING]
-> This method should be used with caution. It is dangerous because the `length` argument is not checked. In addition, the lifetime of the returned span is not validated for safety by span-aware languages.
+> This method should be used with caution. It is dangerous because the `length` argument is not checked. Even though the `ref` is annotated as `scoped`, it will be stored into the returned span, and the lifetime of the returned span will not be validated for safety, even by span-aware languages.
 
        ]]></format>
         </remarks>
@@ -671,6 +698,7 @@ This method can be useful if part of a managed object represents a fixed array.
       <AssemblyInfo>
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -679,7 +707,7 @@ This method can be useful if part of a managed object represents a fixed array.
         <ReturnType>System.Byte</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="array" Type="System.Array" Index="0" FrameworkAlternate="net-6.0" />
+        <Parameter Name="array" Type="System.Array" Index="0" FrameworkAlternate="net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="array">The array to analyze.</param>
@@ -713,6 +741,7 @@ The caller must manually reinterpret the returned <em>ref byte</em> as a ref to 
         <AssemblyName>System.Memory</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -724,7 +753,7 @@ The caller must manually reinterpret the returned <em>ref byte</em> as a ref to 
         <TypeParameter Name="T" />
       </TypeParameters>
       <Parameters>
-        <Parameter Name="array" Type="T[]" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="array" Type="T[]" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <typeparam name="T">The type of the array elements.</typeparam>
@@ -759,6 +788,7 @@ This method does not perform array variance checks. The caller must manually per
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -779,9 +809,9 @@ This method does not perform array variance checks. The caller must manually per
         <summary>Returns a reference to the element of the read-only span at index 0.</summary>
         <returns>A reference to the element at index 0.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 If the read-only span is empty, this method returns a reference to the location where the element at index 0 would have been stored. Such a reference may or may not be `null`. The returned reference can be used for pinning, but it must never be dereferenced.
 
@@ -804,6 +834,7 @@ If the read-only span is empty, this method returns a reference to the location 
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -824,9 +855,9 @@ If the read-only span is empty, this method returns a reference to the location 
         <summary>Returns a reference to the element of the span at index 0.</summary>
         <returns>A reference to the element at index 0.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 If the span is empty, this method returns a reference to the location where the element at index 0 would have been stored. Such a reference may or may not be `null`. The returned reference can be used for pinning, but it must never be dereferenced.
 
@@ -849,6 +880,7 @@ If the span is empty, this method returns a reference to the location where the 
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -875,18 +907,21 @@ If the span is empty, this method returns a reference to the location where the 
         <summary>Reads a structure of type <typeparamref name="T" /> out of a read-only span of bytes.</summary>
         <returns>The structure retrieved from the read-only span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. It is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `Read` method performs this check at runtime and throws `ArgumentException` if the check fails.
+
+> [!CAUTION]
+> This method initializes an instance of `T`, including private instance fields and other implementation details, from the raw binary contents of the source span. Callers must ensure that the contents of the source span are well-formed with regard to `T`'s internal invariants.
 
        ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="T" /> contains references or pointers.</exception>
+          <paramref name="T" /> contains managed object references.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="source" /> is smaller than <paramref name="T" />.</exception>
+          <paramref name="source" /> is smaller than <paramref name="T" />'s length in bytes.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToEnumerable&lt;T&gt;">
@@ -904,6 +939,7 @@ If the span is empty, this method returns a reference to the location where the 
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -924,11 +960,11 @@ If the span is empty, this method returns a reference to the location where the 
         <summary>Creates an <see cref="T:System.Collections.Generic.IEnumerable`1" /> view of the given read-only memory buffer.</summary>
         <returns>An enumerable view of <paramref name="memory" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-This method allows a read-only memory buffer to be used in existing APIs that require a parameter of type <xref:System.Collections.Generic.IEnumerable%601>. 
+## Remarks
+
+This method allows a read-only memory buffer to be used in existing APIs that require a parameter of type <xref:System.Collections.Generic.IEnumerable%601>.
 
        ]]></format>
         </remarks>
@@ -949,6 +985,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -971,11 +1008,20 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <summary>Tries to get an array segment from the underlying memory buffer. The return value indicates the success of the operation. </summary>
         <returns>
           <see langword="true" /> if the method call succeeds; <see langword="false" /> otherwise.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+> [!CAUTION]
+> <xref:System.ReadOnlyMemory%601> is used to represent immutable data. <xref:System.ArraySegment%601> instances returned by this method should not be written to, and the wrapped array instance should only be passed to methods which treat the array contents as read-only.
+
+       ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetMemoryManager&lt;T,TManager&gt;">
-      <MemberSignature Language="C#" Value="public static bool TryGetMemoryManager&lt;T,TManager&gt; (ReadOnlyMemory&lt;T&gt; memory, out TManager? manager) where TManager : System.Buffers.MemoryManager&lt;T&gt;;" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static bool TryGetMemoryManager&lt;T,TManager&gt; (ReadOnlyMemory&lt;T&gt; memory, out TManager? manager) where TManager : System.Buffers.MemoryManager&lt;T&gt;;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryGetMemoryManager&lt;T, (class System.Buffers.MemoryManager`1&lt;!!T&gt;) TManager&gt;(valuetype System.ReadOnlyMemory`1&lt;!!T&gt; memory, [out] !!TManager&amp; manager) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.MemoryMarshal.TryGetMemoryManager``2(System.ReadOnlyMemory{``0},``1@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryGetMemoryManager(Of T, TManager) (memory As ReadOnlyMemory(Of T), ByRef manager As TManager) As Boolean" />
@@ -990,6 +1036,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1010,7 +1057,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <Parameter Name="memory" Type="System.ReadOnlyMemory&lt;T&gt;" />
         <Parameter Name="manager" Type="TManager" RefType="out">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1">
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
             </Attribute>
@@ -1029,7 +1076,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
       </Docs>
     </Member>
     <Member MemberName="TryGetMemoryManager&lt;T,TManager&gt;">
-      <MemberSignature Language="C#" Value="public static bool TryGetMemoryManager&lt;T,TManager&gt; (ReadOnlyMemory&lt;T&gt; memory, out TManager? manager, out int start, out int length) where TManager : System.Buffers.MemoryManager&lt;T&gt;;" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static bool TryGetMemoryManager&lt;T,TManager&gt; (ReadOnlyMemory&lt;T&gt; memory, out TManager? manager, out int start, out int length) where TManager : System.Buffers.MemoryManager&lt;T&gt;;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryGetMemoryManager&lt;T, (class System.Buffers.MemoryManager`1&lt;!!T&gt;) TManager&gt;(valuetype System.ReadOnlyMemory`1&lt;!!T&gt; memory, [out] !!TManager&amp; manager, [out] int32&amp; start, [out] int32&amp; length) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.MemoryMarshal.TryGetMemoryManager``2(System.ReadOnlyMemory{``0},``1@,System.Int32@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryGetMemoryManager(Of T, TManager) (memory As ReadOnlyMemory(Of T), ByRef manager As TManager, ByRef start As Integer, ByRef length As Integer) As Boolean" />
@@ -1044,6 +1091,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1064,7 +1112,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <Parameter Name="memory" Type="System.ReadOnlyMemory&lt;T&gt;" />
         <Parameter Name="manager" Type="TManager" RefType="out">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1">
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
             </Attribute>
@@ -1087,7 +1135,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
       </Docs>
     </Member>
     <Member MemberName="TryGetString">
-      <MemberSignature Language="C#" Value="public static bool TryGetString (ReadOnlyMemory&lt;char&gt; memory, out string? text, out int start, out int length);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static bool TryGetString (ReadOnlyMemory&lt;char&gt; memory, out string? text, out int start, out int length);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryGetString(valuetype System.ReadOnlyMemory`1&lt;char&gt; memory, [out] string&amp; text, [out] int32&amp; start, [out] int32&amp; length) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.MemoryMarshal.TryGetString(System.ReadOnlyMemory{System.Char},System.String@,System.Int32@,System.Int32@)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryGetString (memory As ReadOnlyMemory(Of Char), ByRef text As String, ByRef start As Integer, ByRef length As Integer) As Boolean" />
@@ -1102,6 +1150,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1114,7 +1163,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <Parameter Name="memory" Type="System.ReadOnlyMemory&lt;System.Char&gt;" />
         <Parameter Name="text" Type="System.String" RefType="out">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0">
+            <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1">
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
             </Attribute>
@@ -1149,6 +1198,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1178,16 +1228,19 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <returns>
           <see langword="true" /> if the method succeeds in retrieving an instance of the structure; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. It is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `TryRead` method performs this check at runtime and throws `ArgumentException` if the check fails.
+
+> [!CAUTION]
+> This method initializes an instance of `T`, including private instance fields and other implementation details, from the raw binary contents of the source span. Callers must ensure that the contents of the source span are well-formed with regard to `T`'s internal invariants.
 
        ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="T" /> contains references or pointers.</exception>
+          <paramref name="T" /> contains managed object references.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryWrite&lt;T&gt;">
@@ -1205,6 +1258,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1234,16 +1288,19 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <returns>
           <see langword="true" /> if the write operation succeeded; otherwise, <see langword="false" />. The method returns <see langword="false" /> if the span is too small to contain <paramref name="T" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. It is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `TryWrite` method performs this check at runtime and throws `ArgumentException` if the check fails.
+
+> [!CAUTION]
+> This method copies raw binary data from the original span, including any private instance fields and other implementation details of type `T`. Callers should ensure that their code is resilient to changes in the internal layout of `T`.
 
        ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="T" /> contains references or pointers.</exception>
+          <paramref name="T" /> contains managed object references.</exception>
       </Docs>
     </Member>
     <Member MemberName="Write&lt;T&gt;">
@@ -1261,6 +1318,7 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1288,16 +1346,19 @@ This method allows a read-only memory buffer to be used in existing APIs that re
         <param name="value">The structure to be written to the span.</param>
         <summary>Writes a structure of type <paramref name="T" /> into a span of bytes.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
 
-`T` cannot contain pointers or references. It is checked at runtime in order to preserve type safety.  
+## Remarks
+
+`T` cannot contain managed object references. The `Write` method performs this check at runtime and throws `ArgumentException` if the check fails.
+
+> [!CAUTION]
+> This method copies raw binary data from the original span, including any private instance fields and other implementation details of type `T`. Callers should ensure that their code is resilient to changes in the internal layout of `T`.
 
        ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="T" /> contains references or pointers.</exception>
+          <paramref name="T" /> contains managed object references.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="destination" /> is too small to contain <paramref name="value" />.</exception>
       </Docs>
