@@ -24,6 +24,7 @@ class HttpContent_Example
             length = 0;
             return false;
         }
+
         // SerializeToStream* methods are internally used by CopyTo* methods
         // which in turn are used to copy the content to the NetworkStream.
         protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context)
