@@ -25,4 +25,8 @@ Class HttpClient_Example
 		End Try
 	End Function
 ' </Snippet1>		
+
+	Public Shared Sub Main(args as String())
+		Main().Wait()
+	End Sub
 End Class
