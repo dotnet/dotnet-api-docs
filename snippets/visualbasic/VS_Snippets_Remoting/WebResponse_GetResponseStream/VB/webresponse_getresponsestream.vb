@@ -13,12 +13,7 @@ Imports System.Environment
 
 Class WebResponseSnippet
     
-    'Entry point which delegates to C-style main Private Function
-    Public Overloads Shared Sub Main()
-        Main(GetCommandLineArgs())
-    End Sub
-    
-    Overloads Public Shared Sub Main(args() As String)
+    Public Shared Sub Main(args() As String)
         
         If args.Length < 2 Then
             Console.WriteLine(ControlChars.Cr + "Please type the Url as command line parameter")
