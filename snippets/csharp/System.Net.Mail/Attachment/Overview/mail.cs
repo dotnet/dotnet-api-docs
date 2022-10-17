@@ -12,7 +12,6 @@ namespace Examples.SmtpExamples.Sync
 {
     public class CtorExamples
     {
-        //Display the properties on the service point.
 
         // <snippet1>
         public static void CreateTestMessage1(string server, int port)
@@ -26,9 +25,6 @@ namespace Examples.SmtpExamples.Sync
             // Credentials are necessary if the server requires the client
             // to authenticate before it will send email on the client's behalf.
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
-
-            ServicePoint p = client.ServicePoint;
-            Console.WriteLine("Connection lease timeout: {0}", p.ConnectionLeaseTimeout);
             client.Send(message);
         }
         // </snippet1>

@@ -28,10 +28,6 @@ public:
       // Credentials are necessary if the server requires the client 
       // to authenticate before it will send email on the client's behalf.
       client->Credentials = CredentialCache::DefaultNetworkCredentials;
-      
-      //Display the properties on the service point.
-      ServicePoint^ p = client->ServicePoint;
-      Console::WriteLine( L"Connection lease timeout: {0}", p->ConnectionLeaseTimeout );
       client->Send( message );
 	  client->~SmtpClient();
    }
