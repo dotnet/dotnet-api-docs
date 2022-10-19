@@ -58,15 +58,7 @@
   
  Read and write operations can be performed simultaneously on an instance of the <xref:System.Net.Sockets.NetworkStream> class without the need for synchronization. As long as there is one unique thread for the write operations and one unique thread for the read operations, there will be no cross-interference between read and write threads and no synchronization is required.  
   
-   
-  
-## Examples  
- The following code example demonstrates how to create a <xref:System.Net.Sockets.NetworkStream> from a connected <xref:System.Net.Sockets.SocketType.Stream><xref:System.Net.Sockets.Socket> and perform basic synchronous blocking I/O.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NetworkStream_Synch_SendAndReceive/CPP/source.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/NetworkStream/Overview/source.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/NetworkStream_Synch_SendAndReceive/VB/source.vb" id="Snippet2":::  
-  
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Net.Sockets.TcpClient" />
@@ -983,24 +975,20 @@ The Close method frees both unmanaged and managed resources associated with the 
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets a value that indicates whether data is available on the <see cref="T:System.Net.Sockets.NetworkStream" /> to be read.</summary>
+        <summary>Gets a value that indicates whether data is available on the <see cref="T:System.Net.Sockets.NetworkStream" /> to be immediately read.</summary>
         <value>
           <see langword="true" /> if data is available on the stream to be read; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Use the <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> property to determine if data is ready to be read. If <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> is `true`, a call to <xref:System.Net.Sockets.NetworkStream.Read%2A> returns immediately. If the remote host shuts down or closes the connection, <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> may throw a <xref:System.Net.Sockets.SocketException>.  
-  
-   
-  
-## Examples  
- The following code example reads from the <xref:System.Net.Sockets.NetworkStream> as long as data is available.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NetworkStream_Synch_SendAndReceive/CPP/source.cpp" id="Snippet4":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/NetworkStream/Overview/source.cs" id="Snippet4":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/NetworkStream_Synch_SendAndReceive/VB/source.vb" id="Snippet4":::  
-  
+ Use the <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> property to determine if data is queued to be immediately read. 
+ If <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> is `true`, a call to <xref:System.Net.Sockets.NetworkStream.Read%2A> returns immediately.
+ If the remote host shuts down or closes the connection, <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> may throw a <xref:System.Net.Sockets.SocketException>.
+
+> [!NOTE]
+> The <xref:System.Net.Sockets.NetworkStream.DataAvailable%2A> property cannot be used to indicate end of the transmission.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.NetworkStream" /> is closed.</exception>
@@ -1557,7 +1545,7 @@ There is a failure reading from the network.</exception>
   
 > [!NOTE]
 >  If you receive an <xref:System.IO.IOException>, check the <xref:System.Exception.InnerException> property to determine if it was caused by a <xref:System.Net.Sockets.SocketException>. If so, use the <xref:System.Net.Sockets.SocketException.ErrorCode> property to obtain the specific error code and refer to the [Windows Sockets version 2 API error code](/windows/desktop/winsock/windows-sockets-error-codes-2) documentation for a detailed description of the error.  
-  
+   
    
   
 ## Examples  
