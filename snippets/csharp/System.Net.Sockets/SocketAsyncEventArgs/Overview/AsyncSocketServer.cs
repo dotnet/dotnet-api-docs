@@ -18,26 +18,6 @@ using System.Threading;
 
 namespace AsyncSocketSample
 {
-    // This class is designed for use as the object to be assigned to the SocketAsyncEventArgs.UserToken property.
-    //
-    class AsyncUserToken
-    {
-        Socket m_socket;
-
-        public AsyncUserToken() : this(null) { }
-
-        public AsyncUserToken(Socket socket)
-        {
-            m_socket = socket;
-        }
-
-        public Socket Socket
-        {
-            get { return m_socket; }
-            set { m_socket = value; }
-        }
-    }
-
     //<Snippet1>
     // This class creates a single large buffer which can be divided up
     // and assigned to SocketAsyncEventArgs objects for use with each
@@ -207,7 +187,6 @@ namespace AsyncSocketSample
                 //Pre-allocate a set of reusable SocketAsyncEventArgs
                 readWriteEventArg = new SocketAsyncEventArgs();
                 readWriteEventArg.Completed += new EventHandler<SocketAsyncEventArgs>(IO_Completed);
-                readWriteEventArg.UserToken = new AsyncUserToken();
 
                 // assign a byte buffer from the buffer pool to the SocketAsyncEventArg object
                 m_bufferManager.SetBuffer(readWriteEventArg);
@@ -257,6 +236,7 @@ namespace AsyncSocketSample
                 willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
                 if (!willRaiseEvent)
                 {
+                    Console.WriteLine(">>>>>>>> sync");
                     ProcessAccept(acceptEventArg);
                 }
             }
@@ -282,7 +262,7 @@ namespace AsyncSocketSample
             // Get the socket for the accepted client connection and put it into the
             //ReadEventArg object user token
             SocketAsyncEventArgs readEventArgs = m_readWritePool.Pop();
-            ((AsyncUserToken)readEventArgs.UserToken).Socket = e.AcceptSocket;
+            readEventArgs.UserToken = e.AcceptSocket;
 
             // As soon as the client is connected, post a receive to the connection
             bool willRaiseEvent = e.AcceptSocket.ReceiveAsync(readEventArgs);
@@ -318,7 +298,6 @@ namespace AsyncSocketSample
         private void ProcessReceive(SocketAsyncEventArgs e)
         {
             // check if the remote host closed the connection
-            AsyncUserToken token = (AsyncUserToken)e.UserToken;
             if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
             {
                 //increment the count of the total bytes receive by the server
@@ -327,7 +306,8 @@ namespace AsyncSocketSample
 
                 //echo the data received back to the client
                 e.SetBuffer(e.Offset, e.BytesTransferred);
-                bool willRaiseEvent = token.Socket.SendAsync(e);
+                Socket socket = (Socket)e.UserToken;
+                bool willRaiseEvent = socket.SendAsync(e);
                 if (!willRaiseEvent)
                 {
                     ProcessSend(e);
@@ -349,9 +329,9 @@ namespace AsyncSocketSample
             if (e.SocketError == SocketError.Success)
             {
                 // done echoing data back to the client
-                AsyncUserToken token = (AsyncUserToken)e.UserToken;
+                Socket socket = (Socket)e.UserToken;
                 // read the next block of data send from the client
-                bool willRaiseEvent = token.Socket.ReceiveAsync(e);
+                bool willRaiseEvent = socket.ReceiveAsync(e);
                 if (!willRaiseEvent)
                 {
                     ProcessReceive(e);
@@ -365,16 +345,16 @@ namespace AsyncSocketSample
 
         private void CloseClientSocket(SocketAsyncEventArgs e)
         {
-            AsyncUserToken token = e.UserToken as AsyncUserToken;
+            Socket socket = (Socket)e.UserToken;
 
             // close the socket associated with the client
             try
             {
-                token.Socket.Shutdown(SocketShutdown.Send);
+                socket.Shutdown(SocketShutdown.Send);
             }
             // throws if client process has already closed
             catch (Exception) { }
-            token.Socket.Close();
+            socket.Close();
 
             // decrement the counter keeping track of the total number of clients connected to the server
             Interlocked.Decrement(ref m_numConnectedSockets);
