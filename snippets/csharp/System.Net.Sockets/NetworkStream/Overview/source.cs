@@ -59,7 +59,6 @@ public class NetworkStream_Sync_Send_Receive
 
             // Examples for Read.
             //<Snippet4>
-
             byte[] myReadBuffer = new byte[1024];
             StringBuilder myCompleteMessage = new StringBuilder();
             int numberOfBytesRead = myNetworkStream.Read(myReadBuffer, 0, myReadBuffer.Length);
