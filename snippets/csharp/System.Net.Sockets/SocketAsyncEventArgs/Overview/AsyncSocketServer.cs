@@ -236,7 +236,6 @@ namespace AsyncSocketSample
                 willRaiseEvent = listenSocket.AcceptAsync(acceptEventArg);
                 if (!willRaiseEvent)
                 {
-                    Console.WriteLine(">>>>>>>> sync");
                     ProcessAccept(acceptEventArg);
                 }
             }
