@@ -27,20 +27,8 @@ public class NetworkStream_Sync_Send_Receive
         {
             mySocket.Connect(myIpEndPoint);
 
-            //<Snippet2>
-            // Examples for constructors that do not specify file permission.
             // Create the NetworkStream for communicating with the remote host.
-            NetworkStream myNetworkStream;
-
-            if (networkStreamOwnsSocket)
-            {
-                myNetworkStream = new NetworkStream(mySocket, true);
-            }
-            else
-            {
-                myNetworkStream = new NetworkStream(mySocket);
-            }
-            //</Snippet2>
+            NetworkStream myNetworkStream = new NetworkStream(mySocket, networkStreamOwnsSocket);
 
             //<Snippet3>
             // Examples for CanWrite, and CanWrite
