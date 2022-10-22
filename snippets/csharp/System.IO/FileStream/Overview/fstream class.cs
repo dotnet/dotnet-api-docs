@@ -35,9 +35,10 @@ class Test
         {
             byte[] b = new byte[1024];
             UTF8Encoding temp = new UTF8Encoding(true);
-            while (fs.Read(b,0,b.Length) > 0)
+            int readLen;
+            while ((readLen = fs.Read(b,0,b.Length)) > 0)
             {
-                Console.WriteLine(temp.GetString(b));
+                Console.WriteLine(temp.GetString(b,0,readLen));
             }
         }
     }
