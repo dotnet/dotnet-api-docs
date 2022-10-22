@@ -16,12 +16,12 @@ Public Class Test
             ' requested URI contains a query.
             client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)")
             
-            Dim data As Stream = client.OpenRead(args(0))
-            Dim reader As New StreamReader(data)
+            Using data As Stream = client.OpenRead(args(0))
+            Using reader As New StreamReader(data)
             Dim s As String = reader.ReadToEnd()
             Console.WriteLine(s)
-            data.Close()
             reader.Close()
+            data.Close()                    
         End Using
     End Sub
 End Class
