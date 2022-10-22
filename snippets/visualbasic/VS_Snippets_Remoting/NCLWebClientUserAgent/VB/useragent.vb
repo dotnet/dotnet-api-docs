@@ -17,11 +17,13 @@ Public Class Test
             client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)")
             
             Using data As Stream = client.OpenRead(args(0))
-            Using reader As New StreamReader(data)
-            Dim s As String = reader.ReadToEnd()
-            Console.WriteLine(s)
-            reader.Close()
-            data.Close()                    
+                Using reader As New StreamReader(data)
+                    Dim s As String = reader.ReadToEnd()
+                    Console.WriteLine(s)
+                    reader.Close()
+                End Using
+                data.Close()
+            End Using
         End Using
     End Sub
 End Class
