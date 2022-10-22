@@ -9,7 +9,7 @@ public class Example
    {
       // Get the current NumberFormatInfo object to build the regular 
       // expression pattern dynamically.
-      NumberFormatInfo nfi = NumberFormatInfo.CurrentInfo;
+      NumberFormatInfo nfi = CultureInfo.GetCultureInfo("en-US").NumberFormat;
 
       // Define the regular expression pattern.
       string pattern; 
@@ -26,6 +26,9 @@ public class Example
       pattern += @"\d{";
       // Determine the number of fractional digits in currency values.
       pattern += nfi.CurrencyDecimalDigits.ToString() + "}?){1}$";
+      
+        Console.WriteLine("Pattern is {0}", pattern);
+        Console.WriteLine();
       
       Regex rgx = new Regex(pattern);
 
@@ -45,6 +48,8 @@ public class Example
    }
 }
 // The example displays the following output:
+//       Pattern is ^\s*[\+-]?\s?\$?\s?(\d*\.?\d{2}?){1}$
+//
 //       -42 is a currency value.
 //       19.99 is a currency value.
 //       0.001 is not a currency value.
