@@ -23,9 +23,9 @@ public class Example
       // Add the decimal separator.
       pattern += Regex.Escape(nfi.CurrencyDecimalSeparator) + "?";
       // Add the fractional digits.
-      pattern += @"\d{";
+      pattern += @"(\d{";
       // Determine the number of fractional digits in currency values.
-      pattern += nfi.CurrencyDecimalDigits.ToString() + "}?){1}$";
+      pattern += nfi.CurrencyDecimalDigits.ToString() + "})?){1}$";
       
         Console.WriteLine("Pattern is {0}", pattern);
         Console.WriteLine();
@@ -48,7 +48,7 @@ public class Example
    }
 }
 // The example displays the following output:
-//       Pattern is ^\s*[\+-]?\s?\$?\s?(\d*\.?\d{2}?){1}$
+//       Pattern is ^\s*[\+-]?\s?\$?\s?(\d*\.?(\d{2})?){1}$
 //
 //       -42 is a currency value.
 //       19.99 is a currency value.
