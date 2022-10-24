@@ -22,8 +22,6 @@ public class Test
         using StreamReader reader = new StreamReader(data);
         string s = reader.ReadToEnd();
         Console.WriteLine(s);
-        data.Close();
-        reader.Close();
     }
 }
 //</Snippet1>
