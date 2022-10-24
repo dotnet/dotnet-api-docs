@@ -66,12 +66,14 @@ namespace NCLWebClientAsync
         }
         //</Snippet4>
 
+        //<Snippet44>
         //<Snippet5>
         private static void UploadFileCallback2(Object sender, UploadFileCompletedEventArgs e)
         {
             string reply = System.Text.Encoding.UTF8.GetString(e.Result);
             Console.WriteLine(reply);
         }
+        //</Snippet5>
         
         private static void UploadProgressCallback2(object sender, UploadProgressChangedEventArgs e)
         {
@@ -82,7 +84,7 @@ namespace NCLWebClientAsync
                 e.TotalBytesToSend,
                 e.ProgressPercentage);
         }        
-        //</Snippet5>
+        //</Snippet44>
 
         //<Snippet6>
         // Sample call: UploadFileInBackground("http://www.contoso.com/fileUpload.aspx", "data.txt")
