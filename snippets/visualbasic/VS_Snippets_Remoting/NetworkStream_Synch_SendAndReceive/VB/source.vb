@@ -13,7 +13,6 @@ Public Class NetworkStream_Sync_Send_Receive
    
    Public Shared Sub MySample(networkStreamOwnsSocket As Boolean)
       
-      '<Snippet1> 
       ' This should be the classwide example.
       ' Create a socket and connect with a remote host.
       Dim myIpHostEntry As IPHostEntry = Dns.GetHostEntry("www.contoso.com")
@@ -23,7 +22,6 @@ Public Class NetworkStream_Sync_Send_Receive
       Try
          mySocket.Connect(myIpEndPoint)
          
-         '<Snippet2>  
          ' Examples for constructors that do not specify file permission.
          ' Create the NetworkStream for communicating with the remote host.
          Dim myNetworkStream As NetworkStream
@@ -33,7 +31,6 @@ Public Class NetworkStream_Sync_Send_Receive
          Else
             myNetworkStream = New NetworkStream(mySocket)
          End If
-         '</Snippet2>           
 
          '<Snippet3>  
          ' Examples for CanWrite, and CanWrite  
@@ -48,7 +45,6 @@ Public Class NetworkStream_Sync_Send_Receive
          
          '</Snippet3>
 
-         '<Snippet4>   
          ' Examples for CanRead, Read, and DataAvailable.
          ' Check to see if this NetworkStream is readable.
          If myNetworkStream.CanRead Then
@@ -67,8 +63,6 @@ Public Class NetworkStream_Sync_Send_Receive
          Else
             Console.WriteLine("Sorry.  You cannot read from this NetworkStream.")
          End If
-         
-         '</Snippet4>
 
          '<Snippet5>  
          ' Example for closing the NetworkStream.
@@ -86,8 +80,6 @@ Public Class NetworkStream_Sync_Send_Receive
       Main(System.Environment.GetCommandLineArgs())
    End Sub
    
-   
-   '</Snippet1>
    Overloads Public Shared Sub Main(args() As [String])
       If args(0) = "yes" Then
          NetworkStream_Sync_Send_Receive.MySample(True)
