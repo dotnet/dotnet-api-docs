@@ -20,9 +20,7 @@ Public Class Test
                 Using reader As New StreamReader(data)
                     Dim s As String = reader.ReadToEnd()
                     Console.WriteLine(s)
-                    reader.Close()
                 End Using
-                data.Close()
             End Using
         End Using
     End Sub
