@@ -1,5 +1,6 @@
 //<Snippet1>
 using System;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace Aes_Example;
