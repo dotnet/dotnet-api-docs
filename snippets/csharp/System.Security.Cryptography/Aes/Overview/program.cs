@@ -44,7 +44,9 @@ public static class AesExample
         using var swEncrypt = new StreamWriter(csEncrypt);
         //Write all data to the stream.
         swEncrypt.Write(plainText);
-        
+        swEncrypt.Flush();
+        csEncrypt.FlushFinalBlock();
+
         
         var encrypted = msEncrypt.ToArray();
 
