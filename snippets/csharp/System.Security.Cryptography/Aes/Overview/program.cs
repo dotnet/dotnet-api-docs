@@ -14,9 +14,9 @@ public static class AesExample
         // Create a new instance of the Aes
         // class.  This generates a new key and initialization
         // vector (IV).
-        using var myAes = Aes.Create();
+        using Aes myAes = Aes.Create();
         // Encrypt the string to an array of bytes.
-        var encrypted = EncryptStringToBytes(original, myAes.Key, myAes.IV);
+        byte[] encrypted = EncryptStringToBytes(original, myAes.Key, myAes.IV);
 
         // Decrypt the bytes to a string.
         var roundtrip = DecryptStringFromBytes(encrypted, myAes.Key, myAes.IV);
