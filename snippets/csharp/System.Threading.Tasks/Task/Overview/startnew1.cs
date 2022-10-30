@@ -4,19 +4,18 @@ using System.Threading.Tasks;
 
 public class Example
 {
-   public static void Main()
-   {
-      Task t = Task.Factory.StartNew( () => {
-                                  // Just loop.
-                                  int ctr = 0;
-                                  for (ctr = 0; ctr <= 1000000; ctr++)
-                                  {}
-                                  Console.WriteLine("Finished {0} loop iterations",
-                                                    ctr);
-                               } );
-      t.Wait();
-   }
+    public static async Task Main()
+    {
+        await Task.Factory.StartNew(() =>
+        {
+            // Just loop.
+            int counter = 0;
+            for (counter = 0; counter <= 1000000; counter++)
+            { }
+            Console.WriteLine("Finished {0} loop iterations", counter);
+        });
+    }
 }
-// The example displays the following output:
-//        Finished 1000001 loop iterations
+// This example displays the following output:
+//     Finished 1000001 loop iterations
 // </Snippet7>
