@@ -52,7 +52,6 @@ namespace newTcpClient
         }
         // </Snippet8>
 
-        // <Snippet7>
         public static ManualResetEvent connectDone =
             new ManualResetEvent(false);
 
@@ -62,7 +61,6 @@ namespace newTcpClient
             TcpClient t = (TcpClient)ar.AsyncState;
             t.EndConnect(ar);
         }
-        // </Snippet7>
 
         public static void DoBeginConnect1(string host, int port)
         {
