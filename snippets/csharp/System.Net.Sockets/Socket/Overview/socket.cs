@@ -58,7 +58,7 @@ Connection: Close
             // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
             int charCount = Encoding.ASCII.GetChars(responseBytes, 0, byteCount, responseChars, 0);
 
-            // Print the contents of the buffer 'responseChars' to Console.Out
+            // Print the contents of the 'responseChars' buffer to Console.Out
             Console.Out.Write(responseChars, 0, charCount);
         }
 
@@ -99,7 +99,7 @@ Connection: Close
             // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
             int charCount = Encoding.ASCII.GetChars(responseBytes, 0, byteCount, responseChars, 0);
 
-            // Print the contents of the buffer 'responseChars' to Console.Out
+            // Print the contents of the 'responseChars' buffer to Console.Out
             await Console.Out.WriteAsync(responseChars.AsMemory(0, charCount), cancellationToken);
         }
 
