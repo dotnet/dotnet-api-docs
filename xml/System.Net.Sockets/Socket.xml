@@ -2149,8 +2149,8 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <param name="size">The number of bytes to receive.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
         <param name="socket_flags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" /> that represents the source of the data.</param>
-        <param name="remote_end">An <see cref="T:System.Net.EndPoint" /> that represents the source of the data.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on synchronous receive.</param>
+        <param name="remote_end">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on synchronous receive.</param>
         <param name="callback">The <see cref="T:System.AsyncCallback" /> delegate.</param>
         <param name="state">An object that contains state information for this request.</param>
         <summary>Begins to asynchronously receive data from a specified network device.</summary>
@@ -2170,7 +2170,9 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
  To guarantee that the remote host endpoint is always returned, an application should explicitly bind the <xref:System.Net.Sockets.Socket> to a local endpoint using the <xref:System.Net.Sockets.Socket.Bind%2A> method and then call the <xref:System.Net.Sockets.Socket.SetSocketOption%2A> method with the `optionLevel` parameter set to <xref:System.Net.Sockets.SocketOptionLevel.IP> or <xref:System.Net.Sockets.SocketOptionLevel.IPv6> as appropriate, the `optionName` parameter set to <xref:System.Net.Sockets.SocketOptionName.PacketInformation>, and the `optionValue` parameter to enable this option before calling the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method. Otherwise, it is possible for the remote host endpoint to not be returned when the sender has sent a number of datagrams before the receiver has called the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method.
 
- Although <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> / <xref:System.Net.Sockets.Socket.BeginConnect%2A> method or accept an incoming connection request by calling the <xref:System.Net.Sockets.Socket.Accept%2A> or <xref:System.Net.Sockets.Socket.BeginAccept%2A> method. If you call the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method before establishing or accepting a connection, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method. In either of these cases, the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method will ignore the `remoteEP` parameter and only receive data from the connected or default remote host.
+ Although <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> / <xref:System.Net.Sockets.Socket.BeginConnect%2A> method or accept an incoming connection request by calling the <xref:System.Net.Sockets.Socket.Accept%2A> or <xref:System.Net.Sockets.Socket.BeginAccept%2A> method. If you call the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method before establishing or accepting a connection, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> method.
+
+ The `remoteEp` parameter
 
  With connection-oriented sockets, <xref:System.Net.Sockets.Socket.BeginReceiveFrom%2A> will read as much data as is available up to the number of bytes specified by the `size` parameter.
 
@@ -2280,7 +2282,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <param name="offset">The zero-based position in the <paramref name="buffer" /> parameter at which to store the data.</param>
         <param name="size">The number of bytes to receive.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" /> that represents the source of the data.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on synchronous receive.</param>
         <param name="callback">The <see cref="T:System.AsyncCallback" /> delegate.</param>
         <param name="state">An object that contains state information for this request.</param>
         <summary>Begins to asynchronously receive the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint and packet information.</summary>
@@ -8957,7 +8959,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
       </Parameters>
       <Docs>
         <param name="buffer">An array of type <see cref="T:System.Byte" /> that is the storage location for received data.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <summary>Receives a datagram into the data buffer and stores the endpoint.</summary>
         <returns>The number of bytes received.</returns>
         <remarks>
@@ -8975,7 +8977,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
 
  If no data is available for reading, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will block until data is available. If you are in non-blocking mode, and there is no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.
 
- Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. In either of these cases, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will ignore the `remoteEP` parameter and only receive data from the connected or default remote host.
+ Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method.
 
  With connection-oriented sockets, <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will read as much data as is available up to the size of `buffer`. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been received, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and return zero bytes.
 
@@ -9046,7 +9048,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
       </Parameters>
       <Docs>
         <param name="buffer">A span of bytes that is the storage location for received data.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <summary>Receives a datagram into the data buffer and stores the endpoint.</summary>
         <returns>The number of bytes received.</returns>
         <remarks>To be added.</remarks>
@@ -9100,7 +9102,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
       <Docs>
         <param name="buffer">An array of type <see cref="T:System.Byte" /> that is the storage location for the received data.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <summary>Receives a datagram into the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint.</summary>
         <returns>The number of bytes received.</returns>
         <remarks>
@@ -9118,7 +9120,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
 
  If no data is available for reading, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will block until data is available. If you are in non-blocking mode, and there is no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.
 
- Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. In either of these cases, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will ignore the `remoteEP` parameter and only receive data from the connected or default remote host.
+ Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method.
 
  With connection-oriented sockets, <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will read as much data as is available up to the size of `buffer`. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been Received, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and return zero bytes.
 
@@ -9192,7 +9194,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
       <Docs>
         <param name="buffer">A span of bytes that is the storage location for received data.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <summary>Receives a datagram into the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint.</summary>
         <returns>The number of bytes received.</returns>
         <remarks>To be added.</remarks>
@@ -9254,7 +9256,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <param name="buffer">An array of type <see cref="T:System.Byte" /> that is the storage location for received data.</param>
         <param name="size">The number of bytes to receive.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <summary>Receives the specified number of bytes into the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint.</summary>
         <returns>The number of bytes received.</returns>
         <remarks>
@@ -9269,7 +9271,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
 
  If no data is available for reading, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will block until data is available. If you are in non-blocking mode, and there is no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.
 
- Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. In either of these cases, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will ignore the `remoteEP` parameter and only receive data from the connected or default remote host.
+ Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method.
 
  With connection-oriented sockets, <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will read as much data as is available up to the number of bytes specified by the `size` parameter. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been received, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and return zero bytes.
 
@@ -9373,7 +9375,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <param name="offset">The position in the <paramref name="buffer" /> parameter to store the received data.</param>
         <param name="size">The number of bytes to receive.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <summary>Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint.</summary>
         <returns>The number of bytes received.</returns>
         <remarks>
@@ -9386,7 +9388,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
 
  If no data is available for reading, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will block until data is available. If you are in non-blocking mode, and there is no data available in the protocol stack buffer, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and throw a <xref:System.Net.Sockets.SocketException>. You can use the <xref:System.Net.Sockets.Socket.Available%2A> property to determine if data is available for reading. When <xref:System.Net.Sockets.Socket.Available%2A> is non-zero, retry the receive operation.
 
- Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method. In either of these cases, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will ignore the `remoteEP` parameter and only receive data from the connected or default remote host.
+ Although <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> is intended for connectionless protocols, you can use a connection-oriented protocol as well. If you choose to do so, you must first either establish a remote host connection by calling the <xref:System.Net.Sockets.Socket.Connect%2A> method or accept an incoming remote host connection by calling the <xref:System.Net.Sockets.Socket.Accept%2A> method. If you do not establish or accept a connection before calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method, you will get a <xref:System.Net.Sockets.SocketException>. You can also establish a default remote host for a connectionless protocol prior to calling the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method.
 
  With connection-oriented sockets, <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> will read as much data as is available up to the amount of bytes specified by the `size` parameter. If the remote host shuts down the <xref:System.Net.Sockets.Socket> connection with the <xref:System.Net.Sockets.Socket.Shutdown%2A> method, and all available data has been Received, the <xref:System.Net.Sockets.Socket.ReceiveFrom%2A> method will complete immediately and return zero bytes.
 
@@ -9501,7 +9503,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
 ## Remarks
  The <xref:System.Net.Sockets.Socket.ReceiveFromAsync%2A> method is used primarily to receive data on a connectionless socket. The socket's local address must be known.
 
- The caller must set the <xref:System.Net.Sockets.SocketAsyncEventArgs.RemoteEndPoint%2A?displayProperty=nameWithType> property to the <xref:System.Net.IPEndPoint> of the remote host from which the data is to be received.
+ The caller must set the <xref:System.Net.Sockets.SocketAsyncEventArgs.RemoteEndPoint%2A?displayProperty=nameWithType> property to an <xref:System.Net.EndPoint> of the same type as the endpoint of the remote host. The property will be updated on successful receive to the actual remote endpoint.
 
  The <xref:System.Net.Sockets.SocketAsyncEventArgs.SocketFlags%2A?displayProperty=nameWithType> property on the `e` parameter provides the Window Sockets service provider with additional information about the read request. For more information about how to use this parameter, see <xref:System.Net.Sockets.SocketFlags?displayProperty=nameWithType>.
 
@@ -9725,7 +9727,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
       <Docs>
         <param name="buffer">An <see cref="T:System.Span`1" /> of type <see cref="T:System.Byte" /> that is the storage location for received data.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <param name="ipPacketInformation">An <see cref="T:System.Net.Sockets.IPPacketInformation" /> holding address and interface information.</param>
         <summary>Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <paramref name="socketFlags" />, and stores the endpoint and packet information.</summary>
         <returns>The number of bytes received.</returns>
@@ -9791,7 +9793,7 @@ You must call the Bind method before performing this operation.</exception>
         <param name="offset">The position in the <paramref name="buffer" /> parameter to store the received data.</param>
         <param name="size">The number of bytes to receive.</param>
         <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
-        <param name="remoteEP">An <see cref="T:System.Net.EndPoint" />, passed by reference, that represents the remote server.</param>
+        <param name="remoteEP">A reference to an <see cref="T:System.Net.EndPoint" /> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
         <param name="ipPacketInformation">An <see cref="T:System.Net.Sockets.IPPacketInformation" /> holding address and interface information.</param>
         <summary>Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint and packet information.</summary>
         <returns>The number of bytes received.</returns>
@@ -9918,7 +9920,7 @@ You must call the Bind method before performing this operation.</exception>
 ## Remarks
  The <xref:System.Net.Sockets.Socket.ReceiveMessageFromAsync%2A> method is used primarily to receive message data on a connectionless socket. The socket's local address must be known. This method can only be used with datagram and raw sockets. The socket must be initialized with the socket type set to <xref:System.Net.Sockets.SocketType.Dgram> or <xref:System.Net.Sockets.SocketType.Raw> before calling this method. This can be done when the socket is constructed using <xref:System.Net.Sockets.Socket.%23ctor%2A>.
 
- The caller must set the <xref:System.Net.Sockets.SocketAsyncEventArgs.RemoteEndPoint%2A?displayProperty=nameWithType> property to the <xref:System.Net.IPEndPoint> of the remote host from which the data is to be received.
+ The caller must set the <xref:System.Net.Sockets.SocketAsyncEventArgs.RemoteEndPoint%2A?displayProperty=nameWithType> property to an <xref:System.Net.EndPoint> of the same type as the endpoint of the remote host. The property will be updated on successful receive to the actual remote endpoint.
 
  The following properties and events on the <xref:System.Net.Sockets.SocketAsyncEventArgs?displayProperty=nameWithType> object are required to successfully call this method:
 
