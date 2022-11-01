@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Policy;
 
-class ADSetup
+class ADSetupSnippet
 {
     public static void Main()
     {

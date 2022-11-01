@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Policy;
 
-class Test {
+class CreateDomainSnippet1 {
 
    public static void Main() {
       // <Snippet1>
