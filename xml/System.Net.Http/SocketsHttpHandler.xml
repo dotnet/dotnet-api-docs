@@ -180,7 +180,17 @@ These configuration options are not available starting with .NET 5.
       <Docs>
         <summary>Gets or sets the type of decompression method used by the handler for automatic decompression of the HTTP content response.</summary>
         <value>The type of decompression method used by the handler for automatic decompression of the HTTP content response.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Automatic decompression works only on the top most compression. So if the content is compressed multiple times, only the last compression will be decompressed.
+ For example, for a response with `Content-Encoding: gzip, br` header that contains content first compressed with gzip and then with Brotli, the content will only be decompressed using Brotli, leaving the still gzipped content in the <xref:System.Net.Http.HttpResponseMessage.Content>.
+
+ Setting automatic decompression to anything other than <xref:System.Net.DecompressionMethods.None> will result in adding `Accept-Encoding` header with the set values into every outgoing <xref:System.Net.Http.HttpRequestMessage>.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ConnectCallback">
@@ -608,7 +618,18 @@ Timeout must be greater than or equal to 1 second. Set to <xref:System.Threading
       <Docs>
         <summary>Gets or sets the maximum number of simultaneous TCP connections allowed to a single server.</summary>
         <value>The maximum number of simultaneous TCP connections allowed to a single server.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+
+In this context, server means a unique combination of
+
+- IDN host name (as used in the request URI)
+- Port
+- Value of the Host HTTP header (if present, e.g. when HTTPS is used)
+- URI of the HTTP Proxy (if proxy is used).
+
+         ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxResponseDrainSize">

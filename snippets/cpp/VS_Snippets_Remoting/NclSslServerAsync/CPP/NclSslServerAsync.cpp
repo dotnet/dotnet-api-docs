@@ -236,7 +236,7 @@ public:
       X509Certificate^ serverCertificate = X509Certificate::CreateFromCertFile( args[ 1 ] );
       
       // Create a TCP/IP (IPv4) socket and listen for incoming connections.
-      TcpListener^ listener = gcnew TcpListener( IPAddress::Any,8080 );
+      TcpListener^ listener = gcnew TcpListener( IPAddress::Any,5000 );
       listener->Start();
       while ( true )
       {

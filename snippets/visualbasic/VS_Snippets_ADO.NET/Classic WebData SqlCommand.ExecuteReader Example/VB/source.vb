@@ -21,9 +21,14 @@ Module Module1
 
             Dim command As New SqlCommand(queryString, connection)
             Dim reader As SqlDataReader = command.ExecuteReader()
-            While reader.Read()
-                Console.WriteLine("{0}", reader(0))
-            End While
+            Try
+                While reader.Read()
+                    Console.WriteLine("{0}", reader(0))
+                End While
+            Finally
+                ' Always call Close when done reading.
+                reader.Close()
+            End Try
         End Using
     End Sub
     ' </Snippet1>

@@ -330,7 +330,7 @@
  The use of the Null cipher is required when the encryption policy is set to <xref:System.Net.Security.EncryptionPolicy.NoEncryption?displayProperty=nameWithType>.  
   
 > [!NOTE]
->  The Framework caches SSL sessions as they are created and attempts to reuse a cached session for a new request, if possible. When attempting to reuse an SSL session, the Framework uses the first element of <xref:System.Net.HttpWebRequest.ClientCertificates%2A> (if there is one), or tries to reuse an anonymous sessions if <xref:System.Net.HttpWebRequest.ClientCertificates%2A> is empty.  
+>  .NET caches SSL sessions as they are created and attempts to reuse a cached session for subsequent requests, if possible. When attempting to reuse an SSL session, the Framework uses the first element of the <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection> provided during authentication (if there is one), or tries to reuse an anonymous sessions if the certificate collection is empty.
   
 > [!NOTE]
 >  Client certificates are not supported in the SSL version 2 protocol.  
@@ -425,8 +425,7 @@
  The use of the Null cipher is required when the encryption policy is set to <xref:System.Net.Security.EncryptionPolicy.NoEncryption?displayProperty=nameWithType>.  
   
 > [!NOTE]
->  The Framework caches SSL sessions as they are created and attempts to reuse a cached session for a new request, if possible. When attempting to reuse an SSL session, the Framework uses the first element of P:System.Net.HttpWebRequest.ClientCertificates (if there is one), or tries to reuse an anonymous sessions if P:System.Net.HttpWebRequest.ClientCertificates is empty.  
-  
+>  .NET caches SSL sessions as they are created and attempts to reuse a cached session for subsequent requests, if possible. When attempting to reuse an SSL session, the Framework uses the first element of the <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection> provided during authentication (if there is one), or tries to reuse an anonymous sessions if the certificate collection is empty.
    
   
 ## Examples  
@@ -2789,8 +2788,8 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.  
+## Remarks
+ This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize> method, if it has been overridden. `Dispose()` invokes this method with the `disposing` parameter set to `true`. `Finalize` invokes this method with `disposing` set to `false`.
   
  When the `disposing` parameter is true, this method releases all resources held by any managed objects that this <xref:System.Net.Security.SslStream> references. This method invokes the `Dispose()` method of each referenced object.  
   
@@ -4318,6 +4317,7 @@ This property gets the cipher suite that is going to be used in the communicatio
         <value>An X509Certificate object that represents the certificate supplied for authentication or <see langword="null" /> if no certificate was supplied.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
+If the property is accessed, the remote certificate will not be disposed when the SslStream instance is disposed. The caller of the property is responsible for disposing the returned <xref:System.Security.Cryptography.X509Certificates.X509Certificate> object.
   
 ## Examples  
  The following code example demonstrates displaying the certificate returned by this property.  
@@ -4505,8 +4505,9 @@ This property gets the cipher suite that is going to be used in the communicatio
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The supported security protocols are specified when the <xref:System.Net.Security.SslStream> is created. If no security protocol was passed to the constructor, the instance is created using <xref:System.Security.Authentication.SslProtocols.Default>. The actual protocol used for authentication is selected based on the protocols supported by the client and server.  
-  
+ The enabled security protocols can be specified in <xref:System.Net.Security.SslStream.AuthenticateAsClient%2A> or via <xref:System.Net.Security.SslClientAuthenticationOptions.EnabledSslProtocols> and <xref:System.Net.Security.SslStream.AuthenticateAsServer%2A> or <xref:System.Net.Security.SslServerAuthenticationOptions.EnabledSslProtocols>. If no security protocol was explicitly specified, the <xref:System.Security.Authentication.SslProtocols.Default> value is used.
+ 
+ The actual protocol used for authentication is selected based on the ones supported by the client and server.  
    
   
 ## Examples  

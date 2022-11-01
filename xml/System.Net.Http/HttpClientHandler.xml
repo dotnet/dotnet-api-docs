@@ -207,6 +207,12 @@ These configuration options are not available starting with .NET 5.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+ Automatic decompression works only on the top most compression. So if the content is compressed multiple times, only the last compression will be decompressed.
+ For example, for a response with `Content-Encoding: gzip, br` header that contains content first compressed with gzip and then with Brotli, the content will only be decompressed using Brotli, leaving the still gzipped content in the <xref:System.Net.Http.HttpResponseMessage.Content>.
+
+ Setting automatic decompression to anything other than <xref:System.Net.DecompressionMethods.None> will result in adding `Accept-Encoding` header with the set values into every outgoing <xref:System.Net.Http.HttpRequestMessage>.
+
+
 For the .NET Framework 4.x `System.Net.Http` binary in the Global Assembly Cache (GAC), the default value is <xref:System.Net.DecompressionMethods.None>.
 
 When the [`System.Net.Http` NuGet package](https://www.nuget.org/packages/System.Net.Http/) v4.1.0 to v4.3.2 is used, the default is <xref:System.Net.DecompressionMethods.GZip> and <xref:System.Net.DecompressionMethods.Deflate>.
@@ -569,7 +575,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.
+ This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize> method, if it has been overridden. `Dispose()` invokes this method with the `disposing` parameter set to `true`. `Finalize` invokes this method with `disposing` set to `false`.
 
  When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpClientHandler> references. This method invokes the `Dispose()` method of each referenced object.
 
@@ -665,7 +671,14 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
       <Docs>
         <summary>Gets or sets the maximum number of concurrent connections (per server endpoint) allowed when making requests using an <see cref="T:System.Net.Http.HttpClient" /> object. Note that the limit is per server endpoint, so for example a value of 256 would permit 256 concurrent connections to http://www.adatum.com/ and another 256 to http://www.adventure-works.com/.</summary>
         <value>The maximum number of concurrent connections (per server endpoint) allowed by an <see cref="T:System.Net.Http.HttpClient" /> object.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default value for this property is `int.MaxValue`.  
+  
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxRequestContentBufferSize">
