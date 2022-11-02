@@ -7,7 +7,7 @@ public class Example
 {
    public static void Main()
    {
-      // Get the current NumberFormatInfo object to build the regular 
+      // Get the en-US NumberFormatInfo object to build the regular 
       // expression pattern dynamically.
       NumberFormatInfo nfi = CultureInfo.GetCultureInfo("en-US").NumberFormat;
 
