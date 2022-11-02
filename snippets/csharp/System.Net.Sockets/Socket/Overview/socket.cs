@@ -11,7 +11,6 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
-using System.IO;
 
 public class GetSocket
 {
@@ -20,14 +19,14 @@ public class GetSocket
         Uri? uri = args.Any() ? new Uri(args[0]) : null;
 
         // Sync:
-        SendHttpRequest(Console.Out, uri);
+        SendHttpRequest(uri);
 
         // Async:
-        await SendHttpRequestAsync(Console.Out, uri);
+        await SendHttpRequestAsync(uri);
     }
 
 //<Snippet1>
-private static void SendHttpRequest(TextWriter output, Uri? uri = null, int port = 80)
+private static void SendHttpRequest(Uri? uri = null, int port = 80)
 {
     uri ??= new Uri("http://example.com");
 
@@ -59,19 +58,14 @@ Connection: Close
         // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
         int charCount = Encoding.ASCII.GetChars(responseBytes, 0, byteCount, responseChars, 0);
 
-        // Print the contents of the 'responseChars' buffer to 'output'
-        output.Write(responseChars, 0, charCount);
+        // Print the contents of the 'responseChars' buffer to Console.Out
+        Console.Out.Write(responseChars, 0, charCount);
     }
-
-    output.Flush();
 }
 //</Snippet1>
 
 //<Snippet2>
-private static async Task SendHttpRequestAsync(TextWriter output,
-    Uri? uri = null,
-    int port = 80,
-    CancellationToken cancellationToken = default)
+private static async Task SendHttpRequestAsync(Uri? uri = null, int port = 80, CancellationToken cancellationToken = default)
 {
     uri ??= new Uri("http://example.com");
 
@@ -103,11 +97,9 @@ Connection: Close
         // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
         int charCount = Encoding.ASCII.GetChars(responseBytes, 0, byteCount, responseChars, 0);
 
-        // Print the contents of the 'responseChars' buffer to 'output'
-        await output.WriteAsync(responseChars.AsMemory(0, charCount), cancellationToken);
+        // Print the contents of the 'responseChars' buffer to Console.Out
+        await Console.Out.WriteAsync(responseChars.AsMemory(0, charCount), cancellationToken);
     }
-
-    await output.FlushAsync();
 }
 //</Snippet2>
 }
