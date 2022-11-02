@@ -27,8 +27,8 @@ public class Example
       // Determine the number of fractional digits in currency values.
       pattern += nfi.CurrencyDecimalDigits.ToString() + "})?){1}$";
       
-        Console.WriteLine("Pattern is {0}", pattern);
-        Console.WriteLine();
+      Console.WriteLine("Pattern is {0}", pattern);
+      Console.WriteLine();
       
       Regex rgx = new Regex(pattern);
 
