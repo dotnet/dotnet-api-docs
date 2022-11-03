@@ -41,8 +41,15 @@ Connection: Close
     using Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
     socket.Connect(uri.Host, port);
 
-    // Send the request
-    int sendCnt = socket.Send(requestBytes);
+    // Send the request.
+    // For the tiny amount of data in this example, the first call to Send() will likely deliver the buffer completely,
+    // however this is not guaranteed to happen for larger real-life buffers.
+    // The best practice is to iterate until all the data is sent.
+    int bytesSent = 0;
+    while (bytesSent < requestBytes.Length)
+    {
+        bytesSent += socket.Send(requestBytes, bytesSent, requestBytes.Length - bytesSent, SocketFlags.None);
+    }
 
     // Do minimalistic buffering assuming ASCII response
     byte[] responseBytes = new byte[256];
@@ -80,8 +87,15 @@ Connection: Close
     using Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
     await socket.ConnectAsync(uri.Host, port, cancellationToken);
 
-    // Send the request
-    int sendCnt = await socket.SendAsync(requestBytes, SocketFlags.None, cancellationToken);
+    // Send the request.
+    // For the tiny amount of data in this example, the first call to SendAsync() will likely deliver the buffer completely,
+    // however this is not guaranteed to happen for larger real-life buffers.
+    // The best practice is to iterate until all the data is sent.
+    int bytesSent = 0;
+    while (bytesSent < requestBytes.Length)
+    {
+        bytesSent += await socket.SendAsync(requestBytes.AsMemory(bytesSent), SocketFlags.None);
+    }
 
     // Do minimalistic buffering assuming ASCII response
     byte[] responseBytes = new byte[256];
