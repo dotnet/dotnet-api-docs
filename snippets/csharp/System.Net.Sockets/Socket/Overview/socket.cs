@@ -31,7 +31,7 @@ private static void SendHttpRequest(Uri? uri = null, int port = 80)
     uri ??= new Uri("http://example.com");
 
     // Construct a minimalistic HTTP/1.1 request
-    byte[] requestBytes = Encoding.ASCII.GetBytes(@$"GET {uri.AbsoluteUri} HTTP/1.1
+    byte[] requestBytes = Encoding.ASCII.GetBytes(@$"GET {uri.AbsoluteUri} HTTP/1.0
 Host: {uri.Host}
 Connection: Close
 
