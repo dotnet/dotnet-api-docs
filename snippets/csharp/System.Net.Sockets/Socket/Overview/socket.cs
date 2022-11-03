@@ -57,13 +57,13 @@ Connection: Close
 
     while (true)
     {
-        int byteCount = socket.Receive(responseBytes);
+        int bytesReceived = socket.Receive(responseBytes);
 
         // Receiving 0 bytes means EOF has been reached
-        if (byteCount == 0) break;
+        if (bytesReceived == 0) break;
 
         // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
-        int charCount = Encoding.ASCII.GetChars(responseBytes, 0, byteCount, responseChars, 0);
+        int charCount = Encoding.ASCII.GetChars(responseBytes, 0, bytesReceived, responseChars, 0);
 
         // Print the contents of the 'responseChars' buffer to Console.Out
         Console.Out.Write(responseChars, 0, charCount);
@@ -103,13 +103,13 @@ Connection: Close
 
     while (true)
     {
-        int byteCount = await socket.ReceiveAsync(responseBytes, SocketFlags.None, cancellationToken);
+        int bytesReceived = await socket.ReceiveAsync(responseBytes, SocketFlags.None, cancellationToken);
 
         // Receiving 0 bytes means EOF has been reached
-        if (byteCount == 0) break;
+        if (bytesReceived == 0) break;
 
         // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
-        int charCount = Encoding.ASCII.GetChars(responseBytes, 0, byteCount, responseChars, 0);
+        int charCount = Encoding.ASCII.GetChars(responseBytes, 0, bytesReceived, responseChars, 0);
 
         // Print the contents of the 'responseChars' buffer to Console.Out
         await Console.Out.WriteAsync(responseChars.AsMemory(0, charCount), cancellationToken);
