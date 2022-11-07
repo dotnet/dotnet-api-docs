@@ -17,16 +17,18 @@ Class HttpVersion_Version10
 ' <Snippet1>
 			' HttpClient lifecycle management best practices:
 			' https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
-			Dim client As New HttpClient()
+			Using client As New HttpClient()
+                Using request As New HttpRequestMessage(HttpMethod.Get, "http://www.microsoft.com")
+                    Console.WriteLine("Default HTTP request version is {0}", request.Version)
 
-			Dim request As New HttpRequestMessage(HttpMethod.Get, "http://www.microsoft.com")
-			Console.WriteLine("Default HTTP request version is {0}", request.Version)
+                    request.Version = HttpVersion.Version10
+                    Console.WriteLine("Request version after assignment is {0}", request.Version)
 
-			request.Version = HttpVersion.Version10
-			Console.WriteLine("Request version after assignment is {0}", request.Version)
-
-			Dim response As HttpResponseMessage = client.Send(request)
-			Console.WriteLine("Response HTTP version {0}", response.Version)
+                    Using response As HttpResponseMessage = client.Send(request)
+                        Console.WriteLine("Response HTTP version {0}", response.Version)
+                    End Using
+                End Using
+            End Using
 ' </Snippet1>
             Console.WriteLine(ControlChars.Cr + "Press 'Enter' Key to Continue..............")
             Console.Read()
