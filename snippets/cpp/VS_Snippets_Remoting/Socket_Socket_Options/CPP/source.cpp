@@ -1,4 +1,4 @@
-#using < System.dll>
+#using <System.dll>
 
 using namespace System;
 using namespace System::Text;
@@ -7,8 +7,7 @@ using namespace System::Net;
 using namespace System::Net::Sockets;
 using namespace System::Threading;
 
-public
-ref class Sync_Send_Receive
+public ref class Sync_Send_Receive
 {
 public:
     static void SetSocketOptions()
