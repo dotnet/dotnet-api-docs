@@ -8,19 +8,22 @@ using System.Threading.Tasks;
 
 async Task RunServer()
 {
-    using X509Certificate2 serverCertificate = new X509Certificate2("contoso.com.pfx", "testcertificate");
+    using X509Certificate2 serverCertificate = new("contoso.com.pfx", "testcertificate");
 
-    TcpListener listener = new TcpListener(IPAddress.Loopback, 5004);
+
+    var listener = new TcpListener(IPAddress.Loopback, 5004);
     listener.Start();
-    using TcpClient server = await listener.AcceptTcpClientAsync();
+    using var server = await listener.AcceptTcpClientAsync();
     listener.Stop();
+
 
     await Server(server.GetStream(), serverCertificate);
 }
 
 async Task RunClient()
 {
-    using TcpClient client = new TcpClient();
+    using var client = new TcpClient();
+
     await client.ConnectAsync(new IPEndPoint(IPAddress.Loopback, 5004));
 
     await Client(client.GetStream(), "testserver.contoso.com");
@@ -29,15 +32,17 @@ async Task RunClient()
 //<snippet>
 async Task Server(NetworkStream stream, X509Certificate2 serverCertificate)
 {
-    using SslStream server = new SslStream(stream);
+    using var server = new SslStream(stream);
+
     await server.AuthenticateAsServerAsync(new SslServerAuthenticationOptions
     {
         ServerCertificate = serverCertificate,
-        ApplicationProtocols = new List<SslApplicationProtocol>
+        ApplicationProtocols = new()
         {
-            new SslApplicationProtocol("protocol1"),
-            new SslApplicationProtocol("protocol2"),
+            new("protocol1"),
+            new("protocol2"),
         },
+
     });
 
     string protocol = Encoding.ASCII.GetString(server.NegotiatedApplicationProtocol.Protocol.Span);
@@ -46,16 +51,18 @@ async Task Server(NetworkStream stream, X509Certificate2 serverCertificate)
 
 async Task Client(NetworkStream stream, string hostName)
 {
-    using SslStream client = new SslStream(stream);
+    using var client = new SslStream(stream);
+
     await client.AuthenticateAsClientAsync(new SslClientAuthenticationOptions
     {
         // the host name must match the name on the certificate used on the server side
         TargetHost = hostName,
-        ApplicationProtocols = new List<SslApplicationProtocol>
+        ApplicationProtocols = new()
         {
-            new SslApplicationProtocol("protocol2"),
-            new SslApplicationProtocol("protocol3")
+            new("protocol2"),
+            new("protocol3")
         },
+
     });
 
     string protocol = Encoding.ASCII.GetString(client.NegotiatedApplicationProtocol.Protocol.Span);
