@@ -16,7 +16,6 @@ async Task RunServer()
     using var server = await listener.AcceptTcpClientAsync();
     listener.Stop();
 
-
     await Server(server.GetStream(), serverCertificate);
 }
 
@@ -41,8 +40,7 @@ async Task Server(NetworkStream stream, X509Certificate2 serverCertificate)
         {
             new("protocol1"),
             new("protocol2"),
-        },
-
+        }
     });
 
     string protocol = Encoding.ASCII.GetString(server.NegotiatedApplicationProtocol.Protocol.Span);
@@ -61,8 +59,7 @@ async Task Client(NetworkStream stream, string hostName)
         {
             new("protocol2"),
             new("protocol3")
-        },
-
+        }
     });
 
     string protocol = Encoding.ASCII.GetString(client.NegotiatedApplicationProtocol.Protocol.Span);
