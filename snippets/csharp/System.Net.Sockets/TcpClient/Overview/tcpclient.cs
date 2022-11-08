@@ -66,7 +66,7 @@ class MyTcpClient
       // combination.
       Int32 port = 13000;
 
-      // Prefer using declaration to ensure the instance is Disposed later.
+      // Prefer a using declaration to ensure the instance is Disposed later.
       using TcpClient client = new TcpClient(server, port);
 
       // Translate the passed message into ASCII and store it as a Byte array.
