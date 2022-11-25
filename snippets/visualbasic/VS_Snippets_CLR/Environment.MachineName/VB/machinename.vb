@@ -9,10 +9,7 @@ Class Sample
 End Class
 '
 'This example produces the following results:
-'(Any result that is lengthy, specific to the machine on which this sample was tested, 
-'or reveals information that should remain secure, has been omitted 
-'and marked "!---OMITTED---!".)
 '
-'MachineName: !---OMITTED---!
+'MachineName: MyDesktop
 '
 '</snippet1>

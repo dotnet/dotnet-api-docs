@@ -12,8 +12,7 @@ int main()
 
 /*
 This example produces the following results:
-(Any result that is lengthy, specific to the machine on which this sample was tested, or reveals information that should remain secure, has been omitted and marked S"!---OMITTED---!".)
 
-MachineName: !---OMITTED---!
+MachineName: MyDesktop
 */
 //</snippet1>
