@@ -65,7 +65,7 @@ public class Form1: Form
         Console.WriteLine("\n" + label);
         for(int i = 0; i<table.Rows.Count;i++)
         {
-            Console.WriteLine("\table" + table.Rows[i]["item"]);
+            Console.WriteLine(table.Rows[i]["item"]);
         }
         Console.WriteLine();
     }
@@ -77,7 +77,7 @@ public class Form1: Form
         Console.WriteLine("\n" + label);
         for(int i = 0; i<view.Count;i++)
         {
-            Console.WriteLine("\table" + view[i]["item"]);
+            Console.WriteLine(view[i]["item"]);
         }
         Console.WriteLine();
     }
