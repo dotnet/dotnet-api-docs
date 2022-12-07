@@ -15,6 +15,7 @@
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
@@ -24,6 +25,7 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Net.Http.HttpMessageInvoker</BaseTypeName>
@@ -34,65 +36,42 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The <xref:System.Net.Http.HttpClient> class instance acts as a session to send HTTP requests. An <xref:System.Net.Http.HttpClient> instance is a collection of settings applied to all requests executed by that instance. In addition, every <xref:System.Net.Http.HttpClient> instance uses its own connection pool, isolating its requests from requests executed by other <xref:System.Net.Http.HttpClient> instances.  
-  
- Derived classes should not override the virtual methods on the class. Instead, use a constructor overload that accepts <xref:System.Net.Http.HttpMessageHandler> to configure any pre- or post-request processing.
-  
- By default on .NET Framework and Mono, <xref:System.Net.HttpWebRequest> is used to send requests to the server. This behavior can be modified by specifying a different channel in one of the constructor overloads taking a <xref:System.Net.Http.HttpMessageHandler> instance as parameter. If features like authentication or caching are required, <xref:System.Net.Http.WebRequestHandler> can be used to configure settings and the instance can be passed to the constructor. The returned handler can be passed to one of the constructor overloads taking a <xref:System.Net.Http.HttpMessageHandler> parameter.  
-  
- If an app using <xref:System.Net.Http.HttpClient> and related classes in the <xref:System.Net.Http> namespace intends to download large amounts of data (50 megabytes or more), then the app should stream those downloads and not use the default buffering. If the default buffering is used the client memory usage will get very large, potentially resulting in substantially reduced performance.  
+## Remarks
 
- Properties of <xref:System.Net.Http.HttpClient> should not be modified while there are outstanding requests, because it is not thread-safe.
+The <xref:System.Net.Http.HttpClient> class instance acts as a session to send HTTP requests. An <xref:System.Net.Http.HttpClient> instance is a collection of settings applied to all requests executed by that instance. In addition, every <xref:System.Net.Http.HttpClient> instance uses its own connection pool, isolating its requests from requests executed by other <xref:System.Net.Http.HttpClient> instances.  
 
-   
- The following methods are thread safe:  
-  
-1.  <xref:System.Net.Http.HttpClient.CancelPendingRequests%2A>  
-  
-2.  <xref:System.Net.Http.HttpClient.DeleteAsync%2A>  
-  
-3.  <xref:System.Net.Http.HttpClient.GetAsync%2A>  
-  
-4.  <xref:System.Net.Http.HttpClient.GetByteArrayAsync%2A>  
-  
-5.  <xref:System.Net.Http.HttpClient.GetStreamAsync%2A>  
-  
-6.  <xref:System.Net.Http.HttpClient.GetStringAsync%2A>  
-  
-7.  <xref:System.Net.Http.HttpClient.PostAsync%2A>  
-  
-8.  <xref:System.Net.Http.HttpClient.PutAsync%2A>  
-  
-9.  <xref:System.Net.Http.HttpClient.SendAsync%2A>  
+### Instancing
 
-10. <xref:System.Net.Http.HttpClient.PatchAsync%2A>  
-  
- <xref:System.Net.Http.HttpClient> is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors. Below is an example using HttpClient correctly.  
+<xref:System.Net.Http.HttpClient> is intended to be instantiated once and reused throughout the life of an application. In .NET Core and .NET 5+, HttpClient pools connections inside the handler instance and reuses a connection across multiple requests. If you instantiate an HttpClient class for every request, the number of sockets available under heavy loads will be exhausted. This exhaustion will result in <xref:System.Net.Sockets.SocketException> errors.
+
+You can configure additional options by passing in a "handler", such as <xref:System.Net.Http.HttpClientHandler> (or <xref:System.Net.Http.SocketsHttpHandler> in .NET Core 2.1 or later), as part of the constructor. The connection properties on the handler cannot be changed once a request has been submitted, so one reason to create a new HttpClient instance would be if you need to change the connection properties. If different requests require different settings, this may also lead to an application having multiple <xref:System.Net.Http.HttpClient> instances, where each instance is configured appropriately, and then requests are issued on the relevant client.
+
+HttpClient only resolves DNS entries when a connection is created. It does not track any time to live (TTL) durations specified by the DNS server. If DNS entries change regularly, which can happen in some container scenarios, the client won't respect those updates. To solve this issue, you can limit the lifetime of the connection by setting the <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionLifetime?displayProperty=nameWithType> property, so that DNS lookup is required when the connection is replaced.
   
 ```csharp
 public class GoodController : ApiController
 {
-    private static readonly HttpClient HttpClient;
+    private static readonly HttpClient httpClient;
 
     static GoodController()
     {
-        HttpClient = new HttpClient();
+        var socketsHandler = new SocketsHttpHandler
+        {
+            PooledConnectionLifetime = TimeSpan.FromMinutes(2)
+        };
+
+        httpClient = new HttpClient(socketsHandler);
     }
 }
 ```
 
-```vb
-  Public Class GoodController
-    Inherits ApiController  
-   
-    Private Shared ReadOnly HttpClient As HttpClient  
+As an alternative to creating only one HttpClient instance, you can also use <xref:System.Net.Http.IHttpClientFactory> to manage the HttpClient instances for you. For more information, see [Guidelines for using HttpClient](/dotnet/fundamentals/networking/httpclient-guidelines).
+
+### Derivation
+
+ The <xref:System.Net.Http.HttpClient> also acts as a base class for more specific HTTP clients. An example would be a FacebookHttpClient that provides additional methods specific to a Facebook web service (for example, a `GetFriends` method). Derived classes should not override the virtual methods on the class. Instead, use a constructor overload that accepts <xref:System.Net.Http.HttpMessageHandler> to configure any pre-request or post-request processing.
   
-    Shared Sub New()  
-        HttpClient = New HttpClient()
-    End Sub
-End Class
-```
+### Transports
 
 The <xref:System.Net.Http.HttpClient> is a high-level API that wraps the lower-level functionality available on each platform where it runs.
 
@@ -115,31 +94,101 @@ On each platform, <xref:System.Net.Http.HttpClient> tries to use the best availa
 
 Users can also configure a specific transport for <xref:System.Net.Http.HttpClient> by invoking the <xref:System.Net.Http.HttpClient.%23ctor*> constructor that takes an <xref:System.Net.Http.HttpMessageHandler>.
 
-### HttpClient and .NET Core
-Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of `HttpClientHandler` provides the implementation used by higher-level HTTP networking classes such as `HttpClient`. The use of <xref:System.Net.Http.SocketsHttpHandler> offers a number of advantages:
+#### .NET Framework & Mono
+
+ By default on .NET Framework and Mono, <xref:System.Net.HttpWebRequest> is used to send requests to the server. This behavior can be modified by specifying a different handler in one of the constructor overloads with an <xref:System.Net.Http.HttpMessageHandler> parameter. If you require features like authentication or caching, you can use <xref:System.Net.Http.WebRequestHandler> to configure settings and the instance can be passed to the constructor. The returned handler can be passed to a constructor overload that has an <xref:System.Net.Http.HttpMessageHandler> parameter.  
+  
+#### .NET Core
+
+Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of <xref:System.Net.Http.HttpClientHandler> provides the implementation used by higher-level HTTP networking classes such as <xref:System.Net.Http.HttpClient>. The use of <xref:System.Net.Http.SocketsHttpHandler> offers a number of advantages:
+
 - A significant performance improvement when compared with the previous implementation.
 - The elimination of platform dependencies, which simplifies deployment and servicing. For example, `libcurl` is no longer a dependency on .NET Core for macOS and .NET Core for Linux.
 - Consistent behavior across all .NET platforms.
 
-If this change is undesirable, on Windows you can still use <xref:System.Net.Http.WinHttpHandler> by referencing it's [NuGet package](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler/) and passing it to [`HttpClient`'s constructor](xref:System.Net.Http.HttpClient.%23ctor(System.Net.Http.HttpMessageHandler)) manually.
+If this change is undesirable, on Windows you can continue to use <xref:System.Net.Http.WinHttpHandler> by referencing its [NuGet package](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler/) and passing it to [HttpClient's constructor](xref:System.Net.Http.HttpClient.%23ctor(System.Net.Http.HttpMessageHandler)) manually.
 
-### Configure behavior using run-time configuration options
+### Configure behavior using runtime configuration options
 
-Certain aspects of <xref:System.Net.Http.HttpClient>'s behavior are customizable through [Run-time configuration options](/dotnet/core/run-time-config/networking). However, the behavior of these switches differs through .NET versions. For example, in .NET Core 2.1 - 3.1, you can configure whether <xref:System.Net.Http.SocketsHttpHandler> is used by default, but that option is no longer available starting in .NET 5.0.
+Certain aspects of <xref:System.Net.Http.HttpClient>'s behavior are customizable through [Runtime configuration options](/dotnet/core/run-time-config/networking). However, the behavior of these switches differs through .NET versions. For example, in .NET Core 2.1 - 3.1, you can configure whether <xref:System.Net.Http.SocketsHttpHandler> is used by default, but that option is no longer available starting in .NET 5.0.
 
-## Examples  
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Misc/system.net.http.httpclient/cs/source.cs" id="Snippet1":::  
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Misc/system.net.http.httpclient/vb/source.vb" id="Snippet1":::
+### Connection pooling
+
+HttpClient pools HTTP connections where possible and uses them for more than one request. This can have a significant performance benefit, especially for HTTPS requests, as the connection handshake is only done once.
+
+Connection pool properties can be configured on a <xref:System.Net.Http.HttpClientHandler> or <xref:System.Net.Http.SocketsHttpHandler> passed in during construction, including <xref:System.Net.Http.HttpClientHandler.MaxConnectionsPerServer>, <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionIdleTimeout>, and <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionLifetime>.
+
+Disposing of the HttpClient instance closes the open connections and cancels any pending requests.
+
+> [!NOTE]
+> If you concurrently send HTTP/1.1 requests to the same server, new connections can be created. Even if you reuse the `HttpClient` instance, if the rate of requests is high, or if there are any firewall limitations, that can exhaust the available sockets because of default TCP cleanup timers. To limit the number of concurrent connections, you can set the `MaxConnectionsPerServer` property. By default, the number of concurrent HTTP/1.1 connections is unlimited.
+
+### Buffering and request lifetime
+
+By default, HttpClient methods (except <xref:System.Net.Http.HttpClient.GetStreamAsync%2A>) buffer the responses from the server, reading all the response body into memory before returning the async result. Those requests will continue until one of the following occurs:
+
+* The <xref:System.Threading.Tasks.Task%601> succeeds and returns a result.
+* The <xref:System.Net.Http.HttpClient.Timeout> is reached, in which case the <xref:System.Threading.Tasks.Task%601> will be cancelled.
+* The <xref:System.Threading.CancellationToken> passable to some method overloads is fired.
+* <xref:System.Net.Http.HttpClient.CancelPendingRequests> is called.
+* The HttpClient is disposed.
+
+You can change the buffering behavior on a per-request basis using the <xref:System.Net.Http.HttpCompletionOption> parameter available on some method overloads. This argument can be used to specify if the <xref:System.Threading.Tasks.Task%601> should be considered complete after reading just the response headers, or after reading and buffering the response content.
+ 
+If your app that uses <xref:System.Net.Http.HttpClient> and related classes in the <xref:System.Net.Http> namespace intends to download large amounts of data (50 megabytes or more), then the app should stream those downloads and not use the default buffering. If you use the default buffering, the client memory usage will get very large, potentially resulting in substantially reduced performance.  
+  
+### Thread safety
+
+ The following methods are thread safe:  
+  
+- <xref:System.Net.Http.HttpClient.CancelPendingRequests%2A>
+- <xref:System.Net.Http.HttpClient.DeleteAsync%2A>
+- <xref:System.Net.Http.HttpClient.GetAsync%2A>
+- <xref:System.Net.Http.HttpClient.GetByteArrayAsync%2A>
+- <xref:System.Net.Http.HttpClient.GetStreamAsync%2A>
+- <xref:System.Net.Http.HttpClient.GetStringAsync%2A>
+- <xref:System.Net.Http.HttpClient.PostAsync%2A>
+- <xref:System.Net.Http.HttpClient.PutAsync%2A>
+- <xref:System.Net.Http.HttpClient.SendAsync%2A>
+
+### Proxies
+
+By default, HttpClient reads proxy configuration from environment variables or user/system settings, depending on the platform. You can change this behavior by passing a <xref:System.Net.WebProxy> or <xref:System.Net.IWebProxy> to, in order of precedence:
+
+* The <xref:System.Net.Http.HttpClientHandler.Proxy> property on a HttpClientHandler passed in during HttpClient construction
+* The <xref:System.Net.Http.HttpClient.DefaultProxy> static property (affects all instances)
+
+You can disable the proxy using <xref:System.Net.Http.HttpClientHandler.UseProxy>. The default configuration for Windows users is to try and detect a proxy using network discovery, which can be slow. For high throughput applications where it's known that a proxy isn't required, you should disable the proxy.
+
+Proxy settings (like <xref:System.Net.IWebProxy.Credentials>) should be changed only before the first request is made using the HttpClient. Changes made after using the HttpClient for the first time may not be reflected in subsequent requests.
+
+### Timeouts
+
+You can use <xref:System.Net.Http.HttpClient.Timeout> to set a default timeout for all HTTP requests from the HttpClient instance. The timeout only applies to the xxxAsync methods that cause a request/response to be initiated. If the timeout is reached, the <xref:System.Threading.Tasks.Task%601> for that request is cancelled.
+
+You can set some additional timeouts if you pass in a <xref:System.Net.Http.SocketsHttpHandler> instance when constructing the HttpClient object:
+
+| **Property** | **Description**|
+| ------------ | -------------- |
+| <xref:System.Net.Http.SocketsHttpHandler.ConnectTimeout> | Specifies a timeout that's used when a request requires a new TCP connection to be created. If the timeout occurs, the request <xref:System.Threading.Tasks.Task%601> is cancelled. |
+| <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionLifetime> | Specifies a timeout to be used for each connection in the connection pool. If the connection is idle, the connection is immediately closed; otherwise, the connection is closed at the end of the current request. |
+| <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionIdleTimeout> | If a connection in the connection pool is idle for this long, the connection is closed. |
+| <xref:System.Net.Http.SocketsHttpHandler.Expect100ContinueTimeout> | If request has an "Expect: 100-continue" header, it delays sending content until the timeout or until a "100-continue" response is received. |
+
+HttpClient only resolves DNS entries when the connections are created. It does not track any time to live (TTL) durations specified by the DNS server. If DNS entries are changing regularly, which can happen in some container scenarios, you can use the <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionLifetime> to limit the lifetime of the connection so that DNS lookup is required when replacing the connection. 
+
+## Examples
+
+ :::code language="csharp" source="~/snippets/csharp/System.Net.Http/HttpClient/source.cs" id="Snippet1":::  
+ :::code language="fsharp" source="~/snippets/fsharp/System.Net.Http/HttpClient/source.fs" id="Snippet1":::  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Misc/system.net.http.httpclient/vb/source.vb" id="Snippet1":::
 
  The preceding code example uses an `async Task Main()` entry point. That feature requires C# 7.1 or later.
  
  ]]></format>
     </remarks>
-    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkID=245696">Connecting to a web service</related>
-    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245697">Quickstart: Connecting using HttpClient </related>
-    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245699">How to use HttpClient handlers</related>
-    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245698">How to secure HttpClient connections</related>
-    <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=242550">HttpClient Sample</related>
+    <related type="ExternalDocumentation" href="/dotnet/fundamentals/networking/httpclient-guidelines">Guidelines for using HttpClient</related>
+    <related type="ExternalDocumentation" href="/samples/dotnet/samples/console-webapiclient/">HttpClient Sample</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -202,6 +251,7 @@ End Class
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -237,6 +287,7 @@ Using this constructor is equivalent to calling the [`HttpClient(new HttpClientH
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -278,6 +329,7 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -304,7 +356,7 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
       <MemberSignature Language="VB.NET" Value="Public Property BaseAddress As Uri" />
       <MemberSignature Language="F#" Value="member this.BaseAddress : Uri with get, set" Usage="System.Net.Http.HttpClient.BaseAddress" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property Uri ^ BaseAddress { Uri ^ get(); void set(Uri ^ value); };" />
-      <MemberSignature Language="C#" Value="public Uri? BaseAddress { get; set; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public Uri? BaseAddress { get; set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -316,6 +368,7 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -358,6 +411,7 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -385,7 +439,7 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
       <MemberSignature Language="ILAsm" Value=".property class System.Net.IWebProxy DefaultProxy" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClient.DefaultProxy" />
       <MemberSignature Language="VB.NET" Value="Public Shared Property DefaultProxy As IWebProxy" />
-      <MemberSignature Language="F#" Value="member this.DefaultProxy : System.Net.IWebProxy with get, set" Usage="System.Net.Http.HttpClient.DefaultProxy" />
+      <MemberSignature Language="F#" Value="static member DefaultProxy : System.Net.IWebProxy with get, set" Usage="System.Net.Http.HttpClient.DefaultProxy" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Net::IWebProxy ^ DefaultProxy { System::Net::IWebProxy ^ get(); void set(System::Net::IWebProxy ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -394,6 +448,7 @@ The specified `handler` will be disposed of by calling [HttpClient.Dispose](xref
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -421,7 +476,7 @@ The environment variables used for `DefaultProxy` initialization on Windows and 
 * HTTP_PROXY: the proxy server used on HTTP requests.
 * HTTPS_PROXY: the proxy server used on HTTPS requests.
 * ALL_PROXY: the proxy server used on HTTP and/or HTTPS requests in case HTTP_PROXY and/or HTTPS_PROXY are not defined.
-* NO_PROXY: a comma-separated list of hostnames that should be excluded from proxying.
+* NO_PROXY: a comma-separated list of hostnames that should be excluded from proxying. Asterisks are not supported for wildcards; use a leading dot in case you want to match a subdomain. Examples: `NO_PROXY=.example.com` (with leading dot) will match `www.example.com`, but will not match `example.com`. `NO_PROXY=example.com` (without leading dot) will not match `www.example.com`. This behavior might be revisited in the future to match other ecosystems better.
 
 On systems where environment variables are case-sensitive, the variable names may be all lowercase or all uppercase.  The lowercase names are checked first.
 
@@ -449,6 +504,7 @@ The proxy server may be a hostname or IP address, optionally followed by a colon
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -465,7 +521,7 @@ The proxy server may be a hostname or IP address, optionally followed by a colon
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Headers set on this property don't need to be set on request messages again. `DefaultRequestHeaders` should not be modified while there are outstanding requests, because it is not thread-safe.
+ Headers set on this property don't need to be set on request messages again. `DefaultRequestHeaders` should not be modified while there are outstanding requests.
   
  ]]></format>
         </remarks>
@@ -485,6 +541,7 @@ The proxy server may be a hostname or IP address, optionally followed by a colon
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -525,6 +582,7 @@ The `DefaultRequestVersion` property can be changed as long as the <xref:System.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -563,7 +621,7 @@ This property has no effect on any of the <xref:System.Net.Http.HttpClient.Send%
       <MemberSignature Language="VB.NET" Value="Public Function DeleteAsync (requestUri As String) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.DeleteAsync : string -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.DeleteAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ DeleteAsync(System::String ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -575,6 +633,7 @@ This property has no effect on any of the <xref:System.Net.Http.HttpClient.Send%
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -585,7 +644,14 @@ This property has no effect on any of the <xref:System.Net.Http.HttpClient.Send%
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -601,7 +667,7 @@ This property has no effect on any of the <xref:System.Net.Http.HttpClient.Send%
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
@@ -614,7 +680,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 
 <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeleteAsync">
@@ -624,7 +690,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function DeleteAsync (requestUri As Uri) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.DeleteAsync : Uri -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.DeleteAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ DeleteAsync(Uri ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -636,6 +702,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -662,7 +729,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
@@ -675,7 +742,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 
 <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeleteAsync">
@@ -685,7 +752,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function DeleteAsync (requestUri As String, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.DeleteAsync : string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.DeleteAsync (requestUri, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ DeleteAsync(System::String ^ requestUri, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (string? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (string? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -697,6 +764,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -707,7 +775,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
@@ -725,7 +800,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
@@ -738,7 +813,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 
 <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeleteAsync">
@@ -748,7 +823,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function DeleteAsync (requestUri As Uri, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.DeleteAsync : Uri * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.DeleteAsync (requestUri, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ DeleteAsync(Uri ^ requestUri, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (Uri? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; DeleteAsync (Uri? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -760,6 +835,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -788,7 +864,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.
@@ -801,7 +877,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
 
 <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> is not set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -822,6 +898,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -841,8 +918,8 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.  
+## Remarks
+ This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize> method, if it has been overridden. `Dispose()` invokes this method with the `disposing` parameter set to `true`. `Finalize` invokes this method with `disposing` set to `false`.
   
  When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpClient> references. This method invokes the `Dispose()` method of each referenced object.  
   
@@ -878,7 +955,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As String) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : string -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(System::String ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -890,6 +967,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -900,7 +978,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -910,18 +995,19 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -931,7 +1017,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As Uri) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : Uri -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(Uri ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -943,6 +1029,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -963,18 +1050,18 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -984,7 +1071,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As String, completionOption As HttpCompletionOption) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : string * System.Net.Http.HttpCompletionOption -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync (requestUri, completionOption)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(System::String ^ requestUri, System::Net::Http::HttpCompletionOption completionOption);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri, System.Net.Http.HttpCompletionOption completionOption);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri, System.Net.Http.HttpCompletionOption completionOption);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -996,6 +1083,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1006,7 +1094,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" />
       </Parameters>
       <Docs>
@@ -1024,12 +1119,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -1039,7 +1135,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As String, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync (requestUri, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(System::String ^ requestUri, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1051,6 +1147,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1061,7 +1158,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
@@ -1073,18 +1177,19 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -1094,7 +1199,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As Uri, completionOption As HttpCompletionOption) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : Uri * System.Net.Http.HttpCompletionOption -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync (requestUri, completionOption)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(Uri ^ requestUri, System::Net::Http::HttpCompletionOption completionOption);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri, System.Net.Http.HttpCompletionOption completionOption);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri, System.Net.Http.HttpCompletionOption completionOption);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1106,6 +1211,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1134,12 +1240,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -1149,7 +1255,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As Uri, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : Uri * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync (requestUri, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(Uri ^ requestUri, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1161,6 +1267,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1183,18 +1290,18 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read.  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -1204,7 +1311,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As String, completionOption As HttpCompletionOption, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : string * System.Net.Http.HttpCompletionOption * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync (requestUri, completionOption, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(System::String ^ requestUri, System::Net::Http::HttpCompletionOption completionOption, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (string? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1216,6 +1323,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1226,7 +1334,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
@@ -1246,12 +1361,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetAsync">
@@ -1261,7 +1377,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetAsync (requestUri As Uri, completionOption As HttpCompletionOption, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.GetAsync : Uri * System.Net.Http.HttpCompletionOption * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.GetAsync (requestUri, completionOption, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ GetAsync(Uri ^ requestUri, System::Net::Http::HttpCompletionOption completionOption, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; GetAsync (Uri? requestUri, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1273,6 +1389,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1303,12 +1420,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetByteArrayAsync">
@@ -1337,7 +1454,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetByteArrayAsync (requestUri As String) As Task(Of Byte())" />
       <MemberSignature Language="F#" Value="member this.GetByteArrayAsync : string -&gt; System.Threading.Tasks.Task&lt;byte[]&gt;" Usage="httpClient.GetByteArrayAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;cli::array &lt;System::Byte&gt; ^&gt; ^ GetByteArrayAsync(System::String ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;byte[]&gt; GetByteArrayAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;byte[]&gt; GetByteArrayAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1349,6 +1466,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1365,7 +1483,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Byte[]&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1381,12 +1506,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetByteArrayAsync">
@@ -1396,7 +1522,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetByteArrayAsync (requestUri As Uri) As Task(Of Byte())" />
       <MemberSignature Language="F#" Value="member this.GetByteArrayAsync : Uri -&gt; System.Threading.Tasks.Task&lt;byte[]&gt;" Usage="httpClient.GetByteArrayAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;cli::array &lt;System::Byte&gt; ^&gt; ^ GetByteArrayAsync(Uri ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;byte[]&gt; GetByteArrayAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;byte[]&gt; GetByteArrayAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1408,6 +1534,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1440,13 +1567,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetByteArrayAsync">
@@ -1461,6 +1588,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1469,8 +1597,15 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Byte[]&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1487,12 +1622,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetByteArrayAsync">
@@ -1507,6 +1643,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1515,8 +1652,8 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Byte[]&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1533,12 +1670,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
 
           ]]></format>
         </remarks>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStreamAsync">
@@ -1567,7 +1704,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetStreamAsync (requestUri As String) As Task(Of Stream)" />
       <MemberSignature Language="F#" Value="member this.GetStreamAsync : string -&gt; System.Threading.Tasks.Task&lt;System.IO.Stream&gt;" Usage="httpClient.GetStreamAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::IO::Stream ^&gt; ^ GetStreamAsync(System::String ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; GetStreamAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; GetStreamAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1579,6 +1716,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1595,7 +1733,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.IO.Stream&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1605,18 +1750,19 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
+ This operation will not block. The returned [Task\<Stream>](xref:System.Threading.Tasks.Task%601) object will complete after the response headers are read. This method does not read nor buffer the response body.  
 
 > [!NOTE]
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetStreamAsync">
@@ -1626,7 +1772,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetStreamAsync (requestUri As Uri) As Task(Of Stream)" />
       <MemberSignature Language="F#" Value="member this.GetStreamAsync : Uri -&gt; System.Threading.Tasks.Task&lt;System.IO.Stream&gt;" Usage="httpClient.GetStreamAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::IO::Stream ^&gt; ^ GetStreamAsync(Uri ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; GetStreamAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; GetStreamAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1638,6 +1784,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1664,18 +1811,18 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
+ This operation will not block. The returned [Task\<Stream>](xref:System.Threading.Tasks.Task%601) object will complete after the response headers are read. This method does not read nor buffer the response body.  
 
 > [!NOTE]
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetStreamAsync">
@@ -1690,6 +1837,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1698,8 +1846,15 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.IO.Stream&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1710,19 +1865,20 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
+ This operation will not block. The returned [Task\<Stream>](xref:System.Threading.Tasks.Task%601) object will complete after the response headers are read. This method does not read nor buffer the response body.  
 
 > [!NOTE]
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
       </Docs>
       <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
       <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-      <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+      <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+      <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
     </Member>
     <Member MemberName="GetStreamAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; GetStreamAsync (Uri? requestUri, System.Threading.CancellationToken cancellationToken);" />
@@ -1736,6 +1892,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1744,8 +1901,8 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.IO.Stream&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1756,18 +1913,18 @@ The <paramref name="requestUri" /> is not an absolute URI.
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after the response headers are read. This method does not read nor buffer the response body.  
+ This operation will not block. The returned [Task\<Stream>](xref:System.Threading.Tasks.Task%601) object will complete after the response headers are read. This method does not read nor buffer the response body.  
 
 > [!NOTE]
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStringAsync">
@@ -1796,7 +1953,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetStringAsync (requestUri As String) As Task(Of String)" />
       <MemberSignature Language="F#" Value="member this.GetStringAsync : string -&gt; System.Threading.Tasks.Task&lt;string&gt;" Usage="httpClient.GetStringAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::String ^&gt; ^ GetStringAsync(System::String ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;string&gt; GetStringAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;string&gt; GetStringAsync (string? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1808,6 +1965,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1824,7 +1982,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1840,12 +2005,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetStringAsync">
@@ -1855,7 +2021,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function GetStringAsync (requestUri As Uri) As Task(Of String)" />
       <MemberSignature Language="F#" Value="member this.GetStringAsync : Uri -&gt; System.Threading.Tasks.Task&lt;string&gt;" Usage="httpClient.GetStringAsync requestUri" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::String ^&gt; ^ GetStringAsync(Uri ^ requestUri);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;string&gt; GetStringAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;string&gt; GetStringAsync (Uri? requestUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1867,6 +2033,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1899,12 +2066,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetStringAsync">
@@ -1919,6 +2086,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1927,8 +2095,15 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1945,12 +2120,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetStringAsync">
@@ -1965,6 +2141,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1973,8 +2150,8 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -1991,12 +2168,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of a timeout:
 > - .NET Framework throws a <xref:System.Net.Http.HttpRequestException>.
 > - .NET Core throws a <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception.
-> - .NET 5.0 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
+> - .NET 5 and later versions throw a <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException>.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="requestUri" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation (or timeout for .NET Framework only).</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="MaxResponseContentBufferSize">
@@ -2017,6 +2194,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2049,7 +2227,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function PatchAsync (requestUri As String, content As HttpContent) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.PatchAsync : string * System.Net.Http.HttpContent -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PatchAsync (requestUri, content)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PatchAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string requestUri, System.Net.Http.HttpContent content);" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -2058,6 +2236,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2067,8 +2246,15 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
-        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -2083,6 +2269,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="PatchAsync">
@@ -2092,7 +2279,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function PatchAsync (requestUri As Uri, content As HttpContent) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.PatchAsync : Uri * System.Net.Http.HttpContent -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PatchAsync (requestUri, content)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PatchAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri requestUri, System.Net.Http.HttpContent content);" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -2101,6 +2288,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2110,8 +2298,8 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
-        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -2135,7 +2323,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function PatchAsync (requestUri As String, content As HttpContent, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.PatchAsync : string * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PatchAsync (requestUri, content, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PatchAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (string requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -2144,6 +2332,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2153,9 +2342,16 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
-        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.String" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -2171,6 +2367,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
   
  ]]></format>
         </remarks>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="PatchAsync">
@@ -2180,7 +2377,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="VB.NET" Value="Public Function PatchAsync (requestUri As Uri, content As HttpContent, cancellationToken As CancellationToken) As Task(Of HttpResponseMessage)" />
       <MemberSignature Language="F#" Value="member this.PatchAsync : Uri * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PatchAsync (requestUri, content, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PatchAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PatchAsync (Uri requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -2189,6 +2386,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2198,9 +2396,9 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
-        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0" />
+        <Parameter Name="requestUri" Type="System.Uri" Index="0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="content" Type="System.Net.Http.HttpContent" Index="1" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="requestUri">The Uri the request is sent to.</param>
@@ -2245,7 +2443,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PostAsync : string * System.Net.Http.HttpContent -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PostAsync (requestUri, content)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PostAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (string? requestUri, System.Net.Http.HttpContent content);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (string? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (string? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2257,6 +2455,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2267,7 +2466,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="content" Type="System.Net.Http.HttpContent" />
       </Parameters>
       <Docs>
@@ -2285,12 +2491,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="PostAsync">
@@ -2301,7 +2508,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PostAsync : Uri * System.Net.Http.HttpContent -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PostAsync (requestUri, content)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PostAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (Uri? requestUri, System.Net.Http.HttpContent content);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (Uri? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (Uri? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2313,6 +2520,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2341,12 +2549,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="PostAsync">
@@ -2357,7 +2565,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PostAsync : string * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PostAsync (requestUri, content, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PostAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (string? requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2369,6 +2577,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2379,7 +2588,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="content" Type="System.Net.Http.HttpContent" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
@@ -2399,12 +2615,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="PostAsync">
@@ -2415,7 +2632,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PostAsync : Uri * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PostAsync (requestUri, content, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PostAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (Uri? requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PostAsync (Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2427,6 +2644,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2457,12 +2675,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="PutAsync">
@@ -2492,7 +2710,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PutAsync : string * System.Net.Http.HttpContent -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PutAsync (requestUri, content)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PutAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (string? requestUri, System.Net.Http.HttpContent content);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (string? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (string? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2504,6 +2722,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2514,7 +2733,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="content" Type="System.Net.Http.HttpContent" />
       </Parameters>
       <Docs>
@@ -2532,12 +2758,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="PutAsync">
@@ -2548,7 +2775,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PutAsync : Uri * System.Net.Http.HttpContent -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PutAsync (requestUri, content)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PutAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (Uri? requestUri, System.Net.Http.HttpContent content);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (Uri? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (Uri? requestUri, System.Net.Http.HttpContent? content);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2560,6 +2787,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2588,12 +2816,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="PutAsync">
@@ -2604,7 +2832,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PutAsync : string * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PutAsync (requestUri, content, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PutAsync(System::String ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (string? requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (string? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2616,6 +2844,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2626,7 +2855,14 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="requestUri" Type="System.String" />
+        <Parameter Name="requestUri" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-7.0">
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="content" Type="System.Net.Http.HttpContent" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
@@ -2646,12 +2882,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.UriFormatException">The provided request URI is not valid relative or absolute URI.</exception>
       </Docs>
     </Member>
     <Member MemberName="PutAsync">
@@ -2662,7 +2899,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
       <MemberSignature Language="F#" Value="member this.PutAsync : Uri * System.Net.Http.HttpContent * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;" Usage="httpClient.PutAsync (requestUri, content, cancellationToken)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task&lt;System::Net::Http::HttpResponseMessage ^&gt; ^ PutAsync(Uri ^ requestUri, System::Net::Http::HttpContent ^ content, System::Threading::CancellationToken cancellationToken);" />
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (Uri? requestUri, System.Net.Http.HttpContent content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt; PutAsync (Uri? requestUri, System.Net.Http.HttpContent? content, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-6.0;net-7.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -2674,6 +2911,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2704,12 +2942,12 @@ The <paramref name="requestUri" /> is not an absolute URI.
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <paramref name="requestUri" /> must be an absolute URI or <see cref="P:System.Net.Http.HttpClient.BaseAddress" /> must be set.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="Send">
@@ -2724,12 +2962,13 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -2738,7 +2977,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
         <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="request">The HTTP request message to send.</param>
@@ -2773,12 +3012,13 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -2787,8 +3027,8 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="request">The HTTP request message to send.</param>
@@ -2824,12 +3064,13 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -2838,8 +3079,8 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="request">The HTTP request message to send.</param>
@@ -2879,12 +3120,13 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -2893,9 +3135,9 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="completionOption" Type="System.Net.Http.HttpCompletionOption" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
       </Parameters>
       <Docs>
         <param name="request">The HTTP request message to send.</param>
@@ -2961,6 +3203,7 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -2981,19 +3224,19 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete once the entire response including content is read.  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete once the entire response including content is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -3014,6 +3257,7 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -3042,13 +3286,13 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -3069,6 +3313,7 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -3091,19 +3336,19 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete once the entire response including content is read.  
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete once the entire response including content is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -3124,6 +3369,7 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -3154,13 +3400,13 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
 > In case of timeout, different exceptions are thrown on different .NET implementations.
 > - <xref:System.Net.Http.HttpRequestException> is thrown on all applicable .NET Framework versions.
 > - <xref:System.Threading.Tasks.TaskCanceledException> without any inner exception is thrown on all applicable .NET Core versions.
-> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5.0 and later versions.
+> - <xref:System.Threading.Tasks.TaskCanceledException> that nests a <xref:System.TimeoutException> is thrown on .NET 5 and later versions.
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The request message was already sent by the <see cref="T:System.Net.Http.HttpClient" /> instance.</exception>
         <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">.NET Core and .NET 5 and later only: The request failed due to timeout.</exception>
       </Docs>
     </Member>
     <Member MemberName="Timeout">
@@ -3181,6 +3427,7 @@ The custom <see cref="T:System.Net.Http.HttpMessageHandler" /> does not override
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>

@@ -14,6 +14,7 @@
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
@@ -26,9 +27,10 @@
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Threading" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0" />
+    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Threading" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -51,41 +53,41 @@
   <Docs>
     <summary>Represents a lightweight alternative to <see cref="T:System.Threading.Semaphore" /> that limits the number of threads that can access a resource or pool of resources concurrently.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Semaphores are of two types: local semaphores and named system semaphores. Local semaphores are local to an application, system semaphores are visible throughout the operating system and are suitable for inter-process synchronization. The <xref:System.Threading.SemaphoreSlim> is a lightweight alternative to the <xref:System.Threading.Semaphore> class that doesn't use Windows kernel semaphores. Unlike the <xref:System.Threading.Semaphore> class, the <xref:System.Threading.SemaphoreSlim> class doesn't support named system semaphores. You can use it as a local semaphore only. The <xref:System.Threading.SemaphoreSlim> class is the recommended semaphore for synchronization within a single app.  
-  
- A lightweight semaphore controls access to a pool of resources that is local to your application. When you instantiate a semaphore, you can specify the maximum number of threads that can enter the semaphore concurrently. You also specify the initial number of threads that can enter the semaphore concurrently. This defines the semaphore's count.  
-  
- The count is decremented each time a thread enters the semaphore, and incremented each time a thread releases the semaphore. To enter the semaphore, a thread calls one of the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> overloads. To release the semaphore, it calls one of the <xref:System.Threading.SemaphoreSlim.Release%2A> overloads. When the count reaches zero, subsequent calls to one of the `Wait` methods block until other threads release the semaphore. If multiple threads are blocked, there is no guaranteed order, such as FIFO or LIFO, that controls when threads enter the semaphore.  
-  
- The basic structure for code that uses a semaphore to protect resources is:  
-  
-```vb  
-  
-' Enter semaphore by calling one of the Wait or WaitAsync methods.  
-SemaphoreSlim.Wait()  
-'   
-' Execute code protected by the semaphore.   
-'  
-SemaphoreSlim.Release()  
-  
-```  
-  
- When all threads have released the semaphore, the count is at the maximum value specified when the semaphore was created. The semaphore's count is available from the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Semaphores are of two types: local semaphores and named system semaphores. Local semaphores are local to an application, system semaphores are visible throughout the operating system and are suitable for inter-process synchronization. The <xref:System.Threading.SemaphoreSlim> is a lightweight alternative to the <xref:System.Threading.Semaphore> class that doesn't use Windows kernel semaphores. Unlike the <xref:System.Threading.Semaphore> class, the <xref:System.Threading.SemaphoreSlim> class doesn't support named system semaphores. You can use it as a local semaphore only. The <xref:System.Threading.SemaphoreSlim> class is the recommended semaphore for synchronization within a single app.
+
+ A lightweight semaphore controls access to a pool of resources that is local to your application. When you instantiate a semaphore, you can specify the maximum number of threads that can enter the semaphore concurrently. You also specify the initial number of threads that can enter the semaphore concurrently. This defines the semaphore's count.
+
+ The count is decremented each time a thread enters the semaphore, and incremented each time a thread releases the semaphore. To enter the semaphore, a thread calls one of the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> overloads. To release the semaphore, it calls one of the <xref:System.Threading.SemaphoreSlim.Release%2A> overloads. When the count reaches zero, subsequent calls to one of the `Wait` methods block until other threads release the semaphore. If multiple threads are blocked, there is no guaranteed order, such as FIFO or LIFO, that controls when threads enter the semaphore.
+
+ The basic structure for code that uses a semaphore to protect resources is:
+
+```vb
+
+' Enter semaphore by calling one of the Wait or WaitAsync methods.
+SemaphoreSlim.Wait()
+'
+' Execute code protected by the semaphore.
+'
+SemaphoreSlim.Release()
+
+```
+
+ When all threads have released the semaphore, the count is at the maximum value specified when the semaphore was created. The semaphore's count is available from the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property.
+
 > [!IMPORTANT]
->  The <xref:System.Threading.SemaphoreSlim> class doesn't enforce thread or task identity on calls to the <xref:System.Threading.SemaphoreSlim.Wait%2A>, <xref:System.Threading.SemaphoreSlim.WaitAsync%2A>, and <xref:System.Threading.SemaphoreSlim.Release%2A> methods. In addition, if the <xref:System.Threading.SemaphoreSlim.%23ctor%28System.Int32%29> constructor is used to instantiate the <xref:System.Threading.SemaphoreSlim> object, the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property can increase beyond the value set by the constructor. It is the programmer's responsibility to ensure that calls to <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> methods are appropriately paired with calls to <xref:System.Threading.SemaphoreSlim.Release%2A> methods.  
-  
-   
-  
-## Examples  
- The following example creates a semaphore with a maximum count of three threads and an initial count of zero threads. The example starts five tasks, all of which block waiting for the semaphore. The main thread calls the <xref:System.Threading.SemaphoreSlim.Release%28System.Int32%29> overload to increase the semaphore count to its maximum, which allows three tasks to enter the semaphore. Each time the semaphore is released, the previous semaphore count is displayed. Console messages track semaphore use. The simulated work interval is increased slightly for each thread to make the output easier to read.  
-  
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.semaphoreslim/cs/example.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.semaphoreslim/vb/example.vb" id="Snippet1":::  
-  
+>  The <xref:System.Threading.SemaphoreSlim> class doesn't enforce thread or task identity on calls to the <xref:System.Threading.SemaphoreSlim.Wait%2A>, <xref:System.Threading.SemaphoreSlim.WaitAsync%2A>, and <xref:System.Threading.SemaphoreSlim.Release%2A> methods. In addition, if the <xref:System.Threading.SemaphoreSlim.%23ctor%28System.Int32%29> constructor is used to instantiate the <xref:System.Threading.SemaphoreSlim> object, the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property can increase beyond the value set by the constructor. It is the programmer's responsibility to ensure that calls to <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> methods are appropriately paired with calls to <xref:System.Threading.SemaphoreSlim.Release%2A> methods.
+
+
+
+## Examples
+ The following example creates a semaphore with a maximum count of three threads and an initial count of zero threads. The example starts five tasks, all of which block waiting for the semaphore. The main thread calls the <xref:System.Threading.SemaphoreSlim.Release%28System.Int32%29> overload to increase the semaphore count to its maximum, which allows three tasks to enter the semaphore. Each time the semaphore is released, the previous semaphore count is displayed. Console messages track semaphore use. The simulated work interval is increased slightly for each thread to make the output easier to read.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Threading/SemaphoreSlim/Overview/example.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.semaphoreslim/vb/example.vb" id="Snippet1":::
+
  ]]></format>
     </remarks>
     <threadsafe>All public and protected members of <see cref="T:System.Threading.SemaphoreSlim" /> are thread-safe and may be used concurrently from multiple threads, with the exception of <see cref="M:System.Threading.SemaphoreSlim.Dispose" />, which must be used only when all other operations on the <see cref="T:System.Threading.SemaphoreSlim" /> have completed.</threadsafe>
@@ -120,6 +122,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -138,11 +141,11 @@ SemaphoreSlim.Release()
         <param name="initialCount">The initial number of requests for the semaphore that can be granted concurrently.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.SemaphoreSlim" /> class, specifying the initial number of requests that can be granted concurrently.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `initialCount` parameter defines the number of concurrent requests to enter the semaphore that can be granted. However, it doesn't define the maximum number of requests that can be granted concurrently. A   <xref:System.Threading.SemaphoreSlim> object instantiated by calling this constructor doesn't throw a <xref:System.Threading.SemaphoreFullException> exception if a call to the <xref:System.Threading.SemaphoreSlim.Release%2A> method increases the value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property beyond `initialCount`. This occurs if there are more calls to <xref:System.Threading.SemaphoreSlim.Release%2A> methods than there are to <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> methods. To set the maximum number of concurrent requests to enter the semaphore that can be granted, call the <xref:System.Threading.SemaphoreSlim.%23ctor%28System.Int32%2CSystem.Int32%29> constructor.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `initialCount` parameter defines the number of concurrent requests to enter the semaphore that can be granted. However, it doesn't define the maximum number of requests that can be granted concurrently. A   <xref:System.Threading.SemaphoreSlim> object instantiated by calling this constructor doesn't throw a <xref:System.Threading.SemaphoreFullException> exception if a call to the <xref:System.Threading.SemaphoreSlim.Release%2A> method increases the value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property beyond `initialCount`. This occurs if there are more calls to <xref:System.Threading.SemaphoreSlim.Release%2A> methods than there are to <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> methods. To set the maximum number of concurrent requests to enter the semaphore that can be granted, call the <xref:System.Threading.SemaphoreSlim.%23ctor%28System.Int32%2CSystem.Int32%29> constructor.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
@@ -167,6 +170,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -209,6 +213,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -227,11 +232,11 @@ SemaphoreSlim.Release()
         <summary>Returns a <see cref="T:System.Threading.WaitHandle" /> that can be used to wait on the semaphore.</summary>
         <value>A <see cref="T:System.Threading.WaitHandle" /> that can be used to wait on the semaphore.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this property only when you must wait on a SemaphoreSlim together with other kernel-based synchronization objects with the same wait handle. A successful wait on the <xref:System.Threading.SemaphoreSlim.AvailableWaitHandle%2A> does not imply a successful wait on the <xref:System.Threading.SemaphoreSlim> itself, nor does it decrement the semaphore's count. After the available wait handle is signaled, you should wait on the <xref:System.Threading.SemaphoreSlim> specifically.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this property only when you must wait on a SemaphoreSlim together with other kernel-based synchronization objects with the same wait handle. A successful wait on the <xref:System.Threading.SemaphoreSlim.AvailableWaitHandle%2A> does not imply a successful wait on the <xref:System.Threading.SemaphoreSlim> itself, nor does it decrement the semaphore's count. After the available wait handle is signaled, you should wait on the <xref:System.Threading.SemaphoreSlim> specifically.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.SemaphoreSlim" /> has been disposed.</exception>
@@ -255,6 +260,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -273,11 +279,11 @@ SemaphoreSlim.Release()
         <summary>Gets the number of remaining threads that can enter the <see cref="T:System.Threading.SemaphoreSlim" /> object.</summary>
         <value>The number of remaining threads that can enter the semaphore.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The initial value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property is set by the call to the <xref:System.Threading.SemaphoreSlim.%23ctor%2A> class constructor. It is decremented by each call to the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> method, and incremented by each call to the <xref:System.Threading.SemaphoreSlim.Release%2A> method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The initial value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property is set by the call to the <xref:System.Threading.SemaphoreSlim.%23ctor%2A> class constructor. It is decremented by each call to the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> method, and incremented by each call to the <xref:System.Threading.SemaphoreSlim.Release%2A> method.
+
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
@@ -314,6 +320,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -332,16 +339,16 @@ SemaphoreSlim.Release()
       <Docs>
         <summary>Releases all resources used by the current instance of the <see cref="T:System.Threading.SemaphoreSlim" /> class.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Call `Dispose` when you are finished using the <xref:System.Threading.SemaphoreSlim>. The `Dispose` method leaves the <xref:System.Threading.SemaphoreSlim> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Threading.SemaphoreSlim> so the garbage collector can reclaim the memory that the <xref:System.Threading.SemaphoreSlim> was occupying.  
-  
- For more information, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Call `Dispose` when you are finished using the <xref:System.Threading.SemaphoreSlim>. The `Dispose` method leaves the <xref:System.Threading.SemaphoreSlim> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Threading.SemaphoreSlim> so the garbage collector can reclaim the memory that the <xref:System.Threading.SemaphoreSlim> was occupying.
+
+ For more information, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).
+
 > [!NOTE]
->  Always call `Dispose` before you release your last reference to the <xref:System.Threading.SemaphoreSlim>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Threading.SemaphoreSlim> object's `Finalize` method.  
-  
+>  Always call `Dispose` before you release your last reference to the <xref:System.Threading.SemaphoreSlim>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Threading.SemaphoreSlim> object's `Finalize` method.
+
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
@@ -364,6 +371,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -386,11 +394,11 @@ SemaphoreSlim.Release()
           <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         <summary>Releases the unmanaged resources used by the <see cref="T:System.Threading.SemaphoreSlim" />, and optionally releases the managed resources.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Unlike most of the members of <xref:System.Threading.SemaphoreSlim>, <xref:System.Threading.SemaphoreSlim.Dispose%2A> is not thread-safe and may not be used concurrently with other members of this instance.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Unlike most of the members of <xref:System.Threading.SemaphoreSlim>, <xref:System.Threading.SemaphoreSlim.Dispose%2A> is not thread-safe and may not be used concurrently with other members of this instance.
+
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
@@ -424,6 +432,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -443,11 +452,11 @@ SemaphoreSlim.Release()
         <summary>Releases the <see cref="T:System.Threading.SemaphoreSlim" /> object once.</summary>
         <returns>The previous count of the <see cref="T:System.Threading.SemaphoreSlim" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A call to the <xref:System.Threading.SemaphoreSlim.Release> method increments the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one. If the value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property is zero before this method is called, the method also allows one thread or task blocked by a call to the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> method to enter the semaphore.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A call to the <xref:System.Threading.SemaphoreSlim.Release> method increments the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one. If the value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property is zero before this method is called, the method also allows one thread or task blocked by a call to the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> method to enter the semaphore.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.</exception>
@@ -472,6 +481,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -494,11 +504,11 @@ SemaphoreSlim.Release()
         <summary>Releases the <see cref="T:System.Threading.SemaphoreSlim" /> object a specified number of times.</summary>
         <returns>The previous count of the <see cref="T:System.Threading.SemaphoreSlim" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A call to the <xref:System.Threading.SemaphoreSlim.Release%28System.Int32%29> method increments the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by `releaseCount`. If the value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property is zero before this method is called, the method also allows `releaseCount` threads or tasks blocked by a call to the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> method to enter the semaphore.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A call to the <xref:System.Threading.SemaphoreSlim.Release%28System.Int32%29> method increments the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by `releaseCount`. If the value of the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property is zero before this method is called, the method also allows `releaseCount` threads or tasks blocked by a call to the <xref:System.Threading.SemaphoreSlim.Wait%2A> or <xref:System.Threading.SemaphoreSlim.WaitAsync%2A> method to enter the semaphore.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.</exception>
@@ -536,6 +546,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -548,7 +559,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -560,11 +571,11 @@ SemaphoreSlim.Release()
       <Docs>
         <summary>Blocks the current thread until it can enter the <see cref="T:System.Threading.SemaphoreSlim" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.</exception>
@@ -588,6 +599,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -600,7 +612,7 @@ SemaphoreSlim.Release()
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -617,24 +629,24 @@ SemaphoreSlim.Release()
         <returns>
           <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks 
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
+
 If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
 
-If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.  
-  
+If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.
+
 If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim.Wait%28System.Int32%29> and the timeout interval specified by `millisecondsTimeout` expires:
 
 - The thread or task doesn't enter the semaphore.
-- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.  
-  
+- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite timeout -or- timeout is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+          <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite timeout -or- timeout is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.SemaphoreSlim" /> has been disposed.</exception>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
       </Docs>
@@ -656,6 +668,7 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -668,7 +681,7 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -683,21 +696,21 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> token to observe.</param>
         <summary>Blocks the current thread until it can enter the <see cref="T:System.Threading.SemaphoreSlim" />, while observing a <see cref="T:System.Threading.CancellationToken" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.  
-  
- If `cancellationToken` is cancelled, the thread or task doesn't enter the semaphore, and the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented. Instead, the method throws an <xref:System.OperationCanceledException> exception.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.
+
+ If `cancellationToken` is cancelled, the thread or task doesn't enter the semaphore, and the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented. Instead, the method throws an <xref:System.OperationCanceledException> exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.OperationCanceledException">
           <paramref name="cancellationToken" /> was canceled.</exception>
-        <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.  
-  
- -or-  
-  
+        <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.
+
+ -or-
+
  The <see cref="T:System.Threading.CancellationTokenSource" /> that created <paramref name="cancellationToken" /> has already been disposed.</exception>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
         <related type="Article" href="/dotnet/standard/threading/cancellation-in-managed-threads">Cancellation</related>
@@ -720,6 +733,7 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -732,7 +746,7 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -749,28 +763,28 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <returns>
           <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
-If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately. 
- 
-If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.  
-  
+
+If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
+
+If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.
+
 If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim.Wait%28System.TimeSpan%29> and the timeout interval specified by `millisecondsTimeout` expires:
 
 - The thread or task doesn't enter the semaphore.
-- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.   
-  
+- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="timeout" /> is a negative number other than -1, which represents an infinite timeout.
 
--or- 
+-or-
 
-<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
         <exception cref="T:System.ObjectDisposedException">The semaphoreSlim instance has been disposed.</exception>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
       </Docs>
@@ -792,6 +806,7 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -804,7 +819,7 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -823,22 +838,22 @@ If a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim
         <returns>
           <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
+
 If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
 
-If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.  
-  
+If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.
+
 If `cancellationToken` is cancelled, or if a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim.Wait%28System.Int32%2CSystem.Threading.CancellationToken%29> and the timeout interval specified by `millisecondsTimeout` expires:
 
 - The thread or task doesn't enter the semaphore.
-- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.  
- 
-If `cancellationToken` is cancelled, the method throws an   <xref:System.OperationCanceledException> exception.  
-  
+- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.
+
+If `cancellationToken` is cancelled, the method throws an <xref:System.OperationCanceledException> exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.OperationCanceledException">
@@ -848,7 +863,7 @@ If `cancellationToken` is cancelled, the method throws an   <xref:System.Operati
 
 -or-
 
-<paramref name="millisecondsTimeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+<paramref name="millisecondsTimeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.SemaphoreSlim" /> instance has been disposed, or the <see cref="T:System.Threading.CancellationTokenSource" /> that created <paramref name="cancellationToken" /> has been disposed.</exception>
         <related type="Article" href="/dotnet/standard/threading/semaphore-and-semaphoreslim">Semaphore and SemaphoreSlim</related>
       </Docs>
@@ -870,6 +885,7 @@ If `cancellationToken` is cancelled, the method throws an   <xref:System.Operati
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -882,7 +898,7 @@ If `cancellationToken` is cancelled, the method throws an   <xref:System.Operati
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -901,22 +917,22 @@ If `cancellationToken` is cancelled, the method throws an   <xref:System.Operati
         <returns>
           <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
-If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately. 
+          <format type="text/markdown"><![CDATA[
 
-If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.  
-  
+## Remarks
+If the timeout is set to -1 milliseconds, the method waits indefinitely.
+
+If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
+
+If a thread or task is able to enter the semaphore, it decrements the <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property by one.
+
 If `cancellationToken` is cancelled, or if a thread or task is blocked when calling <xref:System.Threading.SemaphoreSlim.Wait%28System.TimeSpan%2CSystem.Threading.CancellationToken%29> and the timeout interval specified by `millisecondsTimeout` expires:
 
 - The thread or task doesn't enter the semaphore.
-- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.  
+- The <xref:System.Threading.SemaphoreSlim.CurrentCount%2A> property isn't decremented.
 
-If `cancellationToken` is cancelled, the method throws an <xref:System.OperationCanceledException> exception.  
-  
+If `cancellationToken` is cancelled, the method throws an <xref:System.OperationCanceledException> exception.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.OperationCanceledException">
@@ -926,9 +942,9 @@ If `cancellationToken` is cancelled, the method throws an <xref:System.Operation
 
 -or-.
 
-<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
         <exception cref="T:System.ObjectDisposedException">The semaphoreSlim instance has been disposed.
-          
+
 -or-
 
 The <see cref="T:System.Threading.CancellationTokenSource" /> that created <paramref name="cancellationToken" /> has already been disposed.</exception>
@@ -964,6 +980,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1003,6 +1020,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1018,29 +1036,29 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <ReturnType>System.Threading.Tasks.Task&lt;System.Boolean&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="millisecondsTimeout" Type="System.Int32" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="millisecondsTimeout" Type="System.Int32" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="millisecondsTimeout">The number of milliseconds to wait, <see cref="F:System.Threading.Timeout.Infinite" /> (-1) to wait indefinitely, or zero to test the state of the wait handle and return immediately.</param>
         <summary>Asynchronously waits to enter the <see cref="T:System.Threading.SemaphoreSlim" />, using a 32-bit signed integer to measure the time interval.</summary>
         <returns>A task that will complete with a result of <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />, otherwise with a result of <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
- If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately. 
-  
+
+ If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a negative number other than -1, which represents an infinite timeout.
-          
+
 -or-
-          
-<paramref name="millisecondsTimeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+
+<paramref name="millisecondsTimeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
       </Docs>
     </Member>
     <Member MemberName="WaitAsync">
@@ -1060,6 +1078,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1075,7 +1094,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> token to observe.</param>
@@ -1104,6 +1123,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1119,20 +1139,20 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <ReturnType>System.Threading.Tasks.Task&lt;System.Boolean&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="timeout" Type="System.TimeSpan" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="timeout" Type="System.TimeSpan" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="timeout">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait, a <see cref="T:System.TimeSpan" /> that represents -1 milliseconds to wait indefinitely, or a <see cref="T:System.TimeSpan" /> that represents 0 milliseconds to test the wait handle and return immediately.</param>
         <summary>Asynchronously waits to enter the <see cref="T:System.Threading.SemaphoreSlim" />, using a <see cref="T:System.TimeSpan" /> to measure the time interval.</summary>
         <returns>A task that will complete with a result of <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />, otherwise with a result of <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
- If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately. 
-  
+
+ If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.</exception>
@@ -1140,8 +1160,8 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
           <paramref name="timeout" /> is a negative number other than -1, which represents an infinite timeout.
 
 -or-
-          
-<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+
+<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
       </Docs>
     </Member>
     <Member MemberName="WaitAsync">
@@ -1161,6 +1181,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1176,8 +1197,8 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <ReturnType>System.Threading.Tasks.Task&lt;System.Boolean&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="millisecondsTimeout" Type="System.Int32" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="millisecondsTimeout" Type="System.Int32" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="millisecondsTimeout">The number of milliseconds to wait, <see cref="F:System.Threading.Timeout.Infinite" /> (-1) to wait indefinitely, or zero to test the state of the wait handle and return immediately.</param>
@@ -1185,21 +1206,21 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <summary>Asynchronously waits to enter the <see cref="T:System.Threading.SemaphoreSlim" />, using a 32-bit signed integer to measure the time interval, while observing a <see cref="T:System.Threading.CancellationToken" />.</summary>
         <returns>A task that will complete with a result of <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />, otherwise with a result of <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  If the timeout is set to -1 milliseconds, the method waits indefinitely.
- 
- If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately. 
-  
+
+ If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="millisecondsTimeout" /> is a number other than -1, which represents an infinite timeout.
-          
+
 -or-
 
-<paramref name="millisecondsTimeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+<paramref name="millisecondsTimeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
         <exception cref="T:System.ObjectDisposedException">The current instance has already been disposed.</exception>
         <exception cref="T:System.OperationCanceledException">
           <paramref name="cancellationToken" /> was canceled.</exception>
@@ -1222,6 +1243,7 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1237,8 +1259,8 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <ReturnType>System.Threading.Tasks.Task&lt;System.Boolean&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="timeout" Type="System.TimeSpan" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="timeout" Type="System.TimeSpan" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="timeout">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait, a <see cref="T:System.TimeSpan" /> that represents -1 milliseconds to wait indefinitely, or a <see cref="T:System.TimeSpan" /> that represents 0 milliseconds to test the wait handle and return immediately.</param>
@@ -1246,21 +1268,21 @@ The <see cref="T:System.Threading.CancellationTokenSource" /> that created <para
         <summary>Asynchronously waits to enter the <see cref="T:System.Threading.SemaphoreSlim" />, using a <see cref="T:System.TimeSpan" /> to measure the time interval, while observing a <see cref="T:System.Threading.CancellationToken" />.</summary>
         <returns>A task that will complete with a result of <see langword="true" /> if the current thread successfully entered the <see cref="T:System.Threading.SemaphoreSlim" />, otherwise with a result of <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  If the timeout is set to -1 milliseconds, the method waits indefinitely.
 
- If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately. 
-  
+ If the timeout is set to zero milliseconds, the method doesn't block. It tests the state of the wait handle and returns immediately.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="timeout" /> is a negative number other than -1, which represents an infinite timeout.
-          
+
 -or-
 
-<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+<paramref name="timeout" /> is greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</exception>
         <exception cref="T:System.OperationCanceledException">
           <paramref name="cancellationToken" /> was canceled.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.SemaphoreSlim" /> has been disposed.</exception>

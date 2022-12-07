@@ -1,29 +1,32 @@
 <Type Name="Span&lt;T&gt;" FullName="System.Span&lt;T&gt;">
-  <TypeSignature Language="C#" Value="public struct Span&lt;T&gt;" />
+  <TypeSignature Language="C#" Value="public readonly ref struct Span&lt;T&gt;" />
   <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit Span`1&lt;T&gt; extends System.ValueType" />
   <TypeSignature Language="DocId" Value="T:System.Span`1" />
   <TypeSignature Language="VB.NET" Value="Public Structure Span(Of T)" />
   <TypeSignature Language="F#" Value="type Span&lt;'T&gt; = struct" />
   <TypeSignature Language="C++ CLI" Value="generic &lt;typename T&gt;&#xA;public value class Span" />
   <AssemblyInfo>
-    <AssemblyName>System.Memory</AssemblyName>
-  </AssemblyInfo>
-  <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>4.2.1.0</AssemblyVersion>
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Memory</AssemblyName>
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="System.Memory" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="System.Memory" FromVersion="6.0.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="System.Memory" FromVersion="7.0.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="System.Memory" FromVersion="4.1.0.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2" />
     <TypeForwarding From="System.Memory" FromVersion="4.2.0.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-3.0" />
     <TypeForwarding From="System.Memory" FromVersion="4.2.1.0" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
@@ -44,10 +47,18 @@
       <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
     </Attribute>
+    <Attribute FrameworkAlternate="net-7.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.CompilerFeatureRequired("RefStructs")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.CompilerFeatureRequired("RefStructs")&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-7.0">
+      <AttributeName Language="C#">[System.Runtime.InteropServices.Marshalling.NativeMarshalling(typeof(System.Runtime.InteropServices.Marshalling.SpanMarshaller&lt;,&gt;))]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.Marshalling.NativeMarshalling(typeof(System.Runtime.InteropServices.Marshalling.SpanMarshaller&lt;,&gt;))&gt;]</AttributeName>
+    </Attribute>
   </Attributes>
   <Docs>
     <typeparam name="T">The type of items in the <see cref="T:System.Span`1" />.</typeparam>
-    <summary>Provides a type- and memory-safe representation of a contiguous region of arbitrary memory.</summary>
+    <summary>Provides a type-safe and memory-safe representation of a contiguous region of arbitrary memory.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
 
@@ -62,19 +73,23 @@ For spans that represent immutable or read-only structures, use <xref:System.Rea
 
 A `Span<T>` represents a contiguous region of arbitrary memory. A `Span<T>` instance is often used to hold the elements of an array or a portion of an array. Unlike an array, however, a `Span<T>` instance can point to managed memory, native memory, or memory managed on the stack. The following example creates a `Span<Byte>` from an array:
 
-:::code language="csharp" source="~/samples/snippets/csharp/api/system/span/program.cs" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet1":::
      
 The following example creates a `Span<Byte>` from 100 bytes of native memory:
 
-:::code language="csharp" source="~/samples/snippets/csharp/api/system/span/program.cs" id="Snippet2":::
+:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet2":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet2":::
 
 The following example uses the C# [stackalloc](/dotnet/csharp/language-reference/keywords/stackalloc) keyword to allocate 100 bytes of memory on the stack:
 
-:::code language="csharp" source="~/samples/snippets/csharp/api/system/span/program.cs" id="Snippet3":::
+:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet3":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet3":::
 
 Because `Span<T>` is an abstraction over an arbitrary block of memory, methods of the `Span<T>` type and methods with `Span<T>` parameters operate on any `Span<T>` object regardless of the kind of memory it encapsulates. For example, each of the separate sections of code that initialize the span and calculate the sum of its elements can be changed into single initialization and calculation methods, as the following example illustrates:
 
-:::code language="csharp" source="~/samples/snippets/csharp/api/system/span/program.cs" id="Snippet4":::
+:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet4":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet4":::
 
 ## Span\<T> and arrays
 
@@ -82,7 +97,8 @@ When it wraps an array, `Span<T>` can wrap an entire array, as it did in the exa
 
 The following example creates a slice of the middle five elements of a 10-element integer array. Note that the code doubles the values of each integer in the slice. As the output shows, the changes made by the span are reflected in the values of the array.
 
-:::code language="csharp" source="~/samples/snippets/csharp/api/system/span/slice/program.cs":::
+:::code language="csharp" source="~/snippets/csharp/System/Span/Slice/Program.cs":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Slice/Program.fs":::
 
 ## Span\<T> and slices
 
@@ -94,7 +110,8 @@ The following example creates a slice of the middle five elements of a 10-elemen
 
 This allocation and copy operation can be eliminated by using either `Span<T>` or <xref:System.ReadOnlySpan%601>, as the following example shows:
 
-:::code language="csharp" source="~/samples/snippets/csharp/api/system/span/slice2/program.cs":::
+:::code language="csharp" source="~/snippets/csharp/System/Span/Slice/Program2.cs":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Span/Slice/Program2.fs":::
 
 
       ]]></format>
@@ -104,7 +121,34 @@ This allocation and copy operation can be eliminated by using either `Span<T>` o
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Span (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public Span (ref T reference);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T&amp; reference) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Span`1.#ctor(`0@)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (ByRef reference As T)" />
+      <MemberSignature Language="F#" Value="new Span&lt;'T&gt; : 'T -&gt; Span&lt;'T&gt;" Usage="new System.Span&lt;'T&gt; reference" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Span(T % reference);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="reference" Type="T" RefType="ref" Index="0" FrameworkAlternate="net-7.0" />
+      </Parameters>
+      <Docs>
+        <param name="reference">A reference to data.</param>
+        <summary>Creates a new <see cref="T:System.Span`1" /> of length 1 around the specified reference.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Span (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.#ctor(`0[])" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (array As T())" />
@@ -113,18 +157,19 @@ This allocation and copy operation can be eliminated by using either `Span<T>` o
       <MemberSignature Language="C#" Value="public Span (T[] array);" FrameworkAlternate="netcore-2.1;netcore-2.2;netstandard-2.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="array" Type="T[]" />
@@ -151,18 +196,19 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Span(void* pointer, int length);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -192,7 +238,7 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Span (T[]? array, int start, int length);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public Span (T[]? array, int start, int length);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array, int32 start, int32 length) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.#ctor(`0[],System.Int32,System.Int32)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (array As T(), start As Integer, length As Integer)" />
@@ -201,18 +247,19 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
       <MemberSignature Language="C#" Value="public Span (T[] array, int start, int length);" FrameworkAlternate="netcore-2.1;netcore-2.2;netstandard-2.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="array" Type="T[]" />
@@ -257,18 +304,19 @@ This method returns `default` when `array` is `null`.
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void Clear();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -294,18 +342,19 @@ The `Clear` method sets the items in the <xref:System.Span%601> object to their 
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(Span&lt;T&gt; destination);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -332,22 +381,23 @@ This method copies all of `source` to `destination` even if `source` and `destin
       <MemberSignature Language="ILAsm" Value=".property valuetype System.Span`1&lt;!T&gt; Empty" />
       <MemberSignature Language="DocId" Value="P:System.Span`1.Empty" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Empty As Span(Of T)" />
-      <MemberSignature Language="F#" Value="member this.Empty : Span&lt;'T&gt;" Usage="System.Span&lt;'T&gt;.Empty" />
+      <MemberSignature Language="F#" Value="static member Empty : Span&lt;'T&gt;" Usage="System.Span&lt;'T&gt;.Empty" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property Span&lt;T&gt; Empty { Span&lt;T&gt; get(); };" />
       <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
@@ -359,7 +409,7 @@ This method copies all of `source` to `destination` even if `source` and `destin
       </Docs>
     </Member>
     <Member MemberName="Equals">
-      <MemberSignature Language="C#" Value="public override bool Equals (object? obj);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public override bool Equals (object? obj);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool Equals(object obj) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.Equals(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Equals (obj As Object) As Boolean" />
@@ -368,27 +418,32 @@ This method copies all of `source` to `destination` even if `source` and `destin
       <MemberSignature Language="C#" Value="public override bool Equals (object obj);" FrameworkAlternate="netcore-2.1;netcore-2.2;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
           <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
         </Attribute>
-        <Attribute>
+        <Attribute FrameworkAlternate="net-5.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1">
           <AttributeName Language="C#">[System.Obsolete("Equals() on Span will always throw an exception. Use == instead.")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("Equals() on Span will always throw an exception. Use == instead.")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-6.0;net-7.0">
+          <AttributeName Language="C#">[System.Obsolete("Equals() on Span will always throw an exception. Use the equality operator instead.")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("Equals() on Span will always throw an exception. Use the equality operator instead.")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -425,18 +480,19 @@ To compare two <xref:System.Span%601> objects for equality, use the <xref:System
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void Fill(T value);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -464,6 +520,7 @@ To compare two <xref:System.Span%601> objects for equality, use the <xref:System
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -496,18 +553,19 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override int GetHashCode();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -544,6 +602,7 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -563,14 +622,27 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns a reference to the element of the <see cref="T:System.Span`1" /> at index zero.</summary>
-        <returns>A reference to the element of the <see cref="T:System.Span`1" /> at index zero, or <see langword="null" /> if <see cref="P:System.Span`1.IsEmpty" /> is  <see langword="true" />.</returns>
+        <summary>Returns a reference to an object of type T that can be used for pinning.
+        
+This method is intended to support .NET compilers and is not intended to be called by user code.</summary>
+        <returns>A reference to the element of the span at index 0, or <see langword="null" /> if the span is empty.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language-reference/builtin-types/struct#ref-struct). It can be used for pinning a <xref:System.Span%601> in memory. It is required to support the use of a <xref:System.Span%601> within a [fixed](/dotnet/csharp/language-reference/keywords/fixed-statement) statement.
+## Remarks
 
-       ]]></format>
+Applications should not directly call `GetPinnableReference`. Instead, callers should use their language's normal pinning syntax, such as C\#'s `fixed` statement.
+
+If pinning a `Span<char>`, the resulting `char*` __is not__ assumed to be null-terminated. This behavior is different from pinning a `string`, where the resulting `char*` is guaranteed to be null-terminated.
+
+## Examples
+
+The following example demonstrates creating an integer array, pinning it, and writing each element to the console.
+
+:::code language="csharp" source="~/snippets/csharp/System/ReadOnlySpanT/GetPinnableReference/getpinnablereference1.cs":::
+:::code language="fsharp" source="~/snippets/fsharp/System/ReadOnlySpanT/GetPinnableReference/getpinnablereference1.fs":::
+
+ ]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -583,18 +655,19 @@ The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsEmpty { bool get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -615,18 +688,19 @@ The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property T % default[int] { T % get(int index); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue RefType="Ref">
         <ReturnType>T</ReturnType>
@@ -652,18 +726,19 @@ The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property int Length { int get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -683,18 +758,19 @@ The `GetPinnableReference` method returns a [ref struct](/dotnet/csharp/language
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(Span&lt;T&gt; left, Span&lt;T&gt; right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -727,18 +803,19 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static operator Span&lt;T&gt;(ArraySegment&lt;T&gt; segment);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
@@ -762,18 +839,19 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static operator ReadOnlySpan&lt;T&gt;(Span&lt;T&gt; span);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ReadOnlySpan&lt;T&gt;</ReturnType>
@@ -789,7 +867,7 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
-      <MemberSignature Language="C#" Value="public static implicit operator Span&lt;T&gt; (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static implicit operator Span&lt;T&gt; (T[]? array);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype System.Span`1&lt;!T&gt; op_Implicit(!T[] array) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Span`1.op_Implicit(`0[])~System.Span{`0}" />
       <MemberSignature Language="VB.NET" Value="Public Shared Widening Operator CType (array As T()) As Span(Of T)" />
@@ -798,18 +876,19 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
       <MemberSignature Language="C#" Value="public static implicit operator Span&lt;T&gt; (T[] array);" FrameworkAlternate="netcore-2.1;netcore-2.2;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
@@ -833,18 +912,19 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(Span&lt;T&gt; left, Span&lt;T&gt; right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -877,18 +957,19 @@ Two <xref:System.Span%601> objects are equal if they have different lengths or i
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Span&lt;T&gt; Slice(int start);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
@@ -914,18 +995,19 @@ Two <xref:System.Span%601> objects are equal if they have different lengths or i
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Span&lt;T&gt; Slice(int start, int length);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
@@ -953,18 +1035,19 @@ Two <xref:System.Span%601> objects are equal if they have different lengths or i
       <MemberSignature Language="C++ CLI" Value="public:&#xA; cli::array &lt;T&gt; ^ ToArray();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>T[]</ReturnType>
@@ -996,6 +1079,7 @@ This method performs a heap allocation and therefore should be avoided if possib
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1028,18 +1112,19 @@ For a `Span<Char>`, the `ToString` method returns a <xref:System.String> that co
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryCopyTo(Span&lt;T&gt; destination);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyName>System.Memory</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>4.2.1.0</AssemblyVersion>
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>

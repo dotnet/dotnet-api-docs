@@ -7,63 +7,55 @@
   <TypeSignature Language="C++ CLI" Value="public ref class QuicStream sealed : System::IO::Stream" />
   <AssemblyInfo>
     <AssemblyName>System.Net.Quic</AssemblyName>
-    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.IO.Stream</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a QUIC stream. <see cref="T:System.Net.Quic.QuicStream" /> can be <see cref="F:System.Net.Quic.QuicStreamType.Unidirectional">unidirectional</see>, that is, write-only for the opening side, or <see cref="F:System.Net.Quic.QuicStreamType.Bidirectional">bidirectional</see>, which allows both sides to write.</summary>
+    <remarks>
+      <see cref="T:System.Net.Quic.QuicStream" /> can be used in a same way as any other <see cref="T:System.IO.Stream" />.
+
+Apart from a stream API, <see cref="T:System.Net.Quic.QuicStream" /> also exposes QUIC-specific features:
+
+<list type="bullet"><item><term><see cref="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)" /></term><description>Closes the writing side of the stream as a single operation with the write itself.</description></item><item><term><see cref="M:System.Net.Quic.QuicStream.CompleteWrites" /></term><description>Closes the writing side of the stream.</description></item><item><term><see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /></term><description>Aborts either the writing or the reading side of the stream.</description></item><item><term><see cref="M:System.Net.Quic.QuicStream.WritesClosed" /></term><description>Returns a <see cref="T:System.Threading.Tasks.Task" /> that will complete when the stream writing side has been closed (gracefully or abortively).</description></item><item><term><see cref="P:System.Net.Quic.QuicStream.ReadsClosed" /></term><description>Returns a <see cref="T:System.Threading.Tasks.Task" /> that will complete when the stream reading side has been closed (gracefully or abortively).</description></item></list></remarks>
+    <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#name-streams">RFC 9000: Streams</related>
   </Docs>
   <Members>
-    <Member MemberName="AbortRead">
-      <MemberSignature Language="C#" Value="public void AbortRead (long errorCode);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AbortRead(int64 errorCode) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.AbortRead(System.Int64)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub AbortRead (errorCode As Long)" />
-      <MemberSignature Language="F#" Value="member this.AbortRead : int64 -&gt; unit" Usage="quicStream.AbortRead errorCode" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AbortRead(long errorCode);" />
+    <Member MemberName="Abort">
+      <MemberSignature Language="C#" Value="public void Abort (System.Net.Quic.QuicAbortDirection abortDirection, long errorCode);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Abort(valuetype System.Net.Quic.QuicAbortDirection abortDirection, int64 errorCode) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Abort (abortDirection As QuicAbortDirection, errorCode As Long)" />
+      <MemberSignature Language="F#" Value="member this.Abort : System.Net.Quic.QuicAbortDirection * int64 -&gt; unit" Usage="quicStream.Abort (abortDirection, errorCode)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Abort(System::Net::Quic::QuicAbortDirection abortDirection, long errorCode);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
+        <Parameter Name="abortDirection" Type="System.Net.Quic.QuicAbortDirection" />
         <Parameter Name="errorCode" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="errorCode">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AbortWrite">
-      <MemberSignature Language="C#" Value="public void AbortWrite (long errorCode);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void AbortWrite(int64 errorCode) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.AbortWrite(System.Int64)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub AbortWrite (errorCode As Long)" />
-      <MemberSignature Language="F#" Value="member this.AbortWrite : int64 -&gt; unit" Usage="quicStream.AbortWrite errorCode" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void AbortWrite(long errorCode);" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="errorCode" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="errorCode">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="abortDirection">The direction of the stream to abort.</param>
+        <param name="errorCode">The error code with which to abort the stream. This value is application-protocol (which is the layer above QUIC) dependent.</param>
+        <summary>Aborts either the <see cref="F:System.Net.Quic.QuicAbortDirection.Read">reading</see>, <see cref="F:System.Net.Quic.QuicAbortDirection.Write">writing</see>, or <see cref="F:System.Net.Quic.QuicAbortDirection.Both">both</see> sides of the stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Corresponds to [STOP_SENDING](https://www.rfc-editor.org/rfc/rfc9000.html#frame-stop-sending) and [RESET_STREAM](https://www.rfc-editor.org/rfc/rfc9000.html#frame-reset-stream) QUIC frames.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="BeginRead">
@@ -76,7 +68,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.IAsyncResult</ReturnType>
@@ -97,6 +89,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="BeginWrite">
@@ -109,7 +102,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.IAsyncResult</ReturnType>
@@ -130,6 +123,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="CanRead">
@@ -142,15 +136,16 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value indicating whether the <see cref="T:System.Net.Quic.QuicStream" /> supports reading.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="CanSeek">
@@ -163,15 +158,38 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value indicating whether the <see cref="T:System.Net.Quic.QuicStream" /> supports seeking.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="CanTimeout">
+      <MemberSignature Language="C#" Value="public override bool CanTimeout { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool CanTimeout" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.CanTimeout" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property CanTimeout As Boolean" />
+      <MemberSignature Language="F#" Value="member this.CanTimeout : bool" Usage="System.Net.Quic.QuicStream.CanTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool CanTimeout { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value that indicates whether the <see cref="T:System.Net.Quic.QuicStream" /> can timeout.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="CanWrite">
@@ -184,14 +202,93 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value indicating whether the <see cref="T:System.Net.Quic.QuicStream" /> supports writing.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="CompleteWrites">
+      <MemberSignature Language="C#" Value="public void CompleteWrites ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CompleteWrites() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.CompleteWrites" />
+      <MemberSignature Language="VB.NET" Value="Public Sub CompleteWrites ()" />
+      <MemberSignature Language="F#" Value="member this.CompleteWrites : unit -&gt; unit" Usage="quicStream.CompleteWrites " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CompleteWrites();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gracefully completes the writing side of the stream.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Corresponds to an empty [STREAM](https://www.rfc-editor.org/rfc/rfc9000.html#frame-stream) frame with `FIN` flag set to `true`.
+
+Equivalent to using <xref:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)> with `completeWrites: true`.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.Dispose(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Sub Dispose (disposing As Boolean)" />
+      <MemberSignature Language="F#" Value="override this.Dispose : bool -&gt; unit" Usage="quicStream.Dispose disposing" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override void Dispose(bool disposing);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="DisposeAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.ValueTask DisposeAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance valuetype System.Threading.Tasks.ValueTask DisposeAsync() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.DisposeAsync" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function DisposeAsync () As ValueTask" />
+      <MemberSignature Language="F#" Value="override this.DisposeAsync : unit -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.DisposeAsync " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::ValueTask DisposeAsync();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>If the read side is not fully consumed, that is, <see cref="P:System.Net.Quic.QuicStream.ReadsClosed" /> is not completed or <see cref="M:System.Net.Quic.QuicStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)" /> hasn't returned <c>0</c>, aborts the read side with provided <see cref="P:System.Net.Quic.QuicConnectionOptions.DefaultStreamErrorCode" />. If the write side hasn't been closed, closes it gracefully as if <see cref="M:System.Net.Quic.QuicStream.CompleteWrites" /> was called. Finally, all resources associated with the stream will be released.</summary>
+        <returns>A task that represents the asynchronous dispose operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -205,7 +302,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -218,6 +315,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="EndWrite">
@@ -230,7 +328,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -242,6 +340,7 @@
         <param name="asyncResult">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="Flush">
@@ -254,7 +353,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -263,19 +362,19 @@
       <Docs>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="FlushAsync">
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task FlushAsync (System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task FlushAsync (System.Threading.CancellationToken cancellationToken = default);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task FlushAsync(valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.FlushAsync(System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function FlushAsync (cancellationToken As CancellationToken) As Task" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function FlushAsync (Optional cancellationToken As CancellationToken = Nothing) As Task" />
       <MemberSignature Language="F#" Value="override this.FlushAsync : System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="quicStream.FlushAsync cancellationToken" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task ^ FlushAsync(System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -288,6 +387,29 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="Id">
+      <MemberSignature Language="C#" Value="public long Id { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int64 Id" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.Id" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Id As Long" />
+      <MemberSignature Language="F#" Value="member this.Id : int64" Usage="System.Net.Quic.QuicStream.Id" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property long Id { long get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the stream ID.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+        <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#name-stream-types-and-identifier" />
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -300,15 +422,17 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the length of the data available on the stream. This property is not currently supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+        <exception cref="T:System.NotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -321,15 +445,17 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the position within the current stream. This property is not currently supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+        <exception cref="T:System.NotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -342,7 +468,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -355,6 +481,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -367,7 +494,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -384,6 +511,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="ReadAsync">
@@ -395,7 +523,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.ValueTask&lt;System.Int32&gt;</ReturnType>
@@ -410,19 +538,19 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="ReadAsync">
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;int&gt; ReadAsync (byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;int&gt; ReadAsync (byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken = default);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;int32&gt; ReadAsync(unsigned int8[] buffer, int32 offset, int32 count, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadAsync (buffer As Byte(), offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task(Of Integer)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadAsync (buffer As Byte(), offset As Integer, count As Integer, Optional cancellationToken As CancellationToken = Nothing) As Task(Of Integer)" />
       <MemberSignature Language="F#" Value="override this.ReadAsync : byte[] * int * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;int&gt;" Usage="quicStream.ReadAsync (buffer, offset, count, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task&lt;int&gt; ^ ReadAsync(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Int32&gt;</ReturnType>
@@ -441,6 +569,73 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="ReadByte">
+      <MemberSignature Language="C#" Value="public override int ReadByte ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 ReadByte() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.ReadByte" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadByte () As Integer" />
+      <MemberSignature Language="F#" Value="override this.ReadByte : unit -&gt; int" Usage="quicStream.ReadByte " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int ReadByte();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="ReadsClosed">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task ReadsClosed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Threading.Tasks.Task ReadsClosed" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.ReadsClosed" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ReadsClosed As Task" />
+      <MemberSignature Language="F#" Value="member this.ReadsClosed : System.Threading.Tasks.Task" Usage="System.Net.Quic.QuicStream.ReadsClosed" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Threading::Tasks::Task ^ ReadsClosed { System::Threading::Tasks::Task ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a <see cref="T:System.Threading.Tasks.Task" /> that will complete once the reading side has been closed.</summary>
+        <value>To be added.</value>
+        <remarks>The reading side can be closed when it has reached the end of the stream (<see cref="M:System.Net.Quic.QuicStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)" /> will return <c>0</c>), or when <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> is called for <see cref="F:System.Net.Quic.QuicAbortDirection.Read" />, or when the peer called <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> for <see cref="F:System.Net.Quic.QuicAbortDirection.Write" />.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadTimeout">
+      <MemberSignature Language="C#" Value="public override int ReadTimeout { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 ReadTimeout" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.ReadTimeout" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Property ReadTimeout As Integer" />
+      <MemberSignature Language="F#" Value="member this.ReadTimeout : int with get, set" Usage="System.Net.Quic.QuicStream.ReadTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int ReadTimeout { int get(); void set(int value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="Seek">
@@ -453,7 +648,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
@@ -465,9 +660,11 @@
       <Docs>
         <param name="offset">To be added.</param>
         <param name="origin">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Sets the current position of the stream to the given value. This method is not currently supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+        <exception cref="T:System.NotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetLength">
@@ -480,7 +677,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -490,74 +687,32 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Sets the length of the stream. This method is not currently supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+        <exception cref="T:System.NotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
-    <Member MemberName="Shutdown">
-      <MemberSignature Language="C#" Value="public void Shutdown ();" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Shutdown() cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.Shutdown" />
-      <MemberSignature Language="VB.NET" Value="Public Sub Shutdown ()" />
-      <MemberSignature Language="F#" Value="member this.Shutdown : unit -&gt; unit" Usage="quicStream.Shutdown " />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Shutdown();" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ShutdownWriteCompleted">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask ShutdownWriteCompleted (System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask ShutdownWriteCompleted(valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.ShutdownWriteCompleted(System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Function ShutdownWriteCompleted (Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
-      <MemberSignature Language="F#" Value="member this.ShutdownWriteCompleted : System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.ShutdownWriteCompleted cancellationToken" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
-      </Parameters>
-      <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="StreamId">
-      <MemberSignature Language="C#" Value="public long StreamId { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int64 StreamId" />
-      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.StreamId" />
-      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property StreamId As Long" />
-      <MemberSignature Language="F#" Value="member this.StreamId : int64" Usage="System.Net.Quic.QuicStream.StreamId" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property long StreamId { long get(); };" />
+    <Member MemberName="Type">
+      <MemberSignature Language="C#" Value="public System.Net.Quic.QuicStreamType Type { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Net.Quic.QuicStreamType Type" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.Type" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Type As QuicStreamType" />
+      <MemberSignature Language="F#" Value="member this.Type : System.Net.Quic.QuicStreamType" Usage="System.Net.Quic.QuicStream.Type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::Quic::QuicStreamType Type { System::Net::Quic::QuicStreamType get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
+        <ReturnType>System.Net.Quic.QuicStreamType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the stream type.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <related type="Article" href="https://www.rfc-editor.org/rfc/rfc9000.html#name-stream-types-and-identifier" />
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -570,7 +725,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -582,6 +737,7 @@
         <param name="buffer">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -594,7 +750,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -610,32 +766,7 @@
         <param name="count">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="WriteAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask WriteAsync (System.Buffers.ReadOnlySequence&lt;byte&gt; buffers, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.Buffers.ReadOnlySequence`1&lt;unsigned int8&gt; buffers, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteAsync(System.Buffers.ReadOnlySequence{System.Byte},System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Function WriteAsync (buffers As ReadOnlySequence(Of Byte), Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
-      <MemberSignature Language="F#" Value="override this.WriteAsync : System.Buffers.ReadOnlySequence&lt;byte&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.WriteAsync (buffers, cancellationToken)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="buffers" Type="System.Buffers.ReadOnlySequence&lt;System.Byte&gt;" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
-      </Parameters>
-      <Docs>
-        <param name="buffers">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">
@@ -647,7 +778,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
@@ -662,129 +793,49 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask WriteAsync (ReadOnlyMemory&lt;ReadOnlyMemory&lt;byte&gt;&gt; buffers, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.ReadOnlyMemory`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; buffers, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.ReadOnlyMemory{System.Byte}},System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Function WriteAsync (buffers As ReadOnlyMemory(Of ReadOnlyMemory(Of Byte)), Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
-      <MemberSignature Language="F#" Value="override this.WriteAsync : ReadOnlyMemory&lt;ReadOnlyMemory&lt;byte&gt;&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.WriteAsync (buffers, cancellationToken)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="buffers" Type="System.ReadOnlyMemory&lt;System.ReadOnlyMemory&lt;System.Byte&gt;&gt;" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
-      </Parameters>
-      <Docs>
-        <param name="buffers">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="WriteAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask WriteAsync (System.Buffers.ReadOnlySequence&lt;byte&gt; buffers, bool endStream, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.Buffers.ReadOnlySequence`1&lt;unsigned int8&gt; buffers, bool endStream, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteAsync(System.Buffers.ReadOnlySequence{System.Byte},System.Boolean,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Function WriteAsync (buffers As ReadOnlySequence(Of Byte), endStream As Boolean, Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
-      <MemberSignature Language="F#" Value="override this.WriteAsync : System.Buffers.ReadOnlySequence&lt;byte&gt; * bool * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.WriteAsync (buffers, endStream, cancellationToken)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="buffers" Type="System.Buffers.ReadOnlySequence&lt;System.Byte&gt;" />
-        <Parameter Name="endStream" Type="System.Boolean" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
-      </Parameters>
-      <Docs>
-        <param name="buffers">To be added.</param>
-        <param name="endStream">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="WriteAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask WriteAsync (ReadOnlyMemory&lt;byte&gt; buffer, bool endStream, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; buffer, bool endStream, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask WriteAsync (ReadOnlyMemory&lt;byte&gt; buffer, bool completeWrites, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; buffer, bool completeWrites, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Function WriteAsync (buffer As ReadOnlyMemory(Of Byte), endStream As Boolean, Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
-      <MemberSignature Language="F#" Value="override this.WriteAsync : ReadOnlyMemory&lt;byte&gt; * bool * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.WriteAsync (buffer, endStream, cancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function WriteAsync (buffer As ReadOnlyMemory(Of Byte), completeWrites As Boolean, Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
+      <MemberSignature Language="F#" Value="override this.WriteAsync : ReadOnlyMemory&lt;byte&gt; * bool * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.WriteAsync (buffer, completeWrites, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="buffer" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" />
-        <Parameter Name="endStream" Type="System.Boolean" />
+        <Parameter Name="completeWrites" Type="System.Boolean" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="buffer">To be added.</param>
-        <param name="endStream">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
+        <param name="buffer">The region of memory to write data from.</param>
+        <param name="completeWrites">
+          <see langword="true" /> to notify the peer about gracefully closing the write side, that is, to send the FIN flag with the data; otherwise, <see langword="false" />.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)" />
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask WriteAsync (ReadOnlyMemory&lt;ReadOnlyMemory&lt;byte&gt;&gt; buffers, bool endStream, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.ReadOnlyMemory`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; buffers, bool endStream, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.ReadOnlyMemory{System.Byte}},System.Boolean,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Function WriteAsync (buffers As ReadOnlyMemory(Of ReadOnlyMemory(Of Byte)), endStream As Boolean, Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
-      <MemberSignature Language="F#" Value="override this.WriteAsync : ReadOnlyMemory&lt;ReadOnlyMemory&lt;byte&gt;&gt; * bool * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="quicStream.WriteAsync (buffers, endStream, cancellationToken)" />
-      <MemberType>Method</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="buffers" Type="System.ReadOnlyMemory&lt;System.ReadOnlyMemory&lt;System.Byte&gt;&gt;" />
-        <Parameter Name="endStream" Type="System.Boolean" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
-      </Parameters>
-      <Docs>
-        <param name="buffers">To be added.</param>
-        <param name="endStream">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="WriteAsync">
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task WriteAsync (byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task WriteAsync (byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken = default);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task WriteAsync(unsigned int8[] buffer, int32 offset, int32 count, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function WriteAsync (buffer As Byte(), offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function WriteAsync (buffer As Byte(), offset As Integer, count As Integer, Optional cancellationToken As CancellationToken = Nothing) As Task" />
       <MemberSignature Language="F#" Value="override this.WriteAsync : byte[] * int * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="quicStream.WriteAsync (buffer, offset, count, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task ^ WriteAsync(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Quic</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -803,6 +854,75 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="WriteByte">
+      <MemberSignature Language="C#" Value="public override void WriteByte (byte value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void WriteByte(unsigned int8 value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Quic.QuicStream.WriteByte(System.Byte)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub WriteByte (value As Byte)" />
+      <MemberSignature Language="F#" Value="override this.WriteByte : byte -&gt; unit" Usage="quicStream.WriteByte value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void WriteByte(System::Byte value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
+      </Docs>
+    </Member>
+    <Member MemberName="WritesClosed">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task WritesClosed { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Threading.Tasks.Task WritesClosed" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.WritesClosed" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property WritesClosed As Task" />
+      <MemberSignature Language="F#" Value="member this.WritesClosed : System.Threading.Tasks.Task" Usage="System.Net.Quic.QuicStream.WritesClosed" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Threading::Tasks::Task ^ WritesClosed { System::Threading::Tasks::Task ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a <see cref="T:System.Threading.Tasks.Task" /> that will complete when the writing side has been closed.</summary>
+        <value>To be added.</value>
+        <remarks>The writing side can be closed by calling <see cref="M:System.Net.Quic.QuicStream.CompleteWrites" /> or <see cref="M:System.Net.Quic.QuicStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Boolean,System.Threading.CancellationToken)" /> with <c>completeWrites: true</c> and getting acknowledgement from the peer, or when <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> is called for <see cref="F:System.Net.Quic.QuicAbortDirection.Write" />, or when the peer called <see cref="M:System.Net.Quic.QuicStream.Abort(System.Net.Quic.QuicAbortDirection,System.Int64)" /> for <see cref="F:System.Net.Quic.QuicAbortDirection.Read" />.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteTimeout">
+      <MemberSignature Language="C#" Value="public override int WriteTimeout { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 WriteTimeout" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Quic.QuicStream.WriteTimeout" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Property WriteTimeout As Integer" />
+      <MemberSignature Language="F#" Value="member this.WriteTimeout : int with get, set" Usage="System.Net.Quic.QuicStream.WriteTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int WriteTimeout { int get(); void set(int value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Quic</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
   </Members>

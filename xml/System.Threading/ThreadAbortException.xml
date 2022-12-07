@@ -1,6 +1,6 @@
 <Type Name="ThreadAbortException" FullName="System.Threading.ThreadAbortException">
   <TypeSignature Language="C#" Value="public sealed class ThreadAbortException : SystemException" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit ThreadAbortException extends System.SystemException" FrameworkAlternate="net-5.0;net-6.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.0;netstandard-2.1" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit ThreadAbortException extends System.SystemException" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.0;netstandard-2.1" />
   <TypeSignature Language="DocId" Value="T:System.Threading.ThreadAbortException" />
   <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ThreadAbortException&#xA;Inherits SystemException" />
   <TypeSignature Language="F#" Value="type ThreadAbortException = class&#xA;    inherit SystemException" />
@@ -25,11 +25,12 @@
     <AssemblyVersion>4.1.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Threading.Thread" ToVersion="0.0.0.0" FrameworkAlternate="net-5.0;net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading.Thread" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading.Thread" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading.Thread" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.SystemException</BaseTypeName>
@@ -51,26 +52,25 @@
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- When a call is made to the <xref:System.Threading.Thread.Abort%2A> method to destroy a thread, the common language runtime throws a <xref:System.Threading.ThreadAbortException>. <xref:System.Threading.ThreadAbortException> is a special exception that can be caught, but it will automatically be raised again at the end of the `catch` block. When this exception is raised, the runtime executes all the `finally` blocks before ending the thread. Because the thread can do an unbounded computation in the `finally` blocks or call <xref:System.Threading.Thread.ResetAbort%2A?displayProperty=nameWithType> to cancel the abort, there is no guarantee that the thread will ever end. If you want to wait until the aborted thread has ended, you can call the <xref:System.Threading.Thread.Join%2A?displayProperty=nameWithType> method. <xref:System.Threading.Thread.Join%2A> is a blocking call that does not return until the thread actually stops executing.  
+ When a call is made to the <xref:System.Threading.Thread.Abort%2A> method to destroy a thread, the common language runtime throws a <xref:System.Threading.ThreadAbortException> on .NET Framework. <xref:System.Threading.ThreadAbortException> is a special exception that can be caught, but it will automatically be raised again at the end of the `catch` block. When this exception is raised, the runtime executes all the `finally` blocks before ending the thread. Because the thread can do an unbounded computation in the `finally` blocks or call <xref:System.Threading.Thread.ResetAbort%2A?displayProperty=nameWithType> to cancel the abort, there is no guarantee that the thread will ever end. If you want to wait until the aborted thread has ended, you can call the <xref:System.Threading.Thread.Join%2A?displayProperty=nameWithType> method. <xref:System.Threading.Thread.Join%2A> is a blocking call that does not return until the thread actually stops executing.  
   
-**.NET Core only:** Even though this type exists in .NET Core, since <xref:System.Threading.Thread.Abort%2A> is not supported, the common language runtime won't ever throw <xref:System.Threading.ThreadAbortException>.
+> [!NOTE]
+> **.NET Core and .NET 5+ only:** Even though this type exists in .NET Core and .NET 5+, since <xref:System.Threading.Thread.Abort%2A> is not supported, the common language runtime won't ever throw <xref:System.Threading.ThreadAbortException>.
 
 > [!NOTE]
->  When the common language runtime (CLR) stops background threads after all foreground threads in a managed executable have ended, it does not use <xref:System.Threading.Thread.Abort%2A?displayProperty=nameWithType>. Therefore, you cannot use <xref:System.Threading.ThreadAbortException> to detect when background threads are being terminated by the CLR.  
+> When the common language runtime (CLR) stops background threads after all foreground threads in a managed executable have ended, it does not use <xref:System.Threading.Thread.Abort%2A?displayProperty=nameWithType>. Therefore, you cannot use <xref:System.Threading.ThreadAbortException> to detect when background threads are being terminated by the CLR.  
   
- <xref:System.Threading.ThreadAbortException> uses the HRESULT COR_E_THREADABORTED, which has the value 0x80131530.  
+ <xref:System.Threading.ThreadAbortException> uses `HRESULT COR_E_THREADABORTED`, which has the value `0x80131530`.  
   
 > [!NOTE]
->  The value of the inherited <xref:System.Exception.Data%2A> property is always `null`.  
-  
-   
+> The value of the inherited <xref:System.Exception.Data%2A> property is always `null`.
   
 ## Examples  
  The following example demonstrates aborting a thread. The thread that receives the `ThreadAbortException` uses the <xref:System.Threading.Thread.ResetAbort%2A> method to cancel the abort request and continue executing.  
   
- :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR/ThreadAbEx/CPP/threadabex.cpp" id="Snippet1":::
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR/ThreadAbEx/CS/threadabex.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR/ThreadAbEx/VB/threadabex.vb" id="Snippet1":::  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ThreadAbEx/CPP/threadabex.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Threading/ThreadAbortException/Overview/threadabex.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/ThreadAbEx/VB/threadabex.vb" id="Snippet1":::  
   
  This code produces the following output:  
   
@@ -92,7 +92,7 @@ Main ending.
   </Docs>
   <Members>
     <Member MemberName="ExceptionState">
-      <MemberSignature Language="C#" Value="public object? ExceptionState { get; }" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public object? ExceptionState { get; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".property instance object ExceptionState" />
       <MemberSignature Language="DocId" Value="P:System.Threading.ThreadAbortException.ExceptionState" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ExceptionState As Object" />
@@ -119,6 +119,7 @@ Main ending.
         <AssemblyVersion>4.1.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
@@ -143,9 +144,9 @@ Main ending.
 ## Examples  
  The following code example shows how to pass information to a thread that is being aborted.  
   
- :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Thread.Abort2/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Thread.Abort2/CS/source.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Thread.Abort2/VB/source.vb" id="Snippet1":::  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Thread.Abort2/CPP/source.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Threading/Thread/Abort/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Thread.Abort2/VB/source.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
