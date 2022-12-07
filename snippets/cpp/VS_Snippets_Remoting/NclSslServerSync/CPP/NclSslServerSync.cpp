@@ -1,3 +1,4 @@
+
 // NclSslServerSync
 // <snippet0>
 #using <System.dll>
@@ -232,4 +233,3 @@ int main(){
     sts->RunServerASync();
 }
 // </snippet0>
->>>>>>> ad8fc5c19ca160b26cc9f9f25c0e9fac2a3ead14:snippets/cpp/VS_Snippets_Remoting/NclSslServerSync/CPP/NclSslServerSync.cpp

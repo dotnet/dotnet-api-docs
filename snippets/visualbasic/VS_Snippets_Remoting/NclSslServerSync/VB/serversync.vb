@@ -177,4 +177,3 @@ Namespace Examples.System.Net
     End Class
 End Namespace
 '</snippet0>
->>>>>>> ad8fc5c19ca160b26cc9f9f25c0e9fac2a3ead14:snippets/visualbasic/VS_Snippets_Remoting/NclSslServerSync/VB/serversync.vb
