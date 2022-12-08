@@ -9,7 +9,7 @@ Public Module Example
    Public Sub Main()
       ' Get the current NumberFormatInfo object to build the regular 
       ' expression pattern dynamically.
-      Dim nfi As NumberFormatInfo = NumberFormatInfo.CurrentInfo
+      Dim nfi As NumberFormatInfo = CultureInfo.GetCultureInfo("en-US").NumberFormat
 
       ' Define the regular expression pattern.
       Dim pattern As String 
@@ -23,9 +23,12 @@ Public Module Example
       ' Add the decimal separator.
       pattern += Regex.Escape(nfi.CurrencyDecimalSeparator) + "?"
       ' Add the fractional digits.
-      pattern += "\d{"
+      pattern += "(\d{"
       ' Determine the number of fractional digits in currency values.
-      pattern += nfi.CurrencyDecimalDigits.ToString() + "}?){1}$"
+      pattern += nfi.CurrencyDecimalDigits.ToString() + "})?){1}$"
+      
+      Console.WriteLine("Pattern is {0}", pattern)
+      Console.WriteLine()
       
       Dim rgx As New Regex(pattern)
 
@@ -45,6 +48,8 @@ Public Module Example
    End Sub
 End Module
 ' The example displays the following output:
+'       Pattern is ^\s*[\+-]?\s?\$?\s?(\d*\.?(\d{2})?){1}$
+'
 '       -42 is a currency value.
 '       19.99 is a currency value.
 '       0.001 is not a currency value.
