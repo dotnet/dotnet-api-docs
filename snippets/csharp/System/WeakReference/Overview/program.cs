@@ -23,7 +23,7 @@ public class Program
         }
         // Show results.
         double regenPercent = c.RegenerationCount/(double)c.Count;
-        Console.WriteLine("Cache size: {0}, Regenerated: {1:P2}%", c.Count, regenPercent);
+        Console.WriteLine("Cache size: {0}, Regenerated: {1:P2}", c.Count, regenPercent);
     }
 }
 
