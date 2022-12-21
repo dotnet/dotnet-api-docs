@@ -32,10 +32,12 @@ namespace SDKSample
             // Draw a rectangle into the drawing context.
             dc.DrawRectangle(new SolidColorBrush(myColor), null, myRect);
 
+            DpiScale dpiScale = VisualTreeHelper.GetDpi(Application.Current.MainWindow);
+
             // Create a text string and draw it in the drawing context.
             FormattedText formattedText = new FormattedText(caption, CultureInfo.CurrentCulture,
-                 FlowDirection.LeftToRight,
-                 new Typeface("Verdana"), 36, Brushes.Black);
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"), 36, Brushes.Black, dpiScale.PixelsPerDip);
             dc.DrawText(formattedText, new Point(myRect.Left + 10, myRect.Top + 5));
 
             // Close the drawing context to persist the changes.
@@ -80,7 +82,7 @@ namespace SDKSample
 
         //<Snippet101> 
         // Enumerate all the descendants of the visual object.
-        static public void EnumVisual(Visual myVisual)
+        public static void EnumVisual(Visual myVisual)
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(myVisual); i++)
             {
@@ -96,7 +98,7 @@ namespace SDKSample
         //</Snippet101>
 
         // Get the combined bounding rectangle of the parent visual and its descendants.
-        static public Rect GetBoundingRectangle(Visual parentVisual)
+        public static Rect GetBoundingRectangle(Visual parentVisual)
         {
             //<Snippet102>
             // Return the bounding rectangle of the parent visual object and all of its descendants.
@@ -108,7 +110,7 @@ namespace SDKSample
 
         //<SnippetVisualsOverviewSnippet4>
         // Determine if a geometry within the visual was hit.
-        static public void HitTestGeometryInVisual(Visual visual, Point pt)
+        public static void HitTestGeometryInVisual(Visual visual, Point pt)
         {
             // Retrieve the group of drawings for the visual.
             DrawingGroup drawingGroup = VisualTreeHelper.GetDrawing(visual);
@@ -116,7 +118,7 @@ namespace SDKSample
         }
 
         // Enumerate the drawings in the DrawingGroup.
-        static public void EnumDrawingGroup(DrawingGroup drawingGroup, Point pt)
+        public static void EnumDrawingGroup(DrawingGroup drawingGroup, Point pt)
         {
             DrawingCollection drawingCollection = drawingGroup.Children;
 
@@ -141,7 +143,7 @@ namespace SDKSample
         //</SnippetVisualsOverviewSnippet4>
 
         // Find a DrawingVisual in the hit object.
-        static public void FindDrawingVisual(Visual myVisual, Point pt)
+        public static void FindDrawingVisual(Visual myVisual, Point pt)
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(myVisual); i++)
             {
@@ -171,10 +173,11 @@ namespace SDKSample
             dc.DrawEllipse(Brushes.Gray, null, new Point(430, 136), 20, 20);
             dc.DrawEllipse(Brushes.SteelBlue, null, new Point(480, 136), 20, 20);
             dc.DrawEllipse(Brushes.Maroon, null, new Point(530, 136), 20, 20);
+            DpiScale dpiScale = VisualTreeHelper.GetDpi(Application.Current.MainWindow);
             // Create a text string and draw it in the drawing context.
             FormattedText formattedText = new FormattedText("Hi", CultureInfo.CurrentCulture,
-                 FlowDirection.LeftToRight,
-                 new Typeface("Verdana"), 24, Brushes.Black);
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"), 24, Brushes.Black, dpiScale.PixelsPerDip);
             dc.DrawText(formattedText, new Point(430-12, 136-12));
             dc.Close();
 
