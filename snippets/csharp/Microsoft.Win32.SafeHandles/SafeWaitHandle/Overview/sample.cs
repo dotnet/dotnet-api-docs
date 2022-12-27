@@ -5,14 +5,12 @@ using System.Runtime.InteropServices;
 
 class SafeHandlesExample
 {
-
     static void Main()
     {
         UnmanagedMutex uMutex = new UnmanagedMutex("YourCompanyName_SafeHandlesExample_MUTEX");
 
         try
         {
-
             uMutex.Create();
             Console.WriteLine("Mutex created. Press Enter to release it.");
             Console.ReadLine();
@@ -58,10 +56,8 @@ class UnmanagedMutex
 
     public void Create()
     {
-        if (nameValue == null && nameValue.Length == 0)
-        {
-            throw new ArgumentNullException("nameValue");
-        }
+        if (nameValue == null || nameValue.Length == 0)
+            throw new ArgumentException(nameof(nameValue));
 
         handleValue = CreateMutex(mutexAttrValue,
                                         true, nameValue);
