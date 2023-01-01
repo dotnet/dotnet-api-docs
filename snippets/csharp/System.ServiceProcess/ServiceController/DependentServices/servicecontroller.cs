@@ -85,7 +85,7 @@ namespace ServiceControllerSample
          ServiceController sc  = new ServiceController();
          sc.ServiceName = "Alerter";
          Console.WriteLine("The Alerter service status is currently set to {0}",
-                            sc.Status.ToString());
+                            sc.Status);
 
          if (sc.Status == ServiceControllerStatus.Stopped)
          {
@@ -100,7 +100,7 @@ namespace ServiceControllerSample
 
                // Display the current service status.
                Console.WriteLine("The Alerter service status is now set to {0}.",
-                                  sc.Status.ToString());
+                                  sc.Status);
             }
             catch (InvalidOperationException)
             {
@@ -126,10 +126,10 @@ namespace ServiceControllerSample
          // If it is stopped, start the service.
          ServiceController sc = new ServiceController("Telnet");
          Console.WriteLine("The Telnet service status is currently set to {0}",
-                           sc.Status.ToString());
+                           sc.Status);
 
-         if  ((sc.Status.Equals(ServiceControllerStatus.Stopped)) ||
-              (sc.Status.Equals(ServiceControllerStatus.StopPending)))
+         if ((sc.Status == ServiceControllerStatus.Stopped) ||
+             (sc.Status == ServiceControllerStatus.StopPending))
          {
             // Start the service if the current status is stopped.
 
@@ -147,7 +147,7 @@ namespace ServiceControllerSample
          // Refresh and display the current service status.
          sc.Refresh();
          Console.WriteLine("The Telnet service status is now set to {0}.",
-                            sc.Status.ToString());
+                            sc.Status);
 
          // </snippet2>
       }
