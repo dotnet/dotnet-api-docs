@@ -4076,6 +4076,7 @@ If the write operation is successful, the position within the file stream advanc
 
           ]]></format>
         </remarks>
+        <exception cref="T:System.IO.IOException">.NET 8 and later versions: The underlying pipe is closed or disconnected.</exception>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -4141,19 +4142,18 @@ If the write operation is successful, the position within the file stream advanc
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- This method overrides <xref:System.IO.Stream.Write%2A>.  
+## Remarks
+
+This method overrides <xref:System.IO.Stream.Write%2A>.  
   
- The `offset` parameter gives the offset of the byte in `array` (the buffer index) at which to begin copying, and the `count` parameter gives the number of bytes that will be written to the stream. If the write operation is successful, the current position of the stream is advanced by the number of bytes written. If an exception occurs, the current position of the stream is unchanged.  
+The `offset` parameter gives the offset of the byte in `array` (the buffer index) at which to begin copying, and the `count` parameter gives the number of bytes that will be written to the stream. If the write operation is successful, the current position of the stream is advanced by the number of bytes written. If an exception occurs, the current position of the stream is unchanged.  
   
 > [!NOTE]
->  Use the <xref:System.IO.FileStream.CanWrite%2A> property to determine whether the current instance supports writing. For additional information, see <xref:System.IO.Stream.CanWrite%2A>.  
+> Use the <xref:System.IO.FileStream.CanWrite%2A> property to determine whether the current instance supports writing. For additional information, see <xref:System.IO.Stream.CanWrite%2A>.  
   
- Do not interrupt a thread that is performing a write operation. Although the application may appear to run successfully after the thread is unblocked, the interruption can decrease your application's performance and reliability.  
+Do not interrupt a thread that's performing a write operation. Although the application may appear to run successfully after the thread is unblocked, the interruption can decrease your application's performance and reliability.  
   
- For a list of common file and directory operations, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).  
-  
-   
+For a list of common file and directory operations, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
   
 ## Examples  
  This code example is part of a larger example provided for the <xref:System.IO.FileStream.Lock%2A> method.  
@@ -4174,12 +4174,16 @@ If the write operation is successful, the position within the file stream advanc
   
 -or-
   
- Another thread may have caused an unexpected change in the position of the operating system's file handle.</exception>
+Another thread may have caused an unexpected change in the position of the operating system's file handle.
+
+-or-
+
+.NET 8 and later versions: The underlying pipe is closed or disconnected.</exception>
         <exception cref="T:System.ObjectDisposedException">The stream is closed.</exception>
         <exception cref="T:System.NotSupportedException">The current stream instance does not support writing.</exception>
-        <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
-        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
-        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+        <related type="Article" href="/dotnet/standard/io/">File and stream I/O</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read text from a file</related>
+        <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write text to a file</related>
       </Docs>
     </Member>
     <Member MemberName="WriteAsync">
@@ -4224,7 +4228,7 @@ If the write operation is successful, the position within the file stream advanc
 
 ## Remarks
 
-The `WriteAsync` method lets you perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a Windows 8.x Store app or desktop app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+The `WriteAsync` method lets you perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in apps where a time-consuming stream operation can block the UI thread and make your app appear as if it isn't working.
 
 Use the <xref:System.IO.FileStream.CanWrite%2A> property to determine whether the current instance supports writing.
 
@@ -4296,21 +4300,19 @@ If the operation is canceled before it completes, the returned task contains the
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.IO.FileStream.WriteAsync%2A> method enables you to perform resource-intensive file operations without blocking the main thread. This performance consideration is particularly important in a Windows 8.x Store app or desktop app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.  
+ The <xref:System.IO.FileStream.WriteAsync%2A> method enables you to perform resource-intensive file operations without blocking the main thread. This performance consideration is particularly important in apps where a time-consuming stream operation can block the UI thread and make your app appear as if it isn't working.
   
  Use the <xref:System.IO.FileStream.CanWrite%2A> property to determine whether the current instance supports writing.  
   
- If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled> value for the <xref:System.Threading.Tasks.Task.Status%2A> property. If the handle to the file is disposed, the returned task contains the <xref:System.ObjectDisposedException> exception in the <xref:System.Threading.Tasks.Task.Exception%2A> property.  
-  
-   
+ If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled> value for the <xref:System.Threading.Tasks.Task.Status%2A> property. If the handle to the file is disposed, the returned task contains the <xref:System.ObjectDisposedException> exception in the <xref:System.Threading.Tasks.Task.Exception%2A> property.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.FileStream.Write(System.Byte[],System.Int32,System.Int32)>.
   
 ## Examples  
  The following example shows how to write asynchronously to a file.  
   
  :::code language="csharp" source="~/snippets/csharp/System.IO/FileStream/Overview/example3.cs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/Asynchronous_File_IO_async/vb/example3.vb" id="Snippet3":::  
-  
- This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.FileStream.Write(System.Byte[],System.Int32,System.Int32)>.
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/Asynchronous_File_IO_async/vb/example3.vb" id="Snippet3":::
 
 ]]></format>
         </remarks>
@@ -4319,9 +4321,6 @@ If the operation is canceled before it completes, the returned task contains the
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="offset" /> or <paramref name="count" /> is negative.</exception>
         <exception cref="T:System.ArgumentException">The sum of <paramref name="offset" /> and <paramref name="count" /> is larger than the buffer length.</exception>
-        <exception cref="T:System.NotSupportedException">The stream does not support writing.</exception>
-        <exception cref="T:System.ObjectDisposedException">The stream has been disposed.</exception>
-        <exception cref="T:System.InvalidOperationException">The stream is currently in use by a previous write operation.</exception>
         <related type="Article" href="/dotnet/standard/threading/cancellation-in-managed-threads">Cancellation</related>
       </Docs>
     </Member>
@@ -4383,9 +4382,7 @@ If the operation is canceled before it completes, the returned task contains the
  Use `WriteByte` to write a byte to a `FileStream` efficiently. If the stream is closed or not writable, an exception will be thrown.  
   
 > [!NOTE]
->  Use the <xref:System.IO.FileStream.CanWrite%2A> property to determine whether the current instance supports writing. For additional information, see <xref:System.IO.Stream.CanWrite%2A>.  
-  
-   
+> Use the <xref:System.IO.FileStream.CanWrite%2A> property to determine whether the current instance supports writing. For additional information, see <xref:System.IO.Stream.CanWrite%2A>.
   
 ## Examples  
  The following code example shows how to write data to a file, byte by byte, and then verify that the data was written correctly.  
@@ -4398,6 +4395,7 @@ If the operation is canceled before it completes, the returned task contains the
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The stream is closed.</exception>
         <exception cref="T:System.NotSupportedException">The stream does not support writing.</exception>
+        <exception cref="T:System.IO.IOException">.NET 8 and later versions: The underlying pipe is closed or disconnected.</exception>
         <block subset="none" type="overrides">
           <para>The default implementation on <see langword="Stream" /> creates a new single-byte array and then calls <see cref="M:System.IO.Stream.Write(System.Byte[],System.Int32,System.Int32)" />. While this is formally correct, it is inefficient. Any stream with an internal buffer should override this method and provide a much more efficient version that reads the buffer directly, avoiding the extra array allocation on every call.  
   
