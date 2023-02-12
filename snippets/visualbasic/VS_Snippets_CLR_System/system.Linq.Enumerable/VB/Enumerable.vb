@@ -2514,7 +2514,7 @@ Namespace SequenceExamples
 
             ' Display the results.
             Dim output As New System.Text.StringBuilder("All grades except the first three are:" & vbCrLf)
-            For Each grade As Integer In lowerGrades
+            For Each grade As Integer In skippedGrades
                 output.AppendLine(grade)
             Next
             Console.WriteLine(output.ToString())
