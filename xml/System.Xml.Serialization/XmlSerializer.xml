@@ -49,14 +49,16 @@
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
-## Remarks  
+## Remarks
+
  XML serialization is the process of converting an object's public properties and fields to a serial format (in this case, XML) for storage or transport. Deserialization re-creates the object in its original state from the XML output. You can think of serialization as a way of saving the state of an object into a stream or buffer. For example, ASP.NET uses the <xref:System.Xml.Serialization.XmlSerializer> class to encode XML Web service messages.  
   
  The data in your objects is described using programming language constructs like classes, fields, properties, primitive types, arrays, and even embedded XML in the form of <xref:System.Xml.XmlElement> or <xref:System.Xml.XmlAttribute> objects. You have the option of creating your own classes, annotated with attributes, or using the [XML Schema Definition Tool (Xsd.exe)](/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe) to generate the classes based on an existing XML Schema definition (XSD) document. If you have an XML Schema, you can run the Xsd.exe to produce a set of classes that are strongly typed to the schema and annotated with attributes to adhere to the schema when serialized.  
   
  To transfer data between objects and XML requires a mapping from the programming language constructs to XML schema and from the XML schema to the programming language constructs. The <xref:System.Xml.Serialization.XmlSerializer> and related tools like Xsd.exe provide the bridge between these two technologies at both design time and runtime. At design time, use the Xsd.exe to produce an XML schema document (.xsd) from your custom classes or to produce classes from a given schema. In either case, the classes are annotated with custom attributes to instruct the <xref:System.Xml.Serialization.XmlSerializer> how to map between the XML schema system and the common language runtime. At runtime, instances of the classes can be serialized into XML documents that follow the given schema. Likewise, these XML documents can be deserialized into runtime objects. Note that the XML schema is optional, and not required at design time or runtime.  
   
-## Controlling Generated XML  
+## Control generated XML
+
  To control the generated XML, you can apply special attributes to classes and members. For example, to specify a different XML element name, apply an <xref:System.Xml.Serialization.XmlElementAttribute> to a public field or property, and set the <xref:System.Xml.Serialization.XmlElementAttribute.ElementName%2A> property. For a complete list of similar attributes, see [Attributes That Control XML Serialization](/dotnet/standard/serialization/attributes-that-control-xml-serialization). You can also implement the <xref:System.Xml.Serialization.IXmlSerializable> interface to control the XML output.  
   
  If the XML generated must conform to section 5 of the World Wide Consortium document, [Simple Object Access Protocol (SOAP) 1.1](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/), you must construct the <xref:System.Xml.Serialization.XmlSerializer> with an <xref:System.Xml.Serialization.XmlTypeMapping>. To further control the encoded SOAP XML, use the attributes listed in [Attributes That Control Encoded SOAP Serialization](/dotnet/standard/serialization/attributes-that-control-encoded-soap-serialization).  
@@ -144,7 +146,8 @@ public class OptionalOrder
 }  
 ```  
   
-## Overriding Default Serialization  
+## Override default serialization
+
  You can also override the serialization of any set of objects and their fields and properties by creating one of the appropriate attributes, and adding it to an instance of the <xref:System.Xml.Serialization.XmlAttributes> class. Overriding serialization in this way has two uses: first, you can control and augment the serialization of objects found in a DLL, even if you do not have access to the source; second, you can create one set of serializable classes, but serialize the objects in multiple ways. For more details, see the <xref:System.Xml.Serialization.XmlAttributeOverrides> class and [How to: Control Serialization of Derived Classes](/dotnet/standard/serialization/how-to-control-serialization-of-derived-classes).  
   
  To serialize an object, call the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method. To deserialize an object, call the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method.  
@@ -156,7 +159,8 @@ public class OptionalOrder
   
  You must have permission to write to the temporary directory (as defined by the TEMP environment variable) to deserialize an object.  
   
-## Dynamically Generated Assemblies  
+## Dynamically generated assemblies
+
  To increase performance, the XML serialization infrastructure dynamically generates assemblies to serialize and deserialize specified types. The infrastructure finds and reuses those assemblies. This behavior occurs only when using the following constructors:  
   
  <xref:System.Xml.Serialization.XmlSerializer.%23ctor%28System.Type%29?displayProperty=nameWithType>  
@@ -220,7 +224,8 @@ End If
   
 -   Arrays of <xref:System.Collections.Generic.List%601>  
   
-## Serialization of Enumerations of Unsigned Long  
+## Serialization of enumerations of unsigned Long
+
  The <xref:System.Xml.Serialization.XmlSerializer> cannot be instantiated to serialize an enumeration if the following conditions are true: The enumeration is of type unsigned long (`ulong` in C#) and the enumeration contains any member with a value larger than 9,223,372,036,854,775,807. For example, the following cannot be serialized.  
   
 ```  
@@ -232,12 +237,12 @@ public enum LargeNumbers: ulong
 xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));  
 ```  
   
-## Objects marked with the Obsolete Attribute no longer serialized  
- In the .NET Framework 3.5 the <xref:System.Xml.Serialization.XmlSerializer> class no longer serializes objects that are marked as `[Obsolete]`.  
+## Objects marked with the Obsolete attribute no longer serialized  
+
+Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer> class no longer serializes objects that are marked as `[Obsolete]`.
   
-   
-  
-## Examples  
+## Examples
+
  The following example contains two main classes: `PurchaseOrder` and `Test`. The `PurchaseOrder` class contains information about a single purchase. The `Test` class contains the methods that create the purchase order, and that read the created purchase order.  
   
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer Example/CPP/source.cpp" id="Snippet1":::
@@ -249,7 +254,6 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
     <threadsafe>This type is thread safe.</threadsafe>
     <altmember cref="T:System.Xml.Serialization.XmlAttributeOverrides" />
     <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
-    <altmember cref="T:System.Xml.Serialization.XmlSerializer" />
     <altmember cref="P:System.Xml.Serialization.XmlAttributes.XmlText" />
     <related type="Article" href="/dotnet/standard/serialization/introducing-xml-serialization">Introducing XML Serialization</related>
     <related type="Article" href="/dotnet/standard/serialization/how-to-specify-an-alternate-element-name-for-an-xml-stream">How to: Specify an Alternate Element Name for an XML Stream</related>
@@ -1180,9 +1184,7 @@ xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));
 -   <xref:System.Security.Cryptography.CryptoStream>  
   
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
-   
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
   
 ## Examples  
  The following example deserializes an object using a <xref:System.IO.Stream> object.  
