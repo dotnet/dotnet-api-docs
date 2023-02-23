@@ -26,4 +26,4 @@ let newThreads =
            let thread = Thread Slot.slotTest
            thread.Start()
            thread |]
-// </Snippet1>/
+// </Snippet1>
