@@ -12,7 +12,7 @@ let asyncTask =
         let mutable sum = 0L
 
         for i = 1 to 1000000 do
-            sum <- sum + i
+            sum <- sum + int64 i
 
         sum)
 
@@ -22,7 +22,7 @@ let syncTask =
         let mutable sum = 0L
 
         for i = 1 to 1000000 do
-            sum <- sum + i
+            sum <- sum + int64 i
 
         sum)
 
