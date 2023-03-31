@@ -29,11 +29,11 @@ let main args =
 
     match reply.Status with
     | IPStatus.Success ->
-        Console.WriteLine("Address: {0}", reply.Address.ToString())
-        Console.WriteLine("RoundTrip time: {0}", reply.RoundtripTime)
-        Console.WriteLine("Time to live: {0}", reply.Options.Ttl)
-        Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment)
-        Console.WriteLine("Buffer size: {0}", reply.Buffer.Length)
+        printfn "Address: %O" reply.Address
+        printfn "RoundTrip time: %d" reply.RoundtripTime
+        printfn "Time to live: %d" reply.Options.Ttl
+        printfn "Don't fragment: %b" reply.Options.DontFragment
+        printfn "Buffer size: %d" reply.Buffer.Length
         0
     | _ -> 1
 //</snippet4>
