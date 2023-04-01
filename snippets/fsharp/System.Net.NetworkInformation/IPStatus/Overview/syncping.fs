@@ -2,7 +2,6 @@
 
 //NCLPingSync
 //<snippet1>
-open System
 open System.Net.NetworkInformation
 open System.Text
 
@@ -35,6 +34,9 @@ let main args =
         printfn "Don't fragment: %b" reply.Options.DontFragment
         printfn "Buffer size: %d" reply.Buffer.Length
         0
-    | _ -> 1
+    | _ ->
+        eprintfn "Error sending ping: %O" reply
+        eprintfn "Error was: %O" reply.Status
+        1
 //</snippet4>
 //</snippet1>
