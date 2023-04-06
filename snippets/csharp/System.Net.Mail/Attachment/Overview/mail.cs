@@ -12,10 +12,6 @@ namespace Examples.SmtpExamples.Sync
 {
     public class CtorExamples
     {
-        //Display the properties on the service point.
-        //ServicePoint p = client.ServicePoint;
-        //Console.WriteLine("Connection lease timeout: {0}",
-        //p.ConnectionLeaseTimeout);
 
         // <snippet1>
         public static void CreateTestMessage1(string server, int port)
@@ -223,7 +219,7 @@ namespace Examples.SmtpExamples.Sync
             {
                 Console.WriteLine("Exception caught in CreateTestMessage4(): {0}",
                     ex.ToString());
-          }
+            }
         }
         //</snippet7>
 
@@ -245,7 +241,7 @@ namespace Examples.SmtpExamples.Sync
             {
                 Console.WriteLine("Exception caught in CreateTestMessage5(): {0}\n",
                     ex.ToString());
-          }
+            }
         }
         //</snippet8>
 
@@ -951,12 +947,12 @@ namespace Examples.SmtpExamples.Sync
             catch (Exception ex)
             {
                 Console.WriteLine("Exception caught in RetryIfBusy(): {0}",
-                        ex.ToString() );
+                        ex.ToString());
             }
         }
         //</snippet27>
 
-// silly snippets to get code coverage in exceptions!
+        // silly snippets to get code coverage in exceptions!
         //<snippet28>
         public static SmtpException GenerateDefaultSmtpException()
         {
@@ -1030,18 +1026,18 @@ namespace Examples.SmtpExamples.Sync
             Console.WriteLine(a3.ToString());
             DumpMailAddress(a3);
 
-// Use a constructor that takes an address and the display name separately.
-// Throwing a format exception
-//    MailAddress a4 = new MailAddress("tom@contoso.com", "Tom Smith");
-//    Console.WriteLine(a4.ToString());
-//    DumpMailAddress(a4);
+            // Use a constructor that takes an address and the display name separately.
+            // Throwing a format exception
+            //    MailAddress a4 = new MailAddress("tom@contoso.com", "Tom Smith");
+            //    Console.WriteLine(a4.ToString());
+            //    DumpMailAddress(a4);
 
-// WRONG: Should not include angle brackets.
-//    MailAddress a5 = new MailAddress("<tom@contoso.com   >   ", "Tom Smith");
+            // WRONG: Should not include angle brackets.
+            //    MailAddress a5 = new MailAddress("<tom@contoso.com   >   ", "Tom Smith");
             //   Console.WriteLine(a5.ToString());
-//    DumpMailAddress(a5);
+            //    DumpMailAddress(a5);
 
-// WRONG but legal: Should not include display name as part of address.
+            // WRONG but legal: Should not include display name as part of address.
             MailAddress a6 = new MailAddress("Tom Smith<tom@contoso.com>", "Bill Jones");
             Console.WriteLine(a6.ToString());
             DumpMailAddress(a6);

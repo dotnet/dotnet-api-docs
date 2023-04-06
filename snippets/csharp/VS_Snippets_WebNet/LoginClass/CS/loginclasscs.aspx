@@ -8,7 +8,7 @@
 bool IsValidEmail(string strIn)
 {
     // Return true if strIn is in valid email format.
-    return Regex.IsMatch(strIn, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"); 
+    return Regex.IsMatch(strIn, @"^([\w\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"); 
 }
 
 void OnLoggingIn(object sender, System.Web.UI.WebControls.LoginCancelEventArgs e)

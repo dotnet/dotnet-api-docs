@@ -1,32 +1,39 @@
 ﻿// <SNIPPET1>
 using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.IO;
 
 class RC2Sample
 {
-
     static void Main()
     {
         try
         {
-            // Create a new RC2 object to generate a key
+            byte[] key;
+            byte[] iv;
+
+            // Create a new RC2 object to generate a random key
             // and initialization vector (IV).
-            RC2 RC2alg = RC2.Create();
+            using (RC2 rc2 = RC2.Create())
+            {
+                key = rc2.Key;
+                iv = rc2.IV;
+            }
 
             // Create a string to encrypt.
-            string sData = "Here is some data to encrypt.";
-            string FileName = "CText.txt";
+            string original = "Here is some data to encrypt.";
+            // The name/path of the file to write.
+            string filename = "CText.enc";
 
-            // Encrypt text to a file using the file name, key, and IV.
-            EncryptTextToFile(sData, FileName, RC2alg.Key, RC2alg.IV);
+            // Encrypt the string to a file.
+            EncryptTextToFile(original, filename, key, iv);
 
-            // Decrypt the text from a file using the file name, key, and IV.
-            string Final = DecryptTextFromFile(FileName, RC2alg.Key, RC2alg.IV);
+            // Decrypt the file back to a string.
+            string decrypted = DecryptTextFromFile(filename, key, iv);
 
             // Display the decrypted string to the console.
-            Console.WriteLine(Final);
+            Console.WriteLine(decrypted);
         }
         catch (Exception e)
         {
@@ -34,86 +41,58 @@ class RC2Sample
         }
     }
 
-    public static void EncryptTextToFile(String Data, String FileName, byte[] Key, byte[] IV)
+    public static void EncryptTextToFile(string text, string path, byte[] key, byte[] iv)
     {
         try
         {
             // Create or open the specified file.
-            FileStream fStream = File.Open(FileName,FileMode.OpenOrCreate);
-
+            using (FileStream fStream = File.Open(path, FileMode.Create))
             // Create a new RC2 object.
-            RC2 RC2alg = RC2.Create();
+            using (RC2 rc2 = RC2.Create())
+            // Create an RC2 encryptor from the key and IV
+            using (ICryptoTransform encryptor = rc2.CreateEncryptor(key, iv))
+            // Create a CryptoStream using the FileStream and encryptor
+            using (var cStream = new CryptoStream(fStream, encryptor, CryptoStreamMode.Write))
+            {
+                // Convert the provided string to a byte array.
+                byte[] toEncrypt = Encoding.UTF8.GetBytes(text);
 
-            // Create a CryptoStream using the FileStream
-            // and the passed key and initialization vector (IV).
-            CryptoStream cStream = new CryptoStream(fStream,
-                RC2alg.CreateEncryptor(Key,IV),
-                CryptoStreamMode.Write);
-
-            // Create a StreamWriter using the CryptoStream.
-            StreamWriter sWriter = new StreamWriter(cStream);
-
-            // Write the data to the stream
-            // to encrypt it.
-            sWriter.WriteLine(Data);
-
-            // Close the streams and
-            // close the file.
-            sWriter.Close();
-            cStream.Close();
-            fStream.Close();
+                // Write the byte array to the crypto stream.
+                cStream.Write(toEncrypt, 0, toEncrypt.Length);
+            }
         }
-        catch(CryptographicException e)
+        catch (CryptographicException e)
         {
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
-        }
-        catch(UnauthorizedAccessException  e)
-        {
-            Console.WriteLine("A file error occurred: {0}", e.Message);
+            throw;
         }
     }
 
-    public static string DecryptTextFromFile(String FileName, byte[] Key, byte[] IV)
+    public static string DecryptTextFromFile(string path, byte[] key, byte[] iv)
     {
         try
         {
-            // Create or open the specified file.
-            FileStream fStream = File.Open(FileName, FileMode.OpenOrCreate);
-
+            // Open the specified file
+            using (FileStream fStream = File.OpenRead(path))
             // Create a new RC2 object.
-            RC2 RC2alg = RC2.Create();
-
-            // Create a CryptoStream using the FileStream
-            // and the passed key and initialization vector (IV).
-            CryptoStream cStream = new CryptoStream(fStream,
-                RC2alg.CreateDecryptor(Key,IV),
-                CryptoStreamMode.Read);
-
-            // Create a StreamReader using the CryptoStream.
-            StreamReader sReader = new StreamReader(cStream);
-
-            // Read the data from the stream
-            // to decrypt it.
-            string val = sReader.ReadLine();
-
-            // Close the streams and
-            // close the file.
-            sReader.Close();
-            cStream.Close();
-            fStream.Close();
-
-            // Return the string.
-            return val;
+            using (RC2 rc2 = RC2.Create())
+            // Create an RC2 decryptor from the key and IV
+            using (ICryptoTransform decryptor = rc2.CreateDecryptor(key, iv))
+            // Create a CryptoStream using the FileStream and decryptor
+            using (var cStream = new CryptoStream(fStream, decryptor, CryptoStreamMode.Read))
+            // Create a StreamReader to turn the bytes back into text
+            using (StreamReader reader = new StreamReader(cStream, Encoding.UTF8))
+            {
+                // Read back all of the text from the StreamReader, which receives
+                // the decrypted bytes from the CryptoStream, which receives the
+                // encrypted bytes from the FileStream.
+                return reader.ReadToEnd();
+            }
         }
-        catch(CryptographicException e)
+        catch (CryptographicException e)
         {
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
-            return null;
-        }
-        catch(UnauthorizedAccessException  e)
-        {
-            Console.WriteLine("A file error occurred: {0}", e.Message);
-            return null;
+            throw;
         }
     }
 }
