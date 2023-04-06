@@ -24,22 +24,32 @@
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Xml.XmlResolver</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-7.0;net-8.0">
+      <AttributeName Language="C#">[System.Obsolete("XmlSecureResolver is obsolete. Use XmlResolver.ThrowingResolver instead when attempting to forbid XML external entity resolution.", DiagnosticId="SYSLIB0047", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Obsolete("XmlSecureResolver is obsolete. Use XmlResolver.ThrowingResolver instead when attempting to forbid XML external entity resolution.", DiagnosticId="SYSLIB0047", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>Helps to secure another implementation of <see cref="T:System.Xml.XmlResolver" /> by wrapping the <see cref="T:System.Xml.XmlResolver" /> object and restricting the resources that the underlying <see cref="T:System.Xml.XmlResolver" /> has access to.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Xml.XmlUrlResolver> class is the default resolver for all classes in the <xref:System.Xml> namespace. It is used to load XML documents and to resolve external resources such as entities, DTDs or schemas, and import or include directives.  
+ The <xref:System.Xml.XmlUrlResolver> class is the default resolver for all classes in the <xref:System.Xml> namespace. It's used to load XML documents and to resolve external resources such as entities, DTDs or schemas, and import or include directives.  
   
  You can override this default by specifying the <xref:System.Xml.XmlResolver> object to use. For example, if you want to restrict the resources that the underlying <xref:System.Xml.XmlResolver> can access, you can use an <xref:System.Xml.XmlSecureResolver> object.  
   
@@ -48,7 +58,7 @@
  When you construct an <xref:System.Xml.XmlSecureResolver> object, you provide a valid <xref:System.Xml.XmlResolver> implementation along with a URL, an instance of an evidence object, or a permission set, which is used by the <xref:System.Xml.XmlSecureResolver> to determine security. Either a <xref:System.Security.PermissionSet?displayProperty=nameWithType> is generated or the existing one is used and <xref:System.Security.PermissionSet.PermitOnly%2A?displayProperty=nameWithType> is called on it to help secure the underlying <xref:System.Xml.XmlResolver>.  
   
 > [!IMPORTANT]
->  <xref:System.Xml.XmlSecureResolver> objects can contain sensitive information such as user credentials. You should be careful when caching <xref:System.Xml.XmlSecureResolver> objects and should not pass the <xref:System.Xml.XmlSecureResolver> object to an untrusted component.  
+> <xref:System.Xml.XmlSecureResolver> objects can contain sensitive information such as user credentials. Be careful when caching <xref:System.Xml.XmlSecureResolver> objects and should not pass the <xref:System.Xml.XmlSecureResolver> object to an untrusted component.  
   
 > [!IMPORTANT]
 >  There are differences in the security infrastructure for code running on the .NET Framework common language runtime (CLR) and for code running on the CLR that is integrated within Microsoft SQL Server 2005. This can lead to cases where code developed for the .NET Framework CLR operates differently when used on the SQL Server integrated CLR. One of these differences affects the <xref:System.Xml.XmlSecureResolver> class when you have evidence that is based on a URL (that is, when you use the <xref:System.Xml.XmlSecureResolver.CreateEvidenceForUrl%28System.String%29> method or the <xref:System.Xml.XmlSecureResolver.%23ctor%2A> constructor). The policy resolution mechanism of the SQL Server integrated CLR does not use the <xref:System.Security.Policy.Url> or <xref:System.Security.Policy.Zone> information. Instead, it grants permissions based on the GUID that the server adds when assemblies are loaded. When you use the <xref:System.Xml.XmlSecureResolver> in the SQL Server integrated CLR, provide any required evidence directly by using a specified <xref:System.Security.PermissionSet>.  
@@ -59,58 +69,59 @@
   
 2.  Create an <xref:System.Xml.XmlReaderSettings> object that uses the <xref:System.Xml.XmlSecureResolver> object.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet5a":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet5a":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet5a":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet5a":::  
   
 3.  Pass  the <xref:System.Xml.XmlReaderSettings> object to the <xref:System.Xml.XmlReader.Create%2A> method when you're creating the <xref:System.Xml.XmlReader> object.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet5b":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet5b":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet5b":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet5b":::  
   
 ## To restrict access by using a URL  
  Use the <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.String%29> constructor to create an <xref:System.Xml.XmlSecureResolver> object that is allowed to access your local intranet site only.  
   
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet3":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet3":::  
+ :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet3":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet3":::  
   
 ## To restrict access by using a permission set  
   
 1.  Create a <xref:System.Net.WebPermission> object.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet4a":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4a":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet4a":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4a":::  
   
 2.  Specify the URLs that you want to allow access to.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet4b":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4b":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet4b":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4b":::  
   
 3.  Add the web permissions to the <xref:System.Security.PermissionSet> object.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet4c":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4c":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet4c":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4c":::  
   
 4.  Use the <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.Security.PermissionSet%29> constructor to create an <xref:System.Xml.XmlSecureResolver> object by using the permission set.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet4d":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4d":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet4d":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet4d":::  
   
      See the <xref:System.Xml.XmlSecureResolver.%23ctor%2A> reference page for another example.  
   
-## To restrict access by using evidence  
+## To restrict access by using evidence
+
  You can restrict access by using the <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.Security.Policy.Evidence%29> constructor and specifying <xref:System.Security.Policy.Evidence>. The <xref:System.Security.Policy.Evidence> is used to create the <xref:System.Security.PermissionSet> that is applied to the underlying <xref:System.Xml.XmlResolver>. The <xref:System.Xml.XmlSecureResolver> calls <xref:System.Security.PermissionSet.PermitOnly%2A> on the created <xref:System.Security.PermissionSet> before opening any resources.  
   
  Here are some common scenarios and the type of evidence to provide for each:  
   
 -   If you are working in a fully trusted environment, use your assembly to create the evidence:  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet1":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet1":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet1":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet1":::  
   
 -   If you are working in a semi-trusted environment, you have code or data coming from an outside source, and you know the origin of the outside source and have a verifiable URI, use the URI to create the evidence:  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet2":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet2":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet2":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet2":::  
   
 -   If you are working in a semi-trusted environment and you have code or data coming from an outside source, but you don't know the origin of the outside source, either:  
   
@@ -126,8 +137,8 @@
   
 2.  Pass the <xref:System.Xml.XmlSecureResolver> to the <xref:System.Xml.Xsl.XslCompiledTransform.Load%2A> method.  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet6":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet6":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet6":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet6":::  
   
  ]]></format>
     </remarks>
@@ -147,16 +158,17 @@
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
-## Remarks  
- The three constructors provide three types of access restrictions:  
+## Remarks
+
+The three constructors provide three types of access restrictions:  
   
--   The <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.String%29> constructor restricts access by using a URL.  
+- The <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.String%29> constructor restricts access by using a URL.  
   
--   The <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.Security.PermissionSet%29> constructor restricts access by using a permission set.  
+- The <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.Security.PermissionSet%29> constructor restricts access by using a permission set.  
   
--   The <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.Security.Policy.Evidence%29> constructor restricts access by using evidence.  
+- The <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.Security.Policy.Evidence%29> constructor restricts access by using evidence.  
   
- See the constructor reference topics for examples of these types of restrictions.  
+See the constructor reference topics for examples of these types of restrictions.  
   
  ]]></format>
         </remarks>
@@ -190,8 +202,8 @@
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="resolver" Type="System.Xml.XmlResolver" Index="0" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="permissionSet" Type="System.Security.PermissionSet" Index="1" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="resolver" Type="System.Xml.XmlResolver" Index="0" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
+        <Parameter Name="permissionSet" Type="System.Security.PermissionSet" Index="1" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="resolver">The XML resolver that is wrapped by the <see cref="T:System.Xml.XmlSecureResolver" />.</param>
@@ -203,9 +215,9 @@
 ## Examples  
  The following example constructs an <xref:System.Xml.XmlSecureResolver> object by using a customized permission set.  
   
- :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_Data/XmlSecureResolver.cctor/CPP/secresolver.cpp" id="Snippet1":::
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver.cctor/CS/secresolver.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver.cctor/VB/secresolver.vb" id="Snippet1":::  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlSecureResolver.cctor/CPP/secresolver.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/.ctor/secresolver.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver.cctor/VB/secresolver.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -237,8 +249,8 @@
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="resolver" Type="System.Xml.XmlResolver" Index="0" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="evidence" Type="System.Security.Policy.Evidence" Index="1" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="resolver" Type="System.Xml.XmlResolver" Index="0" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
+        <Parameter Name="evidence" Type="System.Security.Policy.Evidence" Index="1" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="resolver">The XML resolver that is wrapped by the <see cref="T:System.Xml.XmlSecureResolver" />.</param>
@@ -252,13 +264,13 @@
   
 -   If you are working in a fully trusted environment, use your assembly to create the evidence:  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet1":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet1":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet1":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet1":::  
   
 -   If you are working in a semi-trusted environment, you have code or data coming from an outside source, and you know the origin of the outside source and have a verifiable URI, use the URI to create the evidence:  
   
-     :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet2":::
-     :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet2":::  
+     :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet2":::
+     :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet2":::  
   
 -   If you are working in a semi-trusted environment and you have code or data coming from an outside source, but you don't know the origin of the outside source, either:  
   
@@ -273,13 +285,13 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public XmlSecureResolver (System.Xml.XmlResolver resolver, string? securityUrl);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public XmlSecureResolver (System.Xml.XmlResolver resolver, string? securityUrl);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Xml.XmlResolver resolver, string securityUrl) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlSecureResolver.#ctor(System.Xml.XmlResolver,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (resolver As XmlResolver, securityUrl As String)" />
       <MemberSignature Language="F#" Value="new System.Xml.XmlSecureResolver : System.Xml.XmlResolver * string -&gt; System.Xml.XmlSecureResolver" Usage="new System.Xml.XmlSecureResolver (resolver, securityUrl)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; XmlSecureResolver(System::Xml::XmlResolver ^ resolver, System::String ^ securityUrl);" />
-      <MemberSignature Language="C#" Value="public XmlSecureResolver (System.Xml.XmlResolver resolver, string securityUrl);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public XmlSecureResolver (System.Xml.XmlResolver resolver, string securityUrl);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -300,6 +312,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="resolver" Type="System.Xml.XmlResolver" />
@@ -322,8 +336,8 @@
 ## Examples  
  This example uses the <xref:System.Xml.XmlSecureResolver.%23ctor%28System.Xml.XmlResolver%2CSystem.String%29> constructor to create an <xref:System.Xml.XmlSecureResolver> object that is allowed to access your local intranet site only.  
   
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver_Samples/CS/XmlSecureResolver_ex.cs" id="Snippet3":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet3":::  
+ :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Overview/XmlSecureResolver_ex.cs" id="Snippet3":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver_Samples/VB/XmlSecureResolver_ex.vb" id="Snippet3":::  
   
  ]]></format>
         </remarks>
@@ -354,7 +368,7 @@
         <ReturnType>System.Security.Policy.Evidence</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="securityUrl" Type="System.String" Index="0" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="securityUrl" Type="System.String" Index="0" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="securityUrl">The URL used to create the evidence.</param>
@@ -399,6 +413,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.ICredentials</ReturnType>
@@ -412,9 +428,9 @@
 ## Examples  
  The following example uses an <xref:System.Xml.XmlSecureResolver> with default credentials to resolve and open network resources needed by the <xref:System.Xml.XmlTextReader>.  
   
- :::code language="cpp" source="~/samples/snippets/cpp/VS_Snippets_Data/XmlSecureResolver.Credentials/CPP/secresolver2.cpp" id="Snippet1":::
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Data/XmlSecureResolver.Credentials/CS/secresolver2.cs" id="Snippet1":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver.Credentials/VB/secresolver2.vb" id="Snippet1":::  
+ :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlSecureResolver.Credentials/CPP/secresolver2.cpp" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlSecureResolver/Credentials/secresolver2.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlSecureResolver.Credentials/VB/secresolver2.vb" id="Snippet1":::  
   
  ]]></format>
         </remarks>
@@ -424,13 +440,13 @@
       </Docs>
     </Member>
     <Member MemberName="GetEntity">
-      <MemberSignature Language="C#" Value="public override object? GetEntity (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public override object? GetEntity (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance object GetEntity(class System.Uri absoluteUri, string role, class System.Type ofObjectToReturn) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlSecureResolver.GetEntity(System.Uri,System.String,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function GetEntity (absoluteUri As Uri, role As String, ofObjectToReturn As Type) As Object" />
       <MemberSignature Language="F#" Value="override this.GetEntity : Uri * string * Type -&gt; obj" Usage="xmlSecureResolver.GetEntity (absoluteUri, role, ofObjectToReturn)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Object ^ GetEntity(Uri ^ absoluteUri, System::String ^ role, Type ^ ofObjectToReturn);" />
-      <MemberSignature Language="C#" Value="public override object GetEntity (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public override object GetEntity (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -451,6 +467,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -472,26 +490,30 @@
 ## Remarks  
   
 > [!IMPORTANT]
->  Your application can mitigate memory denial of service threats to the <xref:System.Xml.XmlSecureResolver.GetEntity%2A> method by implementing an <xref:System.Runtime.InteropServices.ComTypes.IStream> that limits the number of bytes read. This helps guard against situations where malicious code attempts to pass an infinite stream of bytes to the <xref:System.Xml.XmlSecureResolver.GetEntity%2A> method.  
+> Your application can mitigate memory denial of service threats to the <xref:System.Xml.XmlSecureResolver.GetEntity%2A> method by implementing an <xref:System.Runtime.InteropServices.ComTypes.IStream> that limits the number of bytes read. This helps guard against situations where malicious code attempts to pass an infinite stream of bytes to the <xref:System.Xml.XmlSecureResolver.GetEntity%2A> method.  
   
  ]]></format>
         </remarks>
         <exception cref="T:System.Xml.XmlException">
-          <paramref name="ofObjectToReturn" /> is neither <see langword="null" /> nor a <see cref="T:System.IO.Stream" /> type.</exception>
+          <paramref name="ofObjectToReturn" /> is neither <see langword="null" /> nor a <see cref="T:System.IO.Stream" /> type.
+
+-or-
+
+.NET 7 and later versions: In all cases.</exception>
         <exception cref="T:System.UriFormatException">The specified URI is not an absolute URI.</exception>
         <exception cref="T:System.NullReferenceException">
           <paramref name="absoluteUri" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Exception">There is a runtime error (for example, an interrupted server connection).</exception>
+        <exception cref="T:System.Exception">There is a run-time error (for example, an interrupted server connection).</exception>
       </Docs>
     </Member>
     <Member MemberName="GetEntityAsync">
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;object&gt; GetEntityAsync(class System.Uri absoluteUri, string role, class System.Type ofObjectToReturn) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlSecureResolver.GetEntityAsync(System.Uri,System.String,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function GetEntityAsync (absoluteUri As Uri, role As String, ofObjectToReturn As Type) As Task(Of Object)" />
       <MemberSignature Language="F#" Value="override this.GetEntityAsync : Uri * string * Type -&gt; System.Threading.Tasks.Task&lt;obj&gt;" Usage="xmlSecureResolver.GetEntityAsync (absoluteUri, role, ofObjectToReturn)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task&lt;System::Object ^&gt; ^ GetEntityAsync(Uri ^ absoluteUri, System::String ^ role, Type ^ ofObjectToReturn);" />
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -510,14 +532,16 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Object&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="absoluteUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="role" Type="System.String" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="ofObjectToReturn" Type="System.Type" Index="2" FrameworkAlternate="net-5.0;net-6.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="absoluteUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="role" Type="System.String" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="ofObjectToReturn" Type="System.Type" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       </Parameters>
       <Docs>
         <param name="absoluteUri">The URI returned from <see cref="M:System.Xml.XmlSecureResolver.ResolveUri(System.Uri,System.String)" />.</param>
@@ -525,17 +549,17 @@
         <param name="ofObjectToReturn">The type of object to return. The current version only returns <see cref="T:System.IO.Stream" /> objects.</param>
         <summary>Asynchronously maps a URI to an object that contains the actual resource.</summary>
         <returns>The stream returned by calling <see langword="GetEntity" /> on the underlying <see cref="T:System.Xml.XmlResolver" />. If a type other than <see cref="T:System.IO.Stream" /> is specified, the method returns <see langword="null" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Xml.XmlSecureResolver.GetEntity(System.Uri,System.String,System.Type)" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ResolveUri">
-      <MemberSignature Language="C#" Value="public override Uri ResolveUri (Uri? baseUri, string? relativeUri);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public override Uri ResolveUri (Uri? baseUri, string? relativeUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Uri ResolveUri(class System.Uri baseUri, string relativeUri) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlSecureResolver.ResolveUri(System.Uri,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function ResolveUri (baseUri As Uri, relativeUri As String) As Uri" />
       <MemberSignature Language="F#" Value="override this.ResolveUri : Uri * string -&gt; Uri" Usage="xmlSecureResolver.ResolveUri (baseUri, relativeUri)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override Uri ^ ResolveUri(Uri ^ baseUri, System::String ^ relativeUri);" />
-      <MemberSignature Language="C#" Value="public override Uri ResolveUri (Uri baseUri, string relativeUri);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public override Uri ResolveUri (Uri baseUri, string relativeUri);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -556,6 +580,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>

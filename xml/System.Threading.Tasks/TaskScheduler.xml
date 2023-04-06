@@ -27,6 +27,8 @@
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Threading.Tasks" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
@@ -34,6 +36,10 @@
     <TypeForwarding From="System.Threading.Tasks" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="System.Threading.Tasks" FromVersion="6.0.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="System.Threading.Tasks" FromVersion="7.0.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Threading.Tasks" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="System.Threading.Tasks" FromVersion="4.1.0.0" To="System.Runtime" ToVersion="4.2.0.0" FrameworkAlternate="netcore-2.0" />
     <TypeForwarding From="System.Threading.Tasks" FromVersion="4.1.1.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0" />
     <TypeForwarding From="System.Threading.Tasks" FromVersion="4.1.2.0" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
@@ -43,11 +49,11 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+    <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <AttributeName Language="C#">[System.Diagnostics.DebuggerDisplay("Id={Id}")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerDisplay("Id={Id}")&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+    <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
       <AttributeName Language="C#">[System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.Tasks.TaskScheduler+SystemThreadingTasks_TaskSchedulerDebugView))]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerTypeProxy(typeof(System.Threading.Tasks.TaskScheduler+SystemThreadingTasks_TaskSchedulerDebugView))&gt;]</AttributeName>
     </Attribute>
@@ -64,7 +70,8 @@
   
  The <xref:System.Threading.Tasks.TaskScheduler> class also serves as the extension point for all customizable scheduling logic.  This includes mechanisms such as how to schedule a task for execution, and how scheduled tasks should be exposed to debuggers. If you require special functionality, you can create a custom scheduler and enable it for specific tasks or queries.  
   
- In this topic:  
+ In this article:
+
 [The default task scheduler and the thread pool](#Default)  
  [The global queue vs. local queues](#Queues)  
  [Work stealing](#Stealing)  
@@ -74,11 +81,11 @@
   
 <a name="Default"></a>   
 ## The default task scheduler and the thread pool  
- The default scheduler for the Task Parallel Library and PLINQ uses the .NET Framework thread pool, which is represented by the <xref:System.Threading.ThreadPool> class, to queue and execute work. The thread pool uses the information that is provided by the <xref:System.Threading.Tasks.Task> type to efficiently     support the fine-grained parallelism (short-lived units of work) that parallel tasks and queries often represent.  
+ The default scheduler for the Task Parallel Library and PLINQ uses the .NET thread pool, which is represented by the <xref:System.Threading.ThreadPool> class, to queue and execute work. The thread pool uses the information that is provided by the <xref:System.Threading.Tasks.Task> type to efficiently     support the fine-grained parallelism (short-lived units of work) that parallel tasks and queries often represent.  
   
 <a name="Queues"></a>   
 ### The global queue vs. local queues  
- The thread pool maintains a global FIFO (first-in, first-out) work queue for threads in each application domain. Whenever a program calls the <xref:System.Threading.ThreadPool.QueueUserWorkItem%2A?displayProperty=nameWithType> (or <xref:System.Threading.ThreadPool.UnsafeQueueUserWorkItem%2A?displayProperty=nameWithType>) method, the work is put on this shared queue and eventually de-queued onto the next thread that becomes available. Starting with the .NET Framework 4, this queue has been improved to use a lock-free algorithm that resembles the <xref:System.Collections.Concurrent.ConcurrentQueue%601> class. By using this lock-free implementation, the thread pool spends less time when it queues and de-queues work items. This performance benefit is available to all programs that use the thread pool.  
+ The thread pool maintains a global FIFO (first-in, first-out) work queue for threads in each application domain. Whenever a program calls the <xref:System.Threading.ThreadPool.QueueUserWorkItem%2A?displayProperty=nameWithType> (or <xref:System.Threading.ThreadPool.UnsafeQueueUserWorkItem%2A?displayProperty=nameWithType>) method, the work is put on this shared queue and eventually de-queued onto the next thread that becomes available. Starting with .NET Framework 4, this queue uses a lock-free algorithm that resembles the <xref:System.Collections.Concurrent.ConcurrentQueue%601> class. By using this lock-free implementation, the thread pool spends less time when it queues and de-queues work items. This performance benefit is available to all programs that use the thread pool.  
   
  Top-level tasks, which are tasks that are not created in the context of another task, are put on the global queue just like any other work item. However, nested or child tasks, which are created in the context of another task, are handled quite differently. A child or nested task is put on a local queue that is specific to the thread on which the parent task is executing. The parent task may be a top-level task or it also may be the child of another task. When this thread is ready for more work, it first looks in the local queue. If work items are waiting there, they can be accessed quickly. The local queues are accessed in last-in, first-out order (LIFO) to preserve cache locality and reduce contention. For more information about child tasks and nested tasks, see [Attached and Detached Child Tasks](/dotnet/standard/parallel-programming/attached-and-detached-child-tasks).  
   
@@ -86,7 +93,7 @@
   
 <a name="Stealing"></a>   
 ### Work stealing  
- Starting with the .NET Framework 4, the thread pool also features a work-stealing algorithm to help make sure that no threads are sitting idle while others still have work in their queues. When a thread-pool thread is ready for more work, it first looks at the head of its local queue, then in the global queue, and then in the local queues of other threads. If it finds a work item in the local queue of another thread, it first applies heuristics to make sure that it can run the work efficiently. If it can, it de-queues the work item from the tail (in FIFO order). This reduces contention on each local queue and preserves data locality. This architecture helps the thread pool load-balance work more efficiently than past versions did.  
+ Starting with .NET Framework 4, the thread pool also features a work-stealing algorithm to help make sure that no threads are sitting idle while others still have work in their queues. When a thread-pool thread is ready for more work, it first looks at the head of its local queue, then in the global queue, and then in the local queues of other threads. If it finds a work item in the local queue of another thread, it first applies heuristics to make sure that it can run the work efficiently. If it can, it de-queues the work item from the tail (in FIFO order). This reduces contention on each local queue and preserves data locality. This architecture helps the thread pool load-balance work more efficiently than past versions did.  
   
 <a name="LongRunning"></a>   
 ### Long-running tasks  
@@ -104,8 +111,8 @@
   
  The example moves data off the UI thread, modifies it by using parallel loops and <xref:System.Threading.Tasks.Task> objects, and then passes it back to a task that runs on the UI thread. This approach is useful when you have to use the Task Parallel Library to perform operations that either are not supported by the WPF API, or are not sufficiently fast. Another way to create an image mosaic in WPF is to use a <xref:System.Windows.Controls.WrapPanel?displayProperty=nameWithType> control and add images to it. The <xref:System.Windows.Controls.WrapPanel> handles the work of positioning the tiles. However, this work can only be performed on the UI thread.  
   
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Misc/tpl_synccontext/cs/mainwindow.xaml.cs" id="Snippet01":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Misc/tpl_synccontext/vb/MainWindow.xaml.vb" id="Snippet01":::  
+ :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/TaskScheduler/FromCurrentSynchronizationContext/mainwindow.xaml.cs" id="Snippet01":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Misc/tpl_synccontext/vb/MainWindow.xaml.vb" id="Snippet01":::  
   
  To create the example, create a WPF application project in Visual Studio and name it WPF_CS1 (for a C# WPF project) or WPF_VB1 (for a Visual Basic WPF project). Then do the following:  
   
@@ -120,12 +127,10 @@
 This example has some limitations. For example, only 32-bits-per-pixel images are supported; images in other formats are corrupted by the <xref:System.Windows.Media.Imaging.BitmapImage> object during the resizing operation. Also, the source images must all be larger than the tile size. As a further exercise, you can add functionality to handle multiple pixel formats and file sizes.  
   
 ## Examples  
- The following example is taken from the [Samples for Parallel Programming with the .NET Framework 4](https://go.microsoft.com/fwlink/?LinkID=165717) on the MSDN Code Gallery Web site.  It creates a custom task scheduler that limits the number of threads used by the app. It then launches two sets of tasks and displays information about the task and the thread on which the task is executing.  
+ The following example creates a custom task scheduler that limits the number of threads used by the app. It then launches two sets of tasks and displays information about the task and the thread on which the task is executing.  
   
- :::code language="csharp" source="~/samples/snippets/csharp/VS_Snippets_Misc/tpl_schedulers/cs/limitex1.cs" id="Snippet02":::
- :::code language="vb" source="~/samples/snippets/visualbasic/VS_Snippets_Misc/tpl_schedulers/vb/module2.vb" id="Snippet02":::  
-  
- In addition, several sample task schedulers are available on Code Gallery: [Samples for Parallel Programming with the .NET Framework 4](https://go.microsoft.com/fwlink/?LinkID=165717).  
+ :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/TaskScheduler/Overview/limitex1.cs" id="Snippet02":::
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Misc/tpl_schedulers/vb/module2.vb" id="Snippet02":::
   
  ]]></format>
     </remarks>
@@ -163,6 +168,8 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -177,7 +184,7 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
       <MemberSignature Language="ILAsm" Value=".property class System.Threading.Tasks.TaskScheduler Current" />
       <MemberSignature Language="DocId" Value="P:System.Threading.Tasks.TaskScheduler.Current" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Current As TaskScheduler" />
-      <MemberSignature Language="F#" Value="member this.Current : System.Threading.Tasks.TaskScheduler" Usage="System.Threading.Tasks.TaskScheduler.Current" />
+      <MemberSignature Language="F#" Value="static member Current : System.Threading.Tasks.TaskScheduler" Usage="System.Threading.Tasks.TaskScheduler.Current" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Threading::Tasks::TaskScheduler ^ Current { System::Threading::Tasks::TaskScheduler ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -202,6 +209,8 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.TaskScheduler</ReturnType>
@@ -228,7 +237,7 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
       <MemberSignature Language="ILAsm" Value=".property class System.Threading.Tasks.TaskScheduler Default" />
       <MemberSignature Language="DocId" Value="P:System.Threading.Tasks.TaskScheduler.Default" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Default As TaskScheduler" />
-      <MemberSignature Language="F#" Value="member this.Default : System.Threading.Tasks.TaskScheduler" Usage="System.Threading.Tasks.TaskScheduler.Default" />
+      <MemberSignature Language="F#" Value="static member Default : System.Threading.Tasks.TaskScheduler" Usage="System.Threading.Tasks.TaskScheduler.Default" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Threading::Tasks::TaskScheduler ^ Default { System::Threading::Tasks::TaskScheduler ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -253,6 +262,8 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.TaskScheduler</ReturnType>
@@ -332,6 +343,8 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.TaskScheduler</ReturnType>
@@ -355,13 +368,13 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
       </Docs>
     </Member>
     <Member MemberName="GetScheduledTasks">
-      <MemberSignature Language="C#" Value="protected abstract System.Collections.Generic.IEnumerable&lt;System.Threading.Tasks.Task&gt; GetScheduledTasks ();" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="protected abstract System.Collections.Generic.IEnumerable&lt;System.Threading.Tasks.Task&gt; GetScheduledTasks ();" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Collections.Generic.IEnumerable`1&lt;class System.Threading.Tasks.Task&gt; GetScheduledTasks() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Threading.Tasks.TaskScheduler.GetScheduledTasks" />
       <MemberSignature Language="VB.NET" Value="Protected MustOverride Function GetScheduledTasks () As IEnumerable(Of Task)" />
       <MemberSignature Language="F#" Value="abstract member GetScheduledTasks : unit -&gt; seq&lt;System.Threading.Tasks.Task&gt;" Usage="taskScheduler.GetScheduledTasks " />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Collections::Generic::IEnumerable&lt;System::Threading::Tasks::Task ^&gt; ^ GetScheduledTasks();" />
-      <MemberSignature Language="C#" Value="protected abstract System.Collections.Generic.IEnumerable&lt;System.Threading.Tasks.Task&gt;? GetScheduledTasks ();" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="protected abstract System.Collections.Generic.IEnumerable&lt;System.Threading.Tasks.Task&gt;? GetScheduledTasks ();" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks</AssemblyName>
@@ -385,9 +398,11 @@ This example has some limitations. For example, only 32-bits-per-pixel images ar
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
@@ -469,6 +484,8 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -518,13 +535,15 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Indicates the maximum concurrency level this <see cref="T:System.Threading.Tasks.TaskScheduler" /> is able to support.</summary>
-        <value>Returns an integer that represents the maximum concurrency level. The default scheduler returns <see cref="F:System.Int32.MaxValue" />.</value>
+        <value>Returns an integer that represents the maximum concurrency level. The default scheduler returns <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -567,9 +586,11 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
@@ -630,9 +651,11 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
@@ -692,9 +715,11 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
@@ -754,9 +779,11 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
@@ -794,13 +821,13 @@ protected override IEnumerable<Task> GetScheduledTasks()
       </Docs>
     </Member>
     <Member MemberName="UnobservedTaskException">
-      <MemberSignature Language="C#" Value="public static event EventHandler&lt;System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt; UnobservedTaskException;" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public static event EventHandler&lt;System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt; UnobservedTaskException;" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt; UnobservedTaskException" />
       <MemberSignature Language="DocId" Value="E:System.Threading.Tasks.TaskScheduler.UnobservedTaskException" />
       <MemberSignature Language="VB.NET" Value="Public Shared Custom Event UnobservedTaskException As EventHandler(Of UnobservedTaskExceptionEventArgs) " />
       <MemberSignature Language="F#" Value="member this.UnobservedTaskException : EventHandler&lt;System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt; " Usage="member this.UnobservedTaskException : System.EventHandler&lt;System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt; " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static event EventHandler&lt;System::Threading::Tasks::UnobservedTaskExceptionEventArgs ^&gt; ^ UnobservedTaskException;" />
-      <MemberSignature Language="C#" Value="public static event EventHandler&lt;System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt;? UnobservedTaskException;" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static event EventHandler&lt;System.Threading.Tasks.UnobservedTaskExceptionEventArgs&gt;? UnobservedTaskException;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading.Tasks</AssemblyName>
@@ -824,13 +851,15 @@ protected override IEnumerable<Task> GetScheduledTasks()
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[add: System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;add: System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
+        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[remove: System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;remove: System.Security.SecurityCritical&gt;]</AttributeName>
         </Attribute>

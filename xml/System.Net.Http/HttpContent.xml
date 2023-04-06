@@ -15,6 +15,8 @@
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
@@ -24,6 +26,8 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -35,7 +39,32 @@
   </Interfaces>
   <Docs>
     <summary>A base class representing an HTTP entity body and content headers.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ There are various HTTP contents that can be used. These include the following.
+
+1.  <xref:System.Net.Http.ByteArrayContent> - A content represented by a byte array, also serves as a base class for <xref:System.Net.Http.StringContent> and <xref:System.Net.Http.FormUrlEncodedContent>.
+
+2.  <xref:System.Net.Http.StringContent> - A string-based content, by default serialized as `text/plain` `Content-Type` with `UTF-8` encoding.
+
+3.  <xref:System.Net.Http.FormUrlEncodedContent> - A content with name/value tuples serialized as `application/x-www-form-urlencoded` `Content-Type`.
+
+4.  <xref:System.Net.Http.MultipartContent> - A content that can serialize multiple different <xref:System.Net.Http.HttpContent> objects as `multipart/*` `Content-Type`.
+
+5.  <xref:System.Net.Http.Json.JsonContent> - A content that serializes objects as `application/json` `Content-Type` with `UTF-8` encoding by default.
+
+ HTTP content class can be derived by a user to provide custom content serialization logic.
+
+## Examples
+
+The following example shows a custom implementation of <xref:System.Net.Http.HttpContent>. Some methods, despite being defined as `virtual` and not `abstract`, should still be overridden in the implementation for optimal behavior.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Net.Http/HttpContent/source.cs" id="Snippet1":::
+
+   ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -55,6 +84,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -79,6 +110,8 @@
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -87,16 +120,25 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="stream">The target stream.</param>
         <param name="context">Information about the transport (for example, the channel binding token). This parameter may be <see langword="null" />.</param>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         <summary>Serializes the HTTP content into a stream of bytes and copies it to <paramref name="stream" />.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method uses <xref:System.Net.Http.HttpContent.SerializeToStream(System.IO.Stream,System.Net.TransportContext,System.Threading.CancellationToken)> internally to serialize the content into the given stream.
+If the content has been previously buffered, for example, by calling <xref:System.Net.Http.HttpContent.LoadIntoBufferAsync>, the method will return the buffered content and not call the serialization method.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="stream" /> was <see langword="null" />.</exception>
       </Docs>
     </Member>
@@ -110,11 +152,15 @@
       <Docs>
         <summary>Serialize the HTTP content into a stream of bytes and copies it to the stream object provided as the <paramref name="stream" /> parameter.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation does not block.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation does not block.
+
+
+This method uses <xref:System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream,System.Net.TransportContext,System.Threading.CancellationToken)> if implemented or <xref:System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream,System.Net.TransportContext)> internally to serialize the content into the given stream.
+If the content has been previously buffered, for example, by calling <xref:System.Net.Http.HttpContent.LoadIntoBufferAsync>, the method will return the buffered content and not call the serialization method.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -137,6 +183,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -154,23 +202,23 @@
         <summary>Serialize the HTTP content into a stream of bytes and copies it to the stream object provided as the <paramref name="stream" /> parameter.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyToAsync">
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task CopyToAsync (System.IO.Stream stream, System.Net.TransportContext context);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task CopyToAsync (System.IO.Stream stream, System.Net.TransportContext context);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task CopyToAsync(class System.IO.Stream stream, class System.Net.TransportContext context) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpContent.CopyToAsync(System.IO.Stream,System.Net.TransportContext)" />
       <MemberSignature Language="VB.NET" Value="Public Function CopyToAsync (stream As Stream, context As TransportContext) As Task" />
       <MemberSignature Language="F#" Value="member this.CopyToAsync : System.IO.Stream * System.Net.TransportContext -&gt; System.Threading.Tasks.Task" Usage="httpContent.CopyToAsync (stream, context)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Tasks::Task ^ CopyToAsync(System::IO::Stream ^ stream, System::Net::TransportContext ^ context);" />
-      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task CopyToAsync (System.IO.Stream stream, System.Net.TransportContext? context);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task CopyToAsync (System.IO.Stream stream, System.Net.TransportContext? context);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -182,6 +230,8 @@
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -201,11 +251,11 @@
         <summary>Serialize the HTTP content into a stream of bytes and copies it to the stream object provided as the <paramref name="stream" /> parameter.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -222,6 +272,8 @@
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -230,8 +282,8 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="stream">The target stream.</param>
@@ -239,11 +291,11 @@
         <summary>Serialize the HTTP content into a stream of bytes and copies it to the stream object provided as the <paramref name="stream" /> parameter.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -260,6 +312,8 @@
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -268,9 +322,9 @@
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="stream">The target stream.</param>
@@ -279,11 +333,11 @@
         <summary>Serialize the HTTP content into a stream of bytes and copies it to the stream object provided as the <paramref name="stream" /> parameter.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been written to the stream object passed as the `stream` parameter.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -300,6 +354,8 @@
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -308,7 +364,7 @@
         <ReturnType>System.IO.Stream</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
@@ -346,6 +402,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -366,15 +424,15 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a memory stream as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written to the memory stream.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the memory stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.  
-  
- The <xref:System.Net.Http.HttpContent.CreateContentReadStreamAsync%2A> method buffers the content to a memory stream. Derived classes can override this behavior if there is a better way to retrieve the content as stream. For example, a byte array or a string could use a more efficient method way such as wrapping a read-only <xref:System.IO.MemoryStream> around the bytes or string.)  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written to the memory stream.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the memory stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.
+
+ The <xref:System.Net.Http.HttpContent.CreateContentReadStreamAsync%2A> method buffers the content to a memory stream. Derived classes can override this behavior if there is a better way to retrieve the content as stream. For example, a byte array or a string could use a more efficient method way such as wrapping a read-only <xref:System.IO.MemoryStream> around the bytes or string.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -391,6 +449,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -399,22 +459,22 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.Threading.Tasks.Task&lt;System.IO.Stream&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         <summary>Serializes the HTTP content to a memory stream as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written to the memory stream.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the memory stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.  
-  
- The <xref:System.Net.Http.HttpContent.CreateContentReadStreamAsync%2A> method buffers the content to a memory stream. Derived classes can override this behavior if there is a better way to retrieve the content as stream. For example, a byte array or a string could use a more efficient method way such as wrapping a read-only <xref:System.IO.MemoryStream> around the bytes or string.)  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written to the memory stream.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the memory stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.
+
+ The <xref:System.Net.Http.HttpContent.CreateContentReadStreamAsync%2A> method buffers the content to a memory stream. Derived classes can override this behavior if there is a better way to retrieve the content as stream. For example, a byte array or a string could use a more efficient method way such as wrapping a read-only <xref:System.IO.MemoryStream> around the bytes or string.)
+
  ]]></format>
         </remarks>
       </Docs>
@@ -452,6 +512,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -485,6 +547,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -502,11 +566,13 @@ Once the operation completes, the returned memory stream represents the HTTP con
           <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to releases only unmanaged resources.</param>
         <summary>Releases the unmanaged resources used by the <see cref="T:System.Net.Http.HttpContent" /> and optionally disposes of the managed resources.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpContent> references. This method invokes the `Dispose()` method of each referenced object.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize> method, if it has been overridden. `Dispose()` invokes this method with the `disposing` parameter set to `true`. `Finalize` invokes this method with `disposing` set to `false`.
+
+When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpContent> references. This method invokes the `Dispose()` method of each referenced object.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -529,6 +595,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -554,11 +622,11 @@ Once the operation completes, the returned memory stream represents the HTTP con
       <Docs>
         <summary>Serialize the HTTP content to a memory buffer as an asynchronous operation.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -581,6 +649,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -595,13 +665,13 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a memory buffer as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been serialized to the memory buffer.  
-  
- After content is serialized to a memory buffer, calls to one of the  <xref:System.Net.Http.HttpContent.CopyToAsync%2A> methods will copy the content of the memory buffer to the target stream.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been serialized to the memory buffer.
+
+ After content is serialized to a memory buffer, calls to one of the <xref:System.Net.Http.HttpContent.CopyToAsync%2A> methods will copy the content of the memory buffer to the target stream.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -624,6 +694,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -647,15 +719,15 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a memory buffer as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been serialized to the memory buffer.  
-  
- After content is serialized to a memory buffer, calls to one of the  <xref:System.Net.Http.HttpContent.CopyToAsync%2A> methods will copy the content of the memory buffer to the target stream.  
-  
- If the content exceeds the value  passed in the `maxBufferSize` parameter , an exception is thrown.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task> object will complete after all of the content has been serialized to the memory buffer.
+
+ After content is serialized to a memory buffer, calls to one of the <xref:System.Net.Http.HttpContent.CopyToAsync%2A> methods will copy the content of the memory buffer to the target stream.
+
+ If the content exceeds the value passed in the `maxBufferSize` parameter, an exception is thrown.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -678,6 +750,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -698,13 +772,15 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a byte array as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a byte array.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the byte array with the HTTP content.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a byte array.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the byte array with the HTTP content.
+
+ Note that this method will internally buffer the content via <xref:System.Net.Http.HttpContent.LoadIntoBufferAsync>.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -721,6 +797,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -729,24 +807,46 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.Threading.Tasks.Task&lt;System.Byte[]&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         <summary>Serialize the HTTP content to a byte array as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a byte array.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the byte array with the HTTP content.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a byte array.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the byte array with the HTTP content.
+
+ Note that this method will internally buffer the content via <xref:System.Net.Http.HttpContent.LoadIntoBufferAsync>.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="ReadAsStream">
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Serializes the HTTP content and returns a stream that represents the content.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ Note that this method will internally buffer the content unless <xref:System.Net.Http.HttpContent.CreateContentReadStream(System.Threading.CancellationToken)> has been implemented to do otherwise.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="ReadAsStream">
       <MemberSignature Language="C#" Value="public System.IO.Stream ReadAsStream ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.IO.Stream ReadAsStream() cil managed" />
@@ -759,6 +859,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -785,6 +887,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -793,7 +897,7 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.IO.Stream</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
@@ -802,6 +906,26 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="ReadAsStreamAsync">
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Serializes the HTTP content and returns a stream that represents the content.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+ Note that this method will internally buffer the content unless <xref:System.Net.Http.HttpContent.CreateContentReadStreamAsync> has been implemented to do otherwise.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="ReadAsStreamAsync">
       <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.IO.Stream&gt; ReadAsStreamAsync ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class System.IO.Stream&gt; ReadAsStreamAsync() cil managed" />
@@ -820,6 +944,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -840,14 +966,16 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content and return a stream that represents the content as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the stream that represents content has been read.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the stream that represents content has been read.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.
+
+ This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Net.Http.HttpContent.ReadAsStream>.
+
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -863,6 +991,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -871,21 +1001,23 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.Threading.Tasks.Task&lt;System.IO.Stream&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         <summary>Serialize the HTTP content and return a stream that represents the content as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the stream that represents content has been read.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.  
-  
- ]]></format>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the stream that represents content has been read.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the stream that represents the HTTP content. The returned stream can then be used to read the content using various stream APIs.
+
+ This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Net.Http.HttpContent.ReadAsStream>.
+
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -907,6 +1039,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -927,13 +1061,15 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a string as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a string.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the string with the HTTP content.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a string.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the string with the HTTP content.
+
+ Note that this method will internally buffer the content via <xref:System.Net.Http.HttpContent.LoadIntoBufferAsync>.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -950,6 +1086,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -958,20 +1096,22 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.Threading.Tasks.Task&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         <summary>Serialize the HTTP content to a string as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a string.  
-  
- Once the operation completes, the  <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the string with the HTTP content.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been written as a string.
+
+ Once the operation completes, the <xref:System.Threading.Tasks.Task%601.Result%2A> property on the returned task object contains the string with the HTTP content.
+
+ Note that this method will internally buffer the content via <xref:System.Net.Http.HttpContent.LoadIntoBufferAsync>.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -988,6 +1128,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -996,9 +1138,9 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="stream">The target stream.</param>
@@ -1010,13 +1152,13 @@ Once the operation completes, the returned memory stream represents the HTTP con
       </Docs>
     </Member>
     <Member MemberName="SerializeToStreamAsync">
-      <MemberSignature Language="C#" Value="protected abstract System.Threading.Tasks.Task SerializeToStreamAsync (System.IO.Stream stream, System.Net.TransportContext context);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Threading.Tasks.Task SerializeToStreamAsync(class System.IO.Stream stream, class System.Net.TransportContext context) cil managed" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="protected abstract System.Threading.Tasks.Task SerializeToStreamAsync (System.IO.Stream stream, System.Net.TransportContext context);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Threading.Tasks.Task SerializeToStreamAsync(class System.IO.Stream stream, class System.Net.TransportContext context) cil managed" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;net-8.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="DocId" Value="M:System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream,System.Net.TransportContext)" />
-      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function SerializeToStreamAsync (stream As Stream, context As TransportContext) As Task" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function SerializeToStreamAsync (stream As Stream, context As TransportContext) As Task" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;net-8.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="F#" Value="abstract member SerializeToStreamAsync : System.IO.Stream * System.Net.TransportContext -&gt; System.Threading.Tasks.Task" Usage="httpContent.SerializeToStreamAsync (stream, context)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Threading::Tasks::Task ^ SerializeToStreamAsync(System::IO::Stream ^ stream, System::Net::TransportContext ^ context);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="C#" Value="protected abstract System.Threading.Tasks.Task SerializeToStreamAsync (System.IO.Stream stream, System.Net.TransportContext? context);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Threading::Tasks::Task ^ SerializeToStreamAsync(System::IO::Stream ^ stream, System::Net::TransportContext ^ context);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;net-8.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="protected abstract System.Threading.Tasks.Task SerializeToStreamAsync (System.IO.Stream stream, System.Net.TransportContext? context);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="C#" Value="protected internal abstract System.Threading.Tasks.Task SerializeToStreamAsync (System.IO.Stream stream, System.Net.TransportContext context);" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance class System.Threading.Tasks.Task SerializeToStreamAsync(class System.IO.Stream stream, class System.Net.TransportContext context) cil managed" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="VB.NET" Value="Protected Friend MustOverride Function SerializeToStreamAsync (stream As Stream, context As TransportContext) As Task" FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
@@ -1032,6 +1174,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1051,11 +1195,11 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a stream as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been serialized to the stream object passed in the `stream` parameter.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been serialized to the stream object passed in the `stream` parameter.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1072,6 +1216,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1080,9 +1226,9 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="context" Type="System.Net.TransportContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="stream">The target stream.</param>
@@ -1091,11 +1237,11 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <summary>Serialize the HTTP content to a stream as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been serialized to the stream object passed in the `stream` parameter.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This operation will not block. The returned <xref:System.Threading.Tasks.Task%601> object will complete after all of the content has been serialized to the stream object passed in the `stream` parameter.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1118,6 +1264,8 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1136,11 +1284,11 @@ Once the operation completes, the returned memory stream represents the HTTP con
         <returns>
           <see langword="true" /> if <paramref name="length" /> is a valid length; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Net.Http.HttpContent.TryComputeLength%2A> method gives a HTTP content the ability to calculate the content length. This is useful for content types which are able to easily calculate the content length. If computing the content length is not possible or expensive (would require the system to buffer the whole content where the serialization would be expensive or require the system to allocate a lot of memory), this method can return `false`. If this method returns `false`, this implies that either chunked transfer is needed or the content must get buffered before being sent to the server.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Net.Http.HttpContent.TryComputeLength%2A> method gives a HTTP content the ability to calculate the content length. This is useful for content types which are able to easily calculate the content length. If computing the content length is not possible or expensive (would require the system to buffer the whole content where the serialization would be expensive or require the system to allocate a lot of memory), this method can return `false`. If this method returns `false`, this implies that either chunked transfer is needed or the content must get buffered before being sent to the server.
+
  ]]></format>
         </remarks>
       </Docs>

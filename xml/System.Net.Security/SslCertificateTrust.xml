@@ -8,6 +8,8 @@
   <AssemblyInfo>
     <AssemblyName>System.Net.Security</AssemblyName>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -28,9 +30,11 @@
       <AssemblyInfo>
         <AssemblyName>System.Net.Security</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute>
+        <Attribute FrameworkAlternate="net-6.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("windows")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("windows")&gt;]</AttributeName>
         </Attribute>
@@ -53,13 +57,18 @@
 
 ## Remarks
 
-If the `sendTrustInHandshake` argument is `true`, the client can use the list of trusted certificate authorities from the server to select an appropriate client certificate. In .NET 6, the list is only sent on Windows, and it depends on a registry setting.
+If the `sendTrustInHandshake` argument is `true`, the client can use the list of trusted certificate authorities from the server to select an appropriate client certificate. Sending trusted issuers list is not supported for `SslCertificateTrust` instances created using the `SslCertificaetTrust.CreateForX509Collection` in .NET 6.
+ 
+Since .NET 7, the sending trusted issuers list is supported on Linux and OSX platforms.
 
 > [!WARNING]
 > The list of trusted CAs increases the size of the handshake message. It could also be viewed as an information leak about the system's configuration. For these reasons, we recommend setting `sendTrustInHandshake` to `false`.
 
 ]]></format>
         </remarks>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <paramref name="sendTrustInHandshake" /> is <see langword="true" /> and the current platform does not support sending trusted issuers list in handshake.
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="CreateForX509Store">
@@ -72,6 +81,8 @@ If the `sendTrustInHandshake` argument is `true`, the client can use the list of
       <AssemblyInfo>
         <AssemblyName>System.Net.Security</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.Security.SslCertificateTrust</ReturnType>
@@ -91,13 +102,16 @@ If the `sendTrustInHandshake` argument is `true`, the client can use the list of
 
 ## Remarks
 
-If the `sendTrustInHandshake` argument is `true`, the client can use the list of trusted certificate authorities from the server to select an appropriate client certificate. In .NET 6, the list is only sent on Windows, and it depends on a registry setting.
+If the `sendTrustInHandshake` argument is `true`, the client can use the list of trusted certificate authorities from the server to select an appropriate client certificate. In .NET 6, the list is only sent on Windows, and it depends on the "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\SendTrustedIssuerList" registry setting being set to 1. Since .NET 7, the list is sent on Linux and OSX platforms as well.
 
 > [!WARNING]
 > The list of trusted CAs increases the size of the handshake message. It could also be viewed as an information leak about the system's configuration. For these reasons, we recommend setting `sendTrustInHandshake` to `false`.
 
 ]]></format>
         </remarks>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <paramref name="sendTrustInHandshake" /> is <see langword="true" /> and the current platform does not support sending trusted issuers list in handshake, or (on Windows) the <paramref name="store" />'s location is not <see cref="T:System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine" />.
+        </exception>
       </Docs>
     </Member>
   </Members>
