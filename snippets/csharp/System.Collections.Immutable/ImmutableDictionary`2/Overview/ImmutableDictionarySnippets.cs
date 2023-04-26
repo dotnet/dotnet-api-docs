@@ -17,7 +17,7 @@ static class ImmutableDictionarySnippets
             });
 
         // Query values by keys
-        string val;
+        string? val;
 
         if (mimeTypes.TryGetValue("txt", out val)) Console.WriteLine($"txt is mapped to {val}");
         else Console.WriteLine($"txt key is not found");
