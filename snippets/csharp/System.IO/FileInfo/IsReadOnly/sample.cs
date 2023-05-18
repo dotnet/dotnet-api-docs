@@ -2,60 +2,55 @@
 using System;
 using System.IO;
 
-namespace FileSystemExample
+public class FileExample
 {
-    class FileExample
+    public static void Main()
     {
-        public static void Main()
-        {
+        string fileName = @"c:\test.xml";
 
-            string FileName = @"c:\test.xml";
+        // Get the read-only value for a file.
+        bool isReadOnly = IsFileReadOnly(fileName);
 
-            // Get the read-only value for a file.
-            bool isReadOnly = IsFileReadOnly(FileName);
+        // Display whether the file is read-only.
+         Console.WriteLine("The file read-only value for " + fileName + " is: " + isReadOnly);
 
-            // Display wether the file is read-only.
-            Console.WriteLine("The file read-only value for " + FileName + " is: " + isReadOnly);
+        // Set the file to read-write.        
+        Console.WriteLine("Changing the read-only value for " + fileName + " to false.");
+        SetFileReadAccess(fileName, false);
 
-            Console.WriteLine("Changing the read-only value for " + FileName + " to true.");
+        // Get the read-only value for a file.
+        isReadOnly = IsFileReadOnly(fileName);
 
-            // Set the file to read-only.
-            SetFileReadAccess(FileName, true);
+        // Display that the file is now read-write.
+        Console.WriteLine("The file read-only value for " + fileName + " is: " + isReadOnly);
+    }
 
-            // Get the read-only value for a file.
-            isReadOnly = IsFileReadOnly(FileName);
+    // Sets the read-only value of a file.
+    public static void SetFileReadAccess(string fileName, bool setReadOnly)
+    {
+        // Create a new FileInfo object.
+        FileInfo fInfo = new FileInfo(fileName);
 
-            // Display that the file is read-only.
-            Console.WriteLine("The file read-only value for " + FileName + " is: " + isReadOnly);
-        }
+        // Set the IsReadOnly property.
+        fInfo.IsReadOnly = setReadOnly;
+    }
 
-        // Sets the read-only value of a file.
-        public static void SetFileReadAccess(string FileName, bool SetReadOnly)
-        {
-            // Create a new FileInfo object.
-            FileInfo fInfo = new FileInfo(FileName);
+    // Returns whether a file is read-only.
+    public static bool IsFileReadOnly(string fileName)
+    {
+        // Create a new FileInfo object.
+        FileInfo fInfo = new FileInfo(fileName);
 
-            // Set the IsReadOnly property.
-            fInfo.IsReadOnly = SetReadOnly;
-        }
-
-        // Returns wether a file is read-only.
-        public static bool IsFileReadOnly(string FileName)
-        {
-            // Create a new FileInfo object.
-            FileInfo fInfo = new FileInfo(FileName);
-
-            // Return the IsReadOnly property value.
-            return fInfo.IsReadOnly;
-        }
+        // Return the IsReadOnly property value.
+        return fInfo.IsReadOnly;
     }
 }
 
-//This code produces output similar to the following;
-//results may vary based on the computer/file structure/etc.:
+// This code produces output similar to the following,
+// though results may vary based on the computer, file structure, etc.:
 //
-//The file read-only value for c:\test.xml is: True
-//Changing the read-only value for c:\test.xml to true.
-//The file read-only value for c:\test.xml is: True
+// The file read-only value for c:\test.xml is: True
+// Changing the read-only value for c:\test.xml to false.
+// The file read-only value for c:\test.xml is: False
 //
 //</SNIPPET1>
