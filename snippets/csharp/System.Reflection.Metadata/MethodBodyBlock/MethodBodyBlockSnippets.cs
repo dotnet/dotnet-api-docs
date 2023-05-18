@@ -34,7 +34,7 @@ namespace MethodBodyBlockSnippets
                 Console.WriteLine($"  Local variables initialized: {mb.LocalVariablesInitialized}");
 
                 byte[]? il = mb.GetILBytes();
-                Console.WriteLine($"  Method body size: {il?.Length}");
+                Console.WriteLine($"  Method body size: {il?.Length ?? 0}");
                 Console.WriteLine($"  Exception regions: {mb.ExceptionRegions.Length}");
                 Console.WriteLine();
 
