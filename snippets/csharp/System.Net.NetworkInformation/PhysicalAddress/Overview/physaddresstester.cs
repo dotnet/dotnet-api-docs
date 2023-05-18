@@ -3,10 +3,9 @@ using System.Net.NetworkInformation;
 
 namespace Examples.System.Net.Networking
 {
-
     public class PhysicalAddressExample
     {
-// <snippet1>
+        // <snippet1>
         static void DisplayAddressNone()
         {
             PhysicalAddress none = PhysicalAddress.None;
@@ -19,9 +18,9 @@ namespace Examples.System.Net.Networking
             }
             Console.WriteLine();
         }
-// </snippet1>
+        // </snippet1>
 
-// <snippet2>
+        // <snippet2>
         public static void ShowNetworkInterfaces()
         {
             IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
@@ -40,27 +39,27 @@ namespace Examples.System.Net.Networking
                 IPInterfaceProperties properties = adapter.GetIPProperties(); //  .GetIPInterfaceProperties();
                 Console.WriteLine();
                 Console.WriteLine(adapter.Description);
-                Console.WriteLine(String.Empty.PadLeft(adapter.Description.Length,'='));
+                Console.WriteLine(String.Empty.PadLeft(adapter.Description.Length, '='));
                 Console.WriteLine("  Interface type .......................... : {0}", adapter.NetworkInterfaceType);
                 Console.Write("  Physical address ........................ : ");
                 PhysicalAddress address = adapter.GetPhysicalAddress();
                 byte[] bytes = address.GetAddressBytes();
-                for(int i = 0; i< bytes.Length; i++)
+                for (int i = 0; i < bytes.Length; i++)
                 {
                     // Display the physical address in hexadecimal.
                     Console.Write("{0}", bytes[i].ToString("X2"));
-                    // Insert a hyphen after each byte, unless we are at the end of the
-                    // address.
-                    if (i != bytes.Length -1)
+                    // Insert a hyphen after each byte, unless we're at the end of the address.
+                    if (i != bytes.Length - 1)
                     {
-                         Console.Write("-");
+                        Console.Write("-");
                     }
                 }
                 Console.WriteLine();
             }
         }
-// </snippet2>
-// <snippet3>
+        // </snippet2>
+
+        // <snippet3>
         public static void ParseTest()
         {
             PhysicalAddress address = PhysicalAddress.Parse("AC1EBA22");
@@ -70,9 +69,10 @@ namespace Examples.System.Net.Networking
             bool test = address.Equals(address2);
             Console.WriteLine("Equal? {0}", test);
         }
-// </snippet3>
-// <snippet4>
-            public static PhysicalAddress[] StoreNetworkInterfaceAddresses()
+        // </snippet3>
+
+        // <snippet4>
+        public static PhysicalAddress[]? StoreNetworkInterfaceAddresses()
         {
             IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
@@ -89,14 +89,15 @@ namespace Examples.System.Net.Networking
                 IPInterfaceProperties properties = adapter.GetIPProperties();
                 PhysicalAddress address = adapter.GetPhysicalAddress();
                 byte[] bytes = address.GetAddressBytes();
-                PhysicalAddress newAddress =  new PhysicalAddress(bytes);
-                addresses[i++]=newAddress;
-             }
+                PhysicalAddress newAddress = new PhysicalAddress(bytes);
+                addresses[i++] = newAddress;
+            }
             return addresses;
         }
-// </snippet4>
-//<snippet5>
-        public static PhysicalAddress StrictParseAddress(string address)
+        // </snippet4>
+
+        //<snippet5>
+        public static PhysicalAddress? StrictParseAddress(string? address)
         {
             PhysicalAddress newAddress = PhysicalAddress.Parse(address);
             if (PhysicalAddress.None.Equals(newAddress))
@@ -104,10 +105,10 @@ namespace Examples.System.Net.Networking
 
             return newAddress;
         }
-//</snippet5>
+        //</snippet5>
 
-//<snippet6>
-        public static PhysicalAddress StrictParseAddress(ReadOnlySpan<char> address)
+        //<snippet6>
+        public static PhysicalAddress? StrictParseAddress(ReadOnlySpan<char> address)
         {
             PhysicalAddress newAddress = PhysicalAddress.Parse(address);
             if (PhysicalAddress.None.Equals(newAddress))
@@ -115,24 +116,27 @@ namespace Examples.System.Net.Networking
 
             return newAddress;
         }
-//</snippet6>
+        //</snippet6>
 
         public static void Main()
         {
-           DisplayAddressNone();
-           ShowNetworkInterfaces();
-           ParseTest();
-           PhysicalAddress[] addresses = StoreNetworkInterfaceAddresses();
-           foreach (PhysicalAddress address in addresses)
-           {
-              Console.WriteLine(address.ToString());
-           }
+            DisplayAddressNone();
+            ShowNetworkInterfaces();
+            ParseTest();
+            PhysicalAddress[]? addresses = StoreNetworkInterfaceAddresses();
+            if (addresses is not null)
+            {
+                foreach (PhysicalAddress address in addresses)
+                {
+                    Console.WriteLine(address.ToString());
+                }
+            }
 
-          PhysicalAddress a = StrictParseAddress((string)null);
-          Console.WriteLine(a?.ToString() ?? "null");
+            PhysicalAddress? a = StrictParseAddress(null);
+            Console.WriteLine(a?.ToString() ?? "null");
 
-          PhysicalAddress b = StrictParseAddress("".AsSpan());
-          Console.WriteLine(b?.ToString() ?? "null");
+            PhysicalAddress? b = StrictParseAddress("".AsSpan());
+            Console.WriteLine(b?.ToString() ?? "null");
         }
     }
 }
