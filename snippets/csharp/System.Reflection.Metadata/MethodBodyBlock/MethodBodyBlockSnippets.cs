@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
@@ -33,8 +33,8 @@ namespace MethodBodyBlockSnippets
                 Console.WriteLine($"  Maximum stack size: {mb.MaxStack}");
                 Console.WriteLine($"  Local variables initialized: {mb.LocalVariablesInitialized}");
 
-                byte[] il = mb.GetILBytes();
-                Console.WriteLine($"  Method body size: {il.Length}");
+                byte[]? il = mb.GetILBytes();
+                Console.WriteLine($"  Method body size: {il?.Length}");
                 Console.WriteLine($"  Exception regions: {mb.ExceptionRegions.Length}");
                 Console.WriteLine();
 
@@ -55,7 +55,7 @@ namespace MethodBodyBlockSnippets
         {
             string path = typeof(Program).Assembly.Location;
             using var s = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using var reader = new PEReader(s);                
+            using var reader = new PEReader(s);
             MetadataReader mr = reader.GetMetadataReader(MetadataReaderOptions.None);
 
             foreach (TypeDefinitionHandle t in mr.TypeDefinitions)

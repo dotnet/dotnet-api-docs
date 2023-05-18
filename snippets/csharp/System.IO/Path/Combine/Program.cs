@@ -13,6 +13,9 @@ class Program
         Combine3();
         Console.WriteLine("\nPath.Combine(String,String,String,String)");
         Combine4();
+
+        Console.WriteLine();
+        ChangeExtensionTest.Main();
     }
 
     static void Combine1()

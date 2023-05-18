@@ -7,8 +7,12 @@ namespace DocumentSnippets
     {
         static void Main(string[] args)
         {
-            string pdbPath = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location),"DocumentSnippets.pdb");
-            DocumentSnippets.ReadPdbDocuments(pdbPath);
+            string? loc = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            if (loc is not null)
+            {
+                string pdbPath = Path.Combine(loc, "DocumentSnippets.pdb");
+                DocumentSnippets.ReadPdbDocuments(pdbPath);
+            }
         }
     }
 }

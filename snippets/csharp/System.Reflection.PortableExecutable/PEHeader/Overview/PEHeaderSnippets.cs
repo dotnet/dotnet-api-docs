@@ -14,15 +14,18 @@ namespace PEHeaderSnippets
             using var peReader = new PEReader(fs);
 
             // Display PE header information
-            PEHeader header = peReader.PEHeaders.PEHeader;
-            Console.WriteLine($"Image size, bytes:   {header.SizeOfImage}");
-            Console.WriteLine($"Image base:          0x{header.ImageBase:X}");
-            Console.WriteLine($"File alignment:      0x{header.FileAlignment:X}");
-            Console.WriteLine($"Section alignment:   0x{header.SectionAlignment:X}");
-            Console.WriteLine($"Subsystem:           {header.Subsystem}");
-            Console.WriteLine($"Dll characteristics: {header.DllCharacteristics}");
-            Console.WriteLine($"Linker version:      {header.MajorLinkerVersion}.{header.MinorLinkerVersion}");
-            Console.WriteLine($"OS version:          {header.MajorOperatingSystemVersion}.{header.MinorOperatingSystemVersion}");
+            PEHeader? header = peReader.PEHeaders.PEHeader;
+            if (header is not null)
+            {
+                Console.WriteLine($"Image size, bytes:   {header.SizeOfImage}");
+                Console.WriteLine($"Image base:          0x{header.ImageBase:X}");
+                Console.WriteLine($"File alignment:      0x{header.FileAlignment:X}");
+                Console.WriteLine($"Section alignment:   0x{header.SectionAlignment:X}");
+                Console.WriteLine($"Subsystem:           {header.Subsystem}");
+                Console.WriteLine($"Dll characteristics: {header.DllCharacteristics}");
+                Console.WriteLine($"Linker version:      {header.MajorLinkerVersion}.{header.MinorLinkerVersion}");
+                Console.WriteLine($"OS version:          {header.MajorOperatingSystemVersion}.{header.MinorOperatingSystemVersion}");
+            }
             //</SnippetReadPEHeader>
         }
 

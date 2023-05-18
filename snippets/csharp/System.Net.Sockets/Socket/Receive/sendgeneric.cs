@@ -8,7 +8,7 @@ using System.Threading;
 namespace send_generics_csharp
 {
     class Class1
-	{
+    {
         public static int syncSendAndReceive(string host, int port)
         {
             //<Snippet1>
@@ -16,12 +16,12 @@ namespace send_generics_csharp
             Encoding ASCII = Encoding.ASCII;
 
             // Create the TCP Socket.
-            IPHostEntry hostEntry = Dns.Resolve(host);
+            IPHostEntry hostEntry = Dns.GetHostEntry(host);
             IPEndPoint EPhost = new IPEndPoint(
                 hostEntry.AddressList[0], port);
 
             Socket mySocket = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp );
+                SocketType.Stream, ProtocolType.Tcp);
 
             mySocket.Connect(EPhost);
 
@@ -51,13 +51,11 @@ namespace send_generics_csharp
 
             // Specify the first buffer segment (2 bytes, starting
             // at the 4th element of bigBuffer)
-            recvBuffers.Add(new ArraySegment<byte>
-                                    (bigBuffer, 4, 2));
+            recvBuffers.Add(new ArraySegment<byte>(bigBuffer, 4, 2));
 
             // Specify the second buffer segment (500 bytes, starting
             // at the 20th element of bigBuffer)
-            recvBuffers.Add(new ArraySegment<byte>
-                                    (bigBuffer, 20, 500));
+            recvBuffers.Add(new ArraySegment<byte>(bigBuffer, 20, 500));
 
             int bytesReceived = mySocket.Receive(recvBuffers);
 
@@ -73,15 +71,15 @@ namespace send_generics_csharp
         public static void SendCallback(IAsyncResult ar)
         {
             allDone.Set();
-            Socket s = (Socket) ar.AsyncState;
-            s.EndSend(ar);
+            Socket? s = (Socket?)ar.AsyncState;
+            s?.EndSend(ar);
         }
 
         public static void ReceiveCallback(IAsyncResult ar)
         {
             allDone.Set();
-            Socket s = (Socket) ar.AsyncState;
-            s.EndReceive(ar);
+            Socket? s = (Socket?)ar.AsyncState;
+            s?.EndReceive(ar);
         }
 
         public static int asyncSendAndReceive(string host, int port)
@@ -91,12 +89,12 @@ namespace send_generics_csharp
             Encoding ASCII = Encoding.ASCII;
 
             // Create the TCP Socket.
-            IPHostEntry hostEntry = Dns.Resolve(host);
+            IPHostEntry hostEntry = Dns.GetHostEntry(host);
             IPEndPoint EPhost = new IPEndPoint(
                 hostEntry.AddressList[0], port);
 
             Socket mySocket = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp );
+                SocketType.Stream, ProtocolType.Tcp);
 
             mySocket.Connect(EPhost);
 
@@ -150,7 +148,7 @@ namespace send_generics_csharp
             Console.WriteLine("{0}", ASCII.GetString(bigBuffer));
             //</Snippet4>
 
-        return 1;
+            return 1;
         }
 
         [STAThread]
