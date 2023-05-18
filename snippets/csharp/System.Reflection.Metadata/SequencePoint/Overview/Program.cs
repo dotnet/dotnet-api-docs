@@ -8,13 +8,11 @@ namespace SequencePointSnippets
     {
         static void Main(string[] args)
         {
-            string? loc = Path.GetDirectoryName(typeof(Program).Assembly.Location);
-            if (loc is not null)
+            if (Path.GetDirectoryName(typeof(Program).Assembly.Location is string loc)
             {
                 string pdbPath = Path.Combine(loc, "SequencePointSnippets.pdb");
 
-                MethodBase? mbase = MethodInfo.GetCurrentMethod();
-                if (mbase is not null)
+                if (MethodInfo.GetCurrentMethod() is MethodBase mbase)
                     SequencePointSnippets.ReadSourceLineData(pdbPath, mbase.MetadataToken);
             }
         }

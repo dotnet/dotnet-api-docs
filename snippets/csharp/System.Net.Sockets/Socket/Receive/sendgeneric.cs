@@ -71,8 +71,10 @@ namespace send_generics_csharp
         public static void SendCallback(IAsyncResult ar)
         {
             allDone.Set();
-            Socket? s = (Socket?)ar.AsyncState;
-            s?.EndSend(ar);
+            if (ar.AsyncState is Socket s)
+            {
+                s.EndSend(ar);
+            }
         }
 
         public static void ReceiveCallback(IAsyncResult ar)

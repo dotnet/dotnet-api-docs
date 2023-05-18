@@ -31,7 +31,7 @@ public class Example
         Type? handlerType = eInfo?.EventHandlerType;
         MethodInfo? invokeMethod = handlerType?.GetMethod("Invoke");
         ParameterInfo[]? parms = invokeMethod?.GetParameters();
-        Type[] parmTypes = new Type[parms is not null ? parms.Length : 0];
+        Type[] parmTypes = new Type[parms?.Length ?? 0];
         for (int i = 0; i < parms?.Length; i++)
         {
             parmTypes[i] = parms[i].ParameterType;
