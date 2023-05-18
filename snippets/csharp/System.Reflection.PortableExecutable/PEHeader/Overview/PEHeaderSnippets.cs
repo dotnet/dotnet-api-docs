@@ -14,8 +14,7 @@ namespace PEHeaderSnippets
             using var peReader = new PEReader(fs);
 
             // Display PE header information
-            PEHeader? header = peReader.PEHeaders.PEHeader;
-            if (header is not null)
+            if (peReader.PEHeaders.PEHeader is PEHeader header)
             {
                 Console.WriteLine($"Image size, bytes:   {header.SizeOfImage}");
                 Console.WriteLine($"Image base:          0x{header.ImageBase:X}");
