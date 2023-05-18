@@ -8,7 +8,7 @@ namespace SequencePointSnippets
     {
         static void Main(string[] args)
         {
-            if (Path.GetDirectoryName(typeof(Program).Assembly.Location is string loc)
+            if (Path.GetDirectoryName(typeof(Program).Assembly.Location) is string loc)
             {
                 string pdbPath = Path.Combine(loc, "SequencePointSnippets.pdb");
 
