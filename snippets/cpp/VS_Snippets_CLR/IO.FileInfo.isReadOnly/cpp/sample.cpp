@@ -2,71 +2,44 @@
 using namespace System;
 using namespace System::IO;
 
-namespace FileSystemExample
-{
-    // Sets the read-only value of a file.
-    void SetFileReadAccess(String^ fileName, bool setReadOnly)
-    {
-        // Create a new FileInfo object.
-        FileInfo^ fInfo = gcnew FileInfo(fileName);
-
-        // Set the IsReadOnly property.
-        fInfo->IsReadOnly = setReadOnly;
-    }
-
-    // Returns whether a file is read-only.
-    bool IsFileReadOnly(String^ fileName)
-    {
-        // Create a new FileInfo object.
-        FileInfo^ fInfo = gcnew FileInfo(fileName);
-
-        // Return the IsReadOnly property value.
-        return fInfo->IsReadOnly;
-    }
-}
-
 int main()
 {
-    try
-    {
-		String^ fileName = "c:\\test.xml";
+    // Create a temporary file.
+    String^ filePath = Path::GetTempFileName();
+    Console::WriteLine("Created a temp file at '{0}.", filePath);
 
-        if (File::Exists(fileName))
-        {
-            // Get the read-only value for a file.
-            bool isReadOnly = FileSystemExample::IsFileReadOnly(fileName);
+    // Create a new FileInfo object.
+    FileInfo^ fInfo = gcnew FileInfo(filePath);
+    
+    // Get the read-only value for a file.
+    bool isReadOnly = fInfo->IsReadOnly;
 
-            // Display whether the file is read-only.
-            Console::WriteLine("The file read-only value for {0} is:" +
-                "{1}", fileName, isReadOnly);
+    // Display whether the file is read-only.
+    Console::WriteLine("The file read-only value for '{0}' is {1}.", fInfo->Name, isReadOnly);
 
-            Console::WriteLine("Changing the read-only value for {0}" +
-                " to true.", fileName);
+    // Set the file to read-only.
+    Console::WriteLine("Setting the read-only value for '{0}' to true.", fInfo->Name);
+    fInfo->IsReadOnly = true;
 
-            // Set the file to read-only.
-            FileSystemExample::SetFileReadAccess(fileName, true);
+    // Get the read-only value for a file.
+    isReadOnly = fInfo->IsReadOnly;
 
-            // Get the read-only value for a file.
-            isReadOnly = FileSystemExample::IsFileReadOnly(fileName);
+    // Display that the file is now read-only.
+    Console::WriteLine("The file read-only value for '{0}' is {1}.", fInfo->Name, isReadOnly);
 
-            // Display that the file is read-only.
-            Console::WriteLine("The file read-only value for {0} is:" +
-                "{1}", fileName, isReadOnly);
-        }
-        else
-        {
-            Console::WriteLine("The file {0} doesn't exist.", fileName);
-        }
-    }
-    catch (IOException^ ex)
-    {
-        Console::WriteLine(ex->Message);
-    }
+    // Make the file mutable again so it can be deleted.
+    fInfo->IsReadOnly = false;
+
+    // Delete the temporary file.
+    fInfo->Delete();
 };
-//This code produces output similar to the following; 
-//results may vary based on the computer/file structure/etc.:
+
+// This code produces output similar to the following,
+// though results may vary based on the computer, file structure, etc.:
 //
-//The file read-only value for c:\test.xml is:False
-//Changing the read-only value for c:\test.xml to true.
-//The file read-only value for c:\test.xml is:True
+// Created a temp file at 'C:\Users\UserName\AppData\Local\Temp\tmpB438.tmp'.
+// The file read-only value for 'tmpB438.tmp' is False.
+// Setting the read-only value for 'tmpB438.tmp' to true.
+// The file read-only value for 'tmpB438.tmp' is True.
+//
 //</SNIPPET1>

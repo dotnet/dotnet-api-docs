@@ -6,7 +6,7 @@ public class FileExample
 {
     public static void Main()
     {
-        // Create a temporary file
+        // Create a temporary file.
         string filePath = Path.GetTempFileName();
         Console.WriteLine($"Created a temp file at '{filePath}'.");
 
