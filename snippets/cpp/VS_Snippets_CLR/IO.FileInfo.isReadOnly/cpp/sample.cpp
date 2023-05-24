@@ -32,6 +32,8 @@ int main()
 
     // Delete the temporary file.
     fInfo->Delete();
+
+    return 0;
 };
 
 // This code produces output similar to the following,
