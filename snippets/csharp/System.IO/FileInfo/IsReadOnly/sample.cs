@@ -6,51 +6,43 @@ public class FileExample
 {
     public static void Main()
     {
-        string fileName = @"c:\test.xml";
+        // Create a temporary file
+        string filePath = Path.GetTempFileName();
+        Console.WriteLine($"Created a temp file at '{filePath}'.");
+
+        // Create a new FileInfo object.
+        FileInfo fInfo = new FileInfo(filePath);
 
         // Get the read-only value for a file.
-        bool isReadOnly = IsFileReadOnly(fileName);
+        bool isReadOnly = fInfo.IsReadOnly;
 
         // Display whether the file is read-only.
-         Console.WriteLine("The file read-only value for " + fileName + " is: " + isReadOnly);
+        Console.WriteLine($"The file read-only value for '{fInfo.Name}' is {isReadOnly}.");
 
-        // Set the file to read-write.        
-        Console.WriteLine("Changing the read-only value for " + fileName + " to false.");
-        SetFileReadAccess(fileName, false);
+        // Set the file to read-only.        
+        Console.WriteLine($"Setting the read-only value for '{fInfo.Name}' to true.");
+        fInfo.IsReadOnly = true;
 
         // Get the read-only value for a file.
-        isReadOnly = IsFileReadOnly(fileName);
+        isReadOnly = fInfo.IsReadOnly;
 
-        // Display that the file is now read-write.
-        Console.WriteLine("The file read-only value for " + fileName + " is: " + isReadOnly);
-    }
+        // Display that the file is now read-only.
+        Console.WriteLine($"The file read-only value for '{fInfo.Name}' is {isReadOnly}.");
 
-    // Sets the read-only value of a file.
-    public static void SetFileReadAccess(string fileName, bool setReadOnly)
-    {
-        // Create a new FileInfo object.
-        FileInfo fInfo = new FileInfo(fileName);
+        // Make the file mutable again so it can be deleted.
+        fInfo.IsReadOnly = false;
 
-        // Set the IsReadOnly property.
-        fInfo.IsReadOnly = setReadOnly;
-    }
-
-    // Returns whether a file is read-only.
-    public static bool IsFileReadOnly(string fileName)
-    {
-        // Create a new FileInfo object.
-        FileInfo fInfo = new FileInfo(fileName);
-
-        // Return the IsReadOnly property value.
-        return fInfo.IsReadOnly;
+        // Delete the temporary file.
+        fInfo.Delete();
     }
 }
 
 // This code produces output similar to the following,
 // though results may vary based on the computer, file structure, etc.:
 //
-// The file read-only value for c:\test.xml is: True
-// Changing the read-only value for c:\test.xml to false.
-// The file read-only value for c:\test.xml is: False
+// Created a temp file at 'C:\Users\UserName\AppData\Local\Temp\tmpB438.tmp'.
+// The file read-only value for 'tmpB438.tmp' is False.
+// Setting the read-only value for 'tmpB438.tmp' to true.
+// The file read-only value for 'tmpB438.tmp' is True.
 //
 //</SNIPPET1>
