@@ -23,7 +23,7 @@ Public Class FileInfoSnippets
         Console.WriteLine("{0} has attributes of {1}", fileName, fileInfo.Attributes)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\autoexec.bat has attributes of Normal
         ' C:\autoexec.bat has attributes of Archive
         ' </Snippet1>
@@ -45,7 +45,7 @@ Public Class FileInfoSnippets
         Console.WriteLine("{0} is now created at {1}", fileName, fileInfo.CreationTime)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\autoexec.bat was created at 8/17/2004 5:30:13 PM
         ' C:\autoexec.bat is now created at 8/17/2004 7:30:13 PM
         ' </Snippet2>
@@ -64,7 +64,7 @@ Public Class FileInfoSnippets
         Console.WriteLine("{0} has a directoryName of {1}", fileName, fileInfo.DirectoryName)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\TMP\log.txt has a directory name of C:\TMP
         ' </Snippet3>
         Console.WriteLine()
@@ -83,7 +83,7 @@ Public Class FileInfoSnippets
         Console.WriteLine("{0} is in a directory of {1} files.", fileName, dirInfo.GetFiles().Length)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\autoexec.bat is in a directory of 24 files.
         ' </Snippet4>
         Console.WriteLine()
@@ -104,7 +104,7 @@ Public Class FileInfoSnippets
         Next fileInfo
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\ contains the following system files:
         ' CONFIG.SYS
         ' IO.SYS
@@ -131,7 +131,7 @@ Public Class FileInfoSnippets
         Console.WriteLine("{0} now was last accessed at {1}", fileName, fileInfo.LastAccessTime)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\autoexec.bat was last accessed at 8/17/2004 1:30:13 PM
         ' C:\autoexec.bat now was last accessed at 8/17/2004 11:30:13 AM
         ' </Snippet6>
@@ -155,7 +155,7 @@ Public Class FileInfoSnippets
         Console.WriteLine("{0} now was last written to at {1}", fileName, fileInfo.LastWriteTime)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\autoexec.bat was last written to at 8/17/2004 1:30:13 PM
         ' C:\autoexec.bat now was last written to at 8/17/2004 11:30:13 AM
         ' </Snippet7>
@@ -180,7 +180,7 @@ Public Class FileInfoSnippets
         Next fileInfo
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' C:\ contains the following files:
         ' Size   Filename
         ' 0  AUTOEXEC.BAT
@@ -222,7 +222,7 @@ Public Class FileInfoSnippets
         r.Close()
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' File 'C:\DOCUME~1\cliffc\LOCALS~1\Temp\tmp12C.tmp' created of size 0 bytes
         ' File 'C:\DOCUME~1\cliffc\LOCALS~1\Temp\tmp12C.tmp' now has size 22 bytes
         ' The text in the file
@@ -244,41 +244,12 @@ Public Class FileInfoSnippets
         Console.WriteLine("File '{0}' now has size {1} bytes", fileInfo.Name, fileInfo.Length)
         ' This code produces output similar to the following,
         ' though actual results may vary by machine:
-        ' 
+        '
         ' File 'myFile' now has size 20 bytes
         ' </Snippet10>
         Console.WriteLine()
     End Sub
 
-
-    Public Sub OpenWriteAndOpenRead()
-        ' <Snippet11>
-        ' Create a temporary file.
-        Dim fileName As String = Path.GetTempFileName()
-        Dim fileInfo As New FileInfo(fileName)
-
-        ' Write the current time to the file in binary form.
-        Dim currentTime As DateTime = DateTime.Now
-        Dim fileWriteStream As FileStream = fileInfo.OpenWrite()
-        Dim binaryFormatter As New BinaryFormatter()
-        binaryFormatter.Serialize(fileWriteStream, currentTime)
-        fileWriteStream.Close()
-
-        ' Read the time back from the file.
-        Dim fileReadStream As FileStream = fileInfo.OpenRead()
-        Dim timeRead As DateTime = CType(binaryFormatter.Deserialize(fileReadStream), DateTime)
-        fileReadStream.Close()
-
-        Console.WriteLine("Value written {0}", currentTime)
-        Console.WriteLine("Value read    {0}", timeRead)
-        ' This code produces output similar to the following,
-        ' though actual results may vary by machine:
-        ' 
-        ' Value written 9/9/2005 3:46:24 PM
-        ' Value read    9/9/2005 3:46:24 PM
-        ' </Snippet11>
-        Console.WriteLine()
-    End Sub
     Public Shared Sub Main()
         Console.WriteLine()
         Dim fileInfoSnippets As New FileInfoSnippets()
@@ -292,6 +263,5 @@ Public Class FileInfoSnippets
         fileInfoSnippets.Length()
         fileInfoSnippets.AppendTextAndOpenText()
         fileInfoSnippets.CreateText()
-        fileInfoSnippets.OpenWriteAndOpenRead()
     End Sub
 End Class
