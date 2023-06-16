@@ -23,11 +23,6 @@ Module Persistence
         File.Delete(filenameXml)
 
         File.Delete(filenameBin)
-        PersistBinary()
-        File.Delete(filenameBin)
-
-        SaveDateWithTimeZone()
-        RestoreDateWithTimeZone()
     End Sub
 
     ' <Snippet1>

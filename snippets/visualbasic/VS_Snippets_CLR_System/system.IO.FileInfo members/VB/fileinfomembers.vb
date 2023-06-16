@@ -52,7 +52,6 @@ Public Class FileInfoSnippets
         Console.WriteLine()
     End Sub
 
-
     Public Sub DirectoryName()
         ' <Snippet3>
         Dim fileName As String = "C:\TMP\log.txt"
@@ -89,7 +88,6 @@ Public Class FileInfoSnippets
         Console.WriteLine()
     End Sub
 
-
     Public Sub ExtensionAndName()
         ' <Snippet5>
         Dim dirName As String = "C:\"
@@ -114,7 +112,6 @@ Public Class FileInfoSnippets
         Console.WriteLine()
     End Sub
 
-
     Public Sub LastAccessTime()
         ' <Snippet6>
         Dim fileName As String = "C:\autoexec.bat"
@@ -138,7 +135,6 @@ Public Class FileInfoSnippets
         Console.WriteLine()
     End Sub
 
-
     Public Sub LastWriteTime()
         ' <Snippet7>
         Dim fileName As String = "C:\autoexec.bat"
@@ -161,7 +157,6 @@ Public Class FileInfoSnippets
         ' </Snippet7>
         Console.WriteLine()
     End Sub
-
 
     Public Sub Length()
         ' <Snippet8>
@@ -200,7 +195,6 @@ Public Class FileInfoSnippets
         Console.WriteLine()
     End Sub
 
-
     Public Sub AppendTextAndOpenText()
         ' <Snippet9>
         Dim fileName As String = Path.GetTempFileName()
@@ -229,7 +223,6 @@ Public Class FileInfoSnippets
         ' </Snippet9>
         Console.WriteLine()
     End Sub
-
 
     Public Sub CreateText()
         ' <Snippet10>
