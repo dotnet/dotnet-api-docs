@@ -13,7 +13,7 @@ public class Example : IComparer<CultureInfo>
       string[] patternStrings= { "($n)", "-$n", "$-n", "$n-", "(n$)",
                                  "-n$", "n-$", "n$-", "-n $", "-$ n",
                                  "n $-", "$ n-", "$ -n", "n- $", "($ n)",
-                                 "(n $)" };
+                                 "(n $)", "$- n" };
       for (int ctr = patternStrings.GetLowerBound(0);
            ctr <= patternStrings.GetUpperBound(0); ctr++)
          patterns.Add(ctr, patternStrings[ctr]);
@@ -48,4 +48,5 @@ public class Example : IComparer<CultureInfo>
 //       de-LI:           2 (  $-n)       CHF-16.34
 //       de-LU:           8 ( -n $)        -16,34 €
 //       dsb-DE:          8 ( -n $)        -16,34 €
+//       luy-KE:         16 ( $- n)      Ksh- 16.34
 // </Snippet1>
