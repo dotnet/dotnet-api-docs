@@ -49,4 +49,8 @@ public class Example : IComparer<CultureInfo>
 //       de-LU:           8 ( -n $)        -16,34 €
 //       dsb-DE:          8 ( -n $)        -16,34 €
 //       luy-KE:         16 ( $- n)      Ksh- 16.34
+//
+// The result shown here happens only if using ICU.
+// Anyone using old NLS legacy mode can get different results (like .NET Framework apps).
+// Also, globalization data possibly can change which can make these results change too.
 // </Snippet1>
