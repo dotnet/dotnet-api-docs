@@ -52,6 +52,6 @@ End Class
 '       luy-KE:         16 ( $- n)      Ksh- 16.34
 '
 ' The result shown here happens only if using ICU.
-' Anyone using old NLS legacy mode can get different results (like .NET Framework apps).
-' Also, globalization data possibly can change which can make these results change too.
+' Apps that use NLS, for example, .NET Framework apps, might see different results.
+' Globalization data can change, which would also change these results.
 ' </Snippet1>
