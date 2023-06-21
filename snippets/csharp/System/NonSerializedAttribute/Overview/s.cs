@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
-//using System.Runtime.Serialization.Formatters.Binary;
 
 public class Test {
    public static void Main()  {
@@ -18,8 +17,6 @@ public class Test {
       Stream stream = File.Open("data.xml", FileMode.Create);
       SoapFormatter formatter = new SoapFormatter();
 
-      //BinaryFormatter formatter = new BinaryFormatter();
-
       formatter.Serialize(stream, obj);
       stream.Close();
 
@@ -29,8 +26,6 @@ public class Test {
       // Opens file "data.xml" and deserializes the object from it.
       stream = File.Open("data.xml", FileMode.Open);
       formatter = new SoapFormatter();
-
-      //formatter = new BinaryFormatter();
 
       obj = (TestSimpleObject)formatter.Deserialize(stream);
       stream.Close();
