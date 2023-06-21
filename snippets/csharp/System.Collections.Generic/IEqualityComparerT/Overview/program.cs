@@ -61,10 +61,7 @@ class BoxEqualityComparer : IEqualityComparer<Box>
             && b1.Width == b2.Width;
     }
 
-    public int GetHashCode(Box box)
-    {
-        return box.Height ^ box.Length ^ box.Width;
-    }
+    public int GetHashCode(Box box) => box.Height ^ box.Length ^ box.Width;
 }
 
 // The example displays the following output:
