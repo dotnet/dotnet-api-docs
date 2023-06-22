@@ -1,7 +1,6 @@
 ﻿// <Snippet1>
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
 
 public class Test {
