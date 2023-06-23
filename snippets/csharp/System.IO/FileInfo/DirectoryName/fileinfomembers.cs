@@ -1,7 +1,6 @@
 ﻿// <Snippet12>
 using System;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 // </Snippet12>
 
 public class FileInfoSnippets

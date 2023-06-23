@@ -2,10 +2,6 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace EventsTabExample
 {
@@ -22,9 +18,6 @@ namespace EventsTabExample
     public class TypeEventsTab : System.Windows.Forms.Design.EventsTab
     {
         [BrowsableAttribute(true)]
-        // This string contains a Base-64 encoded and serialized example 
-        // property tab image.
-        private string img = "AAEAAAD/////AQAAAAAAAAAMAgAAAFRTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0xLjAuMzMwMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAtgIAAAJCTbYCAAAAAAAANgAAACgAAAANAAAAEAAAAAEAGAAAAAAAAAAAAMQOAADEDgAAAAAAAAAAAADO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tn/ztbZztbZHh4eHh4eztbZztbZztbZztbZztbZztbZztbZztbZztbZ/87W2c7W2QDBAB4eHh4eHs7W2c7W2c7W2c7W2c7W2c7W2c7W2c7W2f/O1tnO1tnO1tkAwQAeHh4eHh7O1tnO1tnO1tnO1tnO1tnO1tnO1tn/ztbZztbZlJSU////AMEAHh4eHh4eztbZztbZztbZztbZztbZztbZ/87W2c7W2c7W2ZSUlP///wDBAB4eHh4eHs7W2c7W2c7W2c7W2c7W2f/O1tnO1tnO1tnO1tmUlJT///8AwQAeHh4eHh7O1tnO1tnO1tnO1tn/ztbZHh4eHh4eHh4eHh4eHh4e////AIAAHh4eHh4eztbZztbZztbZ/87W2ZSUlP///wDBAADBAADBAADBAADBAACAAB4eHh4eHs7W2c7W2f/O1tnO1tmUlJT///8AwQAAgAAeHh4eHh7O1tnO1tnO1tnO1tnO1tn/ztbZztbZztbZlJSU////AMEAAIAAHh4eHh4eztbZztbZztbZztbZ/87W2c7W2c7W2c7W2ZSUlP///wDBAACAAB4eHh4eHs7W2c7W2c7W2f/O1tnO1tnO1tnO1tnO1tmUlJT///8AwQAAgAAeHh4eHh7O1tnO1tn/ztbZztbZztbZztbZztbZztbZlJSU////AMEAAIAAHh4eHh4eztbZ/87W2c7W2c7W2c7W2c7W2c7W2c7W2ZSUlP///wDBAACAAB4eHs7W2f/O1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tnO1tn/Cw==";
         private IServiceProvider sp;
 
         public TypeEventsTab(IServiceProvider sp) : base(sp)

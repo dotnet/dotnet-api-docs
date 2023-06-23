@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace PropertyValueUIServiceExample
 {
     // This component obtains the IPropertyValueUIService and adds a
-    // PropertyValueUIHandler that provides PropertyValueUIItem objects
+    // PropertyValueUIHandler that provides PropertyValueUIItem objects,
     // which provide an image, ToolTip, and invoke event handler to
     // any properties named HorizontalMargin and VerticalMargin, 
     // such as the example integer properties on this component.    

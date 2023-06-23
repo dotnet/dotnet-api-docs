@@ -1,17 +1,10 @@
 ﻿//<Snippet1>
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace TypeCategoryTabExample
-{	
+{
     // This component adds a TypeCategoryTab to the property browser 
     // that is available for any components in the current design mode document.
     [PropertyTabAttribute(typeof(TypeCategoryTab), PropertyTabScope.Document)]
@@ -26,10 +19,6 @@ namespace TypeCategoryTabExample
     // category of the type of each property.
     public class TypeCategoryTab : PropertyTab
     {
-        [BrowsableAttribute(true)]
-        // This string contains a Base-64 encoded and serialized example property tab image.
-        private string img = "AAEAAAD/////AQAAAAAAAAAMAgAAAFRTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0xLjAuMzMwMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA9gAAAAJCTfYAAAAAAAAANgAAACgAAAAIAAAACAAAAAEAGAAAAAAAAAAAAMQOAADEDgAAAAAAAAAAAAD///////////////////////////////////9ZgABZgADzPz/zPz/zPz9AgP//////////gAD/gAD/AAD/AAD/AACKyub///////+AAACAAAAAAP8AAP8AAP9AgP////////9ZgABZgABz13hz13hz13hAgP//////////gAD/gACA/wCA/wCA/wAA//////////+AAACAAAAAAP8AAP8AAP9AgP////////////////////////////////////8L";
-
         public TypeCategoryTab()
         {            
         }
