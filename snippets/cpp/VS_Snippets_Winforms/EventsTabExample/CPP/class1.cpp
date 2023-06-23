@@ -102,30 +102,5 @@ public:
          return "Events by Type";
       }
    }
-
-   property System::Drawing::Bitmap^ Bitmap 
-   {
-      // Provides an image for the event property tab.
-      virtual System::Drawing::Bitmap^ get() override
-      {
-         System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap( DeserializeFromBase64Text( img ) );
-         return bmp;
-      }
-   }
-
-private:
-
-   // This method can be used to retrieve an Image from a block of 
-   // Base64-encoded text.
-   Image^ DeserializeFromBase64Text( String^ text )
-   {
-      Image^ img = nullptr;
-      array<Byte>^memBytes = Convert::FromBase64String( text );
-      IFormatter^ formatter = gcnew BinaryFormatter;
-      MemoryStream^ stream = gcnew MemoryStream( memBytes );
-      img = dynamic_cast<Image^>(formatter->Deserialize( stream ));
-      stream->Close();
-      return img;
-   }
 };
 //</Snippet1>
