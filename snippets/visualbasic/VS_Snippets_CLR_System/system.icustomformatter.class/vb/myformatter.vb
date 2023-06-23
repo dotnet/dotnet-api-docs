@@ -4,7 +4,7 @@
 Imports System.Globalization
 Imports System.Numerics
 
-Public Class BinaryFormatter : Implements IFormatProvider, ICustomFormatter
+Public Class MyFormatter : Implements IFormatProvider, ICustomFormatter
    ' IFormatProvider.GetFormat implementation.
    Public Function GetFormat(formatType As Type) As Object _
                    Implements IFormatProvider.GetFormat
@@ -26,7 +26,7 @@ Public Class BinaryFormatter : Implements IFormatProvider, ICustomFormatter
       ' Handle null or empty format string, string with precision specifier.
       Dim thisFmt As String = String.Empty
       ' Extract first character of format string (precision specifiers
-      ' are not supported by BinaryFormatter).
+      ' are not supported by MyFormatter).
       If Not String.IsNullOrEmpty(fmt) Then
          thisFmt = CStr(IIf(fmt.Length > 1, fmt.Substring(0, 1), fmt))
       End If
@@ -117,21 +117,21 @@ Public Module Example
       
       Dim byteValue As Byte = 124
       ' <Snippet4>
-      Console.WriteLine(String.Format(New BinaryFormatter(), _
+      Console.WriteLine(String.Format(New MyFormatter(), _
                                       "{0} (binary: {0:B}) (hex: {0:H})", byteValue))
       ' </Snippet4>
       
       Dim intValue As Integer = 23045
-      Console.WriteLine(String.Format(New BinaryFormatter(), _
+      Console.WriteLine(String.Format(New MyFormatter(), _
                                       "{0} (binary: {0:B}) (hex: {0:H})", intValue))
       
       Dim ulngValue As ULong = 31906574882
-      Console.WriteLine(String.Format(New BinaryFormatter(), _
+      Console.WriteLine(String.Format(New MyFormatter(), _
                                       "{0} {1}   (binary: {0:B}) {1}   (hex: {0:H})", _
                                       ulngValue, vbCrLf))
 
       Dim bigIntValue As BigInteger = BigInteger.Multiply(Int64.MaxValue, 2)
-      Console.WriteLine(String.Format(New BinaryFormatter(), _
+      Console.WriteLine(String.Format(New MyFormatter(), _
                                       "{0} {1}   (binary: {0:B}) {1}   (hex: {0:H})", _
                                       bigIntValue, vbCrLf))
    End Sub
