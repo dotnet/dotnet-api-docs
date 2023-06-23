@@ -70,29 +70,6 @@ namespace EventsTabExample
                 return "Events by Type";
             }
         }
-
-        // Provides an image for the event property tab.
-        public override System.Drawing.Bitmap Bitmap
-        {
-            get
-            {
-                Bitmap bmp = new Bitmap(DeserializeFromBase64Text(img));
-                return bmp;
-            }
-        }
-
-        // This method can be used to retrieve an Image from a block of 
-        // Base64-encoded text.
-        private Image DeserializeFromBase64Text(string text)
-        {
-            Image img = null;
-            byte[] memBytes = Convert.FromBase64String(text);
-            IFormatter formatter = new BinaryFormatter();
-            MemoryStream stream = new MemoryStream(memBytes);
-            img = (Image)formatter.Deserialize(stream);
-            stream.Close();
-            return img;
-        }
     }
 }
 //</Snippet1>

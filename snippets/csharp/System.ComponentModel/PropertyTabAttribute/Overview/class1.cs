@@ -75,21 +75,9 @@ namespace TypeCategoryTabExample
         {
             get
             {
-                Bitmap bmp = new Bitmap(DeserializeFromBase64Text(img));
+                Bitmap bmp = new Bitmap(@"myproperty.bmp", true);
                 return bmp;
             }
-        }
-
-        // This method can be used to retrieve an Image from a block of Base64-encoded text.
-        private Image DeserializeFromBase64Text(string text)
-        {
-            Image img = null;
-            byte[] memBytes = Convert.FromBase64String(text);
-            IFormatter formatter = new BinaryFormatter();
-            MemoryStream stream = new MemoryStream(memBytes);
-            img = (Image)formatter.Deserialize(stream);
-            stream.Close();
-            return img;
         }
     }
 }
