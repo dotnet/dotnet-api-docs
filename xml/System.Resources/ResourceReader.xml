@@ -174,24 +174,15 @@ Label15="Alternate Email Address:"
  Typically, these exceptions are thrown if the .resources file has been modified manually, if the assembly in which a type is defined has either not been included with an application or has been inadvertently deleted, or if the assembly is an older version that predates a type. If one of these exceptions is thrown, you can retrieve resources by enumerating each resource and calling the <xref:System.Resources.ResourceReader.GetResourceData%2A> method, as the following section shows. This approach provides you with some information about the data type that the <xref:System.Collections.IDictionaryEnumerator.Value%2A?displayProperty=nameWithType> property attempted to return.  
   
 <a name="getresourcedata"></a>   
-### Retrieving Resources by Name with GetResourceData  
+### Retrieve Resources by Name with GetResourceData  
+
  The second approach to enumerating resources in a .resources file also involves navigating through the resources in the file by calling the `IDictionaryEnumerator.MoveNext` method. For each resource, you retrieve the resource's name from the <xref:System.Collections.IDictionaryEnumerator.Key%2A?displayProperty=nameWithType> property, which is then passed to the <xref:System.Resources.ResourceReader.GetResourceData%28System.String%2CSystem.String%40%2CSystem.Byte%5B%5D%40%29> method to retrieve the resource's data. This is returned as a byte array in the `resourceData` argument.  
   
  This approach is more awkward than retrieving the resource name and value from the <xref:System.Collections.IDictionaryEnumerator.Key%2A?displayProperty=nameWithType> and <xref:System.Collections.IDictionaryEnumerator.Value%2A?displayProperty=nameWithType> properties, because it returns the actual bytes that form the resource value. However, if the attempt to retrieve the resource throws an exception, the <xref:System.Resources.ResourceReader.GetResourceData%2A> method can help identify the source of the exception by supplying information about the resource's data type. For more information about the string that indicates the resource's data type, see <xref:System.Resources.ResourceReader.GetResourceData%2A>.  
   
- The following example illustrates how to use this approach to retrieve resources and to handle any exceptions that are thrown. It programmatically creates a binary .resources file that contains four strings, one Boolean, one integer, one bitmap, and one custom `DateTimeTZI` object. To run the example, do the following:  
+ The following example illustrates how to use this approach to retrieve resources and to handle any exceptions that are thrown. It programmatically creates a binary .resources file that contains four strings, one Boolean, one integer, and one bitmap. To run the example, do the following:  
   
-1.  Create an assembly named Library.dll that contains the `DateTimeTZI` structure. The following is the source code for the assembly.  
-  
-     :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceReader/Overview/library.cs" id="Snippet4":::
-  
-     Compile the source code in C# by using the following command:  
-  
-    ```  
-    csc /t:library library.cs  
-    ```
-  
-2.  Compile and execute the following source code, which creates a .resources file named ContactResources.resources.  
+1. Compile and execute the following source code, which creates a .resources file named ContactResources.resources.  
   
      :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceReader/Overview/createresourceex1.cs" id="Snippet5":::
   
@@ -201,11 +192,11 @@ Label15="Alternate Email Address:"
     csc CreateResources.cs /r:library.dll  
     ```
   
-3.  Compile and run the following code to enumerate the resources in the ContactResources.resources file.  
+2. Compile and run the following code to enumerate the resources in the ContactResources.resources file.  
   
      :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceReader/Overview/readresourceex1.cs" id="Snippet6":::
   
-     After modifying the source code (for example, by deliberately throwing a <xref:System.FormatException> at the end of the `try` block) or renaming the Library.dll assembly so that it is unavailable at runtime, you can run the example to see how calls to <xref:System.Resources.ResourceReader.GetResourceData%2A> enable you to retrieve or recreate some resource information.  
+     After modifying the source code (for example, by deliberately throwing a <xref:System.FormatException> at the end of the `try` block), you can run the example to see how calls to <xref:System.Resources.ResourceReader.GetResourceData%2A> enable you to retrieve or recreate some resource information.  
   
  ]]></format>
     </remarks>
@@ -727,11 +718,9 @@ Label11="Mobile Phone:"
   
      Assuming that `resourceData` has not been corrupted, it can usually be converted from a byte array back to its original value by calling a <xref:System.BitConverter> or <xref:System.IO.BinaryReader> method.  
   
--   A string that contains the fully qualified name of the type whose serialized data is assigned to the `resourceData` argument (for example, `System.String`). In addition, for types that are not part of the .NET Framework class library, the string includes the name, version, culture, and public key of the assembly that contains the type. For example, the following string indicates that the serialized data represents an instance of the `Person` type in the `Extensions` namespace, which is found in version 1.0 of an assembly named Utility that has no public key and no designated culture.  
+-   A string that contains the fully qualified name of the type whose serialized data is assigned to the `resourceData` argument (for example, `System.String`). In addition, for types that are not part of the .NET class library, the string includes the name, version, culture, and public key of the assembly that contains the type. For example, the following string indicates that the serialized data represents an instance of the `Person` type in the `Extensions` namespace, which is found in version 1.0 of an assembly named Utility that has no public key and no designated culture.  
   
-     `Extensions.Person, Utility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null`  
-  
-     Assuming that `resourceData` has not been corrupted and that the source type is available, `resourceData` can be converted from a byte array back to its original value by converting the byte array to a <xref:System.IO.Stream> object and passing the stream to the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize%2A?displayProperty=nameWithType> method.  
+     `Extensions.Person, Utility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null`
   
 -   The string used to describe the data type in the <xref:System.Resources.ResourceWriter.AddResourceData%2A?displayProperty=nameWithType> method call.  
   
