@@ -3,7 +3,7 @@ open System
 open System.Globalization
 open System.Numerics
 
-type BinaryFormatter() =
+type MyFormatter() =
     interface IFormatProvider with
         // IFormatProvider.GetFormat implementation.
         member this.GetFormat(formatType: Type) =
@@ -108,20 +108,20 @@ Console.WindowWidth <- 100
 
 let byteValue = 124uy
 // <Snippet4>
-String.Format(BinaryFormatter(), "{0} (binary: {0:B}) (hex: {0:H})", byteValue)
+String.Format(MyFormatter(), "{0} (binary: {0:B}) (hex: {0:H})", byteValue)
 |> printfn "%s"
 // </Snippet4>
 
 let intValue = 23045
-String.Format(BinaryFormatter(), "{0} (binary: {0:B}) (hex: {0:H})", intValue)
+String.Format(MyFormatter(), "{0} (binary: {0:B}) (hex: {0:H})", intValue)
 |> printfn "%s"
 
 let ulngValue = 31906574882uL
-String.Format(BinaryFormatter(), "{0}\n   (binary: {0:B})\n   (hex: {0:H})", ulngValue)
+String.Format(MyFormatter(), "{0}\n   (binary: {0:B})\n   (hex: {0:H})", ulngValue)
 |> printfn "%s"
 
 let bigIntValue = BigInteger.Multiply(Int64.MaxValue, 2)
-String.Format(BinaryFormatter(), "{0}\n   (binary: {0:B})\n   (hex: {0:H})", bigIntValue)
+String.Format(MyFormatter(), "{0}\n   (binary: {0:B})\n   (hex: {0:H})", bigIntValue)
 |> printfn "%s"
 
 // The example displays the following output:
