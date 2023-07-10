@@ -538,11 +538,14 @@ This function can only be called a single time. Subsequent calls to this functio
         <Parameter Name="unknown" Type="System.IntPtr" RefType="out" Index="1" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="unknown">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="obj">A managed wrapper</param>
+        <param name="unknown">An unmanaged COM object</param>
+        <summary>Given a managed object, determine if it is a <see cref="T:System.Runtime.InteropServices.ComWrappers" />-created managed wrapper and if so, return the wrapped unmanaged pointer.</summary>
+        <returns>
+          <see langword="true" /> if the wrapper was resolved to an external COM object, otherwise <see langword="false" />.</returns>
+        <remarks>If a COM object is returned, the caller is expected to call Release() on the object.
+            This can be done through an API like <see cref="M:System.Runtime.InteropServices.Marshal.Release(System.IntPtr)" />.
+            Since this API is required to interact directly with the external COM object, QueryInterface(), it is important for the caller to understand the COM object may have apartment affinity and therefore if the current thread is not in the correct apartment or the COM object is not a proxy this call may fail.</remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetObject">
@@ -572,10 +575,11 @@ This function can only be called a single time. Subsequent calls to this functio
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="unknown">To be added.</param>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="unknown">An unmanaged wrapper</param>
+        <param name="obj">A managed object</param>
+        <summary>Given a COM object, determine if it is a <see cref="T:System.Runtime.InteropServices.ComWrappers" />-created unmanaged wrapper and if so, return the wrapped managed object.</summary>
+        <returns>
+          <see langword="true" /> if the wrapper was resolved to a managed object, otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
