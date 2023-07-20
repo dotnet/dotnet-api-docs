@@ -1406,7 +1406,7 @@
       <Docs>
         <param name="asyncResult">The reference to the pending asynchronous request to finish.</param>
         <summary>Waits for the pending asynchronous read to complete. (Consider using <see cref="M:System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)" /> instead.)</summary>
-        <returns>The number of bytes read from the stream, between zero (0) and the number of bytes you requested. Streams return zero (0) only at the end of the stream, otherwise, they should block until at least one byte is available.</returns>
+        <returns>The number of bytes read from the stream, between zero (0) and the number of bytes requested. ReadAsync returns zero (0) only if zero bytes were requested or if no more bytes will be available because it's at the end of the stream; otherwise, read operations do not complete until at least one byte is available. If zero bytes are requested, read operations may complete immediately or may not complete until at least one byte is available (but without consuming any data).</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -1950,14 +1950,14 @@
       <Docs>
         <param name="buffer">A region of memory. When this method returns, the contents of this region are replaced by the bytes read from the current source.</param>
         <summary>When overridden in a derived class, reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
-        <returns>The total number of bytes read into the buffer. This can be less than the number of bytes allocated in the buffer if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
+        <returns>The total number of bytes read into the buffer. This can be less than the size of the buffer if that many bytes are not currently available, or zero (0) if the buffer's length is zero or the end of the stream has been reached.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  Use the <xref:System.IO.Stream.CanRead%2A> property to determine whether the current instance supports reading. Use the <xref:System.IO.Stream.ReadAsync%2A> method to read asynchronously from the current stream.  
   
- Implementations of this method read a maximum of `buffer.Length` bytes from the current stream and store them in `buffer`. The current position within the stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the stream remains unchanged. Implementations return the number of bytes read. The implementation will block until at least one byte of data can be read, in the event that no data is available. <xref:System.IO.Stream.Read%2A> returns 0 only when there is no more data in the stream and no more is expected (such as a closed socket or end of file). An implementation is free to return fewer bytes than requested even if the end of the stream has not been reached.  
+ Implementations of this method read a maximum of `buffer.Length` bytes from the current stream and store them in `buffer`. The current position within the stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the stream remains unchanged. Implementations return the number of bytes read. If more than zero bytes are requested, the implementation will not complete the operation until at least one byte of data can be read (if zero bytes were requested, some implementations may similarly not complete until at least one byte is available, but no data will be consumed from the stream in such a case). <xref:System.IO.Stream.Read%2A> returns 0 only if 0 bytes were requested or when there is no more data in the stream and no more is expected (such as a closed socket or end of file). An implementation is free to return fewer bytes than requested even if the end of the stream has not been reached.
   
  Use <xref:System.IO.BinaryReader> for reading primitive data types.    
   
@@ -2015,14 +2015,14 @@
         <param name="offset">The zero-based byte offset in <paramref name="buffer" /> at which to begin storing the data read from the current stream.</param>
         <param name="count">The maximum number of bytes to be read from the current stream.</param>
         <summary>When overridden in a derived class, reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
-        <returns>The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
+        <returns>The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if <paramref name="count" /> is 0 or the end of the stream has been reached.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  Use the <xref:System.IO.Stream.CanRead%2A> property to determine whether the current instance supports reading. Use the <xref:System.IO.Stream.ReadAsync%2A> method to read asynchronously from the current stream.  
   
- Implementations of this method read a maximum of `count` bytes from the current stream and store them in `buffer` beginning at `offset`. The current position within the stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the stream remains unchanged. Implementations return the number of bytes read. The implementation will block until at least one byte of data can be read, in the event that no data is available. <xref:System.IO.Stream.Read%2A> returns 0 only when there is no more data in the stream and no more is expected (such as a closed socket or end of file). An implementation is free to return fewer bytes than requested even if the end of the stream has not been reached.  
+ Implementations of this method read a maximum of `count` bytes from the current stream and store them in `buffer` beginning at `offset`. The current position within the stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the stream remains unchanged. Implementations return the number of bytes read. If more than zero bytes are requested, the implementation will not complete the operation until at least one byte of data can be read (some implementations may similarly not complete until at least one byte is available even if zero bytes were requested, but no data will be consumed from the stream in such a case). <xref:System.IO.Stream.Read%2A> returns 0 only if 0 bytes were requested or when there is no more data in the stream and no more is expected (such as a closed socket or end of file). An implementation is free to return fewer bytes than requested even if the end of the stream has not been reached.
   
  Use <xref:System.IO.BinaryReader> for reading primitive data types.  
   
@@ -2098,7 +2098,7 @@
         <param name="buffer">The region of memory to write the data into.</param>
         <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>Asynchronously reads a sequence of bytes from the current stream, advances the position within the stream by the number of bytes read, and monitors cancellation requests.</summary>
-        <returns>A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.ValueTask`1.Result" /> property contains the total number of bytes read into the buffer. The result value can be less than the number of bytes allocated in the buffer if that many bytes are not currently available, or it can be 0 (zero) if the end of the stream has been reached.</returns>
+        <returns>A task that represents the asynchronous read operation. The value of its <see cref="P:System.Threading.Tasks.ValueTask`1.Result" /> property contains the total number of bytes read into the buffer. The result value can be less than the length of the buffer if that many bytes are not currently available, or it can be 0 (zero) if the length of the buffer is 0 or if the end of the stream has been reached.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2168,7 +2168,7 @@
         <param name="offset">The byte offset in <paramref name="buffer" /> at which to begin writing data from the stream.</param>
         <param name="count">The maximum number of bytes to read.</param>
         <summary>Asynchronously reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
-        <returns>A task that represents the asynchronous read operation. The value of the <paramref name="TResult" /> parameter contains the total number of bytes read into the buffer. The result value can be less than the number of bytes requested if the number of bytes currently available is less than the requested number, or it can be 0 (zero) if the end of the stream has been reached.</returns>
+        <returns>A task that represents the asynchronous read operation. The value of the <paramref name="TResult" /> parameter contains the total number of bytes read into the buffer. The result value can be less than the number of bytes requested if the number of bytes currently available is less than the requested number, or it can be 0 (zero) if <paramref name="count" /> is 0 or if the end of the stream has been reached.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2252,7 +2252,7 @@
         <param name="count">The maximum number of bytes to read.</param>
         <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>Asynchronously reads a sequence of bytes from the current stream, advances the position within the stream by the number of bytes read, and monitors cancellation requests.</summary>
-        <returns>A task that represents the asynchronous read operation. The value of the <paramref name="TResult" /> parameter contains the total number of bytes read into the buffer. The result value can be less than the number of bytes requested if the number of bytes currently available is less than the requested number, or it can be 0 (zero) if the end of the stream has been reached.</returns>
+        <returns>A task that represents the asynchronous read operation. The value of the <paramref name="TResult" /> parameter contains the total number of bytes read into the buffer. The result value can be less than the number of bytes requested if the number of bytes currently available is less than the requested number, or it can be 0 (zero) if <paramref name="count" /> is 0 or if the end of the stream has been reached.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
