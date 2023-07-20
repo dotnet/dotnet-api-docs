@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -42,14 +42,14 @@ class HttpClientHandler_SecureExample
         client.Dispose();
     }
 
-    private static bool ServerCertificateCustomValidation(HttpRequestMessage requestMessage, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslErrors)
+    private static bool ServerCertificateCustomValidation(HttpRequestMessage requestMessage, X509Certificate2? certificate, X509Chain? chain, SslPolicyErrors sslErrors)
     {
         // It is possible to inspect the certificate provided by the server.
         Console.WriteLine($"Requested URI: {requestMessage.RequestUri}");
-        Console.WriteLine($"Effective date: {certificate.GetEffectiveDateString()}");
-        Console.WriteLine($"Exp date: {certificate.GetExpirationDateString()}");
-        Console.WriteLine($"Issuer: {certificate.Issuer}");
-        Console.WriteLine($"Subject: {certificate.Subject}");
+        Console.WriteLine($"Effective date: {certificate?.GetEffectiveDateString()}");
+        Console.WriteLine($"Exp date: {certificate?.GetExpirationDateString()}");
+        Console.WriteLine($"Issuer: {certificate?.Issuer}");
+        Console.WriteLine($"Subject: {certificate?.Subject}");
 
         // Based on the custom logic it is possible to decide whether the client considers certificate valid or not
         Console.WriteLine($"Errors: {sslErrors}");

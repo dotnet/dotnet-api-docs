@@ -36,13 +36,7 @@ public struct Point : INullable
         }
     }
 
-    public bool IsNull
-    {
-        get
-        {
-            return is_Null;
-        }
-    }
+    public bool IsNull => is_Null;
 
     public static Point Null
     {
@@ -74,12 +68,15 @@ public struct Point : INullable
         }
 
         // Parse input string here to separate out coordinates
-        string str = Convert.ToString(s);
-        string[] xy = str.Split(':');
+        string? str = Convert.ToString(s);
+        string[]? xy = str?.Split(':');
 
         Point pt = new Point();
-        pt.X = Convert.ToInt32(xy[0]);
-        pt.Y = Convert.ToInt32(xy[1]);
+        if (xy is not null)
+        {
+            pt.X = Convert.ToInt32(xy[0]);
+            pt.Y = Convert.ToInt32(xy[1]);
+        }
         return (pt);
     }
 
@@ -125,9 +122,9 @@ public struct Point : INullable
 
 //-----------------------------------------------------------------------------
 //<Snippet12>
-[SqlUserDefinedType(Format.Native, MaxByteSize=8000)]
+[SqlUserDefinedType(Format.Native, MaxByteSize = 8000)]
 public class SampleType
 {
-   //...
+    //...
 }
 //</Snippet12>
