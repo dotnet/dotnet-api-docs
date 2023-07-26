@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides an abstraction for time.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -31,7 +31,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes the <see cref="T:System.TimeProvider" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -57,13 +57,28 @@
         <Parameter Name="period" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="callback">To be added.</param>
-        <param name="state">To be added.</param>
-        <param name="dueTime">To be added.</param>
-        <param name="period">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="callback">A delegate representing a method to be executed when the timer fires. The method specified for callback should be reentrant, as it may be invoked simultaneously on two threads if the timer fires again before or while a previous callback is still being handled.</param>
+        <param name="state">An object to be passed to the <paramref name="callback" />. This may be <see langword="null" />.</param>
+        <param name="dueTime">The amount of time to delay before <paramref name="callback" /> is invoked. Specify <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" /> to prevent the timer from starting. Specify <see cref="F:System.TimeSpan.Zero" /> to start the timer immediately.</param>
+        <param name="period">The time interval between invocations of <paramref name="callback" />. Specify <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" /> to disable periodic signaling.</param>
+        <summary>Creates a new <see cref="T:System.Threading.ITimer" /> instance, using <see cref="T:System.TimeSpan" /> values to measure time intervals.</summary>
+        <returns>The newly created <see cref="T:System.Threading.ITimer" /> instance.</returns>
+        <remarks>
+          <para> The delegate specified by the callback parameter is invoked once after <paramref name="dueTime" /> elapses, and thereafter each time the <paramref name="period" /> time interval elapses.
+ </para>
+          <para> If <paramref name="dueTime" /> is zero, the callback is invoked immediately. If <paramref name="dueTime" /> is -1 milliseconds, <paramref name="callback" /> is not invoked; the timer is disabled, but can be re-enabled by calling the <see cref="M:System.Threading.ITimer.Change(System.TimeSpan,System.TimeSpan)" /> method.
+ </para>
+          <para> If <paramref name="period" /> is 0 or -1 milliseconds and <paramref name="dueTime" /> is positive, <paramref name="callback" /> is invoked once; the periodic behavior of the timer is disabled, but can be re-enabled using the <see cref="M:System.Threading.ITimer.Change(System.TimeSpan,System.TimeSpan)" /> method.
+ </para>
+          <para> The return <see cref="T:System.Threading.ITimer" /> instance will be implicitly rooted while the timer is still scheduled.
+ </para>
+          <para>
+            <see cref="M:System.TimeProvider.CreateTimer(System.Threading.TimerCallback,System.Object,System.TimeSpan,System.TimeSpan)" /> captures the <see cref="T:System.Threading.ExecutionContext" /> and stores that with the <see cref="T:System.Threading.ITimer" /> for use in invoking <paramref name="callback" /> each time it's called. That capture can be suppressed with <see cref="M:System.Threading.ExecutionContext.SuppressFlow" />.
+ </para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="callback" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">The number of milliseconds in the value of <paramref name="dueTime" /> or <paramref name="period" /> is negative and not equal to <see cref="F:System.Threading.Timeout.Infinite" />, or is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetElapsedTime">
@@ -85,9 +100,9 @@
         <Parameter Name="startingTimestamp" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="startingTimestamp">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="startingTimestamp">The timestamp marking the beginning of the time period.</param>
+        <summary>Gets the elapsed time since the <paramref name="startingTimestamp" /> value retrieved using <see cref="M:System.TimeProvider.GetTimestamp" />.</summary>
+        <returns>A <see cref="T:System.TimeSpan" /> for the elapsed time between the starting timestamp and the time of this call./&gt;</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -111,10 +126,10 @@
         <Parameter Name="endingTimestamp" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="startingTimestamp">To be added.</param>
-        <param name="endingTimestamp">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="startingTimestamp">The timestamp marking the beginning of the time period.</param>
+        <param name="endingTimestamp">The timestamp marking the end of the time period.</param>
+        <summary>Gets the elapsed time between two timestamps retrieved using <see cref="M:System.TimeProvider.GetTimestamp" />.</summary>
+        <returns>A <see cref="T:System.TimeSpan" /> for the elapsed time between the starting and ending timestamps.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -135,7 +150,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a <see cref="T:System.DateTimeOffset" /> value that is set to the current date and time according to this <see cref="T:System.TimeProvider" />'s notion of time based on <see cref="M:System.TimeProvider.GetUtcNow" />, with the offset set to the <see cref="P:System.TimeProvider.LocalTimeZone" />'s offset from Coordinated Universal Time (UTC).</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -157,9 +172,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the current high-frequency value designed to measure small time intervals with high accuracy in the timer mechanism.</summary>
+        <returns>A long integer representing the high-frequency counter value of the underlying timer mechanism.</returns>
+        <remarks>The default implementation returns <see cref="M:System.Diagnostics.Stopwatch.GetTimestamp" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetUtcNow">
@@ -179,9 +194,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a <see cref="T:System.DateTimeOffset" /> value whose date and time are set to the current Coordinated Universal Time (UTC) date and time and whose offset is Zero, all according to this <see cref="T:System.TimeProvider" />'s notion of time.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>The default implementation returns <see cref="P:System.DateTimeOffset.UtcNow" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="LocalTimeZone">
@@ -200,9 +215,9 @@
         <ReturnType>System.TimeZoneInfo</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a <see cref="T:System.TimeZoneInfo" /> object that represents the local time zone according to this <see cref="T:System.TimeProvider" />'s notion of time.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>The default implementation returns <see cref="P:System.TimeZoneInfo.Local" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="System">
@@ -221,9 +236,9 @@
         <ReturnType>System.TimeProvider</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a <see cref="T:System.TimeProvider" /> that provides a clock based on <see cref="P:System.DateTimeOffset.UtcNow" />, a time zone based on <see cref="P:System.TimeZoneInfo.Local" />, a high-performance time stamp based on <see cref="T:System.Diagnostics.Stopwatch" />, and a timer based on <see cref="T:System.Threading.Timer" />.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>If the <see cref="P:System.TimeZoneInfo.Local" /> changes after the object is returned, the change will be reflected in any subsequent operations that retrieve <see cref="M:System.TimeProvider.GetLocalNow" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="TimestampFrequency">
@@ -242,9 +257,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the frequency of <see cref="M:System.TimeProvider.GetTimestamp" /> of high-frequency value per second.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>The default implementation returns <see cref="F:System.Diagnostics.Stopwatch.Frequency" />. For a given TimeProvider instance, the value must be idempotent and remain unchanged.</remarks>
       </Docs>
     </Member>
   </Members>
