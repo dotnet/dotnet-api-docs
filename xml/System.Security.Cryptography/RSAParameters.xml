@@ -1,6 +1,6 @@
 <Type Name="RSAParameters" FullName="System.Security.Cryptography.RSAParameters">
   <TypeSignature Language="C#" Value="public struct RSAParameters" />
-  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit RSAParameters extends System.ValueType" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit RSAParameters extends System.ValueType" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
   <TypeSignature Language="DocId" Value="T:System.Security.Cryptography.RSAParameters" />
   <TypeSignature Language="VB.NET" Value="Public Structure RSAParameters" />
   <TypeSignature Language="F#" Value="type RSAParameters = struct" />
@@ -32,12 +32,15 @@
   <AssemblyInfo>
     <AssemblyName>System.Security.Cryptography</AssemblyName>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Cryptography.Algorithms" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Cryptography.Algorithms" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Cryptography" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="System.Security.Cryptography.Algorithms" FromVersion="7.0.0.0" To="System.Security.Cryptography" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Security.Cryptography" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Security.Cryptography.Algorithms" FromVersion="8.0.0.0" To="System.Security.Cryptography" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -56,52 +59,52 @@
   <Docs>
     <summary>Represents the standard parameters for the <see cref="T:System.Security.Cryptography.RSA" /> algorithm.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Security.Cryptography.RSA> class exposes an <xref:System.Security.Cryptography.RSA.ExportParameters%2A> method that enables you to retrieve the raw RSA key in the form of an <xref:System.Security.Cryptography.RSAParameters> structure. Understanding the contents of this structure requires familiarity with how the <xref:System.Security.Cryptography.RSA> algorithm works. The next section discusses the algorithm briefly.  
-  
-## RSA Algorithm  
- To generate a key pair, you start by creating two large prime numbers named p and q. These numbers are multiplied and the result is called n. Because p and q are both prime numbers, the only factors of n are 1, p, q, and n.  
-  
- If we consider only numbers that are less than n, the count of numbers that are relatively prime to n, that is, have no factors in common with n, equals (p - 1)(q - 1).  
-  
- Now you choose a number e, which is relatively prime to the value you calculated. The public key is now represented as {e, n}.  
-  
- To create the private key, you must calculate d, which is a number such that (d)(e) mod (p - 1)(q - 1) = 1. In accordance with the Euclidean algorithm, the private key is now {d, n}.  
-  
- Encryption of plaintext m to ciphertext c is defined as c = (m ^ e) mod n. Decryption would then be defined as m = (c ^ d) mod n.  
-  
-## Summary of Fields  
- Section A.1.2 of the [PKCS #1: RSA Cryptography Standard](https://go.microsoft.com/fwlink/?LinkId=113155) on the RSA Laboratories Web site defines a format for RSA private keys.  
-  
- The following table summarizes the fields of the <xref:System.Security.Cryptography.RSAParameters> structure. The third column provides the corresponding field in section A.1.2 of [PKCS #1: RSA Cryptography Standard](https://go.microsoft.com/fwlink/?LinkId=113155).  
-  
-|<xref:System.Security.Cryptography.RSAParameters> field|Contains|Corresponding PKCS #1 field|  
-|---------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|----------------------------------|  
-|<xref:System.Security.Cryptography.RSAParameters.D>|d, the private exponent|privateExponent|  
-|<xref:System.Security.Cryptography.RSAParameters.DP>|d mod (p - 1)|exponent1|  
-|<xref:System.Security.Cryptography.RSAParameters.DQ>|d mod (q - 1)|exponent2|  
-|<xref:System.Security.Cryptography.RSAParameters.Exponent>|e, the public exponent|publicExponent|  
-|<xref:System.Security.Cryptography.RSAParameters.InverseQ>|(InverseQ)(q) = 1 mod p|coefficient|  
-|<xref:System.Security.Cryptography.RSAParameters.Modulus>|n|modulus|  
-|<xref:System.Security.Cryptography.RSAParameters.P>|p|prime1|  
-|<xref:System.Security.Cryptography.RSAParameters.Q>|q|prime2|  
-  
- The security of RSA derives from the fact that, given the public key { e, n }, it is computationally infeasible to calculate d, either directly or by factoring n into p and q. Therefore, any part of the key related to d, p, or q must be kept secret. If you call <xref:System.Security.Cryptography.RSACryptoServiceProvider.ExportParameters%2A> and ask for only the public key information, this is why you will receive only <xref:System.Security.Cryptography.RSAParameters.Exponent> and <xref:System.Security.Cryptography.RSAParameters.Modulus>. The other fields are available only if you have access to the private key, and you request it.  
-  
- <xref:System.Security.Cryptography.RSAParameters> is not encrypted in any way, so you must be careful when you use it with the private key information. In fact, none of the fields that contain private key information can be serialized. If you try to serialize an <xref:System.Security.Cryptography.RSAParameters> structure with a remoting call or by using one of the serializers, you will receive only public key information. If you want to pass private key information, you will have to manually send that data. In all cases, if anyone can derive the parameters, the key that you transmit becomes useless.
+      <format type="text/markdown"><![CDATA[
 
- **.NET Core 2.1.0 and later**: The serialization restrictions have been removed and all members of <xref:System.Security.Cryptography.RSAParameters> are serialized. Care must be excercised when writing or upgrading code against .NET Core 2.1.0 or later, because if anyone can derive or intercept the private key parameters the key and all the information encrypted or signed with it are compromised.
-  
+## Remarks
+ The <xref:System.Security.Cryptography.RSA> class exposes an <xref:System.Security.Cryptography.RSA.ExportParameters%2A> method that enables you to retrieve the raw RSA key in the form of an <xref:System.Security.Cryptography.RSAParameters> structure. Understanding the contents of this structure requires familiarity with how the <xref:System.Security.Cryptography.RSA> algorithm works. The next section discusses the algorithm briefly.
+
+## RSA algorithm
+
+ To generate a key pair, you start by creating two large prime numbers named p and q. These numbers are multiplied and the result is called n. Because p and q are both prime numbers, the only factors of n are 1, p, q, and n.
+
+ If we consider only numbers that are less than n, the count of numbers that are relatively prime to n, that is, have no factors in common with n, equals (p - 1)(q - 1).
+
+ Now you choose a number e, which is relatively prime to the value you calculated. The public key is now represented as {e, n}.
+
+ To create the private key, you must calculate d, which is a number such that (d)(e) mod (p - 1)(q - 1) = 1. In accordance with the Euclidean algorithm, the private key is now {d, n}.
+
+ Encryption of plaintext m to ciphertext c is defined as c = (m ^ e) mod n. Decryption would then be defined as m = (c ^ d) mod n.
+
+## Summary of fields
+
+ Section A.1.2 of the [PKCS #1: RSA Cryptography Standard](https://datatracker.ietf.org/doc/html/rfc8017#appendix-A.1.2) defines a format for RSA private keys.
+
+ The following table summarizes the fields of the <xref:System.Security.Cryptography.RSAParameters> structure. The third column provides the corresponding field in section A.1.2 of [PKCS #1: RSA Cryptography Standard](https://datatracker.ietf.org/doc/html/rfc8017#appendix-A.1.2).
+
+| <xref:System.Security.Cryptography.RSAParameters> field    | Contains                | Corresponding PKCS #1 field |
+| ---------------------------------------------------------- | ----------------------- | --------------------------- |
+| <xref:System.Security.Cryptography.RSAParameters.D>        | d, the private exponent | privateExponent             |
+| <xref:System.Security.Cryptography.RSAParameters.DP>       | d mod (p - 1)           | exponent1                   |
+| <xref:System.Security.Cryptography.RSAParameters.DQ>       | d mod (q - 1)           | exponent2                   |
+| <xref:System.Security.Cryptography.RSAParameters.Exponent> | e, the public exponent  | publicExponent              |
+| <xref:System.Security.Cryptography.RSAParameters.InverseQ> | (InverseQ)(q) = 1 mod p | coefficient                 |
+| <xref:System.Security.Cryptography.RSAParameters.Modulus>  | n                       | modulus                     |
+| <xref:System.Security.Cryptography.RSAParameters.P>        | p                       | prime1                      |
+| <xref:System.Security.Cryptography.RSAParameters.Q>        | q                       | prime2                      |
+
+ The security of RSA derives from the fact that, given the public key { e, n }, it is computationally infeasible to calculate d, either directly or by factoring n into p and q. Therefore, any part of the key related to d, p, or q must be kept secret. If you call <xref:System.Security.Cryptography.RSACryptoServiceProvider.ExportParameters%2A> and ask for only the public key information, this is why you will receive only <xref:System.Security.Cryptography.RSAParameters.Exponent> and <xref:System.Security.Cryptography.RSAParameters.Modulus>. The other fields are available only if you have access to the private key, and you request it.
+
+ <xref:System.Security.Cryptography.RSAParameters> is not encrypted in any way, so you must be careful when you use it with the private key information. All members of <xref:System.Security.Cryptography.RSAParameters> are serialized. If anyone can derive or intercept the private key parameters, the key and all the information encrypted or signed with it are compromised.
+
  ]]></format>
     </remarks>
     <related type="Article" href="/dotnet/standard/security/cryptographic-services">Cryptographic Services</related>
-    <related type="ExternalDocumentation" href="https://blogs.msdn.microsoft.com/shawnfa/2005/11/17/all-about-rsaparameters/">All About RSAParameters (blog post)</related>
+    <related type="ExternalDocumentation" href="https://learn.microsoft.com/archive/blogs/shawnfa/all-about-rsaparameters">All About RSAParameters (blog post)</related>
   </Docs>
   <Members>
     <Member MemberName="D">
-      <MemberSignature Language="C#" Value="public byte[]? D;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? D;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] D" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.D" />
       <MemberSignature Language="VB.NET" Value="Public D As Byte() " />
@@ -135,6 +138,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -146,7 +150,7 @@
       </Docs>
     </Member>
     <Member MemberName="DP">
-      <MemberSignature Language="C#" Value="public byte[]? DP;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? DP;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] DP" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.DP" />
       <MemberSignature Language="VB.NET" Value="Public DP As Byte() " />
@@ -180,6 +184,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -191,7 +196,7 @@
       </Docs>
     </Member>
     <Member MemberName="DQ">
-      <MemberSignature Language="C#" Value="public byte[]? DQ;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? DQ;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] DQ" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.DQ" />
       <MemberSignature Language="VB.NET" Value="Public DQ As Byte() " />
@@ -225,6 +230,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -236,7 +242,7 @@
       </Docs>
     </Member>
     <Member MemberName="Exponent">
-      <MemberSignature Language="C#" Value="public byte[]? Exponent;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? Exponent;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] Exponent" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.Exponent" />
       <MemberSignature Language="VB.NET" Value="Public Exponent As Byte() " />
@@ -270,6 +276,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -281,7 +288,7 @@
       </Docs>
     </Member>
     <Member MemberName="InverseQ">
-      <MemberSignature Language="C#" Value="public byte[]? InverseQ;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? InverseQ;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] InverseQ" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.InverseQ" />
       <MemberSignature Language="VB.NET" Value="Public InverseQ As Byte() " />
@@ -315,6 +322,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -326,7 +334,7 @@
       </Docs>
     </Member>
     <Member MemberName="Modulus">
-      <MemberSignature Language="C#" Value="public byte[]? Modulus;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? Modulus;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] Modulus" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.Modulus" />
       <MemberSignature Language="VB.NET" Value="Public Modulus As Byte() " />
@@ -360,6 +368,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -371,7 +380,7 @@
       </Docs>
     </Member>
     <Member MemberName="P">
-      <MemberSignature Language="C#" Value="public byte[]? P;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? P;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] P" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.P" />
       <MemberSignature Language="VB.NET" Value="Public P As Byte() " />
@@ -405,6 +414,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>
@@ -416,7 +426,7 @@
       </Docs>
     </Member>
     <Member MemberName="Q">
-      <MemberSignature Language="C#" Value="public byte[]? Q;" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C#" Value="public byte[]? Q;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".field public unsigned int8[] Q" />
       <MemberSignature Language="DocId" Value="F:System.Security.Cryptography.RSAParameters.Q" />
       <MemberSignature Language="VB.NET" Value="Public Q As Byte() " />
@@ -450,6 +460,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Security.Cryptography</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Byte[]</ReturnType>

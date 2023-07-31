@@ -13,7 +13,7 @@ Public Class Example : Implements IComparer(Of CultureInfo)
       Dim patternStrings() As String = { "($n)", "-$n", "$-n", "$n-", "(n$)", 
                                          "-n$", "n-$", "n$-", "-n $", "-$ n",
                                          "n $-", "$ n-", "$ -n", "n- $", "($ n)",
-                                         "(n $)" }    
+                                         "(n $)", "$- n" }    
       For ctr As Integer = patternStrings.GetLowerBound(0) To patternStrings.GetUpperBound(0)
          patterns.Add(ctr, patternStrings(ctr))
       Next
@@ -49,4 +49,9 @@ End Class
 '       de-LI:           2 (  $-n)       CHF-16.34
 '       de-LU:           8 ( -n $)        -16,34 €
 '       dsb-DE:          8 ( -n $)        -16,34 €
+'       luy-KE:         16 ( $- n)      Ksh- 16.34
+'
+' The result shown here happens only if using ICU.
+' Apps that use NLS, for example, .NET Framework apps, might see different results.
+' Globalization data can change, which would also change these results.
 ' </Snippet1>
