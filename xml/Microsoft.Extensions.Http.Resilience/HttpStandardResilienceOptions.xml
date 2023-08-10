@@ -13,19 +13,27 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>
-            Options for resilient pipeline of policies for usage in HTTP scenarios. It is using five chained layers in this order (from the outermost to the innermost):
-            Bulkhead -&gt; Total Request Timeout -&gt; Retry -&gt; Circuit Breaker -&gt; Attempt Timeout.
+            Options for resilience strategies for usage in HTTP scenarios.
             </summary>
     <remarks>
-            The configuration of each policy is initialized with the default options per type. The request goes through these policies:
-            1. Total request timeout policy applies an overall timeout to the execution, ensuring that the request including hedging attempts does not exceed the configured limit.
-            2. The retry policy retries the request in case the dependency is slow or returns a transient error.
-            3. The bulkhead policy limits the maximum number of concurrent requests being send to the dependency.
-            4. The circuit breaker blocks the execution if too many direct failures or timeouts are detected.
-            5. The attempt timeout policy limits each request attempt duration and throws if its exceeded.
-            </remarks>
+            These options represent configuration for five chained resilience strategies in this order (from the outermost to the innermost):
+            <para>
+            Bulkhead -&gt; Total Request Timeout -&gt; Retry -&gt; Circuit Breaker -&gt; Attempt Timeout.
+            </para>
+            The configuration of each Strategy is initialized with the default options per type. The request goes through these strategies:
+            <list type="number"><item>Total request timeout Strategy applies an overall timeout to the execution, ensuring that the request including hedging attempts does not exceed the configured limit.</item><item>The retry Strategy retries the request in case the dependency is slow or returns a transient error.</item><item>The bulkhead Strategy limits the maximum number of concurrent requests being send to the dependency.</item><item>The circuit breaker blocks the execution if too many direct failures or timeouts are detected.</item><item>The attempt timeout Strategy limits each request attempt duration and throws if its exceeded.</item></list></remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -46,12 +54,12 @@
       </Docs>
     </Member>
     <Member MemberName="AttemptTimeoutOptions">
-      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions AttemptTimeoutOptions { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions AttemptTimeoutOptions" />
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions AttemptTimeoutOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions AttemptTimeoutOptions" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.AttemptTimeoutOptions" />
-      <MemberSignature Language="VB.NET" Value="Public Property AttemptTimeoutOptions As HttpTimeoutPolicyOptions" />
-      <MemberSignature Language="F#" Value="member this.AttemptTimeoutOptions : Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.AttemptTimeoutOptions" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpTimeoutPolicyOptions ^ AttemptTimeoutOptions { Microsoft::Extensions::Http::Resilience::HttpTimeoutPolicyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpTimeoutPolicyOptions ^ value); };" />
+      <MemberSignature Language="VB.NET" Value="Public Property AttemptTimeoutOptions As HttpTimeoutStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.AttemptTimeoutOptions : Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.AttemptTimeoutOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ AttemptTimeoutOptions { Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
@@ -68,61 +76,26 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions</ReturnType>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>
-            Gets or sets the options for the timeout policy applied per each request attempt.
+            Gets or sets the options for the timeout Strategy applied per each request attempt.
             </summary>
         <value>To be added.</value>
         <remarks>
-            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions" />
-            using custom <see cref="P:Microsoft.Extensions.Resilience.Options.TimeoutPolicyOptions.TimeoutInterval" /> of 10 seconds.
-            </remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="BulkheadOptions">
-      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpBulkheadPolicyOptions BulkheadOptions { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpBulkheadPolicyOptions BulkheadOptions" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.BulkheadOptions" />
-      <MemberSignature Language="VB.NET" Value="Public Property BulkheadOptions As HttpBulkheadPolicyOptions" />
-      <MemberSignature Language="F#" Value="member this.BulkheadOptions : Microsoft.Extensions.Http.Resilience.HttpBulkheadPolicyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.BulkheadOptions" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpBulkheadPolicyOptions ^ BulkheadOptions { Microsoft::Extensions::Http::Resilience::HttpBulkheadPolicyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpBulkheadPolicyOptions ^ value); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
-        <AssemblyVersion>8.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName Language="C#">[Microsoft.Extensions.Options.ValidateObjectMembers]</AttributeName>
-          <AttributeName Language="F#">[&lt;Microsoft.Extensions.Options.ValidateObjectMembers&gt;]</AttributeName>
-        </Attribute>
-        <Attribute>
-          <AttributeName Language="C#">[System.ComponentModel.DataAnnotations.Required]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.ComponentModel.DataAnnotations.Required&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpBulkheadPolicyOptions</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>
-            Gets or sets the bulkhead options.
-            </summary>
-        <value>To be added.</value>
-        <remarks>
-            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpBulkheadPolicyOptions" /> using default properties values.
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions" />
+            using custom <see cref="P:Polly.Timeout.TimeoutStrategyOptions.Timeout" /> of 10 seconds.
             </remarks>
       </Docs>
     </Member>
     <Member MemberName="CircuitBreakerOptions">
-      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerPolicyOptions CircuitBreakerOptions { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerPolicyOptions CircuitBreakerOptions" />
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerStrategyOptions CircuitBreakerOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerStrategyOptions CircuitBreakerOptions" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.CircuitBreakerOptions" />
-      <MemberSignature Language="VB.NET" Value="Public Property CircuitBreakerOptions As HttpCircuitBreakerPolicyOptions" />
-      <MemberSignature Language="F#" Value="member this.CircuitBreakerOptions : Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerPolicyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.CircuitBreakerOptions" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpCircuitBreakerPolicyOptions ^ CircuitBreakerOptions { Microsoft::Extensions::Http::Resilience::HttpCircuitBreakerPolicyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpCircuitBreakerPolicyOptions ^ value); };" />
+      <MemberSignature Language="VB.NET" Value="Public Property CircuitBreakerOptions As HttpCircuitBreakerStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.CircuitBreakerOptions : Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.CircuitBreakerOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpCircuitBreakerStrategyOptions ^ CircuitBreakerOptions { Microsoft::Extensions::Http::Resilience::HttpCircuitBreakerStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpCircuitBreakerStrategyOptions ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
@@ -139,7 +112,7 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerPolicyOptions</ReturnType>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerStrategyOptions</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>
@@ -147,17 +120,52 @@
             </summary>
         <value>To be added.</value>
         <remarks>
-            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerPolicyOptions" /> using default properties values.
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerStrategyOptions" /> using default properties values.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RateLimiterOptions">
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpRateLimiterStrategyOptions RateLimiterOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpRateLimiterStrategyOptions RateLimiterOptions" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.RateLimiterOptions" />
+      <MemberSignature Language="VB.NET" Value="Public Property RateLimiterOptions As HttpRateLimiterStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.RateLimiterOptions : Microsoft.Extensions.Http.Resilience.HttpRateLimiterStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.RateLimiterOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpRateLimiterStrategyOptions ^ RateLimiterOptions { Microsoft::Extensions::Http::Resilience::HttpRateLimiterStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpRateLimiterStrategyOptions ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[Microsoft.Extensions.Options.ValidateObjectMembers]</AttributeName>
+          <AttributeName Language="F#">[&lt;Microsoft.Extensions.Options.ValidateObjectMembers&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.ComponentModel.DataAnnotations.Required]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.DataAnnotations.Required&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpRateLimiterStrategyOptions</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the bulkhead options.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpRateLimiterStrategyOptions" /> using default properties values.
             </remarks>
       </Docs>
     </Member>
     <Member MemberName="RetryOptions">
-      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpRetryPolicyOptions RetryOptions { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpRetryPolicyOptions RetryOptions" />
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpRetryStrategyOptions RetryOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpRetryStrategyOptions RetryOptions" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.RetryOptions" />
-      <MemberSignature Language="VB.NET" Value="Public Property RetryOptions As HttpRetryPolicyOptions" />
-      <MemberSignature Language="F#" Value="member this.RetryOptions : Microsoft.Extensions.Http.Resilience.HttpRetryPolicyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.RetryOptions" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpRetryPolicyOptions ^ RetryOptions { Microsoft::Extensions::Http::Resilience::HttpRetryPolicyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpRetryPolicyOptions ^ value); };" />
+      <MemberSignature Language="VB.NET" Value="Public Property RetryOptions As HttpRetryStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.RetryOptions : Microsoft.Extensions.Http.Resilience.HttpRetryStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.RetryOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpRetryStrategyOptions ^ RetryOptions { Microsoft::Extensions::Http::Resilience::HttpRetryStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpRetryStrategyOptions ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
@@ -174,25 +182,25 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpRetryPolicyOptions</ReturnType>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpRetryStrategyOptions</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>
-            Gets or sets the retry policy Options.
+            Gets or sets the retry Strategy Options.
             </summary>
         <value>To be added.</value>
         <remarks>
-            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpRetryPolicyOptions" /> using default properties values.
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpRetryStrategyOptions" /> using default properties values.
             </remarks>
       </Docs>
     </Member>
     <Member MemberName="TotalRequestTimeoutOptions">
-      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions TotalRequestTimeoutOptions { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions TotalRequestTimeoutOptions" />
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions TotalRequestTimeoutOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions TotalRequestTimeoutOptions" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.TotalRequestTimeoutOptions" />
-      <MemberSignature Language="VB.NET" Value="Public Property TotalRequestTimeoutOptions As HttpTimeoutPolicyOptions" />
-      <MemberSignature Language="F#" Value="member this.TotalRequestTimeoutOptions : Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.TotalRequestTimeoutOptions" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpTimeoutPolicyOptions ^ TotalRequestTimeoutOptions { Microsoft::Extensions::Http::Resilience::HttpTimeoutPolicyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpTimeoutPolicyOptions ^ value); };" />
+      <MemberSignature Language="VB.NET" Value="Public Property TotalRequestTimeoutOptions As HttpTimeoutStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.TotalRequestTimeoutOptions : Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardResilienceOptions.TotalRequestTimeoutOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ TotalRequestTimeoutOptions { Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
@@ -209,16 +217,15 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions</ReturnType>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>
-            Gets or sets the timeout policy options for the total timeout applied on the request's execution.
+            Gets or sets the timeout Strategy options for the total timeout applied on the request's execution.
             </summary>
         <value>To be added.</value>
         <remarks>
-            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpTimeoutPolicyOptions" />
-            using default properties values.
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions" />.
             </remarks>
       </Docs>
     </Member>
