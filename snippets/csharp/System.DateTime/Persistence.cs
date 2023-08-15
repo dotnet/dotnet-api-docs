@@ -1,10 +1,7 @@
-﻿using DateTimeExtensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Xml.Serialization;
 
@@ -29,13 +26,6 @@ namespace SystemDateTimeReference
             File.Delete(filenameXml);
             PersistAsXML();
             File.Delete(filenameXml);
-
-            File.Delete(filenameBin);
-            PersistBinary();
-            File.Delete(filenameBin);
-
-            SaveDateWithTimeZone();
-            RestoreDateWithTimeZone();
         }
 
         // <Snippet1>
@@ -52,7 +42,7 @@ namespace SystemDateTimeReference
                            new DateTime(2015, 1, 10, 1, 16, 0),
                            new DateTime(2014, 12, 20, 21, 45, 0),
                            new DateTime(2014, 6, 2, 15, 14, 0) };
-            string output = null;
+            string? output = null;
 
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
             Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
@@ -87,7 +77,7 @@ namespace SystemDateTimeReference
                 }
                 else
                 {
-                    Console.WriteLine("Cannot parse '{inputValue}'");
+                    Console.WriteLine($"Cannot parse '{inputValue}'");
                 }
             }
             Console.WriteLine("Restored dates...");
@@ -127,7 +117,7 @@ namespace SystemDateTimeReference
                            new DateTime(2015, 1, 10, 1, 16, 0),
                            new DateTime(2014, 12, 20, 21, 45, 0),
                            new DateTime(2014, 6, 2, 15, 14, 0) };
-            string output = null;
+            string? output = null;
 
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
             Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
@@ -318,7 +308,7 @@ namespace SystemDateTimeReference
             }
             catch (InvalidOperationException e)
             {
-                Console.WriteLine(e.InnerException.Message);
+                Console.WriteLine(e.InnerException?.Message);
             }
             finally
             {
@@ -326,21 +316,24 @@ namespace SystemDateTimeReference
             }
 
             // Deserialize the data.
-            DateTime[] deserializedDates;
+            DateTime[]? deserializedDates;
             using (var fs = new FileStream(filenameXml, FileMode.Open))
             {
-                deserializedDates = (DateTime[])serializer.Deserialize(fs);
+                deserializedDates = (DateTime[]?)serializer.Deserialize(fs);
             }
 
             // Display the dates.
             Console.WriteLine($"Leap year days from 2000-2100 on an {Thread.CurrentThread.CurrentCulture.Name} system:");
             int nItems = 0;
-            foreach (var dat in deserializedDates)
+            if (deserializedDates is not null)
             {
-                Console.Write($"   {dat:d}     ");
-                nItems++;
-                if (nItems % 5 == 0)
-                    Console.WriteLine();
+                foreach (var dat in deserializedDates)
+                {
+                    Console.Write($"   {dat:d}     ");
+                    nItems++;
+                    if (nItems % 5 == 0)
+                        Console.WriteLine();
+                }
             }
         }
         // The example displays the following output:
@@ -351,156 +344,5 @@ namespace SystemDateTimeReference
         //       29/02/2060       29/02/2064       29/02/2068       29/02/2072       29/02/2076
         //       29/02/2080       29/02/2084       29/02/2088       29/02/2092       29/02/2096
         // </Snippet4>
-
-        private const string filenameBin = @".\Dates.bin";
-
-        // <Snippet5>
-        public static void PersistBinary()
-        {
-            SaveDatesBinary();
-            RestoreDatesBinary();
-        }
-
-        private static void SaveDatesBinary()
-        {
-            DateTime[] dates = { new DateTime(2014, 6, 14, 6, 32, 0),
-                           new DateTime(2014, 7, 10, 23, 49, 0),
-                           new DateTime(2015, 1, 10, 1, 16, 0),
-                           new DateTime(2014, 12, 20, 21, 45, 0),
-                           new DateTime(2014, 6, 2, 15, 14, 0) };
-            var fs = new FileStream(filenameBin, FileMode.Create);
-            var bin = new BinaryFormatter();
-
-            Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
-            Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
-            for (int ctr = 0; ctr < dates.Length; ctr++)
-            {
-                Console.WriteLine(dates[ctr].ToString("f"));
-                dates[ctr] = dates[ctr].ToUniversalTime();
-            }
-            bin.Serialize(fs, dates);
-            fs.Close();
-            Console.WriteLine("Saved dates...");
-        }
-
-        private static void RestoreDatesBinary()
-        {
-            TimeZoneInfo.ClearCachedData();
-            Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-
-            FileStream fs = new FileStream(filenameBin, FileMode.Open);
-            BinaryFormatter bin = new BinaryFormatter();
-            var dates = (DateTime[])bin.Deserialize(fs);
-            fs.Close();
-
-            Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
-            foreach (var value in dates)
-                Console.WriteLine(value.ToLocalTime().ToString("f"));
-
-            Console.WriteLine("Restored dates...");
-        }
-        // When saved on an en-US system, the example displays the following output:
-        //       Current Time Zone: (UTC-08:00) Pacific Time (US & Canada)
-        //       The dates on an en-US system:
-        //       Saturday, June 14, 2014 6:32 AM
-        //       Thursday, July 10, 2014 11:49 PM
-        //       Saturday, January 10, 2015 1:16 AM
-        //       Saturday, December 20, 2014 9:45 PM
-        //       Monday, June 02, 2014 3:14 PM
-        //       Saved dates...
-        //
-        // When restored on an en-GB system, the example displays the following output:
-        //       Current Time Zone: (UTC-6:00) Central Time (US & Canada)
-        //       The dates on an en-GB system:
-        //       14 June 2014 08:32
-        //       11 July 2014 01:49
-        //       10 January 2015 03:16
-        //       20 December 2014 23:45
-        //       02 June 2014 17:14
-        //       Restored dates...
-        // </Snippet5>
-
-        // <Snippet7>
-        public static void SaveDateWithTimeZone()
-        {
-            DateWithTimeZone[] dates = { new DateWithTimeZone(new DateTime(2014, 8, 9, 19, 30, 0),
-                                      TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")),
-                                  new DateWithTimeZone(new DateTime(2014, 8, 15, 19, 0, 0),
-                                      TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time")),
-                                  new DateWithTimeZone(new DateTime(2014, 8, 22, 19, 30, 0),
-                                      TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")),
-                                  new DateWithTimeZone(new DateTime(2014, 8, 28, 19, 0, 0),
-                                      TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")) };
-            var fs = new FileStream(@".\Schedule.bin", FileMode.Create);
-            var formatter = new BinaryFormatter();
-            try
-            {
-                formatter.Serialize(fs, dates);
-                // Display dates.
-                foreach (var date in dates)
-                {
-                    TimeZoneInfo tz = date.TimeZone;
-                    Console.WriteLine($"{date.DateTime} {(tz.IsDaylightSavingTime(date.DateTime) ? tz.DaylightName : tz.StandardName)}");
-                }
-            }
-            catch (SerializationException e)
-            {
-                Console.WriteLine($"Serialization failed. Reason: {e.Message}");
-            }
-            finally
-            {
-                if (fs != null) fs.Close();
-            }
-        }
-        // The example displays the following output:
-        //       8/9/2014 7:30:00 PM Eastern Daylight Time
-        //       8/15/2014 7:00:00 PM Pacific Daylight Time
-        //       8/22/2014 7:30:00 PM Eastern Daylight Time
-        //       8/28/2014 7:00:00 PM Eastern Daylight Time
-        // </Snippet7>
-
-        // <Snippet8>
-        public static void RestoreDateWithTimeZone()
-        {
-            const string filename = @".\Schedule.bin";
-            FileStream fs;
-            if (File.Exists(filename))
-            {
-                fs = new FileStream(filename, FileMode.Open);
-            }
-            else
-            {
-                Console.WriteLine("Unable to find file to deserialize.");
-                return;
-            }
-
-            var formatter = new BinaryFormatter();
-            DateWithTimeZone[] dates;
-            try
-            {
-                dates = (DateWithTimeZone[])formatter.Deserialize(fs);
-                // Display dates.
-                foreach (var date in dates)
-                {
-                    TimeZoneInfo tz = date.TimeZone;
-                    Console.WriteLine($"{ date.DateTime} {(tz.IsDaylightSavingTime(date.DateTime) ? tz.DaylightName : tz.StandardName)}");
-                }
-            }
-            catch (SerializationException e)
-            {
-                Console.WriteLine($"Deserialization failed. Reason: {e.Message}");
-            }
-            finally
-            {
-                if (fs != null) fs.Close();
-            }
-        }
-        // The example displays the following output:
-        //       8/9/2014 7:30:00 PM Eastern Daylight Time
-        //       8/15/2014 7:00:00 PM Pacific Daylight Time
-        //       8/22/2014 7:30:00 PM Eastern Daylight Time
-        //       8/28/2014 7:00:00 PM Eastern Daylight Time
-        // </Snippet8>
     }
 }

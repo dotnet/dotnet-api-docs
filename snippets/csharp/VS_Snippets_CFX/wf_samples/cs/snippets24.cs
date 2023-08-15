@@ -254,7 +254,7 @@ namespace WF_Snippets
 
         [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Visible)]
         [BrowsableAttribute(true)]
-        [DescriptionAttribute("The From property is used to specify the From (Sender's) address for the email mesage.")]
+        [DescriptionAttribute("The From property is used to specify the From (Sender's) address for the email message.")]
         [CategoryAttribute(MessagePropertiesCategory)]
         public string From
         {

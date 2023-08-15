@@ -1,76 +1,47 @@
 ﻿//<Snippet1>
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace PropertyValueUIServiceExample
 {
     // This component obtains the IPropertyValueUIService and adds a
-    // PropertyValueUIHandler that provides PropertyValueUIItem objects
+    // PropertyValueUIHandler that provides PropertyValueUIItem objects,
     // which provide an image, ToolTip, and invoke event handler to
     // any properties named HorizontalMargin and VerticalMargin, 
     // such as the example integer properties on this component.    
     public class PropertyUIComponent : System.ComponentModel.Component
     {
         // Example property for which to provide a PropertyValueUIItem.
-        public int HorizontalMargin 
-        {
-            get
-            {
-                return hMargin;
-            }
-            set
-            {
-                hMargin = value;
-            }
-        }
-        // Example property for which to provide a PropertyValueUIItem.
-        public int VerticalMargin
-        {
-            get
-            {
-                return vMargin;
-            }
-            set
-            {
-                vMargin = value;
-            }
-        }
+        public int HorizontalMargin { get; set; }
 
-        // Field storing the value of the HorizontalMargin property.
-        private int hMargin;
+        // Example property for which to provide a PropertyValueUIItem.
+        public int VerticalMargin { get; set; }
 
         // Field storing the value of the VerticalMargin property.
-        private int vMargin;        
+        private int vMargin;
 
-        // Base64-encoded serialized image data for image icon.
-        private string imageBlob1 = "AAEAAAD/////AQAAAAAAAAAMAgAAAFRTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0xLjAuMzMwMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA9gAAAAJCTfYAAAAAAAAANgAAACgAAAAIAAAACAAAAAEAGAAAAAAAAAAAAMQOAADEDgAAAAAAAAAAAAD///////////////////////////////////8AAAD///////////////8AAAD///////8AAAD///////////////8AAAD///////8AAAD///8AAAAAAAD///8AAAD///////8AAAD///8AAAAAAAD///8AAAD///////8AAAD///////////////8AAAD///////8AAAD///////////////8AAAD///////////////////////////////////8L";
-                
         // Constructor.
         public PropertyUIComponent(System.ComponentModel.IContainer container)
         {
-            if( container != null )
+            if (container != null)
                 container.Add(this);
-            hMargin = 0;		
-            vMargin = 0;
+            HorizontalMargin = 0;
+            VerticalMargin = 0;
         }
 
         // Default component constructor that specifies no container.
         public PropertyUIComponent() : this(null)
-        {}
+        { }
 
-//<Snippet2>
+        //<Snippet2>
         // PropertyValueUIHandler delegate that provides PropertyValueUIItem
         // objects to any properties named HorizontalMargin or VerticalMargin.
-        private void marginPropertyValueUIHandler(System.ComponentModel.ITypeDescriptorContext context, System.ComponentModel.PropertyDescriptor propDesc, ArrayList itemList)
+        private void marginPropertyValueUIHandler(
+            System.ComponentModel.ITypeDescriptorContext context,
+            System.ComponentModel.PropertyDescriptor propDesc,
+            ArrayList itemList)
         {
             // A PropertyValueUIHandler added to the IPropertyValueUIService
             // is queried once for each property of a component and passed
@@ -79,19 +50,19 @@ namespace PropertyValueUIServiceExample
             // component. A PropertyValueUIHandler can determine whether 
             // to add a PropertyValueUIItem for the object to its ValueUIItem 
             // list depending on the values of the PropertyDescriptor.
-            if( propDesc.DisplayName.Equals( "HorizontalMargin" ) )
+            if (propDesc.DisplayName.Equals("HorizontalMargin"))
             {
-                Image img = DeserializeFromBase64Text(imageBlob1);
-                itemList.Add( new PropertyValueUIItem( img, new PropertyValueUIItemInvokeHandler(this.marginInvoke), "Test ToolTip") );
+                Image img = Image.FromFile("SampImag.jpg");
+                itemList.Add(new PropertyValueUIItem(img, new PropertyValueUIItemInvokeHandler(this.marginInvoke), "Test ToolTip"));
             }
-            if( propDesc.DisplayName.Equals( "VerticalMargin" ) )
+            if (propDesc.DisplayName.Equals("VerticalMargin"))
             {
-                Image img = DeserializeFromBase64Text(imageBlob1);
+                Image img = Image.FromFile("SampImag.jpg");
                 img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                itemList.Add( new PropertyValueUIItem( img, new PropertyValueUIItemInvokeHandler(this.marginInvoke), "Test ToolTip") );
+                itemList.Add(new PropertyValueUIItem(img, new PropertyValueUIItemInvokeHandler(this.marginInvoke), "Test ToolTip"));
             }
         }
-//</Snippet2>
+        //</Snippet2>
 
         // Invoke handler associated with the PropertyValueUIItem objects 
         // provided by the marginPropertyValueUIHandler.
@@ -110,35 +81,22 @@ namespace PropertyValueUIServiceExample
                 return base.Site;
             }
             set
-            {                
-                if( value != null )
+            {
+                if (value != null)
                 {
                     base.Site = value;
                     IPropertyValueUIService uiService = (IPropertyValueUIService)this.GetService(typeof(IPropertyValueUIService));
-                    if( uiService != null )                    
-                        uiService.AddPropertyValueUIHandler( new PropertyValueUIHandler(this.marginPropertyValueUIHandler) );                                        
+                    if (uiService != null)
+                        uiService.AddPropertyValueUIHandler(new PropertyValueUIHandler(this.marginPropertyValueUIHandler));
                 }
                 else
                 {
                     IPropertyValueUIService uiService = (IPropertyValueUIService)this.GetService(typeof(IPropertyValueUIService));
-                    if( uiService != null )                    
-                        uiService.RemovePropertyValueUIHandler( new PropertyValueUIHandler(this.marginPropertyValueUIHandler) );                                        
+                    if (uiService != null)
+                        uiService.RemovePropertyValueUIHandler(new PropertyValueUIHandler(this.marginPropertyValueUIHandler));
                     base.Site = value;
                 }
             }
-        }
-
-        // This method can be used to retrieve an Image from a block 
-        // of Base64-encoded text.
-        private Image DeserializeFromBase64Text(string text)
-        {
-            Image img = null;
-            byte[] memBytes = Convert.FromBase64String(text);
-            IFormatter formatter = new BinaryFormatter();
-            MemoryStream stream = new MemoryStream(memBytes);
-            img = (Image)formatter.Deserialize(stream);
-            stream.Close();
-            return img;
         }
     }
 }

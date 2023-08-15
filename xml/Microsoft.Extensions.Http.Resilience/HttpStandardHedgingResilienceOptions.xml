@@ -1,0 +1,169 @@
+<Type Name="HttpStandardHedgingResilienceOptions" FullName="Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions">
+  <TypeSignature Language="C#" Value="public class HttpStandardHedgingResilienceOptions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit HttpStandardHedgingResilienceOptions extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions" />
+  <TypeSignature Language="VB.NET" Value="Public Class HttpStandardHedgingResilienceOptions" />
+  <TypeSignature Language="F#" Value="type HttpStandardHedgingResilienceOptions = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class HttpStandardHedgingResilienceOptions" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+            Options for the pipeline of resilience strategies for usage in hedging HTTP scenarios.
+            </summary>
+    <remarks>
+            These options represents configuration for 5 chained layers in this order (from the outermost to the innermost):
+            <para>
+            Total Request Timeout -&gt; Hedging -&gt; Bulkhead (per endpoint) -&gt; Circuit Breaker (per endpoint) -&gt; Attempt Timeout (per endpoint).
+            </para>
+            The configuration of each resilience strategy is initialized with the default options per type. The request goes through these resilience strategies:
+            <para><list type="number"><item>Total request timeout strategy applies an overall timeout to the execution, ensuring that the request including hedging attempts does not exceed the configured limit.</item><item>The hedging strategy executes the requests against multiple endpoints in case the dependency is slow or returns a transient error.</item><item>The bulkhead policy limits the maximum number of concurrent requests being send to the dependency.</item><item>The circuit breaker blocks the execution if too many direct failures or timeouts are detected.</item><item>The attempt timeout strategy limits each request attempt duration and throws if its exceeded.</item></list></para>
+            The last three strategies are assigned to each individual endpoint. The selection of endpoint can be customized by
+            <see cref="M:Microsoft.Extensions.Http.Resilience.StandardHedgingHandlerBuilderExtensions.SelectStrategyByAuthority(Microsoft.Extensions.Http.Resilience.IStandardHedgingHandlerBuilder,Microsoft.Extensions.Compliance.Classification.DataClassification)" /> or
+            <see cref="M:Microsoft.Extensions.Http.Resilience.StandardHedgingHandlerBuilderExtensions.SelectStrategyBy(Microsoft.Extensions.Http.Resilience.IStandardHedgingHandlerBuilder,System.Func{System.IServiceProvider,System.Func{System.Net.Http.HttpRequestMessage,System.String}})" /> extensions.
+            <para>
+            By default, the endpoint is selected by authority (scheme + host + port).
+            </para></remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public HttpStandardHedgingResilienceOptions ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; HttpStandardHedgingResilienceOptions();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="EndpointOptions">
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HedgingEndpointOptions EndpointOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HedgingEndpointOptions EndpointOptions" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.EndpointOptions" />
+      <MemberSignature Language="VB.NET" Value="Public Property EndpointOptions As HedgingEndpointOptions" />
+      <MemberSignature Language="F#" Value="member this.EndpointOptions : Microsoft.Extensions.Http.Resilience.HedgingEndpointOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.EndpointOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HedgingEndpointOptions ^ EndpointOptions { Microsoft::Extensions::Http::Resilience::HedgingEndpointOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HedgingEndpointOptions ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[Microsoft.Extensions.Options.ValidateObjectMembers]</AttributeName>
+          <AttributeName Language="F#">[&lt;Microsoft.Extensions.Options.ValidateObjectMembers&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.ComponentModel.DataAnnotations.Required]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.DataAnnotations.Required&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HedgingEndpointOptions</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the hedging endpoint options.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HedgingEndpointOptions" /> using default properties values.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HedgingOptions">
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpHedgingStrategyOptions HedgingOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpHedgingStrategyOptions HedgingOptions" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.HedgingOptions" />
+      <MemberSignature Language="VB.NET" Value="Public Property HedgingOptions As HttpHedgingStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.HedgingOptions : Microsoft.Extensions.Http.Resilience.HttpHedgingStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.HedgingOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpHedgingStrategyOptions ^ HedgingOptions { Microsoft::Extensions::Http::Resilience::HttpHedgingStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpHedgingStrategyOptions ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[Microsoft.Extensions.Options.ValidateObjectMembers]</AttributeName>
+          <AttributeName Language="F#">[&lt;Microsoft.Extensions.Options.ValidateObjectMembers&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.ComponentModel.DataAnnotations.Required]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.DataAnnotations.Required&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpHedgingStrategyOptions</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the hedging strategy options.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpHedgingStrategyOptions" /> using default properties values.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TotalRequestTimeoutOptions">
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions TotalRequestTimeoutOptions { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions TotalRequestTimeoutOptions" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.TotalRequestTimeoutOptions" />
+      <MemberSignature Language="VB.NET" Value="Public Property TotalRequestTimeoutOptions As HttpTimeoutStrategyOptions" />
+      <MemberSignature Language="F#" Value="member this.TotalRequestTimeoutOptions : Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions with get, set" Usage="Microsoft.Extensions.Http.Resilience.HttpStandardHedgingResilienceOptions.TotalRequestTimeoutOptions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ TotalRequestTimeoutOptions { Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ get(); void set(Microsoft::Extensions::Http::Resilience::HttpTimeoutStrategyOptions ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Http.Resilience</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[Microsoft.Extensions.Options.ValidateObjectMembers]</AttributeName>
+          <AttributeName Language="F#">[&lt;Microsoft.Extensions.Options.ValidateObjectMembers&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.ComponentModel.DataAnnotations.Required]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.DataAnnotations.Required&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the timeout strategy options for the total timeout applied on the request execution.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            By default it is initialized with a unique instance of <see cref="T:Microsoft.Extensions.Http.Resilience.HttpTimeoutStrategyOptions" />
+            using default properties values.
+            </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
