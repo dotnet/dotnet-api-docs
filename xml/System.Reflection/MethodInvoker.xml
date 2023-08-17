@@ -24,8 +24,8 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Invokes the method reflected by the provided <see cref="T:System.Reflection.MethodBase" />.</summary>
+    <remarks>Used for better performance than <seealso cref="M:System.Reflection.MethodBase.Invoke(System.Object,System.Object[])" /> when compatibility with that method is not necessary and when the caller can cache the MethodInvoker instance for additional invoke calls.<br /> Unlike <see cref="M:System.Reflection.MethodBase.Invoke(System.Object,System.Object[])" />, the invoke methods do not look up default values for arguments when <see cref="F:System.Type.Missing" /> is specified. In addition, the target method may be inlined for performance and not appear in stack traces.</remarks>
   </Docs>
   <Members>
     <Member MemberName="Create">
@@ -53,10 +53,11 @@
         <Parameter Name="method" Type="System.Reflection.MethodBase" />
       </Parameters>
       <Docs>
-        <param name="method">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="method">The method that will be invoked.</param>
+        <summary>Creates a new instance of MethodInvoker.</summary>
+        <returns>An instance of a MethodInvoker.</returns>
+        <remarks>For performance, the resulting instance should be cached for additional calls.</remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="method" /> is not a runtime-based method.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -78,10 +79,18 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The object on which to invoke the method. If the method is static, this argument is ignored.</param>
+        <summary>Invokes the method using the specified parameters.</summary>
+        <returns>An object containing the return value of the invoked method, or <see langword="null" /> if the invoked method does not have a return value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Reflection.TargetException">The <para>obj</para> parameter is <see langword="null" /> and the method is not static.
+
+-or-
+
+The method is not declared or inherited by the class of <para>obj</para>.</exception>
+        <exception cref="T:System.InvalidOperationException">The type that declares the method is an open generic type.</exception>
+        <exception cref="T:System.Reflection.TargetParameterCountException">The correct number of arguments were not provided.</exception>
+        <exception cref="T:System.NotSupportedException">The calling convention or signature is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -104,11 +113,13 @@
         <Parameter Name="arg1" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="arg1">To be added.</param>
+        <param name="obj">The object on which to invoke the method. If the method is static, this argument is ignored.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.MethodInvoker.Invoke(System.Object)" />
+        <exception cref="T:System.ArgumentException">The arguments do not match the signature of the invoked method.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -138,11 +149,13 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="arguments">To be added.</param>
+        <param name="obj">The object on which to invoke the method. If the method is static, this argument is ignored.</param>
+        <param name="arguments">The arguments for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.MethodInvoker.Invoke(System.Object)" />
+        <exception cref="T:System.ArgumentException">The arguments do not match the signature of the invoked method.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -166,12 +179,13 @@
         <Parameter Name="arg2" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="arg1">To be added.</param>
-        <param name="arg2">To be added.</param>
+        <param name="obj">The object on which to invoke the method. If the method is static, this argument is ignored.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <param name="arg2">The second argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.MethodInvoker.Invoke(System.Object)" />
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -196,13 +210,14 @@
         <Parameter Name="arg3" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="arg1">To be added.</param>
-        <param name="arg2">To be added.</param>
-        <param name="arg3">To be added.</param>
+        <param name="obj">The object on which to invoke the method. If the method is static, this argument is ignored.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <param name="arg2">The second argument for the invoked method.</param>
+        <param name="arg3">The third argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.MethodInvoker.Invoke(System.Object)" />
       </Docs>
     </Member>
     <Member MemberName="Invoke">
@@ -228,14 +243,15 @@
         <Parameter Name="arg4" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <param name="arg1">To be added.</param>
-        <param name="arg2">To be added.</param>
-        <param name="arg3">To be added.</param>
-        <param name="arg4">To be added.</param>
+        <param name="obj">The object on which to invoke the method. If the method is static, this argument is ignored.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <param name="arg2">The second argument for the invoked method.</param>
+        <param name="arg3">The third argument for the invoked method.</param>
+        <param name="arg4">The fourth argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.MethodInvoker.Invoke(System.Object)" />
       </Docs>
     </Member>
   </Members>
