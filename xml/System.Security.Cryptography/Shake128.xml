@@ -18,8 +18,8 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Computes the SHAKE128 hash for the input data.</summary>
+    <remarks>This algorithm is specified by FIPS 202. The SHAKE algorithm family is an extendable-output function (XOF) which allows the output to be extended to any length. The size of the XOF indicates the security strength of the algorithm, not the output size.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -35,8 +35,10 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.Shake128" /> class.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="AppendData">
@@ -64,9 +66,12 @@
         <Parameter Name="data" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">The data to process.</param>
+        <summary>Appends the specified data to the data already processed in the hash.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="data" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="AppendData">
@@ -88,9 +93,10 @@
         <Parameter Name="data" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">The data to process.</param>
+        <summary>Appends the specified data to the data already processed in the hash.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -142,10 +148,13 @@
         <Parameter Name="outputLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="outputLength">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="outputLength">The size of the hash to produce.</param>
+        <summary>Retrieves the hash for the data accumulated from prior calls to the <c>AppendData</c> methods, without resetting the object to its initial state.</summary>
+        <returns>The computed hash.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is negative.</exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetCurrentHash">
@@ -167,9 +176,10 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The buffer to fill with the hash.</param>
+        <summary>Fills the buffer with the hash for the data accumulated from prior calls to the <c>AppendData</c> methods, without resetting the object to its initial state.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetHashAndReset">
@@ -197,10 +207,13 @@
         <Parameter Name="outputLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="outputLength">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="outputLength">The size of the hash to produce.</param>
+        <summary>Retrieves the hash for the data accumulated from prior calls to the <c>AppendData</c> methods, and resets the object to its initial state.</summary>
+        <returns>The computed hash.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is negative.</exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetHashAndReset">
@@ -222,9 +235,10 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The buffer to fill with the hash.</param>
+        <summary>Fills the buffer with the hash for the data accumulated from prior calls to the <c>AppendData</c> methods, and resets the object to its initial state.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashData">
@@ -253,11 +267,17 @@
         <Parameter Name="outputLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="outputLength">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The data to hash.</param>
+        <param name="outputLength">The size of the hash to produce.</param>
+        <summary>Computes the hash of data using the SHAKE128 algorithm.</summary>
+        <returns>The hash of the data.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is negative.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashData">
@@ -286,11 +306,19 @@
         <Parameter Name="outputLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="outputLength">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The stream to hash.</param>
+        <param name="outputLength">The size of the hash to produce.</param>
+        <summary>Computes the hash of a stream using the SHAKE128 algorithm.</summary>
+        <returns>The hash of the data.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="source" /> does not support reading.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is negative.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashData">
@@ -320,10 +348,16 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The stream to hash.</param>
+        <param name="destination">The buffer to fill with the hash.</param>
+        <summary>Computes the hash of a stream using the SHAKE128 algorithm.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="source" /> does not support reading.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashData">
@@ -352,11 +386,15 @@
         <Parameter Name="outputLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="outputLength">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The data to hash.</param>
+        <param name="outputLength">The size of the hash to produce.</param>
+        <summary>Computes the hash of data using the SHAKE128 algorithm.</summary>
+        <returns>The hash of the data.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is negative.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashData">
@@ -379,10 +417,12 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The data to hash.</param>
+        <param name="destination">The buffer to fill with the hash.</param>
+        <summary>Computes the hash of data using the SHAKE128 algorithm.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashDataAsync">
@@ -417,12 +457,23 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="outputLength">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The stream to hash.</param>
+        <param name="outputLength">The size of the hash to produce.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.
+              The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously computes the hash of a stream using the SHAKE128 algorithm.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1" /> that completes with the computed hash.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="source" /> does not support reading.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="outputLength" /> is negative.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">
+          <paramref name="cancellationToken" /> has been canceled.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="HashDataAsync">
@@ -452,12 +503,21 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The stream to hash.</param>
+        <param name="destination">The buffer to fill with the hash.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests.
+              The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously computes the hash of a stream using the SHAKE128 algorithm.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.ValueTask" /> that represents the asynchronous operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="source" /> does not support reading.</exception>
+        <exception cref="T:System.OperationCanceledException">
+          <paramref name="cancellationToken" /> has been canceled.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The platform does not support SHAKE128. Callers can use the <see cref="P:System.Security.Cryptography.Shake128.IsSupported" /> property
+              to determine if the platform supports SHAKE128.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsSupported">
@@ -476,8 +536,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value that indicates whether the algorithm is supported on the current platform.</summary>
+        <value>
+          <see langword="true" /> if the algorithm is supported; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
