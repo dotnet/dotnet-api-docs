@@ -77,6 +77,9 @@
  The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
+  
+> [!CAUTION]
+>  By default, a named semaphore is not restricted to the user that created it. Other users may be able to open and use the semaphore, including interfering with the semaphore such as acquiring the semaphore multiple times and not releasing it. An option is to pass in a <xref:System.Security.AccessControl.SemaphoreSecurity> when creating the named semaphore to restrict access to specific users. Avoid using named semaphores without access restrictions on systems that may have untrusted users running code.
 
           ]]></format>
         </remarks>
