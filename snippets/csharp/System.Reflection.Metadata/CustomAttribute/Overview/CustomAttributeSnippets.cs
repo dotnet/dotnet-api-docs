@@ -6,6 +6,17 @@ using System.Reflection.PortableExecutable;
 static class CustomAttributeSnippets
 {
     // <SnippetPrintAttributes>
+    class MyAttribute : Attribute
+    {
+        public int X { get; set; }
+    }
+
+    [My(X = 1)]
+    class ExampleType1 { }
+
+    [My(X = 2)]
+    class ExampleType2 { }
+
     static void PrintCustomAttributes(MetadataReader mr, TypeDefinition t)
     {
         // Enumerate custom attributes on the type definition
@@ -45,6 +56,16 @@ static class CustomAttributeSnippets
             Console.WriteLine();
         }
     }
+
+    static void PrintTypesCustomAttributes(MetadataReader mr)
+    {
+        foreach (TypeDefinitionHandle tdh in mr.TypeDefinitions)
+        {
+            TypeDefinition t = mr.GetTypeDefinition(tdh);
+            Console.WriteLine($"{mr.GetString(t.Namespace)}.{mr.GetString(t.Name)}");
+            PrintCustomAttributes(mr, t);
+        }
+    }
     // </SnippetPrintAttributes>
 
     public static void Run()
@@ -52,12 +73,6 @@ static class CustomAttributeSnippets
         using var fs = new FileStream(typeof(Program).Assembly.Location, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         using var peReader = new PEReader(fs);
         MetadataReader mr = peReader.GetMetadataReader();
-
-        foreach(TypeDefinitionHandle tdh in mr.TypeDefinitions)
-        {
-            TypeDefinition t = mr.GetTypeDefinition(tdh);
-            Console.WriteLine($"{mr.GetString(t.Namespace)}.{mr.GetString(t.Name)}");
-            PrintCustomAttributes(mr, t);
-        }
+        PrintTypesCustomAttributes(mr);
     }
 }
