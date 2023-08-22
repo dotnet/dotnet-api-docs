@@ -50,6 +50,14 @@
       <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
     </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
   </Attributes>
   <Docs>
     <summary>Represents an Advanced Encryption Standard (AES) key to be used with the Galois/Counter Mode (GCM) mode of operation.</summary>
@@ -126,6 +134,10 @@
           <AttributeName Language="C#">[System.Obsolete("AesGcm should indicate the required tag size for encryption and decryption. Use a constructor that accepts the tag size.", DiagnosticId="SYSLIB0053", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("AesGcm should indicate the required tag size for encryption and decryption. Use a constructor that accepts the tag size.", DiagnosticId="SYSLIB0053", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
         </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
       </Attributes>
       <Parameters>
         <Parameter Name="key" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
@@ -160,10 +172,15 @@
         <Parameter Name="tagSizeInBytes" Type="System.Int32" Index="1" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="tagSizeInBytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">The secret key to use for this instance.</param>
+        <param name="tagSizeInBytes">The size of the tag, in bytes, that encryption and decryption must use.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.AesGcm" /> class with a provided key and required tag size.</summary>
+        <remarks>The <paramref name="tagSizeInBytes" /> parameter is used to indicate that the tag parameter in <c>Encrypt</c> or <c>Decrypt</c> must be exactly this size. Indicating the required tag size prevents issues where callers of <c>Decrypt</c> may supply a tag as input and that input is truncated to an unexpected size.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="key" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="key" /> parameter length is other than 16, 24, or 32 bytes (128, 192, or 256 bits).</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="tagSizeInBytes" /> parameter is an unsupported tag size indicated by
+              <see cref="P:System.Security.Cryptography.AesGcm.TagByteSizes" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The current platform does not support AES-GCM.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -184,15 +201,25 @@
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <Parameters>
         <Parameter Name="key" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
         <Parameter Name="tagSizeInBytes" Type="System.Int32" Index="1" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="tagSizeInBytes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">The secret key to use for this instance.</param>
+        <param name="tagSizeInBytes">The size of the tag, in bytes, that encryption and decryption must use.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.AesGcm" /> class with a provided key and required tag size.</summary>
+        <remarks>The <paramref name="tagSizeInBytes" /> parameter is used to indicate that the tag parameter in <c>Encrypt</c> or <c>Decrypt</c> must be exactly this size. Indicating the required tag size prevents issues where callers of <c>Decrypt</c> may supply a tag as input and that input is truncated to an unexpected size.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">The <paramref name="key" /> parameter length is other than 16, 24, or 32 bytes (128, 192, or 256 bits).</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="tagSizeInBytes" /> parameter is an unsupported tag size indicated by
+              <see cref="P:System.Security.Cryptography.AesGcm.TagByteSizes" />.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">The current platform does not support AES-GCM.</exception>
       </Docs>
     </Member>
     <Member MemberName="Decrypt">
@@ -227,7 +254,14 @@
         <Parameter Name="ciphertext" Type="System.Byte[]" />
         <Parameter Name="tag" Type="System.Byte[]" />
         <Parameter Name="plaintext" Type="System.Byte[]" />
-        <Parameter Name="associatedData" Type="System.Byte[]" />
+        <Parameter Name="associatedData" Type="System.Byte[]">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="nonce">The nonce associated with this message, which must match the value provided during encryption.</param>
@@ -281,6 +315,12 @@ The <paramref name="tag" /> parameter length is not permitted by <see cref="P:Sy
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -387,7 +427,14 @@ The <paramref name="tag" /> parameter length is not permitted by <see cref="P:Sy
         <Parameter Name="plaintext" Type="System.Byte[]" />
         <Parameter Name="ciphertext" Type="System.Byte[]" />
         <Parameter Name="tag" Type="System.Byte[]" />
-        <Parameter Name="associatedData" Type="System.Byte[]" />
+        <Parameter Name="associatedData" Type="System.Byte[]">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="nonce">The nonce associated with this message, which should be a unique value for every operation with the same key.</param>
@@ -441,6 +488,12 @@ The <paramref name="tag" /> parameter length is not permitted by <see cref="P:Sy
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -598,8 +651,8 @@ The <paramref name="tag" /> parameter length is not permitted by <see cref="P:Sy
         <ReturnType>System.Nullable&lt;System.Int32&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the size of the tag, in bytes.</summary>
+        <value>The size of the tag that must be used for encryption or decryption, or <see langword="null" /> if the tag size is unspecified.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

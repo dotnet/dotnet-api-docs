@@ -13,9 +13,23 @@
     <BaseTypeName>System.TimeProvider</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.Experimental("EXTEXP0004", UrlFormat="https://aka.ms/dotnet-extensions-warnings/{0}")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.Experimental("EXTEXP0004", UrlFormat="https://aka.ms/dotnet-extensions-warnings/{0}")&gt;]</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>
-            A synthetic clock used to provide deterministic behavior in tests.
+            A synthetic time provider used to enable deterministic behavior in tests.
             </summary>
     <remarks>To be added.</remarks>
   </Docs>
@@ -37,38 +51,34 @@
             Initializes a new instance of the <see cref="T:Microsoft.Extensions.Time.Testing.FakeTimeProvider" /> class.
             </summary>
         <remarks>
-            This creates a clock whose time is set to midnight January 1st 2000.
-            The clock is set to not automatically advance every time it is read.
+            This creates a provider whose time is initially set to midnight January 1st 2000.
+            The provider is set to not automatically advance time each time it is read.
             </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public FakeTimeProvider (DateTimeOffset epoch);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.DateTimeOffset epoch) cil managed" />
+      <MemberSignature Language="C#" Value="public FakeTimeProvider (DateTimeOffset startDateTime);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.DateTimeOffset startDateTime) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Time.Testing.FakeTimeProvider.#ctor(System.DateTimeOffset)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (epoch As DateTimeOffset)" />
-      <MemberSignature Language="F#" Value="new Microsoft.Extensions.Time.Testing.FakeTimeProvider : DateTimeOffset -&gt; Microsoft.Extensions.Time.Testing.FakeTimeProvider" Usage="new Microsoft.Extensions.Time.Testing.FakeTimeProvider epoch" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; FakeTimeProvider(DateTimeOffset epoch);" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (startDateTime As DateTimeOffset)" />
+      <MemberSignature Language="F#" Value="new Microsoft.Extensions.Time.Testing.FakeTimeProvider : DateTimeOffset -&gt; Microsoft.Extensions.Time.Testing.FakeTimeProvider" Usage="new Microsoft.Extensions.Time.Testing.FakeTimeProvider startDateTime" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; FakeTimeProvider(DateTimeOffset startDateTime);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.TimeProvider.Testing</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.Experimental("TBD", UrlFormat="TBD")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.Experimental("TBD", UrlFormat="TBD")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <Parameters>
-        <Parameter Name="epoch" Type="System.DateTimeOffset" />
+        <Parameter Name="startDateTime" Type="System.DateTimeOffset" />
       </Parameters>
       <Docs>
-        <param name="epoch">The starting point for the clock used by this <see cref="T:Microsoft.Extensions.Time.Testing.FakeTimeProvider" />.</param>
+        <param name="startDateTime">The initial time and date reported by the provider.</param>
         <summary>
             Initializes a new instance of the <see cref="T:Microsoft.Extensions.Time.Testing.FakeTimeProvider" /> class.
             </summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+            The provider is set to not automatically advance time each time it is read.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Advance">
@@ -92,9 +102,39 @@
       <Docs>
         <param name="delta">The amount of time to advance the clock by.</param>
         <summary>
-            Advances the clock's time by a specific amount.
+            Advances time by a specific amount.
             </summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+            Advancing time affects the timers created from this provider, and all other operations that are directly or
+            indirectly using this provider as a time source. Whereas when using <see cref="P:System.TimeProvider.System" />, time
+            marches forward automatically in hardware, for the fake time provider the application is responsible for
+            doing this explicitly by calling this method.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AutoAdvanceAmount">
+      <MemberSignature Language="C#" Value="public TimeSpan AutoAdvanceAmount { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.TimeSpan AutoAdvanceAmount" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Time.Testing.FakeTimeProvider.AutoAdvanceAmount" />
+      <MemberSignature Language="VB.NET" Value="Public Property AutoAdvanceAmount As TimeSpan" />
+      <MemberSignature Language="F#" Value="member this.AutoAdvanceAmount : TimeSpan with get, set" Usage="Microsoft.Extensions.Time.Testing.FakeTimeProvider.AutoAdvanceAmount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property TimeSpan AutoAdvanceAmount { TimeSpan get(); void set(TimeSpan value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.TimeProvider.Testing</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.TimeSpan</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the amount of time by which time advances whenever the clock is read.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            This defaults to <see cref="F:System.TimeSpan.Zero" />.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateTimer">
@@ -114,7 +154,14 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="callback" Type="System.Threading.TimerCallback" />
-        <Parameter Name="state" Type="System.Object" />
+        <Parameter Name="state" Type="System.Object">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="dueTime" Type="System.TimeSpan" />
         <Parameter Name="period" Type="System.TimeSpan" />
       </Parameters>
@@ -127,39 +174,6 @@
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
         <inheritdoc />
-      </Docs>
-    </Member>
-    <Member MemberName="Epoch">
-      <MemberSignature Language="C#" Value="public DateTimeOffset Epoch { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.DateTimeOffset Epoch" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Time.Testing.FakeTimeProvider.Epoch" />
-      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Epoch As DateTimeOffset" />
-      <MemberSignature Language="F#" Value="member this.Epoch : DateTimeOffset" Usage="Microsoft.Extensions.Time.Testing.FakeTimeProvider.Epoch" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property DateTimeOffset Epoch { DateTimeOffset get(); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>Microsoft.Extensions.TimeProvider.Testing</AssemblyName>
-        <AssemblyVersion>8.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.Experimental("TBD", UrlFormat="TBD")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.Experimental("TBD", UrlFormat="TBD")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.DateTimeOffset</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>
-            Gets the time which was used as the starting point for the clock in this <see cref="T:Microsoft.Extensions.Time.Testing.FakeTimeProvider" />.
-            </summary>
-        <value>To be added.</value>
-        <remarks>
-            This can be set by passing in a <see cref="T:System.DateTimeOffset" /> to the constructor
-            which takes the <c>epoch</c> argument. If the default constructor is used,
-            the clock's start time defaults to midnight January 1st 2000.
-            </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetTimestamp">
@@ -249,9 +263,9 @@
         <Parameter Name="localTimeZone" Type="System.TimeZoneInfo" />
       </Parameters>
       <Docs>
-        <param name="localTimeZone">The local timezone.</param>
+        <param name="localTimeZone">The local time zone.</param>
         <summary>
-            Sets the local timezone.
+            Sets the local time zone.
             </summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -275,10 +289,33 @@
         <Parameter Name="value" Type="System.DateTimeOffset" />
       </Parameters>
       <Docs>
-        <param name="value">The date and time in the UTC timezone.</param>
+        <param name="value">The date and time in the UTC time zone.</param>
         <summary>
-            Sets the date and time in the UTC timezone.
+            Sets the date and time in the UTC time zone.
             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Start">
+      <MemberSignature Language="C#" Value="public DateTimeOffset Start { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.DateTimeOffset Start" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Time.Testing.FakeTimeProvider.Start" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Start As DateTimeOffset" />
+      <MemberSignature Language="F#" Value="member this.Start : DateTimeOffset" Usage="Microsoft.Extensions.Time.Testing.FakeTimeProvider.Start" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property DateTimeOffset Start { DateTimeOffset get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.TimeProvider.Testing</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.DateTimeOffset</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets the starting date and time for this provider.
+            </summary>
+        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -299,21 +336,12 @@
       </ReturnValue>
       <Docs>
         <summary>
-             Gets the amount that the value from <see cref="M:Microsoft.Extensions.Time.Testing.FakeTimeProvider.GetTimestamp" /> increments per second.
-             </summary>
+            Gets the amount by which the value from <see cref="M:Microsoft.Extensions.Time.Testing.FakeTimeProvider.GetTimestamp" /> increments per second.
+            </summary>
         <value>To be added.</value>
         <remarks>
-             We fix it here for test instability which would otherwise occur within
-             <see cref="M:Microsoft.Extensions.Time.Testing.FakeTimeProvider.GetTimestamp" /> when the result of multiplying underlying ticks
-             by frequency and dividing by ticks per second is truncated to long.
-            
-             Similarly truncation could occur when reversing this calculation to figure a time
-             interval from the difference between two timestamps.
-            
-             As ticks per second is always 10^7, setting frequency to 10^7 is convenient.
-             It happens that the system usually uses 10^9 or 10^6 so this could expose
-             any assumption made that it is one of those values.
-             </remarks>
+            This is fixed to the value of <see cref="F:System.TimeSpan.TicksPerSecond" />.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -334,9 +362,9 @@
       <Parameters />
       <Docs>
         <summary>
-            Returns a string representation this clock's current time.
+            Returns a string representation this provider's idea of current time.
             </summary>
-        <returns>A string representing the clock's current time.</returns>
+        <returns>A string representing the provider's current time.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

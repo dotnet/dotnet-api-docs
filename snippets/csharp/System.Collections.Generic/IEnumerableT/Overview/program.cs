@@ -7,7 +7,7 @@ using System.Linq;
 
 public class App
 {
-    // Excercise the Iterator and show that it's more
+    // Exercise the Iterator and show that it's more
     // performant.
     public static void Main()
     {
