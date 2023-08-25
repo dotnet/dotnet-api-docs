@@ -106,6 +106,7 @@ The <xref:System.Text.Json.Serialization.JsonConverter> associated with the type
           <paramref name="propertyType" /> or <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="propertyType" /> cannot be used for serialization.</exception>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateJsonTypeInfo">
@@ -291,9 +292,9 @@ A parameterless factory is not supported for the current metadata <see cref="P:S
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value that indicates whether the current instance has been locked for modification.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>A <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance can be locked if it has been passed to one of the <see cref="T:System.Text.Json.JsonSerializer" /> methods, has been associated with a <see cref="T:System.Text.Json.Serialization.JsonSerializerContext" /> instance, or a user explicitly called the <see cref="M:System.Text.Json.Serialization.Metadata.JsonTypeInfo.MakeReadOnly" /> method on the instance.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Kind">
@@ -351,8 +352,8 @@ The value of <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind> is
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Locks the current instance for further modification.</summary>
+        <remarks>This method is idempotent.</remarks>
       </Docs>
     </Member>
     <Member MemberName="NumberHandling">
@@ -385,6 +386,7 @@ For contracts originating from <xref:System.Text.Json.Serialization.Metadata.Def
           ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">An invalid <see cref="T:System.Text.Json.Serialization.JsonNumberHandling" /> value was specified.</exception>
       </Docs>
     </Member>
     <Member MemberName="OnDeserialized">
@@ -611,9 +613,10 @@ Serialization callbacks are only supported for <see cref="F:System.Text.Json.Ser
         <ReturnType>System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the <see cref="T:System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver" /> from which this metadata instance originated.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>This metadata is used to determine the <see cref="P:System.Text.Json.Serialization.JsonSerializerContext.GeneratedSerializerOptions" /> configuration for the current metadata instance.</remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.</exception>
       </Docs>
     </Member>
     <Member MemberName="PolymorphismOptions">
@@ -684,9 +687,15 @@ Polymorphic serialization is not supported for the current metadata <see cref="P
         <ReturnType>System.Nullable&lt;System.Text.Json.Serialization.JsonObjectCreationHandling&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the preferred <see cref="T:System.Text.Json.Serialization.JsonObjectCreationHandling" /> value for properties contained in the type.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>For contracts originating from <see cref="T:System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver" /> or <see cref="T:System.Text.Json.Serialization.JsonSerializerContext" />, the value of this callback will be mapped from <see cref="T:System.Text.Json.Serialization.JsonObjectCreationHandlingAttribute" /> annotations on types.</remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.
+
+-or-
+
+Unmapped member handling is only supported for <see cref="F:System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.Object">JsonTypeInfoKind.Object</see>.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Specified an invalid <see cref="T:System.Text.Json.Serialization.JsonObjectCreationHandling" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="Properties">
@@ -765,9 +774,15 @@ It's required that added <xref:System.Text.Json.Serialization.Metadata.JsonPrope
         <ReturnType>System.Nullable&lt;System.Text.Json.Serialization.JsonUnmappedMemberHandling&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the type-level <see cref="T:System.Text.Json.Serialization.JsonUnmappedMemberHandling" /> override.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>For contracts originating from <see cref="T:System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver" /> or <see cref="T:System.Text.Json.Serialization.JsonSerializerContext" />, the value of this callback will be mapped from any <see cref="T:System.Text.Json.Serialization.JsonUnmappedMemberHandlingAttribute" /> annotations.</remarks>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> instance has been locked for further modification.
+
+-or-
+
+Unmapped member handling is only supported for <see cref="F:System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.Object" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">An invalid <see cref="T:System.Text.Json.Serialization.JsonUnmappedMemberHandling" /> value was specified.</exception>
       </Docs>
     </Member>
   </Members>

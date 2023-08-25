@@ -20,8 +20,19 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Determines how deserialization handles object creation for fields or properties.</summary>
+    <remarks>When placed on a field or property, this attribute indicates if the member will be replaced or populated.
+ When default resolvers are used, this attribute maps to <see cref="P:System.Text.Json.Serialization.Metadata.JsonPropertyInfo.ObjectCreationHandling" />.
+ 
+ When placed on a type with <see cref="F:System.Text.Json.Serialization.JsonObjectCreationHandling.Populate" />, this attribute indicates that all members that support population will be populated. When default resolvers are used, this attribute maps to <see cref="P:System.Text.Json.Serialization.Metadata.JsonTypeInfo.PreferredPropertyObjectCreationHandling" />.
+ 
+The attribute corresponds only to the preferred values of creation handling for properties when placed on a type.
+For example, when <see cref="T:System.Text.Json.Serialization.JsonObjectCreationHandlingAttribute" /> with <see cref="F:System.Text.Json.Serialization.JsonObjectCreationHandling.Populate" /> is placed on a class and a property is not capable of being populated, it will be replaced.
+ That might be <see langword="true" /> if, for example, the value type doesn't have a setter or the property is of type <see cref="T:System.Collections.Generic.IEnumerable`1" />.
+ 
+ Only the property type is taken into consideration. For example, if the property is of type <see cref="T:System.Collections.Generic.IEnumerable`1" /> has and has a run-time value of type <see cref="T:System.Collections.Generic.List`1" />, it won't be populated because <see cref="T:System.Collections.Generic.IEnumerable`1" /> is not capable of populating.
+ 
+Value types require a setter to support population. In such cases, deserialization uses a copy of the property value, which will get assigned back to the setter once finished.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -41,7 +52,7 @@
       </Parameters>
       <Docs>
         <param name="handling">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Initializes a new instance of <see cref="T:System.Text.Json.Serialization.JsonObjectCreationHandlingAttribute" />.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -61,7 +72,7 @@
         <ReturnType>System.Text.Json.Serialization.JsonObjectCreationHandling</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the configuration to use when deserializing members.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
