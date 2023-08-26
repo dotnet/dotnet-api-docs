@@ -21,7 +21,7 @@ public class Example
     static int DivideByTwo(int num)
     {
         // If num is an odd number, throw an ArgumentException.
-        if ((num & 1) == 1)
+        if ((num % 2) == 1)
             throw new ArgumentException(String.Format("{0} is not an even number", num),
                                       "num");
 
