@@ -94,7 +94,7 @@ int main()
    {
       // <Snippet2>
       // There are no command line arguments, create an empty 'InstallContext'.
-      myInstallObject->myInstallContext = gcnew InstallContext;
+      myInstallObject->Context = gcnew InstallContext;
       // </Snippet2>
    }
    else
@@ -115,7 +115,7 @@ int main()
       {
          commandLine[ i ] = args[ i + 1 ];
       }
-      myInstallObject->myInstallContext = gcnew InstallContext( args[ 1 ],commandLine );
+      myInstallObject->Context = gcnew InstallContext( args[ 1 ],commandLine );
       // </Snippet3>
    }
 
