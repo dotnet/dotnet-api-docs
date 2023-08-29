@@ -98,7 +98,7 @@ namespace MyInstallContextNamespace
          {
 // <Snippet2>
             // There are no command line arguments, create an empty 'InstallContext'.
-            myInstallObject.myInstallContext = new InstallContext();
+            myInstallObject.Context = new InstallContext();
 // </Snippet2>
          }
 
@@ -121,7 +121,7 @@ namespace MyInstallContextNamespace
             {
                commandLine[ i ] = args[ i ];
             }
-            myInstallObject.myInstallContext = new InstallContext( args[ 0 ], commandLine);
+            myInstallObject.Context = new InstallContext( args[ 0 ], commandLine);
 // </Snippet3>
          }
 
