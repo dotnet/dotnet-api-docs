@@ -79,7 +79,7 @@ Namespace MyInstallContextNamespace
          If args.Length < 2 Then
 ' <Snippet2>
             ' There are no command line arguments, create an empty 'InstallContext'.
-            myInstallObject.myInstallContext = New InstallContext()
+            myInstallObject.Context = New InstallContext()
 ' </Snippet2>
          ElseIf args.Length = 2 And args(1) = "/?" Then
                ' Display the 'Help' for this utility.
@@ -97,7 +97,7 @@ Namespace MyInstallContextNamespace
             For i = 1 To args.Length - 1
                commandLine(i-1) = args(i)
             Next i
-            myInstallObject.myInstallContext = _
+            myInstallObject.Context = _
                New InstallContext("/LogFile:example.log", commandLine)
 ' </Snippet3>
          End If
