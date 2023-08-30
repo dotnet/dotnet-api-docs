@@ -42,8 +42,10 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents an IP network with an <see cref="T:System.Net.IPAddress" /> containing the network prefix and an <see cref="T:System.Int32" /> defining the prefix length.</summary>
+    <remarks>This type disallows arbitrary IP-address/prefix-length CIDR pairs. <see cref="P:System.Net.IPNetwork.BaseAddress" /> must be defined so that all bits after the network prefix are set to zero.
+ In other words, <see cref="P:System.Net.IPNetwork.BaseAddress" /> is always the first usable address of the network.
+ The constructor and the parsing methods will throw in case there are non-zero bits after the prefix.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -69,10 +71,13 @@
         <Parameter Name="prefixLength" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="baseAddress">To be added.</param>
-        <param name="prefixLength">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="baseAddress">The <see cref="T:System.Net.IPAddress" /> that represents the prefix of the network.</param>
+        <param name="prefixLength">The length of the prefix in bits.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.IPNetwork" /> class with the specified <see cref="T:System.Net.IPAddress" /> and prefix length.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The specified <paramref name="baseAddress" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">The specified <paramref name="prefixLength" /> is smaller than `0` or longer than maximum length of <paramref name="prefixLength" />'s <see cref="T:System.Net.Sockets.AddressFamily" />.</exception>
+        <exception cref="T:System.ArgumentException">The specified <paramref name="baseAddress" /> has non-zero bits after the network prefix.</exception>
       </Docs>
     </Member>
     <Member MemberName="BaseAddress">
@@ -101,7 +106,7 @@
         <ReturnType>System.Net.IPAddress</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="T:System.Net.IPAddress" /> that represents the prefix of the network.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -131,10 +136,12 @@
         <Parameter Name="address" Type="System.Net.IPAddress" />
       </Parameters>
       <Docs>
-        <param name="address">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="address">The <see cref="T:System.Net.IPAddress" /> to check.</param>
+        <summary>Determines whether a given <see cref="T:System.Net.IPAddress" /> is part of the network.</summary>
+        <returns>
+          <see langword="true" /> if the <see cref="T:System.Net.IPAddress" /> is part of the network; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The specified <paramref name="address" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -164,6 +171,7 @@
         <returns>
           <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Uninitialized <see cref="T:System.Net.IPNetwork" /> instance.</exception>
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -198,10 +206,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="obj">The <see cref="T:System.Net.IPNetwork" /> instance to compare to this instance.</param>
+        <summary>Determines whether two <see cref="T:System.Net.IPNetwork" /> instances are equal.</summary>
+        <returns>
+          <see langword="true" /> if <paramref name="obj" /> is an <see cref="T:System.Net.IPNetwork" /> instance and the networks are equal; otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">Uninitialized <see cref="T:System.Net.IPNetwork" /> instance.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -221,8 +231,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for this instance.</summary>
+        <returns>An integer hash value.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -246,10 +256,11 @@
         <Parameter Name="right" Type="System.Net.IPNetwork" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first object to compare.</param>
+        <param name="right">The second object to compare.</param>
+        <summary>Determines whether the specified instances of <see cref="T:System.Net.IPNetwork" /> are equal.</summary>
+        <returns>
+          <see langword="true" /> if the networks are equal; otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -273,10 +284,11 @@
         <Parameter Name="right" Type="System.Net.IPNetwork" />
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="left">The first object to compare.</param>
+        <param name="right">The second object to compare.</param>
+        <summary>Determines whether the specified instances of <see cref="T:System.Net.IPNetwork" /> are not equal.</summary>
+        <returns>
+          <see langword="true" /> if the networks are not equal; otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -299,10 +311,12 @@
         <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">A character span that defines an IP network in CIDR notation.</param>
+        <summary>Converts a CIDR character span to an <see cref="T:System.Net.IPNetwork" /> instance.</summary>
+        <returns>An <see cref="T:System.Net.IPNetwork" /> instance.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.FormatException">
+          <paramref name="s" /> is not a valid CIDR network string, or the address contains non-zero bits after the network prefix.</exception>
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -330,10 +344,13 @@
         <Parameter Name="s" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">A <see cref="T:System.String" /> that defines an IP network in CIDR notation.</param>
+        <summary>Converts a CIDR <see cref="T:System.String" /> to an <see cref="T:System.Net.IPNetwork" /> instance.</summary>
+        <returns>An <see cref="T:System.Net.IPNetwork" /> instance.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The specified string is <see langword="null" />.</exception>
+        <exception cref="T:System.FormatException">
+          <paramref name="s" /> is not a valid CIDR network string, or the address contains non-zero bits after the network prefix.</exception>
       </Docs>
     </Member>
     <Member MemberName="PrefixLength">
@@ -352,7 +369,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the length of the network prefix in bits.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -380,13 +397,7 @@
         <Parameter Name="provider" Type="System.IFormatProvider" />
       </Parameters>
       <Docs>
-        <param name="format">The format to use.   
- -or-   
- A <see langword="null" /> reference (<see langword="Nothing" /> in Visual Basic) to use the default format defined for the type of the <see cref="T:System.IFormattable" /> implementation.</param>
-        <param name="provider">To be added.</param>
-        <summary>Formats the value of the current instance using the specified format.</summary>
-        <returns>The value of the current instance in the specified format.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="System.IParsable&lt;System.Net.IPNetwork&gt;.Parse">
@@ -419,11 +430,7 @@
         <Parameter Name="provider" Type="System.IFormatProvider" />
       </Parameters>
       <Docs>
-        <param name="s">The string to parse.</param>
-        <param name="provider">An object that provides culture-specific formatting information about <paramref name="s" />.</param>
-        <summary>Parses a string into a value.</summary>
-        <returns>The result of parsing <paramref name="s" />.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="System.IParsable&lt;System.Net.IPNetwork&gt;.TryParse">
@@ -454,12 +461,7 @@
         <Parameter Name="result" Type="System.Net.IPNetwork" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="provider">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="System.ISpanFormattable.TryFormat">
@@ -487,14 +489,7 @@
         <Parameter Name="provider" Type="System.IFormatProvider" />
       </Parameters>
       <Docs>
-        <param name="destination">The span in which to write this instance's value formatted as a span of characters.</param>
-        <param name="charsWritten">When this method returns, contains the number of characters that were written in <paramref name="destination" />.</param>
-        <param name="format">A span containing the characters that represent a standard or custom format string that defines the acceptable format for <paramref name="destination" />.</param>
-        <param name="provider">An optional object that supplies culture-specific formatting information for <paramref name="destination" />.</param>
-        <summary>Tries to format the value of the current instance into the provided span of characters.</summary>
-        <returns>
-          <see langword="true" /> if the formatting was successful; otherwise, <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="System.ISpanParsable&lt;System.Net.IPNetwork&gt;.Parse">
@@ -520,11 +515,7 @@
         <Parameter Name="provider" Type="System.IFormatProvider" />
       </Parameters>
       <Docs>
-        <param name="s">The span of characters to parse.</param>
-        <param name="provider">An object that provides culture-specific formatting information about <paramref name="s" />.</param>
-        <summary>Parses a span of characters into a value.</summary>
-        <returns>The result of parsing <paramref name="s" />.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="System.ISpanParsable&lt;System.Net.IPNetwork&gt;.TryParse">
@@ -548,12 +539,7 @@
         <Parameter Name="result" Type="System.Net.IPNetwork" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="provider">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="System.IUtf8SpanFormattable.TryFormat">
@@ -581,14 +567,7 @@
         <Parameter Name="provider" Type="System.IFormatProvider" />
       </Parameters>
       <Docs>
-        <param name="utf8Destination">The span in which to write this instance's value formatted as a span of bytes.</param>
-        <param name="bytesWritten">When this method returns, contains the number of bytes that were written in <paramref name="utf8Destination" />.</param>
-        <param name="format">A span containing the characters that represent a standard or custom format string that defines the acceptable format for <paramref name="utf8Destination" />.</param>
-        <param name="provider">An optional object that supplies culture-specific formatting information for <paramref name="utf8Destination" />.</param>
-        <summary>Tries to format the value of the current instance as UTF-8 into the provided span of bytes.</summary>
-        <returns>
-          <see langword="true" /> if the formatting was successful; otherwise, <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -614,8 +593,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Converts the instance to a string containing the <see cref="T:System.Net.IPNetwork" />'s CIDR notation.</summary>
+        <returns>The <see cref="T:System.String" /> containing the <see cref="T:System.Net.IPNetwork" />'s CIDR notation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -639,10 +618,11 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="utf8Destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="utf8Destination">The destination span of UTF-8 bytes.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes that were written to <paramref name="utf8Destination" />.</param>
+        <summary>Attempts to write the <see cref="T:System.Net.IPNetwork" />'s CIDR notation to the given <paramref name="utf8Destination" /> UTF-8 span and returns a value indicating whether the operation succeeded.</summary>
+        <returns>
+          <see langword="true" /> if the formatting was succesful; otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -666,10 +646,11 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The destination span of characters.</param>
+        <param name="charsWritten">When this method returns, contains the number of characters that were written to <paramref name="destination" />.</param>
+        <summary>Attempts to write the <see cref="T:System.Net.IPNetwork" />'s CIDR notation to the given <paramref name="destination" /> span and returns a value indicating whether the operation succeeded.</summary>
+        <returns>
+          <see langword="true" /> if the formatting was succesful; otherwise <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -693,10 +674,11 @@
         <Parameter Name="result" Type="System.Net.IPNetwork" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">A <see cref="T:System.String" /> that defines an IP network in CIDR notation.</param>
+        <param name="result">When the method returns, contains an <see cref="T:System.Net.IPNetwork" /> instance if the conversion succeeds.</param>
+        <summary>Converts the specified CIDR character span to an <see cref="T:System.Net.IPNetwork" /> instance and returns a value indicating whether the conversion succeeded.</summary>
+        <returns>
+          <see langword="true" /> if the conversion was succesful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -726,10 +708,11 @@
         <Parameter Name="result" Type="System.Net.IPNetwork" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="result">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="s">A <see cref="T:System.String" /> that defines an IP network in CIDR notation.</param>
+        <param name="result">When the method returns, contains an <see cref="T:System.Net.IPNetwork" /> instance if the conversion succeeds.</param>
+        <summary>Converts the specified CIDR string to an <see cref="T:System.Net.IPNetwork" /> instance and returns a value indicating whether the conversion succeeded.</summary>
+        <returns>
+          <see langword="true" /> if the conversion was succesful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
