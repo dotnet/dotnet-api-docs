@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 
-class Test {
+class LoadRawSnippet {
    public static void Main() {
       AppDomain currentDomain = AppDomain.CurrentDomain;
 

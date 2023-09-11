@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Security;
 
-class Example
+class CustomAttributeBuilderSnippet
 {
     static void Main()
     {
