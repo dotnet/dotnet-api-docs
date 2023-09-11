@@ -649,7 +649,7 @@ Namespace SequenceExamples
                                        New Pet With {.Name = "Whiskers", .Age = 1}})
 
                 Dim output1 As New System.Text.StringBuilder
-                ' Enumerate the items in the list, calling DefaultIfEmpty() 
+                ' Enumerate the items in the list, calling DefaultIfEmpty()
                 ' with a default value.
                 For Each pet As Pet In pets1.DefaultIfEmpty(defaultPet)
                     output1.AppendLine("Name: " & pet.Name)
@@ -662,7 +662,7 @@ Namespace SequenceExamples
                 Dim pets2 As New List(Of Pet)
 
                 Dim output2 As New System.Text.StringBuilder
-                ' Enumerate the items in the list, calling DefaultIfEmpty() 
+                ' Enumerate the items in the list, calling DefaultIfEmpty()
                 ' with a default value.
                 For Each pet As Pet In pets2.DefaultIfEmpty(defaultPet)
                     output2.AppendLine("Name: " & pet.Name)
@@ -783,7 +783,7 @@ Namespace SequenceExamples
             Dim namesList As New List(Of String())(New String()() {names1, names2, names3})
 
             ' Select arrays that have four or more elements and union
-            ' them into one collection, using Empty() to generate the 
+            ' them into one collection, using Empty() to generate the
             ' empty collection for the seed value.
             Dim allNames As IEnumerable(Of String) =
             namesList.Aggregate(Enumerable.Empty(Of String)(),
@@ -970,7 +970,7 @@ Namespace SequenceExamples
                                       New Pet With {.Name = "Whiskers", .Age = 1},
                                       New Pet With {.Name = "Daisy", .Age = 4}})
 
-                ' Group the pets using Age as the key 
+                ' Group the pets using Age as the key
                 ' and selecting only the pet's Name for each value.
                 Dim query As IEnumerable(Of IGrouping(Of Integer, String)) =
             pets.GroupBy(Function(pet) pet.Age,
@@ -1011,7 +1011,7 @@ Namespace SequenceExamples
                                       New Pet With {.Name = "Whiskers", .Age = 1},
                                       New Pet With {.Name = "Daisy", .Age = 4}})
 
-                ' Group the pets using Age as the key 
+                ' Group the pets using Age as the key
                 ' and selecting only the pet's Name for each value.
                 ' <Snippet122>
                 Dim query =
@@ -1024,7 +1024,7 @@ Namespace SequenceExamples
                 For Each petGroup In query
                     ' Print the key value of the IGrouping.
                     output.AppendLine(petGroup.Age)
-                    ' Iterate over each value in the IGrouping 
+                    ' Iterate over each value in the IGrouping
                     ' and print the value.
                     For Each name As String In petGroup.ageGroup
                         output.AppendLine(String.Format("  {0}", name))
@@ -1200,7 +1200,7 @@ Namespace SequenceExamples
                 Dim pets As New List(Of Pet)(New Pet() {barley, boots, whiskers, daisy})
 
                 ' Create a collection where each element is an anonymous type
-                ' that contains a Person's name and a collection of names of 
+                ' that contains a Person's name and a collection of names of
                 ' the pets that are owned by them.
                 Dim query =
             people.GroupJoin(pets,
@@ -1292,7 +1292,7 @@ Namespace SequenceExamples
                 Dim pets As New List(Of Pet)(New Pet() {barley, boots, whiskers, daisy})
 
                 ' Create a list of Person-Pet pairs, where each element is an
-                ' anonymous type that contains a Pet's name and the name of the 
+                ' anonymous type that contains a Pet's name and the name of the
                 ' Person that owns the Pet.
                 Dim query =
             people.Join(pets,
@@ -1526,7 +1526,7 @@ Namespace SequenceExamples
 
         NotInheritable Class Max2
             ' <Snippet57>
-            ' This class implements IComparable 
+            ' This class implements IComparable
             ' and has a custom 'CompareTo' implementation.
             Class Pet
                 Implements IComparable(Of Pet)
@@ -1560,7 +1560,7 @@ Namespace SequenceExamples
                                  New Pet With {.Name = "Boots", .Age = 4},
                                  New Pet With {.Name = "Whiskers", .Age = 1}}
 
-                ' Find the "maximum" pet according to the 
+                ' Find the "maximum" pet according to the
                 ' custom CompareTo() implementation.
                 Dim max As Pet = pets.Max()
 
@@ -1642,7 +1642,7 @@ Namespace SequenceExamples
 
         NotInheritable Class Min9
             ' <Snippet67>
-            ' This class implements IComparable 
+            ' This class implements IComparable
             ' and has a custom 'CompareTo' implementation.
             Class Pet
                 Implements IComparable(Of Pet)
@@ -1706,7 +1706,7 @@ Namespace SequenceExamples
                                  New Pet With {.Name = "Boots", .Age = 4},
                                  New Pet With {.Name = "Whiskers", .Age = 1}}
 
-                ' Find the youngest pet by passing a 
+                ' Find the youngest pet by passing a
                 ' lambda expression to the Min() method.
                 Dim min As Integer = pets.Min(Function(pet) pet.Age)
 
@@ -1744,7 +1744,7 @@ Namespace SequenceExamples
                 output.AppendLine(fruit)
             Next
 
-            ' The following query shows that the standard query operators such as 
+            ' The following query shows that the standard query operators such as
             ' Where() can be applied to the ArrayList type after calling OfType().
             Dim query2 As IEnumerable(Of String) =
             fruits.OfType(Of String)().Where(Function(fruit) _
@@ -1875,13 +1875,13 @@ Namespace SequenceExamples
         ' Four
         ' four
         ' First
-        ' first 
+        ' first
         ' </Snippet140>
 #End Region
 
 #Region "OrderByDescending"
         ' <Snippet71>
-        ' This class provides a custom implementation 
+        ' This class provides a custom implementation
         ' of the IComparer.Compare() method.
         Class SpecialComparer
             Implements IComparer(Of Decimal)
@@ -1961,7 +1961,7 @@ Namespace SequenceExamples
 #Region "Range"
         Sub RangeEx1()
             ' <Snippet72>
-            ' Generate a sequence of integers from 1 to 10 
+            ' Generate a sequence of integers from 1 to 10
             ' and project their squares.
             Dim squares As IEnumerable(Of Integer) =
             Enumerable.Range(1, 10).Select(Function(x) x * x)
@@ -2142,18 +2142,18 @@ Namespace SequenceExamples
             petOwners.SelectMany(Function(petOwner) petOwner.Pets)
 
                 Dim output As New System.Text.StringBuilder("Using SelectMany():" & vbCrLf)
-                ' Only one foreach loop is required to iterate through 
+                ' Only one foreach loop is required to iterate through
                 ' the results because it is a one-dimensional collection.
                 For Each pet As String In query1
                     output.AppendLine(pet)
                 Next
 
-                ' This code demonstrates how to use Select() instead 
+                ' This code demonstrates how to use Select() instead
                 ' of SelectMany() to get the same result.
                 Dim query2 As IEnumerable(Of String()) =
             petOwners.Select(Function(petOwner) petOwner.Pets)
                 output.AppendLine(vbCrLf & "Using Select():")
-                ' Notice that two foreach loops are required to iterate through 
+                ' Notice that two foreach loops are required to iterate through
                 ' the results because the query returns a collection of arrays.
                 For Each petArray() As String In query2
                     For Each pet As String In petArray
@@ -2204,8 +2204,8 @@ Namespace SequenceExamples
              New PetOwner With
              {.Name = "Hines, Patrick", .Pets = New String() {"Dusty"}}}
 
-                ' Project the items in the array by appending the index 
-                ' of each PetOwner to each pet's name in that petOwner's 
+                ' Project the items in the array by appending the index
+                ' of each PetOwner to each pet's name in that petOwner's
                 ' array of pets.
                 Dim query As IEnumerable(Of String) =
             petOwners.SelectMany(Function(petOwner, index) _
@@ -2508,25 +2508,24 @@ Namespace SequenceExamples
 
             ' Sort the numbers in descending order and
             ' get all but the first (largest) three numbers.
-            Dim lowerGrades As IEnumerable(Of Integer) =
+            Dim skippedGrades As IEnumerable(Of Integer) =
             grades _
-            .OrderByDescending(Function(g) g) _
             .Skip(3)
 
             ' Display the results.
-            Dim output As New System.Text.StringBuilder("All grades except the top three are:" & vbCrLf)
-            For Each grade As Integer In lowerGrades
+            Dim output As New System.Text.StringBuilder("All grades except the first three are:" & vbCrLf)
+            For Each grade As Integer In skippedGrades
                 output.AppendLine(grade)
             Next
             Console.WriteLine(output.ToString())
 
             ' This code produces the following output:
             '
-            ' All grades except the top three are:
-            ' 82
-            ' 70
-            ' 59
+            ' All grades except the first three are:
             ' 56
+            ' 92
+            ' 98
+            ' 85
             ' </Snippet87>
         End Sub
 #End Region
@@ -2756,7 +2755,7 @@ Namespace SequenceExamples
             {"grape", "passionfruit", "banana", "mango",
              "orange", "raspberry", "apple", "blueberry"}
 
-            ' Sort the strings first by their length and then 
+            ' Sort the strings first by their length and then
             ' alphabetically by passing the identity function.
             Dim query As IEnumerable(Of String) =
             fruits _
@@ -2802,7 +2801,7 @@ Namespace SequenceExamples
             Dim fruits() As String =
             {"apPLe", "baNanA", "apple", "APple", "orange", "BAnana", "ORANGE", "apPLE"}
 
-            ' Sort the strings first by their length and then 
+            ' Sort the strings first by their length and then
             ' by using a custom "case insensitive" comparer.
             Dim query As IEnumerable(Of String) =
             fruits _
@@ -2895,7 +2894,7 @@ Namespace SequenceExamples
                   New Package With
                   {.Company = "Adventure Works", .Weight = 33.8, .TrackingNumber = 4665518773L}})
 
-                ' Create a Dictionary that contains Package values, 
+                ' Create a Dictionary that contains Package values,
                 ' using TrackingNumber as the key.
                 Dim dict As Dictionary(Of Long, Package) =
                 packages.ToDictionary(Function(p) p.TrackingNumber)
@@ -2929,7 +2928,7 @@ Namespace SequenceExamples
             {"apple", "passionfruit", "banana", "mango",
              "orange", "blueberry", "grape", "strawberry"}
 
-            ' Project the length of each string and 
+            ' Project the length of each string and
             ' put the length values into a List object.
             Dim lengths As List(Of Integer) =
             fruits _
@@ -2979,9 +2978,9 @@ Namespace SequenceExamples
               New Package With
               {.Company = "Wide World Importers", .Weight = 33.8, .TrackingNumber = 4665518773L}})
 
-            ' Create a Lookup to organize the packages. 
+            ' Create a Lookup to organize the packages.
             ' Use the first character of Company as the key value.
-            ' Select Company appended to TrackingNumber 
+            ' Select Company appended to TrackingNumber
             ' as the element values of the Lookup.
             Dim lookup As ILookup(Of Char, String) =
             packages.ToLookup(Function(p) _
@@ -3049,15 +3048,15 @@ Namespace SequenceExamples
 
             ' This code produces the following output:
             '
-            ' 5 
-            ' 3 
-            ' 9 
-            ' 7 
-            ' 8 
-            ' 6 
-            ' 4 
-            ' 1 
-            ' 0 
+            ' 5
+            ' 3
+            ' 9
+            ' 7
+            ' 8
+            ' 6
+            ' 4
+            ' 1
+            ' 0
             ' </Snippet109>
         End Sub
 #End Region
@@ -3070,7 +3069,7 @@ Namespace SequenceExamples
                                 {"apple", "passionfruit", "banana", "mango",
                                  "orange", "blueberry", "grape", "strawberry"})
 
-            ' Restrict the results to those strings whose 
+            ' Restrict the results to those strings whose
             ' length is less than six.
             Dim query As IEnumerable(Of String) =
             fruits.Where(Function(fruit) fruit.Length < 6)

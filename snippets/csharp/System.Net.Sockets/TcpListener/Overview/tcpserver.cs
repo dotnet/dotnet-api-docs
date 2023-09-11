@@ -74,9 +74,6 @@ class MyTcpListener
           stream.Write(msg, 0, msg.Length);
           Console.WriteLine("Sent: {0}", data);
         }
-
-        // Shutdown and end the connection
-        client.Close();
       }
     }
     catch(SocketException e)
