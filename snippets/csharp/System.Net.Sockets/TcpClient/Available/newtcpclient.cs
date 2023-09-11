@@ -52,7 +52,6 @@ namespace newTcpClient
         }
         // </Snippet8>
 
-        // <Snippet7>
         public static ManualResetEvent connectDone =
             new ManualResetEvent(false);
 
@@ -62,9 +61,7 @@ namespace newTcpClient
             TcpClient t = (TcpClient)ar.AsyncState;
             t.EndConnect(ar);
         }
-        // </Snippet7>
 
-        // <Snippet4>
         public static void DoBeginConnect1(string host, int port)
         {
             // Connect asynchronously to the specifed host.
@@ -84,9 +81,7 @@ namespace newTcpClient
 
             Console.WriteLine("Connection established");
         }
-        // </Snippet4>
 
-        // <Snippet5>
         // Connect asynchronously to the specifed host.
         public static void DoBeginConnect2(string host, int port)
         {
@@ -104,9 +99,7 @@ namespace newTcpClient
 
             Console.WriteLine("Connection established");
         }
-        // </Snippet5>
 
-        // <Snippet6>
         // Connect asynchronously to the specifed host.
         public static void DoBeginConnect3(string host, int port)
         {
@@ -124,7 +117,6 @@ namespace newTcpClient
 
             Console.WriteLine("Connection established");
         }
-        // </Snippet6>
 
         [STAThread]
         static void Main(string[] args)

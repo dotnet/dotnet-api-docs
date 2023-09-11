@@ -31,7 +31,6 @@ namespace TcpListenerExample
         }
         // </Snippet3>
 
-        // <Snippet4>
         // Thread signal.
     public:
         static ManualResetEvent^ ClientConnected;
@@ -73,9 +72,7 @@ namespace TcpListenerExample
             // Signal the calling thread to continue.
             ClientConnected->Set();
         }
-        // </Snippet4>
 
-        // <Snippet5>
         // Thread signal.
     public:
         static ManualResetEvent^ TcpClientConnected;
@@ -120,7 +117,6 @@ namespace TcpListenerExample
             TcpClientConnected->Set();
 
         }
-        // </Snippet5>
 
     public:
         static void Main()
