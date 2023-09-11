@@ -7,9 +7,7 @@ Module Example
    Public Sub Main()
       ' Create the application domain setup information.
       Dim domaininfo As New AppDomainSetup()
-      domaininfo.ConfigurationFile = Environment.CurrentDirectory + 
-                                    Path.DirectorySeparatorChar + 
-                                     "ADSetup.exe.config"
+        domaininfo.ConfigurationFile = Path.Combine(Environment.CurrentDirectory, "ADSetup.exe.config")
       domaininfo.ApplicationBase = Environment.CurrentDirectory
       
       'Create evidence for the new appdomain from evidence of the current application domain.

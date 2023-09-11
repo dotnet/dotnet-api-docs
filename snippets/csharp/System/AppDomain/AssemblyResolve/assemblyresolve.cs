@@ -11,7 +11,7 @@ public class MyType
     }
 }
 
-class Test
+class AssemblyResolveSnippet
 {
     public static void Main()
     {

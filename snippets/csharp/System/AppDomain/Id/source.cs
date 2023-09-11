@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-public class Example
+public class AppDomainIdSnippet
 {
     // The following attribute indicates to the loader that assemblies
     // in the global assembly cache should be shared across multiple
