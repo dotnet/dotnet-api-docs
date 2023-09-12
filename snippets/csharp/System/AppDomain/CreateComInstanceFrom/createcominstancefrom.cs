@@ -17,7 +17,7 @@ class MyComNonVisibleType {
    }
 }
 
-class Test {
+class CreateComInstanceFromSnippet {
    public static void Main() {
       CreateComInstance("MyComNonVisibleType");   // Fail!
       CreateComInstance("MyComVisibleType");      // OK!
