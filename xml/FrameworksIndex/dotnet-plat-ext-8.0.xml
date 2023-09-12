@@ -24,6 +24,7 @@
     <Assembly Name="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0.0" />
     <Assembly Name="Microsoft.Extensions.DependencyInjection" Version="8.0.0.0" />
     <Assembly Name="Microsoft.Extensions.DependencyModel" Version="8.0.0.0" />
+    <Assembly Name="Microsoft.Extensions.Diagnostics.Abstractions" Version="8.0.0.0" />
     <Assembly Name="Microsoft.Extensions.Diagnostics" Version="8.0.0.0" />
     <Assembly Name="Microsoft.Extensions.Diagnostics.ExceptionSummarization" Version="8.0.0.0" />
     <Assembly Name="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="8.0.0.0" />
@@ -160,7 +161,6 @@
   <Namespace Name="Microsoft.Extensions.AsyncState">
     <Type Name="Microsoft.Extensions.AsyncState.AsyncStateExtensions" Id="T:Microsoft.Extensions.AsyncState.AsyncStateExtensions">
       <Member Id="M:Microsoft.Extensions.AsyncState.AsyncStateExtensions.AddAsyncStateCore(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
-      <Member Id="M:Microsoft.Extensions.AsyncState.AsyncStateExtensions.TryRemoveAsyncStateCore(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
     </Type>
     <Type Name="Microsoft.Extensions.AsyncState.AsyncStateToken" Id="T:Microsoft.Extensions.AsyncState.AsyncStateToken">
       <Member Id="M:Microsoft.Extensions.AsyncState.AsyncStateToken.Equals(Microsoft.Extensions.AsyncState.AsyncStateToken)" />
@@ -1065,6 +1065,7 @@
     </Type>
     <Type Name="Microsoft.Extensions.DependencyInjection.MetricsServiceExtensions" Id="T:Microsoft.Extensions.DependencyInjection.MetricsServiceExtensions">
       <Member Id="M:Microsoft.Extensions.DependencyInjection.MetricsServiceExtensions.AddMetrics(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
+      <Member Id="M:Microsoft.Extensions.DependencyInjection.MetricsServiceExtensions.AddMetrics(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder})" />
     </Type>
     <Type Name="Microsoft.Extensions.DependencyInjection.ObjectFactory" Id="T:Microsoft.Extensions.DependencyInjection.ObjectFactory" />
     <Type Name="Microsoft.Extensions.DependencyInjection.ObjectFactory`1" Id="T:Microsoft.Extensions.DependencyInjection.ObjectFactory`1" />
@@ -1089,6 +1090,8 @@
       <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
       <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
       <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)" />
+      <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptionsWithValidateOnStart``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)" />
+      <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptionsWithValidateOnStart``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)" />
       <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.Configure``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{``0})" />
       <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.Configure``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Action{``0})" />
       <Member Id="M:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.ConfigureAll``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{``0})" />
@@ -1549,9 +1552,11 @@
       <Member Id="M:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.#ctor(System.String,Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck,System.Nullable{Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus},System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.TimeSpan})" />
       <Member Id="M:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.#ctor(System.String,System.Func{System.IServiceProvider,Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck},System.Nullable{Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus},System.Collections.Generic.IEnumerable{System.String})" />
       <Member Id="M:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.#ctor(System.String,System.Func{System.IServiceProvider,Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck},System.Nullable{Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus},System.Collections.Generic.IEnumerable{System.String},System.Nullable{System.TimeSpan})" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.Delay" />
       <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.Factory" />
       <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.FailureStatus" />
       <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.Name" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.Period" />
       <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.Tags" />
       <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckRegistration.Timeout" />
     </Type>
@@ -1630,6 +1635,75 @@
     <Type Name="Microsoft.Extensions.Diagnostics.HealthChecks.TelemetryHealthCheckPublisherOptions" Id="T:Microsoft.Extensions.Diagnostics.HealthChecks.TelemetryHealthCheckPublisherOptions">
       <Member Id="M:Microsoft.Extensions.Diagnostics.HealthChecks.TelemetryHealthCheckPublisherOptions.#ctor" />
       <Member Id="P:Microsoft.Extensions.Diagnostics.HealthChecks.TelemetryHealthCheckPublisherOptions.LogOnlyUnhealthy" />
+    </Type>
+  </Namespace>
+  <Namespace Name="Microsoft.Extensions.Diagnostics.Metrics.Configuration">
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.Configuration.IMetricListenerConfigurationFactory" Id="T:Microsoft.Extensions.Diagnostics.Metrics.Configuration.IMetricListenerConfigurationFactory">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.Configuration.IMetricListenerConfigurationFactory.GetConfiguration(System.String)" />
+    </Type>
+  </Namespace>
+  <Namespace Name="Microsoft.Extensions.Diagnostics.Metrics">
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.ConsoleMetrics" Id="T:Microsoft.Extensions.Diagnostics.Metrics.ConsoleMetrics">
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.ConsoleMetrics.DebugListenerName" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder" Id="T:Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder">
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder.Services" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener" Id="T:Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener.GetMeasurementHandlers" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener.Initialize(Microsoft.Extensions.Diagnostics.Metrics.IObservableInstrumentsSource)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener.InstrumentPublished(System.Diagnostics.Metrics.Instrument,System.Object@)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener.MeasurementsCompleted(System.Diagnostics.Metrics.Instrument,System.Object)" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener.Name" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule" Id="T:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule.#ctor(System.String,System.String,System.String,Microsoft.Extensions.Diagnostics.Metrics.MeterScope,System.Boolean)" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule.Enable" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule.InstrumentName" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule.ListenerName" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule.MeterName" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.InstrumentRule.Scopes" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.IObservableInstrumentsSource" Id="T:Microsoft.Extensions.Diagnostics.Metrics.IObservableInstrumentsSource">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.IObservableInstrumentsSource.RecordObservableInstruments" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers" Id="T:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.#ctor" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.ByteHandler" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.DecimalHandler" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.DoubleHandler" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.FloatHandler" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.IntHandler" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.LongHandler" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MeasurementHandlers.ShortHandler" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.MeterScope" Id="T:Microsoft.Extensions.Diagnostics.Metrics.MeterScope">
+      <Member Id="F:Microsoft.Extensions.Diagnostics.Metrics.MeterScope.Global" />
+      <Member Id="F:Microsoft.Extensions.Diagnostics.Metrics.MeterScope.Local" />
+      <Member Id="F:Microsoft.Extensions.Diagnostics.Metrics.MeterScope.None" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderConfigurationExtensions" Id="T:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderConfigurationExtensions">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderConfigurationExtensions.AddConfiguration(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder,Microsoft.Extensions.Configuration.IConfiguration)" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderConsoleExtensions" Id="T:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderConsoleExtensions">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderConsoleExtensions.AddDebugConsole(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder)" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions" Id="T:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.AddListener(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder,Microsoft.Extensions.Diagnostics.Metrics.IMetricsListener)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.AddListener``1(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.ClearListeners(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.DisableMetrics(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder,System.String)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.DisableMetrics(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder,System.String,System.String,System.String,Microsoft.Extensions.Diagnostics.Metrics.MeterScope)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.DisableMetrics(Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions,System.String)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.DisableMetrics(Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions,System.String,System.String,System.String,Microsoft.Extensions.Diagnostics.Metrics.MeterScope)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.EnableMetrics(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder,System.String)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.EnableMetrics(Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder,System.String,System.String,System.String,Microsoft.Extensions.Diagnostics.Metrics.MeterScope)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.EnableMetrics(Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions,System.String)" />
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions.EnableMetrics(Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions,System.String,System.String,System.String,Microsoft.Extensions.Diagnostics.Metrics.MeterScope)" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions" Id="T:Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions">
+      <Member Id="M:Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions.#ctor" />
+      <Member Id="P:Microsoft.Extensions.Diagnostics.Metrics.MetricsOptions.Rules" />
     </Type>
   </Namespace>
   <Namespace Name="Microsoft.Extensions.Diagnostics.ResourceMonitoring">
@@ -2145,6 +2219,7 @@
       <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Configuration" />
       <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Environment" />
       <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Logging" />
+      <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Metrics" />
       <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Microsoft#Extensions#Hosting#IHostApplicationBuilder#Configuration" />
       <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Microsoft#Extensions#Hosting#IHostApplicationBuilder#Properties" />
       <Member Id="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Services" />
@@ -2212,6 +2287,8 @@
       <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureHostOptions(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Hosting.HostOptions})" />
       <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureLogging(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,Microsoft.Extensions.Logging.ILoggingBuilder})" />
       <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureLogging(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Logging.ILoggingBuilder})" />
+      <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureMetrics(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder})" />
+      <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureMetrics(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,Microsoft.Extensions.Diagnostics.Metrics.IMetricsBuilder})" />
       <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureServices(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})" />
       <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.RunConsoleAsync(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Hosting.ConsoleLifetimeOptions},System.Threading.CancellationToken)" />
       <Member Id="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.RunConsoleAsync(Microsoft.Extensions.Hosting.IHostBuilder,System.Threading.CancellationToken)" />
@@ -2246,6 +2323,7 @@
       <Member Id="P:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Configuration" />
       <Member Id="P:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Environment" />
       <Member Id="P:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Logging" />
+      <Member Id="P:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Metrics" />
       <Member Id="P:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Properties" />
       <Member Id="P:Microsoft.Extensions.Hosting.IHostApplicationBuilder.Services" />
     </Type>
@@ -2505,8 +2583,8 @@
       <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpCircuitBreakerStrategyOptions.#ctor" />
     </Type>
     <Type Name="Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions" Id="T:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions">
-      <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddResilienceHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.String,System.Action{Polly.ResilienceStrategyBuilder{System.Net.Http.HttpResponseMessage},Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext})" />
-      <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddResilienceHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.String,System.Action{Polly.ResilienceStrategyBuilder{System.Net.Http.HttpResponseMessage}})" />
+      <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddResilienceHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.String,System.Action{Polly.CompositeStrategyBuilder{System.Net.Http.HttpResponseMessage},Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext})" />
+      <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddResilienceHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.String,System.Action{Polly.CompositeStrategyBuilder{System.Net.Http.HttpResponseMessage}})" />
       <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddStandardHedgingHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" />
       <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddStandardHedgingHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Action{Microsoft.Extensions.Http.Resilience.IRoutingStrategyBuilder})" />
       <Member Id="M:Microsoft.Extensions.Http.Resilience.HttpClientBuilderExtensions.AddStandardResilienceHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" />
@@ -2588,8 +2666,8 @@
     <Type Name="Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext" Id="T:Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext">
       <Member Id="M:Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext.EnableReloads``1(System.String)" />
       <Member Id="P:Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext.BuilderName" />
+      <Member Id="P:Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext.InstanceName" />
       <Member Id="P:Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext.ServiceProvider" />
-      <Member Id="P:Microsoft.Extensions.Http.Resilience.ResilienceHandlerContext.StrategyKey" />
     </Type>
     <Type Name="Microsoft.Extensions.Http.Resilience.RoutingStrategyBuilderExtensions" Id="T:Microsoft.Extensions.Http.Resilience.RoutingStrategyBuilderExtensions">
       <Member Id="M:Microsoft.Extensions.Http.Resilience.RoutingStrategyBuilderExtensions.ConfigureOrderedGroups(Microsoft.Extensions.Http.Resilience.IRoutingStrategyBuilder,Microsoft.Extensions.Configuration.IConfigurationSection)" />
@@ -2692,18 +2770,6 @@
     </Type>
   </Namespace>
   <Namespace Name="Microsoft.Extensions.Http.Telemetry.Logging">
-    <Type Name="Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions" Id="T:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions">
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.Duration" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.Host" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.Method" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.Path" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.RequestBody" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.RequestHeaderPrefix" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.ResponseBody" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.ResponseHeaderPrefix" />
-      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.StatusCode" />
-      <Member Id="P:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingDimensions.DimensionNames" />
-    </Type>
     <Type Name="Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingExtensions" Id="T:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingExtensions">
       <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingExtensions.AddDefaultHttpClientLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
       <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingExtensions.AddDefaultHttpClientLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationSection)" />
@@ -2713,8 +2779,20 @@
       <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingExtensions.AddHttpClientLogging(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,Microsoft.Extensions.Configuration.IConfigurationSection)" />
       <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingExtensions.AddHttpClientLogging(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Action{Microsoft.Extensions.Http.Telemetry.Logging.LoggingOptions})" />
     </Type>
+    <Type Name="Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames" Id="T:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames">
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.Duration" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.Host" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.Method" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.Path" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.RequestBody" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.RequestHeaderPrefix" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.ResponseBody" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.ResponseHeaderPrefix" />
+      <Member Id="F:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.StatusCode" />
+      <Member Id="P:Microsoft.Extensions.Http.Telemetry.Logging.HttpClientLoggingTagNames.DimensionNames" />
+    </Type>
     <Type Name="Microsoft.Extensions.Http.Telemetry.Logging.IHttpClientLogEnricher" Id="T:Microsoft.Extensions.Http.Telemetry.Logging.IHttpClientLogEnricher">
-      <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.IHttpClientLogEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage)" />
+      <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.IHttpClientLogEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage)" />
     </Type>
     <Type Name="Microsoft.Extensions.Http.Telemetry.Logging.LoggingOptions" Id="T:Microsoft.Extensions.Http.Telemetry.Logging.LoggingOptions">
       <Member Id="M:Microsoft.Extensions.Http.Telemetry.Logging.LoggingOptions.#ctor" />
@@ -4012,44 +4090,42 @@
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.EnricherExtensions.AddLogEnricher``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.EnricherExtensions.AddMetricEnricher(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Telemetry.Enrichment.IMetricEnricher)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.EnricherExtensions.AddMetricEnricher``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.EnricherExtensions.AddStaticLogEnricher(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Telemetry.Enrichment.IStaticLogEnricher)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.EnricherExtensions.AddStaticLogEnricher``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
     </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag" Id="T:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag.Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag.Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag.Add(System.String,System.Object)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag.Add(System.String,System.String)" />
+    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector" Id="T:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector.Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector.Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector.Add(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector.Add(System.String,System.String)" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ILogEnricher" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ILogEnricher">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ILogEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ILogEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector)" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.IMetricEnricher" Id="T:Microsoft.Extensions.Telemetry.Enrichment.IMetricEnricher">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IMetricEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentPropertyBag)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IMetricEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector)" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.IStaticLogEnricher" Id="T:Microsoft.Extensions.Telemetry.Enrichment.IStaticLogEnricher">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.IStaticLogEnricher.Enrich(Microsoft.Extensions.Telemetry.Enrichment.IEnrichmentTagCollector)" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ITraceEnricher" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ITraceEnricher">
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ITraceEnricher.Enrich(System.Diagnostics.Activity)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ITraceEnricher.EnrichOnActivityStart(System.Diagnostics.Activity)" />
-    </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherDimensions" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherDimensions">
-      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherDimensions.ProcessId" />
-      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherDimensions.ThreadId" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherDimensions.DimensionNames" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherExtensions" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherExtensions">
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherExtensions.AddProcessLogEnricher(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherExtensions.AddProcessLogEnricher(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationSection)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherExtensions.AddProcessLogEnricher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.Telemetry.Enrichment.ProcessLogEnricherOptions})" />
     </Type>
+    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherTagNames" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherTagNames">
+      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherTagNames.ProcessId" />
+      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherTagNames.ThreadId" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Enrichment.ProcessEnricherTagNames.DimensionNames" />
+    </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ProcessLogEnricherOptions" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ProcessLogEnricherOptions">
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ProcessLogEnricherOptions.#ctor" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Enrichment.ProcessLogEnricherOptions.ProcessId" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Enrichment.ProcessLogEnricherOptions.ThreadId" />
-    </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions">
-      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions.ApplicationName" />
-      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions.BuildVersion" />
-      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions.DeploymentRing" />
-      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions.EnvironmentName" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherDimensions.DimensionNames" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherExtensions" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherExtensions">
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherExtensions.AddServiceLogEnricher(Microsoft.Extensions.DependencyInjection.IServiceCollection)" />
@@ -4061,6 +4137,13 @@
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherExtensions.AddServiceTraceEnricher(OpenTelemetry.Trace.TracerProviderBuilder)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherExtensions.AddServiceTraceEnricher(OpenTelemetry.Trace.TracerProviderBuilder,Microsoft.Extensions.Configuration.IConfigurationSection)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherExtensions.AddServiceTraceEnricher(OpenTelemetry.Trace.TracerProviderBuilder,System.Action{Microsoft.Extensions.Telemetry.Enrichment.ServiceTraceEnricherOptions})" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags">
+      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags.ApplicationName" />
+      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags.BuildVersion" />
+      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags.DeploymentRing" />
+      <Member Id="F:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags.EnvironmentName" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Enrichment.ServiceEnricherTags.DimensionNames" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Enrichment.ServiceLogEnricherOptions" Id="T:Microsoft.Extensions.Telemetry.Enrichment.ServiceLogEnricherOptions">
       <Member Id="M:Microsoft.Extensions.Telemetry.Enrichment.ServiceLogEnricherOptions.#ctor" />
@@ -4205,51 +4288,71 @@
     </Type>
   </Namespace>
   <Namespace Name="Microsoft.Extensions.Telemetry.Logging">
-    <Type Name="Microsoft.Extensions.Telemetry.Logging.ILogPropertyCollector" Id="T:Microsoft.Extensions.Telemetry.Logging.ILogPropertyCollector">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.ILogPropertyCollector.Add(System.String,System.Object)" />
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.ITagCollector" Id="T:Microsoft.Extensions.Telemetry.Logging.ITagCollector">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.ITagCollector.Add(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.ITagCollector.Add(System.String,System.Object,Microsoft.Extensions.Compliance.Classification.DataClassification)" />
     </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggerProvider" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggerProvider">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerProvider.CreateLogger(System.String)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerProvider.Dispose(System.Boolean)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerProvider.SetScopeProvider(Microsoft.Extensions.Logging.IExternalScopeProvider)" />
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions.#ctor" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions.CaptureStackTraces" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions.MaxStackTraceLength" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions.UseFileInfoForStackTraces" />
     </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggingExtensions" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggingExtensions">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingExtensions.AddOpenTelemetryLogging(Microsoft.Extensions.Logging.ILoggingBuilder)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingExtensions.AddOpenTelemetryLogging(Microsoft.Extensions.Logging.ILoggingBuilder,Microsoft.Extensions.Configuration.IConfigurationSection)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingExtensions.AddOpenTelemetryLogging(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Microsoft.Extensions.Telemetry.Logging.LoggingOptions})" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingExtensions.AddProcessor(Microsoft.Extensions.Logging.ILoggingBuilder,OpenTelemetry.BaseProcessor{OpenTelemetry.Logs.LogRecord})" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingExtensions.AddProcessor``1(Microsoft.Extensions.Logging.ILoggingBuilder)" />
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggerMessageHelper" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggerMessageHelper">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageHelper.Stringify(System.Collections.IEnumerable)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageHelper.Stringify``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageHelper.ThreadLocalState" />
     </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggingOptions" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggingOptions">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingOptions.#ctor" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggingOptions.IncludeScopes" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggingOptions.IncludeStackTrace" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggingOptions.MaxStackTraceLength" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggingOptions.UseFormattedMessage" />
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggerMessageState" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.#ctor" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.AddClassifiedTag(System.String,System.Object,Microsoft.Extensions.Compliance.Classification.DataClassification)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.AddTag(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Clear" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.String,System.String)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Microsoft#Extensions#Telemetry#Logging#ITagCollector#Add(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Microsoft#Extensions#Telemetry#Logging#ITagCollector#Add(System.String,System.Object,Microsoft.Extensions.Compliance.Classification.DataClassification)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ReserveClassifiedTagSpace(System.Int32)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ReserveRedactedTagSpace(System.Int32)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ReserveTagSpace(System.Int32)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.System#Collections#Generic#IEnumerable&lt;System#Collections#Generic#KeyValuePair&lt;System#String,System#Object&gt;&gt;#GetEnumerator" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.System#Collections#IEnumerable#GetEnumerator" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ToString" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ClassifiedTagArray" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.Item(System.Int32)" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.NumClassifiedTags" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.NumRedactedTags" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.NumTags" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.RedactedTagArray" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.System#Collections#Generic#IReadOnlyCollection&lt;System#Collections#Generic#KeyValuePair&lt;System#String,System#Object&gt;&gt;#Count" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.TagArray" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.TagNamePrefix" />
     </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute" Id="T:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(Microsoft.Extensions.Logging.LogLevel)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(Microsoft.Extensions.Logging.LogLevel,System.String)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(System.Int32)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(System.Int32,Microsoft.Extensions.Logging.LogLevel)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(System.Int32,Microsoft.Extensions.Logging.LogLevel,System.String)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(System.Int32,System.String)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.#ctor(System.String)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.EventId" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.EventName" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.Level" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.Message" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LogMethodAttribute.SkipEnabledCheck" />
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggerMessageState/ClassifiedTag" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ClassifiedTag">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ClassifiedTag.#ctor(System.String,System.Object,Microsoft.Extensions.Compliance.Classification.DataClassification)" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ClassifiedTag.Classification" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ClassifiedTag.Name" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Logging.LoggerMessageState.ClassifiedTag.Value" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggingEnrichmentExtensions" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggingEnrichmentExtensions">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingEnrichmentExtensions.EnableEnrichment(Microsoft.Extensions.Logging.ILoggingBuilder)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingEnrichmentExtensions.EnableEnrichment(Microsoft.Extensions.Logging.ILoggingBuilder,Microsoft.Extensions.Configuration.IConfigurationSection)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingEnrichmentExtensions.EnableEnrichment(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Microsoft.Extensions.Telemetry.Logging.LoggerEnrichmentOptions})" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Telemetry.Logging.LoggingRedactionExtensions" Id="T:Microsoft.Extensions.Telemetry.Logging.LoggingRedactionExtensions">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LoggingRedactionExtensions.EnableRedaction(Microsoft.Extensions.Logging.ILoggingBuilder)" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Logging.LogMethodHelper" Id="T:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper">
       <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.#ctor" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Add(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Add(System.String,System.Object,Microsoft.Extensions.Compliance.Classification.DataClassification)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.GetHelper" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentPropertyBag#Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentPropertyBag#Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentPropertyBag#Add(System.String,System.Object)" />
-      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentPropertyBag#Add(System.String,System.String)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.String}})" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.String,System.Object)" />
+      <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Microsoft#Extensions#Telemetry#Enrichment#IEnrichmentTagCollector#Add(System.String,System.String)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.ReturnHelper(Microsoft.Extensions.Telemetry.Logging.LogMethodHelper)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Stringify(System.Collections.IEnumerable)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Logging.LogMethodHelper.Stringify``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})" />
@@ -4273,20 +4376,16 @@
     <Type Name="Microsoft.Extensions.Telemetry.Metering.CounterAttribute" Id="T:Microsoft.Extensions.Telemetry.Metering.CounterAttribute">
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.CounterAttribute.#ctor(System.String[])" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.CounterAttribute.#ctor(System.Type)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute.Dimensions" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute.Name" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute.TagNames" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute.Type" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1" Id="T:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1">
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1.#ctor(System.String[])" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1.#ctor(System.Type)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1.Dimensions" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1.Name" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1.TagNames" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.CounterAttribute`1.Type" />
-    </Type>
-    <Type Name="Microsoft.Extensions.Telemetry.Metering.DimensionAttribute" Id="T:Microsoft.Extensions.Telemetry.Metering.DimensionAttribute">
-      <Member Id="M:Microsoft.Extensions.Telemetry.Metering.DimensionAttribute.#ctor(System.String)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.DimensionAttribute.Name" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Metering.EventCountersCollectorOptions" Id="T:Microsoft.Extensions.Telemetry.Metering.EventCountersCollectorOptions">
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.EventCountersCollectorOptions.#ctor" />
@@ -4301,22 +4400,22 @@
     <Type Name="Microsoft.Extensions.Telemetry.Metering.GaugeAttribute" Id="T:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute">
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute.#ctor(System.String[])" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute.#ctor(System.Type)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute.Dimensions" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute.Name" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute.TagNames" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.GaugeAttribute.Type" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Metering.HistogramAttribute" Id="T:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute">
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute.#ctor(System.String[])" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute.#ctor(System.Type)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute.Dimensions" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute.Name" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute.TagNames" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute.Type" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1" Id="T:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1">
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1.#ctor(System.String[])" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1.#ctor(System.Type)" />
-      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1.Dimensions" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1.Name" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1.TagNames" />
       <Member Id="P:Microsoft.Extensions.Telemetry.Metering.HistogramAttribute`1.Type" />
     </Type>
     <Type Name="Microsoft.Extensions.Telemetry.Metering.Meter`1" Id="T:Microsoft.Extensions.Telemetry.Metering.Meter`1">
@@ -4340,6 +4439,10 @@
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.OTelMeteringExtensions.AddMetering(OpenTelemetry.Metrics.MeterProviderBuilder)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.OTelMeteringExtensions.AddMetering(OpenTelemetry.Metrics.MeterProviderBuilder,Microsoft.Extensions.Configuration.IConfigurationSection)" />
       <Member Id="M:Microsoft.Extensions.Telemetry.Metering.OTelMeteringExtensions.AddMetering(OpenTelemetry.Metrics.MeterProviderBuilder,System.Action{Microsoft.Extensions.Telemetry.Metering.MeteringOptions})" />
+    </Type>
+    <Type Name="Microsoft.Extensions.Telemetry.Metering.TagNameAttribute" Id="T:Microsoft.Extensions.Telemetry.Metering.TagNameAttribute">
+      <Member Id="M:Microsoft.Extensions.Telemetry.Metering.TagNameAttribute.#ctor(System.String)" />
+      <Member Id="P:Microsoft.Extensions.Telemetry.Metering.TagNameAttribute.Name" />
     </Type>
   </Namespace>
   <Namespace Name="Microsoft.Extensions.Telemetry.Testing.Logging">
@@ -4863,18 +4966,26 @@
     </Type>
     <Type Name="System.BinaryData" Id="T:System.BinaryData">
       <Member Id="M:System.BinaryData.#ctor(System.Byte[])" />
+      <Member Id="M:System.BinaryData.#ctor(System.Byte[],System.String)" />
       <Member Id="M:System.BinaryData.#ctor(System.Object,System.Text.Json.JsonSerializerOptions,System.Type)" />
       <Member Id="M:System.BinaryData.#ctor(System.Object,System.Text.Json.Serialization.JsonSerializerContext,System.Type)" />
       <Member Id="M:System.BinaryData.#ctor(System.ReadOnlyMemory{System.Byte})" />
+      <Member Id="M:System.BinaryData.#ctor(System.ReadOnlyMemory{System.Byte},System.String)" />
       <Member Id="M:System.BinaryData.#ctor(System.String)" />
+      <Member Id="M:System.BinaryData.#ctor(System.String,System.String)" />
       <Member Id="M:System.BinaryData.Equals(System.Object)" />
       <Member Id="M:System.BinaryData.FromBytes(System.Byte[])" />
+      <Member Id="M:System.BinaryData.FromBytes(System.Byte[],System.String)" />
       <Member Id="M:System.BinaryData.FromBytes(System.ReadOnlyMemory{System.Byte})" />
+      <Member Id="M:System.BinaryData.FromBytes(System.ReadOnlyMemory{System.Byte},System.String)" />
       <Member Id="M:System.BinaryData.FromObjectAsJson``1(``0,System.Text.Json.JsonSerializerOptions)" />
       <Member Id="M:System.BinaryData.FromObjectAsJson``1(``0,System.Text.Json.Serialization.Metadata.JsonTypeInfo{``0})" />
       <Member Id="M:System.BinaryData.FromStream(System.IO.Stream)" />
+      <Member Id="M:System.BinaryData.FromStream(System.IO.Stream,System.String)" />
+      <Member Id="M:System.BinaryData.FromStreamAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)" />
       <Member Id="M:System.BinaryData.FromStreamAsync(System.IO.Stream,System.Threading.CancellationToken)" />
       <Member Id="M:System.BinaryData.FromString(System.String)" />
+      <Member Id="M:System.BinaryData.FromString(System.String,System.String)" />
       <Member Id="M:System.BinaryData.GetHashCode" />
       <Member Id="M:System.BinaryData.op_Implicit(System.BinaryData)~System.ReadOnlyMemory{System.Byte}" />
       <Member Id="M:System.BinaryData.op_Implicit(System.BinaryData)~System.ReadOnlySpan{System.Byte}" />
@@ -4884,9 +4995,11 @@
       <Member Id="M:System.BinaryData.ToObjectFromJson``1(System.Text.Json.Serialization.Metadata.JsonTypeInfo{``0})" />
       <Member Id="M:System.BinaryData.ToStream" />
       <Member Id="M:System.BinaryData.ToString" />
+      <Member Id="M:System.BinaryData.WithMediaType(System.String)" />
       <Member Id="P:System.BinaryData.Empty" />
       <Member Id="P:System.BinaryData.IsEmpty" />
       <Member Id="P:System.BinaryData.Length" />
+      <Member Id="P:System.BinaryData.MediaType" />
     </Type>
     <Type Name="System.UriIdnScope" Id="T:System.UriIdnScope">
       <Member Id="F:System.UriIdnScope.All" />
@@ -5093,11 +5206,11 @@
   </Namespace>
   <Namespace Name="System.Cloud.Messaging">
     <Type Name="System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions" Id="T:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions">
+      <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddKeyedSingleton``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder)" />
+      <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddKeyedSingleton``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder,System.Func{System.IServiceProvider,``0})" />
+      <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddKeyedSingleton``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder,System.String,System.Func{System.IServiceProvider,``0})" />
       <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddMessageMiddleware``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder)" />
       <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddMessageMiddleware``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder,System.Func{System.IServiceProvider,``0})" />
-      <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddNamedSingleton``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder)" />
-      <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddNamedSingleton``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder,System.Func{System.IServiceProvider,``0})" />
-      <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.AddNamedSingleton``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder,System.String,System.Func{System.IServiceProvider,``0})" />
       <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.ConfigureMessageConsumer``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder)" />
       <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.ConfigureMessageConsumer``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder,System.Func{System.IServiceProvider,``0})" />
       <Member Id="M:System.Cloud.Messaging.AsyncProcessingPipelineBuilderExtensions.ConfigureMessageDestination``1(System.Cloud.Messaging.IAsyncProcessingPipelineBuilder)" />
@@ -23853,6 +23966,13 @@
       <Member Id="M:System.ServiceProcess.TimeoutException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)" />
       <Member Id="M:System.ServiceProcess.TimeoutException.#ctor(System.String)" />
       <Member Id="M:System.ServiceProcess.TimeoutException.#ctor(System.String,System.Exception)" />
+    </Type>
+  </Namespace>
+  <Namespace Name="System.Text.Json.Serialization">
+    <Type Name="System.Text.Json.Serialization.BinaryDataJsonConverter" Id="T:System.Text.Json.Serialization.BinaryDataJsonConverter">
+      <Member Id="M:System.Text.Json.Serialization.BinaryDataJsonConverter.#ctor" />
+      <Member Id="M:System.Text.Json.Serialization.BinaryDataJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)" />
+      <Member Id="M:System.Text.Json.Serialization.BinaryDataJsonConverter.Write(System.Text.Json.Utf8JsonWriter,System.BinaryData,System.Text.Json.JsonSerializerOptions)" />
     </Type>
   </Namespace>
   <Namespace Name="System.Threading">
