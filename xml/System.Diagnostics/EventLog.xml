@@ -2500,17 +2500,13 @@ SVC_UPDATE.EXE
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of days to retain entries in the event log.</summary>
-        <value>The number of days that entries in the event log are retained. The default value is 7.</value>
+        <summary>Deprecated</summary>
+        <value>Deprecated</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- Use the <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> property to examine the current setting for an event log. Use <xref:System.Diagnostics.EventLog.ModifyOverflowPolicy%2A> to change the minimum number of days that each entry in the event log must be retained.  
-  
- The <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> value depends on the configured overflow behavior of the event log. If the <xref:System.Diagnostics.OverflowAction> property for an event log is set to <xref:System.Diagnostics.OverflowAction.OverwriteAsNeeded>, then the <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> value is 0. If the <xref:System.Diagnostics.OverflowAction> property for an event log is set to <xref:System.Diagnostics.OverflowAction.DoNotOverwrite>, then the <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> value is -1. If the <xref:System.Diagnostics.OverflowAction> property for an event log is set to <xref:System.Diagnostics.OverflowAction.OverwriteOlder>, then the <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> value is greater than zero, and represents the number of days to retain event log entries when the event log is full.  
-  
- The overflow behavior only occurs when an event log reaches its size limit. When an <xref:System.Diagnostics.EventLog> has its <xref:System.Diagnostics.EventLog.OverflowAction%2A> set to <xref:System.Diagnostics.OverflowAction.OverwriteOlder>, and the event log reaches its maximum size, then new entries are written only if they can replace entries whose age exceeds the <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> period. Retaining event entries for a minimum period is appropriate when the event log is archived regularly. Otherwise, you risk losing new entries when the event log reaches its limit. To avoid losing new event information, set the minimum retention days for events based on your archive schedule for a particular event log.  
+ Support for the <xref:System.Diagnostics.EventLog.MinimumRetentionDays%2A> property was removed in Windows Vista and later operating systems. Setting this value can cause the Event Log to never overwrite events, and to drop all events to the channel once it is full.
   
    
   
@@ -2565,9 +2561,8 @@ SVC_UPDATE.EXE
         <Parameter Name="retentionDays" Type="System.Int32" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;xamarinmac-3.0" />
       </Parameters>
       <Docs>
-        <param name="action">The overflow behavior for writing new entries to the event log.</param>
-        <param name="retentionDays">The minimum number of days each event log entry is retained. This parameter is used only if <paramref name="action" /> is set to <see cref="F:System.Diagnostics.OverflowAction.OverwriteOlder" />.</param>
-        <summary>Changes the configured behavior for writing new entries when the event log reaches its maximum file size.</summary>
+        <param name="action">The overflow behavior for writing new entries to the event log. Must not be `OverwriteOlder`.</param>
+        <param name="retentionDays">Deprecated. Must be 0.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -2583,10 +2578,11 @@ SVC_UPDATE.EXE
 >  This property represents a configuration setting for the event log represented by this instance. When the event log reaches its maximum size, this property specifies how the operating system handles new entries written by all event sources registered for the event log.  
   
  Set the `action` parameter to <xref:System.Diagnostics.OverflowAction.OverwriteAsNeeded> to indicate that a new entry overwrites the oldest entry when the <xref:System.Diagnostics.EventLog> reaches its maximum size. If the `action` parameter is set to <xref:System.Diagnostics.OverflowAction.OverwriteAsNeeded>, the `retentionDays` parameter value is ignored.  
-  
- Set the `action` parameter to <xref:System.Diagnostics.OverflowAction.OverwriteOlder> to indicate that each new entry overwrites older entries when the <xref:System.Diagnostics.EventLog> reaches its maximum size. Specify the number of days that events must be retained in the log using the `retentionDays` parameter. Events written within the retention range are not overwritten by new entries.  
-  
+
  Set the `action` parameter to <xref:System.Diagnostics.OverflowAction.DoNotOverwrite> to discard new events when the maximum log size is reached. If the `action` parameter is set to <xref:System.Diagnostics.OverflowAction.DoNotOverwrite>, the `retentionDays` parameter value is ignored.  
+
+> [!WARNING]
+> Never set the `action` parameter to <xref:System.Diagnostics.OverflowAction.OverwriteOlder>. This value is deprecated and may cause the log to behave as if the `DoNotOverwrite` parameter was passed instead.
   
 > [!CAUTION]
 >  Setting the overflow policy to <xref:System.Diagnostics.OverflowAction.DoNotOverwrite> specifies that new entries are discarded when the event log is full. If you use this setting, ensure the event log is regularly archived and cleared to avoid reaching its maximum size limit.  
