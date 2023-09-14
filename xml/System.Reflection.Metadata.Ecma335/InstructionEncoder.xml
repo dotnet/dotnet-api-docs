@@ -27,6 +27,14 @@
       <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
     </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
   </Attributes>
   <Docs>
     <summary>Encodes Common Intermediate Language (CIL) instructions.</summary>
@@ -67,7 +75,14 @@ This example shows how to emit a method body using <xref:System.Reflection.Metad
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="codeBuilder" Type="System.Reflection.Metadata.BlobBuilder" />
-        <Parameter Name="controlFlowBuilder" Type="System.Reflection.Metadata.Ecma335.ControlFlowBuilder" />
+        <Parameter Name="controlFlowBuilder" Type="System.Reflection.Metadata.Ecma335.ControlFlowBuilder">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="codeBuilder">Builder to write encoded instructions to.</param>
@@ -331,6 +346,16 @@ This example shows how to emit a method body using <xref:System.Reflection.Metad
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Reflection.Metadata.Ecma335.ControlFlowBuilder</ReturnType>
       </ReturnValue>
@@ -870,10 +895,14 @@ A single label may be marked multiple times, the last offset wins.
         <Parameter Name="branchCount" Type="System.Int32" Index="0" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="branchCount">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="branchCount">The number of branches the instruction will have.</param>
+        <summary>Starts encoding a switch instruction.</summary>
+        <returns>A <see cref="T:System.Reflection.Metadata.Ecma335.SwitchInstructionEncoder" /> that will be used to emit the labels for the branches.</returns>
+        <remarks>Before using this <see cref="T:System.Reflection.Metadata.Ecma335.InstructionEncoder" /> in any other way, the method <see cref="M:System.Reflection.Metadata.Ecma335.SwitchInstructionEncoder.Branch(System.Reflection.Metadata.Ecma335.LabelHandle)" /> must be called on the returned value exactly <paramref name="branchCount" /> times. Failure to do so will throw <see cref="T:System.InvalidOperationException" />.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="branchCount" /> is less than or equal to zero.</exception>
+        <exception cref="T:System.InvalidOperationException">
+          <see cref="M:System.Reflection.Metadata.Ecma335.SwitchInstructionEncoder.Branch(System.Reflection.Metadata.Ecma335.LabelHandle)" /> was not called on the returned value exactly <paramref name="branchCount" /> times.</exception>
       </Docs>
     </Member>
     <Member MemberName="Token">

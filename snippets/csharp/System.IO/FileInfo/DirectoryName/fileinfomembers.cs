@@ -1,7 +1,6 @@
 ﻿// <Snippet12>
 using System;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 // </Snippet12>
 
 public class FileInfoSnippets
@@ -296,38 +295,7 @@ public class FileInfoSnippets
         // </Snippet10>
         Console.WriteLine();
     }
-
-    public void OpenWriteAndOpenRead()
-    {
-        // <Snippet11>
-
-        // Create a temporary file.
-        string      fileName = Path.GetTempFileName();
-        FileInfo    fileInfo = new FileInfo(fileName);
-
-        // Write the current time to the file in binary form.
-        DateTime   currentTime = DateTime.Now;
-        FileStream fileWriteStream = fileInfo.OpenWrite();
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        binaryFormatter.Serialize(fileWriteStream, currentTime);
-        fileWriteStream.Close();
-
-        // Read the time back from the file.
-        FileStream fileReadStream = fileInfo.OpenRead();
-        DateTime   timeRead = (DateTime)binaryFormatter.Deserialize(fileReadStream);
-        fileReadStream.Close();
-
-        Console.WriteLine("Value written {0}", currentTime);
-        Console.WriteLine("Value read    {0}", timeRead);
-        /* This code produces output similar to the following,
-         * though actual results may vary by machine:
-         *
-         * Value written 9/9/2005 3:46:24 PM
-         * Value read    9/9/2005 3:46:24 PM
-         */
-        // </Snippet11>
-        Console.WriteLine();
-    }
+    
     public static void Main()
     {
         Console.WriteLine();
@@ -342,6 +310,5 @@ public class FileInfoSnippets
         fileInfoSnippets.Length();
         fileInfoSnippets.AppendTextAndOpenText();
         fileInfoSnippets.CreateText();
-        fileInfoSnippets.OpenWriteAndOpenRead();
     }
 }

@@ -46,6 +46,16 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>Controls the system garbage collector, a service that automatically reclaims unused memory.</summary>
     <remarks>
@@ -210,7 +220,14 @@
         <ReturnType>T[]</ReturnType>
       </ReturnValue>
       <TypeParameters>
-        <TypeParameter Name="T" />
+        <TypeParameter Name="T">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </TypeParameter>
       </TypeParameters>
       <Parameters>
         <Parameter Name="length" Type="System.Int32" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
@@ -257,7 +274,14 @@ If pinned is set to `true`, `T` must not be a reference type or a type that cont
         <ReturnType>T[]</ReturnType>
       </ReturnValue>
       <TypeParameters>
-        <TypeParameter Name="T" />
+        <TypeParameter Name="T">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </TypeParameter>
       </TypeParameters>
       <Parameters>
         <Parameter Name="length" Type="System.Int32" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
@@ -1083,22 +1107,24 @@ This method is most useful in monitoring scenarios for measuring the difference 
       <Docs>
         <param name="obj">The object that generation information is retrieved for.</param>
         <summary>Returns the current generation number of the specified object.</summary>
-        <returns>The current generation number of <paramref name="obj" />.</returns>
+        <returns>The current generation number of <paramref name="obj" />, or <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see>.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Use this method to determine the age of an object, and then use that information with the <xref:System.GC.Collect%2A> method to force the garbage collector to collect objects in the same generation. For example, use this method when you have a set of objects that are created as a group and that become inaccessible at the same time.
 
+Use this method to determine the age of an object, and then use that information with the <xref:System.GC.Collect%2A> method to force the garbage collector to collect objects in the same generation. For example, use this method when you have a set of objects that are created as a group and that become inaccessible at the same time.
 
+Starting in .NET 8, this method might return <xref:System.Int32.MaxValue> for objects allocated on non-GC heaps. For more information, see [GC.GetGeneration might return Int32.MaxValue](/dotnet/core/compatibility/core-libraries/8.0/getgeneration-return-value).
 
 ## Examples
- The following example demonstrates how to use the <xref:System.GC.GetGeneration%2A> method to determine the age of an object. The example then performs garbage collections to clean up memory and compare the pre and post collection memory totals in the console.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/GC/Overview/class1.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/GC/Overview/class1.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb" id="Snippet1":::
+The following example demonstrates how to use the <xref:System.GC.GetGeneration%2A> method to determine the age of an object. The example then performs garbage collections to clean up memory and compare the pre and post collection memory totals in the console.
+
+:::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System/GC/Overview/class1.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/GC/Overview/class1.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1150,17 +1176,22 @@ This method is most useful in monitoring scenarios for measuring the difference 
       <Docs>
         <param name="wo">A <see cref="T:System.WeakReference" /> that refers to the target object whose generation number is to be determined.</param>
         <summary>Returns the current generation number of the target of a specified weak reference.</summary>
-        <returns>The current generation number of the target of <paramref name="wo" />.</returns>
+        <returns>The current generation number of the target of <paramref name="wo" />, or <see cref="P:System.Int32.MaxValue" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Examples
- The following example demonstrates the use of the <xref:System.GC.GetGeneration%2A> method to determine the age of a weak reference object.
+## Remarks
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/CPP/systemgcgetgenerationweak.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/GC/GetGeneration/systemgcgetgenerationweak.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/GC/GetGeneration/systemgcgetgenerationweak.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/VB/systemgcgetgenerationweak.vb" id="Snippet1":::
+Starting in .NET 8, this method might return <xref:System.Int32.MaxValue> for objects allocated on non-GC heaps. For more information, see [GC.GetGeneration might return Int32.MaxValue](/dotnet/core/compatibility/core-libraries/8.0/getgeneration-return-value).
+
+## Examples
+
+The following example demonstrates the use of the <xref:System.GC.GetGeneration%2A> method to determine the age of a weak reference object.
+
+:::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/CPP/systemgcgetgenerationweak.cpp" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System/GC/GetGeneration/systemgcgetgenerationweak.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/GC/GetGeneration/systemgcgetgenerationweak.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/VB/systemgcgetgenerationweak.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1254,8 +1285,8 @@ This method is most useful in monitoring scenarios for measuring the difference 
       <Docs>
         <param name="forceFullCollection">
           <see langword="true" /> to indicate that this method can wait for garbage collection to occur before returning; otherwise, <see langword="false" />.</param>
-        <summary>Retrieves the number of bytes currently thought to be allocated. A parameter indicates whether this method can wait a short interval before returning, to allow the system to collect garbage and finalize objects.</summary>
-        <returns>A number that is the best available approximation of the number of bytes currently allocated in managed memory.</returns>
+        <summary>Retrieves the heap size excluding fragmentation. For example if the total GC heap size is 100mb and fragmentation, ie, space taken up by free objects, takes up 40mb, this API would report 60mb. A parameter indicates whether this method can wait a short interval before returning, to allow the system to collect garbage and finalize objects.</summary>
+        <returns>The heap size, in bytes, excluding fragmentation.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1341,6 +1372,10 @@ This method is most useful in monitoring scenarios for measuring the difference 
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
         <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)&gt;]</AttributeName>
@@ -1457,6 +1492,63 @@ This method is most useful in monitoring scenarios for measuring the difference 
         <altmember cref="M:System.GC.GetGeneration(System.Object)" />
       </Docs>
     </Member>
+    <Member MemberName="RefreshMemoryLimit">
+      <MemberSignature Language="C#" Value="public static void RefreshMemoryLimit ();" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void RefreshMemoryLimit() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.GC.RefreshMemoryLimit" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub RefreshMemoryLimit ()" />
+      <MemberSignature Language="F#" Value="static member RefreshMemoryLimit : unit -&gt; unit" Usage="System.GC.RefreshMemoryLimit " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void RefreshMemoryLimit();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.RequiresPreviewFeatures("RefreshMemoryLimit is in preview.")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.RequiresPreviewFeatures("RefreshMemoryLimit is in preview.")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Instructs the Garbage Collector to reconfigure itself by detecting the various memory limits on the system.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+           In addition to actual physical memory limit and container-limit settings, these configuration settings can be overwritten:
+ 
+          - GCHeapHardLimit
+          - GCHeapHardLimitPercent
+          - GCHeapHardLimitSOH
+          - GCHeapHardLimitLOH
+          - GCHeapHardLimitPOH
+          - GCHeapHardLimitSOHPercent
+          - GCHeapHardLimitLOHPercent
+          - GCHeapHardLimitPOHPercent
+          
+ Instead of updating the environment variable (which won't be read), these override these settings by using a ulong value in the AppContext.
+ 
+ For example, you can use `AppContext.SetData("GCHeapHardLimit", (ulong) 100 * 1024 * 1024)` to override the GCHeapHardLimit to 100M.
+ 
+ This API only handles configs that can be handled when the runtime is loaded. For configs that don't have any effects on 32-bit systems (like the GCHeapHardLimit* ones), this API will not handle it.
+         ]]></format>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">
+          <para>The hard limit is too low. This can happen if the heap hard limit that the refresh will set, either because of new AppData settings or implied by the container memory-limit changes, is lower than what's already committed.</para>
+          <para>-or-</para>
+          <para>The hard limit is invalid. This can happen, for example, with negative heap hard-limit percentages.</para>
+        </exception>
+      </Docs>
+    </Member>
     <Member MemberName="RegisterForFullGCNotification">
       <MemberSignature Language="C#" Value="public static void RegisterForFullGCNotification (int maxGenerationThreshold, int largeObjectHeapThreshold);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig void RegisterForFullGCNotification(int32 maxGenerationThreshold, int32 largeObjectHeapThreshold) cil managed" />
@@ -1531,8 +1623,6 @@ This method is most useful in monitoring scenarios for measuring the difference 
 
 -   The smaller the threshold value, the fewer the allocations between notification and the full garbage collection.
 
-
-
 ## Examples
  The following example shows how to register a garbage collection notification and start a thread to monitor the status of the garbage collection notification. This code example is part of a larger example provided for [Garbage Collection Notifications](/dotnet/standard/garbage-collection/notifications) topic.
 
@@ -1547,6 +1637,50 @@ This method is most useful in monitoring scenarios for measuring the difference 
           <paramref name="maxGenerationThreshold" /> or <paramref name="largeObjectHeapThreshold" /> is not between 1 and 99.</exception>
         <related type="Article" href="/dotnet/standard/garbage-collection/notifications">Garbage Collection Notifications</related>
         <exception cref="T:System.InvalidOperationException">This member is not available when concurrent garbage collection is enabled. See the &lt;gcConcurrent&gt; runtime setting for information about how to disable concurrent garbage collection.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="RegisterNoGCRegionCallback">
+      <MemberSignature Language="C#" Value="public static void RegisterNoGCRegionCallback (long totalSize, Action callback);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void RegisterNoGCRegionCallback(int64 totalSize, class System.Action callback) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.GC.RegisterNoGCRegionCallback(System.Int64,System.Action)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub RegisterNoGCRegionCallback (totalSize As Long, callback As Action)" />
+      <MemberSignature Language="F#" Value="static member RegisterNoGCRegionCallback : int64 * Action -&gt; unit" Usage="System.GC.RegisterNoGCRegionCallback (totalSize, callback)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void RegisterNoGCRegionCallback(long totalSize, Action ^ callback);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="totalSize" Type="System.Int64" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="callback" Type="System.Action" Index="1" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="totalSize">The total size of the no GC region.</param>
+        <param name="callback">The callback to be executed a certain amount of memory is allocated in the no GC region.</param>
+        <summary>Registers a callback to be invoked when a certain amount of memory is allocated in the no GC region.</summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="totalSize" /> is less than or equal to 0.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="callback" /> argument is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">
+          <para>The GC is not currently under a NoGC region.</para>
+          <para>-or-</para>
+          <para>Another callback is already registered.</para>
+          <para>-or-</para>
+          <para>The <paramref name="totalSize" /> exceeds the size of the No GC region.</para>
+          <para>-or-</para>
+          <para>The operation to withhold memory for the callback failed.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="RemoveMemoryPressure">

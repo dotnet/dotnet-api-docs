@@ -237,22 +237,21 @@
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
- The <xref:System.Windows.Forms.InputLanguage.FromCulture%2A> method selects from among installed keyboards. Specifically, this method performs the following operations:  
+
+The <xref:System.Windows.Forms.InputLanguage.FromCulture%2A> method returns the first keyboard layout with matching `culture` from the list of all installed keyboard layouts. It might return an unexpected value if multiple keyboards are installed under a single user language.
+
+Specifically, this method performs the following operations:  
+
+1.  Gets the full list of available input language identifiers (HKLs) from the `GetKeyboardLayoutList` function.
   
-1.  Gets the LCID associated with `culture`.  
+2.  Finds the HKL that corresponds to the `culture`, if one is present.
   
-2.  Gets the full list of available input language identifiers (HKLs) from the `GetKeyboardLayoutList` function.  
+3.  Returns the installed keyboard associated with that HKL.
   
-3.  Finds the HKL that corresponds to the LCID from `culture`, if one is present.  
-  
-4.  Returns the installed keyboard associated with that HKL.  
-  
-5.  If no keyboard is found, returns `null`.  
+4.  If no keyboard is found, returns `null`.
   
 > [!NOTE]
 >  The <xref:System.Windows.Forms.InputLanguage.FromCulture%2A> method never tries to load or install an additional keyboard if one has not already been installed for `culture`. Use the Platform SDK function, `LoadKeyboardLayout`, to install an additional keyboard.  
-  
-   
   
 ## Examples  
  The following code example sets the default input language as the current input language.  
