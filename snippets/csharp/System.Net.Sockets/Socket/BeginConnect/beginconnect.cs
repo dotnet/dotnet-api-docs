@@ -9,7 +9,6 @@ namespace BeginConnectTester
 {
 	class ConnectTester
 	{
-//<Snippet1>
         public static ManualResetEvent allDone =
             new ManualResetEvent(false);
 
@@ -22,8 +21,7 @@ namespace BeginConnectTester
             Socket s = (Socket) ar.AsyncState;
             s.EndConnect(ar);
         }
-//</Snippet1>
-//<Snippet7>
+
         // Asynchronous connect using the host name, resolved via
         // IPAddress
         public static void BeginConnect1(string host, int port)
@@ -48,8 +46,6 @@ namespace BeginConnectTester
 
             Console.WriteLine("Connection established");
         }		
-//</Snippet7>
-//<Snippet2>
 
         // Asynchronous connect, using DNS.GetHostAddresses
         public static void BeginConnect2(string host, int port)
@@ -73,9 +69,7 @@ namespace BeginConnectTester
 
             Console.WriteLine("Connection established");
         }		
-//</Snippet2>
 
-//<Snippet3>
         // Asynchronous connect using host name (resolved by the
         // BeginConnect call.)
         public static void BeginConnect3(string host, int port)
@@ -97,7 +91,6 @@ namespace BeginConnectTester
 
             Console.WriteLine("Connection established");
         }		
-//</Snippet3>
 
 //<Snippet4>
         // Synchronous connect using IPAddress to resolve the
