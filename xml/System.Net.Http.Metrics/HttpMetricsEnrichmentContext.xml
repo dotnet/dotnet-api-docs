@@ -24,8 +24,21 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides functionality for enriching the <c>http.client.request.duration</c> metric.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Enrichment is done on per-request basis by callbacks registered with <xref:System.Net.Http.Metrics.HttpMetricsEnrichmentContext.AddCallback(System.Net.Http.HttpRequestMessage,System.Action{System.Net.Http.Metrics.HttpMetricsEnrichmentContext})>.
+
+The callbacks are responsible for adding custom tags via <xref:System.Net.Http.Metrics.HttpMetricsEnrichmentContext.AddCustomTag(System.String,System.Object)> for which they can use the request, response, and error information exposed on the <xref:System.Net.Http.Metrics.HttpMetricsEnrichmentContext> instance.
+ 
+ > [!IMPORTANT]
+ > The <xref:System.Net.Http.Metrics.HttpMetricsEnrichmentContext> instance must not be used from outside of the enrichment callbacks.
+ 
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="AddCallback">
@@ -48,9 +61,9 @@
         <Parameter Name="callback" Type="System.Action&lt;System.Net.Http.Metrics.HttpMetricsEnrichmentContext&gt;" />
       </Parameters>
       <Docs>
-        <param name="request">To be added.</param>
-        <param name="callback">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="request">The <see cref="T:System.Net.Http.HttpRequestMessage" /> to apply enrichment to.</param>
+        <param name="callback">The callback responsible for adding custom tags via <see cref="M:System.Net.Http.Metrics.HttpMetricsEnrichmentContext.AddCustomTag(System.String,System.Object)" />.</param>
+        <summary>Adds a callback to register custom tags for the <c>http.client.request.duration</c> metric.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -81,10 +94,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The name of the tag.</param>
+        <param name="value">The value of the tag.</param>
+        <summary>Appends a custom tag to the list of tags to be recorded with the <c>http.client.request.duration</c> metric.</summary>
+        <remarks>This method must not be used from outside of the enrichment callbacks.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Exception">
@@ -113,9 +126,9 @@
         <ReturnType>System.Exception</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the exception that occurred, or <see langword="null" /> if there was no error.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>This property must not be used from outside of the enrichment callbacks.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Request">
@@ -134,9 +147,9 @@
         <ReturnType>System.Net.Http.HttpRequestMessage</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="T:System.Net.Http.HttpRequestMessage" /> that has been sent.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>This property must not be used from outside of the enrichment callbacks.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Response">
@@ -165,9 +178,9 @@
         <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the <see cref="T:System.Net.Http.HttpRequestMessage" /> received from the server, or <see langword="null" /> if the request failed.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>This property must not be used from outside of the enrichment callbacks.</remarks>
       </Docs>
     </Member>
   </Members>
