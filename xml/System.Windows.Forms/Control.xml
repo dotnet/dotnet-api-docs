@@ -7899,7 +7899,12 @@ MyControl.Font = New Font(MyControl.Font, _
 > [!NOTE]
 >  In addition to the <xref:System.Windows.Forms.Control.InvokeRequired%2A> property, there are four methods on a control that are thread safe: <xref:System.Windows.Forms.Control.Invoke%2A>, <xref:System.Windows.Forms.Control.BeginInvoke%2A>, <xref:System.Windows.Forms.Control.EndInvoke%2A>, and <xref:System.Windows.Forms.Control.CreateGraphics%2A> if the handle for the control has already been created. Calling <xref:System.Windows.Forms.Control.CreateGraphics%2A> before the control's handle has been created on a background thread can cause illegal cross thread calls. For all other method calls, you should use one of the invoke methods to marshal the call to the control's thread.
 
- The delegate can be an instance of <xref:System.EventHandler>, in which case the sender parameter will contain this control, and the event parameter will contain <xref:System.EventArgs.Empty?displayProperty=nameWithType>. The delegate can also be an instance of <xref:System.Windows.Forms.MethodInvoker>, or any other delegate that takes a void parameter list. A call to an <xref:System.EventHandler> or <xref:System.Windows.Forms.MethodInvoker> delegate will be faster than a call to another type of delegate.
+ The delegate can be an instance of <xref:System.EventHandler>, in which case the parameters will depend on the `args` value:
+ In case no parameters are passed, the sender parameter will contain this control and the event parameter will contain <xref:System.EventArgs.Empty?displayProperty=nameWithType>.
+ When one single parameter is passed, the sender parameter will contain the first args element and the event parameter will contain <xref:System.EventArgs.Empty?displayProperty=nameWithType>.
+ If more than one parameter are passed, the sender parameter will contain the first element from `args`, and the <xref:System.EventArgs> parameter will contain the second element.
+ 
+ A call to an <xref:System.EventHandler> or <xref:System.Windows.Forms.MethodInvoker> delegate will be faster than a call to another type of delegate.
 
 > [!NOTE]
 >  An exception might be thrown if the thread that should process the message is no longer active.
