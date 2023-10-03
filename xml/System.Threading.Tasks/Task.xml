@@ -118,13 +118,14 @@
 
 <a name="Creating"></a>
 ## Creating and executing a task
- <xref:System.Threading.Tasks.Task> instances may be created in a variety of ways. The most common approach, which is available starting with the .NET Framework 4.5, is to call the static <xref:System.Threading.Tasks.Task.Run%2A> method. The <xref:System.Threading.Tasks.Task.Run%2A> method provides a simple way to start a task using default values and without requiring additional parameters. The following example uses the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method to start a task that loops and then displays the number of loop iterations:
+
+You can create <xref:System.Threading.Tasks.Task> instances in a variety of ways. The most common approach is to call the static <xref:System.Threading.Tasks.Task.Run%2A> method. The <xref:System.Threading.Tasks.Task.Run%2A> method provides a simple way to start a task using default values and without requiring additional parameters. The following example uses the <xref:System.Threading.Tasks.Task.Run%28System.Action%29> method to start a task that loops and then displays the number of loop iterations:
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/run1.cs" id="Snippet6":::
  :::code language="fsharp" source="~/snippets/fsharp/System.Threading.Tasks/Task/Overview/run1.fs" id="Snippet6":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.tasks.task/vb/run1.vb" id="Snippet6":::
 
- An alternative, and the most common method to start a task in .NET Framework 4, is the static <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method. The <xref:System.Threading.Tasks.Task.Factory%2A?displayProperty=nameWithType> property returns a <xref:System.Threading.Tasks.TaskFactory> object. Overloads of the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method let you specify parameters to pass to the task creation options and a task scheduler. The following example uses the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method to start a task. It is functionally equivalent to the code in the previous example.
+ An alternative is the static <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method. The <xref:System.Threading.Tasks.Task.Factory%2A?displayProperty=nameWithType> property returns a <xref:System.Threading.Tasks.TaskFactory> object. Overloads of the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method let you specify parameters to pass to the task creation options and a task scheduler. The following example uses the <xref:System.Threading.Tasks.TaskFactory.StartNew%2A?displayProperty=nameWithType> method to start a task. It is functionally equivalent to the code in the previous example.
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Task/Overview/startnew1.cs" id="Snippet7":::
  :::code language="fsharp" source="~/snippets/fsharp/System.Threading.Tasks/Task/Overview/startnew1.fs" id="Snippet7":::
@@ -1589,8 +1590,6 @@ End Class
 ## Remarks
  The returned <xref:System.Threading.Tasks.Task> will not be scheduled for execution until the current task has completed. If the criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
 
-
-
 ## Examples
  The following is an example of using ContinueWith to run work both in the background and on the user interface threads.
 
@@ -2386,8 +2385,6 @@ End Sub
 ## Remarks
  The returned <xref:System.Threading.Tasks.Task%601> will not be scheduled for execution until the current task has completed. If the criteria specified through the `continuationOptions` parameter are not met, the continuation task will be canceled instead of scheduled.
 
-
-
 ## Examples
  The following example shows how to use the ContinueWith method with continuation options:
 
@@ -2819,8 +2816,6 @@ End Sub
 > [!NOTE]
 >  The system clock that is used is the same clock used by [GetTickCount](/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount), which is not affected by changes made with [timeBeginPeriod](/windows/win32/api/timeapi/nf-timeapi-timebeginperiod) and [timeEndPeriod](/windows/win32/api/timeapi/nf-timeapi-timeendperiod).
 
-
-
 ## Examples
  The following example launches a task that includes a call to the <xref:System.Threading.Tasks.Task.Delay%28System.Int32%2CSystem.Threading.CancellationToken%29> method with a one second delay. Before the delay interval elapses, the token is cancelled. The output from the example shows that, as a result, a <xref:System.Threading.Tasks.TaskCanceledException> is thrown, and the tasks' <xref:System.Threading.Tasks.Task.Status%2A> property is set to <xref:System.Threading.Tasks.TaskStatus.Canceled>.
 
@@ -3008,6 +3003,7 @@ Task t Status: RanToCompletion, Result: 42
             <paramref name="delay" />'s <see cref="P:System.TimeSpan.TotalMilliseconds" /> property is greater than 4294967294.</para>
         </exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="timeProvider" /> argument is <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -5172,8 +5168,6 @@ This member is an explicit interface member implementation. It can be used only 
 > [!NOTE]
 >  Canceling the `cancellationToken` cancellation token has no effect on the running task unless it has also been passed the cancellation token and is prepared to handle cancellation. Passing the `cancellationToken` object to this method simply allows the wait to be canceled.
 
-
-
 ## Examples
  The following example illustrates the simple use of a cancellation token to cancel waiting for a task's completion. A task is launched, calls the <xref:System.Threading.CancellationTokenSource.Cancel%2A?displayProperty=nameWithType> method to cancel any of the token source's cancellation tokens, and then delays for five seconds. Note that the task itself has not been passed the cancellation token and is not cancelable. The application thread calls the task's <xref:System.Threading.Tasks.Task.Wait%2A?displayProperty=nameWithType> method to wait for the task to complete, but the wait is canceled once the cancellation token is cancelled and an <xref:System.OperationCanceledException> is thrown. The exception handler reports the exception and then sleeps for six seconds. As the output from the example shows, that delay allows the task to complete in the <xref:System.Threading.Tasks.TaskStatus.RanToCompletion> state.
 
@@ -6105,6 +6099,7 @@ timeout is greater than
         <summary>Gets a <see cref="T:System.Threading.Tasks.Task" /> that will complete when this <see cref="T:System.Threading.Tasks.Task" /> completes or when the specified <see cref="P:System.Threading.CancellationToken" /> has cancellation requested.</summary>
         <returns>The <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous wait. It may or may not be the same instance as the current instance.</returns>
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Threading.Tasks.Task.Wait" />.</remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="WaitAsync">
@@ -6179,6 +6174,7 @@ timeout is greater than
         <summary>Gets a <see cref="T:System.Threading.Tasks.Task" /> that will complete when this <see cref="T:System.Threading.Tasks.Task" /> completes, when the specified timeout expires, or when the specified <see cref="P:System.Threading.CancellationToken" /> has cancellation requested.</summary>
         <returns>The <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous wait. It may or may not be the same instance as the current instance.</returns>
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Threading.Tasks.Task.Wait(System.TimeSpan)" />.</remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="WaitAsync">
@@ -6255,6 +6251,7 @@ timeout is greater than
         <returns>The <see cref="T:System.Threading.Tasks.Task" /> representing the asynchronous wait.  It may or may not be the same instance as the current instance.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="timeProvider" /> argument is <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="WhenAll">
