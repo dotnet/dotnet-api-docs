@@ -79,12 +79,12 @@
 ### Synchronous mode
  The following example shows how the <xref:System.Net.Sockets.Socket> class can be used to send data to an HTTP server, printing the ASCII response to the standard output.
  This example blocks the calling thread until the entire page is received.
- 
+
  :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/Overview/socket.cs" id="Snippet1":::
 
 ### Asynchronous mode
  The second example demonstrates the same HTTP GET scenario, using Task-based asynchronous API-s, while also forwarding a <xref:System.Threading.CancellationToken> to the asynchronous methods, making the entire operation cancellable.
- 
+
  > [!TIP]
  > <xref:System.Net.Sockets.Socket>'s async methods that do not take a <xref:System.Threading.CancellationToken> typically return a <xref:System.Threading.Tasks.Task>, which is allocated on the heap.
  > Cancellable overloads are always <xref:System.Threading.Tasks.ValueTask>-returning; using them helps reducing allocations in high-performance code.
@@ -636,7 +636,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
  This exception also occurs if the socket is already connected or a socket operation was already in progress using the specified <paramref name="e" /> parameter.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="AcceptAsync">
@@ -681,7 +681,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
  This exception also occurs if the socket is already connected or a socket operation was already in progress using the specified <paramref name="e" /> parameter.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddressFamily">
@@ -2899,7 +2899,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
  You can pass a callback that implements <xref:System.AsyncCallback> to <xref:System.Net.Sockets.Socket.BeginSendFile%2A> in order to get notified about the completion of the operation. Note that if the underlying network stack completes the operation synchronously, the callback will be executed inline, during the call to <xref:System.Net.Sockets.Socket.BeginSendFile%2A>. In this case, the <xref:System.IAsyncResult.CompletedSynchronously%2A> property on the returned <xref:System.IAsyncResult> will be set to `true` to indicate that the method completed synchronously. Use the <xref:System.IAsyncResult.AsyncState%2A> property of the <xref:System.IAsyncResult> to obtain the state object passed to the <xref:System.Net.Sockets.Socket.BeginSendFile%2A> method.
 
- The <xref:System.Net.Sockets.Socket.BeginSendFile%2A> operation must be completed by calling the <xref:System.Net.Sockets.Socket.EndSendFile%2A> method. Typically, the method is invoked by the <xref:System.AsyncCallback> delegate. <xref:System.Net.Sockets.Socket.EndSendFile%2A> will block the calling thread until the operation is completed. 
+ The <xref:System.Net.Sockets.Socket.BeginSendFile%2A> operation must be completed by calling the <xref:System.Net.Sockets.Socket.EndSendFile%2A> method. Typically, the method is invoked by the <xref:System.AsyncCallback> delegate. <xref:System.Net.Sockets.Socket.EndSendFile%2A> will block the calling thread until the operation is completed.
 
  Although intended for connection-oriented protocols, <xref:System.Net.Sockets.Socket.BeginSendFile%2A> also works for connectionless protocols, provided that you first call the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.BeginConnect%2A> method to establish a default remote host. With connectionless protocols, you must be sure that the size of your file does not exceed the maximum packet size of the underlying service provider. If it does, the datagram is not sent and <xref:System.Net.Sockets.Socket.BeginSendFile%2A> throws a <xref:System.Net.Sockets.SocketException> exception.
 
@@ -2991,7 +2991,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
  You can pass a callback that implements <xref:System.AsyncCallback> to <xref:System.Net.Sockets.Socket.BeginSendFile%2A> in order to get notified about the completion of the operation. Note that if the underlying network stack completes the operation synchronously, the callback will be executed inline, during the call to <xref:System.Net.Sockets.Socket.BeginSendFile%2A>. In this case, the <xref:System.IAsyncResult.CompletedSynchronously%2A> property on the returned <xref:System.IAsyncResult> will be set to `true` to indicate that the method completed synchronously. Use the <xref:System.IAsyncResult.AsyncState%2A> property of the <xref:System.IAsyncResult> to obtain the state object passed to the <xref:System.Net.Sockets.Socket.BeginSendFile%2A> method.
 
- The <xref:System.Net.Sockets.Socket.BeginSendFile%2A> operation must be completed by calling the <xref:System.Net.Sockets.Socket.EndSendFile%2A> method. Typically, the method is invoked by the provided <xref:System.AsyncCallback> delegate. <xref:System.Net.Sockets.Socket.EndSendFile%2A> will block the calling thread until the operation is completed. 
+ The <xref:System.Net.Sockets.Socket.BeginSendFile%2A> operation must be completed by calling the <xref:System.Net.Sockets.Socket.EndSendFile%2A> method. Typically, the method is invoked by the provided <xref:System.AsyncCallback> delegate. <xref:System.Net.Sockets.Socket.EndSendFile%2A> will block the calling thread until the operation is completed.
 
  Although intended for connection-oriented protocols, <xref:System.Net.Sockets.Socket.BeginSendFile%2A> also works for connectionless protocols, provided that you first call the <xref:System.Net.Sockets.Socket.Connect%2A> or <xref:System.Net.Sockets.Socket.BeginConnect%2A> method to establish a default remote host. With connectionless protocols, you must be sure that the size of your file does not exceed the maximum packet size of the underlying service provider. If it does, the datagram is not sent and <xref:System.Net.Sockets.Socket.BeginSendFile%2A> throws a <xref:System.Net.Sockets.SocketException> exception.
 
@@ -3095,7 +3095,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
  You can pass a callback that implements <xref:System.AsyncCallback> to <xref:System.Net.Sockets.Socket.BeginSendTo%2A> in order to get notified about the completion of the operation. Note that if the underlying network stack completes the operation synchronously, the callback will be executed inline, during the call to <xref:System.Net.Sockets.Socket.BeginSendTo%2A>. In this case, the <xref:System.IAsyncResult.CompletedSynchronously%2A> property on the returned <xref:System.IAsyncResult> will be set to `true` to indicate that the method completed synchronously. Use the <xref:System.IAsyncResult.AsyncState%2A> property of the <xref:System.IAsyncResult> to obtain the state object passed to the <xref:System.Net.Sockets.Socket.BeginSendTo%2A> method.
 
- The <xref:System.Net.Sockets.Socket.BeginSendTo%2A> operation must be completed by calling the <xref:System.Net.Sockets.Socket.EndSendTo%2A> method. Typically, the method is invoked by the provided <xref:System.AsyncCallback> delegate. <xref:System.Net.Sockets.Socket.EndSendTo%2A> will block the calling thread until the operation is completed. 
+ The <xref:System.Net.Sockets.Socket.BeginSendTo%2A> operation must be completed by calling the <xref:System.Net.Sockets.Socket.EndSendTo%2A> method. Typically, the method is invoked by the provided <xref:System.AsyncCallback> delegate. <xref:System.Net.Sockets.Socket.EndSendTo%2A> will block the calling thread until the operation is completed.
 
  If you are using a connection-oriented protocol, you must first call the <xref:System.Net.Sockets.Socket.Connect%2A>, <xref:System.Net.Sockets.Socket.BeginConnect%2A>, <xref:System.Net.Sockets.Socket.Accept%2A>, or <xref:System.Net.Sockets.Socket.BeginAccept%2A> method, or <xref:System.Net.Sockets.Socket.BeginSendTo%2A> will throw a <xref:System.Net.Sockets.SocketException>. <xref:System.Net.Sockets.Socket.BeginSendTo%2A> will ignore the `remoteEP` parameter and send data to the <xref:System.Net.EndPoint> established in the <xref:System.Net.Sockets.Socket.Connect%2A>, <xref:System.Net.Sockets.Socket.BeginConnect%2A>, <xref:System.Net.Sockets.Socket.Accept%2A>, or <xref:System.Net.Sockets.Socket.BeginAccept%2A> method.
 
@@ -4045,7 +4045,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.NotSupportedException">The local endpoint and the <paramref name="remoteEP" /> parameter are not the same address family.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -4085,10 +4085,10 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Net.Sockets.Socket.Connect(System.Net.IPAddress,System.Int32)" />.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="address" /> parameter cannot be null.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.  
-  
- -or-  
-  
+          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.
+
+ -or-
+
  <paramref name="port" /> is greater than <see cref="F:System.Net.IPEndPoint.MaxPort" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> is listening.</exception>
         <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
@@ -4135,10 +4135,10 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.ArgumentNullException">The <paramref name="addresses" /> parameter cannot be null.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="addresses" /> parameter cannot be empty array.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.  
-  
- -or-  
-  
+          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.
+
+ -or-
+
  <paramref name="port" /> is greater than <see cref="F:System.Net.IPEndPoint.MaxPort" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> is listening.</exception>
         <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
@@ -4184,10 +4184,10 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Net.Sockets.Socket.Connect(System.String,System.Int32)" />.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="host" /> parameter cannot be null.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.  
-  
- -or-  
-  
+          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.
+
+ -or-
+
  <paramref name="port" /> is greater than <see cref="F:System.Net.IPEndPoint.MaxPort" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> is listening.</exception>
         <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
@@ -4235,16 +4235,16 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Net.Sockets.Socket.Connect(System.Net.IPAddress,System.Int32)" />.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="address" /> parameter cannot be null.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.  
-  
- -or-  
-  
+          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.
+
+ -or-
+
  <paramref name="port" /> is greater than <see cref="F:System.Net.IPEndPoint.MaxPort" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> is listening.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -4287,17 +4287,17 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.ArgumentNullException">The <paramref name="addresses" /> parameter cannot be null.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="addresses" /> parameter cannot be empty array.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.  
-  
- -or-  
-  
+          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.
+
+ -or-
+
  <paramref name="port" /> is greater than <see cref="F:System.Net.IPEndPoint.MaxPort" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> is listening.</exception>
         <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -4432,17 +4432,17 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Net.Sockets.Socket.Connect(System.String,System.Int32)" />.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="host" /> parameter cannot be null.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.  
-  
- -or-  
-  
+          <paramref name="port" /> is less than <see cref="F:System.Net.IPEndPoint.MinPort" />.
+
+ -or-
+
  <paramref name="port" /> is greater than <see cref="F:System.Net.IPEndPoint.MaxPort" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Net.Sockets.Socket" /> is listening.</exception>
         <exception cref="T:System.NotSupportedException">The socket is not in the <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" /> or <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" /> families.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="Connected">
@@ -4677,7 +4677,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Net.Sockets.Socket.Disconnect(System.Boolean)" />.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> object has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -5118,7 +5118,7 @@ Duplication of the socket reference failed.</exception>
  The <xref:System.Net.Sockets.Socket.EndAccept%2A> method blocks until a connection is pending in the incoming connection queue. The <xref:System.Net.Sockets.Socket.EndAccept%2A> method accepts the incoming connection and returns a new <xref:System.Net.Sockets.Socket> that can be used to send data to and receive data from the remote host.
 
 > [!NOTE]
->  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. 
+>  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code.
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
@@ -5207,7 +5207,7 @@ Duplication of the socket reference failed.</exception>
  The <xref:System.Net.Sockets.Socket.EndAccept%2A> method blocks until a connection is pending in the incoming connection queue. The <xref:System.Net.Sockets.Socket.EndAccept%2A> method accepts the incoming connection and returns a new <xref:System.Net.Sockets.Socket> that can be used to send data to and receive data from the remote host.
 
 > [!NOTE]
->  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. 
+>  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code.
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
@@ -5296,7 +5296,7 @@ Duplication of the socket reference failed.</exception>
  The <xref:System.Net.Sockets.Socket.EndAccept%2A> method blocks until a connection is pending in the incoming connection queue. The <xref:System.Net.Sockets.Socket.EndAccept%2A> method accepts the incoming connection and returns a new <xref:System.Net.Sockets.Socket> that can be used to send data to and receive data from the remote host.
 
 > [!NOTE]
->  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code. 
+>  If you receive a <xref:System.Net.Sockets.SocketException>, use the <xref:System.Net.Sockets.SocketException.ErrorCode%2A?displayProperty=nameWithType> property to obtain the specific error code.
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
@@ -8948,7 +8948,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveAsync">
@@ -8989,7 +8989,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveBufferSize">
@@ -9810,7 +9810,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveFromAsync">
@@ -9856,7 +9856,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveMessageFrom">
@@ -10246,7 +10246,7 @@ You must call the Bind method before performing this operation.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="remoteEndPoint" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">You must call the Bind method before performing this operation.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveMessageFromAsync">
@@ -10291,7 +10291,7 @@ You must call the Bind method before performing this operation.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="remoteEndPoint" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">You must call the Bind method before performing this operation.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveTimeout">
@@ -11838,7 +11838,7 @@ This member outputs trace information when you enable network tracing in your ap
         <summary>Sends data on a connected socket.</summary>
         <returns>An asynchronous task that completes with the number of bytes sent.</returns>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -11879,7 +11879,7 @@ This member outputs trace information when you enable network tracing in your ap
         <remarks>To be added.</remarks>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendBufferSize">
@@ -12201,7 +12201,7 @@ This member outputs trace information when you enable network tracing in your ap
         <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.Socket" /> object is not connected to a remote host.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The file <paramref name="fileName" /> was not found.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendFileAsync">
@@ -12248,7 +12248,7 @@ This member outputs trace information when you enable network tracing in your ap
         <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.Socket" /> object is not connected to a remote host.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The file <paramref name="fileName" /> was not found.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendPacketsAsync">
@@ -13111,7 +13111,7 @@ This member outputs trace information when you enable network tracing in your ap
           <paramref name="remoteEP" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendToAsync">
@@ -13156,7 +13156,7 @@ This member outputs trace information when you enable network tracing in your ap
           <paramref name="remoteEP" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
-        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetIPProtectionLevel">
