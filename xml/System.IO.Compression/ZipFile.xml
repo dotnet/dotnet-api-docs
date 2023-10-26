@@ -91,10 +91,31 @@
         <Parameter Name="destination" Type="System.IO.Stream" Index="1" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="sourceDirectoryName">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sourceDirectoryName">The path to the directory to be archived, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="destination">The stream where the zip archive is to be stored.</param>
+        <summary>Creates a zip archive in the specified stream that contains the files and directories from the specified directory.</summary>
+        <remarks>The directory structure from the file system is preserved in the archive. If the directory is empty, an empty archive is created.
+             This method overload does not include the base directory in the archive and does not allow you to specify a compression level.
+             If you want to include the base directory or specify a compression level, call the <see cref="M:System.IO.Compression.ZipFile.CreateFromDirectory(System.String,System.IO.Stream,System.IO.Compression.CompressionLevel,System.Boolean)" /> method overload.
+             If a file in the directory cannot be added to the archive, the archive is left incomplete and invalid, and the method throws an <see cref="T:System.IO.IOException" /> exception.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="sourceDirectoryName" /> is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+The <paramref name="destination" /> stream does not support writing.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sourceDirectoryName" /> or <paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">In <paramref name="sourceDirectoryName" /> the specified path, file name, or both exceed the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">
+          <paramref name="sourceDirectoryName" /> is invalid or does not exist (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">A file in the specified directory could not be opened.
+
+-or-
+
+An I/O error occurred while opening a file to be archived.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="sourceDirectoryName" /> contains an invalid format.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromDirectory">
@@ -213,12 +234,35 @@ An I/O error occurred while opening a file to be archived.</exception>
         <Parameter Name="includeBaseDirectory" Type="System.Boolean" Index="3" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="sourceDirectoryName">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="compressionLevel">To be added.</param>
-        <param name="includeBaseDirectory">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sourceDirectoryName">The path to the directory to be archived, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="destination">The stream where the zip archive is to be stored.</param>
+        <param name="compressionLevel">One of the enumeration values that indicates whether to emphasize speed or compression effectiveness when creating the entry.</param>
+        <param name="includeBaseDirectory">
+          <see langword="true" /> to include the directory name from <paramref name="sourceDirectoryName" /> at the root of the archive; <see langword="false" /> to include only the contents of the directory.</param>
+        <summary>Creates a zip archive in the specified stream that contains the files and directories from the specified directory, uses the specified compression level, and optionally includes the base directory.</summary>
+        <remarks>The directory structure from the file system is preserved in the archive. If the directory is empty, an empty archive is created.
+             Use this method overload to specify the compression level and whether to include the base directory in the archive.
+             If a file in the directory cannot be added to the archive, the archive is left incomplete and invalid, and the method throws an <see cref="T:System.IO.IOException" /> exception.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="sourceDirectoryName" /> is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+The <paramref name="destination" /> stream does not support writing.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sourceDirectoryName" /> or <paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">In <paramref name="sourceDirectoryName" /> the specified path, file name, or both exceed the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">
+          <paramref name="sourceDirectoryName" /> is invalid or does not exist (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">A file in the specified directory could not be opened.
+
+-or-
+
+An I/O error occurred while opening a file to be archived.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="sourceDirectoryName" /> contains an invalid format.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="compressionLevel" /> is not a valid <see cref="T:System.IO.Compression.CompressionLevel" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromDirectory">
@@ -350,13 +394,36 @@ An I/O error occurred while opening a file to be archived.</exception>
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="sourceDirectoryName">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="compressionLevel">To be added.</param>
-        <param name="includeBaseDirectory">To be added.</param>
-        <param name="entryNameEncoding">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="sourceDirectoryName">The path to the directory to be archived, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="destination">The stream where the zip archive is to be stored.</param>
+        <param name="compressionLevel">One of the enumeration values that indicates whether to emphasize speed or compression effectiveness when creating the entry.</param>
+        <param name="includeBaseDirectory">
+          <see langword="true" /> to include the directory name from <paramref name="sourceDirectoryName" /> at the root of the archive; <see langword="false" /> to include only the contents of the directory.</param>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
+        <summary>Creates a zip archive in the specified stream that contains the files and directories from the specified directory, uses the specified compression level and character encoding for entry names, and optionally includes the base directory.</summary>
+        <remarks>The directory structure from the file system is preserved in the archive. If the directory is empty, an empty archive is created.
+             Use this method overload to specify the compression level and character encoding, and whether to include the base directory in the archive.
+             If a file in the directory cannot be added to the archive, the archive is left incomplete and invalid, and the method throws an <see cref="T:System.IO.IOException" /> exception.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="sourceDirectoryName" /> is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+The <paramref name="destination" /> stream does not support writing.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sourceDirectoryName" /> or <paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">In <paramref name="sourceDirectoryName" /> the specified path, file name, or both exceed the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">
+          <paramref name="sourceDirectoryName" /> is invalid or does not exist (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">A file in the specified directory could not be opened.
+
+-or-
+
+An I/O error occurred while opening a file to be archived.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="sourceDirectoryName" /> contains an invalid format.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="compressionLevel" /> is not a valid <see cref="T:System.IO.Compression.CompressionLevel" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateFromDirectory">
@@ -503,10 +570,40 @@ An I/O error occurred while opening a file to be archived.</exception>
         <Parameter Name="destinationDirectoryName" Type="System.String" Index="1" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The stream from which the zip archive is to be extracted.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system.</summary>
+        <remarks>This method creates the specified directory and all subdirectories. The destination directory cannot already exist.
+            Exceptions related to validating the paths in the <paramref name="destinationDirectoryName" /> or the files in the zip archive contained in <paramref name="source" /> parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted.
+            Each extracted file has the same relative path to the directory specified by <paramref name="destinationDirectoryName" /> as its source entry has to the root of the archive.
+            If a file to be archived has an invalid last modified time, the first date and time representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destinationDirectoryName" />&gt; is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="destinationDirectoryName" /> or <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The specified path in <paramref name="destinationDirectoryName" /> exceeds the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+Extracting an archive entry would create a file that is outside the directory specified by <paramref name="destinationDirectoryName" />. (For example, this might happen if the entry name contains parent directory accessors.)
+
+-or-
+
+An archive entry to extract has the same name as an entry that has already been extracted or that exists in <paramref name="destinationDirectoryName" />.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission to access the archive or the destination directory.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="destinationDirectoryName" /> contains an invalid format.</exception>
+        <exception cref="T:System.IO.InvalidDataException">The archive contained in the <paramref name="source" /> stream is not a valid zip archive.
+
+-or-
+
+An archive entry was not found or was corrupt.
+
+-or-
+
+An archive entry was compressed by using a compression method that is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
@@ -620,11 +717,42 @@ An I/O error occurred while opening a file to be archived.</exception>
         <Parameter Name="overwriteFiles" Type="System.Boolean" Index="2" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="overwriteFiles">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The stream from which the zip archive is to be extracted.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="overwriteFiles">
+          <see langword="true" /> to overwrite files; <see langword="false" /> otherwise.</param>
+        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system, and optionally allows choosing if the files in the destination directory should be overwritten.</summary>
+        <remarks>This method creates the specified directory and all subdirectories. The destination directory cannot already exist.
+            Exceptions related to validating the paths in the <paramref name="destinationDirectoryName" /> or the files in the zip archive contained in <paramref name="source" /> parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted.
+            Each extracted file has the same relative path to the directory specified by <paramref name="destinationDirectoryName" /> as its source entry has to the root of the archive.
+            If a file to be archived has an invalid last modified time, the first date and time representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destinationDirectoryName" />&gt; is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="destinationDirectoryName" /> or <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The specified path in <paramref name="destinationDirectoryName" /> exceeds the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+Extracting an archive entry would create a file that is outside the directory specified by <paramref name="destinationDirectoryName" />. (For example, this might happen if the entry name contains parent directory accessors.)
+
+-or-
+
+<paramref name="overwriteFiles" /> is <see langword="false" /> and an archive entry to extract has the same name as an entry that has already been extracted or that exists in <paramref name="destinationDirectoryName" />.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission to access the archive or the destination directory.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="destinationDirectoryName" /> contains an invalid format.</exception>
+        <exception cref="T:System.IO.InvalidDataException">The archive contained in the <paramref name="source" /> stream is not a valid zip archive.
+
+-or-
+
+An archive entry was not found or was corrupt.
+
+-or-
+
+An archive entry was compressed by using a compression method that is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
@@ -658,11 +786,45 @@ An I/O error occurred while opening a file to be archived.</exception>
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="entryNameEncoding">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The stream from which the zip archive is to be extracted.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
+        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system and uses the specified character encoding for entry names.</summary>
+        <remarks>This method creates the specified directory and all subdirectories. The destination directory cannot already exist.
+            Exceptions related to validating the paths in the <paramref name="destinationDirectoryName" /> or the files in the zip archive contained in <paramref name="source" /> parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted.
+            Each extracted file has the same relative path to the directory specified by <paramref name="destinationDirectoryName" /> as its source entry has to the root of the archive.
+            If a file to be archived has an invalid last modified time, the first date and time representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destinationDirectoryName" />&gt; is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+<paramref name="entryNameEncoding" /> is set to a Unicode encoding other than UTF-8.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="destinationDirectoryName" /> or <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The specified path in <paramref name="destinationDirectoryName" /> exceeds the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+Extracting an archive entry would create a file that is outside the directory specified by <paramref name="destinationDirectoryName" />. (For example, this might happen if the entry name contains parent directory accessors.)
+
+-or-
+
+An archive entry to extract has the same name as an entry that has already been extracted or that exists in <paramref name="destinationDirectoryName" />.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission to access the archive or the destination directory.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="destinationDirectoryName" /> contains an invalid format.</exception>
+        <exception cref="T:System.IO.InvalidDataException">The archive contained in the <paramref name="source" /> stream is not a valid zip archive.
+
+-or-
+
+An archive entry was not found or was corrupt.
+
+-or-
+
+An archive entry was compressed by using a compression method that is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
@@ -898,12 +1060,47 @@ If `entryNameEncoding` is set to `null`, entry names are decoded according to th
         <Parameter Name="overwriteFiles" Type="System.Boolean" Index="3" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="entryNameEncoding">To be added.</param>
-        <param name="overwriteFiles">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The stream from which the zip archive is to be extracted.</param>
+        <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
+        <param name="overwriteFiles">
+          <see langword="true" /> to overwrite files; <see langword="false" /> otherwise.</param>
+        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system, uses the specified character encoding for entry names, and optionally allows choosing if the files in the destination directory should be overwritten.</summary>
+        <remarks>This method creates the specified directory and all subdirectories. The destination directory cannot already exist.
+            Exceptions related to validating the paths in the <paramref name="destinationDirectoryName" /> or the files in the zip archive contained in <paramref name="source" /> parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted.
+            Each extracted file has the same relative path to the directory specified by <paramref name="destinationDirectoryName" /> as its source entry has to the root of the archive.
+            If a file to be archived has an invalid last modified time, the first date and time representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destinationDirectoryName" />&gt; is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+<paramref name="entryNameEncoding" /> is set to a Unicode encoding other than UTF-8.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="destinationDirectoryName" /> or <paramref name="source" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The specified path in <paramref name="destinationDirectoryName" /> exceeds the system-defined maximum length.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">The name of an entry in the archive is <see cref="F:System.String.Empty" />, contains only white space, or contains at least one invalid character.
+
+-or-
+
+Extracting an archive entry would create a file that is outside the directory specified by <paramref name="destinationDirectoryName" />. (For example, this might happen if the entry name contains parent directory accessors.)
+
+-or-
+
+<paramref name="overwriteFiles" /> is <see langword="false" /> and an archive entry to extract has the same name as an entry that has already been extracted or that exists in <paramref name="destinationDirectoryName" />.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission to access the archive or the destination directory.</exception>
+        <exception cref="T:System.NotSupportedException">
+          <paramref name="destinationDirectoryName" /> contains an invalid format.</exception>
+        <exception cref="T:System.IO.InvalidDataException">The archive contained in the <paramref name="source" /> stream is not a valid zip archive.
+
+-or-
+
+An archive entry was not found or was corrupt.
+
+-or-
+
+An archive entry was compressed by using a compression method that is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">

@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using System.Timers;
 
-public class Example
+public class ReflectionOnlySnippet
 {
     public static void Main()
     {

@@ -303,10 +303,14 @@
         <Parameter Name="timeProvider" Type="System.TimeProvider" Index="1" FrameworkAlternate="net-8.0" />
       </Parameters>
       <Docs>
-        <param name="delay">To be added.</param>
-        <param name="timeProvider">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="delay">The time interval to wait before canceling this <see cref="T:System.Threading.CancellationTokenSource" />.</param>
+        <param name="timeProvider">The <see cref="T:System.TimeProvider" /> with which to interpret the <paramref name="delay" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.CancellationTokenSource" /> class that will be canceled after the specified <see cref="T:System.TimeSpan" />.</summary>
+        <remarks>The countdown for the delay starts during the call to the constructor.  When the delay expires, the constructed <see cref="T:System.Threading.CancellationTokenSource" /> is canceled, if it has not been canceled already. Subsequent calls to CancelAfter will reset the delay for the constructed <see cref="T:System.Threading.CancellationTokenSource" />, if it has not been canceled already.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="delay" />'s <see cref="P:System.TimeSpan.TotalMilliseconds" /> is less than -1 or greater than <see cref="F:System.UInt32.MaxValue" /> - 1.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="timeProvider" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Cancel">
@@ -605,9 +609,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Communicates a request for cancellation asynchronously.</summary>
+        <returns>A task that will complete after cancelable operations and callbacks registered with the associated <see cref="T:System.Threading.CancellationToken" /> have completed.</returns>
+        <remarks>
+          <para> The associated <see cref="T:System.Threading.CancellationToken" /> will be notified of the cancellation and will synchronously transition to a state where <see cref="P:System.Threading.CancellationToken.IsCancellationRequested" /> returns <see langword="true" />.
+            Any callbacks or cancelable operations registered with the <see cref="T:System.Threading.CancellationToken" />  will be executed asynchronously, with the returned <see cref="T:System.Threading.Tasks.Task" /> representing their eventual completion.
+            </para>
+          <para> Callbacks registered with the token should not throw exceptions.
+            However, any such exceptions that are thrown will be aggregated into an <see cref="T:System.AggregateException" />, such that one callback throwing an exception will not prevent other registered callbacks from being executed.
+            </para>
+          <para> The <see cref="T:System.Threading.ExecutionContext" /> that was captured when each callback was registered will be reestablished when the callback is invoked.
+            </para>
+        </remarks>
+        <exception cref="T:System.ObjectDisposedException">This <see cref="T:System.Threading.CancellationTokenSource" /> has been disposed.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateLinkedTokenSource">

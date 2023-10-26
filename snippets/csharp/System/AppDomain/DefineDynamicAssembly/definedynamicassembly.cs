@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-class Test {
+class DefinedDynamicAssemblySnippet {
    public static void Main() {
       AppDomain currentDomain = AppDomain.CurrentDomain;
 

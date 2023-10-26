@@ -86,7 +86,6 @@ namespace Example
 
         public static void Listen()
         {
-        // <snippet6>
             // This server waits for a connection and then uses asynchronous operations to
             // accept the connection with initial data sent from the client.
 
@@ -140,11 +139,9 @@ namespace Example
             handler.BeginReceive( state.buffer, 0, StateObject.BufferSize, 0,
             new AsyncCallback(ReadCallback), state);
         }
-        // </snippet6>
 
         public static void ListenWithSocket()
         {
-        // <snippet7>
             // This server waits for a connection and then uses asynchronous operations to
             // accept the connection with initial data sent from the client.
 
@@ -200,8 +197,6 @@ namespace Example
             handler.BeginReceive( state.buffer, 0, StateObject.BufferSize, 0,
             new AsyncCallback(ReadCallback), state);
         }
-
-        // </snippet7>
 
         public static void ReadCallback(IAsyncResult ar)
         {
@@ -300,7 +295,6 @@ namespace Example
             sendDone.Set();
         }
 
-        // <snippet9>
         public static void AsynchronousFileSend()
         {
             // Send a file to a remote device.
@@ -342,9 +336,7 @@ namespace Example
             client.EndSendFile(ar);
             sendDone.Set();
         }
-        // </snippet9>
 
-        // <snippet10>
         public static void AsynchronousFileSendWithBuffers()
         {
             // Send a file asynchronously to the remote device. Send a buffer before the file and a buffer afterwards.
@@ -395,7 +387,6 @@ namespace Example
             client.EndSendFile(ar);
             sendDone.Set();
         }
-        // </snippet10>
 
         private static void ConnectCallback(IAsyncResult ar)
         {
@@ -456,7 +447,6 @@ namespace Example
 
         public static void ClientDisconnect()
         {
-        //<snippet11>
             // Establish the remote endpoint for the socket.
             // For this example use local computer.
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
@@ -502,8 +492,6 @@ namespace Example
             // Signal that the disconnect is complete.
             disconnectDone.Set();
         }
-
-        //</snippet11>
 
         public static void SynchronousServer()
         {

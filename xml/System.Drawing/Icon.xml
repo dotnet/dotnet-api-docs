@@ -51,6 +51,14 @@
       <AttributeName Language="C#">[System.ComponentModel.TypeConverter(typeof(System.Drawing.IconConverter))]</AttributeName>
       <AttributeName Language="F#">[&lt;System.ComponentModel.TypeConverter(typeof(System.Drawing.IconConverter))&gt;]</AttributeName>
     </Attribute>
+    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
     <Attribute FrameworkAlternate="dotnet-plat-ext-8.0;windowsdesktop-8.0">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.TypeForwardedFrom("System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.TypeForwardedFrom("System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")&gt;]</AttributeName>
@@ -707,19 +715,27 @@
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Drawing.Icon</ReturnType>
+        <Attributes>
+          <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="filePath" Type="System.String" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="id" Type="System.Int32" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="smallIcon" Type="System.Boolean" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="filePath" Type="System.String" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="id" Type="System.Int32" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="smallIcon" Type="System.Boolean" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="filePath">To be added.</param>
         <param name="id">To be added.</param>
-        <param name="smallIcon">To be added.</param>
+        <param name="smallIcon">
+          <see langword="true" /> to get the <see cref="T:System.Drawing.Icon" /> at the current system small icon size setting. <see langword="false" /> to get the <see cref="T:System.Drawing.Icon" /> at the current system large icon size setting. The default is <see langword="false" />.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Icon.ExtractIcon(System.String,System.Int32,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="ExtractIcon">
@@ -736,19 +752,36 @@
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Drawing.Icon</ReturnType>
+        <Attributes>
+          <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="filePath" Type="System.String" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="id" Type="System.Int32" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="size" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="filePath" Type="System.String" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="id" Type="System.Int32" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="size" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
-        <param name="filePath">To be added.</param>
-        <param name="id">To be added.</param>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="filePath">Path to an icon or PE (.dll, .exe) file.</param>
+        <param name="id">Positive numbers refer to an icon index in the given file. Negative numbers refer to a specific native resource identifier in a PE (.dll, .exe) file.</param>
+        <param name="size">The desired size. If the specified size does not exist, an existing size will be resampled to give the requested size.</param>
+        <summary>Extracts a specified icon from the given <paramref name="filePath" />.</summary>
+        <returns>An <see cref="T:System.Drawing.Icon" />, or <see langword="null" /> if an icon can't be found with the specified <paramref name="id" />.</returns>
+        <remarks>
+          <para> Unlike the <see cref="M:System.Drawing.Icon#ctor(System.String)">constructors that take a path</see>, this method and the <see cref="M:System.Drawing.Icon.ExtractAssociatedIcon(System.String)" /> methods do not retain all of the resource data or modify the original data (outside of resizing if necessary). As such, the <see cref="T:System.Drawing.Icon" /> only uses as much memory as is needed for the requested size (mostly native memory).
+             </para>
+          <para> Without the original source data, the <see cref="M:System.Drawing.Icon#ctor(System.Drawing.Icon,System.Drawing.Size)">copy constructors</see> have to resample the current icon's bitmap to change sizes. For best image quality, if different sizes for an <see cref="T:System.Drawing.Icon" /> are desired you should create separate instances with this method and avoid the copy constructors.
+             </para>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="size" /> is negative or larger than <see cref="F:System.UInt16.MaxValue" />.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="filePath" /> could not be accessed.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="filePath" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Finalize">

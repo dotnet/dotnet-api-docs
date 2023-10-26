@@ -482,7 +482,14 @@ On .NET Core, the key usage attribute on the X509 certificate, if present, is re
       <Docs>
         <summary>Gets or sets authentication information used by this handler.</summary>
         <value>The authentication credentials associated with the handler. The default is <see langword="null" />.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the <xref:System.Net.Http.HttpClientHandler.UseDefaultCredentials> property has been set to `true`, it has a side effect on this property, and this property will be set to <xref:System.Net.CredentialCache.DefaultCredentials>.
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DangerousAcceptAnyServerCertificateValidator">
@@ -850,9 +857,9 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <ReturnType>System.Diagnostics.Metrics.IMeterFactory</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the <see cref="T:System.Diagnostics.Metrics.IMeterFactory" /> to create a custom <see cref="T:System.Diagnostics.Metrics.Meter" /> for the <see cref="T:System.Net.Http.HttpClientHandler" /> instance.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>When <see cref="P:System.Net.Http.HttpClientHandler.MeterFactory" /> is set to a non-<see langword="null" /> value, all metrics emitted by the <see cref="T:System.Net.Http.HttpClientHandler" /> instance will be recorded using the <see cref="T:System.Diagnostics.Metrics.Meter" /> provided by the <see cref="T:System.Diagnostics.Metrics.IMeterFactory" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="PreAuthenticate">
@@ -1084,6 +1091,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
 
  If the <see cref="T:System.Threading.Tasks.TaskCanceledException" /> exception nests the <see cref="T:System.TimeoutException" />:
  The request failed due to timeout.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -1143,6 +1151,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> was <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ServerCertificateCustomValidationCallback">
@@ -1449,6 +1458,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
  Set this property to `true` when requests made by the <xref:System.Net.Http.HttpClientHandler> object should, if requested by the server, be authenticated using the credentials of the currently logged on user. For client applications, this is the desired behavior in most scenarios. For middle-tier applications, such as ASP.NET applications, instead of using this property, you would typically set the <xref:System.Net.Http.HttpClientHandler.Credentials%2A> property to the credentials of the client on whose behalf the request is made.
  
  This property doesn't affect proxy credentials. When the default (system) proxy is being used, set credentials explicitly by using the <xref:System.Net.Http.HttpClientHandler.DefaultProxyCredentials> property. When the proxy is set by the <xref:System.Net.Http.HttpClientHandler.Proxy> property, set credentials for the proxy via its <xref:System.Net.IWebProxy.Credentials> property.
+
+ If this property has been set to `true` then, it has a side effect on <xref:System.Net.Http.HttpClientHandler.Credentials> property, and <xref:System.Net.Http.HttpClientHandler.Credentials> will be set to <xref:System.Net.CredentialCache.DefaultCredentials>.
  ]]></format>
         </remarks>
       </Docs>

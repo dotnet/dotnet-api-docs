@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-public class Example : MarshalByRefObject
+public class AddDynamicBaseSnippet : MarshalByRefObject
 {
    static void Main()
    {
@@ -40,8 +40,8 @@ public class Example : MarshalByRefObject
 
       // Create an instance of the Example class in the application domain,
       // and call its Test method to load the dynamic assembly and use it.
-      Example ex = (Example) ad.CreateInstanceAndUnwrap(
-         typeof(Example).Assembly.FullName, "Example");
+      AddDynamicBaseSnippet ex = (AddDynamicBaseSnippet) ad.CreateInstanceAndUnwrap(
+         typeof(AddDynamicBaseSnippet).Assembly.FullName, "Example");
       ex.Test();
    }
 

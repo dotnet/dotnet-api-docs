@@ -105,7 +105,11 @@
 
  ]]></format>
     </remarks>
-    <threadsafe>Instances of this class are thread safe.</threadsafe>
+    <threadsafe>
+It is safe to perform a send and a receive operation simultaneously on a <see cref="T:System.Net.Sockets.Socket" /> instance,
+but it's not recommended to issue multiple send or multiple receive calls concurrently. Depending on the underlying platform
+implementation, this may lead to unintended data interleaving for large or multi-buffer sends or receives.
+    </threadsafe>
     <altmember cref="N:System.Net" />
     <altmember cref="N:System.Net.Cache" />
     <altmember cref="N:System.Net.Security" />
@@ -664,6 +668,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
  This exception also occurs if the socket is already connected or a socket operation was already in progress using the specified <paramref name="e" /> parameter.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="AcceptAsync">
@@ -715,6 +720,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
  This exception also occurs if the socket is already connected or a socket operation was already in progress using the specified <paramref name="e" /> parameter.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="AddressFamily">
@@ -941,13 +947,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example attempts to receive an incoming connection asynchronously.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet2":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> object has been closed.</exception>
@@ -1053,12 +1052,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example opens a socket and accepts an asynchronous connection. In this example, the socket accepts the initial 10 bytes of data. The number of bytes received and the data are displayed on the console by the callback delegate. See <xref:System.Net.Sockets.Socket.BeginReceive%2A> for a description of how the remaining data is received.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet6":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet6":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> object has been closed.</exception>
@@ -1161,12 +1154,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
-
-## Examples
- The following code example opens a socket and accepts an asynchronous connection. In this example, the socket accepts the initial 10 bytes of data and the `acceptSocket` parameter is `null`, which forces the <xref:System.Net.Sockets.Socket.BeginAccept%2A> method to create the accepted socket. The number of bytes received and the data are displayed on the console by the callback delegate. See <xref:System.Net.Sockets.Socket.BeginReceive%2A> for a description of how the remaining data is received.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet7":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet7":::
 
  ]]></format>
         </remarks>
@@ -1295,13 +1282,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example initiates an asynchronous connection attempt.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet1":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1419,15 +1399,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
-
-## Examples
- The following code example initiates an asynchronous connection attempt.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.Sockets.Socket.BeginConnect/CPP/beginconnect.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginConnect/beginconnect.cs" id="Snippet1":::
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.Sockets.Socket.BeginConnect/CPP/beginconnect.cpp" id="Snippet7":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginConnect/beginconnect.cs" id="Snippet7":::
 
  ]]></format>
         </remarks>
@@ -1549,15 +1520,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example initiates an asynchronous connection attempt.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.Sockets.Socket.BeginConnect/CPP/beginconnect.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginConnect/beginconnect.cs" id="Snippet1":::
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.Sockets.Socket.BeginConnect/CPP/beginconnect.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginConnect/beginconnect.cs" id="Snippet2":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1678,15 +1640,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example initiates an asynchronous connection attempt.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.Sockets.Socket.BeginConnect/CPP/beginconnect.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginConnect/beginconnect.cs" id="Snippet1":::
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/System.Net.Sockets.Socket.BeginConnect/CPP/beginconnect.cpp" id="Snippet3":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginConnect/beginconnect.cs" id="Snippet3":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1776,12 +1729,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-## Examples
- The following code example creates a socket for asynchronous communication and sends some data to a remote host. When the data has been sent, <xref:System.Net.Sockets.Socket.Shutdown%2A> is called to stop the send and receive activity. Then <xref:System.Net.Sockets.Socket.BeginDisconnect%2A> is called to begin a disconnect request. When the request completes, the <xref:System.Net.Sockets.Socket.Connected%2A> property is queried to test whether the socket is disconnected.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet11":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet11":::
 
  ]]></format>
         </remarks>
@@ -2124,21 +2071,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example begins to asynchronously receive data from a connected <xref:System.Net.Sockets.Socket>.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet11":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet11":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet11":::
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet7":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet7":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet7":::
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet8":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet8":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet8":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2414,13 +2346,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
-
-## Examples
- The following code example asynchronously receives connectionless datagrams from a remote host.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet41":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet41":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet41":::
 
  ]]></format>
         </remarks>
@@ -3049,13 +2974,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example begins asynchronously sending data to a remote host.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet5":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet5":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet5":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3172,12 +3090,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
 
-## Examples
- The following code example creates and connects a socket for asynchronous communication. First, the file "text.txt" is sent asynchronously to the remote host. The callback delegate calls <xref:System.Net.Sockets.Socket.EndSendFile%2A> to complete the transmission.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet9":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet9":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> object has been closed.</exception>
@@ -3270,12 +3182,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
-
-## Examples
- The following code example creates and connects a socket for asynchronous communication and begins sending the file "text.txt" asynchronously to the remote host. In this example, a `preBuffer` and a `postBuffer` of data is created to send with the file and the default <xref:System.Net.Sockets.TransmitFileOptions> value is used. The callback delegate calls <xref:System.Net.Sockets.Socket.EndSendFile%2A> to complete the transmission.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet10":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet10":::
 
  ]]></format>
         </remarks>
@@ -3395,13 +3301,6 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
 
 > [!NOTE]
 >  The execution context (the security context, the impersonated user, and the calling context) is cached for the asynchronous <xref:System.Net.Sockets.Socket> methods. After the first use of a particular context (a specific asynchronous <xref:System.Net.Sockets.Socket> method, a specific <xref:System.Net.Sockets.Socket> instance, and a specific callback), subsequent uses of that context will see a performance improvement.
-
-## Examples
- The following code example asynchronously sends data to the specified remote host.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet3":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet3":::
 
  ]]></format>
         </remarks>
@@ -4339,6 +4238,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.NotSupportedException">The local endpoint and the <paramref name="remoteEP" /> parameter are not the same address family.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -4541,6 +4441,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -4594,6 +4495,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ConnectAsync">
@@ -4740,6 +4642,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller higher in the call stack does not have permission for the requested operation.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="Connected">
@@ -4978,6 +4881,7 @@ This method populates the <xref:System.Net.Sockets.Socket> instance with data ga
         <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:System.Net.Sockets.Socket.Disconnect(System.Boolean)" />.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> object has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -5426,12 +5330,6 @@ Duplication of the socket reference failed.</exception>
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
 
-## Examples
- The following code example uses <xref:System.Net.Sockets.Socket.BeginAccept%2A> to create and connect a socket and accept the initial 10 bytes of data. The callback delegate calls <xref:System.Net.Sockets.Socket.EndAccept%2A> to end the asynchronous request. The number of bytes transmitted and the data are returned in the `buffer` and `bytesTransferred` parameters of this method and are displayed on the console.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet6":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet6":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.NotSupportedException">Windows NT is required for this method.</exception>
@@ -5516,13 +5414,6 @@ Duplication of the socket reference failed.</exception>
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
 
-## Examples
- The following code example ends an asynchronous request and creates a new <xref:System.Net.Sockets.Socket> to accept an incoming connection request. For a complete example that demonstrates asynchronous communications with sockets, see [Socket Code Examples](/dotnet/framework/network-programming/socket-code-examples).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet7":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet7":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet7":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -5605,11 +5496,6 @@ Duplication of the socket reference failed.</exception>
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
-## Examples
- The following code example uses <xref:System.Net.Sockets.Socket.BeginAccept%2A> to create and connect a socket and accept the initial 10 bytes of data. The callback delegate calls <xref:System.Net.Sockets.Socket.EndAccept%2A> to end the asynchronous request. The number of bytes transmitted and the data are returned in the `buffer` and `bytesTransferred` parameters of this method and are displayed on the console.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet6":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet6":::
 
  ]]></format>
         </remarks>
@@ -5692,13 +5578,6 @@ Duplication of the socket reference failed.</exception>
 > [!NOTE]
 > This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
 
-## Examples
- The following code example ends the asynchronous connection attempt. For a complete example that demonstrates asynchronous communications with sockets, see [Socket Code Examples](/dotnet/framework/network-programming/socket-code-examples).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet5":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet5":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet5":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -5773,12 +5652,6 @@ Duplication of the socket reference failed.</exception>
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-## Examples
- The following code example creates a socket for asynchronous communication and sends some data to a remote host. When the data has been sent, <xref:System.Net.Sockets.Socket.Shutdown%2A> is called to stop the send and receive activity. Then <xref:System.Net.Sockets.Socket.BeginDisconnect%2A> is called to begin a disconnect request. The callback delegate calls <xref:System.Net.Sockets.Socket.EndDisconnect%2A> to end the asynchronous request. When the request completes, the <xref:System.Net.Sockets.Socket.Connected%2A> property is queried to test whether the socket is disconnected.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet11":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet11":::
 
  ]]></format>
         </remarks>
@@ -5876,13 +5749,6 @@ Duplication of the socket reference failed.</exception>
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-## Examples
- The following code example ends a pending asynchronous read. For a complete example that demonstrates asynchronous communications with sockets, see [Socket Code Examples](/dotnet/framework/network-programming/socket-code-examples).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet8":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet8":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet8":::
 
  ]]></format>
         </remarks>
@@ -6060,13 +5926,6 @@ Duplication of the socket reference failed.</exception>
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-## Examples
- The following code example ends a pending asynchronous read from a specific <xref:System.Net.EndPoint>.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet10":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet10":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet10":::
 
  ]]></format>
         </remarks>
@@ -6251,13 +6110,6 @@ Duplication of the socket reference failed.</exception>
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
 
-## Examples
- The following code example ends a pending asynchronous send.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet6":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet6":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet6":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -6427,12 +6279,6 @@ Duplication of the socket reference failed.</exception>
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
 
-## Examples
- The following code example creates and connects a socket for asynchronous communication and begins sending the file "text.txt" asynchronously to the remote host. The callback delegate calls <xref:System.Net.Sockets.Socket.EndSendFile%2A> to complete the transmission.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/NCLSocketEnhancements/CPP/nclsocketenhancements.cpp" id="Snippet9":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/nclsocketenhancements.cs" id="Snippet9":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.NotSupportedException">Windows NT is required for this method.</exception>
@@ -6516,13 +6362,6 @@ Duplication of the socket reference failed.</exception>
 
 > [!NOTE]
 >  This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-## Examples
- The following code example ends an asynchronous send to a specific location.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Socket_Async_Send_Receive/CPP/source.cpp" id="Snippet9":::
- :::code language="csharp" source="~/snippets/csharp/System.Net.Sockets/Socket/BeginAccept/source.cs" id="Snippet9":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Socket_Async_Send_Receive/VB/source.vb" id="Snippet9":::
 
  ]]></format>
         </remarks>
@@ -9378,6 +9217,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveAsync">
@@ -9425,6 +9265,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <remarks>To be added.</remarks>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveBufferSize">
@@ -9811,6 +9652,61 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <c>remoteEP</c> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ReceiveFrom">
+      <MemberSignature Language="C#" Value="public int ReceiveFrom (Span&lt;byte&gt; buffer, System.Net.Sockets.SocketFlags socketFlags, System.Net.SocketAddress receivedAddress);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 ReceiveFrom(valuetype System.Span`1&lt;unsigned int8&gt; buffer, valuetype System.Net.Sockets.SocketFlags socketFlags, class System.Net.SocketAddress receivedAddress) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Sockets.Socket.ReceiveFrom(System.Span{System.Byte},System.Net.Sockets.SocketFlags,System.Net.SocketAddress)" />
+      <MemberSignature Language="VB.NET" Value="Public Function ReceiveFrom (buffer As Span(Of Byte), socketFlags As SocketFlags, receivedAddress As SocketAddress) As Integer" />
+      <MemberSignature Language="F#" Value="member this.ReceiveFrom : Span&lt;byte&gt; * System.Net.Sockets.SocketFlags * System.Net.SocketAddress -&gt; int" Usage="socket.ReceiveFrom (buffer, socketFlags, receivedAddress)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int ReceiveFrom(Span&lt;System::Byte&gt; buffer, System::Net::Sockets::SocketFlags socketFlags, System::Net::SocketAddress ^ receivedAddress);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Sockets</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Net</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="socketFlags" Type="System.Net.Sockets.SocketFlags" Index="1" FrameworkAlternate="net-8.0" />
+        <Parameter Name="receivedAddress" Type="System.Net.SocketAddress" Index="2" FrameworkAlternate="net-8.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="buffer">A span of bytes that is the storage location for received data.</param>
+        <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values.</param>
+        <param name="receivedAddress">A <see cref="T:System.Net.SocketAddress" /> instance that gets updated with the value of the remote peer when this method returns.</param>
+        <summary>Receives a datagram into the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint.</summary>
+        <returns>The number of bytes received.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="receivedAddress" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
       </Docs>
@@ -10309,6 +10205,7 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveFromAsync">
@@ -10368,6 +10265,64 @@ If you're using a connectionless <xref:System.Net.Sockets.Socket>, <xref:System.
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
         <exception cref="T:System.Security.SecurityException">A caller in the call stack does not have the required permissions.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ReceiveFromAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask&lt;int&gt; ReceiveFromAsync (Memory&lt;byte&gt; buffer, System.Net.Sockets.SocketFlags socketFlags, System.Net.SocketAddress receivedAddress, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask`1&lt;int32&gt; ReceiveFromAsync(valuetype System.Memory`1&lt;unsigned int8&gt; buffer, valuetype System.Net.Sockets.SocketFlags socketFlags, class System.Net.SocketAddress receivedAddress, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Sockets.Socket.ReceiveFromAsync(System.Memory{System.Byte},System.Net.Sockets.SocketFlags,System.Net.SocketAddress,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function ReceiveFromAsync (buffer As Memory(Of Byte), socketFlags As SocketFlags, receivedAddress As SocketAddress, Optional cancellationToken As CancellationToken = Nothing) As ValueTask(Of Integer)" />
+      <MemberSignature Language="F#" Value="member this.ReceiveFromAsync : Memory&lt;byte&gt; * System.Net.Sockets.SocketFlags * System.Net.SocketAddress * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask&lt;int&gt;" Usage="socket.ReceiveFromAsync (buffer, socketFlags, receivedAddress, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Sockets</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Net</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask&lt;System.Int32&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Memory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="socketFlags" Type="System.Net.Sockets.SocketFlags" Index="1" FrameworkAlternate="net-8.0" />
+        <Parameter Name="receivedAddress" Type="System.Net.SocketAddress" Index="2" FrameworkAlternate="net-8.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The buffer for the received data.</param>
+        <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values that will be used when receiving the data.</param>
+        <param name="receivedAddress">A <see cref="T:System.Net.SocketAddress" /> instance that gets updated with the value of the remote peer when this method returns.</param>
+        <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
+        <summary>Receives a datagram into the data buffer, using the specified <see cref="T:System.Net.Sockets.SocketFlags" />, and stores the endpoint.</summary>
+        <returns>An asynchronous task that completes with a <see cref="T:System.Net.Sockets.SocketReceiveFromResult" /> containing the number of bytes received and the endpoint of the sending host.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="receivedAddress" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveMessageFrom">
@@ -10791,6 +10746,7 @@ You must call the Bind method before performing this operation.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="remoteEndPoint" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">You must call the Bind method before performing this operation.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveMessageFromAsync">
@@ -10849,6 +10805,7 @@ You must call the Bind method before performing this operation.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="remoteEndPoint" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">You must call the Bind method before performing this operation.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReceiveTimeout">
@@ -12510,6 +12467,7 @@ This member outputs trace information when you enable network tracing in your ap
         <summary>Sends data on a connected socket.</summary>
         <returns>An asynchronous task that completes with the number of bytes sent.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -12557,6 +12515,7 @@ This member outputs trace information when you enable network tracing in your ap
         <remarks>To be added.</remarks>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendBufferSize">
@@ -12914,6 +12873,7 @@ This member outputs trace information when you enable network tracing in your ap
         <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.Socket" /> object is not connected to a remote host.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The file <paramref name="fileName" /> was not found.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendFileAsync">
@@ -12974,6 +12934,7 @@ This member outputs trace information when you enable network tracing in your ap
         <exception cref="T:System.NotSupportedException">The <see cref="T:System.Net.Sockets.Socket" /> object is not connected to a remote host.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The file <paramref name="fileName" /> was not found.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendPacketsAsync">
@@ -13426,6 +13387,61 @@ This member outputs trace information when you enable network tracing in your ap
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <c>remoteEP</c> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SendTo">
+      <MemberSignature Language="C#" Value="public int SendTo (ReadOnlySpan&lt;byte&gt; buffer, System.Net.Sockets.SocketFlags socketFlags, System.Net.SocketAddress socketAddress);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 SendTo(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; buffer, valuetype System.Net.Sockets.SocketFlags socketFlags, class System.Net.SocketAddress socketAddress) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Sockets.Socket.SendTo(System.ReadOnlySpan{System.Byte},System.Net.Sockets.SocketFlags,System.Net.SocketAddress)" />
+      <MemberSignature Language="VB.NET" Value="Public Function SendTo (buffer As ReadOnlySpan(Of Byte), socketFlags As SocketFlags, socketAddress As SocketAddress) As Integer" />
+      <MemberSignature Language="F#" Value="member this.SendTo : ReadOnlySpan&lt;byte&gt; * System.Net.Sockets.SocketFlags * System.Net.SocketAddress -&gt; int" Usage="socket.SendTo (buffer, socketFlags, socketAddress)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int SendTo(ReadOnlySpan&lt;System::Byte&gt; buffer, System::Net::Sockets::SocketFlags socketFlags, System::Net::SocketAddress ^ socketAddress);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Sockets</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Net</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="socketFlags" Type="System.Net.Sockets.SocketFlags" Index="1" FrameworkAlternate="net-8.0" />
+        <Parameter Name="socketAddress" Type="System.Net.SocketAddress" Index="2" FrameworkAlternate="net-8.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="buffer">A span of bytes that contains the data to be sent.</param>
+        <param name="socketFlags">A bitwise combination of the <see cref="T:System.Net.Sockets.SocketFlags" /> values that will be used when sending the data.</param>
+        <param name="socketAddress">The <see cref="T:System.Net.SocketAddress" /> that represents the destination for the data.</param>
+        <summary>Sends data to a specific endpoint using the specified <see cref="T:System.Net.Sockets.SocketFlags" />.</summary>
+        <returns>The number of bytes sent.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="socketAddress" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
       </Docs>
@@ -13895,6 +13911,7 @@ This member outputs trace information when you enable network tracing in your ap
           <paramref name="remoteEP" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendToAsync">
@@ -13953,6 +13970,64 @@ This member outputs trace information when you enable network tracing in your ap
           <paramref name="remoteEP" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SendToAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.ValueTask&lt;int&gt; SendToAsync (ReadOnlyMemory&lt;byte&gt; buffer, System.Net.Sockets.SocketFlags socketFlags, System.Net.SocketAddress socketAddress, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Tasks.ValueTask`1&lt;int32&gt; SendToAsync(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; buffer, valuetype System.Net.Sockets.SocketFlags socketFlags, class System.Net.SocketAddress socketAddress, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Net.Sockets.Socket.SendToAsync(System.ReadOnlyMemory{System.Byte},System.Net.Sockets.SocketFlags,System.Net.SocketAddress,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function SendToAsync (buffer As ReadOnlyMemory(Of Byte), socketFlags As SocketFlags, socketAddress As SocketAddress, Optional cancellationToken As CancellationToken = Nothing) As ValueTask(Of Integer)" />
+      <MemberSignature Language="F#" Value="member this.SendToAsync : ReadOnlyMemory&lt;byte&gt; * System.Net.Sockets.SocketFlags * System.Net.SocketAddress * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask&lt;int&gt;" Usage="socket.SendToAsync (buffer, socketFlags, socketAddress, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Sockets</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Net</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask&lt;System.Int32&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="socketFlags" Type="System.Net.Sockets.SocketFlags" Index="1" FrameworkAlternate="net-8.0" />
+        <Parameter Name="socketAddress" Type="System.Net.SocketAddress" Index="2" FrameworkAlternate="net-8.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The buffer for the data to send.</param>
+        <param name="socketFlags">A bitwise combination of <see cref="T:System.Net.Sockets.SocketFlags" /> values that will be used when sending the data.</param>
+        <param name="socketAddress">The <see cref="T:System.Net.SocketAddress" /> that represents the destination for the data.</param>
+        <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+        <summary>Sends data to a specific endpoint using the specified <see cref="T:System.Net.Sockets.SocketFlags" />.</summary>
+        <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="socketAddress" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Net.Sockets.SocketException">An error occurred when attempting to access the socket.</exception>
+        <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Net.Sockets.Socket" /> has been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetIPProtectionLevel">

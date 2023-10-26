@@ -19,13 +19,13 @@
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides methods to invoke the method specified by the provided <see cref="T:System.Reflection.ConstructorInfo" />.</summary>
+    <remarks>This class provides better performance than <see cref="M:System.Reflection.ConstructorInfo.Invoke(System.Object[])" /> when compatibility with that method is not necessary and when the caller can cache the ConstructorInvoker instance for additional invoke calls. Unlike <see cref="M:System.Reflection.ConstructorInfo.Invoke(System.Object[])" />, the invoke methods in this class don't look up default values for arguments when <see cref="F:System.Type.Missing" /> is specified. In addition, the target constructor may be inlined for performance and not appear in stack traces.</remarks>
   </Docs>
   <Members>
     <Member MemberName="Create">
@@ -40,12 +40,6 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Reflection.ConstructorInvoker</ReturnType>
       </ReturnValue>
@@ -53,14 +47,15 @@
         <Parameter Name="constructor" Type="System.Reflection.ConstructorInfo" />
       </Parameters>
       <Docs>
-        <param name="constructor">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="constructor">The constructor that will be invoked.</param>
+        <summary>Creates a new instance of <see cref="T:System.Reflection.ConstructorInvoker" />.</summary>
+        <returns>The new instance.</returns>
+        <remarks>For performance, the resulting instance should be cached for additional calls.</remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="constructor" /> is not a runtime-based method.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public object? Invoke ();" />
+      <MemberSignature Language="C#" Value="public object Invoke ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.ConstructorInvoker.Invoke" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke () As Object" />
@@ -76,13 +71,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Invokes the constructor.</summary>
+        <returns>An instance of the class associated with the constructor.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">The type that declares the method is an open generic type.</exception>
+        <exception cref="T:System.Reflection.TargetParameterCountException">An incorrect number of arguments was provided.</exception>
+        <exception cref="T:System.NotSupportedException">The calling convention or signature is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public object? Invoke (object? arg1);" />
+      <MemberSignature Language="C#" Value="public object Invoke (object? arg1);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(object arg1) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.ConstructorInvoker.Invoke(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (arg1 As Object) As Object" />
@@ -97,17 +95,26 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="arg1" Type="System.Object" />
+        <Parameter Name="arg1" Type="System.Object">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
-        <param name="arg1">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <summary>Invokes the constructor using the specified arguments.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.ConstructorInvoker.Invoke" />
+        <exception cref="T:System.ArgumentException">The arguments do not match the signature of the invoked constructor.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public object? Invoke (Span&lt;object?&gt; arguments);" />
+      <MemberSignature Language="C#" Value="public object Invoke (Span&lt;object?&gt; arguments);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(valuetype System.Span`1&lt;object&gt; arguments) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.ConstructorInvoker.Invoke(System.Span{System.Object})" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (arguments As Span(Of Object)) As Object" />
@@ -132,14 +139,16 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="arguments">To be added.</param>
+        <param name="arguments">The arguments for the invoked constructor.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.ConstructorInvoker.Invoke(System.Object)" />
+        <exception cref="T:System.ArgumentException">The arguments do not match the signature of the invoked constructor.</exception>
       </Docs>
     </Member>
     <Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public object? Invoke (object? arg1, object? arg2);" />
+      <MemberSignature Language="C#" Value="public object Invoke (object? arg1, object? arg2);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(object arg1, object arg2) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.ConstructorInvoker.Invoke(System.Object,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (arg1 As Object, arg2 As Object) As Object" />
@@ -150,23 +159,36 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
+        <Attributes>
+          <Attribute>
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
         <Parameter Name="arg1" Type="System.Object" />
         <Parameter Name="arg2" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="arg1">To be added.</param>
-        <param name="arg2">To be added.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <param name="arg2">The second argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.ConstructorInvoker.Invoke(System.Object)" />
       </Docs>
     </Member>
     <Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public object? Invoke (object? arg1, object? arg2, object? arg3);" />
+      <MemberSignature Language="C#" Value="public object Invoke (object? arg1, object? arg2, object? arg3);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(object arg1, object arg2, object arg3) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.ConstructorInvoker.Invoke(System.Object,System.Object,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (arg1 As Object, arg2 As Object, arg3 As Object) As Object" />
@@ -177,8 +199,20 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
+        <Attributes>
+          <Attribute>
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
         <Parameter Name="arg1" Type="System.Object" />
@@ -186,16 +220,17 @@
         <Parameter Name="arg3" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="arg1">To be added.</param>
-        <param name="arg2">To be added.</param>
-        <param name="arg3">To be added.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <param name="arg2">The second argument for the invoked method.</param>
+        <param name="arg3">The third argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.ConstructorInvoker.Invoke(System.Object)" />
       </Docs>
     </Member>
     <Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public object? Invoke (object? arg1, object? arg2, object? arg3, object? arg4);" />
+      <MemberSignature Language="C#" Value="public object Invoke (object? arg1, object? arg2, object? arg3, object? arg4);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object Invoke(object arg1, object arg2, object arg3, object arg4) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Reflection.ConstructorInvoker.Invoke(System.Object,System.Object,System.Object,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function Invoke (arg1 As Object, arg2 As Object, arg3 As Object, arg4 As Object) As Object" />
@@ -206,8 +241,20 @@
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
+        <Attributes>
+          <Attribute>
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
         <Parameter Name="arg1" Type="System.Object" />
@@ -216,13 +263,14 @@
         <Parameter Name="arg4" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="arg1">To be added.</param>
-        <param name="arg2">To be added.</param>
-        <param name="arg3">To be added.</param>
-        <param name="arg4">To be added.</param>
+        <param name="arg1">The first argument for the invoked method.</param>
+        <param name="arg2">The second argument for the invoked method.</param>
+        <param name="arg3">The third argument for the invoked method.</param>
+        <param name="arg4">The fourth argument for the invoked method.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Reflection.ConstructorInvoker.Invoke(System.Object)" />
       </Docs>
     </Member>
   </Members>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class PingPong
+public class CallbackStaticSnippet
 {
     // <Snippet1>
     static string greetings = "PONG!";

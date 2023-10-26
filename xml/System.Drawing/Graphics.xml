@@ -40,6 +40,14 @@
     </Interface>
   </Interfaces>
   <Attributes>
+    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
     <Attribute FrameworkAlternate="netframework-1.1">
       <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(false)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(false)&gt;]</AttributeName>
@@ -442,19 +450,20 @@
         <Parameter Name="color" Type="System.Drawing.Color" />
       </Parameters>
       <Docs>
-        <param name="color">
-          <see cref="T:System.Drawing.Color" /> structure that represents the background color of the drawing surface.</param>
+        <param name="color">The background color of the drawing surface.</param>
         <summary>Clears the entire drawing surface and fills it with the specified background color.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Drawing.Graphics.Clear%2A> method clears the state of the graphics object and should not be called when the graphics object cannot be updated. For example, if the <xref:System.Drawing.Graphics.Clear%2A> method is called on a secure desktop in a terminal server session, an <xref:System.Runtime.InteropServices.ExternalException> may occur, leaving the <xref:System.Drawing.Graphics> object in an inconsistent state.
 
+Effectively, the <xref:System.Drawing.Graphics.Clear%2A> method fills an area with a solid color brush of the specified color. The transparency of the specified color is maintained.
 
+This method clears the state of the graphics object and should not be called when the graphics object cannot be updated. For example, if the <xref:System.Drawing.Graphics.Clear%2A> method is called on a secure desktop in a terminal server session, an <xref:System.Runtime.InteropServices.ExternalException> may occur, leaving the <xref:System.Drawing.Graphics> object in an inconsistent state.
 
 ## Examples
- The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs> `e`, which is a parameter of the <xref:System.Windows.Forms.Control.Paint> event handler. The code clears the drawing surface of the <xref:System.Drawing.Graphics> and sets the background color to the system-defined teal color.
+
+The following code example is designed for use with Windows Forms, and it requires <xref:System.Windows.Forms.PaintEventArgs> `e`, which is a parameter of the <xref:System.Windows.Forms.Control.Paint> event handler. The code clears the drawing surface of the <xref:System.Drawing.Graphics> and sets the background color to the system-defined teal color.
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Winforms/System.Drawing.ClassicGraphicsExamples/CPP/form1.cpp" id="Snippet5":::
  :::code language="csharp" source="~/snippets/csharp/System.Drawing/Graphics/Overview/form1.cs" id="Snippet5":::
@@ -1782,16 +1791,26 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="cachedBitmap" Type="System.Drawing.Imaging.CachedBitmap" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="x" Type="System.Int32" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="y" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="cachedBitmap" Type="System.Drawing.Imaging.CachedBitmap" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="x" Type="System.Int32" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="y" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
-        <param name="cachedBitmap">To be added.</param>
-        <param name="x">To be added.</param>
-        <param name="y">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="cachedBitmap">The <see cref="T:System.Drawing.Imaging.CachedBitmap" /> that contains the image to be drawn.</param>
+        <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+        <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+        <summary>Draws the given <paramref name="cachedBitmap" />.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="cachedBitmap" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">
+
+              The <paramref name="cachedBitmap" /> is not compatible with the <see cref="T:System.Drawing.Graphics" /> device state.
+
+-or-
+
+The <see cref="T:System.Drawing.Graphics" /> object has a transform applied other than a translation.
+             </exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="DrawClosedCurve">
@@ -4100,7 +4119,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.Point[]" />
         <Parameter Name="srcRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="image">
@@ -4194,7 +4220,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.PointF[]" />
         <Parameter Name="srcRect" Type="System.Drawing.RectangleF" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="image">
@@ -4594,8 +4627,22 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.Point[]" />
         <Parameter Name="srcRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
-        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="image">
@@ -4697,8 +4744,22 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.PointF[]" />
         <Parameter Name="srcRect" Type="System.Drawing.RectangleF" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
-        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="image">
@@ -4794,8 +4855,22 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.Point[]" />
         <Parameter Name="srcRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
-        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="callbackData" Type="System.Int32" />
       </Parameters>
       <Docs>
@@ -4891,8 +4966,22 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.PointF[]" />
         <Parameter Name="srcRect" Type="System.Drawing.RectangleF" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
-        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="callback" Type="System.Drawing.Graphics+DrawImageAbort">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="callbackData" Type="System.Int32" />
       </Parameters>
       <Docs>
@@ -5175,7 +5264,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="srcWidth" Type="System.Int32" />
         <Parameter Name="srcHeight" Type="System.Int32" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="image">
@@ -5273,7 +5369,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="srcWidth" Type="System.Single" />
         <Parameter Name="srcHeight" Type="System.Single" />
         <Parameter Name="srcUnit" Type="System.Drawing.GraphicsUnit" />
-        <Parameter Name="imageAttrs" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttrs" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="image">
@@ -5354,11 +5457,24 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="image" Type="System.Drawing.Image" />
+        <Parameter Name="image" Type="System.Drawing.Image">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="destRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcX" Type="System.Int32" />
         <Parameter Name="srcY" Type="System.Int32" />
@@ -5455,11 +5571,24 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="image" Type="System.Drawing.Image" />
+        <Parameter Name="image" Type="System.Drawing.Image">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="destRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcX" Type="System.Single" />
         <Parameter Name="srcY" Type="System.Single" />
@@ -5556,11 +5685,24 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="image" Type="System.Drawing.Image" />
+        <Parameter Name="image" Type="System.Drawing.Image">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="destRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcX" Type="System.Int32" />
         <Parameter Name="srcY" Type="System.Int32" />
@@ -5659,11 +5801,24 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="image" Type="System.Drawing.Image" />
+        <Parameter Name="image" Type="System.Drawing.Image">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="destRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="srcX" Type="System.Single" />
         <Parameter Name="srcY" Type="System.Single" />
@@ -7403,10 +7558,17 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="point" Type="System.Drawing.PointF" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="point" Type="System.Drawing.PointF" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="s">To be added.</param>
@@ -7415,6 +7577,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <param name="point">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.PointF)" />
       </Docs>
     </Member>
     <Member MemberName="DrawString">
@@ -7433,10 +7596,17 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="layoutRectangle" Type="System.Drawing.RectangleF" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="layoutRectangle" Type="System.Drawing.RectangleF" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="s">To be added.</param>
@@ -7444,7 +7614,11 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <param name="brush">To be added.</param>
         <param name="layoutRectangle">To be added.</param>
         <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para> The text represented by the <paramref name="s" /> parameter is drawn inside the rectangle represented by the <paramref name="layoutRectangle" /> parameter. If the text does not fit inside the rectangle, it is truncated at the nearest word. To further manipulate how the string is drawn inside the rectangle use the <see cref="M:System.Drawing.Graphics.DrawString(System.ReadOnlySpan{System.Char},System.Drawing.Font,System.Drawing.Brush,System.Drawing.RectangleF,System.Drawing.StringFormat)" /> overload that takes a <see cref="T:System.Drawing.StringFormat" />.
+             </para>
+        </remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.RectangleF)" />
       </Docs>
     </Member>
     <Member MemberName="DrawString">
@@ -7477,7 +7651,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="s" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="brush" Type="System.Drawing.Brush" />
         <Parameter Name="point" Type="System.Drawing.PointF" />
@@ -7559,7 +7740,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="s" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="brush" Type="System.Drawing.Brush" />
         <Parameter Name="layoutRectangle" Type="System.Drawing.RectangleF" />
@@ -7628,11 +7816,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="point" Type="System.Drawing.PointF" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="4" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="point" Type="System.Drawing.PointF" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="4" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="s">To be added.</param>
@@ -7642,6 +7844,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <param name="format">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.PointF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="DrawString">
@@ -7660,11 +7863,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="layoutRectangle" Type="System.Drawing.RectangleF" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="4" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="layoutRectangle" Type="System.Drawing.RectangleF" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="4" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="s">To be added.</param>
@@ -7674,6 +7891,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <param name="format">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="DrawString">
@@ -7692,11 +7910,18 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="x" Type="System.Single" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="y" Type="System.Single" Index="4" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="x" Type="System.Single" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="y" Type="System.Single" Index="4" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="s">To be added.</param>
@@ -7706,6 +7931,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <param name="y">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Single,System.Single)" />
       </Docs>
     </Member>
     <Member MemberName="DrawString">
@@ -7738,11 +7964,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="s" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="brush" Type="System.Drawing.Brush" />
         <Parameter Name="point" Type="System.Drawing.PointF" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="s">String to draw.</param>
@@ -7819,11 +8059,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="s" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="brush" Type="System.Drawing.Brush" />
         <Parameter Name="layoutRectangle" Type="System.Drawing.RectangleF" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="s">String to draw.</param>
@@ -7907,7 +8161,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="s" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="brush" Type="System.Drawing.Brush" />
         <Parameter Name="x" Type="System.Single" />
@@ -7970,12 +8231,26 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="x" Type="System.Single" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="y" Type="System.Single" Index="4" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="5" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="s" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="brush" Type="System.Drawing.Brush" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="x" Type="System.Single" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="y" Type="System.Single" Index="4" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="5" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="s">To be added.</param>
@@ -7986,6 +8261,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <param name="format">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Single,System.Single,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="DrawString">
@@ -8018,12 +8294,26 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="s" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="brush" Type="System.Drawing.Brush" />
         <Parameter Name="x" Type="System.Single" />
         <Parameter Name="y" Type="System.Single" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="s">String to draw.</param>
@@ -8939,7 +9229,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoint" Type="System.Drawing.Point" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -9067,7 +9364,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.Point[]" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -9201,7 +9505,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoint" Type="System.Drawing.PointF" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -9333,7 +9644,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destPoints" Type="System.Drawing.PointF[]" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -9468,7 +9786,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destRect" Type="System.Drawing.Rectangle" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -9601,7 +9926,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="destRect" Type="System.Drawing.RectangleF" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -10180,7 +10512,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="unit" Type="System.Drawing.GraphicsUnit" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -10249,7 +10588,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="unit" Type="System.Drawing.GraphicsUnit" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -10324,7 +10670,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="unit" Type="System.Drawing.GraphicsUnit" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -10397,7 +10750,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="unit" Type="System.Drawing.GraphicsUnit" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -10472,7 +10832,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="unit" Type="System.Drawing.GraphicsUnit" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -10546,7 +10913,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <Parameter Name="unit" Type="System.Drawing.GraphicsUnit" />
         <Parameter Name="callback" Type="System.Drawing.Graphics+EnumerateMetafileProc" />
         <Parameter Name="callbackData" Type="System.IntPtr" />
-        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes" />
+        <Parameter Name="imageAttr" Type="System.Drawing.Imaging.ImageAttributes">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="metafile">
@@ -13262,6 +13636,10 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
           <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
         </Attribute>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -14325,10 +14703,24 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Drawing.Region[]</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="layoutRect" Type="System.Drawing.RectangleF" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="layoutRect" Type="System.Drawing.RectangleF" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14338,6 +14730,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureCharacterRanges">
@@ -14370,10 +14763,24 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Drawing.Region[]</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.String" />
+        <Parameter Name="text" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="layoutRect" Type="System.Drawing.RectangleF" />
-        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" />
+        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="text">String to measure.</param>
@@ -14420,6 +14827,8 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         </remarks>
         <altmember cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font)" />
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="font" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="MeasureString">
@@ -14443,12 +14852,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14456,6 +14878,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14488,7 +14911,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.String" />
+        <Parameter Name="text" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
       </Parameters>
       <Docs>
@@ -14529,6 +14959,8 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="font" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14543,13 +14975,26 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="layoutArea" Type="System.Drawing.SizeF" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="layoutArea" Type="System.Drawing.SizeF" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14558,6 +15003,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.SizeF)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14572,13 +15018,26 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="width" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="width" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14587,6 +15046,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14625,7 +15085,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.String" />
+        <Parameter Name="text" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="layoutArea" Type="System.Drawing.SizeF" />
       </Parameters>
@@ -14669,6 +15136,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.SizeF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14701,7 +15169,14 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.String" />
+        <Parameter Name="text" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="font" Type="System.Drawing.Font" />
         <Parameter Name="width" Type="System.Int32" />
       </Parameters>
@@ -14746,6 +15221,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14760,14 +15236,34 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="origin" Type="System.Drawing.PointF" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="origin" Type="System.Drawing.PointF" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14777,6 +15273,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.PointF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14791,14 +15288,34 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="layoutArea" Type="System.Drawing.SizeF" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="layoutArea" Type="System.Drawing.SizeF" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14808,6 +15325,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.SizeF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14822,14 +15340,34 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="width" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="width" Type="System.Int32" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="format" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -14839,6 +15377,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Int32,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14867,12 +15406,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="text" Type="System.String" />
-        <Parameter Name="font" Type="System.Drawing.Font" />
+        <Parameter Name="font" Type="System.Drawing.Font">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="origin" Type="System.Drawing.PointF" />
         <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" />
       </Parameters>
@@ -14924,6 +15476,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.SizeF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -14952,12 +15505,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="text" Type="System.String" />
-        <Parameter Name="font" Type="System.Drawing.Font" />
+        <Parameter Name="font" Type="System.Drawing.Font">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="layoutArea" Type="System.Drawing.SizeF" />
         <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" />
       </Parameters>
@@ -15007,6 +15573,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Int32,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -15035,12 +15602,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="text" Type="System.String" />
-        <Parameter Name="font" Type="System.Drawing.Font" />
+        <Parameter Name="font" Type="System.Drawing.Font">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="width" Type="System.Int32" />
         <Parameter Name="format" Type="System.Drawing.StringFormat" />
       </Parameters>
@@ -15091,6 +15671,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -15105,16 +15686,36 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyName>System.Drawing.Common</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="layoutArea" Type="System.Drawing.SizeF" Index="2" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="charactersFitted" Type="System.Int32" RefType="out" Index="4" FrameworkAlternate="windowsdesktop-8.0" />
-        <Parameter Name="linesFilled" Type="System.Int32" RefType="out" Index="5" FrameworkAlternate="windowsdesktop-8.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="font" Type="System.Drawing.Font" Index="1" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="layoutArea" Type="System.Drawing.SizeF" Index="2" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" Index="3" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="charactersFitted" Type="System.Int32" RefType="out" Index="4" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
+        <Parameter Name="linesFilled" Type="System.Int32" RefType="out" Index="5" FrameworkAlternate="windowsdesktop-8.0;dotnet-plat-ext-8.0" />
       </Parameters>
       <Docs>
         <param name="text">To be added.</param>
@@ -15126,6 +15727,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.SizeF,System.Drawing.StringFormat,System.Int32@,System.Int32@)" />
       </Docs>
     </Member>
     <Member MemberName="MeasureString">
@@ -15154,12 +15756,25 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Drawing.SizeF</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="text" Type="System.String" />
-        <Parameter Name="font" Type="System.Drawing.Font" />
+        <Parameter Name="font" Type="System.Drawing.Font">
+          <Attributes>
+            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="layoutArea" Type="System.Drawing.SizeF" />
         <Parameter Name="stringFormat" Type="System.Drawing.StringFormat" />
         <Parameter Name="charactersFitted" Type="System.Int32" RefType="out" />
@@ -15217,6 +15832,7 @@ The number of points in the array should be a multiple of 3 plus 1 because the f
         <altmember cref="M:System.Windows.Forms.TextRenderer.MeasureText(System.Drawing.IDeviceContext,System.String,System.Drawing.Font,System.Drawing.Size,System.Windows.Forms.TextFormatFlags)" />
         <altmember cref="M:System.Drawing.Graphics.MeasureCharacterRanges(System.String,System.Drawing.Font,System.Drawing.RectangleF,System.Drawing.StringFormat)" />
         <related type="Article" href="/dotnet/framework/winforms/advanced/using-fonts-and-text">Using Fonts and Text</related>
+        <inheritdoc cref="M:System.Drawing.Graphics.MeasureString(System.String,System.Drawing.Font,System.Drawing.SizeF,System.Drawing.StringFormat)" />
       </Docs>
     </Member>
     <MemberGroup MemberName="MultiplyTransform">

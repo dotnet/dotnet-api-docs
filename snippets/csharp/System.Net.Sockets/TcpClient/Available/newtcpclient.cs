@@ -14,7 +14,7 @@ namespace newTcpClient
         static void GetAvailable()
         {
             // Find out how many bytes are ready to be read.
-            Console.WriteLine("Availabe value is {0}", t.Available);
+            Console.WriteLine("Available value is {0}", t.Available);
         }
         // </Snippet1>
 
@@ -52,7 +52,6 @@ namespace newTcpClient
         }
         // </Snippet8>
 
-        // <Snippet7>
         public static ManualResetEvent connectDone =
             new ManualResetEvent(false);
 
@@ -62,14 +61,12 @@ namespace newTcpClient
             TcpClient t = (TcpClient)ar.AsyncState;
             t.EndConnect(ar);
         }
-        // </Snippet7>
 
-        // <Snippet4>
         public static void DoBeginConnect1(string host, int port)
         {
-            // Connect asynchronously to the specifed host.
+            // Connect asynchronously to the specified host.
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
-//            IPAddress remoteHost = new IPAddress(host);
+            // IPAddress remoteHost = new IPAddress(host);
             IPAddress[] remoteHost = Dns.GetHostAddresses(host);
 
             connectDone.Reset();
@@ -84,10 +81,8 @@ namespace newTcpClient
 
             Console.WriteLine("Connection established");
         }
-        // </Snippet4>
 
-        // <Snippet5>
-        // Connect asynchronously to the specifed host.
+        // Connect asynchronously to the specified host.
         public static void DoBeginConnect2(string host, int port)
         {
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
@@ -104,10 +99,8 @@ namespace newTcpClient
 
             Console.WriteLine("Connection established");
         }
-        // </Snippet5>
 
-        // <Snippet6>
-        // Connect asynchronously to the specifed host.
+        // Connect asynchronously to the specified host.
         public static void DoBeginConnect3(string host, int port)
         {
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
@@ -124,7 +117,6 @@ namespace newTcpClient
 
             Console.WriteLine("Connection established");
         }
-        // </Snippet6>
 
         [STAThread]
         static void Main(string[] args)
