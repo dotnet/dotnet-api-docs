@@ -863,8 +863,33 @@
   
  The <xref:System.IO.FileSystemWatcher.WaitForChanged%2A> method allows event handlers to be invoked to respond to file changes even if this property is set to `false`.  
   
-   
-  
+ If an <xref:System.IO.IOException> is thrown
+ telling you that the *the configured user limit on the number of `inotify` instances has been reached*,
+ you can use the following shell function to fix the problem:
+
+```sh
+handle_mui_error() {
+MUI_PATH=/proc/sys/fs/inotify/max_user_instances
+let mui=$(<"${MUI_PATH}")
+[[
+ "${1}" = "The configured user limit (${mui}) on the number of inotify instances has been reached"
+ ]] && let 'mui <<= 01' &&
+ echo $mui > "${MUI_PATH}" ||
+ pkexec sh -c ">'${MUI_PATH}' echo $mui"
+}
+# Example usage:
+handle_mui_error 'The configured user limit (128) on the number of inotify instances has been reached'
+```
+
+ Each execution of this script doubles the system-wide limit, except when run in parallel.
+ This script requires privilege elevation, so either run it as superuser
+ or be prepared to authenticate using [pkexec]((https://www.freedesktop.org/software/polkit).
+ This is a global setting that can be modified by another user at any time.
+ Use the configuration tools provided by your operating system to change the initial value of this setting at boot time.
+ This script does not attempt to fix the other possible reason for this exception,
+ which is *the per-process limit on the number of open file descriptors has been reached*
+ (see your operating system documentation for error `EMFILE`).
+
 ## Examples  
  The following example creates a <xref:System.IO.FileSystemWatcher> to watch the directory specified at run time. The component is set to watch for changes in `LastWrite` and `LastAccess` time, the creation, deletion, or renaming of text files in the directory. If a file is changed, created, or deleted, the path to the file prints to the console. When a file is renamed, the old and new paths print to the console.  
   
@@ -877,6 +902,7 @@
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.IO.FileSystemWatcher" /> object has been disposed.</exception>
         <exception cref="T:System.PlatformNotSupportedException">The current operating system is not Microsoft Windows NT or later.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The directory specified in <see cref="P:System.IO.FileSystemWatcher.Path" /> could not be found.</exception>
+        <exception cref="T:System.IO.IOException">Linux-based operating systems only: The configured user limit on the number of <c>inotify</c> instances has been reached, or the per-process limit on the number of open file descriptors has been reached.</exception>
         <exception cref="T:System.ArgumentException">
           <see cref="P:System.IO.FileSystemWatcher.Path" /> has not been set or is invalid.</exception>
       </Docs>
