@@ -19,4 +19,3 @@ Module GetRelativePathExample
     End Sub
 
 End Module
-'</snippet1>
