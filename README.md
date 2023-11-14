@@ -6,7 +6,7 @@ The repository for conceptual .NET documentation is the [dotnet/docs repository]
 
 ## :purple_heart: Contribute
 
-We welcome contributions to help us improve and complete the .NET API Reference docs.
+We welcome contributions to help us improve and complete the .NET API reference docs.
 
 To contribute, see:
 
