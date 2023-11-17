@@ -20,7 +20,7 @@ class MyClass2
     }
 }
 
-public class MyTypeClass22
+public class MyTypeClass2
 {
     public static void Main(string[] args)
     {
