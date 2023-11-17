@@ -79,12 +79,12 @@ Namespace SDKSamples
 
 				If e.Delta > 0 Then
 					'execute the Slider DecreaseSmall RoutedCommand
-					'the slider.value propety is passed as the command parameter
+					'the slider.value property is passed as the command parameter
 					CType(Slider.DecreaseSmall, RoutedCommand).Execute(source.Value,source)
 
 				Else
 					'execute the Slider IncreaseSmall RoutedCommand
-					'the slider.value propety is passed as the command parameter
+					'the slider.value property is passed as the command parameter
 					CType(Slider.IncreaseSmall, RoutedCommand).Execute(source.Value,source)
 				End If
 			End If
@@ -99,12 +99,12 @@ Namespace SDKSamples
 			If source IsNot Nothing Then
 				If e.ChangedButton = MouseButton.XButton1 Then
 					'  Execute the Slider DecreaseSmall RoutedCommand
-					'  The slider.value propety is passed as the command parameter
+					'  The slider.value property is passed as the command parameter
 					CType(Slider.DecreaseSmall, RoutedCommand).Execute(source.Value, source)
 				End If
 				If e.ChangedButton = MouseButton.XButton2 Then
 					'  Execute the Slider IncreaseSmall RoutedCommand
-					'  The slider.value propety is passed as the command parameter
+					'  The slider.value property is passed as the command parameter
 					CType(Slider.IncreaseSmall, RoutedCommand).Execute(source.Value, source)
 				End If
 			End If
