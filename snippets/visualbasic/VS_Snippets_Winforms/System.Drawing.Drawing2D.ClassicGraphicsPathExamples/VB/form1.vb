@@ -101,7 +101,7 @@ Public Class Form1
     ' <snippet4>
     Public Sub AddClosedCurveExample(ByVal e As PaintEventArgs)
 
-        ' Creates a symetrical, closed curve.
+        ' Creates a symmetrical, closed curve.
         Dim myArray As Point() = {New Point(20, 100), New Point(40, 150), _
         New Point(60, 125), New Point(40, 100), New Point(60, 75), _
         New Point(40, 50)}
@@ -157,7 +157,7 @@ Public Class Form1
     ' <snippet7>
     Public Sub AddLineExample(ByVal e As PaintEventArgs)
 
-        ' Create a path and add a symetrical triangle using AddLine.
+        ' Create a path and add a symmetrical triangle using AddLine.
         Dim myPath As New GraphicsPath
         myPath.AddLine(30, 30, 60, 60)
         myPath.AddLine(60, 60, 0, 60)
@@ -174,7 +174,7 @@ Public Class Form1
     ' <snippet8>
     Public Sub AddLinesExample(ByVal e As PaintEventArgs)
 
-        'Create a symetrical triangle using an array of points.
+        'Create a symmetrical triangle using an array of points.
         Dim myArray As Point() = {New Point(30, 30), New Point(60, 60), _
         New Point(0, 60), New Point(30, 30)}
         Dim myPath As New GraphicsPath
@@ -191,7 +191,7 @@ Public Class Form1
     ' <snippet9>
     Public Sub AddPathExample(ByVal e As PaintEventArgs)
 
-        ' Creates a symetrical triangle and adds an inverted triangle.
+        ' Creates a symmetrical triangle and adds an inverted triangle.
 
         ' Create the first path - right side up triangle.
         Dim myArray As Point() = {New Point(30, 30), New Point(60, 60), _

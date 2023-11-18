@@ -1,6 +1,7 @@
 ﻿// <Snippet1>
 using System;
 using System.Reflection;
+
 public class MyPropertyClass
 {
     private int [,] myPropertyArray = new int[10,10];
@@ -17,6 +18,7 @@ public class MyPropertyClass
         }
     }
 }
+
 public class MyTypeClass
 {
     public static void Main()
