@@ -29,22 +29,33 @@
   </Attributes>
   <Docs>
     <summary>Provides access to an inaccessible member of a specific type.</summary>
-    <remarks>This attribute may be applied to an <code>extern static</code> method.
-             The implementation of the <code>extern static</code> method annotated with this attribute will be provided by the runtime based on the information in the attribute and the signature of the method that the attribute is applied to.
-             The runtime will try to find the matching method or field and forward the call to it. If the matching method or field is not found, the body of the <code>extern</code> method will throw <see cref="T:System.MissingFieldException" /> or <see cref="T:System.MissingMethodException" />.
-             Only the specific type defined will be examined for inaccessible members. The type hierarchy is not walked looking for a match.
-             For <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.Method" />, <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticMethod" />, <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.Field" />, and <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticField" />, the type of the first argument of the annotated <code>extern</code> method identifies the owning type.
-             The value of the first argument is treated as <code>this</code> pointer for instance fields and methods.
-             The first argument must be passed as <code>ref</code> for instance fields and methods on structs.
-             The value of the first argument is not used by the implementation for <code>static</code> fields and methods.
-             Return type is considered for the signature match. modreqs and modopts are initially not considered for the signature match. However, if an ambiguity exists ignoring modreqs and modopts, a precise match is attempted. If an ambiguity still exists <see cref="T:System.Reflection.AmbiguousMatchException" /> is thrown.
-             By default, the attributed method's name dictates the name of the method/field. This can cause confusion in some cases since language abstractions, like C# local functions, generate mangled IL names. The solution to this is to use the <code>nameof</code> mechanism and define the <see cref="P:System.Runtime.CompilerServices.UnsafeAccessorAttribute.Name" /> property.
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+This attribute may be applied to an `extern static method. The implementation of the `extern static` method annotated with this attribute will be provided by the runtime based on the information in the attribute and the signature of the method that the attribute is applied to. The runtime will try to find the matching method or field and forward the call to it. If the matching method or field is not found, the body of the `extern` method will throw <xref::System.MissingFieldException> or <xref:System.MissingMethodException>.
+
+For <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Method>, <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticMethod>, <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Field>, and <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticField>, the type of the first argument of the annotated `extern static` method identifies the owning type. Only the specific type defined will be examined for inaccessible members. The type hierarchy is not walked looking for a match.
+
+The value of the first argument is treated as `this` pointer for instance fields and methods.
+
+The first argument must be passed as `ref` for instance fields and methods on structs.
+
+The value of the first argument is not used by the implementation for `static` fields and methods.
+
+The return type is considered for the signature match. modreqs and modopts are initially not considered for the signature match. However, if an ambiguity exists ignoring modreqs and modopts, a precise match is attempted. If an ambiguity still exists <xref:System.Reflection.AmbiguousMatchException> is thrown.
+
+By default, the attributed method's name dictates the name of the method/field. This can cause confusion in some cases since language abstractions, like C# local functions, generate mangled IL names. The solution to this is to use the `nameof` mechanism and define the <xref:System.Runtime.CompilerServices.UnsafeAccessorAttribute.Name> property.
+        
+      ]]></format>
     </remarks>
     <example>
       <code language="csharp">
-      public void Method(Class c) {
-        PrivateMethod(c);
-        [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(PrivateMethod))] extern static void PrivateMethod(Class c);
+      public void Method(Class c)
+      {
+          PrivateMethod(c);
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(PrivateMethod))]
+          extern static void PrivateMethod(Class c);
       }
       </code>
     </example>
