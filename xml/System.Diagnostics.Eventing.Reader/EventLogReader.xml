@@ -443,7 +443,7 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Reads the next event that is returned from the event query in this object.</summary>
+        <summary>Reads and returns the next event from the event query results - or null if the end of the results has been reached.</summary>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671205(v=vs.90)">Technology Summary for Reading and Managing Event Logs</related>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671204(v=vs.90)">Event Log Scenarios</related>
       </Docs>
@@ -475,16 +475,52 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Reads the next event that is returned from the event query in this object.</summary>
-        <returns>Returns an <see cref="T:System.Diagnostics.Eventing.Reader.EventRecord" /> object.</returns>
+        <summary>Reads and returns the next event from the event query results - or null if the end of the results has been reached.</summary>
+        <returns>Returns an <see cref="T:System.Diagnostics.Eventing.Reader.EventRecord" /> object - or a null reference.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- For example code using this class, see [How To: Query for Events](https://docs.microsoft.com/previous-versions/bb671200(v=vs.90)).  
-  
+          <para>
+            This overload is equivalent to calling <see cref="M:System.Diagnostics.Eventing.Reader.EventLogReader.ReadEvent(System.TimeSpan)" /> with an <see cref="M:System.Threading.Timeout.InfiniteTimeSpan" /> timeout parameter argument.
+          </para>
+          <para>
+            Each time this method is called the reader will advance to the next event record in its query results or the log file being read.
+            When the reader reaches the end of the query results or log file the method will return null on its next call, but subsequent calls will throw an InvalidOperationException.
+          </para>
+          <para>
+            The returned EventRecord objects implement IDisposable and should be disposed of appropriately. To avoid leaking resources consider copying desired data from the EventRecord object into a custom class or tuple and then immediately disposing of the returned EventRecord before advancing to the next logged event.
+          </para>
+          <format type="text/markdown"><![CDATA[
+public static IEnumerable<(String logPath, DateTime dateTime, String level, String description)> GetEvents(String logPath)
+{
+    if (logPath is null) throw new ArgumentNullException(nameof(logPath));
+
+    using (EventLogReader rdr = new EventLogReader(path: logPath))
+    {
+        while (rdr.ReadEvent() is EventRecord e)
+        {
+            try
+            {
+                EventLogRecord rec = (EventLogRecord)e;
+                yield return (
+                    logPath    : logPath,
+                    dateTime   : rec.TimeCreated ?? default,
+                    level      : rec.LevelDisplayName,
+                    description: rec.FormatDescription()
+                );
+            }
+            finally
+            {
+                e.Dispose();
+            }
+        }
+    }
+}
  ]]></format>
         </remarks>
+          <!--<exception cref="T:System.Diagnostics.Eventing.Reader.EventLogException"></exception>-->
+          <exception cref="T:System.Diagnostics.Eventing.Reader.EventLogReadingException"></exception>
+          <exception cref="T:System.Diagnostics.Eventing.Reader.EventLogInvalidDataException"></exception>
+          <exception cref="T:System.InvalidOperationException">Thrown when ReadEvent is called again after a previous call returned null.</exception>
+          <exception cref="T:System.UnauthorizedAccessException"></exception>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671205(v=vs.90)">Technology Summary for Reading and Managing Event Logs</related>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671204(v=vs.90)">Event Log Scenarios</related>
       </Docs>
@@ -527,7 +563,48 @@
         <param name="timeout">The maximum time to allow the read operation to run before canceling the operation.</param>
         <summary>Reads the next event that is returned from the event query in this object.</summary>
         <returns>Returns an <see cref="T:System.Diagnostics.Eventing.Reader.EventRecord" /> object.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>
+            Each time this method is called the reader will advance to the next event record in its query results or the log file being read.
+            When the reader reaches the end of the query results or log file the method will return null on its next call, but subsequent calls will throw an InvalidOperationException.
+          </para>
+          <para>
+            The returned EventRecord objects implement IDisposable and should be disposed of appropriately. To avoid leaking resources consider copying desired data from the EventRecord object into a custom class or tuple and then immediately disposing of the returned EventRecord before advancing to the next logged event.
+          </para>
+          <format type="text/markdown"><![CDATA[
+public static IEnumerable<(String logPath, DateTime dateTime, String level, String description)> GetEvents(String logPath, TimeSpan timeout)
+{
+    if (logPath is null) throw new ArgumentNullException(nameof(logPath));
+
+    using (EventLogReader rdr = new EventLogReader(path: logPath))
+    {
+        while (rdr.ReadEvent(timeout) is EventRecord e)
+        {
+            try
+            {
+                EventLogRecord rec = (EventLogRecord)e;
+                yield return (
+                    logPath    : logPath,
+                    dateTime   : rec.TimeCreated ?? default,
+                    level      : rec.LevelDisplayName,
+                    description: rec.FormatDescription()
+                );
+            }
+            finally
+            {
+                e.Dispose();
+            }
+        }
+    }
+}
+ ]]></format>
+        </remarks>
+          <!--<exception cref="T:System.Diagnostics.Eventing.Reader.EventLogException"></exception>-->
+          <exception cref="T:System.Diagnostics.Eventing.Reader.EventLogReadingException"></exception>
+          <exception cref="T:System.Diagnostics.Eventing.Reader.EventLogInvalidDataException"></exception>
+          <exception cref="T:System.InvalidOperationException">Thrown when ReadEvent is called again after a previous call returned null.</exception>
+          <exception cref="T:System.UnauthorizedAccessException"></exception>
+        <exception cref="T:System.OperationCanceledException">Thrown when the timeout is exceeded.</exception>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671205(v=vs.90)">Technology Summary for Reading and Managing Event Logs</related>
         <related type="Article" href="https://docs.microsoft.com/previous-versions/bb671204(v=vs.90)">Event Log Scenarios</related>
       </Docs>
