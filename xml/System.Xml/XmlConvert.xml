@@ -56,46 +56,7 @@
   </Attributes>
   <Docs>
     <summary>Encodes and decodes XML names, and provides methods for converting between common language runtime types and XML Schema definition language (XSD) types. When converting data types, the values returned are locale-independent.</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Xml.XmlConvert> class is functionally equivalent to the <xref:System.Convert> class, but it supports XML standards. The type system is based on the XML Schema definition language (XSD) schema type, and the values returned are always locale-independent.  
-  
-## Encoding and decoding  
- Element and attribute names or ID values are limited to a range of XML characters according to the W3C [XML 1.0 recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/). When names contain invalid characters, you can use the <xref:System.Xml.XmlConvert.EncodeName%2A> and <xref:System.Xml.XmlConvert.DecodeName%2A> methods in this class to translate them into valid XML names.  
-  
- For example, if you want to use the column heading "Order Detail" in a database, the database allows the space between the two words. However, in XML, the space between "Order" and "Detail" is considered an invalid XML character. You have to convert it into an escaped hexadecimal encoding and decode it later.  
-  
- You can use the <xref:System.Xml.XmlConvert.EncodeName%2A> method with the <xref:System.Xml.XmlWriter> class to ensure the names being written are valid XML names. The following C# code converts the name "Order Detail" into a valid XML name and writes the element `<Order_0x0020_Detail>My order</Order_0x0020_Detail>`.  
-  
-```csharp  
-writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
-```  
-  
- The following <xref:System.Xml.XmlConvert> methods perform encoding and decoding.  
-  
-|Method|Description|  
-|------------|-----------------|  
-|<xref:System.Xml.XmlConvert.EncodeName%2A>|Takes a name and returns the encoded name along with any invalid character that is replaced by an escape string. This method allows colons in any position, which means that the name may still be invalid according to the W3C [Namespaces in XML 1.0 recommendation](https://www.w3.org/TR/REC-xml-names/).|  
-|<xref:System.Xml.XmlConvert.EncodeNmToken%2A>|Takes a name and returns the encoded name.|  
-|<xref:System.Xml.XmlConvert.EncodeLocalName%2A>|Same as <xref:System.Xml.XmlConvert.EncodeName%2A> except that it also encodes the colon character, guaranteeing that the name can be used as the `LocalName` part of a namespace-qualified name.|  
-|<xref:System.Xml.XmlConvert.DecodeName%2A>|Reverses the transformation for all the encoding methods.|  
-  
-## Name validation  
- The <xref:System.Xml.XmlConvert> class contains two methods that check the characters in an element or attribute name and verify that the name conforms to the rules set by the W3C [XML 1.0 recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/):  
-  
--   <xref:System.Xml.XmlConvert.VerifyName%2A> checks the characters and verifies that the name is valid. The method returns the name if it's valid, and throws an exception if it isn't.  
-  
--   <xref:System.Xml.XmlConvert.VerifyNCName%2A> performs the same validation, but accepts non-qualified names.  
-  
- The <xref:System.Xml.XmlConvert> contains additional methods that validate tokens, white-space characters, public IDs, and other strings.  
-  
-## Data type conversion  
- <xref:System.Xml.XmlConvert> also provides methods that enable you to convert data from a string to a strongly typed data type. For example, the <xref:System.Xml.XmlConvert.ToDateTime%2A> method converts a string to its <xref:System.DateTime> equivalent. This is useful because most methods in the <xref:System.Xml.XmlReader> class return data as a string. After the data is read, it can be converted to the proper data type before being used. The <xref:System.Xml.XmlConvert.ToString%2A> overloads provide the complementary operation by converting strongly typed data to strings. For example, this is useful when you want to add the data to text boxes on a webpage. Locale settings are not taken into account during data conversion. The data types are based on the XML Schema (XSD) data types.  
-  
- ]]></format>
-    </remarks>
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmlconvert">System.Xml.XmlConvert</see>.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -190,29 +151,29 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Decodes a name. This method does the reverse of the <see cref="M:System.Xml.XmlConvert.EncodeName(System.String)" /> and <see cref="M:System.Xml.XmlConvert.EncodeLocalName(System.String)" /> methods.</summary>
         <returns>The decoded name.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The names are decoded using the following rules:  
-  
-- Names are decoded from left to right.  
-  
-- Any sequence \_x*HHHH*\_ (where HHHH stands for a valid, four-digit hexadecimal UCS-2 code) that has not been decoded is transformed into the corresponding Unicode 2.1 (Unicode 3.0 if supported by the application) character.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The names are decoded using the following rules:
+
+- Names are decoded from left to right.
+
+- Any sequence \_x*HHHH*\_ (where HHHH stands for a valid, four-digit hexadecimal UCS-2 code) that has not been decoded is transformed into the corresponding Unicode 2.1 (Unicode 3.0 if supported by the application) character.
+
 - No shortforms are recognized. They are passed on without translation. For example, \_x20\_ or \_\_ are not decoded.
-  
+
 > [!NOTE]
-> The actual encoding of the character is application-specific. For example, Order\_x0020\_Details becomes Order Details. Even escaped characters that are invalid in XML names will be recognized and decoded.  
-  
-   
-  
-## Examples  
- The following example encodes and decodes names.  
-  
+> The actual encoding of the character is application-specific. For example, Order\_x0020\_Details becomes Order Details. Even escaped characters that are invalid in XML names will be recognized and decoded.
+
+
+
+## Examples
+ The following example encodes and decodes names.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlConvert.EncodeName/CPP/convert.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/DecodeName/convert.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.EncodeName/VB/convert.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.EncodeName/VB/convert.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -272,24 +233,24 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the name to a valid XML local name.</summary>
         <returns>The encoded name.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is similar to the <xref:System.Xml.XmlConvert.EncodeName%2A> method except that it encodes the colon character, which guarantees that the name can be used as the local name part of a namespace qualified name.  
-  
- For example, if you passed this method the invalid name a:b, it returns a\_x003a\_b, which is a valid local name.  
-  
- If `name` is `null` or <xref:System.String.Empty?displayProperty=fullName>, the method returns the same value.  
-  
-   
-  
-## Examples  
- The following example encodes and decodes names.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method is similar to the <xref:System.Xml.XmlConvert.EncodeName%2A> method except that it encodes the colon character, which guarantees that the name can be used as the local name part of a namespace qualified name.
+
+ For example, if you passed this method the invalid name a:b, it returns a\_x003a\_b, which is a valid local name.
+
+ If `name` is `null` or <xref:System.String.Empty?displayProperty=fullName>, the method returns the same value.
+
+
+
+## Examples
+ The following example encodes and decodes names.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlConvert.EncodeName/CPP/convert.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/DecodeName/convert.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.EncodeName/VB/convert.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.EncodeName/VB/convert.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Xml.XmlConvert.EncodeName(System.String)" />
@@ -351,26 +312,26 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the name to a valid XML name.</summary>
         <returns>The name with any invalid characters replaced by an escape string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method translates invalid characters, such as spaces or half-width Katakana, that need to be mapped to XML names without the support or presence of schemas. The invalid characters are translated into escaped numeric entity encodings.  
-  
- The escape character is "\_". Any XML name character that does not conform to the [XML 1.0 spec (fourth edition) recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/) is escaped as \_xHHHH\_. The HHHH string stands for the four-digit hexadecimal UCS-2 code for the character in most significant bit first order. For example, the name Order Details is encoded as Order\_x0020\_Details.  
-  
- The underscore character does not need to be escaped unless it is followed by a character sequence that together with the underscore can be misinterpreted as an escape sequence when decoding the name. For example, Order\_Details is not encoded, but Order\_x0020\_ is encoded as Order\_x005f\_x0020\_. No shortforms are allowed. For example, the forms \_x20\_ and \_\_ are not generated.  
-  
- This method guarantees the name is valid according to the XML specification. It allows colons in any position, which means the name may still be invalid according to the [W3C Namespace Specification](https://www.w3.org/TR/REC-xml-names/). To guarantee it is a valid namespace qualified name use <xref:System.Xml.XmlConvert.EncodeLocalName%2A> for the prefix and local name parts and join the result with a colon.  
-  
-   
-  
-## Examples  
- The following example encodes and decodes names.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method translates invalid characters, such as spaces or half-width Katakana, that need to be mapped to XML names without the support or presence of schemas. The invalid characters are translated into escaped numeric entity encodings.
+
+ The escape character is "\_". Any XML name character that does not conform to the [XML 1.0 spec (fourth edition) recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/) is escaped as \_xHHHH\_. The HHHH string stands for the four-digit hexadecimal UCS-2 code for the character in most significant bit first order. For example, the name Order Details is encoded as Order\_x0020\_Details.
+
+ The underscore character does not need to be escaped unless it is followed by a character sequence that together with the underscore can be misinterpreted as an escape sequence when decoding the name. For example, Order\_Details is not encoded, but Order\_x0020\_ is encoded as Order\_x005f\_x0020\_. No shortforms are allowed. For example, the forms \_x20\_ and \_\_ are not generated.
+
+ This method guarantees the name is valid according to the XML specification. It allows colons in any position, which means the name may still be invalid according to the [W3C Namespace Specification](https://www.w3.org/TR/REC-xml-names/). To guarantee it is a valid namespace qualified name use <xref:System.Xml.XmlConvert.EncodeLocalName%2A> for the prefix and local name parts and join the result with a colon.
+
+
+
+## Examples
+ The following example encodes and decodes names.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlConvert.EncodeName/CPP/convert.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/DecodeName/convert.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.EncodeName/VB/convert.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.EncodeName/VB/convert.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Xml.XmlConvert.EncodeLocalName(System.String)" />
@@ -432,13 +393,13 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Verifies the name is valid according to the XML specification.</summary>
         <returns>The encoded name.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method guarantees that the name is valid according to the XML specification. For example, if you passed this method the invalid name 70+, it returns 70\_x002b\_ which is a valid XML name.  
-  
- If `name` is `null` or String.Empty then you get the same value returned.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method guarantees that the name is valid according to the XML specification. For example, if you passed this method the invalid name 70+, it returns 70\_x002b\_ which is a valid XML name.
+
+ If `name` is `null` or String.Empty then you get the same value returned.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -567,11 +528,11 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <returns>
           <see langword="true" /> if the character is a valid Start Name Character type; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For details about allowed characters, see the [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkId=147985) recommendation.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For details about allowed characters, see the [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkId=147985) recommendation.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -616,11 +577,11 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <returns>
           <see langword="true" /> if the passed in character is a valid XML whitespace character; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For details about allowed characters, see the [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) recommendation.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For details about allowed characters, see the [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) recommendation.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -665,11 +626,11 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <returns>
           <see langword="true" /> if the passed in character is a valid XML character; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For details about allowed characters, see the [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkId=147985) recommendation.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For details about allowed characters, see the [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkId=147985) recommendation.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -762,11 +723,11 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.String" /> to a <see cref="T:System.Boolean" /> equivalent.</summary>
         <returns>A <see langword="Boolean" /> value, that is, <see langword="true" /> or <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Valid strings are "1" or "true" for `true` and "0" or "false" for `false`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Valid strings are "1" or "true" for `true` and "0" or "false" for `false`.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -936,26 +897,26 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.String" /> to a <see cref="T:System.DateTime" /> equivalent.</summary>
         <returns>A <see langword="DateTime" /> equivalent of the string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
 > [!NOTE]
->  The <xref:System.Xml.XmlConvert.ToDateTime%28System.String%29?displayProperty=nameWithType> method is obsolete in the 2.0 version of the .NET Framework and has been replaced by the <xref:System.Xml.XmlConvert.ToDateTime%28System.String%2CSystem.Xml.XmlDateTimeSerializationMode%29?displayProperty=nameWithType> method.  
-  
-   
-  
-## Examples  
- The following example uses <xref:System.Xml.XmlConvert.ToDouble%2A> and `ToDateTime` to read strongly typed data.  
-  
+>  The <xref:System.Xml.XmlConvert.ToDateTime%28System.String%29?displayProperty=nameWithType> method is obsolete in the 2.0 version of the .NET Framework and has been replaced by the <xref:System.Xml.XmlConvert.ToDateTime%28System.String%2CSystem.Xml.XmlDateTimeSerializationMode%29?displayProperty=nameWithType> method.
+
+
+
+## Examples
+ The following example uses <xref:System.Xml.XmlConvert.ToDouble%2A> and `ToDateTime` to read strongly typed data.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlConvert.ToDouble/CPP/readData.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToDateTime/readdata.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.ToDouble/VB/readdata.vb" id="Snippet1":::  
-  
- The example uses the file, `orderData.xml`, as input.  
-  
- :::code language="xml" source="~/snippets/xml/VS_Snippets_Data/XmlConvert.ToDouble/XML/orderdata.xml" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.ToDouble/VB/readdata.vb" id="Snippet1":::
+
+ The example uses the file, `orderData.xml`, as input.
+
+ :::code language="xml" source="~/snippets/xml/VS_Snippets_Data/XmlConvert.ToDouble/XML/orderdata.xml" id="Snippet2":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1017,10 +978,10 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <exception cref="T:System.ArgumentNullException">
           <paramref name="s" /> is <see langword="null" />.</exception>
         <exception cref="T:System.FormatException">
-          <paramref name="s" /> or <paramref name="format" /> is String.Empty  
-  
- -or-  
-  
+          <paramref name="s" /> or <paramref name="format" /> is String.Empty
+
+ -or-
+
  <paramref name="s" /> does not contain a date and time that corresponds to <paramref name="format" />.</exception>
       </Docs>
     </Member>
@@ -1074,20 +1035,20 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.String" /> to a <see cref="T:System.DateTime" /> equivalent.</summary>
         <returns>A <see langword="DateTime" /> equivalent of the string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method allows multiple formats for the string to be validated against.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method allows multiple formats for the string to be validated against.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="s" /> is <see langword="null" />.</exception>
         <exception cref="T:System.FormatException">
-          <paramref name="s" /> or an element of <paramref name="formats" /> is String.Empty  
-  
- -or-  
-  
+          <paramref name="s" /> or an element of <paramref name="formats" /> is String.Empty
+
+ -or-
+
  <paramref name="s" /> does not contain a date and time that corresponds to any of the elements of <paramref name="formats" />.</exception>
       </Docs>
     </Member>
@@ -1198,31 +1159,31 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the supplied <see cref="T:System.String" /> to a <see cref="T:System.DateTimeOffset" /> equivalent.</summary>
         <returns>The <see cref="T:System.DateTimeOffset" /> equivalent of the supplied string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.
-  
-## Examples  
- The following example demonstrates how to read a string from an XML file and use the <xref:System.Xml.XmlConvert.ToDateTimeOffset%2A> method to convert the string to a <xref:System.DateTimeOffset> type.  
-  
+
+## Examples
+ The following example demonstrates how to read a string from an XML file and use the <xref:System.Xml.XmlConvert.ToDateTimeOffset%2A> method to convert the string to a <xref:System.DateTimeOffset> type.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToDateTimeOffset/XmlConvert_ToDateTimeOffset_ex1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToDateTimeOffset_ex1/VB/XmlConvert_ToDateTimeOffset_ex1.vb" id="Snippet1":::  
-  
- The example uses the transactions.xml file.  
-  
-```xml  
-<?xml version="1.0"?>  
-<transactions>  
-   <transaction>  
-      <id>123456789</id>  
-      <amount>1.00</amount>  
-      <currency>USD</currency>  
-      <time>2007-08-03T22:05:13-07:00</time>  
-   </transaction>  
-</transactions>  
-```  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToDateTimeOffset_ex1/VB/XmlConvert_ToDateTimeOffset_ex1.vb" id="Snippet1":::
+
+ The example uses the transactions.xml file.
+
+```xml
+<?xml version="1.0"?>
+<transactions>
+   <transaction>
+      <id>123456789</id>
+      <amount>1.00</amount>
+      <currency>USD</currency>
+      <time>2007-08-03T22:05:13-07:00</time>
+   </transaction>
+</transactions>
+```
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1283,35 +1244,35 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the supplied <see cref="T:System.String" /> to a <see cref="T:System.DateTimeOffset" /> equivalent.</summary>
         <returns>The <see cref="T:System.DateTimeOffset" /> equivalent of the supplied string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the offset specified within the input string will cause an overflow in the deserialized representation of the DateTimeOffset, a FormatException is thrown.  
-  
- When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.  
-  
-   
-  
-## Examples  
- The following example demonstrates how to read a string from an XML file and use the <xref:System.Xml.XmlConvert.ToDateTimeOffset%2A> method to convert the string to a <xref:System.DateTimeOffset> type. The input string is validated against the specified format before being converted.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the offset specified within the input string will cause an overflow in the deserialized representation of the DateTimeOffset, a FormatException is thrown.
+
+ When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.
+
+
+
+## Examples
+ The following example demonstrates how to read a string from an XML file and use the <xref:System.Xml.XmlConvert.ToDateTimeOffset%2A> method to convert the string to a <xref:System.DateTimeOffset> type. The input string is validated against the specified format before being converted.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToDateTimeOffset/XmlConvert_ToDateTimeOffset_ex2.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToDateTimeOffset_ex2/VB/XmlConvert_ToDateTimeOffset_ex2.vb" id="Snippet1":::  
-  
- The example uses the transactions.xml file.  
-  
-```xml  
-<?xml version="1.0"?>  
-<transactions>  
-   <transaction>  
-      <id>123456789</id>  
-      <amount>1.00</amount>  
-      <currency>USD</currency>  
-      <time>2007-08-03T22:05:13-07:00</time>  
-   </transaction>  
-</transactions>  
-```  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToDateTimeOffset_ex2/VB/XmlConvert_ToDateTimeOffset_ex2.vb" id="Snippet1":::
+
+ The example uses the transactions.xml file.
+
+```xml
+<?xml version="1.0"?>
+<transactions>
+   <transaction>
+      <id>123456789</id>
+      <amount>1.00</amount>
+      <currency>USD</currency>
+      <time>2007-08-03T22:05:13-07:00</time>
+   </transaction>
+</transactions>
+```
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1372,35 +1333,35 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the supplied <see cref="T:System.String" /> to a <see cref="T:System.DateTimeOffset" /> equivalent.</summary>
         <returns>The <see cref="T:System.DateTimeOffset" /> equivalent of the supplied string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the offset specified within the input string will cause an overflow in the deserialized representation of the DateTimeOffset, a FormatException is thrown.  
-  
- When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.  
-  
-   
-  
-## Examples  
- The following example demonstrates how to read a string from an XML file and use the <xref:System.Xml.XmlConvert.ToDateTimeOffset%2A> method to convert the string to a <xref:System.DateTimeOffset> type. The input string must validate against one of the specified formats before being converted.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the offset specified within the input string will cause an overflow in the deserialized representation of the DateTimeOffset, a FormatException is thrown.
+
+ When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.
+
+
+
+## Examples
+ The following example demonstrates how to read a string from an XML file and use the <xref:System.Xml.XmlConvert.ToDateTimeOffset%2A> method to convert the string to a <xref:System.DateTimeOffset> type. The input string must validate against one of the specified formats before being converted.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToDateTimeOffset/XmlConvert_ToDateTimeOffset_ex3.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToDateTimeOffset_ex3/VB/XmlConvert_ToDateTimeOffset_ex3.vb" id="Snippet1":::  
-  
- The example uses the transactions.xml file.  
-  
-```xml  
-<?xml version="1.0"?>  
-<transactions>  
-   <transaction>  
-      <id>123456789</id>  
-      <amount>1.00</amount>  
-      <currency>USD</currency>  
-      <time>2007-08-03T22:05:13-07:00</time>  
-   </transaction>  
-</transactions>  
-```  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToDateTimeOffset_ex3/VB/XmlConvert_ToDateTimeOffset_ex3.vb" id="Snippet1":::
+
+ The example uses the transactions.xml file.
+
+```xml
+<?xml version="1.0"?>
+<transactions>
+   <transaction>
+      <id>123456789</id>
+      <amount>1.00</amount>
+      <currency>USD</currency>
+      <time>2007-08-03T22:05:13-07:00</time>
+   </transaction>
+</transactions>
+```
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1501,24 +1462,24 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.String" /> to a <see cref="T:System.Double" /> equivalent.</summary>
         <returns>A <see cref="T:System.Double" /> equivalent of the string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If `s` is INF or -INF, this method returns Double.PositiveInfinity or Double.NegativeInfinity respectively.  
-  
-   
-  
-## Examples  
- The following example uses `ToDouble` and <xref:System.Xml.XmlConvert.ToDateTime%2A> to read strongly typed data.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If `s` is INF or -INF, this method returns Double.PositiveInfinity or Double.NegativeInfinity respectively.
+
+
+
+## Examples
+ The following example uses `ToDouble` and <xref:System.Xml.XmlConvert.ToDateTime%2A> to read strongly typed data.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlConvert.ToDouble/CPP/readData.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToDateTime/readdata.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.ToDouble/VB/readdata.vb" id="Snippet1":::  
-  
- The example uses the file, `orderData.xml`, as input.  
-  
- :::code language="xml" source="~/snippets/xml/VS_Snippets_Data/XmlConvert.ToDouble/XML/orderdata.xml" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.ToDouble/VB/readdata.vb" id="Snippet1":::
+
+ The example uses the file, `orderData.xml`, as input.
+
+ :::code language="xml" source="~/snippets/xml/VS_Snippets_Data/XmlConvert.ToDouble/XML/orderdata.xml" id="Snippet2":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1835,11 +1796,11 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.String" /> to a <see cref="T:System.Single" /> equivalent.</summary>
         <returns>A <see cref="T:System.Single" /> equivalent of the string.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If `s` is INF or -INF, this method returns Single.PositiveInfinity or Single.NegativeInfinity respectively.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If `s` is INF or -INF, this method returns Single.PositiveInfinity or Single.NegativeInfinity respectively.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2056,14 +2017,14 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.DateTime" /> to a <see cref="T:System.String" />.</summary>
         <returns>A string representation of the <see langword="DateTime" /> in the format yyyy-MM-ddTHH:mm:ss where 'T' is a constant literal.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
 > [!NOTE]
->  The <xref:System.Xml.XmlConvert.ToString%28System.DateTime%29?displayProperty=nameWithType> method is obsolete in the 2.0 version of the .NET Framework and has been replaced with the <xref:System.Xml.XmlConvert.ToString%28System.DateTime%2CSystem.Xml.XmlDateTimeSerializationMode%29?displayProperty=nameWithType> method.  
->  The suggested mode is <xref:System.Xml.XmlDateTimeSerializationMode.RoundtripKind>. If an exact match is expected, please use <xref:System.Xml.XmlConvert.ToString%28System.DateTime%2CSystem.String%29?displayProperty=nameWithType> with the format string `yyyy-MM-ddTHH:mm:ss.fffffffzzzzzz`. 
-  
+>  The <xref:System.Xml.XmlConvert.ToString%28System.DateTime%29?displayProperty=nameWithType> method is obsolete in the 2.0 version of the .NET Framework and has been replaced with the <xref:System.Xml.XmlConvert.ToString%28System.DateTime%2CSystem.Xml.XmlDateTimeSerializationMode%29?displayProperty=nameWithType> method.
+>  The suggested mode is <xref:System.Xml.XmlDateTimeSerializationMode.RoundtripKind>. If an exact match is expected, please use <xref:System.Xml.XmlConvert.ToString%28System.DateTime%2CSystem.String%29?displayProperty=nameWithType> with the format string `yyyy-MM-ddTHH:mm:ss.fffffffzzzzzz`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2111,14 +2072,14 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the supplied <see cref="T:System.DateTimeOffset" /> to a <see cref="T:System.String" />.</summary>
         <returns>A <see cref="T:System.String" /> representation of the supplied <see cref="T:System.DateTimeOffset" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example converts a <xref:System.DateTimeOffset> representation of the current time to a <xref:System.String>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example converts a <xref:System.DateTimeOffset> representation of the current time to a <xref:System.String>.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToString/XmlConvert_ToString_DTO.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToString_DTO/VB/XmlConvert_ToString_DTO.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToString_DTO/VB/XmlConvert_ToString_DTO.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2213,20 +2174,20 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.Double" /> to a <see cref="T:System.String" />.</summary>
         <returns>A string representation of the <see cref="T:System.Double" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If `value` is Double.PositiveInfinity or Double.NegativeInfinity, this method returns the string INF or -INF respectively.  
-  
-   
-  
-## Examples  
- The following example, converts data types to string and then writes the information out to the console.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If `value` is Double.PositiveInfinity or Double.NegativeInfinity, this method returns the string INF or -INF respectively.
+
+
+
+## Examples
+ The following example, converts data types to string and then writes the information out to the console.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToString/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="F:System.Double.PositiveInfinity" />
@@ -2323,15 +2284,15 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.Int16" /> to a <see cref="T:System.String" />.</summary>
         <returns>A string representation of the <see cref="T:System.Int16" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example, converts data types to string and then writes the information out to the console.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example, converts data types to string and then writes the information out to the console.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToString/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2524,11 +2485,11 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.Single" /> to a <see cref="T:System.String" />.</summary>
         <returns>A string representation of the <see cref="T:System.Single" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If `value` is Single.PositiveInfinity or Single.NegativeInfinity, this method returns the string INF or -INF respectively.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If `value` is Single.PositiveInfinity or Single.NegativeInfinity, this method returns the string INF or -INF respectively.
+
  ]]></format>
         </remarks>
         <altmember cref="F:System.Single.PositiveInfinity" />
@@ -2786,15 +2747,15 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the <see cref="T:System.DateTime" /> to a <see cref="T:System.String" />.</summary>
         <returns>A string representation of the <see langword="DateTime" /> in the specified format.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example, converts data types to string and then writes the information out to the console.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example, converts data types to string and then writes the information out to the console.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToString/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlConvert.ToString Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2899,14 +2860,14 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Converts the supplied <see cref="T:System.DateTimeOffset" /> to a <see cref="T:System.String" /> in the specified format.</summary>
         <returns>A <see cref="T:System.String" /> representation in the specified format of the supplied <see cref="T:System.DateTimeOffset" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example converts a <xref:System.DateTimeOffset> representation of the current time to a <xref:System.String> in the specified format.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example converts a <xref:System.DateTimeOffset> representation of the current time to a <xref:System.String> in the specified format.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/ToString/XmlConvert_ToString_DTO_Format.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToString_DTO_Format/VB/XmlConvert_ToString_DTO_Format.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert_ToString_DTO_Format/VB/XmlConvert_ToString_DTO_Format.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -3177,30 +3138,30 @@ writer.WriteElementString(XmlConvert.EncodeName("Order Detail"),"My order");
         <summary>Verifies that the name is a valid name according to the W3C Extended Markup Language recommendation.</summary>
         <returns>The name, if it is a valid XML name.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method can be used with the <xref:System.Xml.XmlWriter> class in the following manner.  
-  
-```csharp  
-try{  
-  writer.WriteStartElement(XmlConvert.VerifyName("item"),"bar");  
-}  
-catch(Exception e)  
-{  
-  Console.WriteLine("error");  
-}  
-```  
-  
-   
-  
-## Examples  
- The following example uses the `VerifyName` method to write an element name.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method can be used with the <xref:System.Xml.XmlWriter> class in the following manner.
+
+```csharp
+try{
+  writer.WriteStartElement(XmlConvert.VerifyName("item"),"bar");
+}
+catch(Exception e)
+{
+  Console.WriteLine("error");
+}
+```
+
+
+
+## Examples
+ The following example uses the `VerifyName` method to write an element name.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlConvert.VerifyName/CPP/verifyname.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/VerifyName/verifyname.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.VerifyName/VB/verifyname.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlConvert.VerifyName/VB/verifyname.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Xml.XmlException">
@@ -3315,22 +3276,22 @@ catch(Exception e)
         <summary>Verifies that the string is a valid NMTOKEN according to the W3C XML Schema Part2: Datatypes recommendation.</summary>
         <returns>The name token, if it is a valid NMTOKEN.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method ensures that the name token follows the proper syntax for a valid NMTOKEN. It can be used in the following manner:  
-  
-```csharp  
-try {  
-  writer.WriteStartElement(XmlConvert.VerifyNMTOKEN("abc"),"book");  
-}  
-catch(Exception e) {  
-  Console.WriteLine("error");  
-}  
-```  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method ensures that the name token follows the proper syntax for a valid NMTOKEN. It can be used in the following manner:
+
+```csharp
+try {
+  writer.WriteStartElement(XmlConvert.VerifyNMTOKEN("abc"),"book");
+}
+catch(Exception e) {
+  Console.WriteLine("error");
+}
+```
+
  For more information on the NMTOKEN data type, see the [NMTOKEN](https://www.w3.org/TR/xmlschema-2/#NMTOKEN) section of the XML Schema Part 2: Datatypes Second Edition.
-  
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Xml.XmlException">The string is not a valid name token.</exception>
@@ -3381,15 +3342,15 @@ catch(Exception e) {
         <summary>Returns the passed in string instance if all the characters in the string argument are valid public id characters.</summary>
         <returns>The passed-in string if all the characters in the argument are valid public id characters.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- No other values than the passed in argument should be returned. The characters valid for public id do not vary between XML editions, so no `XmlVersion` overload is required.  
-  
- See [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) production [13] `PubidChar` for details on the allowed characters  
-  
- If the parameter is null, an `ArgumentNullException` will be thrown. If any of the characters are not valid public id characters, an `XmlException` is thrown with information about the first invalid character encountered.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ No other values than the passed in argument should be returned. The characters valid for public id do not vary between XML editions, so no `XmlVersion` overload is required.
+
+ See [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) production [13] `PubidChar` for details on the allowed characters
+
+ If the parameter is null, an `ArgumentNullException` will be thrown. If any of the characters are not valid public id characters, an `XmlException` is thrown with information about the first invalid character encountered.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -3447,22 +3408,22 @@ catch(Exception e) {
         <summary>Verifies that the string is a valid token according to the W3C XML Schema Part2: Datatypes recommendation.</summary>
         <returns>The token, if it is a valid token.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method ensures that the name token follows the proper syntax for a valid token. It can be used in the following manner:  
-  
-```csharp  
-try {  
-  writer.WriteStartElement(XmlConvert.VerifyTOKEN("abc"),"book");  
-}  
-catch(Exception e) {  
-  Console.WriteLine("error");  
-}  
-```  
-  
- For more information on tokens, see [NMTOKEN](https://www.w3.org/TR/xmlschema-2/#NMTOKEN).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method ensures that the name token follows the proper syntax for a valid token. It can be used in the following manner:
+
+```csharp
+try {
+  writer.WriteStartElement(XmlConvert.VerifyTOKEN("abc"),"book");
+}
+catch(Exception e) {
+  Console.WriteLine("error");
+}
+```
+
+ For more information on tokens, see [NMTOKEN](https://www.w3.org/TR/xmlschema-2/#NMTOKEN).
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Xml.XmlException">The string value is not a valid token.</exception>
@@ -3511,25 +3472,25 @@ catch(Exception e) {
         <summary>Returns the passed-in string instance if all the characters in the string argument are valid whitespace characters.</summary>
         <returns>The passed-in string instance if all the characters in the string argument are valid whitespace characters, otherwise <see langword="null" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- No other values than the passed in argument should be returned. The characters that are valid for whitespace do not vary between XML editions, so no xml version overload is required.  
-  
- See [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) production [3] S for details on the allowed characters.  
-  
- If the parameter is null, an `ArgumentNullException` will be thrown.  
-  
- If any of the characters are not valid whitespace characters, an `XmlException` is thrown with information about the first invalid character encountered.  
-  
-   
-  
-## Examples  
- The following example uses the <xref:System.Xml.XmlConvert.VerifyWhitespace%2A> method to detect the presence of an invalid character in a value assigned to the start element.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ No other values than the passed in argument should be returned. The characters that are valid for whitespace do not vary between XML editions, so no xml version overload is required.
+
+ See [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) production [3] S for details on the allowed characters.
+
+ If the parameter is null, an `ArgumentNullException` will be thrown.
+
+ If any of the characters are not valid whitespace characters, an `XmlException` is thrown with information about the first invalid character encountered.
+
+
+
+## Examples
+ The following example uses the <xref:System.Xml.XmlConvert.VerifyWhitespace%2A> method to detect the presence of an invalid character in a value assigned to the start element.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/VerifyWhitespace/xmlconvertnewverify.cs" id="Snippet5":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/xmlconvert.newverify/vb/xmlconvertnewverify.vb" id="Snippet5":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/xmlconvert.newverify/vb/xmlconvertnewverify.vb" id="Snippet5":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -3577,21 +3538,21 @@ catch(Exception e) {
         <summary>Returns the passed-in string if all the characters and surrogate pair characters in the string argument are valid XML characters, otherwise an <see langword="XmlException" /> is thrown with information on the first invalid character encountered.</summary>
         <returns>The passed-in string if all the characters and surrogate-pair characters in the string argument are valid XML characters, otherwise an <see langword="XmlException" /> is thrown with information on the first invalid character encountered.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- No other values than the passed in argument should be returned. See [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) production [2] `Char` for details on the allowed characters.  
-  
- If the parameter is null, an `ArgumentNullException` will be thrown. If any of the characters are not valid xml characters, an `XmlException` is thrown with information on the first invalid character encountered.  
-  
-   
-  
-## Examples  
- The following example uses the <xref:System.Xml.XmlConvert.VerifyXmlChars%2A> method used to detect an illegal character in the start element.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ No other values than the passed in argument should be returned. See [XML 1.0 spec (fourth edition)](https://go.microsoft.com/fwlink/?LinkID=147985) production [2] `Char` for details on the allowed characters.
+
+ If the parameter is null, an `ArgumentNullException` will be thrown. If any of the characters are not valid xml characters, an `XmlException` is thrown with information on the first invalid character encountered.
+
+
+
+## Examples
+ The following example uses the <xref:System.Xml.XmlConvert.VerifyXmlChars%2A> method used to detect an illegal character in the start element.
+
  :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlConvert/VerifyWhitespace/xmlconvertnewverify.cs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/xmlconvert.newverify/vb/xmlconvertnewverify.vb" id="Snippet3":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/xmlconvert.newverify/vb/xmlconvertnewverify.vb" id="Snippet3":::
+
  ]]></format>
         </remarks>
       </Docs>

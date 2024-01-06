@@ -58,211 +58,16 @@
   </Attributes>
   <Docs>
     <summary>Serializes and deserializes objects into and from XML documents. The <see cref="T:System.Xml.Serialization.XmlSerializer" /> enables you to control how objects are encoded into XML.</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-serialization-xmlserializer">System.Xml.Serialization.XmlSerializer</see>.</remarks>
+    <example>
+      <format type="text/markdown"><![CDATA[
+The following example contains two main classes: `PurchaseOrder` and `Test`. The `PurchaseOrder` class contains information about a single purchase. The `Test` class contains the methods that create the purchase order, and that read the created purchase order.
 
- XML serialization is the process of converting an object's public properties and fields to a serial format (in this case, XML) for storage or transport. Deserialization re-creates the object in its original state from the XML output. You can think of serialization as a way of saving the state of an object into a stream or buffer. For example, ASP.NET uses the <xref:System.Xml.Serialization.XmlSerializer> class to encode XML Web service messages.  
-  
- The data in your objects is described using programming language constructs like classes, fields, properties, primitive types, arrays, and even embedded XML in the form of <xref:System.Xml.XmlElement> or <xref:System.Xml.XmlAttribute> objects. You have the option of creating your own classes, annotated with attributes, or using the [XML Schema Definition Tool (Xsd.exe)](/dotnet/standard/serialization/xml-schema-definition-tool-xsd-exe) to generate the classes based on an existing XML Schema definition (XSD) document. If you have an XML Schema, you can run the Xsd.exe to produce a set of classes that are strongly typed to the schema and annotated with attributes to adhere to the schema when serialized.  
-  
- To transfer data between objects and XML requires a mapping from the programming language constructs to XML schema and from the XML schema to the programming language constructs. The <xref:System.Xml.Serialization.XmlSerializer> and related tools like Xsd.exe provide the bridge between these two technologies at both design time and runtime. At design time, use the Xsd.exe to produce an XML schema document (.xsd) from your custom classes or to produce classes from a given schema. In either case, the classes are annotated with custom attributes to instruct the <xref:System.Xml.Serialization.XmlSerializer> how to map between the XML schema system and the common language runtime. At runtime, instances of the classes can be serialized into XML documents that follow the given schema. Likewise, these XML documents can be deserialized into runtime objects. Note that the XML schema is optional, and not required at design time or runtime.  
-  
-## Control generated XML
-
- To control the generated XML, you can apply special attributes to classes and members. For example, to specify a different XML element name, apply an <xref:System.Xml.Serialization.XmlElementAttribute> to a public field or property, and set the <xref:System.Xml.Serialization.XmlElementAttribute.ElementName%2A> property. For a complete list of similar attributes, see [Attributes That Control XML Serialization](/dotnet/standard/serialization/attributes-that-control-xml-serialization). You can also implement the <xref:System.Xml.Serialization.IXmlSerializable> interface to control the XML output.  
-  
- If the XML generated must conform to section 5 of the World Wide Consortium document, [Simple Object Access Protocol (SOAP) 1.1](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/), you must construct the <xref:System.Xml.Serialization.XmlSerializer> with an <xref:System.Xml.Serialization.XmlTypeMapping>. To further control the encoded SOAP XML, use the attributes listed in [Attributes That Control Encoded SOAP Serialization](/dotnet/standard/serialization/attributes-that-control-encoded-soap-serialization).  
-  
- With the <xref:System.Xml.Serialization.XmlSerializer> you can take advantage of working with strongly typed classes and still have the flexibility of XML. Using fields or properties of type <xref:System.Xml.XmlElement>, <xref:System.Xml.XmlAttribute> or <xref:System.Xml.XmlNode> in your strongly typed classes, you can read parts of the XML document directly into XML objects.  
-  
- If you work with extensible XML schemas, you can also use the <xref:System.Xml.Serialization.XmlAnyElementAttribute> and <xref:System.Xml.Serialization.XmlAnyAttributeAttribute> attributes to serialize and deserialize elements or attributes that are not found in the original schema. To use the objects, apply an <xref:System.Xml.Serialization.XmlAnyElementAttribute> to a field that returns an array of <xref:System.Xml.XmlElement> objects, or apply an <xref:System.Xml.Serialization.XmlAnyAttributeAttribute> to a field that returns an array of <xref:System.Xml.XmlAttribute> objects.  
-  
- If a property or field returns a complex object (such as an array or a class instance), the <xref:System.Xml.Serialization.XmlSerializer> converts it to an element nested within the main XML document. For example, the first class in the following code returns an instance of the second class.  
-  
-```vb  
-Public Class MyClass  
-    Public MyObjectProperty As MyObject  
-End Class  
-  
-Public Class MyObject  
-    Public ObjectName As String  
-End Class  
-```  
-  
-```csharp  
-public class MyClass  
-{  
-    public MyObject MyObjectProperty;  
-}  
-public class MyObject  
-{  
-    public string ObjectName;  
-}  
-```  
-  
- The serialized, XML output looks like this:  
-  
-```  
-<MyClass>  
-  <MyObjectProperty>  
-  <ObjectName>My String</ObjectName>  
-  </MyObjectProperty>  
-</MyClass>  
-```  
-  
- If a schema includes an element that is optional (minOccurs = '0'), or if the schema includes a default value, you have two options. One option is to use <xref:System.ComponentModel.DefaultValueAttribute?displayProperty=nameWithType> to specify the default value, as shown in the following code.  
-  
-```vb  
-Public Class PurchaseOrder  
-    <System.ComponentModel.DefaultValueAttribute ("2002")> _  
-    Public Year As String  
-End Class  
-```  
-  
-```csharp  
-public class PurchaseOrder  
-{  
-    [System.ComponentModel.DefaultValueAttribute ("2002")]  
-    public string Year;  
-}  
-```  
-  
- Another option is to use a special pattern to create a Boolean field recognized by the <xref:System.Xml.Serialization.XmlSerializer>, and to apply the <xref:System.Xml.Serialization.XmlIgnoreAttribute> to the field. The pattern is created in the form of `propertyNameSpecified`. For example, if there is a field named "MyFirstName" you would also create a field named "MyFirstNameSpecified" that instructs the <xref:System.Xml.Serialization.XmlSerializer> whether to generate the XML element named "MyFirstName". This is shown in the following example.  
-  
-```vb  
-Public Class OptionalOrder  
-    ' This field's value should not be serialized   
-    ' if it is uninitialized.  
-    Public FirstOrder As String  
-  
-    ' Use the XmlIgnoreAttribute to ignore the   
-    ' special field named "FirstOrderSpecified".  
-    <System.Xml.Serialization.XmlIgnoreAttribute> _  
-    Public FirstOrderSpecified As Boolean  
-End Class  
-```  
-  
-```csharp  
-public class OptionalOrder  
-{  
-    // This field should not be serialized   
-    // if it is uninitialized.  
-    public string FirstOrder;  
-  
-    // Use the XmlIgnoreAttribute to ignore the   
-    // special field named "FirstOrderSpecified".  
-    [System.Xml.Serialization.XmlIgnoreAttribute]  
-    public bool FirstOrderSpecified;  
-}  
-```  
-  
-## Override default serialization
-
- You can also override the serialization of any set of objects and their fields and properties by creating one of the appropriate attributes, and adding it to an instance of the <xref:System.Xml.Serialization.XmlAttributes> class. Overriding serialization in this way has two uses: first, you can control and augment the serialization of objects found in a DLL, even if you do not have access to the source; second, you can create one set of serializable classes, but serialize the objects in multiple ways. For more details, see the <xref:System.Xml.Serialization.XmlAttributeOverrides> class and [How to: Control Serialization of Derived Classes](/dotnet/standard/serialization/how-to-control-serialization-of-derived-classes).  
-  
- To serialize an object, call the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method. To deserialize an object, call the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method.  
-  
- To add XML namespaces to an XML document, see <xref:System.Xml.Serialization.XmlSerializerNamespaces>.  
-  
-> [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> gives special treatment to classes that implement <xref:System.Collections.IEnumerable> or <xref:System.Collections.ICollection>. A class that implements <xref:System.Collections.IEnumerable> must implement a public `Add` method that takes a single parameter. The `Add` method's parameter must be of the same type as is returned from the `Current` property on the value returned from `GetEnumerator`, or one of that type's bases. A class that implements <xref:System.Collections.ICollection> (such as <xref:System.Collections.CollectionBase>) in addition to <xref:System.Collections.IEnumerable> must have a public `Item` indexed property (indexer in C#) that takes an integer, and it must have a public `Count` property of type integer. The parameter to the `Add` method must be the same type as is returned from the `Item` property, or one of that type's bases. For classes that implement <xref:System.Collections.ICollection>, values to be serialized are retrieved from the indexed `Item` property, not by calling `GetEnumerator`.  
-  
- You must have permission to write to the temporary directory (as defined by the TEMP environment variable) to deserialize an object.  
-  
-## Dynamically generated assemblies
-
- To increase performance, the XML serialization infrastructure dynamically generates assemblies to serialize and deserialize specified types. The infrastructure finds and reuses those assemblies. This behavior occurs only when using the following constructors:  
-  
- <xref:System.Xml.Serialization.XmlSerializer.%23ctor%28System.Type%29?displayProperty=nameWithType>  
-  
- <xref:System.Xml.Serialization.XmlSerializer.%23ctor%28System.Type%2CSystem.String%29?displayProperty=nameWithType>  
-  
- If you use any of the other constructors, multiple versions of the same assembly are generated and never unloaded, which results in a memory leak and poor performance. The easiest solution is to use one of the previously mentioned two constructors. Otherwise, you must cache the assemblies in a <xref:System.Collections.Hashtable>, as shown in the following example.  
-  
-```csharp  
-Hashtable serializers = new Hashtable();  
-  
-// Use the constructor that takes a type and XmlRootAttribute.  
-XmlSerializer s = new XmlSerializer(typeof(MyClass), myRoot);  
-  
-// Implement a method named GenerateKey that creates unique keys   
-// for each instance of the XmlSerializer. The code should take   
-// into account all parameters passed to the XmlSerializer   
-// constructor.  
-object key = GenerateKey(typeof(MyClass), myRoot);  
-  
-// Check the local cache for a matching serializer.  
-XmlSerializer ser = (XmlSerializer)serializers[key];  
-if (ser == null)   
-{  
-    ser = new XmlSerializer(typeof(MyClass), myRoot);  
-    // Cache the serializer.  
-    serializers[key] = ser;  
-}
-
-// Use the serializer to serialize or deserialize.
-```  
-  
-```vb  
-Dim serializers As New Hashtable()  
-  
-' Use the constructor that takes a type and XmlRootAttribute.  
-Dim s As New XmlSerializer(GetType([MyClass]), myRoot)  
-  
-' Implement a method named GenerateKey that creates unique keys   
-' for each instance of the XmlSerializer. The code should take   
-' into account all parameters passed to the XmlSerializer   
-' constructor.  
-Dim key As Object = GenerateKey(GetType([MyClass]), myRoot)  
-  
-' Check the local cache for a matching serializer.  
-Dim ser As XmlSerializer = CType(serializers(key), XmlSerializer)  
-  
-If ser Is Nothing Then  
-    ser = New XmlSerializer(GetType([MyClass]), myRoot)  
-    ' Cache the serializer.  
-    serializers(key) = ser  
-End If  
-
-' Use the serializer to serialize or deserialize.
-```  
-  
-## Serialization of ArrayList and Generic List  
- The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize or deserialize the following:  
-  
--   Arrays of <xref:System.Collections.ArrayList>  
-  
--   Arrays of <xref:System.Collections.Generic.List%601>  
-  
-## Serialization of enumerations of unsigned Long
-
- The <xref:System.Xml.Serialization.XmlSerializer> cannot be instantiated to serialize an enumeration if the following conditions are true: The enumeration is of type unsigned long (`ulong` in C#) and the enumeration contains any member with a value larger than 9,223,372,036,854,775,807. For example, the following cannot be serialized.  
-  
-```  
-public enum LargeNumbers: ulong  
-{  
-    a = 9223372036854775808  
-}  
-// At runtime, the following code will fail.  
-xmlSerializer mySerializer=new XmlSerializer(typeof(LargeNumbers));  
-```  
-  
-## Objects marked with the Obsolete attribute no longer serialized  
-
-Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer> class no longer serializes objects that are marked as `[Obsolete]`.
-  
-## Examples
-
- The following example contains two main classes: `PurchaseOrder` and `Test`. The `PurchaseOrder` class contains information about a single purchase. The `Test` class contains the methods that create the purchase order, and that read the created purchase order.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer Example/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer Example/VB/source.vb" id="Snippet1":::  
-  
- ]]></format>
-    </remarks>
+:::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer Example/CPP/source.cpp" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Overview/source.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer Example/VB/source.vb" id="Snippet1":::
+      ]]></format>
+    </example>
     <threadsafe>This type is thread safe.</threadsafe>
     <altmember cref="T:System.Xml.Serialization.XmlAttributeOverrides" />
     <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -377,20 +182,20 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="type">The type of the object that this <see cref="T:System.Xml.Serialization.XmlSerializer" /> can serialize.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of the specified type into XML documents, and deserialize XML documents into objects of the specified type.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Commonly, an application defines several classes that the <xref:System.Xml.Serialization.XmlSerializer> converts into a single XML-instance document. However, the <xref:System.Xml.Serialization.XmlSerializer> must know only one type--the type of the class that represents the XML root element. The <xref:System.Xml.Serialization.XmlSerializer> automatically serializes all subordinate class instances. Similarly, only the type of the XML root element is required for deserialization.  
-  
-   
-  
-## Examples  
- The following example constructs an <xref:System.Xml.Serialization.XmlSerializer> that serializes an object named `Widget`. The example sets various properties of the object before calling the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Commonly, an application defines several classes that the <xref:System.Xml.Serialization.XmlSerializer> converts into a single XML-instance document. However, the <xref:System.Xml.Serialization.XmlSerializer> must know only one type--the type of the class that represents the XML root element. The <xref:System.Xml.Serialization.XmlSerializer> automatically serializes all subordinate class instances. Similarly, only the type of the XML root element is required for deserialization.
+
+
+
+## Examples
+ The following example constructs an <xref:System.Xml.Serialization.XmlSerializer> that serializes an object named `Widget`. The example sets various properties of the object before calling the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer6 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/.ctor/source5.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer6 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer6 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Serialize(System.IO.TextWriter,System.Object)" />
@@ -449,20 +254,20 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="xmlTypeMapping">An <see cref="T:System.Xml.Serialization.XmlTypeMapping" /> that maps one type to another.</param>
         <summary>Initializes an instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class using an object that maps one type to another.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor is used to create an <xref:System.Xml.Serialization.XmlSerializer> when you serialize an object into a SOAP message. To control the SOAP messages generated, use the special attributes (beginning with the word "Soap") found in the <xref:System.Xml.Serialization> namespace.  
-  
-   
-  
-## Examples  
- The following example serializes a class named `Group`. The serialization of the `GroupName`, `IgnoreThis` fields, and the members of the `GroupType` enumeration are overridden. In the `CreateOverrideSerializer` method, a <xref:System.Xml.Serialization.SoapAttributeOverrides> object is created, and for each overridden member or enumeration, a <xref:System.Xml.Serialization.SoapAttributes> object is created with the appropriate property set and added to the <xref:System.Xml.Serialization.SoapAttributeOverrides> object. An <xref:System.Xml.Serialization.XmlMapping> object is created using the <xref:System.Xml.Serialization.SoapAttributeOverrides> object, and that <xref:System.Xml.Serialization.XmlMapping> object is used to create the <xref:System.Xml.Serialization.XmlSerializer> that overrides the default serialization.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor is used to create an <xref:System.Xml.Serialization.XmlSerializer> when you serialize an object into a SOAP message. To control the SOAP messages generated, use the special attributes (beginning with the word "Soap") found in the <xref:System.Xml.Serialization> namespace.
+
+
+
+## Examples
+ The following example serializes a class named `Group`. The serialization of the `GroupName`, `IgnoreThis` fields, and the members of the `GroupType` enumeration are overridden. In the `CreateOverrideSerializer` method, a <xref:System.Xml.Serialization.SoapAttributeOverrides> object is created, and for each overridden member or enumeration, a <xref:System.Xml.Serialization.SoapAttributes> object is created with the appropriate property set and added to the <xref:System.Xml.Serialization.SoapAttributeOverrides> object. An <xref:System.Xml.Serialization.XmlMapping> object is created using the <xref:System.Xml.Serialization.SoapAttributeOverrides> object, and that <xref:System.Xml.Serialization.XmlMapping> object is used to create the <xref:System.Xml.Serialization.XmlSerializer> that overrides the default serialization.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/SoapAttributesOverrides/CPP/soapover.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/SoapAttributeOverrides/Overview/soapover.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/SoapAttributesOverrides/VB/SoapOver.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/SoapAttributesOverrides/VB/SoapOver.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -530,15 +335,15 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="defaultNamespace">The default namespace to use for all the XML elements.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of the specified type into XML documents, and deserialize XML documents into objects of the specified type. Specifies the default namespace for all the XML elements.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example constructs an <xref:System.Xml.Serialization.XmlSerializer> that serializes an object named `Widget`. The example sets various properties of the object before calling the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example constructs an <xref:System.Xml.Serialization.XmlSerializer> that serializes an object named `Widget`. The example sets various properties of the object before calling the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer1 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/.ctor/source1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer1 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer1 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -610,22 +415,22 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="extraTypes">A <see cref="T:System.Type" /> array of additional object types to serialize.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of the specified type into XML documents, and deserialize XML documents into object of a specified type. If a property or field returns an array, the <paramref name="extraTypes" /> parameter specifies objects that can be inserted into the array.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- By default, if a public property or field returns an object, or array of objects, the object types are automatically serialized. However, if a class contains a field or property that returns an array of type <xref:System.Object>, any object can be inserted into that array. In that case, the <xref:System.Xml.Serialization.XmlSerializer> must be instructed to expect all the possible object types that are inserted into the <xref:System.Object> array. To do this, use the `extraTypes` parameter to specify the extra object types to serialize or deserialize.  
-  
- You can also use the `extraTypes` parameter to specify types derived from a base class. For example, suppose a base class named `Phone` exists, and a class named `InternationalPhone` derives from it. Use the `extraTypes` parameter to specify the derived type as well.  
-  
-   
-  
-## Examples  
- The following example serializes an instance of a class that contains a public field that returns an array of objects. The `extraTypes` parameter of the <xref:System.Xml.Serialization.XmlSerializer> constructor specifies the types of the objects that can be serialized in the array.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ By default, if a public property or field returns an object, or array of objects, the object types are automatically serialized. However, if a class contains a field or property that returns an array of type <xref:System.Object>, any object can be inserted into that array. In that case, the <xref:System.Xml.Serialization.XmlSerializer> must be instructed to expect all the possible object types that are inserted into the <xref:System.Object> array. To do this, use the `extraTypes` parameter to specify the extra object types to serialize or deserialize.
+
+ You can also use the `extraTypes` parameter to specify types derived from a base class. For example, suppose a base class named `Phone` exists, and a class named `InternationalPhone` derives from it. Use the `extraTypes` parameter to specify the derived type as well.
+
+
+
+## Examples
+ The following example serializes an instance of a class that contains a public field that returns an array of objects. The `extraTypes` parameter of the <xref:System.Xml.Serialization.XmlSerializer> constructor specifies the types of the objects that can be serialized in the array.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer3 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/.ctor/source3.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer3 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer3 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -693,20 +498,20 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="overrides">An <see cref="T:System.Xml.Serialization.XmlAttributeOverrides" />.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of the specified type into XML documents, and deserialize XML documents into objects of the specified type. Each object to be serialized can itself contain instances of classes, which this overload can override with other classes.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `overrides` parameter can be used to control how fields and properties are encoded in XML. These settings override any attributes that already exist on the objects. This can be useful when the source code cannot be modified or multiple encodings are required for the same classes.  
-  
-   
-  
-## Examples  
- The following example serializes an instance of a class that is defined in a DLL and to do so, overrides the public members found in the DLL.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `overrides` parameter can be used to control how fields and properties are encoded in XML. These settings override any attributes that already exist on the objects. This can be useful when the source code cannot be modified or multiple encodings are required for the same classes.
+
+
+
+## Examples
+ The following example serializes an instance of a class that is defined in a DLL and to do so, overrides the public members found in the DLL.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer4 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/.ctor/source4.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer4 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer4 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributeOverrides" />
@@ -775,20 +580,20 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="root">An <see cref="T:System.Xml.Serialization.XmlRootAttribute" /> that represents the XML root element.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of the specified type into XML documents, and deserialize an XML document into object of the specified type. It also specifies the class to use as the XML root element.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The root element of an XML document encloses all the other elements. By default, the object specified by the `type` parameter is serialized as the root element. Properties, such as the XML element name of the root element, are taken from the `type` object. However, the `root` parameter allows you to replace the default object's information by specifying an <xref:System.Xml.Serialization.XmlRootAttribute>; the object allows you to set a different namespace, element name, and so on.  
-  
-   
-  
-## Examples  
- The following example constructs an <xref:System.Xml.Serialization.XmlSerializer> that uses an <xref:System.Xml.Serialization.XmlRootAttribute> that contains various properties of the XML root element, such as its namespace and element name.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The root element of an XML document encloses all the other elements. By default, the object specified by the `type` parameter is serialized as the root element. Properties, such as the XML element name of the root element, are taken from the `type` object. However, the `root` parameter allows you to replace the default object's information by specifying an <xref:System.Xml.Serialization.XmlRootAttribute>; the object allows you to set a different namespace, element name, and so on.
+
+
+
+## Examples
+ The following example constructs an <xref:System.Xml.Serialization.XmlSerializer> that uses an <xref:System.Xml.Serialization.XmlRootAttribute> that contains various properties of the XML root element, such as its namespace and element name.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer2 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/.ctor/source2.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer2 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer2 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -877,24 +682,24 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="defaultNamespace">The default namespace of all XML elements in the XML document.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of type <see cref="T:System.Object" /> into XML document instances, and deserialize XML document instances into objects of type <see cref="T:System.Object" />. Each object to be serialized can itself contain instances of classes, which this overload overrides with other classes. This overload also specifies the default namespace for all the XML elements and the class to use as the XML root element.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `overrides` parameter allows for the creation of an <xref:System.Xml.Serialization.XmlSerializer> that serializes a class that extends or overrides the behavior of a base class. For example, given a DLL, it is possible to create a class that inherits or extends a class contained in the DLL. To serialize such a class, you must use an instance of the <xref:System.Xml.Serialization.XmlAttributeOverrides> class when constructing the <xref:System.Xml.Serialization.XmlSerializer>. For more details, see <xref:System.Xml.Serialization.XmlAttributeOverrides>.  
-  
- By default, if a public property or field returns an object, or array of objects, the object types are automatically serialized. However, if a class contains a field or property that returns an array of type <xref:System.Object>, any object can be inserted into that array. In that case, the <xref:System.Xml.Serialization.XmlSerializer> must be instructed to expect all the possible object types that are inserted into the <xref:System.Object> array. To do this, use the `extraTypes` parameter to specify the extra object types to serialize or deserialize.  
-  
- The root element of an XML document encloses all the other elements. By default, the object specified by the `type` parameter is serialized as the root element. Properties, such as the XML element name of the root element are taken from the `type` object. However, the `root` parameter allows you to replace the default object's information by specifying an <xref:System.Xml.Serialization.XmlRootAttribute>; the object allows you to set a different namespace, element name, and so on.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `overrides` parameter allows for the creation of an <xref:System.Xml.Serialization.XmlSerializer> that serializes a class that extends or overrides the behavior of a base class. For example, given a DLL, it is possible to create a class that inherits or extends a class contained in the DLL. To serialize such a class, you must use an instance of the <xref:System.Xml.Serialization.XmlAttributeOverrides> class when constructing the <xref:System.Xml.Serialization.XmlSerializer>. For more details, see <xref:System.Xml.Serialization.XmlAttributeOverrides>.
+
+ By default, if a public property or field returns an object, or array of objects, the object types are automatically serialized. However, if a class contains a field or property that returns an array of type <xref:System.Object>, any object can be inserted into that array. In that case, the <xref:System.Xml.Serialization.XmlSerializer> must be instructed to expect all the possible object types that are inserted into the <xref:System.Object> array. To do this, use the `extraTypes` parameter to specify the extra object types to serialize or deserialize.
+
+ The root element of an XML document encloses all the other elements. By default, the object specified by the `type` parameter is serialized as the root element. Properties, such as the XML element name of the root element are taken from the `type` object. However, the `root` parameter allows you to replace the default object's information by specifying an <xref:System.Xml.Serialization.XmlRootAttribute>; the object allows you to set a different namespace, element name, and so on.
+
  Use the `defaultName` parameter to specify the default namespace of all XML elements generated by the <xref:System.Xml.Serialization.XmlSerializer>.
-  
-## Examples  
- The following example serializes an instance of a class that is defined in a DLL and to do so, overrides the public members found in the class. The example also specifies an array of extra types, the default namespace for all XML elements, and the class to use that provides the XML root element information. The example assumes that the code at the beginning has been compiled into a DLL named `HighSchool`.  
-  
+
+## Examples
+ The following example serializes an instance of a class that is defined in a DLL and to do so, overrides the public members found in the class. The example also specifies an array of extra types, the default namespace for all XML elements, and the class to use that provides the XML root element information. The example assumes that the code at the beginning has been compiled into a DLL named `HighSchool`.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/.ctor/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.XmlSerializer Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributeOverrides" />
@@ -1034,11 +839,11 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="evidence">An instance of the <see cref="T:System.Security.Policy.Evidence" /> class that contains credentials required to access types.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> class that can serialize objects of the specified type into XML document instances, and deserialize XML document instances into objects of the specified type. This overload allows you to supply other types that can be encountered during a serialization or deserialization operation, as well as a default namespace for all XML elements, the class to use as the XML root element, its location, and credentials required for access.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Allows more precise control over access to a temporary directory and prevents code injection and exploitation. To use this method, specify a location and give access only to specific users. Administrators can set up policies with evidence lists that match evidence to permissions.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Allows more precise control over access to a temporary directory and prevents code injection and exploitation. To use this method, specify a location and give access only to specific users. Administrators can set up policies with evidence lists that match evidence to permissions.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1089,15 +894,15 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <returns>
           <see langword="true" /> if this <see cref="T:System.Xml.Serialization.XmlSerializer" /> can deserialize the object that the <see cref="T:System.Xml.XmlReader" /> points to; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following example calls the <xref:System.Xml.Serialization.XmlSerializer.CanDeserialize%2A> method to check whether an XML document can be deserialized.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example calls the <xref:System.Xml.Serialization.XmlSerializer.CanDeserialize%2A> method to check whether an XML document can be deserialized.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.CanDeserialize Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/CanDeserialize/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.CanDeserialize Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.CanDeserialize Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Xml.Serialization.XmlSerializer.Deserialize(System.IO.Stream)" />
@@ -1253,36 +1058,36 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Deserializes the XML document contained by the specified <see cref="T:System.IO.Stream" />.</summary>
         <returns>The <see cref="T:System.Object" /> being deserialized.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Deserialization is the process of reading an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.  
-  
- Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.  
-  
- Use the `stream` parameter to specify an object that derives from the <xref:System.IO.Stream> class, which is designed to write to streams. Classes that derive from the <xref:System.IO.Stream> class include:  
-  
--   <xref:System.IO.BufferedStream>  
-  
--   <xref:System.IO.FileStream>  
-  
--   <xref:System.IO.MemoryStream>  
-  
--   <xref:System.Net.Sockets.NetworkStream>  
-  
--   <xref:System.Security.Cryptography.CryptoStream>  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Deserialization is the process of reading an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.
+
+ Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.
+
+ Use the `stream` parameter to specify an object that derives from the <xref:System.IO.Stream> class, which is designed to write to streams. Classes that derive from the <xref:System.IO.Stream> class include:
+
+-   <xref:System.IO.BufferedStream>
+
+-   <xref:System.IO.FileStream>
+
+-   <xref:System.IO.MemoryStream>
+
+-   <xref:System.Net.Sockets.NetworkStream>
+
+-   <xref:System.Security.Cryptography.CryptoStream>
+
 > [!NOTE]
 >  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
-  
-## Examples  
- The following example deserializes an object using a <xref:System.IO.Stream> object.  
-  
+
+## Examples
+ The following example deserializes an object using a <xref:System.IO.Stream> object.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Deserialize/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -1347,30 +1152,30 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Deserializes the XML document contained by the specified <see cref="T:System.IO.TextReader" />.</summary>
         <returns>The <see cref="T:System.Object" /> being deserialized.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Deserialization is the process of reading an instance of an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.  
-  
- Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.  
-  
- Classes that inherit from <xref:System.IO.TextReader> include <xref:System.IO.StringReader> and <xref:System.IO.StreamReader>. If you are using a <xref:System.IO.StreamReader> to deserialize an object, you must construct the <xref:System.IO.StreamReader> with an appropriate <xref:System.Text.Encoding>. The encoding specified by the XML document is ignored.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Deserialization is the process of reading an instance of an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.
+
+ Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.
+
+ Classes that inherit from <xref:System.IO.TextReader> include <xref:System.IO.StringReader> and <xref:System.IO.StreamReader>. If you are using a <xref:System.IO.StreamReader> to deserialize an object, you must construct the <xref:System.IO.StreamReader> with an appropriate <xref:System.Text.Encoding>. The encoding specified by the XML document is ignored.
+
 > [!NOTE]
->  To use the encoding specified by the XML document, use the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> overload that takes an <xref:System.Xml.XmlReader> instead. The <xref:System.Xml.XmlReader> automatically detects and uses the encoding specified by the XML document.  
-  
+>  To use the encoding specified by the XML document, use the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> overload that takes an <xref:System.Xml.XmlReader> instead. The <xref:System.Xml.XmlReader> automatically detects and uses the encoding specified by the XML document.
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
-   
-  
-## Examples  
- The following example deserializes an object using a <xref:System.IO.TextReader> object.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+
+
+## Examples
+ The following example deserializes an object using a <xref:System.IO.TextReader> object.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize1 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Deserialize/source1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize1 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize1 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during deserialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -1487,28 +1292,28 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Deserializes the XML document contained by the specified <see cref="T:System.Xml.XmlReader" />.</summary>
         <returns>The <see cref="T:System.Object" /> being deserialized.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Deserialization is the process of reading an instance of an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.  
-  
- Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.  
-  
- The <xref:System.Xml.XmlReader> automatically detects and uses the encoding specified by the XML document.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Deserialization is the process of reading an instance of an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.
+
+ Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.
+
+ The <xref:System.Xml.XmlReader> automatically detects and uses the encoding specified by the XML document.
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
-   
-  
-## Examples  
- The following example deserializes an object using an <xref:System.Xml.XmlReader>.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+
+
+## Examples
+ The following example deserializes an object using an <xref:System.Xml.XmlReader>.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize2 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Deserialize/source2.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize2 Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize2 Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Deserialize2 Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during deserialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -1585,17 +1390,17 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Deserializes the XML document contained by the specified <see cref="T:System.Xml.XmlReader" /> and encoding style.</summary>
         <returns>The deserialized object.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Deserialization is the process of reading an instance of an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.  
-  
- Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.  
-  
- Set the `encodingStyle` parameter to "<http://schemas.xmlsoap.org/soap/encoding/>" for SOAP version 1.1 encoding; otherwise, set it to "<http://www.w3.org/2001/12/soap-encoding>" for SOAP version 1.2 encoding.  
-  
- **Note** The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Deserialization is the process of reading an instance of an XML document and constructing an object that is strongly typed to the XML Schema (XSD) of the document.
+
+ Before deserializing, an <xref:System.Xml.Serialization.XmlSerializer> must be constructed using the type of the object that is being deserialized.
+
+ Set the `encodingStyle` parameter to "<http://schemas.xmlsoap.org/soap/encoding/>" for SOAP version 1.1 encoding; otherwise, set it to "<http://www.w3.org/2001/12/soap-encoding>" for SOAP version 1.2 encoding.
+
+ **Note** The <xref:System.Xml.Serialization.XmlSerializer> cannot deserialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during deserialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -1666,11 +1471,11 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Deserializes an XML document contained by the specified <see cref="T:System.Xml.XmlReader" /> and allows the overriding of events that occur during deserialization.</summary>
         <returns>The <see cref="T:System.Object" /> being deserialized.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The object being deserialized.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The object being deserialized.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1740,11 +1545,11 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Deserializes the object using the data contained by the specified <see cref="T:System.Xml.XmlReader" />.</summary>
         <returns>The object being deserialized.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is required for deserialization of unknown headers for Web Service scenarios only. This method allows you to avoid event synchronization in Web Service methods.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method is required for deserialization of unknown headers for Web Service scenarios only. This method allows you to avoid event synchronization in Web Service methods.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1994,20 +1799,20 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Returns an array of <see cref="T:System.Xml.Serialization.XmlSerializer" /> objects created from an array of types.</summary>
         <returns>An array of <see cref="T:System.Xml.Serialization.XmlSerializer" /> objects.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  The <xref:System.Xml.Serialization.XmlSerializer.FromTypes%2A> method allows you to efficiently create an array of <xref:System.Xml.Serialization.XmlSerializer> objects for processing an array of <xref:System.Type> objects. However, it is recommended for callers to cache the returned serializers when there are repeated calls to this method.
-  
-   
-  
-## Examples  
- The following example uses the <xref:System.Xml.Serialization.XmlSerializer.FromTypes%2A> method to return an array of <xref:System.Xml.Serialization.XmlSerializer> objects. The code includes three class definitions that are each used to create an array of <xref:System.Type> objects.  
-  
+
+
+
+## Examples
+ The following example uses the <xref:System.Xml.Serialization.XmlSerializer.FromTypes%2A> method to return an array of <xref:System.Xml.Serialization.XmlSerializer> objects. The code includes three class definitions that are each used to create an array of <xref:System.Type> objects.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.FromTypes Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/FromTypes/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.FromTypes Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.FromTypes Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -2026,13 +1831,13 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
       <Docs>
         <summary>Returns an assembly that contains typed serializers.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
-  
- If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.
+
+ If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2122,13 +1927,13 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
       <Docs>
         <summary>Returns the name of the assembly that contains one or more versions of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> especially created to serialize or deserialize specific types.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
-  
- If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.
+
+ If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2182,13 +1987,13 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Returns the name of the assembly that contains one or more versions of the <see cref="T:System.Xml.Serialization.XmlSerializer" /> especially created to serialize or deserialize the specified type.</summary>
         <returns>The name of the assembly that contains an <see cref="T:System.Xml.Serialization.XmlSerializer" /> for the type.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
-  
- If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.
+
+ If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2246,13 +2051,13 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <summary>Returns the name of the assembly that contains the serializer for the specified type in the specified namespace.</summary>
         <returns>The name of the assembly that contains specially built serializers.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.  
-  
- If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The [XML Serializer Generator Tool (Sgen.exe)](/dotnet/standard/serialization/xml-serializer-generator-tool-sgen-exe) creates an XML serialization assembly for types in a specified assembly to improve the run-time performance of an <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types. Use the <xref:System.Xml.Serialization.XmlSerializer.GetXmlSerializerAssemblyName%2A> to return the name of such an assembly.
+
+ If you are distributing such an assembly as part of a client application that calls a Web service, you can apply the <xref:System.Xml.Serialization.XmlSerializerAssemblyAttribute> to the client type to specify the location and name of the assembly.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -2331,30 +2136,30 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="o">The <see cref="T:System.Object" /> to serialize.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.IO.Stream" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  The <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method converts the public fields and read/write properties of an object into XML. It does not convert methods, indexers, private fields, or read-only properties.
-  
- In the `stream` parameter, specify an object that derives from the abstract <xref:System.IO.Stream> class. Classes that derive from <xref:System.IO.Stream> include:  
-  
--   <xref:System.IO.BufferedStream>  
--   <xref:System.IO.FileStream>  
--   <xref:System.IO.MemoryStream>  
--   <xref:System.Net.Sockets.NetworkStream>  
--   <xref:System.Security.Cryptography.CryptoStream>  
-  
+
+ In the `stream` parameter, specify an object that derives from the abstract <xref:System.IO.Stream> class. Classes that derive from <xref:System.IO.Stream> include:
+
+-   <xref:System.IO.BufferedStream>
+-   <xref:System.IO.FileStream>
+-   <xref:System.IO.MemoryStream>
+-   <xref:System.Net.Sockets.NetworkStream>
+-   <xref:System.Security.Cryptography.CryptoStream>
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.     
-  
-## Examples  
- The following example serializes an object using a <xref:System.IO.Stream> object.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+## Examples
+ The following example serializes an object using a <xref:System.IO.Stream> object.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Serialize2 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Serialize/source2.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize2 Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize2 Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize2 Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -2431,32 +2236,32 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="o">The <see cref="T:System.Object" /> to serialize.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.IO.TextWriter" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  The <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method converts the public fields and read/write properties of an object into XML. It does not convert methods, indexers, private fields, or read-only properties.
-  
- In the `textWriter` parameter, specify an object that derives from the abstract <xref:System.IO.TextWriter> class. Classes that derive from <xref:System.IO.TextWriter> include:  
-  
--   <xref:System.IO.StreamWriter>  
-  
--   <xref:System.IO.StringWriter>  
-  
--   <xref:System.CodeDom.Compiler.IndentedTextWriter>  
-  
+
+ In the `textWriter` parameter, specify an object that derives from the abstract <xref:System.IO.TextWriter> class. Classes that derive from <xref:System.IO.TextWriter> include:
+
+-   <xref:System.IO.StreamWriter>
+
+-   <xref:System.IO.StringWriter>
+
+-   <xref:System.CodeDom.Compiler.IndentedTextWriter>
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
-   
-  
-## Examples  
- The following example serializes an object using a <xref:System.IO.TextWriter>.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+
+
+## Examples
+ The following example serializes an object using a <xref:System.IO.TextWriter>.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Serialize Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Serialize/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />
@@ -2587,26 +2392,26 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="o">The <see cref="T:System.Object" /> to serialize.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.Xml.XmlWriter" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  The <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method converts the public fields and read/write properties of an object into XML. It does not convert methods, indexers, private fields, or read-only properties.
-  
- In the `xmlWriter` parameter, specify an object that derives from the abstract <xref:System.Xml.XmlWriter> class. The <xref:System.Xml.XmlTextWriter> derives from the <xref:System.Xml.XmlWriter>.  
-  
+
+ In the `xmlWriter` parameter, specify an object that derives from the abstract <xref:System.Xml.XmlWriter> class. The <xref:System.Xml.XmlTextWriter> derives from the <xref:System.Xml.XmlWriter>.
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
-   
-  
-## Examples  
- The following example serializes an object using an <xref:System.Xml.XmlWriter>.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+
+
+## Examples
+ The following example serializes an object using an <xref:System.Xml.XmlWriter>.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Serialize4 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Serialize/source4.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize4 Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize4 Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize4 Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -2685,35 +2490,35 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="namespaces">The <see cref="T:System.Xml.Serialization.XmlSerializerNamespaces" /> referenced by the object.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.IO.Stream" /> that references the specified namespaces.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  When the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method is invoked, the public fields and read/write properties of an object are converted into XML. Methods, indexers, private fields, and read-only properties are not serialized.
-  
- Use the `stream` parameter to specify an object that derives from the abstract <xref:System.IO.Stream> class, which is designed to write to streams. Classes that derive from the <xref:System.IO.Stream> class include:  
-  
--   <xref:System.IO.BufferedStream>  
-  
--   <xref:System.IO.FileStream>  
-  
--   <xref:System.IO.MemoryStream>  
-  
--   <xref:System.Net.Sockets.NetworkStream>  
-  
--   <xref:System.Security.Cryptography.CryptoStream>  
-  
+
+ Use the `stream` parameter to specify an object that derives from the abstract <xref:System.IO.Stream> class, which is designed to write to streams. Classes that derive from the <xref:System.IO.Stream> class include:
+
+-   <xref:System.IO.BufferedStream>
+
+-   <xref:System.IO.FileStream>
+
+-   <xref:System.IO.MemoryStream>
+
+-   <xref:System.Net.Sockets.NetworkStream>
+
+-   <xref:System.Security.Cryptography.CryptoStream>
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
-   
-  
-## Examples  
- The following example serializes an object with a <xref:System.IO.Stream> object. The example also creates an <xref:System.Xml.Serialization.XmlSerializerNamespaces> and adds two namespaces to the object. The class that defines the serialized object is also attributed with <xref:System.Xml.Serialization.XmlElementAttribute> attributes to specify the namespace for each element.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+
+
+## Examples
+ The following example serializes an object with a <xref:System.IO.Stream> object. The example also creates an <xref:System.Xml.Serialization.XmlSerializerNamespaces> and adds two namespaces to the object. The class that defines the serialized object is also attributed with <xref:System.Xml.Serialization.XmlElementAttribute> attributes to specify the namespace for each element.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Serialize3 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Serialize/source3.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize3 Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize3 Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -2792,28 +2597,28 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="namespaces">The <see cref="T:System.Xml.Serialization.XmlSerializerNamespaces" /> that contains namespaces for the generated XML document.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.IO.TextWriter" /> and references the specified namespaces.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  When the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method is invoked the public fields and read/write properties of an object are converted into XML. Methods, indexers, private fields, and read-only properties are not serialized.
-  
- Use the `textWriter` parameter to specify an object that derives from the abstract <xref:System.IO.TextWriter> class. Classes that derive from <xref:System.IO.TextWriter> class include:  
-  
--   <xref:System.IO.StreamWriter>  
--   <xref:System.IO.StringWriter>  
--   <xref:System.CodeDom.Compiler.IndentedTextWriter>  
-  
+
+ Use the `textWriter` parameter to specify an object that derives from the abstract <xref:System.IO.TextWriter> class. Classes that derive from <xref:System.IO.TextWriter> class include:
+
+-   <xref:System.IO.StreamWriter>
+-   <xref:System.IO.StringWriter>
+-   <xref:System.CodeDom.Compiler.IndentedTextWriter>
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.     
-  
-## Examples  
- The following example serializes an object with a <xref:System.IO.TextWriter>. The example also creates an <xref:System.Xml.Serialization.XmlSerializerNamespaces> object and adds two namespaces to the object. The class that defines the serialized object is also attributed with <xref:System.Xml.Serialization.XmlElementAttribute> attributes to specify the namespace for each element.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+## Examples
+ The following example serializes an object with a <xref:System.IO.TextWriter>. The example also creates an <xref:System.Xml.Serialization.XmlSerializerNamespaces> object and adds two namespaces to the object. The class that defines the serialized object is also attributed with <xref:System.Xml.Serialization.XmlElementAttribute> attributes to specify the namespace for each element.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Serialize1 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Serialize/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize1 Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize1 Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize1 Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -2895,24 +2700,24 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="namespaces">The <see cref="T:System.Xml.Serialization.XmlSerializerNamespaces" /> referenced by the object.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.Xml.XmlWriter" /> and references the specified namespaces.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  When the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method is invoked, the public fields and read/write properties of an object are converted into XML. Methods, indexers, private fields, and read-only properties are not serialized.
-  
- Use the `xmlWriter` parameter to specify an object that derives from the abstract <xref:System.Xml.XmlWriter> class, which is designed to write XML documents. The <xref:System.Xml.XmlTextWriter> derives from the <xref:System.Xml.XmlWriter>.  
-  
+
+ Use the `xmlWriter` parameter to specify an object that derives from the abstract <xref:System.Xml.XmlWriter> class, which is designed to write XML documents. The <xref:System.Xml.XmlTextWriter> derives from the <xref:System.Xml.XmlWriter>.
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.     
-  
-## Examples  
- The following example serializes an object with an <xref:System.Xml.XmlWriter>. The example also creates an <xref:System.Xml.Serialization.XmlSerializerNamespaces> and adds two namespaces to the object. Several instances of the <xref:System.Xml.Serialization.XmlElementAttribute> class are applied to the class members to specify the namespace for each element.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
+## Examples
+ The following example serializes an object with an <xref:System.Xml.XmlWriter>. The example also creates an <xref:System.Xml.Serialization.XmlSerializerNamespaces> and adds two namespaces to the object. Several instances of the <xref:System.Xml.Serialization.XmlElementAttribute> class are applied to the class members to specify the namespace for each element.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.Serialize5 Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlSerializer/Serialize/source5.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.Serialize5 Example/VB/source.vb" id="Snippet1":::
- :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize5 Example/Common/simple.xml" id="Snippet1":::  
-  
+ :::code language="xml" source="~/snippets/common/VS_Snippets_Remoting/Classic XmlSerializer.Serialize5 Example/Common/simple.xml" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -2995,18 +2800,18 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="encodingStyle">The encoding style of the serialized XML.</param>
         <summary>Serializes the specified object and writes the XML document to a file using the specified <see cref="T:System.Xml.XmlWriter" /> and references the specified namespaces and encoding style.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  When the <xref:System.Xml.Serialization.XmlSerializer.Serialize%2A> method is invoked, the public fields and read/write properties of an object are converted into XML. Methods, indexers, private fields, and read-only properties are not serialized.
-  
- Use the `xmlWriter` parameter to specify an object that derives from the abstract <xref:System.Xml.XmlWriter> class, which is designed to write XML documents. The <xref:System.Xml.XmlTextWriter> derives from the <xref:System.Xml.XmlWriter>.  
-  
- Set the `encodingStyle` parameter to "http://schemas.xmlsoap.org/soap/encoding/" for SOAP version 1.1 encoding; otherwise, set it to "http://www.w3.org/2001/12/soap-encoding" for SOAP version 1.2 encoding.  
-  
+
+ Use the `xmlWriter` parameter to specify an object that derives from the abstract <xref:System.Xml.XmlWriter> class, which is designed to write XML documents. The <xref:System.Xml.XmlTextWriter> derives from the <xref:System.Xml.XmlWriter>.
+
+ Set the `encodingStyle` parameter to "http://schemas.xmlsoap.org/soap/encoding/" for SOAP version 1.1 encoding; otherwise, set it to "http://www.w3.org/2001/12/soap-encoding" for SOAP version 1.2 encoding.
+
 > [!NOTE]
->  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.  
-  
+>  The <xref:System.Xml.Serialization.XmlSerializer> cannot serialize the following: arrays of <xref:System.Collections.ArrayList> and arrays of <xref:System.Collections.Generic.List%601>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">An error occurred during serialization. The original exception is available using the <see cref="P:System.Exception.InnerException" /> property.</exception>
@@ -3087,11 +2892,11 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
         <param name="id">For SOAP encoded messages, the base used to generate id attributes.</param>
         <summary>Serializes the specified <see cref="T:System.Object" /> and writes the XML document to a file using the specified <see cref="T:System.Xml.XmlWriter" />, XML namespaces, and encoding.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The *id* parameter supplies the base string used to create SOAP ids. By default, these are "id1", "id2" and so on. But if the parameter is set to "myBase" the generated values are "myBaseid1", "myBaseid2" and so on. This functionality is used to create unique id values across the whole SOAP message.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The *id* parameter supplies the base string used to create SOAP ids. By default, these are "id1", "id2" and so on. But if the parameter is set to "myBase" the generated values are "myBaseid1", "myBaseid2" and so on. This functionality is used to create unique id values across the whole SOAP message.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -3135,22 +2940,22 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
       <Docs>
         <summary>Occurs when the <see cref="T:System.Xml.Serialization.XmlSerializer" /> encounters an XML attribute of unknown type during deserialization.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- By default, after calling the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method, the <xref:System.Xml.Serialization.XmlSerializer> ignores XML attributes of unknown types. However, you can use this event to handle such node types.  
-  
- If the instance of the class being deserialized contains a field that returns an array of <xref:System.Xml.XmlAttribute> objects and an <xref:System.Xml.Serialization.XmlAnyAttributeAttribute> has been applied to the field, the <xref:System.Xml.Serialization.XmlSerializer.UnknownAttribute> event does not occur. Instead, all unknown XML attributes are collected into the array.  
-  
-   
-  
-## Examples  
- The following example prints information about any unknown attributes encountered while deserializing an XML document.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ By default, after calling the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method, the <xref:System.Xml.Serialization.XmlSerializer> ignores XML attributes of unknown types. However, you can use this event to handle such node types.
+
+ If the instance of the class being deserialized contains a field that returns an array of <xref:System.Xml.XmlAttribute> objects and an <xref:System.Xml.Serialization.XmlAnyAttributeAttribute> has been applied to the field, the <xref:System.Xml.Serialization.XmlSerializer.UnknownAttribute> event does not occur. Instead, all unknown XML attributes are collected into the array.
+
+
+
+## Examples
+ The following example prints information about any unknown attributes encountered while deserializing an XML document.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.UnknownAttribute Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlAttributeEventArgs/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.UnknownAttribute Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.UnknownAttribute Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAnyAttributeAttribute" />
@@ -3204,33 +3009,33 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
       <Docs>
         <summary>Occurs when the <see cref="T:System.Xml.Serialization.XmlSerializer" /> encounters an XML element of unknown type during deserialization.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- By default, after calling the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method, the <xref:System.Xml.Serialization.XmlSerializer> ignores XML attributes of unknown types. However, you can use this event to handle such node types.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ By default, after calling the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method, the <xref:System.Xml.Serialization.XmlSerializer> ignores XML attributes of unknown types. However, you can use this event to handle such node types.
+
 > [!NOTE]
->  If the <xref:System.Xml.Serialization.XmlAnyElementAttribute> is applied to a field that returns an array of <xref:System.Xml.XmlElement> objects, all unknown elements are collected in the array. In that case, the <xref:System.Xml.Serialization.XmlSerializer.UnknownElement> event does not occur.  
-  
-   
-  
-## Examples  
- The following example deserializes a class named `Group` from a file named UnknownElements.xml. Whenever an element is found in the file that has no corresponding member in the class, the <xref:System.Xml.Serialization.XmlSerializer.UnknownElement> event occurs. To try the example, paste the following XML code into a file named UnknownElements.xml.  
-  
-```  
-<?xml version="1.0" encoding="utf-8"?>  
-<Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">  
-  <GroupName>MyGroup</GroupName>  
-  <GroupSize>Large</GroupSize>  
-  <GroupNumber>444</GroupNumber>  
-  <GroupBase>West</GroupBase>  
-</Group>  
-```  
-  
+>  If the <xref:System.Xml.Serialization.XmlAnyElementAttribute> is applied to a field that returns an array of <xref:System.Xml.XmlElement> objects, all unknown elements are collected in the array. In that case, the <xref:System.Xml.Serialization.XmlSerializer.UnknownElement> event does not occur.
+
+
+
+## Examples
+ The following example deserializes a class named `Group` from a file named UnknownElements.xml. Whenever an element is found in the file that has no corresponding member in the class, the <xref:System.Xml.Serialization.XmlSerializer.UnknownElement> event occurs. To try the example, paste the following XML code into a file named UnknownElements.xml.
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GroupName>MyGroup</GroupName>
+  <GroupSize>Large</GroupSize>
+  <GroupNumber>444</GroupNumber>
+  <GroupBase>West</GroupBase>
+</Group>
+```
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/XmlSerializer.UnknownElement Example/CPP/unknownelement.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlElementEventArgs/Overview/unknownelement.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/XmlSerializer.UnknownElement Example/VB/unknownelement.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/XmlSerializer.UnknownElement Example/VB/unknownelement.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAnyElementAttribute" />
@@ -3283,20 +3088,20 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
       <Docs>
         <summary>Occurs when the <see cref="T:System.Xml.Serialization.XmlSerializer" /> encounters an XML node of unknown type during deserialization.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- By default, after calling the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method, the <xref:System.Xml.Serialization.XmlSerializer> ignores XML nodes of unknown types. However, you can use this event to handle such node types.  
-  
-   
-  
-## Examples  
- The following example prints the type of any encountered unknown node.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ By default, after calling the <xref:System.Xml.Serialization.XmlSerializer.Deserialize%2A> method, the <xref:System.Xml.Serialization.XmlSerializer> ignores XML nodes of unknown types. However, you can use this event to handle such node types.
+
+
+
+## Examples
+ The following example prints the type of any encountered unknown node.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/Classic XmlSerializer.UnknownNode Example/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlNodeEventArgs/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.UnknownNode Example/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/Classic XmlSerializer.UnknownNode Example/VB/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAnyElementAttribute" />
@@ -3351,49 +3156,49 @@ Starting in .NET Framework 3.5, the <xref:System.Xml.Serialization.XmlSerializer
       <Docs>
         <summary>Occurs during deserialization of a SOAP-encoded XML stream, when the <see cref="T:System.Xml.Serialization.XmlSerializer" /> encounters a recognized type that is not used or is unreferenced.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Xml.Serialization.XmlSerializer.UnreferencedObject> event only occurs when the <xref:System.Xml.Serialization.XmlSerializer> is used to deserialize an XML document that contains a SOAP message that conforms to section 5 of the World Wide Web Consortium document, [Simple Object Access Protocol (SOAP) 1.1](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/).  
-  
- Documents that conform to section 5 are in a special format. At the very least, such a document includes the main body of the SOAP message. However, rather than having all types defined inline in the document, some type definitions can be encoded as references to top-level elements in the document. Thus, for every element found in the main body that is a reference, there must be a corresponding element that contains the type definition. To correlate the referencing element and the type definition, the type definition has an `id` attribute set to a unique string ID and the referencing element has an `href` attribute that references the same ID.  
-  
-```  
-<Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="id1" n1:GroupName=".NET" GroupNumber="ZDI=" CreationDate="2002-05-02" xmlns:n1="http:'www.cpandl.com">  
-    <PosInt xsi:type="xsd:nonNegativeInteger">10000</PosInt>  
-    <GroupVehicle href="#id2" />  
-  </Group>  
-  <Vehicle id="id2" n1:type="Vehicle" xmlns:n1="http://www.w3.org/2001/XMLSchema-instance">  
-    <licenseNumber xmlns:q1="http://www.w3.org/2001/XMLSchema" n1:type="q1:string">1234</licenseNumber>  
-  </Vehicle>  
-```  
-  
- The <xref:System.Xml.Serialization.XmlSerializer.UnreferencedObject> event occur when there is a type definition found in the document, but no parameter in the main body references it. When the event occurs, you can retrieve the XML type of the unreferenced object by examining the <xref:System.Xml.Serialization.UnreferencedObjectEventArgs.UnreferencedObject%2A> property of the <xref:System.Xml.Serialization.UnreferencedObjectEventArgs> class. The XML ID of the object is returned by the <xref:System.Xml.Serialization.UnreferencedObjectEventArgs.UnreferencedId%2A> property.  
-  
- The <xref:System.Xml.Serialization.XmlSerializer.UnreferencedObject> event should not be confused with the <xref:System.Xml.Serialization.XmlSerializer.UnknownElement> and <xref:System.Xml.Serialization.XmlSerializer.UnknownNode> events, which occur when there is no class member that corresponds to the XML node or element type.  
-  
-   
-  
-## Examples  
- The following example adds an <xref:System.Xml.Serialization.UnreferencedObjectEventHandler> to an <xref:System.Xml.Serialization.XmlSerializer>. The event is handled by the `Serializer``_``UnreferencedObject` method. To run the example, cut and paste the following XML into a file named "UnrefObj.xml".  
-  
-```  
-<wrapper>  
-  <Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="id1" n1:GroupName=".NET" xmlns:n1="http://www.cpandl.com">  
-   </Group>  
-<Vehicle id="id2" n1:type="Vehicle" xmlns:n1="http://www.w3.org/2001/XMLSchema-instance">  
-    <licenseNumber xmlns:q1="http://www.w3.org/2001/XMLSchema" n1:type="q1:string">ABCD</licenseNumber>  
-  </Vehicle>  
-<Vehicle id="id3" n1:type="Vehicle" xmlns:n1="http://www.w3.org/2001/XMLSchema-instance">  
-    <licenseNumber xmlns:q1="http://www.w3.org/2001/XMLSchema" n1:type="q1:string">1234</licenseNumber>  
-  </Vehicle>  
-</wrapper>  
-```  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Xml.Serialization.XmlSerializer.UnreferencedObject> event only occurs when the <xref:System.Xml.Serialization.XmlSerializer> is used to deserialize an XML document that contains a SOAP message that conforms to section 5 of the World Wide Web Consortium document, [Simple Object Access Protocol (SOAP) 1.1](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/).
+
+ Documents that conform to section 5 are in a special format. At the very least, such a document includes the main body of the SOAP message. However, rather than having all types defined inline in the document, some type definitions can be encoded as references to top-level elements in the document. Thus, for every element found in the main body that is a reference, there must be a corresponding element that contains the type definition. To correlate the referencing element and the type definition, the type definition has an `id` attribute set to a unique string ID and the referencing element has an `href` attribute that references the same ID.
+
+```
+<Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="id1" n1:GroupName=".NET" GroupNumber="ZDI=" CreationDate="2002-05-02" xmlns:n1="http:'www.cpandl.com">
+    <PosInt xsi:type="xsd:nonNegativeInteger">10000</PosInt>
+    <GroupVehicle href="#id2" />
+  </Group>
+  <Vehicle id="id2" n1:type="Vehicle" xmlns:n1="http://www.w3.org/2001/XMLSchema-instance">
+    <licenseNumber xmlns:q1="http://www.w3.org/2001/XMLSchema" n1:type="q1:string">1234</licenseNumber>
+  </Vehicle>
+```
+
+ The <xref:System.Xml.Serialization.XmlSerializer.UnreferencedObject> event occur when there is a type definition found in the document, but no parameter in the main body references it. When the event occurs, you can retrieve the XML type of the unreferenced object by examining the <xref:System.Xml.Serialization.UnreferencedObjectEventArgs.UnreferencedObject%2A> property of the <xref:System.Xml.Serialization.UnreferencedObjectEventArgs> class. The XML ID of the object is returned by the <xref:System.Xml.Serialization.UnreferencedObjectEventArgs.UnreferencedId%2A> property.
+
+ The <xref:System.Xml.Serialization.XmlSerializer.UnreferencedObject> event should not be confused with the <xref:System.Xml.Serialization.XmlSerializer.UnknownElement> and <xref:System.Xml.Serialization.XmlSerializer.UnknownNode> events, which occur when there is no class member that corresponds to the XML node or element type.
+
+
+
+## Examples
+ The following example adds an <xref:System.Xml.Serialization.UnreferencedObjectEventHandler> to an <xref:System.Xml.Serialization.XmlSerializer>. The event is handled by the `Serializer``_``UnreferencedObject` method. To run the example, cut and paste the following XML into a file named "UnrefObj.xml".
+
+```
+<wrapper>
+  <Group xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="id1" n1:GroupName=".NET" xmlns:n1="http://www.cpandl.com">
+   </Group>
+<Vehicle id="id2" n1:type="Vehicle" xmlns:n1="http://www.w3.org/2001/XMLSchema-instance">
+    <licenseNumber xmlns:q1="http://www.w3.org/2001/XMLSchema" n1:type="q1:string">ABCD</licenseNumber>
+  </Vehicle>
+<Vehicle id="id3" n1:type="Vehicle" xmlns:n1="http://www.w3.org/2001/XMLSchema-instance">
+    <licenseNumber xmlns:q1="http://www.w3.org/2001/XMLSchema" n1:type="q1:string">1234</licenseNumber>
+  </Vehicle>
+</wrapper>
+```
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Remoting/UnreferencedObject Event Example/CPP/unrefobj.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/UnreferencedObjectEventArgs/Overview/unrefobj.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/UnreferencedObject Event Example/VB/unrefobj.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Remoting/UnreferencedObject Event Example/VB/unrefobj.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Xml.Serialization.XmlAttributes" />

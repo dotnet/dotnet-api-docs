@@ -65,29 +65,22 @@
     <summary>Converts a sequence of encoded bytes into a set of characters.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
+To obtain an instance of an implementation of the <xref:System.Text.Decoder> class, call the <xref:System.Text.Encoding.GetDecoder%2A> method of an <xref:System.Text.Encoding> implementation.
 
-## Remarks
- To obtain an instance of an implementation of the <xref:System.Text.Decoder> class, the application should use the <xref:System.Text.Encoding.GetDecoder%2A> method of an <xref:System.Text.Encoding> implementation.
-
- The <xref:System.Text.Decoder.GetCharCount%2A> method determines how many characters result in decoding a sequence of bytes, and the <xref:System.Text.Decoder.GetChars%2A> method performs the actual decoding. There are several versions of both of these methods available in the <xref:System.Text.Decoder> class. For more information, see <xref:System.Text.Encoding.GetChars%2A?displayProperty=nameWithType>. A <xref:System.Text.Decoder> object maintains state information between successive calls to `GetChars` or <xref:System.Text.Decoder.Convert%2A> methods so it can correctly decode byte sequences that span blocks. The <xref:System.Text.Decoder> also preserves trailing bytes at the end of data blocks and uses the trailing bytes in the next decoding operation. Therefore, <xref:System.Text.Encoding.GetDecoder%2A> and <xref:System.Text.Encoding.GetEncoder%2A> are useful for network transmission and file operations because those operations often deal with blocks of data instead of a complete data stream.
+The <xref:System.Text.Decoder.GetCharCount%2A> method determines how many characters result in decoding a sequence of bytes, and the <xref:System.Text.Decoder.GetChars%2A> method performs the actual decoding. There are several versions of both of these methods available in the <xref:System.Text.Decoder> class. For more information, see <xref:System.Text.Encoding.GetChars%2A?displayProperty=nameWithType>. A <xref:System.Text.Decoder> object maintains state information between successive calls to `GetChars` or <xref:System.Text.Decoder.Convert%2A> methods so it can correctly decode byte sequences that span blocks. The <xref:System.Text.Decoder> also preserves trailing bytes at the end of data blocks and uses the trailing bytes in the next decoding operation. Therefore, <xref:System.Text.Encoding.GetDecoder%2A> and <xref:System.Text.Encoding.GetEncoder%2A> are useful for network transmission and file operations because those operations often deal with blocks of data instead of a complete data stream.
 
 > [!NOTE]
->  When the application is done with a stream of data, it should make sure that the state information is flushed by setting the `flush` parameter to `true` in the appropriate method call. If an exception occurs or if the application switches streams, it should call <xref:System.Text.Decoder.Reset%2A> to clear the internal state of the `Decoder` object.
+> When the application is done with a stream of data, it should make sure that the state information is flushed by setting the `flush` parameter to `true` in the appropriate method call. If an exception occurs or if the application switches streams, it should call <xref:System.Text.Decoder.Reset%2A> to clear the internal state of the `Decoder` object.
+      ]]></format></remarks>
+    <example>
+      <format type="text/markdown"><![CDATA[
+The following example demonstrates the use of a <xref:System.Text.Decoder> to convert two different byte arrays into a character array. One of the character's bytes spans the arrays. This is similar to what a <xref:System.IO.StreamReader> object does internally when reading a stream.
 
-## Version Considerations
- A <xref:System.Text.Decoder> or <xref:System.Text.Encoder> object can be serialized during a conversion operation. The state of the object is retained if it is deserialized in the same version of the .NET Framework, but lost if it is deserialized in another version.
-
-
-
-## Examples
- The following example demonstrates the use of a <xref:System.Text.Decoder> to convert two different byte arrays into a character array. One of the character's bytes spans the arrays. This is similar to what a <xref:System.IO.StreamReader> object does internally when reading a stream.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic Decoder Example/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Text/Decoder/Overview/source.cs" interactive="try-dotnet" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic Decoder Example/VB/source.vb" id="Snippet1":::
-
- ]]></format>
-    </remarks>
+:::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic Decoder Example/CPP/source.cpp" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.Text/Decoder/Overview/source.cs" interactive="try-dotnet" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic Decoder Example/VB/source.vb" id="Snippet1":::
+      ]]></format>
+    </example>
     <block subset="none" type="overrides">
       <para>When your application inherits from this class, it must override all the members.</para>
     </block>
@@ -181,13 +174,13 @@
 
 ## Remarks
 
-Remember that the <xref:System.Text.Decoder> object saves state between calls to <xref:System.Text.Decoder.Convert%2A>. 
-When the application is done with a stream of data, it should set the `flush` parameter to `true` to make sure that the state information is flushed. With this setting, the decoder ignores invalid bytes at the end of the data block and clears the internal buffer. 
+Remember that the <xref:System.Text.Decoder> object saves state between calls to <xref:System.Text.Decoder.Convert%2A>.
+When the application is done with a stream of data, it should set the `flush` parameter to `true` to make sure that the state information is flushed. With this setting, the decoder ignores invalid bytes at the end of the data block and clears the internal buffer.
 Any remaining processed data that is part of a logical unit, such as the high surrogate of a surrogate pair, is converted according to the current fallback settings.
 
-The `Convert` method is designed to be used in a loop to decode an arbitrary amount of input, such as data read from a file or stream. 
+The `Convert` method is designed to be used in a loop to decode an arbitrary amount of input, such as data read from a file or stream.
 It stores the output of the decoding operation in a fixed-size buffer.
-<xref:System.Text.Decoder.GetChars%2A> will throw an exception if the output buffer isn't large enough, but <xref:System.Text.Decoder.Convert%2A> will fill as much space as possible and return the bytes read and chars written, provided the output array allows for at least two characters. 
+<xref:System.Text.Decoder.GetChars%2A> will throw an exception if the output buffer isn't large enough, but <xref:System.Text.Decoder.Convert%2A> will fill as much space as possible and return the bytes read and chars written, provided the output array allows for at least two characters.
 Also see <xref:System.Text.Encoding.GetChars%2A?displayProperty=nameWithType> for more comments.
 
  ]]></format>

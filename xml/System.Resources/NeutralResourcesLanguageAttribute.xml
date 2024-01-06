@@ -70,111 +70,7 @@
   </Attributes>
   <Docs>
     <summary>Informs the resource manager of an app's default culture. This class cannot be inherited.</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-  
-## Desktop Apps  
- In desktop apps, the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute informs the resource manager of an app's default culture and the location of its resources. By default, resources are embedded in the main app assembly, and you can use the attribute as follows. This statement specifies that the English (United States) is the app's default culture.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Resources/NeutralResourcesLanguageAttribute/Overview/example1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.resources.neutralresourceslanguageattribute/vb/example1.vb" id="Snippet1":::  
-  
- You can also use the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to indicate where <xref:System.Resources.ResourceManager> can find the resources of the default culture by providing an <xref:System.Resources.UltimateResourceFallbackLocation> enumeration value in the attribute statement. This is most commonly done to indicate that the resources reside in a satellite assembly. For example, the following statement specifies that English (United States) is the app's default or neutral culture and that its resources reside in a satellite assembly. The <xref:System.Resources.ResourceManager> object will look for them in a subdirectory named en-US.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Resources/NeutralResourcesLanguageAttribute/Overview/example2.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.resources.neutralresourceslanguageattribute/vb/example2.vb" id="Snippet2":::  
-  
-> [!TIP]
->  We recommend that you always use the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to define the default culture of your app.  
-  
- The attribute performs two roles:  
-  
--   If the default culture's resources are embedded in the app's main assembly and <xref:System.Resources.ResourceManager> has to retrieve resources that belong to the same culture as the default culture, the <xref:System.Resources.ResourceManager> automatically uses the resources located in the main assembly instead of searching for a satellite assembly. This bypasses the usual assembly probe, improves lookup performance for the first resource you load, and can reduce your working set. See [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps) for the process <xref:System.Resources.ResourceManager> uses to probe for resource files.  
-  
--   If the default culture's resources are located in a satellite assembly rather than in the main app assembly, the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute specifies the culture and the directory from which the runtime can load the resources.  
-  
-## Windows 8.x Store Apps  
- In Windows 8.x Store apps whose resources are loaded and retrieved by using the <xref:System.Resources.ResourceManager> class, the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute defines the neutral culture whose resources are used in the event of a failed probe. It does not specify the location of the resources. By default, <xref:System.Resources.ResourceManager> uses the app's package resource index (PRI) file to locate the resources of the default culture. The neutral culture that is defined by the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute is added to the end of the UI language list to simulate this effect.  
-  
- If you load and retrieve resources by using the Windows Runtime[Windows.ApplicationModel.Resources.ResourceLoader](https://go.microsoft.com/fwlink/p/?LinkId=238182) class or the types in the [Windows.ApplicationModel.Resources.Core](https://go.microsoft.com/fwlink/p/?LinkId=238194) namespace, the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute is ignored.  
-  
-   
-  
-## Examples  
- The following example uses a simple "Hello World" app to illustrate the use of the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to define a default or fallback culture. It requires the creation of separate resource files for the English (en), English (United States) (en-US), and French (France) (fr-FR) cultures. The following shows the contents of a text file named ExampleResources.txt for the English culture.  
-  
-```  
-# Resources for the default (en) culture.  
-Greeting=Hello  
-```  
-  
- To use the resource file in an app, you must use the [Resource File Generator (Resgen.exe)](/dotnet/framework/tools/resgen-exe-resource-file-generator) to convert the file from its text (.txt) format to a binary (.resources) format as follows:  
-  
-```  
-resgen ExampleResources.txt  
-```  
-  
- When the app is compiled, the binary resource file will be embedded in the main app assembly.  
-  
- The following shows the contents of a text file named ExampleResources.en-US.txt that provides resources for the English (United States) culture.  
-  
-```  
-# Resources for the en-US culture.  
-Greeting=Hi  
-```  
-  
- The text file can be converted to a binary resources file by using the [Resource File Generator (ResGen.exe)](/dotnet/framework/tools/resgen-exe-resource-file-generator) at the command line as follows:  
-  
-```  
-resgen ExampleResources.en-US.txt ExampleResources.en-US.resources  
-```  
-  
- The binary resource file should then be compiled into an assembly by using [Assembly Linker (Al.exe)](/dotnet/framework/tools/al-exe-assembly-linker) and placed in the en-US subdirectory of the app directory by issuing the following command:  
-  
-```  
-al /t:lib /embed:ExampleResources.en-US.resources /culture:en-US /out:en-us\Example.resources.dll  
-```  
-  
- The following shows the contents of a text file named ExampleResources.fr-FR.txt that provides resources for the French (France) culture.  
-  
-```  
-# Resources for the fr-FR culture.  
-Greeting=Bonjour  
-```  
-  
- The text file can be converted to a binary resource file by using ResGen.exe at the command line as follows:  
-  
-```  
-resgen ExampleResources.fr-FR.txt ExampleResources.fr-FR.resources  
-```  
-  
- The binary resources file should then be compiled into an assembly by using Assembly Linker and placed in the fr-FR subdirectory of the app directory by issuing the following command:  
-  
-```  
-al /t:lib /embed:ExampleResources.fr-FR.resources /culture:fr-FR /out:fr-FR\Example.resources.dll  
-```  
-  
- The following example provides the executable code that sets the current culture, prompts for the user's name, and displays a localized string.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Resources/NeutralResourcesLanguageAttribute/Overview/example.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.neutralresourceslanguageattribute/vb/example.vb" id="Snippet1":::  
-  
- It can be compiled by using the following command in Visual Basic:  
-  
-```  
-vbc Example.vb /resource:ExampleResources.resources  
-```  
-  
- or by using the following command in C#:  
-  
-```  
-csc Example.cs /resource:ExampleResources.resources  
-```  
-  
- ]]></format>
-    </remarks>
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-neutralresourceslanguageattribute">System.Resources.NeutralResourcesLanguageAttribute</see>.</remarks>
     <altmember cref="T:System.Resources.UltimateResourceFallbackLocation" />
     <altmember cref="P:System.Resources.ResourceManager.FallbackLocation" />
     <related type="Article" href="/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps">Packaging and Deploying Resources</related>
@@ -231,12 +127,12 @@ csc Example.cs /resource:ExampleResources.resources
         <param name="cultureName">The name of the culture that the current assembly's neutral resources were written in.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Resources.NeutralResourcesLanguageAttribute" /> class.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
-For a detailed list of culture names available on Windows systems, see the **Language tag** column in the [list of language/region names supported by Windows](https://docs.microsoft.com/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Culture names follow the standard defined by [BCP 47](https://tools.ietf.org/html/bcp47).  
-  
+For a detailed list of culture names available on Windows systems, see the **Language tag** column in the [list of language/region names supported by Windows](https://docs.microsoft.com/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Culture names follow the standard defined by [BCP 47](https://tools.ietf.org/html/bcp47).
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="cultureName" /> parameter is <see langword="null" />.</exception>
@@ -284,13 +180,13 @@ For a detailed list of culture names available on Windows systems, see the **Lan
         <param name="location">One of the enumeration values that indicates the location from which to retrieve neutral fallback resources.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Resources.NeutralResourcesLanguageAttribute" /> class with the specified ultimate resource fallback location.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use the <xref:System.Resources.NeutralResourcesLanguageAttribute> constructor with the <xref:System.Resources.UltimateResourceFallbackLocation> enumeration to specify whether the <xref:System.Resources.ResourceManager> class is to retrieve neutral fallback resources from the main app assembly (the default), or from a satellite assembly specified by the <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> and the <xref:System.Resources.ResourceManager.FallbackLocation%2A> properties.  
-  
- For a detailed list of culture names available on Windows systems, see the **Language tag** column in the [list of language/region names supported by Windows](https://docs.microsoft.com/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Culture names follow the standard defined by [BCP 47](https://tools.ietf.org/html/bcp47).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Resources.NeutralResourcesLanguageAttribute> constructor with the <xref:System.Resources.UltimateResourceFallbackLocation> enumeration to specify whether the <xref:System.Resources.ResourceManager> class is to retrieve neutral fallback resources from the main app assembly (the default), or from a satellite assembly specified by the <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> and the <xref:System.Resources.ResourceManager.FallbackLocation%2A> properties.
+
+ For a detailed list of culture names available on Windows systems, see the **Language tag** column in the [list of language/region names supported by Windows](https://docs.microsoft.com/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Culture names follow the standard defined by [BCP 47](https://tools.ietf.org/html/bcp47).
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -343,12 +239,12 @@ For a detailed list of culture names available on Windows systems, see the **Lan
         <summary>Gets the culture name.</summary>
         <value>The name of the default culture for the main assembly.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks
- 
+
 For a detailed list of culture names available on Windows systems, see the **Language tag** column in the [list of language/region names supported by Windows](https://docs.microsoft.com/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Culture names follow the standard defined by [BCP 47](https://tools.ietf.org/html/bcp47).
-  
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Globalization.CultureInfo.Name" />
