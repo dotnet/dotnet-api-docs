@@ -77,63 +77,7 @@
   <Docs>
     <typeparam name="T">The type of items in the <see cref="T:System.Span`1" />.</typeparam>
     <summary>Provides a type-safe and memory-safe representation of a contiguous region of arbitrary memory.</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[  
-
-`Span<T>` is a [ref struct](/dotnet/csharp/language-reference/builtin-types/ref-struct) that is allocated on the stack rather than on the managed heap. Ref struct types have a number of restrictions to ensure that they cannot be promoted to the managed heap, including that they can't be boxed, they can't be assigned to variables of type <xref:System.Object>, `dynamic` or to any interface type, they can't be fields in a reference type, and they can't be used across `await` and `yield` boundaries. In addition, calls to two methods, <xref:System.Span%601.Equals(System.Object)> and <xref:System.Span%601.GetHashCode%2A>, throw a <xref:System.NotSupportedException>. 
-
-> [!IMPORTANT]
-> Because it is a stack-only type, `Span<T>` is unsuitable for many scenarios that require storing references to buffers on the heap. This is true, for example, of routines that make asynchronous method calls. For such scenarios, you can use the complementary <xref:System.Memory%601?displayProperty=nameWithType> and <xref:System.ReadOnlyMemory%601?displayProperty=nameWithType> types.
-
-For spans that represent immutable or read-only structures, use <xref:System.ReadOnlySpan%601?displayProperty=nameWithType>.
-
-## Span\<T> and memory
-
-A `Span<T>` represents a contiguous region of arbitrary memory. A `Span<T>` instance is often used to hold the elements of an array or a portion of an array. Unlike an array, however, a `Span<T>` instance can point to managed memory, native memory, or memory managed on the stack. The following example creates a `Span<Byte>` from an array:
-
-:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet1":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet1":::
-     
-The following example creates a `Span<Byte>` from 100 bytes of native memory:
-
-:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet2":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet2":::
-
-The following example uses the C# [stackalloc](/dotnet/csharp/language-reference/keywords/stackalloc) keyword to allocate 100 bytes of memory on the stack:
-
-:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet3":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet3":::
-
-Because `Span<T>` is an abstraction over an arbitrary block of memory, methods of the `Span<T>` type and methods with `Span<T>` parameters operate on any `Span<T>` object regardless of the kind of memory it encapsulates. For example, each of the separate sections of code that initialize the span and calculate the sum of its elements can be changed into single initialization and calculation methods, as the following example illustrates:
-
-:::code language="csharp" source="~/snippets/csharp/System/Span/Overview/program.cs" id="Snippet4":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Span/Overview/program.fs" id="Snippet4":::
-
-## Span\<T> and arrays
-
-When it wraps an array, `Span<T>` can wrap an entire array, as it did in the examples in the [Span\<T> and memory](#spant-and-memory) section. Because it supports slicing, `Span<T>` can also point to any contiguous range within the array.  
-
-The following example creates a slice of the middle five elements of a 10-element integer array. Note that the code doubles the values of each integer in the slice. As the output shows, the changes made by the span are reflected in the values of the array.
-
-:::code language="csharp" source="~/snippets/csharp/System/Span/Slice/Program.cs":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Span/Slice/Program.fs":::
-
-## Span\<T> and slices
-
-`Span<T>` includes two overloads of the <xref:System.Span%601.Slice%2A> method that form a slice out of the current span that starts at a specified index. This makes it possible to treat the data in a `Span<T>` as a set of logical chunks that can be processed as needed by portions of a data processing pipeline with minimal performance impact. For example, since modern server protocols are often text-based, manipulation of strings and substrings is particularly important. In the <xref:System.String> class, the major method for extracting substrings is <xref:System.String.Substring%2A>. For data pipelines that rely on extensive string manipulation, its use offers some performance penalties, since it:
-
-1. Creates a new string to hold the substring.
-
-2. Copies a subset of the characters from the original string to the new string.
-
-This allocation and copy operation can be eliminated by using either `Span<T>` or <xref:System.ReadOnlySpan%601>, as the following example shows:
-
-:::code language="csharp" source="~/snippets/csharp/System/Span/Slice/Program2.cs":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Span/Slice/Program2.fs":::
-
-
-      ]]></format>
-    </remarks>
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-span{t}">Supplemental API remarks for Span&lt;T&gt;</see>.</remarks>
     <related type="article" href="/dotnet/standard/memory-and-spans/">Memory- and span-related types</related>
     <related type="article" href="/dotnet/standard/memory-and-spans/memory-t-usage-guidelines">Memory&lt;T&gt; and Span&lt;T&gt; usage guidelines</related>
   </Docs>
@@ -205,7 +149,7 @@ This allocation and copy operation can be eliminated by using either `Span<T>` o
         <param name="array">The array from which to create the <see cref="T:System.Span`1" /> object. </param>
         <summary>Creates a new <see cref="T:System.Span`1" /> object over the entirety of a specified array.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 If `array` is `null`, this constructor returns a `null` `Span<T>`.
 
@@ -257,9 +201,9 @@ If `array` is `null`, this constructor returns a `null` `Span<T>`.
         <param name="length">The number of <typeparamref name="T" /> elements to be included in the <see cref="T:System.Span`1" />.</param>
         <summary>Creates a new <see cref="T:System.Span`1" /> object  from a specified number of <typeparamref name="T" /> elements starting at a specified memory address.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-        This constructor should be used with care, since it creates arbitrarily typed `T`s from a `void*`-typed block of memory, and `length` is not checked. However, if the constructor succeeds in creating a new <xref:System.Span%601> object, all subsequent uses are correct.        
+        This constructor should be used with care, since it creates arbitrarily typed `T`s from a `void*`-typed block of memory, and `length` is not checked. However, if the constructor succeeds in creating a new <xref:System.Span%601> object, all subsequent uses are correct.
 
       ]]></format>
         </remarks>
@@ -366,9 +310,9 @@ This method returns `default` when `array` is `null`.
       <Docs>
         <summary>Clears the contents of this <see cref="T:System.Span`1" /> object.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-The `Clear` method sets the items in the <xref:System.Span%601> object to their default values. It does not remove items from the <xref:System.Span%601>.  
+The `Clear` method sets the items in the <xref:System.Span%601> object to their default values. It does not remove items from the <xref:System.Span%601>.
 
          ]]></format>
         </remarks>
@@ -415,7 +359,7 @@ The `Clear` method sets the items in the <xref:System.Span%601> object to their 
         <param name="destination">The destination <see cref="T:System.Span`1" /> object.</param>
         <summary>Copies the contents of this <see cref="T:System.Span`1" /> into a destination <see cref="T:System.Span`1" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 This method copies all of `source` to `destination` even if `source` and `destination` overlap.
 
@@ -518,12 +462,12 @@ This method copies all of `source` to `destination` even if `source` and `destin
         <summary>Calls to this method are not supported.</summary>
         <returns>Calls to this method are not supported.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 Calls to the <xref:System.Span%601.Equals%2A> method are not supported. Calls to the <xref:System.Span%601.Equals%2A> methods produce either of two results:
 
 - If `obj` is a <xref:System.Span%601>, the method call generates compiler error CS1503: "cannot convert from 'System.Span' to 'object'." This is because <xref:System.Span%601> is a [ref struct](/dotnet/csharp/language-reference/builtin-types/ref-struct) that cannot be boxed and therefore cannot be converted to an <xref:System.Object>.
 
-- If the type of `obj` is not a <xref:System.Span%601>, the method call throws a <xref:System.NotSupportedException>. 
+- If the type of `obj` is not a <xref:System.Span%601>, the method call throws a <xref:System.NotSupportedException>.
 
 To compare two <xref:System.Span%601> objects for equality, use the <xref:System.Span%601.op_Equality%2A> comparison operator.
 
@@ -600,7 +544,7 @@ To compare two <xref:System.Span%601> objects for equality, use the <xref:System
         <summary>Returns an enumerator for this <see cref="T:System.Span`1" />.</summary>
         <returns>An enumerator for this span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, you can use the C# `foreach` statement and the Visual Basic `For Each`...`Next` construct to enumerate a <xref:System.Span%601>.
 
        ]]></format>
@@ -688,7 +632,7 @@ Instead of calling the <xref:System.Span%601.GetEnumerator%2A> method directly, 
       <Parameters />
       <Docs>
         <summary>Returns a reference to an object of type T that can be used for pinning.
-        
+
 This method is intended to support .NET compilers and is not intended to be called by user code.</summary>
         <returns>A reference to the element of the span at index 0, or <see langword="null" /> if the span is empty.</returns>
         <remarks>
@@ -869,7 +813,7 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <returns>
           <see langword="true" /> if the two <see cref="T:System.Span`1" /> objects are equal; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 Two <xref:System.Span%601> objects are equal if they have the same length and the corresponding elements of `left` and `right` point to the same memory. Note that the test for equality does *not* attempt to determine whether the contents are equal.
 
@@ -1062,9 +1006,9 @@ Two <xref:System.Span%601> objects are equal if they have the same length and th
         <returns>
           <see langword="true" /> if the two <see cref="T:System.Span`1" /> objects are not equal; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-Two <xref:System.Span%601> objects are not equal if they have different lengths or if the corresponding elements of `left` and `right` do not point to the same memory. 
+Two <xref:System.Span%601> objects are not equal if they have different lengths or if the corresponding elements of `left` and `right` do not point to the same memory.
 
          ]]></format>
         </remarks>
@@ -1182,7 +1126,7 @@ Two <xref:System.Span%601> objects are not equal if they have different lengths 
         <summary>Copies the contents of this span into a new array.</summary>
         <returns>An array containing the data in the current span.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 This method performs a heap allocation and therefore should be avoided if possible. Heap allocations are expected in APIs that work with arrays. Using such APIs is unavoidable if an alternative API overload that takes a <xref:System.Span%601> does not exist.
 
@@ -1222,7 +1166,7 @@ This method performs a heap allocation and therefore should be avoided if possib
         <summary>Returns the string representation of this <see cref="T:System.Span`1" /> object.</summary>
         <returns>The string representation of this <see cref="T:System.Span`1" /> object.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 For a `Span<Char>`, the `ToString` method returns a <xref:System.String> that contains the characters pointed to by the <xref:System.Span%601>. Otherwise, it returns a <xref:System.String> with the name of the type and the number of elements that the <xref:System.Span%601> contains.
 
        ]]></format>
@@ -1272,7 +1216,7 @@ For a `Span<Char>`, the `ToString` method returns a <xref:System.String> that co
         <returns>
           <see langword="true" /> if the copy operation succeeded; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 This method copies all of `source` to `destination` even if `source` and `destination` overlap.
 
