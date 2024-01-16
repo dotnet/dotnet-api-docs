@@ -25,13 +25,7 @@ public class rfc2898test
             //<SNIPPET6>
             string pwd1 = passwordargs[0];
             // Create a byte array to hold the random value.
-            byte[] salt1 = new byte[8];
-            using (RNGCryptoServiceProvider rngCsp = new
-RNGCryptoServiceProvider())
-            {
-                // Fill the array with a random value.
-                rngCsp.GetBytes(salt1);
-            }
+            byte[] salt1 = RandomNumberGenerator.GetBytes(8);
 
             //data1 can be a string or contents of a file.
             string data1 = "Some test data";
@@ -43,9 +37,8 @@ RNGCryptoServiceProvider())
             try
             {
                 //<SNIPPET4>
-                Rfc2898DeriveBytes k1 = new Rfc2898DeriveBytes(pwd1, salt1,
-myIterations);
-                Rfc2898DeriveBytes k2 = new Rfc2898DeriveBytes(pwd1, salt1);
+                Rfc2898DeriveBytes k1 = new Rfc2898DeriveBytes(pwd1, salt1, myIterations, HashAlgorithmName.SHA256);
+                Rfc2898DeriveBytes k2 = new Rfc2898DeriveBytes(pwd1, salt1, myIterations, HashAlgorithmName.SHA256);
                 //</SNIPPET4>
                 // Encrypt the data.
                 Aes encAlg = Aes.Create();
