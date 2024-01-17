@@ -13,8 +13,6 @@ public class Example
             { "the", "fox", "jumps", "over", "the", "dog" };
         LinkedList<string> sentence = new LinkedList<string>(words);
         Display(sentence, "The linked list values:");
-        Console.WriteLine("sentence.Contains(\"jumps\") = {0}",
-            sentence.Contains("jumps"));
         // </Snippet2>
 
         // Add the word 'today' to the beginning of the linked list.
@@ -134,13 +132,18 @@ public class Example
         //</Snippet10>
 
         //<Snippet11>
+        Console.WriteLine("Test 17: linked list Contains 'jumps' = {0}",
+            sentence.Contains("jumps"));
+        //</Snippet11>
+        
+        //<Snippet12>
         // Release all the nodes.
         sentence.Clear();
 
         Console.WriteLine();
-        Console.WriteLine("Test 17: Clear linked list. Contains 'jumps' = {0}",
+        Console.WriteLine("Test 18: Cleared linked list Contains 'jumps' = {0}",
             sentence.Contains("jumps"));
-        //</Snippet11>
+        //</Snippet12>
 
         Console.ReadLine();
     }
@@ -248,6 +251,8 @@ public class Example
 //lazy
 //rhinoceros
 
-//Test 17: Clear linked list. Contains 'jumps' = False
+//Test 17: linked list Contains 'jumps'= True
+
+//Test 18: Cleared linked list Contains 'jumps'  = False
 //
 // </Snippet1>
