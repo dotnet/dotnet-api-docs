@@ -2830,31 +2830,19 @@
         <param name="progID">The programmatic identifier (ProgID) of the object that was requested.</param>
         <summary>Obtains a running instance of the specified object from the running object table (ROT).</summary>
         <returns>The object that was requested; otherwise <see langword="null" />. You can cast this object to any COM interface that it supports.</returns>
-        <remarks>
+        <remarks>For more information about this API, see &lt;see href="/dotnet/fundamentals/runtime-libraries/system-runtime-interopservices-marshal-getactiveobject"&gt;Supplemental API remarks for System.Runtime.InteropServices.Marshal.GetActiveObject&lt;/see&gt;.</remarks>
+        <example>
           <format type="text/markdown"><![CDATA[
+The following example was run on a computer that was configured with a running instance of Microsoft Word. There were no instances of Microsoft Excel running.
 
-## Remarks
- <xref:System.Runtime.InteropServices.Marshal.GetActiveObject%2A> exposes the COM [GetActiveObject](/windows/win32/api/oleauto/nf-oleauto-getactiveobject) function from OLEAUT32.DLL; however, the latter expects a class identifier (CLSID) instead of the programmatic identifier (`ProgID`) expected by this method. To obtain a running instance of a COM object without a registered `ProgID`, use platform invoke to define the COM [GetActiveObject](/windows/win32/api/oleauto/nf-oleauto-getactiveobject) function. For a description of platform invoke, see [Consuming Unmanaged DLL Functions](/dotnet/framework/interop/consuming-unmanaged-dll-functions).
+The example calls <xref:System.Runtime.InteropServices.Marshal.GetActiveObject%2A> twice. The first call tries to retrieve a reference to an instance of Microsoft Word (an instance of the `Word.Application` object). The second call tries to retrieve a reference to an instance of Microsoft Excel (an instance of an `Excel.Application` object).
 
-## ProgID and CLSID
- Keys in the HKEY_CLASSES_ROOT subtree of the registry contain a variety of subkey types. Most of the subkeys are ProgIDs, which map a user-friendly string to a CLSID. Applications often use these human-readable strings instead of the numeric CLSIDs. Often, a component has a version-independent ProgID that is mapped to the latest version of the component that is installed on the system.
+The code retrieves a reference to an instance of Microsoft Word successfully. However, because Microsoft Excel is not running, the attempt to retrieve the second object raises a <xref:System.Runtime.InteropServices.COMException>.
 
- Applications and components primarily use ProgIDs to retrieve their corresponding CLSIDs.
-
-
-
-## Examples
- The following example was run on a computer that was configured with a running instance of Microsoft Word. There were no instances of Microsoft Excel running.
-
- The example calls <xref:System.Runtime.InteropServices.Marshal.GetActiveObject%2A> twice. The first call tries to retrieve a reference to an instance of Microsoft Word (an instance of the `Word.Application` object). The second call tries to retrieve a reference to an instance of Microsoft Excel (an instance of an `Excel.Application` object).
-
- The code retrieves a reference to an instance of Microsoft Word successfully. However, because Microsoft Excel is not running, the attempt to retrieve the second object raises a <xref:System.Runtime.InteropServices.COMException>.
-
- :::code language="csharp" source="~/snippets/csharp/System.Runtime.InteropServices/Marshal/GetActiveObject/marshal.getactiveobject.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.interopservices.marshal.getactiveobject/vb/marshal.getactiveobject.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+:::code language="csharp" source="~/snippets/csharp/System.Runtime.InteropServices/Marshal/GetActiveObject/marshal.getactiveobject.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.interopservices.marshal.getactiveobject/vb/marshal.getactiveobject.vb" id="Snippet1":::
+          ]]></format>
+        </example>
         <exception cref="T:System.Runtime.InteropServices.COMException">The object was not found.</exception>
       </Docs>
     </Member>

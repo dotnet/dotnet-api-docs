@@ -3283,52 +3283,16 @@ The value of this constant is 100.
         <param name="s">A string that specifies the time interval to convert.</param>
         <summary>Converts the string representation of a time interval to its <see cref="T:System.TimeSpan" /> equivalent.</summary>
         <returns>A time interval that corresponds to <paramref name="s" />.</returns>
-        <remarks>
+        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-timespan-parse">Supplemental API remarks for System.TimeSpan.Parse</see>.</remarks>
+        <example>
           <format type="text/markdown"><![CDATA[
+The following example uses the <xref:System.TimeSpan.Parse%2A> method to convert each element in a string array to a <xref:System.TimeSpan> value. It changes the current system culture to Croatian - Croatia ("hr-HR") and English - United States ("en-US") to illustrate how the current system culture affects the parsing operation.
 
-## Remarks
- The `s` parameter contains a time interval specification in the form:
-
- [*ws*][-]{ *d* &#124; [*d*.]*hh*:*mm*[:*ss*[.*ff*]] }[*ws*]
-
- Elements in square brackets ([ and ]) are optional. One selection from the list of alternatives enclosed in braces ({ and }) and separated by vertical bars (&#124;) is required. The following table describes each element.
-
-|Element|Description|
-|-------------|-----------------|
-|*ws*|Optional white space.|
-|-|An optional minus sign, which indicates a negative <xref:System.TimeSpan>.|
-|*d*|Days, ranging from 0 to 10675199.|
-|.|A culture-sensitive symbol that separates days from hours. The invariant format uses a period (".") character.|
-|*hh*|Hours, ranging from 0 to 23.|
-|:|The culture-sensitive time separator symbol. The invariant format uses a colon (":") character.|
-|*mm*|Minutes, ranging from 0 to 59.|
-|*ss*|Optional seconds, ranging from 0 to 59.|
-|*.*|A culture-sensitive symbol that separates seconds from fractions of a second. The invariant format uses a period (".") character.|
-|*ff*|Optional fractional seconds, consisting of one to seven decimal digits.|
-
-If the `s` argument is not a day value only, it must include an hours and a minutes component; other components are optional. If they are present, the values of each time component must fall within a specified range. For example, the value of *hh*, the hours component, must be between 0 and 23. Because of this, passing "23:00:00" to the <xref:System.TimeSpan.Parse%2A> method returns a time interval of 23 hours. On the other hand, passing "24:00:00" returns a time interval of 24 days. Because "24" is outside the range of the hours component, it is interpreted as the days component.
-
- The components of `s` must collectively specify a time interval that is greater than or equal to <xref:System.TimeSpan.MinValue?displayProperty=nameWithType> and less than or equal to <xref:System.TimeSpan.MaxValue?displayProperty=nameWithType>.
-
- The <xref:System.TimeSpan.Parse%28System.String%29> method tries to parse `s` by using each of the culture-specific formats for the current culture.
-
-## Notes to callers
-
-When a time interval component in the string to be parsed contains more than seven digits, parsing operations in the .NET Framework 3.5 and earlier versions may behave differently from parsing operations in the .NET Framework 4 and later versions. In some cases, parsing operations that succeed in the .NET Framework 3.5 and earlier versions may fail and throw an <xref:System.OverflowException> in the .NET Framework 4 and later. In other cases, parsing operations that throw a <xref:System.FormatException> in the .NET Framework 3.5 and earlier versions may fail and throw an <xref:System.OverflowException> in the .NET Framework 4 and later. The following example illustrates both scenarios.
-
-:::code language="csharp" source="~/snippets/csharp/System/TimeSpan/Parse/parsefailure1.cs" interactive="try-dotnet-method" id="Snippet3":::
-:::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/Parse/parsefailure1.fs" id="Snippet3":::
-:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.timespan.parse/vb/parsefailure1.vb" id="Snippet3":::
-
-## Examples
- The following example uses the <xref:System.TimeSpan.Parse%2A> method to convert each element in a string array to a <xref:System.TimeSpan> value. It changes the current system culture to Croatian - Croatia ("hr-HR") and English - United States ("en-US") to illustrate how the current system culture affects the parsing operation.
-
- :::code language="csharp" source="~/snippets/csharp/System/TimeSpan/Parse/parse1.cs" interactive="try-dotnet" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/Parse/parse1.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.timespan.parse/vb/parse1.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+:::code language="csharp" source="~/snippets/csharp/System/TimeSpan/Parse/parse1.cs" interactive="try-dotnet" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/Parse/parse1.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.timespan.parse/vb/parse1.vb" id="Snippet1":::
+          ]]></format>
+        </example>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="s" /> is <see langword="null" />.</exception>
         <exception cref="T:System.FormatException">
@@ -3454,60 +3418,28 @@ When a time interval component in the string to be parsed contains more than sev
         <returns>A time interval that corresponds to <paramref name="input" />, as specified by <paramref name="formatProvider" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
+This method tries to parse `input` by using each of the culture-specific formats for the culture specified by `formatProvider`.
 
-## Remarks
- The `input` parameter contains a time interval specification in the form:
+The `formatProvider` parameter is an <xref:System.IFormatProvider> implementation that provides culture-specific information about the format of the returned string. The `formatProvider` parameter can be any of the following:
 
- [*ws*][-]{ *d* &#124; [*d*.]*hh*:*mm*[:*ss*[.*ff*]] }[*ws*]
+- A <xref:System.Globalization.CultureInfo> object that represents the culture whose formatting conventions are to be reflected in the returned string. The <xref:System.Globalization.DateTimeFormatInfo> object returned by the <xref:System.Globalization.CultureInfo.DateTimeFormat%2A?displayProperty=nameWithType> property defines the formatting of the returned string.
+- A <xref:System.Globalization.DateTimeFormatInfo> object that defines the formatting of the returned string.
+- A custom object that implements the <xref:System.IFormatProvider> interface. Its <xref:System.IFormatProvider.GetFormat%2A?displayProperty=nameWithType> method returns a <xref:System.Globalization.DateTimeFormatInfo> object that provides formatting information.
 
- Elements in square brackets ([ and ]) are optional; one selection from the list of alternatives enclosed in braces ({ and }) and separated by vertical bars (&#124;) is required. The following table describes each element.
+If `formatProvider` is `null`, the <xref:System.Globalization.DateTimeFormatInfo> object that is associated with the current culture is used.
 
-|Element|Description|
-|-------------|-----------------|
-|*ws*|Optional white space.|
-|-|An optional minus sign, which indicates a negative <xref:System.TimeSpan>.|
-|*d*|Days, ranging from 0 to 10675199.|
-|.|A culture-sensitive symbol that separates days from hours. The default value is a period (".") character.|
-|*hh*|Hours, ranging from 0 to 23.|
-|:|The culture-sensitive time separator symbol.|
-|*mm*|Minutes, ranging from 0 to 59.|
-|*ss*|Optional seconds, ranging from 0 to 59.|
-|.|A culture-sensitive symbol that separates seconds from fractions of a second. The default value is a period (".") character.|
-|*ff*|Optional fractional seconds, consisting of one to seven decimal digits.|
-
-If the `input` argument is not a day value only, it must include an hours and a minutes component; other components are optional. If they are present, the values of each time component must fall within a specified range. For example, the value of *hh*, the hours component, must be between 0 and 23. Because of this, passing "23:00:00" to the <xref:System.TimeSpan.Parse%2A> method returns a time interval of 23 hours. On the other hand, passing "24:00:00" returns a time interval of 24 days. Because "24" is outside the range of the hours component, it is interpreted as the days component.
-
- The components of `input` must collectively specify a time interval that is greater than or equal to <xref:System.TimeSpan.MinValue?displayProperty=nameWithType> and less than or equal to <xref:System.TimeSpan.MaxValue?displayProperty=nameWithType>.
-
- The <xref:System.TimeSpan.Parse%28System.String%29> method tries to parse `input` by using each of the culture-specific formats for the culture specified by `formatProvider`.
-
- The `formatProvider` parameter is an <xref:System.IFormatProvider> implementation that provides culture-specific information about the format of the returned string. The `formatProvider` parameter can be any of the following:
-
--   A <xref:System.Globalization.CultureInfo> object that represents the culture whose formatting conventions are to be reflected in the returned string. The <xref:System.Globalization.DateTimeFormatInfo> object returned by the <xref:System.Globalization.CultureInfo.DateTimeFormat%2A?displayProperty=nameWithType> property defines the formatting of the returned string.
-
--   A <xref:System.Globalization.DateTimeFormatInfo> object that defines the formatting of the returned string.
-
--   A custom object that implements the <xref:System.IFormatProvider> interface. Its <xref:System.IFormatProvider.GetFormat%2A?displayProperty=nameWithType> method returns a <xref:System.Globalization.DateTimeFormatInfo> object that provides formatting information.
-
- If `formatProvider` is `null`, the <xref:System.Globalization.DateTimeFormatInfo> object that is associated with the current culture is used.
-
-## Notes to callers
-
-When a time interval component in the string to be parsed contains more than seven digits, parsing operations in the .NET Framework 3.5 and earlier versions may behave differently from parsing operations in the .NET Framework 4 and later versions. In some cases, parsing operations that succeed in the .NET Framework 3.5 and earlier versions may fail and throw an <xref:System.OverflowException> in the .NET Framework 4 and later. In other cases, parsing operations that throw a <xref:System.FormatException> in the .NET Framework 3.5 and earlier versions may fail and throw an <xref:System.OverflowException> in the .NET Framework 4 and later. The following example illustrates both scenarios.
-
-:::code language="csharp" source="~/snippets/csharp/System/TimeSpan/Parse/parsefailure1.cs" interactive="try-dotnet-method" id="Snippet3":::
-:::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/Parse/parsefailure1.fs" id="Snippet3":::
-:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.timespan.parse/vb/parsefailure1.vb" id="Snippet3":::
-
-## Examples
- The following example defines an array of <xref:System.Globalization.CultureInfo> objects, and uses each object in calls to the <xref:System.TimeSpan.Parse%28System.String%2CSystem.IFormatProvider%29> method to parse the elements in a string array. The example illustrates how the conventions of a specific culture influence the formatting operation.
+For more information about this API, see [Supplemental API remarks for System.TimeSpan.Parse](/dotnet/fundamentals/runtime-libraries/system-timespan-parse).
+          ]]></format>
+        </remarks>
+        <example>
+          <format type="text/markdown"><![CDATA[
+The following example defines an array of <xref:System.Globalization.CultureInfo> objects, and uses each object in calls to the <xref:System.TimeSpan.Parse%28System.String%2CSystem.IFormatProvider%29> method to parse the elements in a string array. The example illustrates how the conventions of a specific culture influence the formatting operation.
 
  :::code language="csharp" source="~/snippets/csharp/System/TimeSpan/Parse/parse2.cs" interactive="try-dotnet" id="Snippet2":::
  :::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/Parse/parse2.fs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.timespan.parse/vb/parse2.vb" id="Snippet2":::
-
- ]]></format>
-        </remarks>
+          ]]></format>
+        </example>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="input" /> is <see langword="null" />.</exception>
         <exception cref="T:System.FormatException">
@@ -5669,51 +5601,16 @@ The <xref:System.TimeSpan.TotalNanoseconds> property represents whole and fracti
         <summary>Converts the string representation of a time interval to its <see cref="T:System.TimeSpan" /> equivalent and returns a value that indicates whether the conversion succeeded.</summary>
         <returns>
           <see langword="true" /> if <paramref name="s" /> was converted successfully; otherwise, <see langword="false" />. This operation returns <see langword="false" /> if the <paramref name="s" /> parameter is <see langword="null" /> or <see cref="F:System.String.Empty" />, has an invalid format, represents a time interval that is less than <see cref="F:System.TimeSpan.MinValue">TimeSpan.MinValue</see> or greater than <see cref="F:System.TimeSpan.MaxValue">TimeSpan.MaxValue</see>, or has at least one days, hours, minutes, or seconds component outside its valid range.</returns>
-        <remarks>
+        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-timespan-tryparse">Supplemental API remarks for TimeSpan.TryParse</see>.</remarks>
+        <example>
           <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.TimeSpan.TryParse%2A> method is like the <xref:System.TimeSpan.Parse%28System.String%29?displayProperty=nameWithType> method, except that it does not throw an exception if the conversion fails.
-
- The `s` parameter contains a time interval specification in the form:
-
- [*ws*][-]{ *d* &#124; *d*.*hh*:*mm*[:*ss*[.*ff*]] &#124; *hh*:*mm*[:*ss*[.*ff*]] }[*ws*]
-
- Elements in square brackets ([ and ]) are optional. One selection from the list of alternatives enclosed in braces ({ and }) and separated by vertical bars (&#124;) is required. The following table describes each element.
-
-|Element|Description|
-|-------------|-----------------|
-|*ws*|Optional white space.|
-|-|An optional minus sign, which indicates a negative <xref:System.TimeSpan>.|
-|*d*|Days, ranging from 0 to 10675199.|
-|.|A culture-sensitive symbol that separates days from hours. The invariant format uses a period (".") character.|
-|*hh*|Hours, ranging from 0 to 23.|
-|:|The culture-sensitive time separator symbol. The invariant format uses a colon (":") character.|
-|*mm*|Minutes, ranging from 0 to 59.|
-|*ss*|Optional seconds, ranging from 0 to 59.|
-|.|A culture-sensitive symbol that separates seconds from fractions of a second. The invariant format uses a period (".") character.|
-|*ff*|Optional fractional seconds, consisting of one to seven decimal digits.|
-
- The components of `s` must collectively specify a time interval that is greater than or equal to <xref:System.TimeSpan.MinValue?displayProperty=nameWithType> and less than or equal to <xref:System.TimeSpan.MaxValue?displayProperty=nameWithType>.
-
- The <xref:System.TimeSpan.Parse%28System.String%29> method tries to parse `s` by using each of the culture-specific formats for the current culture.
-
-## Notes to callers
-
-In some cases, when a time interval component in the string to be parsed contains more than seven digits, parsing operations that succeed in the .NET Framework 3.5 and earlier versions may fail and throw an <xref:System.OverflowException> in the .NET Framework 4 and later versions. The following example illustrates this scenario.
-:::code language="csharp" source="~/snippets/csharp/System/TimeSpan/TryParse/tryparsefailure1.cs" id="Snippet3":::
-:::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/TryParse/tryparsefailure1.fs" id="Snippet3":::
-:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeSpan.TryParse/vb/tryparsefailure1.vb" id="Snippet3":::
-
-## Examples
- The following example uses the <xref:System.TimeSpan.TryParse%2A> method to create <xref:System.TimeSpan> objects from valid <xref:System.TimeSpan> strings and to indicate when the parse operation has failed because the time span string is invalid.
+The following example uses the <xref:System.TimeSpan.TryParse%2A> method to create <xref:System.TimeSpan> objects from valid <xref:System.TimeSpan> strings and to indicate when the parse operation has failed because the time span string is invalid.
 
  :::code language="csharp" source="~/snippets/csharp/System/TimeSpan/TryParse/TryParse1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/TryParse/TryParse1.fs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeSpan.TryParse/vb/TryParse1.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+          ]]></format>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="TryParse">
@@ -5829,62 +5726,16 @@ In some cases, when a time interval component in the string to be parsed contain
         <summary>Converts the string representation of a time interval to its <see cref="T:System.TimeSpan" /> equivalent by using the specified culture-specific formatting information, and returns a value that indicates whether the conversion succeeded.</summary>
         <returns>
           <see langword="true" /> if <paramref name="input" /> was converted successfully; otherwise, <see langword="false" />. This operation returns <see langword="false" /> if the <paramref name="input" /> parameter is <see langword="null" /> or <see cref="F:System.String.Empty" />, has an invalid format, represents a time interval that is less than <see cref="F:System.TimeSpan.MinValue">TimeSpan.MinValue</see> or greater than <see cref="F:System.TimeSpan.MaxValue">TimeSpan.MaxValue</see>, or has at least one days, hours, minutes, or seconds component outside its valid range.</returns>
-        <remarks>
+        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-timespan-tryparse">Supplemental API remarks for TimeSpan.TryParse</see>.</remarks>
+        <example>
           <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.TimeSpan.TryParse%28System.String%2CSystem.IFormatProvider%2CSystem.TimeSpan%40%29> method is like the <xref:System.TimeSpan.Parse%28System.String%2CSystem.IFormatProvider%29> method, except that it does not throw an exception if the conversion fails.
-
- The `input` parameter contains a time interval specification in the form:
-
- [*ws*][-]{ *d* &#124; *d*.*hh*:*mm*[:*ss*[.*ff*]] &#124; *hh*:*mm*[:*ss*[.*ff*]] }[*ws*]
-
- Elements in square brackets ([ and ]) are optional. One selection from the list of alternatives enclosed in braces ({ and }) and separated by vertical bars (&#124;) is required. The following table describes each element.
-
-|Element|Description|
-|-------------|-----------------|
-|*ws*|Optional white space.|
-|-|An optional minus sign, which indicates a negative <xref:System.TimeSpan>.|
-|*d*|Days, ranging from 0 to 10675199.|
-|.|A culture-sensitive symbol that separates days from hours. The invariant format uses a period (".") character.|
-|*hh*|Hours, ranging from 0 to 23.|
-|:|The culture-sensitive time separator symbol. The invariant format uses a colon (":") character.|
-|*mm*|Minutes, ranging from 0 to 59.|
-|*ss*|Optional seconds, ranging from 0 to 59.|
-|.|A culture-sensitive symbol that separates seconds from fractions of a second. The invariant format uses a period (".") character.|
-|*ff*|Optional fractional seconds, consisting of one to seven decimal digits.|
-
- The components of `input` must collectively specify a time interval that is greater than or equal to <xref:System.TimeSpan.MinValue?displayProperty=nameWithType> and less than or equal to <xref:System.TimeSpan.MaxValue?displayProperty=nameWithType>.
-
- The <xref:System.TimeSpan.TryParse%28System.String%2CSystem.IFormatProvider%2CSystem.TimeSpan%40%29> method tries to parse `input` by using each of the culture-specific formats for the culture specified by `formatProvider`.
-
- The `formatProvider` parameter is an <xref:System.IFormatProvider> implementation that provides culture-specific information about the format of the returned string. The `formatProvider` parameter can be any of the following:
-
--   A <xref:System.Globalization.CultureInfo> object that represents the culture whose formatting conventions are to be reflected in the returned string. The <xref:System.Globalization.DateTimeFormatInfo> object returned by the <xref:System.Globalization.CultureInfo.DateTimeFormat%2A?displayProperty=nameWithType> property defines the formatting of the returned string.
-
--   A <xref:System.Globalization.DateTimeFormatInfo> object that defines the formatting of the returned string.
-
--   A custom object that implements the <xref:System.IFormatProvider> interface. Its <xref:System.IFormatProvider.GetFormat%2A?displayProperty=nameWithType> method returns a <xref:System.Globalization.DateTimeFormatInfo> object that provides formatting information.
-
- If `formatProvider` is `null`, the <xref:System.Globalization.DateTimeFormatInfo> object that is associated with the current culture is used.
-
-## Notes to callers
-
-In some cases, when a time interval component in the string to be parsed contains more than seven digits, parsing operations that succeed and return `true` in the .NET Framework 3.5 and earlier versions may fail and return `false` in the.NET Framework 4 and later versions. The following example illustrates this scenario:
-
- :::code language="csharp" source="~/snippets/csharp/System/TimeSpan/TryParse/tryparsefailure1.cs" id="Snippet3":::
- :::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/TryParse/tryparsefailure1.fs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeSpan.TryParse/vb/tryparsefailure1.vb" id="Snippet3":::
-
-## Examples
- The following example defines an array of <xref:System.Globalization.CultureInfo> objects, and uses each object in calls to the <xref:System.TimeSpan.TryParse%28System.String%2CSystem.IFormatProvider%2CSystem.TimeSpan%40%29> method to parse the elements in a string array. The example illustrates how the conventions of a specific culture influence the formatting operation.
+The following example defines an array of <xref:System.Globalization.CultureInfo> objects, and uses each object in calls to the <xref:System.TimeSpan.TryParse%28System.String%2CSystem.IFormatProvider%2CSystem.TimeSpan%40%29> method to parse the elements in a string array. The example illustrates how the conventions of a specific culture influence the formatting operation.
 
  :::code language="csharp" source="~/snippets/csharp/System/TimeSpan/TryParse/tryparse2.cs" interactive="try-dotnet" id="Snippet2":::
  :::code language="fsharp" source="~/snippets/fsharp/System/TimeSpan/TryParse/tryparse2.fs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeSpan.TryParse/vb/tryparse2.vb" id="Snippet2":::
-
- ]]></format>
-        </remarks>
+          ]]></format>
+        </example>
       </Docs>
     </Member>
     <MemberGroup MemberName="TryParseExact">
