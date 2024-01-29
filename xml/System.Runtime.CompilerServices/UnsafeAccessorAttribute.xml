@@ -65,6 +65,7 @@ By default, the attributed method's name dictates the name of the method/field. 
           Class(int i) { PrivateField = i; }
           void PrivateMethod() { }
           int PrivateField;
+          int PrivateProperty { get => PrivateField; }
       }
 
       public void CallStaticPrivateMethod()
@@ -78,7 +79,6 @@ By default, the attributed method's name dictates the name of the method/field. 
       {
           ref int f = ref GetSetStaticPrivateField(null);
 
-          
           [UnsafeAccessor(UnsafeAccessorKind.StaticField, Name = "StaticPrivateField")]
           extern static ref int GetSetStaticPrivateField(Class c);
       }
@@ -90,7 +90,6 @@ By default, the attributed method's name dictates the name of the method/field. 
 
           PrivateCtorAsMethod(c2, 2);
 
-          
           [UnsafeAccessor(UnsafeAccessorKind.Constructor)]
           extern static Class PrivateCtor(int i);
           
@@ -105,11 +104,17 @@ By default, the attributed method's name dictates the name of the method/field. 
           [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(PrivateMethod))]
           extern static void PrivateMethod(Class c);
       }
+      public void GetPrivateProperty(Class c)
+      {
+          int f = GetPrivateProperty(c);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "get_PrivateProperty")]
+          extern static int GetPrivateProperty(Class c);
+      }
       public void GetSetPrivateField(Class c)
       {
           ref int f = ref GetSetPrivateField(c);
 
-          
           [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "PrivateField")]
           extern static ref int GetSetPrivateField(Class c);
       }

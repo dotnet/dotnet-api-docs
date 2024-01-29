@@ -69,60 +69,7 @@
   </Attributes>
   <Docs>
     <summary>Serializes and deserializes an object, or an entire graph of connected objects, in binary format.</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-[!INCLUDE[binaryformatter](~/includes/binaryformatter.md)]
-
- The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> and <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> classes implement the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> interface to support remote procedure calls (RPCs), and the <xref:System.Runtime.Serialization.IFormatter> interface (inherited by the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter>) to support serialization of a graph of objects. The <xref:System.Runtime.Serialization.Formatters.Soap.SoapFormatter> class also supports RPCs with <xref:System.Runtime.Serialization.Formatters.ISoapMessage> objects, without using the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> functionality.
-
- During RPCs, the <xref:System.Runtime.Remoting.Messaging.IRemotingFormatter> interface allows the specification of two separate object graphs: the graph of objects to serialize, and an additional graph that contains an array of header objects that convey information about the remote function call (for example, transaction ID or a method signature).
-
- RPCs that use the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> separate into two distinct parts: method calls, which are sent to the server with the remote object that contains the method called, and method responses, which are sent from the server to the client with the status and response information from the called method.
-
- During serialization of a method call the first object of the object graph must support the <xref:System.Runtime.Remoting.Messaging.IMethodCallMessage> interface. To deserialize a method call, use the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize%2A> method with the <xref:System.Runtime.Remoting.Messaging.HeaderHandler> parameter. The remoting infrastructure uses the <xref:System.Runtime.Remoting.Messaging.HeaderHandler> delegate to produce an object that supports the <xref:System.Runtime.Serialization.ISerializable> interface. When the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> invokes the <xref:System.Runtime.Remoting.Messaging.HeaderHandler> delegate, it returns the URI of the remote object with the method that is being called. The first object in the graph returned supports the <xref:System.Runtime.Remoting.Messaging.IMethodCallMessage> interface.
-
- The serialization procedure for a method response is identical to that of a method call, except the first object of the object graph must support the <xref:System.Runtime.Remoting.Messaging.IMethodReturnMessage> interface. To deserialize a method response, use the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.DeserializeMethodResponse%2A> method. To save time, details about the caller object are not sent to the remote object during the method call. These details are instead obtained from the original method call, which is passed to the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.DeserializeMethodResponse%2A> method in the <xref:System.Runtime.Remoting.Messaging.IMethodCallMessage> parameter. The first object in the graph returned by the <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.DeserializeMethodResponse%2A> method supports the <xref:System.Runtime.Remoting.Messaging.IMethodReturnMessage> interface.
-
-> [!IMPORTANT]
->  Using binary serialization to deserialize untrusted data can lead to security risks. For more information, see [Validate All Inputs](https://owasp.org/www-project-proactive-controls/v3/en/c5-validate-inputs) and the [BinaryFormatter security guide](/dotnet/standard/serialization/binaryformatter-security-guide).
-
-## Unpaired Surrogates
- Any unpaired surrogate characters are lost in binary serialization. For example, the following string contains a high surrogate Unicode character `(\ud800`) in between the two `Test` words:
-
- `Test\ud800Test`
-
- Before serialization, the byte array of the string is as follows:
-
-|Byte Array Value|Character|
-|----------------------|---------------|
-|84|T|
-|101|e|
-|115|s|
-|116|t|
-|55296|\ud800|
-|84|T|
-|101|e|
-|115|s|
-|116|t|
-
- After deserialization, the high surrogate Unicode character is lost:
-
-|Byte Array Value|Character|
-|----------------------|---------------|
-|84|T|
-|101|e|
-|115|s|
-|116|t|
-|84|T|
-|101|e|
-|115|s|
-|116|t|
-
- ]]></format>
-    </remarks>
+    <remarks>Warning: BinaryFormatter is insecure and can't be made secure. For more information, see the <see href="/dotnet/standard/serialization/binaryformatter-security-guide">BinaryFormatter security guide</see> and <see href="/previous-versions/dotnet/fundamentals/serialization/binary/system-runtime-serialization-formatters-binary-binaryformatter">System.Runtime.Serialization.Formatters.Binary.BinaryFormatter class</see>.</remarks>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
