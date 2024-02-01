@@ -1192,7 +1192,36 @@
       <Parameters />
       <Docs>
         <summary>Displays the image specified by the <see cref="P:System.Windows.Forms.PictureBox.ImageLocation" /> property of the <see cref="T:System.Windows.Forms.PictureBox" />.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[## Remarks
+
+Starting with .NET 8, the behavior of loading a remote image by the `PictureBox` control changed. By default, the <xref:System.Net.ServicePointManager.CheckCertificateRevocationList%2A?displayProperty=fullName> property is set to `true` before a remote image is downloaded through <xref:System.Net.WebClient>. This setting ensures that servers with certificates have those certificates checked against the certificate authority revocation list (CRL) as part of the validation process.
+
+A previously working remote resource might fail to load when the the locally cached CRL is out-of-date, and an update can't be retrieved. This can happen when the network the app is running on is restricted and the CRL location isn't on the allowlist.
+
+It's also possible that the delay in checking the CRL negatively affects the apps ability to function.
+
+An app can opt out of this behavior by setting the `System.Windows.Forms.ServicePointManagerCheckCrl` option for the app, in one of the following ways:
+
+- Set the property to `false` in the [_\[app\].runtime.json_](/dotnet/core/runtime-config/#runtimeconfigjson) configuration file:
+
+  ```json
+  {
+    "configProperties": {
+      "System.Windows.Forms.ServicePointManagerCheckCrl": false
+    }
+  }
+  ```
+
+- Add the `<RuntimeHostConfigurationOption>` setting in the project file to disable it:
+
+  ```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.ServicePointManagerCheckCrl" Value="false" />
+  </ItemGroup>
+  ```
+]]></format>
+        </remarks>
         <exception cref="T:System.InvalidOperationException">
           <see cref="P:System.Windows.Forms.PictureBox.ImageLocation" /> is <see langword="null" /> or an empty string.</exception>
         <altmember cref="Overload:System.Windows.Forms.PictureBox.LoadAsync" />
@@ -1228,7 +1257,36 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the `url` parameter indicates a local file, the recommended format is a local file path. For example, an image file named myPicture.jpglocated atc:\ would be accessed by passing **c:\myPicture.jpg** for the `url` parameter. A full path, such as `http://www.contoso.com/path/images/image.jpg`, or a relative path, such as **./images/image.jpg**, can be used. If a relative path is used, it will be considered relative to the working directory. A call to the <xref:System.Windows.Forms.PictureBox.Load%2A> method sets the <xref:System.Windows.Forms.PictureBox.ImageLocation%2A> property to the value of `url`.
+
+If the `url` parameter indicates a local file, the recommended format is a local file path. For example, an image file named _myPicture.jpg_ located at _c:\\_ would be accessed by passing `c:\myPicture.jpg` for the `url` parameter. A full path, such as `http://www.contoso.com/path/images/image.jpg`, or a relative path, such as **./images/image.jpg**, can be used. If a relative path is used, it will be considered relative to the working directory. A call to the <xref:System.Windows.Forms.PictureBox.Load%2A> method sets the <xref:System.Windows.Forms.PictureBox.ImageLocation%2A> property to the value of the `url` parameter.
+
+### Load behavior changes
+
+Starting with .NET 8, the behavior of loading a remote image by the `PictureBox` control changed. By default, the <xref:System.Net.ServicePointManager.CheckCertificateRevocationList%2A?displayProperty=fullName> property is set to `true` before a remote image is downloaded through <xref:System.Net.WebClient>. This setting ensures that servers with certificates have those certificates checked against the certificate authority revocation list (CRL) as part of the validation process.
+
+A previously working remote resource might fail to load when the the locally cached CRL is out-of-date, and an update can't be retrieved. This can happen when the network the app is running on is restricted and the CRL location isn't on the allowlist.
+
+It's also possible that the delay in checking the CRL negatively affects the apps ability to function.
+
+An app can opt out of this behavior by setting the `System.Windows.Forms.ServicePointManagerCheckCrl` option for the app, in one of the following ways:
+
+- Set the property to `false` in the [_\[app\].runtime.json_](/dotnet/core/runtime-config/#runtimeconfigjson) configuration file:
+
+  ```json
+  {
+    "configProperties": {
+      "System.Windows.Forms.ServicePointManagerCheckCrl": false
+    }
+  }
+  ```
+
+- Add the `<RuntimeHostConfigurationOption>` setting in the project file to disable it:
+
+  ```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.ServicePointManagerCheckCrl" Value="false" />
+  </ItemGroup>
+  ```
 
  ]]></format>
         </remarks>
@@ -1279,9 +1337,38 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Besides calling the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method, the <xref:System.Windows.Forms.PictureBox.WaitOnLoad%2A> property must be set to `false` to load an image asynchronously. When you load an image asynchronously, you can handle the <xref:System.Windows.Forms.PictureBox.LoadProgressChanged> event to determine the progress of an image load or the <xref:System.Windows.Forms.PictureBox.LoadCompleted> event to determine when an image load has completed.
 
- This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Windows.Forms.PictureBox.Load>.
+Besides calling the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method, the <xref:System.Windows.Forms.PictureBox.WaitOnLoad%2A> property must be set to `false` to load an image asynchronously. When you load an image asynchronously, you can handle the <xref:System.Windows.Forms.PictureBox.LoadProgressChanged> event to determine the progress of an image load or the <xref:System.Windows.Forms.PictureBox.LoadCompleted> event to determine when an image load has completed.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Windows.Forms.PictureBox.Load>.
+
+### Load behavior changes
+
+Starting with .NET 8, the behavior of loading a remote image by the `PictureBox` control changed. By default, the <xref:System.Net.ServicePointManager.CheckCertificateRevocationList%2A?displayProperty=fullName> property is set to `true` before a remote image is downloaded through <xref:System.Net.WebClient>. This setting ensures that servers with certificates have those certificates checked against the certificate authority revocation list (CRL) as part of the validation process.
+
+A previously working remote resource might fail to load when the the locally cached CRL is out-of-date, and an update can't be retrieved. This can happen when the network the app is running on is restricted and the CRL location isn't on the allowlist.
+
+It's also possible that the delay in checking the CRL negatively affects the apps ability to function.
+
+An app can opt out of this behavior by setting the `System.Windows.Forms.ServicePointManagerCheckCrl` option for the app, in one of the following ways:
+
+- Set the property to `false` in the [_\[app\].runtime.json_](/dotnet/core/runtime-config/#runtimeconfigjson) configuration file:
+
+  ```json
+  {
+    "configProperties": {
+      "System.Windows.Forms.ServicePointManagerCheckCrl": false
+    }
+  }
+  ```
+
+- Add the `<RuntimeHostConfigurationOption>` setting in the project file to disable it:
+
+  ```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.ServicePointManagerCheckCrl" Value="false" />
+  </ItemGroup>
+  ```
 
 ]]></format>
         </remarks>
@@ -1317,17 +1404,47 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the `url` parameter indicates a local file, the recommended format is a local file path. For example, an image file named myPicture.jpglocated atc:\ would be accessed by passing **c:\myPicture.jpg** for the `url` parameter. A full path, such as `http://www.contoso.com/path/images/image.jpg`, or a relative path, such as **./images/image.jpg**, can be used. If a relative path is used, it will be considered relative to the working directory. A call to the <xref:System.Windows.Forms.PictureBox.Load%2A> method sets the <xref:System.Windows.Forms.PictureBox.ImageLocation%2A> property to the value of `url`.
 
- A call to the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method sets the <xref:System.Windows.Forms.PictureBox.ImageLocation%2A> property to the value of `url`. Besides calling the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method, you must set the <xref:System.Windows.Forms.PictureBox.WaitOnLoad%2A> property to `false` to load an image asynchronously. When you load an image asynchronously, you can handle the <xref:System.Windows.Forms.PictureBox.LoadProgressChanged> event to determine the progress of an image load or the <xref:System.Windows.Forms.PictureBox.LoadCompleted> event to determine when an image load has completed. If an error occurs during an asynchronous image-loading operation, it will be caught and reported by the <xref:System.ComponentModel.AsyncCompletedEventArgs.Error%2A> property of the <xref:System.ComponentModel.AsyncCompletedEventArgs>.
+If the `url` parameter indicates a local file, the recommended format is a local file path. For example, an image file named _myPicture.jpg_ located at _c:\\_ would be accessed by passing `c:\myPicture.jpg` for the `url` parameter. A full path, such as `http://www.contoso.com/path/images/image.jpg`, or a relative path, such as **./images/image.jpg**, can be used. If a relative path is used, it will be considered relative to the working directory. A call to the <xref:System.Windows.Forms.PictureBox.Load%2A> method sets the <xref:System.Windows.Forms.PictureBox.ImageLocation%2A> property to the value of the `url` parameter.
 
- This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Windows.Forms.PictureBox.Load(System.String)>.
+A call to the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method sets the <xref:System.Windows.Forms.PictureBox.ImageLocation%2A> property to the value of `url`. Besides calling the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method, you must set the <xref:System.Windows.Forms.PictureBox.WaitOnLoad%2A> property to `false` to load an image asynchronously. When you load an image asynchronously, you can handle the <xref:System.Windows.Forms.PictureBox.LoadProgressChanged> event to determine the progress of an image load or the <xref:System.Windows.Forms.PictureBox.LoadCompleted> event to determine when an image load has completed. If an error occurs during an asynchronous image-loading operation, it will be caught and reported by the <xref:System.ComponentModel.AsyncCompletedEventArgs.Error%2A> property of the <xref:System.ComponentModel.AsyncCompletedEventArgs>.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Windows.Forms.PictureBox.Load(System.String)>.
+
+### Load behavior changes
+
+Starting with .NET 8, the behavior of loading a remote image by the `PictureBox` control changed. By default, the <xref:System.Net.ServicePointManager.CheckCertificateRevocationList%2A?displayProperty=fullName> property is set to `true` before a remote image is downloaded through <xref:System.Net.WebClient>. This setting ensures that servers with certificates have those certificates checked against the certificate authority revocation list (CRL) as part of the validation process.
+
+A previously working remote resource might fail to load when the the locally cached CRL is out-of-date, and an update can't be retrieved. This can happen when the network the app is running on is restricted and the CRL location isn't on the allowlist.
+
+It's also possible that the delay in checking the CRL negatively affects the apps ability to function.
+
+An app can opt out of this behavior by setting the `System.Windows.Forms.ServicePointManagerCheckCrl` option for the app, in one of the following ways:
+
+- Set the property to `false` in the [_\[app\].runtime.json_](/dotnet/core/runtime-config/#runtimeconfigjson) configuration file:
+
+  ```json
+  {
+    "configProperties": {
+      "System.Windows.Forms.ServicePointManagerCheckCrl": false
+    }
+  }
+  ```
+
+- Add the `<RuntimeHostConfigurationOption>` setting in the project file to disable it:
+
+  ```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.ServicePointManagerCheckCrl" Value="false" />
+  </ItemGroup>
+  ```
 
 ## Examples
- The following code example demonstrates how to use the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method. To run this example, paste the following code into a Windows Form that contains a <xref:System.Windows.Forms.PictureBox> named `pictureBox1` and a <xref:System.Windows.Forms.Button> named `startLoadButton`. Make sure that the <xref:System.Windows.Forms.Control.Click> event for the button is associated with the `startLoadButton_Click` method in this example. You must change the image file path to a path that is valid on your system.
 
- :::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/PictureBox/CancelAsync/Form1.cs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Winforms/System.Windows.Forms.TreeViewPictureBoxWhidbeyMembers/VB/Form1.vb" id="Snippet3":::
+The following code example demonstrates how to use the <xref:System.Windows.Forms.PictureBox.LoadAsync%2A> method. To run this example, paste the following code into a Windows Form that contains a <xref:System.Windows.Forms.PictureBox> named `pictureBox1` and a <xref:System.Windows.Forms.Button> named `startLoadButton`. Make sure that the <xref:System.Windows.Forms.Control.Click> event for the button is associated with the `startLoadButton_Click` method in this example. You must change the image file path to a path that is valid on your system.
+
+:::code language="csharp" source="~/snippets/csharp/System.Windows.Forms/PictureBox/CancelAsync/Form1.cs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Winforms/System.Windows.Forms.TreeViewPictureBoxWhidbeyMembers/VB/Form1.vb" id="Snippet3":::
 
 ]]></format>
         </remarks>
