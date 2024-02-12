@@ -6,7 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Security.Permissions;
 
 public class Form1 : Form
 {
@@ -26,8 +25,6 @@ public class Form1 : Form
         Application.Run(new Form1());
     }
 
-    [SecurityPermissionAttribute(
-        SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
     public class MyTreeViewCombo : ComboBox
     {   
         ToolStripControlHost treeViewHost;

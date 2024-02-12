@@ -8,10 +8,10 @@ public class Example
         char[] charsToTrim = { '*', ' ', '\''};
         string banner = "*** Much Ado About Nothing ***";
         string result = banner.Trim(charsToTrim);
-        Console.WriteLine("Trimmmed\n   {0}\nto\n   '{1}'", banner, result);
+        Console.WriteLine("Trimmed\n   {0}\nto\n   '{1}'", banner, result);
 
         // The example displays the following output:
-        //       Trimmmed
+        //       Trimmed
         //          *** Much Ado About Nothing ***
         //       to
         //          'Much Ado About Nothing'

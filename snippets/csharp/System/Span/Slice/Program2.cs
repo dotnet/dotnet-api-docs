@@ -2,7 +2,7 @@
 
 class Program2
 {
-    static void Main()
+    static void Run()
     {
         string contentLength = "Content-Length: 132";
         var length = GetContentLength(contentLength.ToCharArray());

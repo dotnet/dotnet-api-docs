@@ -4,11 +4,9 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 
 public class MyITransportHeadersClient
 {
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main()
    {
       try

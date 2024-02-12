@@ -128,7 +128,6 @@ public class DemoControl : UserControl
 //
 // This designer also offers a designer action for changing the 
 // Anchor property.
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
 public class DemoControlDesigner : ControlDesigner
 {
     // This adorner holds the glyphs that represent the Anchor property.

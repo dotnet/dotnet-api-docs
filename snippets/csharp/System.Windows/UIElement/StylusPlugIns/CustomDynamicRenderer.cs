@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Diagnostics;
 using System.Windows.Threading;
 
-namespace AdvancedInkInputSemples
+namespace AdvancedInkInputSamples
 {
     //<Snippet19>
     delegate void WorkerMethod();

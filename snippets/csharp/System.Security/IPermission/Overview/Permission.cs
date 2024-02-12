@@ -174,7 +174,7 @@ public sealed class SoundPermission : CodeAccessPermission, IPermission,
     {
         // These first three lines create an element with the required format.
         SecurityElement e = new SecurityElement("IPermission");
-        // Replace the double quotation marks (“”) with single quotation marks (‘’)
+        // Replace the double quotation marks ("") with single quotation marks ('')
         // to remain XML compliant when the culture is not neutral.
         e.AddAttribute("class", GetType().AssemblyQualifiedName.Replace('\"', '\''));
         e.AddAttribute("version", "1");

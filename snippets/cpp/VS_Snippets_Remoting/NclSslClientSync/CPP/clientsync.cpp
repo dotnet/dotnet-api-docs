@@ -136,7 +136,7 @@ namespace NlsClientSync
             //<snippet4>
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
-            TcpClient^ client = gcnew TcpClient(machineName, 8080);
+            TcpClient^ client = gcnew TcpClient(machineName, 5000);
             Console::WriteLine("Client connected.");
               
             // Create an SSL stream that will close 

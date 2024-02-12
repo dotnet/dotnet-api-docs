@@ -2979,7 +2979,7 @@ Number.prototype._toFormattedString = function Number$_toFormattedString(format,
     var _percentNegativePattern = ["-n %", "-n%", "-%n"];
     var _numberNegativePattern = ["(n)","-n","- n","n-","n -"];
     var _currencyPositivePattern = ["$n","n$","$ n","n $"];
-    var _currencyNegativePattern = ["($n)","-$n","$-n","$n-","(n$)","-n$","n-$","n$-","-n $","-$ n","n $-","$ n-","$ -n","n- $","($ n)","(n $)"];
+    var _currencyNegativePattern = ["($n)","-$n","$-n","$n-","(n$)","-n$","n-$","n$-","-n $","-$ n","n $-","$ n-","$ -n","n- $","($ n)","(n $)","$- n"];
     function zeroPad(str, count, left) {
         for (var l=str.length; l < count; l++) {
             str = (left ? ('0' + str) : (str + '0'));

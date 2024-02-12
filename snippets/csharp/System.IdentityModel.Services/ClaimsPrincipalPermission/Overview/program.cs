@@ -1,10 +1,9 @@
 ﻿// <Snippet1>
 using System;
-using System.Security.Permissions;
-using System.Security.Principal;
-using System.Threading;
-using System.Security.Claims;
 using System.IdentityModel.Services;
+using System.Security.Claims;
+using System.Security.Permissions;
+using System.Threading;
 
 namespace ClaimsBasedAuthorization
 {
@@ -15,22 +14,22 @@ namespace ClaimsBasedAuthorization
     {
         static void Main(string[] args)
         {
-// <Snippet2>
+            // <Snippet2>
             //
             // Method 1. Simple access check using static method. 
             // Expect this to be most common method.
             //
             ClaimsPrincipalPermission.CheckAccess("resource", "action");
-// </Snippet2>
+            // </Snippet2>
 
-// <Snippet3>
+            // <Snippet3>
             //
             // Method 2. Programmatic check using the permission class
             // Follows model found at http://msdn.microsoft.com/library/system.security.permissions.principalpermission.aspx
             //
             ClaimsPrincipalPermission cpp = new ClaimsPrincipalPermission("resource", "action");
             cpp.Demand();
-// </Snippet3>
+            // </Snippet3>
 
             //
             // Method 3. Access check interacting directly with the authorization manager.
@@ -46,7 +45,7 @@ namespace ClaimsBasedAuthorization
             Console.WriteLine("Press [Enter] to continue.");
             Console.ReadLine();
         }
-// <Snippet4>
+        // <Snippet4>
 
         //
         // Declarative access check using the permission class. The caller must satisfy both demands.
@@ -56,7 +55,7 @@ namespace ClaimsBasedAuthorization
         static void ProtectedMethod()
         {
         }
-// </Snippet4>
+        // </Snippet4>
     }
 }
 // </Snippet1>

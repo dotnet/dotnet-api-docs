@@ -33,7 +33,6 @@ using System.Diagnostics;
 using System.Collections;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation;
-using System.Security.Permissions;
 
 namespace CustomControls
 {
@@ -362,7 +361,6 @@ namespace CustomControls
         /// <param name="msg">The Windows message.</param>
         /// <param name="keyData">Information about the key press.</param>
         /// <returns>true if successful.</returns>
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Down)
@@ -445,7 +443,6 @@ namespace CustomControls
         /// </summary>
         /// <param name="winMessage">Windows message.</param>
         /// <remarks>This method enables UI Automation to find the control.</remarks>
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
             const int WM_GETOBJECT = 0x003D;

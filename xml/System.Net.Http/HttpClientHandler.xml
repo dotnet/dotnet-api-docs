@@ -15,6 +15,8 @@
     <AssemblyVersion>4.2.2.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>netstandard</AssemblyName>
@@ -24,57 +26,31 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Http" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Net.Http.HttpMessageHandler</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>The default message handler used by <see cref="T:System.Net.Http.HttpClient" /> in .NET Framework and .NET Core 2.0 and earlier.</summary>
-    <remarks>
+    <example>
       <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `HttpClientHandler` class and classes derived from it enable developers to configure a variety of options ranging from proxies to authentication.
-
-### HttpClientHandler in .NET Core
-
-Starting in .NET Core 2.1, the implementation of the `HttpClientHandler` class was changed to be based on the cross-platform HTTP protocol stack used by the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class. Prior to .NET Core 2.1, the `HttpClientHandler` class used older HTTP protocol stacks (<xref:System.Net.Http.WinHttpHandler> on Windows and `CurlHandler`, an internal class implemented on top of Linux's native `libcurl` component, on Linux).
-
-On .NET Core 2.1 - 3.1 only, you can configure your app to use the older HTTP protocol stacks in one of the following three ways:
-
-- Call the <xref:System.AppContext.SetSwitch%2A?displayProperty=nameWithType> method:
-
-  ```csharp
-  AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
-  ```
-
-  ```vb
-  AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", False)
-  ```
-
-- Define the `System.Net.Http.UseSocketsHttpHandler` switch in the *.netcore.runtimeconfig.json* configuration file:
-
-  ```json
-  "runtimeOptions": {
-    "configProperties": {
-        "System.Net.Http.UseSocketsHttpHandler": false
-    }
-  }
-  ```
-
-- Define an environment variable named `DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER` and set it to either `false` or **0**.
-
-These configuration options are not available starting with .NET 5.
-
-## Examples
- :::code language="csharp" source="~/snippets/csharp/System.Net.Http/HttpClientHandler/Overview/source.cs" id="Snippet1":::
-
- The preceding code example uses an `async Task Main()` entry point. That feature requires C# 7.1 or later.
-
- ]]></format>
-    </remarks>
+        :::code language="csharp" source="~/snippets/csharp/System.Net.Http/HttpClientHandler/Overview/source.cs" id="Snippet1":::
+      ]]></format>
+    </example>
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-net-http-httpclienthandler">Supplemental API remarks for HttpClientHandler</see>.</remarks>
     <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkID=245696">Connecting to a web service</related>
     <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245697">Quickstart: Connecting using HttpClient </related>
     <related type="ExternalDocumentation" href="https://go.microsoft.com/fwlink/?LinkId=245699">How to use HttpClient handlers</related>
@@ -99,6 +75,8 @@ These configuration options are not available starting with .NET 5.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -129,6 +107,8 @@ These configuration options are not available starting with .NET 5.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -150,7 +130,9 @@ These configuration options are not available starting with .NET 5.
 
  If <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> is set to `false`, all HTTP responses with an HTTP status code from 300 to 399 are  returned to the application.
 
- The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.
+ The Authorization header is cleared on auto-redirects and the handler automatically tries to re-authenticate to the redirected location. No other headers are cleared. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module.
+
+ If you are using cookies by specifically adding them to the <xref:System.Net.Http.HttpRequestMessage.Headers> collection, these are not cleared when a redirect is followed, as the handler has no way of knowing what domain a cookie is allowed for. If you want to mimic browser behavior, use the <xref:System.Net.CookieContainer> class which allows you to specify the target domain for a cookie.
 
 > [!NOTE]
 >  With <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> set to `true`, the .NET Framework will follow redirections even when being redirected to an HTTP URI from an HTTPS URI.
@@ -178,6 +160,8 @@ These configuration options are not available starting with .NET 5.
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -185,7 +169,7 @@ These configuration options are not available starting with .NET 5.
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -200,6 +184,12 @@ These configuration options are not available starting with .NET 5.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+ Automatic decompression works only on the top most compression. So if the content is compressed multiple times, only the last compression will be decompressed.
+ For example, for a response with `Content-Encoding: gzip, br` header that contains content first compressed with gzip and then with Brotli, the content will only be decompressed using Brotli, leaving the still gzipped content in the <xref:System.Net.Http.HttpResponseMessage.Content>.
+
+ Setting automatic decompression to anything other than <xref:System.Net.DecompressionMethods.None> will result in adding `Accept-Encoding` header with the set values into every outgoing <xref:System.Net.Http.HttpRequestMessage>.
+
+
 For the .NET Framework 4.x `System.Net.Http` binary in the Global Assembly Cache (GAC), the default value is <xref:System.Net.DecompressionMethods.None>.
 
 When the [`System.Net.Http` NuGet package](https://www.nuget.org/packages/System.Net.Http/) v4.1.0 to v4.3.2 is used, the default is <xref:System.Net.DecompressionMethods.GZip> and <xref:System.Net.DecompressionMethods.Deflate>.
@@ -228,6 +218,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -235,7 +227,7 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -273,6 +265,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -306,6 +300,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -313,9 +309,17 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netstandard-2.0">
           <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
@@ -328,7 +332,15 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
       <Docs>
         <summary>Gets the collection of security certificates that are associated with requests to the server.</summary>
         <value>The X509CertificateCollection that is presented to the server when performing certificate based client authentication.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+On .NET Core, the key usage attribute on the X509 certificate, if present, is required to have the value "Digital Signature" in order to be used when sending the request.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CookieContainer">
@@ -349,6 +361,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -356,9 +370,21 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[set: System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;set: System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -380,13 +406,13 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
       </Docs>
     </Member>
     <Member MemberName="Credentials">
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials Credentials { get; set; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials Credentials { get; set; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.ICredentials Credentials" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.Credentials" />
       <MemberSignature Language="VB.NET" Value="Public Property Credentials As ICredentials" />
       <MemberSignature Language="F#" Value="member this.Credentials : System.Net.ICredentials with get, set" Usage="System.Net.Http.HttpClientHandler.Credentials" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::ICredentials ^ Credentials { System::Net::ICredentials ^ get(); void set(System::Net::ICredentials ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials? Credentials { get; set; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials? Credentials { get; set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -398,6 +424,8 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -405,7 +433,7 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -416,17 +444,24 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
       <Docs>
         <summary>Gets or sets authentication information used by this handler.</summary>
         <value>The authentication credentials associated with the handler. The default is <see langword="null" />.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the <xref:System.Net.Http.HttpClientHandler.UseDefaultCredentials> property has been set to `true`, it has a side effect on this property, and this property will be set to <xref:System.Net.CredentialCache.DefaultCredentials>.
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="DangerousAcceptAnyServerCertificateValidator">
-      <MemberSignature Language="C#" Value="public static Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2?,System.Security.Cryptography.X509Certificates.X509Chain?,System.Net.Security.SslPolicyErrors,bool&gt; DangerousAcceptAnyServerCertificateValidator { get; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public static Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2?,System.Security.Cryptography.X509Certificates.X509Chain?,System.Net.Security.SslPolicyErrors,bool&gt; DangerousAcceptAnyServerCertificateValidator { get; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".property class System.Func`5&lt;class System.Net.Http.HttpRequestMessage, class System.Security.Cryptography.X509Certificates.X509Certificate2, class System.Security.Cryptography.X509Certificates.X509Chain, valuetype System.Net.Security.SslPolicyErrors, bool&gt; DangerousAcceptAnyServerCertificateValidator" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property DangerousAcceptAnyServerCertificateValidator As Func(Of HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, Boolean)" />
-      <MemberSignature Language="F#" Value="member this.DangerousAcceptAnyServerCertificateValidator : Func&lt;System.Net.Http.HttpRequestMessage, System.Security.Cryptography.X509Certificates.X509Certificate2, System.Security.Cryptography.X509Certificates.X509Chain, System.Net.Security.SslPolicyErrors, bool&gt;" Usage="System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator" />
+      <MemberSignature Language="F#" Value="static member DangerousAcceptAnyServerCertificateValidator : Func&lt;System.Net.Http.HttpRequestMessage, System.Security.Cryptography.X509Certificates.X509Certificate2, System.Security.Cryptography.X509Certificates.X509Chain, System.Net.Security.SslPolicyErrors, bool&gt;" Usage="System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ DangerousAcceptAnyServerCertificateValidator { Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ get(); };" />
-      <MemberSignature Language="C#" Value="public static Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt; DangerousAcceptAnyServerCertificateValidator { get; }" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.2;netframework-4.8;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public static Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt; DangerousAcceptAnyServerCertificateValidator { get; }" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -435,15 +470,21 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 1, 2, 2 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 1, 2, 2 })&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -464,7 +505,7 @@ After NuGet package v4.3.2, the default value of <xref:System.Net.DecompressionM
 handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
 ```
 
- This gives <xref:System.Net.Http.HttpClientHandler> implementations a known object reference identity that expresses the developer's intention. If the object stored in the <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property is reference equals to <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A>, the runtime is able to entirely disable validation on a platform that would otherwise throw a <xref:System.PlatformNotSupportedException>.
+ This gives <xref:System.Net.Http.HttpClientHandler> implementations a known object reference identity that expresses the developer's intention. If the object stored in the <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> property is reference equals to <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A>, the runtime is able to entirely disable validation on a platform that would otherwise throw a <xref:System.PlatformNotSupportedException>.
 
  As a side benefit, developers can use this property to make it easier for tools to flag the danger of disabling certificate validation, which makes it easier for developers to avoid shipping insecure applications.
 
@@ -473,13 +514,13 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
       </Docs>
     </Member>
     <Member MemberName="DefaultProxyCredentials">
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials? DefaultProxyCredentials { get; set; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials? DefaultProxyCredentials { get; set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.ICredentials DefaultProxyCredentials" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.DefaultProxyCredentials" />
       <MemberSignature Language="VB.NET" Value="Public Property DefaultProxyCredentials As ICredentials" />
       <MemberSignature Language="F#" Value="member this.DefaultProxyCredentials : System.Net.ICredentials with get, set" Usage="System.Net.Http.HttpClientHandler.DefaultProxyCredentials" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::ICredentials ^ DefaultProxyCredentials { System::Net::ICredentials ^ get(); void set(System::Net::ICredentials ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials DefaultProxyCredentials { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials DefaultProxyCredentials { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -491,6 +532,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -498,7 +541,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -534,6 +577,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -554,7 +599,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.
+ This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize> method, if it has been overridden. `Dispose()` invokes this method with the `disposing` parameter set to `true`. `Finalize` invokes this method with `disposing` set to `false`.
 
  When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.Net.Http.HttpClientHandler> references. This method invokes the `Dispose()` method of each referenced object.
 
@@ -580,6 +625,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -587,7 +634,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -626,6 +673,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -633,7 +682,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -648,7 +697,14 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
       <Docs>
         <summary>Gets or sets the maximum number of concurrent connections (per server endpoint) allowed when making requests using an <see cref="T:System.Net.Http.HttpClient" /> object. Note that the limit is per server endpoint, so for example a value of 256 would permit 256 concurrent connections to http://www.adatum.com/ and another 256 to http://www.adventure-works.com/.</summary>
         <value>The maximum number of concurrent connections (per server endpoint) allowed by an <see cref="T:System.Net.Http.HttpClient" /> object.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `int.MaxValue`.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MaxRequestContentBufferSize">
@@ -669,6 +725,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -709,6 +767,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -716,7 +776,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -732,6 +792,36 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <summary>Gets or sets the maximum length, in kilobytes (1024 bytes), of the response headers. For example, if the value is 64, then 65536 bytes are allowed for the maximum response headers' length.</summary>
         <value>The maximum length, in kilobytes (1024 bytes), of the response headers.</value>
         <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MeterFactory">
+      <MemberSignature Language="C#" Value="public System.Diagnostics.Metrics.IMeterFactory? MeterFactory { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Diagnostics.Metrics.IMeterFactory MeterFactory" />
+      <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.MeterFactory" />
+      <MemberSignature Language="VB.NET" Value="Public Property MeterFactory As IMeterFactory" />
+      <MemberSignature Language="F#" Value="member this.MeterFactory : System.Diagnostics.Metrics.IMeterFactory with get, set" Usage="System.Net.Http.HttpClientHandler.MeterFactory" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Diagnostics::Metrics::IMeterFactory ^ MeterFactory { System::Diagnostics::Metrics::IMeterFactory ^ get(); void set(System::Diagnostics::Metrics::IMeterFactory ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Http</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Diagnostics.Metrics.IMeterFactory</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets the <see cref="T:System.Diagnostics.Metrics.IMeterFactory" /> to create a custom <see cref="T:System.Diagnostics.Metrics.Meter" /> for the <see cref="T:System.Net.Http.HttpClientHandler" /> instance.</summary>
+        <value>To be added.</value>
+        <remarks>When <see cref="P:System.Net.Http.HttpClientHandler.MeterFactory" /> is set to a non-<see langword="null" /> value, all metrics emitted by the <see cref="T:System.Net.Http.HttpClientHandler" /> instance will be recorded using the <see cref="T:System.Diagnostics.Metrics.Meter" /> provided by the <see cref="T:System.Diagnostics.Metrics.IMeterFactory" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="PreAuthenticate">
@@ -752,6 +842,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -759,7 +851,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -786,13 +878,13 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
       </Docs>
     </Member>
     <Member MemberName="Properties">
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IDictionary&lt;string,object?&gt; Properties { get; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IDictionary&lt;string,object?&gt; Properties { get; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IDictionary`2&lt;string, object&gt; Properties" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.Properties" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Properties As IDictionary(Of String, Object)" />
       <MemberSignature Language="F#" Value="member this.Properties : System.Collections.Generic.IDictionary&lt;string, obj&gt;" Usage="System.Net.Http.HttpClientHandler.Properties" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::Generic::IDictionary&lt;System::String ^, System::Object ^&gt; ^ Properties { System::Collections::Generic::IDictionary&lt;System::String ^, System::Object ^&gt; ^ get(); };" />
-      <MemberSignature Language="C#" Value="public System.Collections.Generic.IDictionary&lt;string,object&gt; Properties { get; }" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IDictionary&lt;string,object&gt; Properties { get; }" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -804,6 +896,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -811,6 +905,10 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 1, 2 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 1, 2 })&gt;]</AttributeName>
+        </Attribute>
         <Attribute FrameworkAlternate="netstandard-2.0">
           <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
@@ -826,13 +924,13 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
       </Docs>
     </Member>
     <Member MemberName="Proxy">
-      <MemberSignature Language="C#" Value="public System.Net.IWebProxy Proxy { get; set; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Net.IWebProxy Proxy { get; set; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.IWebProxy Proxy" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.Proxy" />
       <MemberSignature Language="VB.NET" Value="Public Property Proxy As IWebProxy" />
       <MemberSignature Language="F#" Value="member this.Proxy : System.Net.IWebProxy with get, set" Usage="System.Net.Http.HttpClientHandler.Proxy" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::IWebProxy ^ Proxy { System::Net::IWebProxy ^ get(); void set(System::Net::IWebProxy ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.IWebProxy? Proxy { get; set; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public System.Net.IWebProxy? Proxy { get; set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -844,6 +942,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -851,11 +951,19 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
+        <Attribute FrameworkAlternate="net-7.0;net-8.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-7.0;net-8.0">
+          <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
           <AttributeName Language="C#">[set: System.Security.SecuritySafeCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;set: System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
@@ -900,22 +1008,28 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyName>System.Net.Http</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-6.0">
+        <Attribute FrameworkAlternate="net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
         <ReturnType>System.Net.Http.HttpResponseMessage</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0" />
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0" />
+        <Parameter Name="request" Type="System.Net.Http.HttpRequestMessage" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       </Parameters>
       <Docs>
         <param name="request">The HTTP request message.</param>
@@ -939,6 +1053,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
 
  If the <see cref="T:System.Threading.Tasks.TaskCanceledException" /> exception nests the <see cref="T:System.TimeoutException" />:
  The request failed due to timeout.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendAsync">
@@ -959,6 +1074,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -966,6 +1083,10 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+        </Attribute>
         <Attribute FrameworkAlternate="xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0">
           <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
@@ -992,16 +1113,17 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="request" /> was <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="ServerCertificateCustomValidationCallback">
-      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2?,System.Security.Cryptography.X509Certificates.X509Chain?,System.Net.Security.SslPolicyErrors,bool&gt;? ServerCertificateCustomValidationCallback { get; set; }" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2?,System.Security.Cryptography.X509Certificates.X509Chain?,System.Net.Security.SslPolicyErrors,bool&gt;? ServerCertificateCustomValidationCallback { get; set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Func`5&lt;class System.Net.Http.HttpRequestMessage, class System.Security.Cryptography.X509Certificates.X509Certificate2, class System.Security.Cryptography.X509Certificates.X509Chain, valuetype System.Net.Security.SslPolicyErrors, bool&gt; ServerCertificateCustomValidationCallback" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback" />
       <MemberSignature Language="VB.NET" Value="Public Property ServerCertificateCustomValidationCallback As Func(Of HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, Boolean)" />
       <MemberSignature Language="F#" Value="member this.ServerCertificateCustomValidationCallback : Func&lt;System.Net.Http.HttpRequestMessage, System.Security.Cryptography.X509Certificates.X509Certificate2, System.Security.Cryptography.X509Certificates.X509Chain, System.Net.Security.SslPolicyErrors, bool&gt; with get, set" Usage="System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ ServerCertificateCustomValidationCallback { Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ get(); void set(Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ value); };" />
-      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt; ServerCertificateCustomValidationCallback { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt; ServerCertificateCustomValidationCallback { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http</AssemblyName>
@@ -1013,6 +1135,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1020,9 +1144,13 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 2, 2 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 2, 2 })&gt;]</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netstandard-2.0">
           <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
@@ -1036,7 +1164,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <summary>Gets or sets a callback method to validate the server certificate.</summary>
         <value>A callback method to validate the server certificate.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 ## Remarks
  The <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> can be used to obtain and validate the server certificate.
@@ -1068,6 +1196,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1075,7 +1205,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -1112,6 +1242,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1146,6 +1278,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1180,6 +1314,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1214,6 +1350,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1221,7 +1359,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -1254,6 +1392,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1261,7 +1401,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>
@@ -1278,8 +1418,10 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
 
 ## Remarks
  Set this property to `true` when requests made by the <xref:System.Net.Http.HttpClientHandler> object should, if requested by the server, be authenticated using the credentials of the currently logged on user. For client applications, this is the desired behavior in most scenarios. For middle-tier applications, such as ASP.NET applications, instead of using this property, you would typically set the <xref:System.Net.Http.HttpClientHandler.Credentials%2A> property to the credentials of the client on whose behalf the request is made.
- 
+
  This property doesn't affect proxy credentials. When the default (system) proxy is being used, set credentials explicitly by using the <xref:System.Net.Http.HttpClientHandler.DefaultProxyCredentials> property. When the proxy is set by the <xref:System.Net.Http.HttpClientHandler.Proxy> property, set credentials for the proxy via its <xref:System.Net.IWebProxy.Credentials> property.
+
+ If this property has been set to `true` then, it has a side effect on <xref:System.Net.Http.HttpClientHandler.Credentials> property, and <xref:System.Net.Http.HttpClientHandler.Credentials> will be set to <xref:System.Net.CredentialCache.DefaultCredentials>.
  ]]></format>
         </remarks>
       </Docs>
@@ -1302,6 +1444,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>4.2.2.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>
@@ -1309,7 +1453,7 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
         </Attribute>

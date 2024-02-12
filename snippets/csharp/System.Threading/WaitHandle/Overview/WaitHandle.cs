@@ -30,7 +30,7 @@ public sealed class App
             (DateTime.Now - dt).TotalMilliseconds);
 
         // Queue up two tasks on two different threads;
-        // wait until any tasks are completed.
+        // wait until any task is completed.
         dt = DateTime.Now;
         Console.WriteLine();
         Console.WriteLine("The main thread is waiting for either task to complete.");

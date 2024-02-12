@@ -41,7 +41,6 @@ namespace IToolboxUserExample
     // IToolboxUser designer to be queried to check for whether to enable or disable all 
     // ToolboxItems which create any components whose type name begins with "System.Windows.Forms".
     [ToolboxItemFilterAttribute("System.Windows.Forms", ToolboxItemFilterType.Custom)]
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class SampleRootDesigner : ParentControlDesigner, IRootDesigner, IToolboxUser
     {
         // This field is a custom Control type named RootDesignerView. This field references

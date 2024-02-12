@@ -35,7 +35,6 @@ namespace CustomProxySample
       }
    }
 // <Snippet1>
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyProxy : RealProxy
    {
       String stringUri;
@@ -83,7 +82,6 @@ namespace CustomProxySample
 // </Snippet1>
    public class ProxySample
    {
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public static void Main()
       {
          // Create an instance of MyProxy.

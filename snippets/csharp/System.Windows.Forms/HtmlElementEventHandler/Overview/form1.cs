@@ -10,7 +10,6 @@ namespace HtmlElementEventHandlerCSharp
 	/// <summary>
 	/// Summary description for Form1.
 	/// </summary>
-        [System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
 	public class Form1 : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.WebBrowser WebBrowser1;

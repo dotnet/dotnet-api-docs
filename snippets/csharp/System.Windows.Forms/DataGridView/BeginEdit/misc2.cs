@@ -144,9 +144,6 @@ public class DerivedDGVCell : DataGridViewCell
 //<snippet70>
 public class CustomDataGridView : DataGridView
 {
-    [System.Security.Permissions.UIPermission(
-        System.Security.Permissions.SecurityAction.LinkDemand,
-        Window = System.Security.Permissions.UIPermissionWindow.AllWindows)]
     protected override bool ProcessDialogKey(Keys keyData)
     {
         // Extract the key code from the key value. 
@@ -160,9 +157,6 @@ public class CustomDataGridView : DataGridView
         return base.ProcessDialogKey(keyData);
     }
 
-    [System.Security.Permissions.SecurityPermission(
-        System.Security.Permissions.SecurityAction.LinkDemand, Flags = 
-        System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
     protected override bool ProcessDataGridViewKey(KeyEventArgs e)
     {
         // Handle the ENTER key as if it were a RIGHT ARROW key. 

@@ -62,7 +62,6 @@ class and created class is called from the 'TestClass'.
    }
    public class TestClass
    {
-      [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
       public static void Main()
       {
          CodeGenerator myCodeGenerator = new CodeGenerator();

@@ -41,7 +41,7 @@ Module Module1
                 Console.WriteLine("Both records are written to database.")
             Catch e As Exception
                 Try
-                    transaction.Rollback()
+                    transaction.Rollback("SampleTransaction")
                 Catch ex As SqlException
                     If Not transaction.Connection Is Nothing Then
                         Console.WriteLine("An exception of type " & ex.GetType().ToString() & _

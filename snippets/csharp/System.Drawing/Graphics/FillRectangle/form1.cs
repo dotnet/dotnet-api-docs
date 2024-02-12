@@ -182,12 +182,8 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
 
         // Snippet for: M:System.Drawing.Graphics.FromHdc(System.IntPtr)
         // <snippet118>
-        [System.Security.Permissions.SecurityPermission(
-        System.Security.Permissions.SecurityAction.LinkDemand, Flags = 
-        System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]            
         private void FromHdcHdc(PaintEventArgs e)
         {
-
             // Get handle to device context.
             IntPtr hdc = e.Graphics.GetHdc();
 
@@ -254,12 +250,8 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
         [System.Runtime.InteropServices.DllImportAttribute("gdi32.dll")]
         private static extern int RealizePalette(IntPtr hdc);
 
-        [System.Security.Permissions.SecurityPermission(
-        System.Security.Permissions.SecurityAction.LinkDemand, Flags = 
-        System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]            
         private void GetHalftonePaletteVoid(PaintEventArgs e)
         {
-
             // Create and draw image.
             Image imageFile = Image.FromFile("SampImag.jpg");
             e.Graphics.DrawImage(imageFile, new Point(0, 0));
@@ -296,12 +288,8 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
                int lrCornerX, int lrCornerY);
         }
 
-        [System.Security.Permissions.SecurityPermission(
-        System.Security.Permissions.SecurityAction.LinkDemand, Flags = 
-        System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]            
         private void GetHdcForGDI1(PaintEventArgs e)
         {
-
             // Create pen.
             Pen redPen = new Pen(Color.Red, 1);
 
@@ -936,12 +924,8 @@ namespace System.Drawing.ClassicGraphicsExamples3CS
             int ulCornerX, int ulCornerY,
             int lrCornerX, int lrCornerY);
 
-        [System.Security.Permissions.SecurityPermission(
-        System.Security.Permissions.SecurityAction.LinkDemand, Flags = 
-        System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]            
         private void GetHdcForGDI2(PaintEventArgs e)
         {
-
             // Create pen.
             Pen redPen = new Pen(Color.Red, 1);
 

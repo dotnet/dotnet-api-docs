@@ -19,7 +19,6 @@ using System.Collections;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Proxies;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 namespace IMethodCallMessageNS
 {
@@ -27,7 +26,6 @@ namespace IMethodCallMessageNS
    // In the same class, in the Invoke method, the methods and properties of the
    // IMethodCallMessage are demonstrated.
 
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyProxy : RealProxy
    {
       public MyProxy(Type myType) : base(myType)
@@ -83,7 +81,6 @@ namespace IMethodCallMessageNS
    }
 
    // The class used to obtain Metadata.
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyMarshalByRefClass : MarshalByRefObject
    {
       public int MyMethod(string str, double dbl, int i)
@@ -96,7 +93,6 @@ namespace IMethodCallMessageNS
    // Main class that drives the whole sample.
    public class ProxySample
    {
-      [SecurityPermission(SecurityAction.LinkDemand)]
       public static void Main()
       {
          Console.WriteLine("Generate a new MyProxy.");

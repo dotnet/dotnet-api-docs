@@ -20,7 +20,6 @@ using System.Security.Permissions;
 
 public class MyHttpClientChannel
 {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main()
    {
       try

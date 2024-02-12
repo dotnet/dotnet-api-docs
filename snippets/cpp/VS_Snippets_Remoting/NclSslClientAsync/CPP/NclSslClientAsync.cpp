@@ -263,7 +263,7 @@ public:
       serverName = args[ 1 ];
       
       // Create a TCP/IP client socket.
-      TcpClient^ client = gcnew TcpClient( serverName,80 );
+      TcpClient^ client = gcnew TcpClient( serverName,5000 );
       Console::WriteLine( L"Client connected." );
       
       // Create an SSL stream that will close the client's stream.

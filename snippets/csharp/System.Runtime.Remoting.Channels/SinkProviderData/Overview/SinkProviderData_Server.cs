@@ -7,13 +7,11 @@ using System.Collections;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 using System.Threading;
 using IPFilter;
 
 public class Server
 {
-   [SecurityPermission(SecurityAction.Demand)]
    public static void Main()
    {
       RemotingConfiguration.Configure("channels.config");

@@ -26,7 +26,6 @@ namespace IDesignerHostExample
     // You can double-click the component of an IDesignerHostExampleDesigner 
     // to show a form containing a listbox that lists the name and type 
     // of each component or control in the current design-time project.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
     public class IDesignerHostExampleDesigner : IDesigner
     {
         private System.ComponentModel.IComponent component;

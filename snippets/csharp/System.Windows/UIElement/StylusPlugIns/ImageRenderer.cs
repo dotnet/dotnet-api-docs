@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Ink;
 
-namespace AdvancedInkInputSemples
+namespace AdvancedInkInputSamples
 {
 
     /// <summary>

@@ -32,7 +32,6 @@ namespace MyLogging
 {
 // <Snippet1>
 // <Snippet2>
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyServerProcessingLogClientChannelSinkProviderData : IClientChannelSinkProvider
    {
 
@@ -73,7 +72,6 @@ namespace MyLogging
    }
 // </Snippet2>
 // </Snippet1>
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    internal class MyLoggingClientChannelSink : BaseChannelObjectWithProperties, IClientChannelSink,
       ILoggingSink
    {
@@ -170,7 +168,6 @@ namespace MyLogging
       }
    }
 
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class MyServerProcessingLogServerChannelSinkProviderData : IServerChannelSinkProvider
    {
       private IServerChannelSinkProvider myServerChannelSinkProviderNext = null;
@@ -202,7 +199,6 @@ namespace MyLogging
       }
    }
 
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    internal class LoggingServerChannelSink : BaseChannelObjectWithProperties, IServerChannelSink,
       ILoggingSink
    {

@@ -1,31 +1,21 @@
 ﻿//<snippet1>
-using System;
 using System.ComponentModel;
 
 namespace EditorBrowsableDemo
 {
     public class Class1
     {
-        public Class1()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        int ageval;
+        public Class1() { }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int Age
         {
-            get { return ageval; }
-            set
-            {
-                if (!ageval.Equals(value))
-                {
-                    ageval = value;
-                }
-            }
+            get; set;
+        }
+
+        public int Height
+        {
+            get; set;
         }
     }
 }

@@ -1,4 +1,4 @@
-//<Snippet1>
+﻿//<Snippet1>
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -37,15 +37,14 @@ class DemoAssemblyBuilder
         }
         */
 
-        AssemblyName aName = new AssemblyName("DynamicAssemblyExample");
+        var aName = new AssemblyName("DynamicAssemblyExample");
         AssemblyBuilder ab =
             AssemblyBuilder.DefineDynamicAssembly(
                 aName,
                 AssemblyBuilderAccess.Run);
 
         // The module name is usually the same as the assembly name.
-        ModuleBuilder mb =
-            ab.DefineDynamicModule(aName.Name);
+        ModuleBuilder mb = ab.DefineDynamicModule(aName.Name ?? "DynamicAssemblyExample");
 
         TypeBuilder tb = mb.DefineType(
             "MyDynamicType",
@@ -72,8 +71,8 @@ class DemoAssemblyBuilder
         // base class (System.Object) by passing an empty array of
         // types (Type.EmptyTypes) to GetConstructor.
         ctor1IL.Emit(OpCodes.Ldarg_0);
-        ctor1IL.Emit(OpCodes.Call,
-            typeof(object).GetConstructor(Type.EmptyTypes));
+        ConstructorInfo? ci = typeof(object).GetConstructor(Type.EmptyTypes);
+        ctor1IL.Emit(OpCodes.Call, ci!);
         // Push the instance on the stack before pushing the argument
         // that is to be assigned to the private field m_number.
         ctor1IL.Emit(OpCodes.Ldarg_0);
@@ -176,40 +175,43 @@ class DemoAssemblyBuilder
         methIL.Emit(OpCodes.Ret);
 
         // Finish the type.
-        Type t = tb.CreateType();                
+        Type? t = tb.CreateType();
 
         // Because AssemblyBuilderAccess includes Run, the code can be
         // executed immediately. Start by getting reflection objects for
         // the method and the property.
-        MethodInfo mi = t.GetMethod("MyMethod");
-        PropertyInfo pi = t.GetProperty("Number");
+        MethodInfo? mi = t?.GetMethod("MyMethod");
+        PropertyInfo? pi = t?.GetProperty("Number");
 
         // Create an instance of MyDynamicType using the default
         // constructor.
-        object o1 = Activator.CreateInstance(t);
+        object? o1 = null;
+        if (t is not null)
+            o1 = Activator.CreateInstance(t);
 
         // Display the value of the property, then change it to 127 and
         // display it again. Use null to indicate that the property
         // has no index.
-        Console.WriteLine("o1.Number: {0}", pi.GetValue(o1, null));
-        pi.SetValue(o1, 127, null);
-        Console.WriteLine("o1.Number: {0}", pi.GetValue(o1, null));
+        Console.WriteLine("o1.Number: {0}", pi?.GetValue(o1, null));
+        pi?.SetValue(o1, 127, null);
+        Console.WriteLine("o1.Number: {0}", pi?.GetValue(o1, null));
 
         // Call MyMethod, passing 22, and display the return value, 22
         // times 127. Arguments must be passed as an array, even when
         // there is only one.
         object[] arguments = { 22 };
         Console.WriteLine("o1.MyMethod(22): {0}",
-            mi.Invoke(o1, arguments));
+            mi?.Invoke(o1, arguments));
 
         // Create an instance of MyDynamicType using the constructor
         // that specifies m_Number. The constructor is identified by
         // matching the types in the argument array. In this case,
         // the argument array is created on the fly. Display the
         // property value.
-        object o2 = Activator.CreateInstance(t,
-            new object[] { 5280 });
-        Console.WriteLine("o2.Number: {0}", pi.GetValue(o2, null));
+        object? o2 = null;
+        if (t is not null)
+            Activator.CreateInstance(t, new object[] { 5280 });
+        Console.WriteLine("o2.Number: {0}", pi?.GetValue(o2, null));
     }
 }
 

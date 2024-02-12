@@ -2508,11 +2508,8 @@ namespace SequenceExamples
             // <Snippet87>
             int[] grades = { 59, 82, 70, 56, 92, 98, 85 };
 
-            IEnumerable<int> lowerGrades =
-                grades.OrderByDescending(g => g).Skip(3);
-
-            Console.WriteLine("All grades except the top three are:");
-            foreach (int grade in lowerGrades)
+            Console.WriteLine("All grades except the first three:");
+            foreach (int grade in grades.Skip(3))
             {
                 Console.WriteLine(grade);
             }
@@ -2520,11 +2517,11 @@ namespace SequenceExamples
             /*
              This code produces the following output:
 
-             All grades except the top three are:
-             82
-             70
-             59
+            All grades except the first three:
              56
+             92
+             98
+             85
             */
             // </Snippet87>
         }

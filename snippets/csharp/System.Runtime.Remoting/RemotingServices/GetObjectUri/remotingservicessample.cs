@@ -20,13 +20,10 @@ using System.Net;
 using System.IO;
 //</snippet5>
 
-using System.Security.Permissions;
-
 //<snippet6>
 // An instance of ClientApp will call an instance of this class remotely.
 
 public class TcpServerApp {
-[SecurityPermission(SecurityAction.Demand)]
    public TcpServerApp()
    {
       // Register a class over TCP at tcp://localhost:8085/HttpHelloServer.
@@ -58,7 +55,6 @@ public class TcpServerApp {
 
 //<snippet9>
 public class HttpServerApp {
-[SecurityPermission(SecurityAction.Demand)]
    public HttpServerApp() {
       // Marshal an object over HTTP at http://localhost:8090/HttpHelloServer.
 
@@ -93,7 +89,6 @@ public class HelloServer : MarshalByRefObject {
       Console.WriteLine("Client invoked SayHelloToServer(\"{0}\").", name);
    }   
 
-[SecurityPermission(SecurityAction.Demand)]
    //<snippet3> 
    // IsOneWay
    // Note the lack of the OneWayAttribute adornment on this method.
@@ -115,7 +110,6 @@ public class HelloServer : MarshalByRefObject {
 // An instance of this class will call an instance of ServerApp remotely.
 
 public class TcpClientApp {
-[SecurityPermission(SecurityAction.Demand)]
    public TcpClientApp() {
       const string myHelloServerUrl = "tcp://localhost:8085/TcpHelloServer";
 

@@ -15,7 +15,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Xps.Packaging;
-using System.Security.Permissions;
 using System.Xml;
 using WinForms = Microsoft.Win32;
 
@@ -148,7 +147,6 @@ namespace SdkSample
         ///   document to load and display.</param>
         /// <returns>
         ///   true if the document loads successfully; otherwise false.</returns>
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public bool OpenEncryptedDocument(string xpsFile)
         {
             // Check to see if the document is encrypted.
@@ -634,7 +632,6 @@ namespace SdkSample
         ///   Returns the email address of the current user log-in.</summary>
         /// <returns>
         ///   The email address of the current user.</returns>
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         static internal string GetDefaultWindowsUserName()
         {
             // Get the identity of the currently logged in user.

@@ -3,13 +3,14 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
 namespace FirstAssembly
 {
     public class InFirstAssembly
     {
         public static void Main()
         {
-            FistMethod();
+            FirstMethod();
             SecondAssembly.InSecondAssembly.OtherMethod();
         }
 
@@ -22,10 +23,6 @@ namespace FirstAssembly
 }
 
 // Assembly SecondAssembly
-using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-
 namespace SecondAssembly
 {
     class InSecondAssembly

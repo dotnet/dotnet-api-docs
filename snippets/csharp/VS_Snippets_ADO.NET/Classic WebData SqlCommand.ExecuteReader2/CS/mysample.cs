@@ -22,11 +22,13 @@ class Program
         {
             SqlCommand command = new SqlCommand(queryString, connection);
             connection.Open();
-            SqlDataReader reader =
-                command.ExecuteReader(CommandBehavior.CloseConnection);
-            while (reader.Read())
+            using(SqlDataReader reader =
+                command.ExecuteReader(CommandBehavior.CloseConnection))
             {
-                Console.WriteLine(String.Format("{0}", reader[0]));
+                while (reader.Read())
+                {
+                    Console.WriteLine(String.Format("{0}", reader[0]));
+                }
             }
         }
     }

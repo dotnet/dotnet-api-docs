@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 
 public class SinkProviderSampleClass  {
-[SecurityPermission(SecurityAction.Demand)]
    public static void Main()  {
       // <Snippet1>
       IDictionary prop = new Hashtable();

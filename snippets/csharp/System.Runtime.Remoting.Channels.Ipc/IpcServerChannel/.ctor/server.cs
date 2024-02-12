@@ -12,11 +12,9 @@
 
 using System;
 using System.Runtime.Remoting.Channels.Ipc;
-using System.Security.Permissions;
 
 public class Server
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         // Create the server channel.

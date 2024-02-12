@@ -6,7 +6,6 @@ using System.Security.Permissions;
 
 namespace WebBrowserExtensibility
 {
-    [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
     public class Form1 : Form
     {
         [STAThread]
@@ -41,7 +40,6 @@ namespace WebBrowserExtensibility
         AxHost.ConnectionPointCookie cookie;
         WebBrowser2EventHelper helper;
 
-        [PermissionSetAttribute(SecurityAction.LinkDemand, Name="FullTrust")]
         protected override void CreateSink()
         {
             base.CreateSink();
@@ -53,7 +51,6 @@ namespace WebBrowserExtensibility
                 this.ActiveXInstance, helper, typeof(DWebBrowserEvents2));
         }
 
-        [PermissionSetAttribute(SecurityAction.LinkDemand, Name="FullTrust")]
         protected override void DetachSink()
         {
             // Disconnect the client that handles the event

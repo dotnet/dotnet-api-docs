@@ -34,10 +34,10 @@ namespace FileSystemExample
         }
 
         // Adds an ACL entry on the specified directory for the specified account.
-        public static void AddDirectorySecurity(string FileName, string Account, FileSystemRights Rights, AccessControlType ControlType)
+        public static void AddDirectorySecurity(string DirectoryName, string Account, FileSystemRights Rights, AccessControlType ControlType)
         {
             // Create a new DirectoryInfo object.
-            DirectoryInfo dInfo = new DirectoryInfo(FileName);
+            DirectoryInfo dInfo = new DirectoryInfo(DirectoryName);
 
             // Get a DirectorySecurity object that represents the
             // current security settings.
@@ -53,10 +53,10 @@ namespace FileSystemExample
         }
 
         // Removes an ACL entry on the specified directory for the specified account.
-        public static void RemoveDirectorySecurity(string FileName, string Account, FileSystemRights Rights, AccessControlType ControlType)
+        public static void RemoveDirectorySecurity(string DirectoryName, string Account, FileSystemRights Rights, AccessControlType ControlType)
         {
             // Create a new DirectoryInfo object.
-            DirectoryInfo dInfo = new DirectoryInfo(FileName);
+            DirectoryInfo dInfo = new DirectoryInfo(DirectoryName);
 
             // Get a DirectorySecurity object that represents the
             // current security settings.

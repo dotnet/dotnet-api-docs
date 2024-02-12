@@ -15,7 +15,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
     
-namespace AdvancedInkInputSemples
+namespace AdvancedInkInputSamples
 {
     // <Snippet1>
     // EventArgs for the StrokeRendered event.

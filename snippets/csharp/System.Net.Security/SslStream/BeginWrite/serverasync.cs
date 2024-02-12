@@ -215,7 +215,7 @@ namespace Examples.Ssl
             }
             X509Certificate serverCertificate = X509Certificate.CreateFromCertFile(args[0]);
             // Create a TCP/IP (IPv4) socket and listen for incoming connections.
-            TcpListener listener = new TcpListener(IPAddress.Any, 8080);
+            TcpListener listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
             Console.WriteLine("Listening for clients.");
             while (true)

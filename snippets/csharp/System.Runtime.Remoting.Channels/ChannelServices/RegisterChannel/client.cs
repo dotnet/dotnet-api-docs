@@ -19,7 +19,6 @@ public class SampleClient : MarshalByRefObject {
         SampleClient client = new SampleClient();
     }
 
-    [PermissionSet(SecurityAction.LinkDemand)]
     public SampleClient() {
 
         ChannelServices.RegisterChannel(new HttpChannel(0));

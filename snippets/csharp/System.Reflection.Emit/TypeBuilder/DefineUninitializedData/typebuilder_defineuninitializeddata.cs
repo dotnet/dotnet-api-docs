@@ -17,7 +17,6 @@ using System.Security.Permissions;
 
 public sealed class Example
 {
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       Type myHelloWorldType = CreateCallee(Thread.GetDomain());

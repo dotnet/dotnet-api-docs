@@ -7,7 +7,6 @@
     using System.Windows.Controls;
     using System.Collections.Generic;
     using System.Windows.Input;
-    using System.Security.Permissions;
 
     internal class Particle
     {
@@ -279,7 +278,6 @@
             _timeTracker = null;
         }
 
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         protected void OnFrameCallback(object sender, EventArgs e)
         {
             UpdateParticles(_timeTracker.Update());

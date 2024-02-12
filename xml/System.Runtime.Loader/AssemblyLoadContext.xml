@@ -1,10 +1,10 @@
 <Type Name="AssemblyLoadContext" FullName="System.Runtime.Loader.AssemblyLoadContext">
-  <TypeSignature Language="C#" Value="public class AssemblyLoadContext" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AssemblyLoadContext extends System.Object" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="C#" Value="public class AssemblyLoadContext" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AssemblyLoadContext extends System.Object" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
   <TypeSignature Language="DocId" Value="T:System.Runtime.Loader.AssemblyLoadContext" />
-  <TypeSignature Language="VB.NET" Value="Public Class AssemblyLoadContext" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="VB.NET" Value="Public Class AssemblyLoadContext" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
   <TypeSignature Language="F#" Value="type AssemblyLoadContext = class" />
-  <TypeSignature Language="C++ CLI" Value="public ref class AssemblyLoadContext" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+  <TypeSignature Language="C++ CLI" Value="public ref class AssemblyLoadContext" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
   <TypeSignature Language="C#" Value="public abstract class AssemblyLoadContext" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
   <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit AssemblyLoadContext extends System.Object" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
   <TypeSignature Language="VB.NET" Value="Public MustInherit Class AssemblyLoadContext" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
@@ -18,6 +18,8 @@
     <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
@@ -27,64 +29,22 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-8.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>Represents the runtime's concept of a scope for assembly loading.</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[
-## Remarks
-
-The <xref:System.Runtime.Loader.AssemblyLoadContext> represents a load context. Conceptually, a load context creates a scope for loading, resolving, and potentially unloading a set of assemblies.
-
-The <xref:System.Runtime.Loader.AssemblyLoadContext> exists primarily to provide assembly loading isolation. It allows multiple versions of the same assembly to be loaded within a single process. It replaces the isolation mechanisms provided by multiple <xref:System.AppDomain> instances in .NET Framework.
- 
-> [!NOTE]
-> - <xref:System.Runtime.Loader.AssemblyLoadContext> does not provide any security features. All code has full permissions of the process.
-> - In .NET Core 2.0 - 2.2 only, <xref:System.Runtime.Loader.AssemblyLoadContext> is an abstract class. To create a concrete class in these versions, implement the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> method.
-
-### Usage in the runtime
-
-The runtime implements two assembly load contexts:
-
-* <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> represents the runtime's default context, which is used for the application main assembly and its static dependencies.
-* The <xref:System.Reflection.Assembly.LoadFile(System.String)?displayProperty=nameWithType> method isolates the assemblies it loads by instantiating the most basic <xref:System.Runtime.Loader.AssemblyLoadContext>. It has a simplistic isolation scheme that loads each assembly in its own <xref:System.Runtime.Loader.AssemblyLoadContext> with no dependency resolution.
- 
-### Application usage
-
-An application can create its own <xref:System.Runtime.Loader.AssemblyLoadContext> to create a custom solution for advanced scenarios. The customization focuses on defining dependency resolution mechanisms.
- 
-The <xref:System.Runtime.Loader.AssemblyLoadContext> provides two extension points to implement managed assembly resolution:
-
-1. The <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> method provides the first chance for the <xref:System.Runtime.Loader.AssemblyLoadContext> to resolve, load, and return the assembly. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> method returns `null`, the loader tries to load the assembly into the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType>.
-2. If the <xref:System.Runtime.Loader.AssemblyLoadContext.Default?displayProperty=nameWithType> is unable to resolve the assembly, the original <xref:System.Runtime.Loader.AssemblyLoadContext> gets a second chance to resolve the assembly. The runtime raises the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
- 
-Additionally, the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll(System.String)?displayProperty=nameWithType> virtual method allows customization of the default unmanaged assembly resolution. The default implementation returns `null`, which causes the runtime search to use its default search policy. The default search policy is sufficient for most scenarios.
-
-### Technical challenges
-
-* It is not possible to load multiple versions of the runtime in a single process.
-
-	 > [!CAUTION]
-	 > Loading multiple copies or different versions of framework assemblies can lead to unexpected and hard-to-diagnose behavior.
-	 
-	 > [!TIP]
-	 > Use process boundaries with remoting or interprocess communication to solve this isolation problem.
- 
-* The timing of assembly loading can make testing and debugging difficult. Assemblies are typically loaded without their dependencies immediately being resolved. The dependencies are loaded as they are needed:
-
-     * When code branches into a dependent assembly.
-     * When code loads resources.
-     * When code explicitly loads assemblies.
- 
-* The implementation of <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)?displayProperty=nameWithType> can add new dependencies that may need to be isolated to allow different versions to exist. The most natural implementation would place these dependencies in the default context. Careful design can isolate the new dependencies.
- 
-* The same assembly is loaded multiple times into different contexts.
-     * This can lead to confusing error messages, for example "Unable to cast object of type 'Sample.Plugin' to type 'Sample.Plugin'".
-     * Marshaling across isolation boundaries is non-trivial. A typical solution is to use an interface defined in an assembly that's only loaded into the default load context.
- 
- ]]></format>
-    </remarks>
-    <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md">AssemblyLoadContext CoreCLR design document</related>
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-runtime-loader-assemblyloadcontext">Supplemental API remarks for AssemblyLoadContext</see>.</remarks>
+    <related type="Article" href="/dotnet/core/dependency-loading/understanding-assemblyloadcontext">About AssemblyLoadContext</related>
     <related type="Article" href="/dotnet/standard/assembly/unloadability">How to use and debug assembly unloadability in .NET Core</related>
+    <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md">AssemblyLoadContext CoreCLR design document</related>
     <related type="Article" href="https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/unloadability.md">AssemblyLoadContext unloadability design document</related>
   </Docs>
   <Members>
@@ -104,6 +64,8 @@ Additionally, the <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedD
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -137,9 +99,11 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="isCollectible" Type="System.Boolean" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="isCollectible" Type="System.Boolean" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
         <param name="isCollectible">
@@ -169,10 +133,18 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-        <Parameter Name="isCollectible" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="isCollectible" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
         <param name="name">The value for <see cref="P:System.Runtime.Loader.AssemblyLoadContext.Name" /> in the new instance. Its value can be <see langword="null" />.</param>
@@ -187,7 +159,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="ILAsm" Value=".property class System.Collections.Generic.IEnumerable`1&lt;class System.Runtime.Loader.AssemblyLoadContext&gt; All" />
       <MemberSignature Language="DocId" Value="P:System.Runtime.Loader.AssemblyLoadContext.All" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property All As IEnumerable(Of AssemblyLoadContext)" />
-      <MemberSignature Language="F#" Value="member this.All : seq&lt;System.Runtime.Loader.AssemblyLoadContext&gt;" Usage="System.Runtime.Loader.AssemblyLoadContext.All" />
+      <MemberSignature Language="F#" Value="static member All : seq&lt;System.Runtime.Loader.AssemblyLoadContext&gt;" Usage="System.Runtime.Loader.AssemblyLoadContext.All" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Collections::Generic::IEnumerable&lt;System::Runtime::Loader::AssemblyLoadContext ^&gt; ^ All { System::Collections::Generic::IEnumerable&lt;System::Runtime::Loader::AssemblyLoadContext ^&gt; ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -196,6 +168,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Runtime.Loader.AssemblyLoadContext&gt;</ReturnType>
@@ -220,6 +194,8 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Reflection.Assembly&gt;</ReturnType>
@@ -235,7 +211,7 @@ This constructor is protected. It can only be called from the <xref:System.Runti
       <MemberSignature Language="ILAsm" Value=".property class System.Runtime.Loader.AssemblyLoadContext CurrentContextualReflectionContext" />
       <MemberSignature Language="DocId" Value="P:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property CurrentContextualReflectionContext As AssemblyLoadContext" />
-      <MemberSignature Language="F#" Value="member this.CurrentContextualReflectionContext : System.Runtime.Loader.AssemblyLoadContext" Usage="System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" />
+      <MemberSignature Language="F#" Value="static member CurrentContextualReflectionContext : System.Runtime.Loader.AssemblyLoadContext" Usage="System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Runtime::Loader::AssemblyLoadContext ^ CurrentContextualReflectionContext { System::Runtime::Loader::AssemblyLoadContext ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -244,7 +220,19 @@ This constructor is protected. It can only be called from the <xref:System.Runti
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext</ReturnType>
       </ReturnValue>
@@ -266,7 +254,7 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
       <MemberSignature Language="ILAsm" Value=".property class System.Runtime.Loader.AssemblyLoadContext Default" />
       <MemberSignature Language="DocId" Value="P:System.Runtime.Loader.AssemblyLoadContext.Default" />
       <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Default As AssemblyLoadContext" />
-      <MemberSignature Language="F#" Value="member this.Default : System.Runtime.Loader.AssemblyLoadContext" Usage="System.Runtime.Loader.AssemblyLoadContext.Default" />
+      <MemberSignature Language="F#" Value="static member Default : System.Runtime.Loader.AssemblyLoadContext" Usage="System.Runtime.Loader.AssemblyLoadContext.Default" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Runtime::Loader::AssemblyLoadContext ^ Default { System::Runtime::Loader::AssemblyLoadContext ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
@@ -278,6 +266,8 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -306,6 +296,8 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext+ContextualReflectionScope</ReturnType>
@@ -338,12 +330,20 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Runtime.Loader.AssemblyLoadContext+ContextualReflectionScope</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="activating" Type="System.Reflection.Assembly" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+        <Parameter Name="activating" Type="System.Reflection.Assembly" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       </Parameters>
       <Docs>
         <param name="activating">The assembly that is used to determine the requested <see cref="T:System.Runtime.Loader.AssemblyLoadContext" /> instance.</param>
@@ -373,6 +373,8 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -400,6 +402,8 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -423,7 +427,7 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
       </Docs>
     </Member>
     <Member MemberName="GetLoadContext">
-      <MemberSignature Language="C#" Value="public static System.Runtime.Loader.AssemblyLoadContext? GetLoadContext (System.Reflection.Assembly assembly);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static System.Runtime.Loader.AssemblyLoadContext? GetLoadContext (System.Reflection.Assembly assembly);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Runtime.Loader.AssemblyLoadContext GetLoadContext(class System.Reflection.Assembly assembly) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(System.Reflection.Assembly)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function GetLoadContext (assembly As Assembly) As AssemblyLoadContext" />
@@ -440,6 +444,8 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -474,6 +480,8 @@ For more information, see [AssemblyLoadContext.CurrentContextualReflectionContex
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -493,12 +501,12 @@ For more information, see [How to use and debug assembly unloadability in .NET C
       </Docs>
     </Member>
     <Member MemberName="Load">
-      <MemberSignature Language="C#" Value="protected virtual System.Reflection.Assembly? Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="protected virtual System.Reflection.Assembly? Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Reflection.Assembly Load(class System.Reflection.AssemblyName assemblyName) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Function Load (assemblyName As AssemblyName) As Assembly" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly&#xA;override this.Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function Load (assemblyName As AssemblyName) As Assembly" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly&#xA;override this.Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Reflection::Assembly ^ Load(System::Reflection::AssemblyName ^ assemblyName);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="C#" Value="protected abstract System.Reflection.Assembly Load (System.Reflection.AssemblyName assemblyName);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="VB.NET" Value="Protected MustOverride Function Load (assemblyName As AssemblyName) As Assembly" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="F#" Value="abstract member Load : System.Reflection.AssemblyName -&gt; System.Reflection.Assembly" Usage="assemblyLoadContext.Load assemblyName" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
@@ -513,6 +521,8 @@ For more information, see [How to use and debug assembly unloadability in .NET C
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -532,7 +542,7 @@ For more information, see [How to use and debug assembly unloadability in .NET C
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
-During assembly resolution, the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)> method has the first chance to resolve the assembly name to a loaded assembly. It can load an assembly and return it, return an already loaded assembly, or return `null`. If it returns `null`, the resolution process continues. See [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm) for the full process description.
+During assembly resolution, the <xref:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)> method has the first chance to resolve the assembly name to a loaded assembly. It can load an assembly and return it, return an already loaded assembly, or return `null`. If it returns `null`, the resolution process continues. For the full process description, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm).
 
 Implementations of this method can return an assembly loaded into any <xref:System.Runtime.Loader.AssemblyLoadContext>, not just the instance it was called on. Returning an assembly from a different <xref:System.Runtime.Loader.AssemblyLoadContext> does not result in that assembly becoming associated with this instance.
 
@@ -541,6 +551,8 @@ Implementations of this method can return an assembly loaded into any <xref:Syst
 
  ]]></format>
         </remarks>
+        <related type="Article" href="/dotnet/core/dependency-loading/loading-managed">Managed assembly loading algorithm</related>
+        <related type="Article" href="/dotnet/core/tutorials/creating-app-with-plugin-support">Create a .NET Core application with plugins</related>
       </Docs>
     </Member>
     <Member MemberName="LoadFromAssemblyName">
@@ -560,6 +572,8 @@ Implementations of this method can return an assembly loaded into any <xref:Syst
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -590,15 +604,15 @@ Implementations of this method can return an assembly loaded into any <xref:Syst
 2. Unless the assembly is loaded or an exception is thrown, the method attempts to load the assembly in the default <xref:System.Runtime.Loader.AssemblyLoadContext>.
 3. Unless the assembly is loaded or an exception is thrown, the method fires the <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event.
 4. Unless the assembly is loaded or an exception is thrown, the method fires the <xref:System.AppDomain.AssemblyResolve> event.
- 
+
 > [!NOTE]
 > <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name, and the first assembly that matches the simple name has a incompatible version or culture. The loader does not continue probing for other assemblies that match the simple name.
- 
+
 Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
- 
+
 * One version of an executable assembly.
 * One version of a satellite assembly for each culture.
- 
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -608,6 +622,7 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyName" /> is not a valid assembly.</exception>
         <exception cref="T:System.IO.FileLoadException">An assembly or module was loaded which did not match the <paramref name="assemblyName" />.</exception>
+        <related type="Article" href="/dotnet/core/dependency-loading/loading-managed">Managed assembly loading algorithm</related>
       </Docs>
     </Member>
     <Member MemberName="LoadFromAssemblyPath">
@@ -627,13 +642,15 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")&gt;]</AttributeName>
         </Attribute>
@@ -650,15 +667,15 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <returns>The loaded assembly.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="assemblyPath" /> argument is not an absolute path.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="assemblyPath" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="assemblyPath" /> argument is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">The <paramref name="assemblyPath" /> parameter is an empty string ("") or does not exist.</exception>
-        <exception cref="T:System.BadImageFormatException">
-          <paramref name="assemblyPath" /> is not a valid assembly.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The <paramref name="assemblyPath" /> argument is an empty string ("") or does not exist.</exception>
+        <exception cref="T:System.BadImageFormatException">The  <paramref name="assemblyPath" /> argument is not a valid assembly.</exception>
+        <related type="Article" href="/dotnet/core/dependency-loading/loading-managed">Managed assembly loading algorithm</related>
       </Docs>
     </Member>
     <Member MemberName="LoadFromNativeImagePath">
-      <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromNativeImagePath (string nativeImagePath, string? assemblyPath);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromNativeImagePath (string nativeImagePath, string? assemblyPath);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Reflection.Assembly LoadFromNativeImagePath(string nativeImagePath, string assemblyPath) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromNativeImagePath(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function LoadFromNativeImagePath (nativeImagePath As String, assemblyPath As String) As Assembly" />
@@ -675,13 +692,15 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")&gt;]</AttributeName>
         </Attribute>
@@ -691,7 +710,14 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
       </ReturnValue>
       <Parameters>
         <Parameter Name="nativeImagePath" Type="System.String" />
-        <Parameter Name="assemblyPath" Type="System.String" />
+        <Parameter Name="assemblyPath" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="nativeImagePath">The fully qualified path of the file to load.</param>
@@ -703,18 +729,18 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
 
 ## Remarks
  The native image of a managed assembly is pre-jitted to optimize running on a specific platform.
- 
+
  The assembly path refers to the path to the IL version of the assembly. It is an optional argument as the IL is typically included in the native image. It can be used by the runtime as a fallback if the native image is not found.
- 
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="nativeImagePath" /> argument is not an absolute path.</exception>
         <exception cref="T:System.ArgumentException">The <paramref name="assemblyPath" /> argument is not an absolute path.</exception>
-        <exception cref="T:System.ArgumentNullException">The <paramref name="nativeImagePath" /> parameter is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="nativeImagePath" /> argument is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">The <paramref name="nativeImagePath" /> parameter is an empty string ("") or does not exist.</exception>
-        <exception cref="T:System.BadImageFormatException">
-          <paramref name="assemblyPath" /> is not a valid assembly.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The <paramref name="nativeImagePath" /> argument is an empty string ("") or does not exist.</exception>
+        <exception cref="T:System.BadImageFormatException">The <paramref name="assemblyPath" /> argument is not a valid assembly.</exception>
+        <related type="Article" href="/dotnet/core/dependency-loading/loading-managed">Managed assembly loading algorithm</related>
       </Docs>
     </Member>
     <Member MemberName="LoadFromStream">
@@ -734,13 +760,15 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")&gt;]</AttributeName>
         </Attribute>
@@ -760,10 +788,11 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
           <paramref name="assembly" /> is <see langword="null" />.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assembly" /> is not a valid assembly.</exception>
+        <related type="Article" href="/dotnet/core/dependency-loading/loading-managed">Managed assembly loading algorithm</related>
       </Docs>
     </Member>
     <Member MemberName="LoadFromStream">
-      <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromStream (System.IO.Stream assembly, System.IO.Stream? assemblySymbols);" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public System.Reflection.Assembly LoadFromStream (System.IO.Stream assembly, System.IO.Stream? assemblySymbols);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Reflection.Assembly LoadFromStream(class System.IO.Stream assembly, class System.IO.Stream assemblySymbols) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromStream(System.IO.Stream,System.IO.Stream)" />
       <MemberSignature Language="VB.NET" Value="Public Function LoadFromStream (assembly As Stream, assemblySymbols As Stream) As Assembly" />
@@ -780,13 +809,15 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-5.0;net-6.0">
+        <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0">
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")&gt;]</AttributeName>
         </Attribute>
@@ -796,7 +827,14 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
       </ReturnValue>
       <Parameters>
         <Parameter Name="assembly" Type="System.IO.Stream" />
-        <Parameter Name="assemblySymbols" Type="System.IO.Stream" />
+        <Parameter Name="assemblySymbols" Type="System.IO.Stream">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="assembly">A byte array that is a COFF-based image containing a managed assembly.</param>
@@ -827,6 +865,8 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -847,9 +887,9 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
 
 ## Remarks
  The default implementation always returns <xref:System.IntPtr.Zero?displayProperty=nameWithType>. When <xref:System.IntPtr.Zero?displayProperty=nameWithType> is returned, the runtime loads the library with its default policy.
- 
+
  This virtual method can be overridden to customize the unmanaged library search algorithm. When overridden the name can be used to identify the library. The loaded library does not need to match the requested name, but can be transformed as needed. This could include adjusting the name for platform specific naming.
- 
+
  ]]></format>
         </remarks>
       </Docs>
@@ -871,6 +911,8 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -887,7 +929,7 @@ Each <xref:System.Runtime.Loader.AssemblyLoadContext> can load only:
         <summary>Loads an unmanaged library from the specified path.</summary>
         <returns>The OS handle for the loaded native library.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 The OS handle returned by this method can be used with methods of the <xref:System.Runtime.InteropServices.NativeLibrary?displayProperty=nameWithType> class.
 
@@ -914,7 +956,19 @@ The OS handle returned by this method can be used with methods of the <xref:Syst
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[get: System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
@@ -925,10 +979,10 @@ The OS handle returned by this method can be used with methods of the <xref:Syst
       </Docs>
     </Member>
     <Member MemberName="Resolving">
-      <MemberSignature Language="C#" Value="public event Func&lt;System.Runtime.Loader.AssemblyLoadContext,System.Reflection.AssemblyName,System.Reflection.Assembly?&gt;? Resolving;" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public event Func&lt;System.Runtime.Loader.AssemblyLoadContext,System.Reflection.AssemblyName,System.Reflection.Assembly?&gt;? Resolving;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".event class System.Func`3&lt;class System.Runtime.Loader.AssemblyLoadContext, class System.Reflection.AssemblyName, class System.Reflection.Assembly&gt; Resolving" />
       <MemberSignature Language="DocId" Value="E:System.Runtime.Loader.AssemblyLoadContext.Resolving" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event Resolving As Func(Of AssemblyLoadContext, AssemblyName, Assembly) " FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="F#" Value="member this.Resolving : Func&lt;System.Runtime.Loader.AssemblyLoadContext, System.Reflection.AssemblyName, System.Reflection.Assembly&gt; " Usage="member this.Resolving : System.Func&lt;System.Runtime.Loader.AssemblyLoadContext, System.Reflection.AssemblyName, System.Reflection.Assembly&gt; " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event Func&lt;System::Runtime::Loader::AssemblyLoadContext ^, System::Reflection::AssemblyName ^, System::Reflection::Assembly ^&gt; ^ Resolving;" />
       <MemberSignature Language="C#" Value="public event Func&lt;System.Runtime.Loader.AssemblyLoadContext,System.Reflection.AssemblyName,System.Reflection.Assembly&gt; Resolving;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
@@ -943,11 +997,19 @@ The OS handle returned by this method can be used with methods of the <xref:Syst
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 1, 2 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 1, 2 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Func&lt;System.Runtime.Loader.AssemblyLoadContext,System.Reflection.AssemblyName,System.Reflection.Assembly&gt;</ReturnType>
       </ReturnValue>
@@ -958,16 +1020,18 @@ The OS handle returned by this method can be used with methods of the <xref:Syst
 
 ## Remarks
  It is the responsibility of the handler for this event to return the assembly that is specified, or to return `null` if the assembly is not recognized.
- 
+
  > [!IMPORTANT]
- >  If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
- 
- For more information about handling events, see [Handling and Raising Events](/dotnet/standard/events/).
- 
+ > If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
+
+ For more information about handling events, see [Handle and raise events](/dotnet/standard/events/).
+
  It is noteworthy that a handler can be added for this event on any <xref:System.Runtime.Loader.AssemblyLoadContext>, including the default context.
- 
+
  ]]></format>
         </remarks>
+        <related type="Article" href="/dotnet/core/dependency-loading/collect-details">Collect detailed assembly loading information</related>
+        <related type="Article" href="/dotnet/standard/events/">Handle and raise events</related>
       </Docs>
     </Member>
     <Member MemberName="ResolvingUnmanagedDll">
@@ -984,14 +1048,22 @@ The OS handle returned by this method can be used with methods of the <xref:Syst
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 1 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 1 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Func&lt;System.Reflection.Assembly,System.String,System.IntPtr&gt;</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Occurs when the resolution of a native library fails.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 This event is raised if the native library cannot be resolved by the default resolution logic (including <xref:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll%2A>).
 
@@ -1016,6 +1088,8 @@ This event is raised if the native library cannot be resolved by the default res
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1031,9 +1105,9 @@ This event is raised if the native library cannot be resolved by the default res
         <param name="directoryPath">The full path to the directory where the optimization profiles are stored.</param>
         <summary>Sets the root path where the optimization profiles for this load context are stored.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[ 
+          <format type="text/markdown"><![CDATA[
 
-## Remarks		  
+## Remarks
 
 The profile optimization improves the startup performance of the load context on multicore computers by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations. For more information, see <xref:System.Runtime.ProfileOptimization>.
 
@@ -1042,7 +1116,7 @@ The profile optimization improves the startup performance of the load context on
       </Docs>
     </Member>
     <Member MemberName="StartProfileOptimization">
-      <MemberSignature Language="C#" Value="public void StartProfileOptimization (string? profile);" FrameworkAlternate="net-5.0;net-6.0" />
+      <MemberSignature Language="C#" Value="public void StartProfileOptimization (string? profile);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void StartProfileOptimization(string profile) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.Loader.AssemblyLoadContext.StartProfileOptimization(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub StartProfileOptimization (profile As String)" />
@@ -1059,11 +1133,19 @@ The profile optimization improves the startup performance of the load context on
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -1074,9 +1156,9 @@ The profile optimization improves the startup performance of the load context on
         <param name="profile">The name of the optimization profile.</param>
         <summary>Starts the profile optimization for the specified profile.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[ 
+          <format type="text/markdown"><![CDATA[
 
-## Remarks		  
+## Remarks
 
 The profile optimization improves the startup performance of the load context on multicore computers by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations. For more information, see <xref:System.Runtime.ProfileOptimization>.
 
@@ -1098,6 +1180,8 @@ The profile optimization improves the startup performance of the load context on
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -1123,6 +1207,8 @@ The profile optimization improves the startup performance of the load context on
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -1145,10 +1231,10 @@ The profile optimization improves the startup performance of the load context on
       </Docs>
     </Member>
     <Member MemberName="Unloading">
-      <MemberSignature Language="C#" Value="public event Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt;? Unloading;" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public event Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt;? Unloading;" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1" />
       <MemberSignature Language="ILAsm" Value=".event class System.Action`1&lt;class System.Runtime.Loader.AssemblyLoadContext&gt; Unloading" />
       <MemberSignature Language="DocId" Value="E:System.Runtime.Loader.AssemblyLoadContext.Unloading" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event Unloading As Action(Of AssemblyLoadContext) " FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;xamarinandroid-7.1;xamarinios-10.8" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event Unloading As Action(Of AssemblyLoadContext) " FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-3.0;netcore-3.1;xamarinandroid-7.1;xamarinios-10.8" />
       <MemberSignature Language="F#" Value="member this.Unloading : Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; " Usage="member this.Unloading : System.Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event Action&lt;System::Runtime::Loader::AssemblyLoadContext ^&gt; ^ Unloading;" />
       <MemberSignature Language="C#" Value="public event Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt; Unloading;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;xamarinandroid-7.1;xamarinios-10.8" />
@@ -1163,11 +1249,19 @@ The profile optimization improves the startup performance of the load context on
         <AssemblyVersion>4.1.1.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
         <AssemblyVersion>2.0.5.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Action&lt;System.Runtime.Loader.AssemblyLoadContext&gt;</ReturnType>
       </ReturnValue>

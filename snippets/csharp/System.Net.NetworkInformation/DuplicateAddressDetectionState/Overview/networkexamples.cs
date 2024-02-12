@@ -8,7 +8,6 @@ using System.Net.Sockets;
         public static void GetTcpConnections()
         {
             IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
-//            TcpConnectionInformation connections = properties.GetActiveTcpConnections();
             TcpConnectionInformation[] connections = properties.GetActiveTcpConnections();
 
             foreach (TcpConnectionInformation t in connections)

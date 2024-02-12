@@ -7,12 +7,12 @@ using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Lifetime;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using SampleNamespace;
 
-public class SampleClient : MarshalByRefObject {
-    [SecurityPermission(SecurityAction.LinkDemand)]
-    public static void Main() {
+public class SampleClient : MarshalByRefObject
+{    
+    public static void Main()
+    {
         ChannelServices.RegisterChannel(new HttpChannel(0));
         RemotingConfiguration.RegisterActivatedClientType(typeof(SampleService), "http://localhost:9000/MySampleService");
         SampleService myRemoteObject = new SampleService();

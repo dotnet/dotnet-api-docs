@@ -19,7 +19,6 @@ using System.Security.Permissions;
 
 public class MyClient
 {
-   [PermissionSet(SecurityAction.LinkDemand)]
    public static void Main()
    {
       try

@@ -1,15 +1,12 @@
 ﻿// <snippet10>
 using System;
 using System.Runtime.Remoting;
-using System.Security.Permissions;
 using System.Security.Principal;
 using System.Text;
 
 public class Remotable : MarshalByRefObject
 {
-
     // A method to call remotely.
-    [SecurityPermission(SecurityAction.LinkDemand)]
     public string GetMessage()
     {
         // Create a message.

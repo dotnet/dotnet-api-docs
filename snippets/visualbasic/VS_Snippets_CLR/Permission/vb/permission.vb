@@ -27,24 +27,24 @@ NotInheritable Public Class SoundPermission
     Private m_specifiedAsUnrestricted As [Boolean] = False
     Private m_flags As SoundPermissionState = SoundPermissionState.NoSound
     ' This constructor creates and initializes a permission with generic access.
-    Public Sub New(ByVal state As PermissionState) 
+    Public Sub New(ByVal state As PermissionState)
         m_specifiedAsUnrestricted = state = PermissionState.Unrestricted
-    
+
     End Sub
-    ' This constructor creates and initializes a permission with specific access.        
-    Public Sub New(ByVal flags As SoundPermissionState) 
+    ' This constructor creates and initializes a permission with specific access.
+    Public Sub New(ByVal flags As SoundPermissionState)
         If Not [Enum].IsDefined(GetType(SoundPermissionState), flags) Then
             Throw New ArgumentException("flags value is not valid for the SoundPermissionState enuemrated type")
         End If
         m_specifiedAsUnrestricted = False
         m_flags = flags
-    
+
     End Sub
     ' For debugging, return the state of this object as XML.
-    Public Overrides Function ToString() As String 
+    Public Overrides Function ToString() As String
         Return ToXml().ToString()
-    
-    End Function 'ToString   
+
+    End Function 'ToString
     ' Private method to cast (if possible) an IPermission to the type.
     Private Function VerifyTypeMatch(ByVal target As IPermission) As SoundPermission
         If [GetType]() <> target.GetType() Then
@@ -53,7 +53,7 @@ NotInheritable Public Class SoundPermission
         Return CType(target, SoundPermission)
 
     End Function 'VerifyTypeMatch
-    ' This is the Private Clone helper method. 
+    ' This is the Private Clone helper method.
     Private Function Clone(ByVal specifiedAsUnrestricted As [Boolean], ByVal flags As SoundPermissionState) As SoundPermission
         Dim soundPerm As SoundPermission = CType(Clone(), SoundPermission)
         soundPerm.m_specifiedAsUnrestricted = specifiedAsUnrestricted
@@ -169,7 +169,7 @@ NotInheritable Public Class SoundPermission
     Public Overrides Function ToXml() As SecurityElement
         ' These first three lines create an element with the required format.
         Dim e As New SecurityElement("IPermission")
-        ' Replace the double quotation marks ("") with single quotation marks (‘’)
+        ' Replace the double quotation marks ("") with single quotation marks ('')
         ' to remain XML compliant when the culture is not neutral.
         e.AddAttribute("class", [GetType]().AssemblyQualifiedName.Replace(ControlChars.Quote, "'"c))
         e.AddAttribute("version", "1")
@@ -200,7 +200,7 @@ NotInheritable Public Class SoundPermission
     Public Function Clone() As [Object] Implements System.ICloneable.Clone
         Return MemberwiseClone()
 
-    End Function 'Clone 
+    End Function 'Clone
 #End Region
 
 End Class

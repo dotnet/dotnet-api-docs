@@ -2,7 +2,7 @@
 
 // <Snippet2>
 [Serializable]
-public class PingPong
+public class CallbackByValSnippet
 {
     private string greetings = "PING!";
 
@@ -10,7 +10,7 @@ public class PingPong
     {
         AppDomain otherDomain = AppDomain.CreateDomain("otherDomain");
 
-        PingPong pp = new PingPong();
+        CallbackByValSnippet pp = new CallbackByValSnippet();
         pp.MyCallBack();
         pp.greetings = "PONG!";
         otherDomain.DoCallBack(new CrossAppDomainDelegate(pp.MyCallBack));

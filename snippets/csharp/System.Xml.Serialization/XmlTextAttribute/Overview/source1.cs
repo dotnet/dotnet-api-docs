@@ -1,7 +1,4 @@
 ﻿using System.Xml.Serialization;
-using System.Security.Permissions;
-[assembly: SecurityPermission(
-   SecurityAction.RequestMinimum, Execution = true)]
 
 //<snippet0>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.42")]

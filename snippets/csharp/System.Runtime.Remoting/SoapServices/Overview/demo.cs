@@ -62,9 +62,6 @@ namespace ExampleNamespace
 
 public class Demo
 {
-    [System.Security.Permissions.SecurityPermissionAttribute(
-    System.Security.Permissions.SecurityAction.LinkDemand,
-    Flags=System.Security.Permissions.SecurityPermissionFlag.Infrastructure)]
     public static void Main(string[] args)
     {
         //<snippet101>

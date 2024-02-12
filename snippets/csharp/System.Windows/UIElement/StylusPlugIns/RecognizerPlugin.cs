@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Diagnostics;
 
-namespace AdvancedInkInputSemples
+namespace AdvancedInkInputSamples
 {
     //<Snippet12>
     class RecognizerPlugin : StylusPlugIn

@@ -123,7 +123,6 @@ internal class MyConstructorBuilder
       }
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       MyConstructorBuilder myConstructorBuilder = new MyConstructorBuilder();

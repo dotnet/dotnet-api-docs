@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Automation.Provider;
-using System.Security.Permissions;
 
 namespace UIAIRangeValueProvider_snip
 {
@@ -71,7 +70,6 @@ namespace UIAIRangeValueProvider_snip
         /// </summary>
         /// <param name="winMessage">Windows message.</param>
         /// <remarks>This method enables UI Automation to find the control.</remarks>
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
             const int WM_GETOBJECT = 0x003D;

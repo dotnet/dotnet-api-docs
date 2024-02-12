@@ -22,7 +22,7 @@ namespace Examples.System.Net
         {
             serverCertificate = X509Certificate.CreateFromCertFile(certificate);
             // Create a TCP/IP (IPv4) socket and listen for incoming connections.
-            TcpListener listener = new TcpListener(IPAddress.Any, 8080);
+            TcpListener listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
             while (true)
             {
@@ -131,6 +131,7 @@ namespace Examples.System.Net
             Console.WriteLine("Is authenticated: {0} as server? {1}", stream.IsAuthenticated, stream.IsServer);
             Console.WriteLine("IsSigned: {0}", stream.IsSigned);
             Console.WriteLine("Is Encrypted: {0}", stream.IsEncrypted);
+            Console.WriteLine("Is mutually authenticated: {0}", stream.IsMutuallyAuthenticated);
          }
          //</snippet4>
          //<snippet5>

@@ -22,7 +22,6 @@ using System.Security.Permissions;
 
 namespace Logging
 {
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class LoggingClientChannelSinkProvider : IClientChannelSinkProvider
    {
       private IClientChannelSinkProvider next1 = null;
@@ -50,7 +49,7 @@ namespace Logging
          }
       }
    }
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
+
    internal class LoggingClientChannelSink : BaseChannelObjectWithProperties, IClientChannelSink
    {
       private IClientChannelSink nextSink1 = null;
@@ -89,7 +88,6 @@ namespace Logging
       }
    }
 // <Snippet1>
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
    public class LoggingServerChannelSinkProvider : IServerChannelSinkProvider
    {
       private IServerChannelSinkProvider next2 = null;
@@ -118,7 +116,7 @@ namespace Logging
          }
       }
    }
-   [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
+   
    internal class LoggingServerChannelSink : BaseChannelObjectWithProperties, IServerChannelSink
    {
       private IServerChannelSink nextSink2 = null;

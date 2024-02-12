@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 public delegate bool CallBack(int handle, IntPtr param);
 
@@ -24,7 +23,6 @@ public class App
         Run();
     }
 
-    [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
     public static void Run()
     {
         TextWriter tw = Console.Out;

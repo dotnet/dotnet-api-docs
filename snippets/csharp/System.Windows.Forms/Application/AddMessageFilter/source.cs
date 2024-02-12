@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Security.Permissions;
 
 public class Form1 : Form
 {
@@ -14,7 +13,6 @@ public class Form1 : Form
 
 // <Snippet1>
 // Creates a  message filter.
-[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
 public class TestMessageFilter : IMessageFilter
 {
     public bool PreFilterMessage(ref Message m)

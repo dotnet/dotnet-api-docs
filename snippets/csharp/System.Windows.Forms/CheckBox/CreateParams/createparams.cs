@@ -5,12 +5,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Permissions;
 
-[SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
 public class MyIconButton : Button
 {
-
     private Icon icon;
 
     public MyIconButton()
@@ -35,8 +32,6 @@ public class MyIconButton : Button
     {
         get
         {
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
-
             // Extend the CreateParams property of the Button class.
             CreateParams cp = base.CreateParams;
             // Update the button Style.
@@ -64,7 +59,6 @@ public class MyIconButton : Button
         }
     }
 
-    [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
     protected override void OnHandleCreated(EventArgs e)
     {
         base.OnHandleCreated(e);

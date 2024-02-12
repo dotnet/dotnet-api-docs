@@ -117,8 +117,6 @@ public:
 
    static void Listen()
    {
-      
-      // <snippet6>
       // This server waits for a connection and then uses asynchronous operations to
       // accept the connection with initial data sent from the client.
       // Establish the local endpoint for the socket.
@@ -169,12 +167,8 @@ public:
       state->workSocket = handler;
       handler->BeginReceive( state->buffer, 0, StateObject::BufferSize, static_cast<SocketFlags>(0), gcnew AsyncCallback( ReadCallback ), state );
    }
-
-
-   // </snippet6>
    static void ListenWithSocket()
    {
-      // <snippet7>
       // This server waits for a connection and then uses asynchronous operations to
       // accept the connection with initial data sent from the client.
       // Establish the local endpoint for the socket.
@@ -225,7 +219,6 @@ public:
       handler->BeginReceive( state->buffer, 0, StateObject::BufferSize, static_cast<SocketFlags>(0), gcnew AsyncCallback( ReadCallback ), state );
    }
 
-   // </snippet7>
    static void ReadCallback( IAsyncResult^ ar )
    {
       String^ content = String::Empty;
@@ -322,7 +315,6 @@ private:
 
 public:
 
-   // <snippet9>
    static void AsynchronousFileSend()
    {
       // Send a file to a remote device.
@@ -363,10 +355,6 @@ private:
       sendDone->Set();
    }
 
-   // </snippet9>
-
-
-   // <snippet10>
 public:
    static void AsynchronousFileSendWithBuffers()
    {
@@ -417,7 +405,6 @@ private:
       client->EndSendFile( ar );
       sendDone->Set();
    }
-   // </snippet10>
 
    static void ConnectCallback( IAsyncResult^ ar )
    {
@@ -476,7 +463,6 @@ private:
 public:
    static void ClientDisconnect()
    {
-      //<snippet11>
       // Establish the remote endpoint for the socket.
       // For this example use local computer.
       IPHostEntry^ ipHostInfo = Dns::GetHostEntry( Dns::GetHostName() );
@@ -525,7 +511,6 @@ private:
 
 public:
 
-   //</snippet11>
    static void SynchronousServer()
    {
       // Establish the local endpoint for the socket.

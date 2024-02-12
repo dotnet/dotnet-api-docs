@@ -12,7 +12,6 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
 using System.Timers;
-using System.Security.Permissions;
 
 namespace DispatcherSnippets
 {
@@ -69,7 +68,6 @@ namespace DispatcherSnippets
         }
 
         //<SnippetDispatcherDispatcherFrameDoEvents>
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public void DoEvents()
         {
             DispatcherFrame frame = new DispatcherFrame();
@@ -136,7 +134,6 @@ namespace DispatcherSnippets
             return null;
         }
 
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         public void DoEvents2()
         {
             DispatcherFrame frame = new DispatcherFrame();

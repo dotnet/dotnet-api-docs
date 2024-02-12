@@ -14,11 +14,9 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 
 public class Client
 {
-[SecurityPermission(SecurityAction.Demand)]
     public static void Main(string[] args)
     {
         // Create the channel.

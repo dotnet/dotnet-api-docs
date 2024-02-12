@@ -36,6 +36,6 @@ public class Test {
 // some textmore text
 // Display the InnerXml of the element...
 // some text<child />more text
-// <elem>Text containing &lt;markup/&gt; will have char(&lt;) and char(&gt;) escaped.</elem>
+// <elem>Text containing &amp;lt;markup/&amp;gt; will have char(&amp;lt;) and char(&amp;gt;) escaped.</elem>
 // <elem>Text containing <markup />.</elem>
 // </Snippet1>

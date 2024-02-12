@@ -48,7 +48,7 @@ Module Module1
 
                 ' Attempt to roll back the transaction.
                 Try
-                    transaction.Rollback()
+                    transaction.Rollback("SampleTransaction")
 
                 Catch ex2 As Exception
                     ' This catch block will handle any errors that may have occurred

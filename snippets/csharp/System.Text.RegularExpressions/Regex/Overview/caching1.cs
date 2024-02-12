@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-public class Example
+public class CachingExample
 {
    public static void Main()
    {

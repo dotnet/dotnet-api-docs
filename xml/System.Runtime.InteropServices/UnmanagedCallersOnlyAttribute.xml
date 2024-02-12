@@ -9,6 +9,8 @@
     <AssemblyName>System.Runtime.InteropServices</AssemblyName>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Attribute</BaseTypeName>
@@ -28,9 +30,10 @@
 ## Remarks
 
 Methods marked with this attribute have the following restrictions:
-* Method must be marked `static`.
+
+* Must be marked `static`.
 * Must not be called from managed code.
-* Must only have [blittable](https://docs.microsoft.com/dotnet/framework/interop/blittable-and-non-blittable-types) arguments.
+* Must only have [blittable](https://learn.microsoft.com/dotnet/framework/interop/blittable-and-non-blittable-types) arguments.
 * Must not have generic type parameters or be contained within a generic class.
 
 ## Examples
@@ -55,6 +58,8 @@ to a native function.
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -74,12 +79,20 @@ to a native function.
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Type[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Optional. If omitted, the runtime will use the default platform calling convention.</summary>
+        <summary>Optional. If omitted, the runtime will use [the default platform calling convention](/dotnet/standard/native-interop/calling-conventions#platform-default-calling-convention).</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -87,9 +100,6 @@ to a native function.
 
 Supplied types must be from the official <xref:System.Runtime.CompilerServices> namespace and be of the form `CallConvXXX`.
 
-The "default platform calling convention" is generally unambiguous for all supported platforms except x86-based platforms. The x86 defaults are as follows:
-* Windows - [stdcall](https://docs.microsoft.com/cpp/cpp/stdcall)
-* Non-Windows - [cdecl](https://docs.microsoft.com/cpp/cpp/cdecl)
           ]]></format>
         </remarks>
         <altmember cref="T:System.Runtime.CompilerServices.CallConvCdecl" />
@@ -109,13 +119,32 @@ The "default platform calling convention" is generally unambiguous for all suppo
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Optional. If omitted, no named export is emitted during compilation.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The export name must be a valid identifier for a native symbol on the target platform. The identifier must not conflict with system-provided native identifiers (for example, names of methods in the C standard library, or POSIX/Win32 API names).
+To avoid name collisions of native symbols, it's common to use a prefix. For example, you can name the exported functions `mylibrary_free`, `mylibrary_isdigit`, and `mylibrary_copy` to avoid name collisions.
+
+Target-dependent name mangling is performed on the symbol name, such as prepending or appending `_` or `@` characters to distinguish calling conventions on x86 Windows.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>

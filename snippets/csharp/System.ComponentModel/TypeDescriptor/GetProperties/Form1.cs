@@ -117,8 +117,6 @@ public class DemoControl : Label
 	// <snippet22>
 	// Toolbox items must be serializable.
 	[Serializable]
-    [System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Name="FullTrust")]
-    [System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Name="FullTrust")]
 	class DemoToolboxItem : ToolboxItem
 	{
 		// The add components dialog in VS looks for a public
@@ -161,7 +159,6 @@ public class DemoControl : Label
 // This class demonstrates a designer that attaches to various 
 // services and changes the properties exposed by the control
 // being designed.
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
 public class DemoControlDesigner : ControlDesigner
 {
     // This member backs the Locked property.

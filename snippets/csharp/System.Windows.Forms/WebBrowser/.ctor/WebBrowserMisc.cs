@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Security.Permissions;
 
-[PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
 public class Form1 : Form
 {
     [STAThread]

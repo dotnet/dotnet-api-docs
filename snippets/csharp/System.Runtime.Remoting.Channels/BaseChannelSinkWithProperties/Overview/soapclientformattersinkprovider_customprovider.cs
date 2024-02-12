@@ -18,9 +18,7 @@ using System.Collections;
 using System.IO;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
-[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
 public class MyClientFormatterProvider : IClientChannelSinkProvider
 {
    private IClientChannelSinkProvider nextProvider = null;
@@ -60,7 +58,6 @@ public class MyClientFormatterProvider : IClientChannelSinkProvider
    }
 }
 // <Snippet2>
-[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
 internal class MyClientFormatterChannelSink :
          BaseChannelSinkWithProperties, IClientChannelSink, IMessageSink
 {

@@ -3,7 +3,6 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Security.Permissions;
 
 // This example shows how to create your own column style that
 // hosts a control, in this case, a DateTimePicker.
@@ -177,8 +176,6 @@ public class DataGridTimePickerColumn : DataGridColumnStyle
 
 public class CustomDateTimePicker : DateTimePicker
 {
-    [SecurityPermissionAttribute(
-    SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
     protected override bool ProcessKeyMessage(ref Message m)
     {
         // Keep all the keys for the DateTimePicker.

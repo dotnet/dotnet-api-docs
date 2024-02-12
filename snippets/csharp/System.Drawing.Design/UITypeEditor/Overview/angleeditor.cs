@@ -10,7 +10,6 @@ namespace AngleEditor
 {
     // This UITypeEditor can be associated with Int32, Double and Single
     // properties to provide a design-mode angle selection interface.
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     public class AngleEditor : System.Drawing.Design.UITypeEditor
     {
         public AngleEditor()

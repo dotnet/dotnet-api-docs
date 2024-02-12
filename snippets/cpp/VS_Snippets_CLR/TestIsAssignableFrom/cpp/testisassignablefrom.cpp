@@ -91,7 +91,7 @@ int main()
 
 //This code example produces the following output:
 //
-// Defned Classes:
+// Defined Classes:
 // room assignable from kitchen: True
 // bedroom assignable from guestroom: True
 //kitchen assignable from masterbedroom: False

@@ -12,7 +12,6 @@ namespace TextDataTextBoxComponent
     // Component that adds a "Text" data format ToolboxItemCreatorCallback 
     // to the Toolbox. This component uses a custom ToolboxItem that 
     // creates a TextBox containing the text data.
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     public class TextDataTextBoxComponent : Component
     {
         private bool creatorAdded = false;
@@ -124,7 +123,6 @@ namespace TextDataTextBoxComponent
 
     // Custom toolbox item creates a TextBox and sets its Text property
     // to the constructor-specified text.
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")] 
     public class TextToolboxItem : ToolboxItem
     {
         private string text;
@@ -137,7 +135,6 @@ namespace TextDataTextBoxComponent
 
         // ToolboxItem.CreateComponentsCore override to create the TextBox 
         // and link a method to set its Text property.
-        [PermissionSet(SecurityAction.Demand, Name="FullTrust")] 
         protected override IComponent[] CreateComponentsCore(IDesignerHost host)
         {
             System.Windows.Forms.TextBox textbox = 

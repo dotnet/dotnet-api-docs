@@ -65,14 +65,14 @@ class MyTcpClient
       // connected to the same address as specified by the server, port
       // combination.
       Int32 port = 13000;
-      TcpClient client = new TcpClient(server, port);
+
+      // Prefer a using declaration to ensure the instance is Disposed later.
+      using TcpClient client = new TcpClient(server, port);
 
       // Translate the passed message into ASCII and store it as a Byte array.
       Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
 
       // Get a client stream for reading and writing.
-     //  Stream stream = client.GetStream();
-
       NetworkStream stream = client.GetStream();
 
       // Send the message to the connected TcpServer.
@@ -80,7 +80,7 @@ class MyTcpClient
 
       Console.WriteLine("Sent: {0}", message);
 
-      // Receive the TcpServer.response.
+      // Receive the server response.
 
       // Buffer to store the response bytes.
       data = new Byte[256];
@@ -93,9 +93,10 @@ class MyTcpClient
       responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
       Console.WriteLine("Received: {0}", responseData);
 
-      // Close everything.
-      stream.Close();
-      client.Close();
+      // Explicit close is not necessary since TcpClient.Dispose() will be
+      // called automatically.
+      // stream.Close();
+      // client.Close();
     }
     catch (ArgumentNullException e)
     {

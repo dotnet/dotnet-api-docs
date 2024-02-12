@@ -1,11 +1,8 @@
 ﻿using System.Security;
-using System.Security.Permissions;
 using System.Net;
 using System;
 
 //<Snippet1>
-//Uses the DnsPermissionAttribute to restrict access only to those who have permission.
-[DnsPermission(SecurityAction.Demand, Unrestricted = true)]
 public class MyClass
 {
     public static IPAddress GetIPAddress()
@@ -27,6 +24,6 @@ public class MyClass
             Console.WriteLine("Access denied");	
             Console.WriteLine(securityException.ToString());
         }
-//</Snippet1>
     }
 }
+//</Snippet1>

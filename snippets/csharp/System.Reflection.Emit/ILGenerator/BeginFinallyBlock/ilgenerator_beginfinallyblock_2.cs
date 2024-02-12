@@ -112,7 +112,7 @@ public class ILGenerator_BeginFinallyBlock
 
       return myTypeBuilder.CreateType();
    }
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
+   
    public static void Main()
    {
       Type myAddType = AddType();

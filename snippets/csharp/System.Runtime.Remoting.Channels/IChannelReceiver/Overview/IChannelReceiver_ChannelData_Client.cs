@@ -11,7 +11,6 @@ namespace RemotingSamples
 {
    public class MyIChannelReceiverChannelDataClientClass
    {
-      [PermissionSet(SecurityAction.LinkDemand)]
       public static void Main()
       {
          string myChannelURL = "tcp://" + Dns.Resolve(Dns.GetHostName())

@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 
 public class Example
 {
-    private static object timer;
+    private static object? timer;
 
     public static void Main()
     {
@@ -14,7 +14,7 @@ public class Example
         timer = Activator.CreateInstance(t);
 
         // Use reflection to get the Elapsed event.
-        EventInfo eInfo = t.GetEvent("Elapsed");
+        EventInfo? eInfo = t.GetEvent("Elapsed");
 
         // In order to create a method to handle the Elapsed event,
         // it is necessary to know the signature of the delegate
@@ -28,11 +28,11 @@ public class Example
         // creates an array of Type objects that represent the
         // parameter types of the Invoke method.
         //
-        Type handlerType = eInfo.EventHandlerType;
-        MethodInfo invokeMethod = handlerType.GetMethod("Invoke");
-        ParameterInfo[] parms = invokeMethod.GetParameters();
-        Type[] parmTypes = new Type[parms.Length];
-        for (int i = 0; i < parms.Length; i++)
+        Type? handlerType = eInfo?.EventHandlerType;
+        MethodInfo? invokeMethod = handlerType?.GetMethod("Invoke");
+        ParameterInfo[]? parms = invokeMethod?.GetParameters();
+        Type[] parmTypes = new Type[parms?.Length ?? 0];
+        for (int i = 0; i < parms?.Length; i++)
         {
             parmTypes[i] = parms[i].ParameterType;
         }
@@ -60,7 +60,7 @@ public class Example
         // captured earlier.
         MethodBuilder handler = tb.DefineMethod("DynamicHandler",
             MethodAttributes.Public | MethodAttributes.Static,
-            invokeMethod.ReturnType, parmTypes);
+            invokeMethod?.ReturnType, parmTypes);
 
         // Generate code to handle the event. In this case, the
         // handler simply prints a text string to the console.
@@ -73,14 +73,17 @@ public class Example
         // be used. In order to create the delegate that will
         // handle the event, a MethodInfo from the finished type
         // is required.
-        Type finished = tb.CreateType();
-        MethodInfo eventHandler = finished.GetMethod("DynamicHandler");
+        Type? finished = tb.CreateType();
+        MethodInfo? eventHandler = finished?.GetMethod("DynamicHandler");
 
         // Use the MethodInfo to create a delegate of the correct
         // type, and call the AddEventHandler method to hook up
         // the event.
-        Delegate d = Delegate.CreateDelegate(handlerType, eventHandler);
-        eInfo.AddEventHandler(timer, d);
+        if (handlerType is not null && eventHandler is not null)
+        {
+            Delegate d = Delegate.CreateDelegate(handlerType, eventHandler);
+            eInfo?.AddEventHandler(timer, d);
+        }
 
         // Late-bound calls to the Interval and Enabled property
         // are required to enable the timer with a one-second

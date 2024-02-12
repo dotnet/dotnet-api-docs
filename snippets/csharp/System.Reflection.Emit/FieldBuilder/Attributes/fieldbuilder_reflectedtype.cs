@@ -66,7 +66,6 @@ public class FieldBuilder_Sample
       return myTypeBuilder.CreateType();
    }
 
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       Type myType = CreateType(Thread.GetDomain());

@@ -2,18 +2,15 @@
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 using SampleNamespace;
 
 public class SampleClient {
    private const string SERVER_URL = "http://localhost:9000/MySampleService/SampleWellKnown.soap";
 
-   [SecurityPermission(SecurityAction.LinkDemand)]
    public static void Main() {
       Snippet1();
    }
 
-   [SecurityPermission(SecurityAction.LinkDemand)]
    private static void Snippet1() {
 
       // <Snippet1>

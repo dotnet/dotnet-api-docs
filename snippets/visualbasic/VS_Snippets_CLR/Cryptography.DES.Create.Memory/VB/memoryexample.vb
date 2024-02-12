@@ -7,94 +7,97 @@ Module DESSample
 
     Sub Main()
         Try
+            Dim key As Byte()
+            Dim iv As Byte()
+
             ' Create a new DES object to generate a key
             ' and initialization vector (IV).
-            Dim DESalg As DES = DES.Create
+            Using des As DES = DES.Create
+                key = des.Key
+                iv = des.IV
+            End Using
 
             ' Create a string to encrypt.
-            Dim sData As String = "Here is some data to encrypt."
+            Dim original As String = "Here is some data to encrypt."
 
             ' Encrypt the string to an in-memory buffer.
-            Dim Data As Byte() = EncryptTextToMemory(sData, DESalg.Key, DESalg.IV)
+            Dim encrypted As Byte() = EncryptTextToMemory(original, key, iv)
 
             ' Decrypt the buffer back to a string.
-            Dim Final As String = DecryptTextFromMemory(Data, DESalg.Key, DESalg.IV)
+            Dim decrypted As String = DecryptTextFromMemory(encrypted, key, iv)
 
             ' Display the decrypted string to the console.
-            Console.WriteLine(Final)
+            Console.WriteLine(decrypted)
         Catch e As Exception
             Console.WriteLine(e.Message)
         End Try
     End Sub
 
 
-    Function EncryptTextToMemory(ByVal Data As String, ByVal Key() As Byte, ByVal IV() As Byte) As Byte()
+    Function EncryptTextToMemory(text As String, key As Byte(), iv As Byte()) As Byte()
         Try
             ' Create a MemoryStream.
-            Dim mStream As New MemoryStream
+            Using mStream As New MemoryStream
+                ' Create a new DES object,
+                ' Create a DES encryptor from the key and IV,
+                ' Create a CryptoStream using the MemoryStream And encryptor
+                Using des As DES = DES.Create,
+                    encryptor As ICryptoTransform = des.CreateEncryptor(key, iv),
+                    cStream = New CryptoStream(mStream, encryptor, CryptoStreamMode.Write)
 
-            ' Create a new DES object.
-            Dim DESalg As DES = DES.Create
+                    ' Convert the passed string to a byte array.
+                    Dim toEncrypt As Byte() = Encoding.UTF8.GetBytes(text)
 
-            ' Create a CryptoStream using the MemoryStream 
-            ' and the passed key and initialization vector (IV).
-            Dim cStream As New CryptoStream(mStream, _
-                                            DESalg.CreateEncryptor(Key, IV), _
-                                            CryptoStreamMode.Write)
+                    ' Write the byte array to the crypto stream and flush it.
+                    cStream.Write(toEncrypt, 0, toEncrypt.Length)
 
-            ' Convert the passed string to a byte array.
-            Dim toEncrypt As Byte() = New ASCIIEncoding().GetBytes(Data)
+                    ' Ending the using block for the CryptoStream completes the encryption.
+                End Using
 
-            ' Write the byte array to the crypto stream and flush it.
-            cStream.Write(toEncrypt, 0, toEncrypt.Length)
-            cStream.FlushFinalBlock()
+                ' Get an array of bytes from the MemoryStream that holds the encrypted data.
+                Dim ret As Byte() = mStream.ToArray()
 
-            ' Get an array of bytes from the 
-            ' MemoryStream that holds the 
-            ' encrypted data.
-            Dim ret As Byte() = mStream.ToArray()
-
-            ' Close the streams.
-            cStream.Close()
-            mStream.Close()
-
-            ' Return the encrypted buffer.
-            Return ret
+                ' Return the encrypted buffer.
+                Return ret
+            End Using
         Catch e As CryptographicException
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message)
-            Return Nothing
+            Throw
         End Try
     End Function
 
 
-    Function DecryptTextFromMemory(ByVal Data() As Byte, ByVal Key() As Byte, ByVal IV() As Byte) As String
+    Function DecryptTextFromMemory(encrypted As Byte(), key As Byte(), iv As Byte()) As String
         Try
-            ' Create a new MemoryStream using the passed 
-            ' array of encrypted data.
-            Dim msDecrypt As New MemoryStream(Data)
+            ' Create a buffer to hold the decrypted data.
+            ' DES-encrypted data will always be slightly bigger than the decrypted data.
+            Dim decrypted(encrypted.Length - 1) As Byte
+            Dim offset As Integer = 0
 
+            ' Create a new MemoryStream using the provided array of encrypted data.
             ' Create a new DES object.
-            Dim DESalg As DES = DES.Create
+            ' Create a DES decryptor from the key and IV
+            ' Create a CryptoStream using the MemoryStream and decryptor
+            Using mStream As New MemoryStream(encrypted),
+                des As DES = DES.Create,
+                decryptor As ICryptoTransform = des.CreateDecryptor(key, iv),
+                cStream = New CryptoStream(mStream, decryptor, CryptoStreamMode.Read)
 
-            ' Create a CryptoStream using the MemoryStream 
-            ' and the passed key and initialization vector (IV).
-            Dim csDecrypt As New CryptoStream(msDecrypt, _
-                                              DESalg.CreateDecryptor(Key, IV), _
-                                              CryptoStreamMode.Read)
+                ' Keep reading from the CryptoStream until it finishes (returns 0).
+                Dim read As Integer = 1
 
-            ' Create buffer to hold the decrypted data.
-            Dim fromEncrypt(Data.Length - 1) As Byte
+                While (read > 0)
+                    read = cStream.Read(decrypted, offset, decrypted.Length - offset)
+                    offset += read
+                End While
+            End Using
 
-            ' Read the decrypted data out of the crypto stream
-            ' and place it into the temporary buffer.
-            csDecrypt.Read(fromEncrypt, 0, fromEncrypt.Length)
-
-            'Convert the buffer into a string and return it.
-            Return New ASCIIEncoding().GetString(fromEncrypt)
+            ' Convert the buffer into a string and return it.
+            Return New ASCIIEncoding().GetString(decrypted, 0, offset)
         Catch e As CryptographicException
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message)
             Return Nothing
         End Try
     End Function
-End Module
+End Module 
  ' </SNIPPET1>

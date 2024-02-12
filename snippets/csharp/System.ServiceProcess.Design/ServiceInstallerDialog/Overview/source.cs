@@ -1,12 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
-using System.Data;
-using System.ComponentModel;
-using System.Configuration.Install;
+using System.Management;
 using System.ServiceProcess;
 using System.ServiceProcess.Design;
-using System.Management;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace ServiceChangeSample

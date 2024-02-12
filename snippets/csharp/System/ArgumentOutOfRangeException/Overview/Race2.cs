@@ -5,7 +5,7 @@ using System.Threading;
 
 public class ContinentD
 {
-   public string Name { get; set; }
+   public string? Name { get; set; }
    public int Population { get; set; }
    public Decimal Area { get; set; }
 }
@@ -13,7 +13,7 @@ public class ContinentD
 public class Example12
 {
    static ConcurrentBag<ContinentD> ContinentDs = new ConcurrentBag<ContinentD>();
-   static CountdownEvent gate;
+   static CountdownEvent? gate;
    static string msg = string.Empty;
 
    public static void Main()
@@ -43,9 +43,9 @@ public class Example12
       }
    }
 
-   private static void PopulateContinentDs(Object obj)
+   private static void PopulateContinentDs(Object? obj)
    {
-      string name = obj.ToString();
+      string? name = obj?.ToString();
       lock(msg) {
          msg += string.Format("Adding '{0}' to the list.\n", name);
       }
@@ -54,7 +54,7 @@ public class Example12
       // Sleep to simulate retrieving remaining data.
       Thread.Sleep(25);
       ContinentDs.Add(ContinentD);
-      gate.Signal();
+      gate?.Signal();
    }
 }
 // The example displays output like the following:

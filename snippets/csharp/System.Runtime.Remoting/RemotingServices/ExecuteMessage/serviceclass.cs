@@ -5,7 +5,6 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Contexts;
 using System.Runtime.Remoting.Channels;
-using System.Security.Permissions;
 
 public class SampleService : ContextBoundObject {
     public bool UpdateServer(int i, double d, string s){
@@ -16,11 +15,9 @@ public class SampleService : ContextBoundObject {
 
 public class ReplicationSinkProp : IDynamicProperty, IContributeDynamicSink {
     public string Name{
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
-        get{ return "ReplicationSinkProp";}
+        get { return "ReplicationSinkProp";}
     }
 
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public IDynamicMessageSink GetDynamicSink(){
         return new ReplicationSink();
     }
@@ -32,7 +29,6 @@ public class ReplicationSink : IDynamicMessageSink{
    // System.Runtime.Remoting.RemotingServices.ExecuteMessage
    // System.Runtime.Remoting.RemotingServices.GetSessionIdForMethodMessage
    // <Snippet1>
-   [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
    public void ProcessMessageStart(IMessage requestMessage, bool bClientSide, bool bAsyncCall) {
 
       Console.WriteLine("\nProcessMessageStart");
@@ -89,7 +85,6 @@ public class ReplicationSink : IDynamicMessageSink{
    }
    // </Snippet1>
 
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public void ProcessMessageFinish(IMessage requestMessage, bool bClientSide, bool bAsyncCall){
 
         Console.WriteLine("\nProcessMessageFinish");

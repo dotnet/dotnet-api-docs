@@ -12,11 +12,9 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 using SampleNamespace;
 
 public class SampleClient : MarshalByRefObject {
-    [SecurityPermission(SecurityAction.LinkDemand)]
     public static void Main() {
         // System.Runtime.Remoting.RemotingServices.Unmarshal
         // <Snippet2>

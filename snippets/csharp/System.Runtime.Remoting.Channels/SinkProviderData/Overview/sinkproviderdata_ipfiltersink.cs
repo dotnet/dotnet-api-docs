@@ -18,7 +18,6 @@ using System.Reflection;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 namespace IPFilter
 {
@@ -48,11 +47,10 @@ namespace IPFilter
             myCollectionData = providerData;
         }
 
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
         public void GetChannelData(IChannelDataStore myLocalChannelData)
         {
         }
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
+        
         public IServerChannelSink CreateSink(IChannelReceiver myChannel)
         {
             IServerChannelSink myIServerChannelSink_nextSink = null;
@@ -101,12 +99,10 @@ namespace IPFilter
 
         public IServerChannelSinkProvider Next
         {
-            [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
             get
             {
                 return myIServerChannelSinkProviderNew;
             }
-            [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
             set
             {
                 myIServerChannelSinkProviderNew = value;
@@ -182,7 +178,6 @@ namespace IPFilter
             }
         }
 
-        [SecurityPermission(SecurityAction.Demand)]
         public MyIPFilterChannelSink(bool myAcceptMode, IServerChannelSink myIServerChannelSink_nextSink) : base()
         {
             myFilterSet = new ArrayList();
@@ -197,7 +192,6 @@ namespace IPFilter
             myFilterSet.Add(f);
         }
 
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
         public ServerProcessing ProcessMessage(
             IServerChannelSinkStack sinkStack,
             IMessage requestMessage,
@@ -231,13 +225,11 @@ namespace IPFilter
             }
         } // ProcessMessage
 
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
         public void AsyncProcessResponse(IServerResponseChannelSinkStack sinkStack, Object state,
             IMessage msg, ITransportHeaders headers, Stream stream)
         {
         } // AsyncProcessResponse
 
-        [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
         public Stream GetResponseStream(IServerResponseChannelSinkStack sinkStack, Object state,
             IMessage msg, ITransportHeaders headers)
         {
@@ -246,7 +238,6 @@ namespace IPFilter
 
         public IServerChannelSink NextChannelSink
         {
-            [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
             get { return myIServerChannelSink_newSink; }
         }
 

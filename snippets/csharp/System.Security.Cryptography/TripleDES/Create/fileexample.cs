@@ -1,33 +1,39 @@
 ﻿// <SNIPPET1>
 using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.IO;
 
 class TripleDESSample
 {
-
     static void Main()
     {
         try
         {
-            // Create a new TripleDES object to generate a key
-            // and an initialization vector (IV).
-            using (TripleDES TripleDESalg = TripleDES.Create())
+            byte[] key;
+            byte[] iv;
+
+            // Create a new TripleDES object to generate a random key
+            // and initialization vector (IV).
+            using (TripleDES tripleDes = TripleDES.Create())
             {
-                // Create a string to encrypt.
-                string sData = "Here is some data to encrypt.";
-                string FileName = "CText.enc";
-
-                // Encrypt text to a file using the file name, key, and IV.
-                EncryptTextToFile(sData, FileName, TripleDESalg.Key, TripleDESalg.IV);
-
-                // Decrypt the text from a file using the file name, key, and IV.
-                string Final = DecryptTextFromFile(FileName, TripleDESalg.Key, TripleDESalg.IV);
-
-                // Display the decrypted string to the console.
-                Console.WriteLine(Final);
+                key = tripleDes.Key;
+                iv = tripleDes.IV;
             }
+
+            // Create a string to encrypt.
+            string original = "Here is some data to encrypt.";
+            // The name/path of the file to write.
+            string filename = "CText.enc";
+
+            // Encrypt the string to a file.
+            EncryptTextToFile(original, filename, key, iv);
+
+            // Decrypt the file back to a string.
+            string decrypted = DecryptTextFromFile(filename, key, iv);
+
+            // Display the decrypted string to the console.
+            Console.WriteLine(decrypted);
         }
         catch (Exception e)
         {
@@ -35,90 +41,58 @@ class TripleDESSample
         }
     }
 
-    public static void EncryptTextToFile(String Data, String FileName, byte[] Key, byte[] IV)
+    public static void EncryptTextToFile(string text, string path, byte[] key, byte[] iv)
     {
         try
         {
             // Create or open the specified file.
-            using (FileStream fStream = File.Open(FileName, FileMode.OpenOrCreate))
+            using (FileStream fStream = File.Open(path, FileMode.Create))
+            // Create a new TripleDES object.
+            using (TripleDES tripleDes = TripleDES.Create())
+            // Create a TripleDES encryptor from the key and IV
+            using (ICryptoTransform encryptor = tripleDes.CreateEncryptor(key, iv))
+            // Create a CryptoStream using the FileStream and encryptor
+            using (var cStream = new CryptoStream(fStream, encryptor, CryptoStreamMode.Write))
             {
+                // Convert the provided string to a byte array.
+                byte[] toEncrypt = Encoding.UTF8.GetBytes(text);
 
-                // Create a new TripleDES object.
-                using (TripleDES tripleDESalg = TripleDES.Create())
-                {
-
-                    // Create a CryptoStream using the FileStream
-                    // and the passed key and initialization vector (IV).
-                    using (CryptoStream cStream = new CryptoStream(fStream,
-                        tripleDESalg.CreateEncryptor(Key, IV),
-                        CryptoStreamMode.Write))
-                    {
-
-                        // Create a StreamWriter using the CryptoStream.
-                        using (StreamWriter sWriter = new StreamWriter(cStream))
-                        {
-
-                            // Write the data to the stream
-                            // to encrypt it.
-                            sWriter.WriteLine(Data);
-                        }
-                    }
-                }
+                // Write the byte array to the crypto stream.
+                cStream.Write(toEncrypt, 0, toEncrypt.Length);
             }
         }
         catch (CryptographicException e)
         {
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            Console.WriteLine("A file access error occurred: {0}", e.Message);
+            throw;
         }
     }
 
-    public static string DecryptTextFromFile(String FileName, byte[] Key, byte[] IV)
+    public static string DecryptTextFromFile(string path, byte[] key, byte[] iv)
     {
         try
         {
-            string retVal = "";
-            // Create or open the specified file.
-            using (FileStream fStream = File.Open(FileName, FileMode.OpenOrCreate))
+            // Open the specified file
+            using (FileStream fStream = File.OpenRead(path))
+            // Create a new TripleDES object.
+            using (TripleDES tripleDes = TripleDES.Create())
+            // Create a TripleDES decryptor from the key and IV
+            using (ICryptoTransform decryptor = tripleDes.CreateDecryptor(key, iv))
+            // Create a CryptoStream using the FileStream and decryptor
+            using (var cStream = new CryptoStream(fStream, decryptor, CryptoStreamMode.Read))
+            // Create a StreamReader to turn the bytes back into text
+            using (StreamReader reader = new StreamReader(cStream, Encoding.UTF8))
             {
-
-                // Create a new TripleDES object.
-                using (TripleDES tripleDESalg = TripleDES.Create())
-                {
-
-                    // Create a CryptoStream using the FileStream
-                    // and the passed key and initialization vector (IV).
-                    using (CryptoStream cStream = new CryptoStream(fStream,
-                        tripleDESalg.CreateDecryptor(Key, IV),
-                        CryptoStreamMode.Read))
-                    {
-
-                        // Create a StreamReader using the CryptoStream.
-                        using (StreamReader sReader = new StreamReader(cStream))
-                        {
-
-                            // Read the data from the stream
-                            // to decrypt it.
-                            retVal = sReader.ReadLine();
-                        }
-                    }
-                }
+                // Read back all of the text from the StreamReader, which receives
+                // the decrypted bytes from the CryptoStream, which receives the
+                // encrypted bytes from the FileStream.
+                return reader.ReadToEnd();
             }
-            // Return the string.
-            return retVal;
         }
         catch (CryptographicException e)
         {
             Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
-            return null;
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            Console.WriteLine("A file access error occurred: {0}", e.Message);
-            return null;
+            throw;
         }
     }
 }

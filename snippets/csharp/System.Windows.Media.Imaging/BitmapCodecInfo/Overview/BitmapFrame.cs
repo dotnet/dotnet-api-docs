@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Threading;
-using System.Security.Permissions;
 using System.Collections.ObjectModel;
 
 namespace SDKSample
@@ -20,7 +19,7 @@ namespace SDKSample
             base.OnStartup (e);
             CreateAndShowMainWindow ();
         }
-        [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+        
         private void CreateAndShowMainWindow ()
         {
 

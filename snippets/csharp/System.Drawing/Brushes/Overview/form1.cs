@@ -3,10 +3,8 @@ using System.Drawing;
 using System;
 using System.Windows.Forms;
 
-[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
 public class Form1:
     System.Windows.Forms.Form
-
 {
     #region " Windows Form Designer generated code "
 

@@ -13,12 +13,10 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
-using System.Security.Permissions;
 
 public class Server2
 {
     // Broken.
-[SecurityPermission(SecurityAction.Demand)]
     private static HttpServerChannel Ctor1()
     {
         //<snippet11>

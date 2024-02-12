@@ -8,7 +8,7 @@ public class CspKeyContainerInfoExample
 
     public static void Main(String[] args)
     {
-        RSACryptoServiceProvider rsa= new RSACryptoServiceProvider();
+        RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
 
         try
         {

@@ -17,10 +17,9 @@ using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
-using System.Security.Permissions;
+
 public class ClientClass
 {
-   [SecurityPermission(SecurityAction.Demand)]
    public static void Main()
    {
       try

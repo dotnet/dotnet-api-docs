@@ -6,7 +6,6 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 using System.Timers;
 
 namespace TimerSample {
@@ -80,7 +79,6 @@ namespace TimerSample {
             }
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         public override Object InitializeLifetimeService() {
             ILease lease = (ILease)base.InitializeLifetimeService();
             if (lease.CurrentState == LeaseState.Initial) {

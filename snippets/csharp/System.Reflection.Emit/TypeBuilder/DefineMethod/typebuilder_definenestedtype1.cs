@@ -25,7 +25,6 @@ public interface IMyInterface
 
 public class Example
 {
-   [PermissionSetAttribute(SecurityAction.Demand, Name="FullTrust")]
    public static void Main()
    {
       Type myNestedClassType = CreateCallee(Thread.GetDomain());

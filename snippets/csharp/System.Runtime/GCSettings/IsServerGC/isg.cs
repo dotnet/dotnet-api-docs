@@ -8,7 +8,7 @@ class Sample
     {
         string result;
 
-        if (GCSettings.IsServerGC == true)
+        if (GCSettings.IsServerGC)
             result = "server";
         else
             result = "workstation";

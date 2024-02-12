@@ -26,7 +26,7 @@ public:
       serverCertificate = X509Certificate::CreateFromCertFile( certificate );
       
       // Create a TCP/IP (IPv4) socket and listen for incoming connections.
-      TcpListener^ listener = gcnew TcpListener( IPAddress::Any,8080 );
+      TcpListener^ listener = gcnew TcpListener( IPAddress::Any,5000 );
       listener->Start();
       
       while (true) 
@@ -155,6 +155,7 @@ public:
       Console::WriteLine( L"Is authenticated: {0} as server? {1}", stream->IsAuthenticated, stream->IsServer );
       Console::WriteLine( L"IsSigned: {0}", stream->IsSigned );
       Console::WriteLine( L"Is Encrypted: {0}", stream->IsEncrypted );
+      Console::WriteLine( L"Is mutually authenticated: {0}", stream->IsMutuallyAuthenticated );
    }
 
 

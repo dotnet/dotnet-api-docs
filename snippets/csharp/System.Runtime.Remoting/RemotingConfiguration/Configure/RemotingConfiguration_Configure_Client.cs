@@ -2,11 +2,9 @@
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
-using System.Security.Permissions;
 
   public class Client
   {
-    [SecurityPermission(SecurityAction.LinkDemand)]
     public static void Main()
     {
       TcpChannel myChannel = new TcpChannel();

@@ -3,8 +3,7 @@ using System.ComponentModel.Design;
 
 namespace DesignerVerbCollectionExample
 {
-    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")] 
-	public class Class1
+    public class Class1
 	{
 		public Class1()
 		{

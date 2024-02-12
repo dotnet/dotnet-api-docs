@@ -4,7 +4,6 @@ using System.Collections;
 using System.IO;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
 
 public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 {
@@ -20,7 +19,6 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 // <snippet22>
     public IClientChannelSink NextChannelSink
     {
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         get
         {
             return(nextSink);
@@ -29,7 +27,6 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 // </snippet22>
 
 // <snippet23>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public Stream GetRequestStream (IMessage message, ITransportHeaders requestHeaders)
     {
         // Get the request stream from the next sink in the chain.
@@ -38,7 +35,6 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 // </snippet23>
 
 // <snippet24>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public void ProcessMessage (IMessage message,
                                 ITransportHeaders requestHeaders,
                                 Stream requestStream,
@@ -61,7 +57,6 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 
 // <snippet25>
     // For synchronous remoting, it is not necessary to implement this method.
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public void AsyncProcessRequest (IClientChannelSinkStack sinkStack,
                                      IMessage message,
                                      ITransportHeaders requestHeaders,
@@ -72,7 +67,6 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 // </snippet25>
 
 // <snippet26>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public void AsyncProcessResponse (IClientResponseChannelSinkStack sinkStack,
                                       Object state,
                                       ITransportHeaders responseHeaders,
@@ -83,7 +77,6 @@ public class ClientSink : BaseChannelSinkWithProperties, IClientChannelSink
 // </snippet26>
 
     // Constructor
-    [SecurityPermission(SecurityAction.LinkDemand)]
     public ClientSink (IClientChannelSink sink) {
       if (sink == null) throw new ArgumentNullException("sink");
       nextSink = sink;
@@ -103,12 +96,10 @@ public class ClientSinkProvider : IClientChannelSinkProvider
 // <snippet32>
     public IClientChannelSinkProvider Next
     {
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         get
         {
             return(nextProvider);
         }
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
         set
         {
             nextProvider = value;
@@ -117,7 +108,6 @@ public class ClientSinkProvider : IClientChannelSinkProvider
 // </snippet32>
 
 // <snippet33>
-    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Infrastructure)]
     public IClientChannelSink CreateSink (IChannelSender channel, String url, Object remoteChannelData)
     {
 

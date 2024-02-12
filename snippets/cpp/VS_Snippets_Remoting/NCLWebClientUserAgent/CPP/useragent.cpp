@@ -25,6 +25,7 @@ int main()
    Console::WriteLine( s );
    data->Close();
    reader->Close();
+   delete client;
 }
 
 //</Snippet1>

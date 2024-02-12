@@ -4,7 +4,6 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Lifetime;
-using System.Security.Permissions;
 
 public class Server {
 
@@ -14,7 +13,6 @@ public class Server {
       myServer.Run();
    }
 
-[SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.Infrastructure)]
    public void Run()
    {
       LifetimeServices.LeaseTime = TimeSpan.FromSeconds(5);
