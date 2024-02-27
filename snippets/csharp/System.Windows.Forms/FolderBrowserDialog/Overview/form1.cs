@@ -1,4 +1,3 @@
-﻿//<Snippet1>
 // The following example displays an application that provides the ability to 
 // open rich text files (rtf) into the RichTextBox. The example demonstrates 
 // using the FolderBrowserDialog to set the default directory for opening files.
@@ -12,20 +11,20 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
 {
     private FolderBrowserDialog folderBrowserDialog1;
     private OpenFileDialog openFileDialog1;
-    
+
     private RichTextBox richTextBox1;
 
-    private MainMenu mainMenu1;
-    private MenuItem fileMenuItem, openMenuItem;
-    private MenuItem folderMenuItem, closeMenuItem;
-    
+    private MenuStrip mainMenu1;
+    private ToolStripMenuItem fileMenuItem, openMenuItem;
+    private ToolStripMenuItem folderMenuItem, closeMenuItem;
+
     private string openFileName, folderName;
 
     private bool fileOpened = false;
 
     // The main entry point for the application.
     [STAThreadAttribute]
-    static void Main() 
+    static void Main()
     {
         Application.Run(new FolderBrowserDialogExampleForm());
     }
@@ -33,38 +32,43 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
     // Constructor.
     public FolderBrowserDialogExampleForm()
     {
-        this.mainMenu1 = new System.Windows.Forms.MainMenu();
-        this.fileMenuItem = new System.Windows.Forms.MenuItem();
-        this.openMenuItem = new System.Windows.Forms.MenuItem();
-        this.folderMenuItem = new System.Windows.Forms.MenuItem();
-        this.closeMenuItem = new System.Windows.Forms.MenuItem();
+        this.mainMenu1 = new MenuStrip();
 
-        this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-        this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-        this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+        this.fileMenuItem = new ToolStripMenuItem();
+        this.openMenuItem = new ToolStripMenuItem();
+        this.folderMenuItem = new ToolStripMenuItem();
+        this.closeMenuItem = new ToolStripMenuItem();
 
-        this.mainMenu1.MenuItems.Add(this.fileMenuItem);
-        this.fileMenuItem.MenuItems.AddRange(
-                            new System.Windows.Forms.MenuItem[] {this.openMenuItem,
-                                                                 this.closeMenuItem,
-                                                                 this.folderMenuItem});
+        this.openFileDialog1 = new OpenFileDialog();
+        this.folderBrowserDialog1 = new FolderBrowserDialog();
+        this.richTextBox1 = new RichTextBox();
+
+        this.mainMenu1.Items.Add(this.fileMenuItem);
+
         this.fileMenuItem.Text = "File";
+        this.fileMenuItem.DropDownItems.AddRange(
+            new ToolStripItem[] {
+            	this.openMenuItem,
+                this.closeMenuItem,
+                this.folderMenuItem
+            }
+        );
 
         this.openMenuItem.Text = "Open...";
-        this.openMenuItem.Click += new System.EventHandler(this.openMenuItem_Click);
+        this.openMenuItem.Click += new EventHandler(this.openMenuItem_Click);
 
         this.folderMenuItem.Text = "Select Directory...";
-        this.folderMenuItem.Click += new System.EventHandler(this.folderMenuItem_Click);
+        this.folderMenuItem.Click += new EventHandler(this.folderMenuItem_Click);
 
         this.closeMenuItem.Text = "Close";
-        this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
+        this.closeMenuItem.Click += new EventHandler(this.closeMenuItem_Click);
         this.closeMenuItem.Enabled = false;
 
         this.openFileDialog1.DefaultExt = "rtf";
         this.openFileDialog1.Filter = "rtf files (*.rtf)|*.rtf";
 
         // Set the help text description for the FolderBrowserDialog.
-        this.folderBrowserDialog1.Description = 
+        this.folderBrowserDialog1.Description =
             "Select the directory that you want to use as the default.";
 
         // Do not allow the user to create new files via the FolderBrowserDialog.
@@ -74,19 +78,24 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
         this.folderBrowserDialog1.RootFolder = Environment.SpecialFolder.Personal;
 
         this.richTextBox1.AcceptsTab = true;
-        this.richTextBox1.Location = new System.Drawing.Point(8, 8);
-        this.richTextBox1.Size = new System.Drawing.Size(280, 344);
-        this.richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | 
-                                   AnchorStyles.Bottom | AnchorStyles.Right;
+        this.richTextBox1.Location = new System.Drawing.Point(8, 40);
+        this.richTextBox1.Size = new System.Drawing.Size(280, 312);
+        this.richTextBox1.Anchor = (
+            AnchorStyles.Top |
+            AnchorStyles.Left |
+            AnchorStyles.Bottom |
+            AnchorStyles.Right
+        );
 
         this.ClientSize = new System.Drawing.Size(296, 360);
+        this.Controls.Add(this.mainMenu1);
         this.Controls.Add(this.richTextBox1);
-        this.Menu = this.mainMenu1;
+        this.MainMenuStrip = this.mainMenu1;
         this.Text = "RTF Document Browser";
     }
 
     // Bring up a dialog to open a file.
-    private void openMenuItem_Click(object sender, System.EventArgs e)
+    private void openMenuItem_Click(object sender, EventArgs e)
     {
         // If a file is not opened, then set the initial directory to the
         // FolderBrowserDialog.SelectedPath value.
@@ -99,7 +108,7 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
         DialogResult result = openFileDialog1.ShowDialog();
 
         // OK button was pressed.
-        if(result == DialogResult.OK) 
+        if (result == DialogResult.OK)
         {
             openFileName = openFileDialog1.FileName;
             try
@@ -107,13 +116,13 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
                 // Output the requested file in richTextBox1.
                 Stream s = openFileDialog1.OpenFile();
                 richTextBox1.LoadFile(s, RichTextBoxStreamType.RichText);
-                s.Close();    
-            
+                s.Close();
+
                 fileOpened = true;
-            } 
-            catch(Exception exp)
+            }
+            catch (Exception exp)
             {
-                MessageBox.Show("An error occurred while attempting to load the file. The error is:" 
+                MessageBox.Show("An error occurred while attempting to load the file. The error is:"
                                 + System.Environment.NewLine + exp.ToString() + System.Environment.NewLine);
                 fileOpened = false;
             }
@@ -123,14 +132,14 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
         }
 
         // Cancel button was pressed.
-        else if(result == DialogResult.Cancel) 
+        else if (result == DialogResult.Cancel)
         {
             return;
         }
     }
 
     // Close the current file.
-    private void closeMenuItem_Click(object sender, System.EventArgs e)
+    private void closeMenuItem_Click(object sender, EventArgs e)
     {
         richTextBox1.Text = "";
         fileOpened = false;
@@ -138,21 +147,21 @@ public class FolderBrowserDialogExampleForm : System.Windows.Forms.Form
         closeMenuItem.Enabled = false;
     }
 
-    // Bring up a dialog to chose a folder path in which to open or save a file.
-    private void folderMenuItem_Click(object sender, System.EventArgs e)
+    // Bring up a dialog to choose a folder path in which to open or save a file.
+    private void folderMenuItem_Click(object sender, EventArgs e)
     {
         // Show the FolderBrowserDialog.
         DialogResult result = folderBrowserDialog1.ShowDialog();
-        if( result == DialogResult.OK )
+        if (result == DialogResult.OK)
         {
             folderName = folderBrowserDialog1.SelectedPath;
-            if(!fileOpened)
+            if (!fileOpened)
             {
                 // No file is opened, bring up openFileDialog in selected path.
                 openFileDialog1.InitialDirectory = folderName;
                 openFileDialog1.FileName = null;
                 openMenuItem.PerformClick();
-            } 
+            }
         }
     }
 }
