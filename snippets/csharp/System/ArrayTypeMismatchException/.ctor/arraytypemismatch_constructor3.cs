@@ -10,7 +10,6 @@
    in the calling method and the error message is displayed to the console.
  */
 // <Snippet1>
-
 using System;
 
 public class ArrayTypeMisMatchConst

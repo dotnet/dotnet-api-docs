@@ -3,7 +3,6 @@
   *Purpose: Shows how to build a custom event provider. 
   **/
 // <Snippet1>
-
 using System;
 using System.Text;
 using System.IO;
@@ -18,7 +17,6 @@ namespace SamplesAspNet
     public class SampleEventProvider : 
         System.Web.Management.WebEventProvider
     {
-
         // The local path of the file where
         // to store event information.
         private string logFilePath;
@@ -175,5 +173,4 @@ namespace SamplesAspNet
         // </Snippet6>
     }
 }
-
 // </Snippet1>

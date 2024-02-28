@@ -1,5 +1,4 @@
 ﻿// <snippet1>
-
 using System;
 using System.IO;
 using System.Web;
@@ -10,7 +9,6 @@ using System.Security.Permissions;
 namespace Samples.AspNet.CS
 {
 // <snippet10>
-
     // A custom class that overrides its CreateHtmlTextWriter method.
     // This page uses the HtmlStyledLabelWriter class to render its content.
     [AspNetHostingPermission(SecurityAction.Demand,

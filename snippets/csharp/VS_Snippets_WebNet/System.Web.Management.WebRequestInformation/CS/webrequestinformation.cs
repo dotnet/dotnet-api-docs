@@ -4,7 +4,6 @@
  * access the request information. 
   **/
 // <Snippet1>
-
 using System;
 using System.Text;
 using System.Web;

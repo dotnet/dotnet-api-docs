@@ -1,12 +1,10 @@
 ﻿// <snippet2>
-
 using System;
 using System.IO;
 using System.Text;
 
 namespace Samples.AspNet.CS.Controls
 {
-
    public class UpperCaseFilterStream : Stream
    // This filter changes all characters passed through it to uppercase.
    {

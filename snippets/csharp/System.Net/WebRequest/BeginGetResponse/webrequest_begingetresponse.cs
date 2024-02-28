@@ -9,7 +9,6 @@
 */
 // <Snippet1>
 // <Snippet2>
-
 using System;
 using System.Net;
 using System.IO;

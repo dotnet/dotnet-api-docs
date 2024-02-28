@@ -1,5 +1,4 @@
 ﻿// <snippet0>
-
 using System;
 using System.Messaging;
 
@@ -41,5 +40,4 @@ public class QueueExample
         // </snippet1>
     }
 }
-
 // </snippet0>

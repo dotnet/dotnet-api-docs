@@ -2,7 +2,6 @@
 // Allowed snippet tags range: [41 - 50].
 
 // <Snippet41>
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,14 +9,12 @@ using System.Configuration;
 
 namespace Samples.AspNet
 {
-
     class TestingConfigValidatorAttribute
     {
         static TestingConfigValidatorAttribute()
         {
             try
             {
-
                 SelectCar car;
 
                 // Get the current configuration file.

@@ -1,5 +1,4 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Text;
 using System.Threading;
@@ -296,7 +295,4 @@ class AssemblyBuilderDemo {
 			  new object[0]);
    }
 }
-
-
-
 // </Snippet1>

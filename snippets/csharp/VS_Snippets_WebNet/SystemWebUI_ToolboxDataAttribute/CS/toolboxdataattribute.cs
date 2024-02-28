@@ -4,7 +4,6 @@
  */
 
 //<snippet1>
-
 using System;
 using System.Web;
 using System.Web.UI;
@@ -12,7 +11,6 @@ using System.Web.UI.WebControls;
 
 namespace CustomControls
 {
-
   [ ToolboxData("<{0}:MyLabel Text='MyLabel' BorderColor='Yellow' BackColor='Magenta' BorderWidth = '10'  runat='server'></{0}:MyLabel>") ]	
   public class MyLabel : Label 
   {
@@ -22,5 +20,4 @@ namespace CustomControls
     } 
   }
 }
-
 //</snippet1>

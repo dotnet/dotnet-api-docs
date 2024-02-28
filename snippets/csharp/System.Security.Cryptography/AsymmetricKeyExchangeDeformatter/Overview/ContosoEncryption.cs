@@ -3,7 +3,6 @@
 // AsymmetricKeyExchangeFormatter and AsymmetricKeyExchangeDeformatter classes
 // respectfully and can be found in their class reference.
 //<Snippet9>
-
 using System;
 using System.Security.Cryptography;
 

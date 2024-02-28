@@ -7,7 +7,6 @@
 // </Internal>
 
 //<Snippet1>
-
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -29,10 +28,8 @@ using System.Text;
 //
 namespace Mssc.TransportProtocols.Utilities
 {
-
   public class TestMulticastOption
   {
-
     private static IPAddress mcastAddress;
     private static int mcastPort;
     private static Socket mcastSocket;

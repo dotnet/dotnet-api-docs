@@ -3,7 +3,6 @@
 * ASP.NET health monitoriong types. 
  */
 // <Snippet1>
-
 using System;
 using System.Management;
 
@@ -145,5 +144,4 @@ namespace SamplesAspNet
         }
     }
 } 
-
 // </Snippet1>

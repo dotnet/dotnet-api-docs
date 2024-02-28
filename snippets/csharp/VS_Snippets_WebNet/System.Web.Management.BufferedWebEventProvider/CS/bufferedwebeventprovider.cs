@@ -3,7 +3,6 @@
   *Purpose: Shows how to build a custom event provider. 
   **/
 // <Snippet1>
-
 using System;
 using System.Text;
 using System.IO;
@@ -288,5 +287,4 @@ using System.Web;
         // </Snippet10>
     }
 }
-
 // </Snippet1>

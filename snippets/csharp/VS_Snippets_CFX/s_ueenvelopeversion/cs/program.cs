@@ -1,6 +1,5 @@
 ﻿// Snippet for System.ServiceModel.EnvelopeVersion
 // <Snippet0>
-
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
