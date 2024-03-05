@@ -5,18 +5,7 @@ using System.Reflection;
 
 class MyPropertyTypeClass
 {
-    String myMessage = "Hello World.";
-    public string MyProperty1
-    {
-        get
-        {			
-            return myMessage;
-        }
-        set
-        {
-            myMessage = value;
-        }			
-    }
+    public string MyProperty1 { get; set; } = "Hello World.";
 }
 
 class TestClass
@@ -24,29 +13,33 @@ class TestClass
     static void Main()
     {
         try
-        {	
+        {
             Type myType = typeof(MyPropertyTypeClass);
+
             // Get the PropertyInfo object representing MyProperty1.
             PropertyInfo myStringProperties1 = myType.GetProperty("MyProperty1", typeof(string));
-            Console.WriteLine("The name of the first property of MyPropertyTypeClass is {0}.", myStringProperties1.Name);
-            Console.WriteLine("The type of the first property of MyPropertyTypeClass is {0}.", myStringProperties1.PropertyType);
+
+            Console.WriteLine("The name of the first property of MyPropertyTypeClass is {0}.",
+                myStringProperties1.Name);
+            Console.WriteLine("The type of the first property of MyPropertyTypeClass is {0}.",
+                myStringProperties1.PropertyType);
         }
-        catch(ArgumentNullException e)
+        catch (ArgumentNullException e)
         {
             Console.WriteLine("ArgumentNullException :" + e.Message);
         }
-        catch(AmbiguousMatchException e)
+        catch (AmbiguousMatchException e)
         {
             Console.WriteLine("AmbiguousMatchException :" + e.Message);
         }
-        catch(NullReferenceException e)
+        catch (NullReferenceException e)
         {
-            Console.WriteLine("Source : {0}" , e.Source);
-            Console.WriteLine("Message : {0}" , e.Message);
+            Console.WriteLine("Source : {0}", e.Source);
+            Console.WriteLine("Message : {0}", e.Message);
         }
-	//Output:
-	//The name of the first property of MyPropertyTypeClass is MyProperty1.
-	//The type of the first property of MyPropertyTypeClass is System.String.
+        //Output:
+        //The name of the first property of MyPropertyTypeClass is MyProperty1.
+        //The type of the first property of MyPropertyTypeClass is System.String.
     }
 }
 // </Snippet1>	
