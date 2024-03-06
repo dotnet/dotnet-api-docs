@@ -2,12 +2,11 @@
 
 using System;
 using System.Reflection;
-using System.Security;
 
 public class MyClass1
 {
-    public MyClass1(){}
-    public MyClass1(int i){}
+    public MyClass1() { }
+    public MyClass1(int i) { }
 
     public static void Main()
     {
@@ -30,7 +29,7 @@ public class MyClass1
                     "as a parameter is not available.");
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine("Exception caught.");
             Console.WriteLine("Source: " + e.Source);
