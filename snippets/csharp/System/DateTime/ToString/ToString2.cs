@@ -3,7 +3,7 @@ using System;
 
 public class DateToStringExample2
 {
-   public static void Main0()
+   public static void Main()
    {
       DateTime dateValue = new DateTime(2008, 6, 15, 21, 15, 07);
       // Create an array of standard format strings.

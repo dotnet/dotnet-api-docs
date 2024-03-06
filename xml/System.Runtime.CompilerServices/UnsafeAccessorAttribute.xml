@@ -8,6 +8,7 @@
   <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Attribute</BaseTypeName>
@@ -29,22 +30,94 @@
   </Attributes>
   <Docs>
     <summary>Provides access to an inaccessible member of a specific type.</summary>
-    <remarks>This attribute may be applied to an <code>extern static</code> method.
-             The implementation of the <code>extern static</code> method annotated with this attribute will be provided by the runtime based on the information in the attribute and the signature of the method that the attribute is applied to.
-             The runtime will try to find the matching method or field and forward the call to it. If the matching method or field is not found, the body of the <code>extern</code> method will throw <see cref="T:System.MissingFieldException" /> or <see cref="T:System.MissingMethodException" />.
-             Only the specific type defined will be examined for inaccessible members. The type hierarchy is not walked looking for a match.
-             For <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.Method" />, <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticMethod" />, <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.Field" />, and <see cref="F:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticField" />, the type of the first argument of the annotated <code>extern</code> method identifies the owning type.
-             The value of the first argument is treated as <code>this</code> pointer for instance fields and methods.
-             The first argument must be passed as <code>ref</code> for instance fields and methods on structs.
-             The value of the first argument is not used by the implementation for <code>static</code> fields and methods.
-             Return type is considered for the signature match. modreqs and modopts are initially not considered for the signature match. However, if an ambiguity exists ignoring modreqs and modopts, a precise match is attempted. If an ambiguity still exists <see cref="T:System.Reflection.AmbiguousMatchException" /> is thrown.
-             By default, the attributed method's name dictates the name of the method/field. This can cause confusion in some cases since language abstractions, like C# local functions, generate mangled IL names. The solution to this is to use the <code>nameof</code> mechanism and define the <see cref="P:System.Runtime.CompilerServices.UnsafeAccessorAttribute.Name" /> property.
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+You can apply this attribute to an `extern static` method. The implementation of the `extern static` method annotated with this attribute will be provided by the runtime based on the information in the attribute and the signature of the method that the attribute is applied to. The runtime will try to find the matching method or field and forward the call to it. If the matching method or field is not found, the body of the `extern static` method will throw <xref:System.MissingFieldException> or <xref:System.MissingMethodException>.
+
+For <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Method>, <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticMethod>, <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Field>, and <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticField>, the type of the first argument of the annotated `extern static` method identifies the owning type. Only the specific type defined will be examined for inaccessible members. The type hierarchy is not walked looking for a match.
+
+The value of the first argument is treated as `this` pointer for instance fields and methods.
+
+The first argument must be passed as `ref` for instance fields and methods on structs.
+
+The value of the first argument is not used by the implementation for `static` fields and methods.
+
+The return value for an accessor to a field can be `ref` if setting of the field is desired.
+
+
+Constructors can be accessed using <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Constructor> or <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Method>.
+
+
+The return type is considered for the signature match. Modreqs and modopts are initially not considered for the signature match. However, if an ambiguity exists ignoring modreqs and modopts, a precise match is attempted. If an ambiguity still exists, <xref:System.Reflection.AmbiguousMatchException> is thrown.
+
+By default, the attributed method's name dictates the name of the method/field. This can cause confusion in some cases since language abstractions, like C# local functions, generate mangled IL names. The solution to this is to use the `nameof` mechanism and define the <xref:System.Runtime.CompilerServices.UnsafeAccessorAttribute.Name> property.
+
+      ]]></format>
     </remarks>
     <example>
       <code language="csharp">
-      public void Method(Class c) {
-        PrivateMethod(c);
-        [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(PrivateMethod))] extern static void PrivateMethod(Class c);
+      public class Class
+      {
+          static void StaticPrivateMethod() { }
+          static int StaticPrivateField;
+          Class(int i) { PrivateField = i; }
+          void PrivateMethod() { }
+          int PrivateField;
+          int PrivateProperty { get =&gt; PrivateField; }
+      }
+
+      public void CallStaticPrivateMethod()
+      {
+          StaticPrivateMethod(null);
+          
+          [UnsafeAccessor(UnsafeAccessorKind.StaticMethod, Name = nameof(StaticPrivateMethod))]
+          extern static void StaticPrivateMethod(Class c);
+      }
+      public void GetSetStaticPrivateField()
+      {
+          ref int f = ref GetSetStaticPrivateField(null);
+
+          [UnsafeAccessor(UnsafeAccessorKind.StaticField, Name = "StaticPrivateField")]
+          extern static ref int GetSetStaticPrivateField(Class c);
+      }
+      public void CallPrivateConstructor()
+      {
+          Class c1 = PrivateCtor(1);
+          
+          Class c2 = (Class)RuntimeHelpers.GetUninitializedObject(typeof(Class));
+
+          PrivateCtorAsMethod(c2, 2);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Constructor)]
+          extern static Class PrivateCtor(int i);
+          
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = ".ctor")]
+          extern static void PrivateCtorAsMethod(Class c, int i);
+
+      }
+      public void CallPrivateMethod(Class c)
+      {
+          PrivateMethod(c);
+          
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(PrivateMethod))]
+          extern static void PrivateMethod(Class c);
+      }
+      public void GetPrivateProperty(Class c)
+      {
+          int f = GetPrivateProperty(c);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "get_PrivateProperty")]
+          extern static int GetPrivateProperty(Class c);
+      }
+      public void GetSetPrivateField(Class c)
+      {
+          ref int f = ref GetSetPrivateField(c);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "PrivateField")]
+          extern static ref int GetSetPrivateField(Class c);
       }
       </code>
     </example>
@@ -61,6 +134,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="kind" Type="System.Runtime.CompilerServices.UnsafeAccessorKind" />
@@ -82,6 +156,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Runtime.CompilerServices.UnsafeAccessorKind</ReturnType>
@@ -103,6 +178,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
