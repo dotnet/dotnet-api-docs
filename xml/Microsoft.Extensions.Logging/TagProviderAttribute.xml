@@ -8,6 +8,7 @@
   <AssemblyInfo>
     <AssemblyName>Microsoft.Extensions.Telemetry.Abstractions</AssemblyName>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Attribute</BaseTypeName>
@@ -17,10 +18,6 @@
     <Attribute>
       <AttributeName Language="C#">[System.AttributeUsage(System.AttributeTargets.Parameter | System.AttributeTargets.Property)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.AttributeUsage(System.AttributeTargets.Parameter | System.AttributeTargets.Property)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute>
-      <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.Experimental("EXTEXP0003", UrlFormat="https://aka.ms/dotnet-extensions-warnings/{0}")]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.Experimental("EXTEXP0003", UrlFormat="https://aka.ms/dotnet-extensions-warnings/{0}")&gt;]</AttributeName>
     </Attribute>
     <Attribute>
       <AttributeName Language="C#">[System.Diagnostics.Conditional("CODE_GENERATION_ATTRIBUTES")]</AttributeName>
@@ -36,8 +33,11 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>
+            Defines a method to invoke to generate logging tags for a referenced object.
+            </summary>
     <remarks>To be added.</remarks>
+    <altmember cref="T:Microsoft.Extensions.Logging.LoggerMessageAttribute" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -51,16 +51,50 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Telemetry.Abstractions</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="providerType" Type="System.Type" />
         <Parameter Name="providerMethod" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="providerType">To be added.</param>
-        <param name="providerMethod">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="providerType">A type containing a method that provides a custom set of tags to log.</param>
+        <param name="providerMethod">The name of a method on the provider type that generates a custom set of tags to log.</param>
+        <summary>
+             Initializes a new instance of the <see cref="T:Microsoft.Extensions.Logging.TagProviderAttribute" /> class with custom tags provider.
+             </summary>
+        <remarks>
+             You can create your own method that will generate the exact set of tags to log
+             for a given input object.
+            
+             The method referenced by this constructor should be non-generic, <c>static</c>, and <c>public</c>, and it should have two parameters:
+             <list type="bullet"><item><description>First parameter of type <see cref="T:Microsoft.Extensions.Logging.ITagCollector" />.</description></item><item><description>
+                 Second parameter of type <c>T?</c>, where <c>T</c> is the type of logging method parameter that you want to log.
+                 </description></item></list></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="providerMethod" /> or <paramref name="providerType" /> is <see langword="null" />.
+             </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="providerMethod" /> is either an empty string or contains only whitespace.
+             </exception>
+        <example>
+          <code language="csharp">
+             [LoggerMessage(1, LogLevel.Warning, "Custom tags for {Param}.")]
+             static partial void LogMethod(ILogger logger,
+                 [TagProvider(typeof(CustomProvider), nameof(CustomProvider.GetTagsToLog))] ClassToLog o);
+            
+             public static class CustomProvider
+             {
+                 public static void GetTagsToLog(ITagCollector collector, ClassToLog? param)
+                 {
+                     collector.Add("Custom_tag_name", param?.MyProperty);
+                     collector.Add(nameof(ClassToLog.AnotherProperty), param?.AnotherProperty);
+                     // ...
+                 }
+             }
+             </code>
+        </example>
+        <altmember cref="T:Microsoft.Extensions.Logging.ITagCollector" />
       </Docs>
     </Member>
     <Member MemberName="OmitReferenceName">
@@ -74,13 +108,18 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Telemetry.Abstractions</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>
+            Gets or sets a value indicating whether to prefix the name of the parameter or property to the generated name of each tag being logged.
+            </summary>
+        <value>
+            Defaults to <see langword="false" />.
+            </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -95,12 +134,15 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Telemetry.Abstractions</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets the name of the method that provides tags to be logged.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -116,12 +158,15 @@
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Telemetry.Abstractions</AssemblyName>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Type</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets the <see cref="T:System.Type" /> containing the method that provides tags to be logged.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>

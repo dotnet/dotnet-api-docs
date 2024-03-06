@@ -34,7 +34,7 @@ int main()
       // Get the PropertyInfo by passing the property name and specifying the BindingFlags.
       PropertyInfo^ myPropInfo = myType->GetProperty( "MyProperty", static_cast<BindingFlags>(BindingFlags::Public | BindingFlags::Instance) );
       
-      // Display Name propety to console.
+      // Display Name property to console.
       Console::WriteLine( "{0} is a property of MyClass.", myPropInfo->Name );
    }
    catch ( NullReferenceException^ e ) 
