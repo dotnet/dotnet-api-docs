@@ -1,6 +1,7 @@
 ﻿// System.Runtime.InteropServices.TypeLibFuncAttribute
 // System.Runtime.InteropServices.TypeLibFuncFlags
 // <Snippet5>
+
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
