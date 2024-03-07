@@ -5,19 +5,8 @@ using System.Reflection;
 
 class MyClass2
 {
-    private int myProperty;
     // Declare MyProperty.
-    public int MyProperty
-    {
-        get
-        {
-            return myProperty;
-        }
-        set
-        {
-            myProperty=value;
-        }
-    }
+    public int MyProperty { get; set; }
 }
 
 public class MyTypeClass2
@@ -27,15 +16,20 @@ public class MyTypeClass2
         try
         {
             // Get Type object of MyClass2.
-            Type myType=typeof(MyClass2);
+            Type myType = typeof(MyClass2);
+
             // Get the PropertyInfo by passing the property name and specifying the BindingFlags.
-            PropertyInfo myPropInfo = myType.GetProperty("MyProperty", BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo myPropInfo = myType.GetProperty(
+                "MyProperty",
+                BindingFlags.Public | BindingFlags.Instance
+                );
+
             // Display Name property to console.
             Console.WriteLine("{0} is a property of MyClass2.", myPropInfo.Name);
         }
-        catch(NullReferenceException e)
+        catch (NullReferenceException e)
         {
-            Console.WriteLine("MyProperty does not exist in MyClass2." +e.Message);
+            Console.WriteLine("MyProperty does not exist in MyClass2." + e.Message);
         }
     }
 }

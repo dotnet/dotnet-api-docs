@@ -2,17 +2,14 @@
 using System;
 using System.Messaging;
 
-public class QueueExample
+public class QueueExample2
 {
     public static void Main()
     {
-        // Create a new instance of the class.
-        QueueExample example = new QueueExample();
-
         // Create a nontransactional queue on the local computer.
         CreateQueue(".\\exampleQueue", false);
 
-        example.UseQueue();
+        UseQueue();
 
         return;
     }
@@ -20,7 +17,7 @@ public class QueueExample
     // Create a new queue.
     public static void CreateQueue(string queuePath, bool transactional)
     {
-        if(!MessageQueue.Exists(queuePath))
+        if (!MessageQueue.Exists(queuePath))
         {
             MessageQueue.Create(queuePath, transactional);
         }
@@ -30,7 +27,7 @@ public class QueueExample
         }
     }
 
-    public void UseQueue()
+    public static void UseQueue()
     {
         // <snippet1>
         // Connect to a queue on the local computer, grant exclusive read
