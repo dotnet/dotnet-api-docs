@@ -4,6 +4,7 @@
   *by inheriting from the System.Web.Management.WebErrorEvent.
   **/
 // <Snippet1>
+
 using System;
 using System.Text;
 using System.Web;

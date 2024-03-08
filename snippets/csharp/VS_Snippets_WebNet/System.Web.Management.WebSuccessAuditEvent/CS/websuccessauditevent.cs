@@ -4,6 +4,7 @@
   *by inheriting from the System.Web.Management.WebSuccessAuditEvent class.
   **/
 // <Snippet1>
+
 using System;
 using System.Text;
 using System.Web;

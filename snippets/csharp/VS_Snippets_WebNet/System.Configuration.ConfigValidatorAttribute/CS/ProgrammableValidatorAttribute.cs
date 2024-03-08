@@ -2,6 +2,7 @@
 // Allowed snippet tags range: [31 - 40].
 
 // <Snippet31>
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Configuration;
 
 namespace Samples.AspNet
 {
+
     // Show how to create a custom programmable 
     // validator. That is a validator whose
     // validation parameters can be passed when the

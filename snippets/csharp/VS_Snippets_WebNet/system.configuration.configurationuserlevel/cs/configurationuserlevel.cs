@@ -1,4 +1,5 @@
 ﻿// <Snippet1>
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,10 @@ using System.Text;
 
 public class UsingConsoleConfigElement
 {
+
     static void GetConfigurationFile()
     {
+
         try
         {
             // Get the current application configuration file.
@@ -62,4 +65,5 @@ public class UsingConsoleConfigElement
         Console.ReadLine();
     }
 }
+
 // </Snippet1>
