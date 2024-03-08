@@ -1863,24 +1863,26 @@
       </Parameters>
       <Docs>
         <param name="id">The time zone identifier, which corresponds to the <see cref="P:System.TimeZoneInfo.Id" /> property.</param>
-        <summary>Instantiates a new <see cref="T:System.TimeZoneInfo" /> object based on its identifier.</summary>
+        <summary>Returns a <see cref="T:System.TimeZoneInfo" /> object based on its identifier.</summary>
         <returns>An object whose identifier is the value of the <paramref name="id" /> parameter.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `id` parameter must correspond exactly to the time zone's identifier in length, but not in case, for a successful match to occur; that is, the comparison of `id` with time zone identifiers is case-insensitive. If you want to retrieve time zone objects based on partial matches, you can write custom procedures that work with the read-only collection of <xref:System.TimeZoneInfo> objects returned by the <xref:System.TimeZoneInfo.GetSystemTimeZones%2A> method.
 
- On Windows systems, `FindSystemTimeZoneById` tries to match `id` to the subkey names of the HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Time Zones branch of the registry. On Linux and macOS, it uses time zone information available in the [ICU Library](https://unicode-org.github.io/icu/userguide/datetime/timezone/). If the registry or the library does not have the information for the time zone you desire, you can create a particular time zone either by calling one of the overloads of the <xref:System.TimeZoneInfo.CreateCustomTimeZone%2A> method or by calling <xref:System.TimeZoneInfo.FromSerializedString%2A> to deserialize a <xref:System.TimeZoneInfo> object that represents the required time zone. However, time zones created by these method calls are not system-defined time and cannot be retrieved using the <xref:System.TimeZoneInfo.FindSystemTimeZoneById%2A> method. These custom time zones can be accessed only through the object reference returned by the <xref:System.TimeZoneInfo.CreateCustomTimeZone%2A> or <xref:System.TimeZoneInfo.FromSerializedString%2A> method call.
+The `id` parameter must correspond exactly to the time zone's identifier in length, but not in case, for a successful match to occur; that is, the comparison of `id` with time zone identifiers is case-insensitive. If you want to retrieve time zone objects based on partial matches, you can write custom procedures that work with the read-only collection of <xref:System.TimeZoneInfo> objects returned by the <xref:System.TimeZoneInfo.GetSystemTimeZones%2A> method.
 
-This method returns a new <xref:System.TimeZoneInfo> instance for each method call; it does not return cached objects. This may impact performance in applications that call the `FindSystemTimeZoneById` method repeatedly with the same identifier.
+On Windows systems, `FindSystemTimeZoneById` tries to match `id` to the subkey names of the HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Time Zones branch of the registry. On Linux and macOS, it uses time zone information available in the [ICU Library](https://unicode-org.github.io/icu/userguide/datetime/timezone/). If the registry or the library does not have the information for the time zone you desire, you can create a particular time zone either by calling one of the overloads of the <xref:System.TimeZoneInfo.CreateCustomTimeZone%2A> method or by calling <xref:System.TimeZoneInfo.FromSerializedString%2A> to deserialize a <xref:System.TimeZoneInfo> object that represents the required time zone. However, time zones created by these method calls are not system-defined time and cannot be retrieved using the <xref:System.TimeZoneInfo.FindSystemTimeZoneById%2A> method. These custom time zones can be accessed only through the object reference returned by the <xref:System.TimeZoneInfo.CreateCustomTimeZone%2A> or <xref:System.TimeZoneInfo.FromSerializedString%2A> method call.
+
+In .NET 7 and earlier versions, this method returns a new <xref:System.TimeZoneInfo> instance for each method call. This might impact performance in applications that call the `FindSystemTimeZoneById` method repeatedly with the same identifier. (In .NET 8 and later versions, this method always returns a cached <xref:System.TimeZoneInfo> instance.)
 
 ## Examples
- The following example uses the <xref:System.TimeZoneInfo.FindSystemTimeZoneById%2A> method to retrieve the Tokyo Standard Time zone. This <xref:System.TimeZoneInfo> object is then used to convert the local time to the time in Tokyo and to determine whether it is Tokyo Standard Time or Tokyo Daylight Time.
 
- :::code language="csharp" source="~/snippets/csharp/System/TimeZoneInfo/ConvertTimeBySystemTimeZoneId/convertdt2.cs" id="Snippet2":::
- :::code language="fsharp" source="~/snippets/fsharp/System/TimeZoneInfo/ConvertTimeBySystemTimeZoneId/convertdt2.fs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeZone2.Conversions/vb/convertdt2.vb" id="Snippet2":::
+The following example uses the <xref:System.TimeZoneInfo.FindSystemTimeZoneById%2A> method to retrieve the Tokyo Standard Time zone. This <xref:System.TimeZoneInfo> object is then used to convert the local time to the time in Tokyo and to determine whether it is Tokyo Standard Time or Tokyo Daylight Time.
+
+:::code language="csharp" source="~/snippets/csharp/System/TimeZoneInfo/ConvertTimeBySystemTimeZoneId/convertdt2.cs" id="Snippet2":::
+:::code language="fsharp" source="~/snippets/fsharp/System/TimeZoneInfo/ConvertTimeBySystemTimeZoneId/convertdt2.fs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeZone2.Conversions/vb/convertdt2.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -1890,7 +1892,7 @@ This method returns a new <xref:System.TimeZoneInfo> instance for each method ca
         <exception cref="T:System.Security.SecurityException">The process does not have the permissions required to read from the registry key that contains the time zone information.</exception>
         <exception cref="T:System.InvalidTimeZoneException">The time zone identifier was found, but the registry data is corrupted.</exception>
         <altmember cref="P:System.TimeZoneInfo.Id" />
-        <related type="Article" href="/dotnet/standard/datetime/instantiate-time-zone-info">How to: Instantiate a TimeZoneInfo Object</related>
+        <related type="Article" href="/dotnet/standard/datetime/instantiate-time-zone-info">How to: Obtain a TimeZoneInfo Object</related>
       </Docs>
     </Member>
     <Member MemberName="FromSerializedString">
