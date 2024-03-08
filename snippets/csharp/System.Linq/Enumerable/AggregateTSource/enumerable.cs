@@ -2074,12 +2074,12 @@ namespace SequenceExamples
             /*
              This code produces the following output:
 
-             {index=0, str=}
-             {index=1, str=b}
-             {index=2, str=ma}
-             {index=3, str=ora}
-             {index=4, str=pass}
-             {index=5, str=grape}
+             { index = 0, str =  }
+             { index = 1, str = b }
+             { index = 2, str = ma }
+             { index = 3, str = ora }
+             { index = 4, str = pass }
+             { index = 5, str = grape }
             */
             // </Snippet76>
         }
