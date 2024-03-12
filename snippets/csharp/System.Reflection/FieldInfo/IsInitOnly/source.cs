@@ -1,9 +1,8 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Reflection;
 
- //Make two fields, one public and one read-only.
+//Make two fields, one public and one read-only.
 public class Myfielda
 {
     public string field = "A - public modifiable field";

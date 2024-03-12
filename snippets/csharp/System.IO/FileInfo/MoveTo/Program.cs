@@ -1,5 +1,4 @@
 ﻿//<SNIPPET1>
-
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -12,7 +11,6 @@ using System.Xml;
 
 namespace Microsoft.Samples.MoveTo.CS
 {
-
 	class Program
 	{
 		private static string sourcePath = Environment.GetFolderPath
