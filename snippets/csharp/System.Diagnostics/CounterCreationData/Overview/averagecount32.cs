@@ -1,18 +1,16 @@
 ﻿//<snippet1>
-
 using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-public class App {
-
+public class App
+{
     private static PerformanceCounter avgCounter64Sample;
     private static PerformanceCounter avgCounter64SampleBase;
 
     public static void Main()
     {
-
         ArrayList samplesList = new ArrayList();
 
         // If the category does not exist, create the category and exit.
