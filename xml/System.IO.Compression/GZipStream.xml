@@ -465,8 +465,20 @@ By default, the compression level is set to <xref:System.IO.Compression.Compress
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/GZipStream/BeginRead_Byte_Int32_Int32_AsyncCallback_Object.md)]
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
 
+Starting with .NET Framework 4.5, you can perform asynchronous read operations by using the <xref:System.IO.Stream.ReadAsync%2A?displayProperty=nameWithType> method. The <xref:System.IO.Compression.GZipStream.BeginRead%2A> method is still available in current versions to support legacy code; however, you can implement asynchronous I/O operations more easily by using the new async methods. For more information, see [Asynchronous file I/O](/dotnet/standard/io/asynchronous-file-i-o).
+
+Pass the <xref:System.IAsyncResult> return value to the <xref:System.IO.Compression.GZipStream.EndRead%2A> method of the stream to determine how many bytes were read and to release operating system resources used for reading. You can do this either by using the same code that called <xref:System.IO.Compression.GZipStream.BeginRead%2A> or in a callback passed to <xref:System.IO.Compression.GZipStream.BeginRead%2A>.
+
+The current position in the stream is updated when the asynchronous read or write is issued, not when the I/O operation completes.
+
+Multiple simultaneous asynchronous requests render the request completion order uncertain.
+
+Use the <xref:System.IO.Compression.GZipStream.CanRead%2A> property to determine whether the current <xref:System.IO.Compression.GZipStream> object supports reading.
+
+If a stream is closed or you pass an invalid argument, exceptions are thrown immediately from <xref:System.IO.Compression.GZipStream.BeginRead%2A>. Errors that occur during an asynchronous read request, such as a disk failure during the I/O request, occur on the thread pool thread and throw exceptions when calling <xref:System.IO.Compression.GZipStream.EndRead%2A>.
           ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">The method tried to read asynchronously past the end of the stream, or a disk error occurred.</exception>
@@ -1257,13 +1269,14 @@ This method stores in the task it returns all non-usage exceptions that the meth
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
 
 Use the <xref:System.IO.Compression.GZipStream.CanRead%2A> property to determine whether the current instance supports reading. Use the <xref:System.IO.Compression.GZipStream.ReadAsync%2A> method to read asynchronously from the current stream.
 
 This method reads a maximum of `buffer.Length` bytes from the current stream and stores them in `buffer`. The current position within the GZip stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the GZip stream remains unchanged. In the event that no data is available, this method blocks until at least one byte of data can be read. `Read` returns 0 only when there is no more data in the stream and no more is expected (such as a closed socket or end of file). The method is free to return fewer bytes than requested even if the end of the stream has not been reached.
 
- Use <xref:System.IO.BinaryReader> for reading primitive data types.
+Use <xref:System.IO.BinaryReader> for reading primitive data types.
 
           ]]></format>
         </remarks>
@@ -1326,6 +1339,9 @@ This method reads a maximum of `buffer.Length` bytes from the current stream and
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
 
 If data is found in an invalid format, an <xref:System.IO.InvalidDataException> is thrown. A cyclic redundancy check (CRC) is performed as one of the last operations of this method.
 
@@ -1401,7 +1417,8 @@ The following example shows how to compress and decompress bytes by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
 
 The `ReadAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
 
@@ -1467,7 +1484,8 @@ If the operation is canceled before it completes, the returned task contains the
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
 
 The `ReadAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
 

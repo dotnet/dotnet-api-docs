@@ -9,7 +9,7 @@ public static class MemoryWriteReadExample
     private const string Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
     private static readonly byte[] s_messageBytes = Encoding.ASCII.GetBytes(Message);
 
-    public static void Main()
+    public static void Run()
     {
         Console.WriteLine($"The original string length is {s_messageBytes.Length} bytes.");
         using var stream = new MemoryStream();
@@ -35,10 +35,18 @@ public static class MemoryWriteReadExample
     {
         stream.Position = 0;
         int bufferSize = 512;
-        byte[] decompressedBytes = new byte[bufferSize];
-        using var decompressor = new GZipStream(stream, CompressionMode.Decompress);
-        int length = decompressor.Read(decompressedBytes, 0, bufferSize);
-        return length;
+        byte[] buffer = new byte[bufferSize];
+        using var gzipStream = new GZipStream(stream, CompressionMode.Decompress);
+
+        int totalRead = 0;
+        while (totalRead < buffer.Length)
+        {
+            int bytesRead = gzipStream.Read(buffer, totalRead, buffer.Length - totalRead);
+            if (bytesRead == 0) break;
+            totalRead += bytesRead;
+        }
+
+        return totalRead;
     }
 }
 //</snippet1>
