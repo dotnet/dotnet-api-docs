@@ -41,7 +41,7 @@ public static class MemoryWriteReadExample
         int totalRead = 0;
         while (totalRead < buffer.Length)
         {
-            int bytesRead = gzipStream.Read(buffer, totalRead, buffer.Length - totalRead);
+            int bytesRead = gzipStream.Read(buffer.AsSpan(totalRead));
             if (bytesRead == 0) break;
             totalRead += bytesRead;
         }
