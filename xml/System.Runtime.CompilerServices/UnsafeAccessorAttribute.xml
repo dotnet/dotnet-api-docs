@@ -35,7 +35,7 @@
 
 ## Remarks
 
-You can apply this attribute to an `extern static` method. The implementation of the `extern static` method annotated with this attribute will be provided by the runtime based on the information in the attribute and the signature of the method that the attribute is applied to. The runtime will try to find the matching method or field and forward the call to it. If the matching method or field is not found, the body of the `extern static` method will throw <xref:System.MissingFieldException> or <xref:System.MissingMethodException>.
+You can apply this attribute to an `extern static` method. The implementation of the `extern static` method annotated with this attribute will be provided by the runtime based on the information in the attribute and the signature of the method that the attribute is applied to. The runtime will try to find the matching method or field and forward the call to it. If the matching method or field is not found, the body of the `extern static` method will throw <xref:System.MissingFieldException> or <xref:System.MissingMethodException>. Generic parameters are supported, but must match the target in form and index (that is, type parameters must be type parameters and method parameters must be method parameters). The `extern static` method's generic parameters must also exactly match any constraints reflected on the target. If constraints do not match the method will throw <xref:System.InvalidProgramException>.
 
 For <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Method>, <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticMethod>, <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.Field>, and <xref:System.Runtime.CompilerServices.UnsafeAccessorKind.StaticField>, the type of the first argument of the annotated `extern static` method identifies the owning type. Only the specific type defined will be examined for inaccessible members. The type hierarchy is not walked looking for a match.
 
@@ -43,7 +43,7 @@ The value of the first argument is treated as `this` pointer for instance fields
 
 The first argument must be passed as `ref` for instance fields and methods on structs.
 
-The value of the first argument is not used by the implementation for `static` fields and methods.
+The value of the first argument is not used by the implementation for `static` fields and methods and may be `null`.
 
 The return value for an accessor to a field can be `ref` if setting of the field is desired.
 
@@ -72,7 +72,7 @@ By default, the attributed method's name dictates the name of the method/field. 
       public void CallStaticPrivateMethod()
       {
           StaticPrivateMethod(null);
-          
+
           [UnsafeAccessor(UnsafeAccessorKind.StaticMethod, Name = nameof(StaticPrivateMethod))]
           extern static void StaticPrivateMethod(Class c);
       }
@@ -86,14 +86,14 @@ By default, the attributed method's name dictates the name of the method/field. 
       public void CallPrivateConstructor()
       {
           Class c1 = PrivateCtor(1);
-          
+
           Class c2 = (Class)RuntimeHelpers.GetUninitializedObject(typeof(Class));
 
           PrivateCtorAsMethod(c2, 2);
 
           [UnsafeAccessor(UnsafeAccessorKind.Constructor)]
           extern static Class PrivateCtor(int i);
-          
+
           [UnsafeAccessor(UnsafeAccessorKind.Method, Name = ".ctor")]
           extern static void PrivateCtorAsMethod(Class c, int i);
 
@@ -101,7 +101,7 @@ By default, the attributed method's name dictates the name of the method/field. 
       public void CallPrivateMethod(Class c)
       {
           PrivateMethod(c);
-          
+
           [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(PrivateMethod))]
           extern static void PrivateMethod(Class c);
       }
@@ -118,6 +118,41 @@ By default, the attributed method's name dictates the name of the method/field. 
 
           [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "PrivateField")]
           extern static ref int GetSetPrivateField(Class c);
+      }
+
+      // Generic example
+      public class Class&lt;T&gt;
+      {
+          private T _field;
+          private void M(T t) { }
+          private void GM&lt;U&gt;(U u) { }
+          private void GMWithConstraints&lt;U&gt;(T t, U u) where T: U, IEquatable&lt;T&gt; { }
+      }
+
+      class Accessors&lt;V&gt;
+      {
+          [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_field")]
+          extern static ref V GetSetPrivateField(Class&lt;V&gt; c);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "M")]
+          extern static void CallM(Class&lt;V&gt; c, V v);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "GM")]
+          extern static void CallGM&lt;W&gt;(Class&lt;V&gt; c, W w);
+
+          [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "GMWithConstraints")]
+          extern static void CallGMWithConstraints&lt;W&gt;(Class&lt;V&gt; c, V v, W w) where V: W, IEquatable&lt;V&gt;;
+      }
+
+      public void AccessGenericType(Class&lt;int&gt; c)
+      {
+          ref int f = ref Accessors&lt;int&gt;.GetSetPrivateField(c);
+
+          Accessors&lt;int&gt;.CallM(c, 1);
+
+          Accessors&lt;int&gt;.CallGM&lt;string&gt;(c, string.Empty);
+
+          Accessors&lt;string&gt;.CallGMWithConstraints&lt;object&gt;(c, string.Empty, new object());
       }
       </code>
     </example>
