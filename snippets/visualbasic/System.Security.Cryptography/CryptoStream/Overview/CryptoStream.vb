@@ -66,10 +66,13 @@ Class AesExample
         Return encrypted
 
     End Function 'EncryptStringToBytes
-
     '</Snippet2>
+
     '<Snippet3>
-    Shared Function DecryptStringFromBytes(ByVal cipherText() As Byte, ByVal Key() As Byte, ByVal IV() As Byte) As String
+    Shared Function DecryptStringFromBytes(
+        ByVal cipherText() As Byte,
+        ByVal Key() As Byte,
+        ByVal IV() As Byte) As String
         ' Check arguments.
         If cipherText Is Nothing OrElse cipherText.Length <= 0 Then
             Throw New ArgumentNullException(NameOf(cipherText))
@@ -107,6 +110,6 @@ Class AesExample
         Return plaintext
 
     End Function 'DecryptStringFromBytes 
+    '</Snippet3>
 End Class
-'</Snippet3>
 '</Snippet1>
