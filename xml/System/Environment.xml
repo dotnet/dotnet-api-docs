@@ -954,13 +954,13 @@ The following example attempts to retrieve the value of an environment variable 
       </Parameters>
       <Docs>
         <param name="variable">The name of an environment variable.</param>
-        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values. Only <see cref="F:System.EnvironmentVariableTarget.Process" /> is supported on .NET running on Unix-based systems.</param>
+        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values. Only <see cref="F:System.EnvironmentVariableTarget.Process" /> is supported on .NET running on Unix-like systems.</param>
         <summary>Retrieves the value of an environment variable from the current process or from the Windows operating system registry key for the current user or local machine.</summary>
         <returns>The value of the environment variable specified by the <paramref name="variable" /> and <paramref name="target" /> parameters, or <see langword="null" /> if the environment variable is not found.</returns>
         <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-environment-getenvironmentvariable">Supplemental API remarks for Environment.GetEnvironmentVariable</see>.</remarks>
         <example>
           <format type="text/markdown"><![CDATA[
-The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-based systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
+The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-like systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
 
 :::code language="csharp" source="~/snippets/csharp/System/Environment/GetEnvironmentVariable/gsev.cs":::
 :::code language="fsharp" source="~/snippets/fsharp/System/Environment/GetEnvironmentVariable/gsev.fs":::
@@ -1041,26 +1041,29 @@ The following example creates environment variables for the <xref:System.Environ
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The names and values for the environment variables are stored as key-value pairs in the returned <xref:System.Collections.IDictionary>.
+
+The names and values for the environment variables are stored as key-value pairs in the returned <xref:System.Collections.IDictionary>.
 
 ### On Windows systems
 
 On Windows systems, the `GetEnvironmentVariables` method returns the following environment variables:
 
 - All per-machine environment variables that are defined at the time the process is created, along with their values.
-
 - All per-user environment variables that are defined at the time the process is created, along with their values.
-
 - Any variables inherited from the parent process from which the .NET application was launched or added to the process block while the process is running. Environment variables are added while the process is running by calling either the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%29> method or the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a `target` value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>.
 
-### On non-Windows systems
+### On Unix-like systems
 
-On non-Windows systems, the `GetEnvironmentVariables` method retrieves the name and value of all environment variables that are inherited from the parent process that launched the `dotnet` process or that are defined within the scope of the `dotnet` process itself. Once the `dotnet` process ends, these latter environment variables cease to exist.
+On Unix-like systems, the `GetEnvironmentVariables` method retrieves the name and value of all environment variables that are inherited from the parent process that launched the `dotnet` process or that are defined within the scope of the `dotnet` process itself. Once the `dotnet` process ends, these latter environment variables cease to exist.
 
-.NET running on Unix-based systems does not support per-machine or per-user environment variables.
+.NET running on Unix-like systems does not support per-machine or per-user environment variables.
+
+> [!NOTE]
+> On Unix-like systems, in-process environment modifications made by native libraries aren't seen by managed callers.
 
 ## Examples
- The following example demonstrates the <xref:System.Environment.GetEnvironmentVariables%2A> method.
+
+The following example demonstrates the <xref:System.Environment.GetEnvironmentVariables%2A> method.
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/Environment.GetEnvironmentVariables/CPP/getenvironmentvariables.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System/Environment/GetEnvironmentVariables/getenvironmentvariables.cs" id="Snippet1":::
@@ -1120,7 +1123,7 @@ On non-Windows systems, the `GetEnvironmentVariables` method retrieves the name 
         <Parameter Name="target" Type="System.EnvironmentVariableTarget" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0" />
       </Parameters>
       <Docs>
-        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values. Only <see cref="F:System.EnvironmentVariableTarget.Process" /> is supported on .NET running on Unix-based systems.</param>
+        <param name="target">One of the <see cref="T:System.EnvironmentVariableTarget" /> values. Only <see cref="F:System.EnvironmentVariableTarget.Process" /> is supported on .NET running on Unix-like systems.</param>
         <summary>Retrieves all environment variable names and their values from the current process, or from the Windows operating system registry key for the current user or local machine.</summary>
         <returns>A dictionary that contains all environment variable names and their values from the source specified by the <paramref name="target" /> parameter; otherwise, an empty dictionary if no environment variables are found.</returns>
         <remarks>
@@ -1134,15 +1137,18 @@ The names and values of the environment variables are stored as key/value pairs 
 
 On Windows systems, the `target` parameter specifies whether the source is the current process, the registry key for the current user, or the registry key for the local machine.
 
-### On non-Windows systems
+### On Unix-like systems
 
-On non-Windows systems, only a `target` value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> is supported. Per-process environment variables are inherited from the parent process (typically the shell) used to launch the `dotnet` process or are defined within the scope of the `dotnet` process itself. Once the dotnet process ends, these latter environment variables cease to exist.
+On Unix-like systems, only a `target` value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> is supported. Per-process environment variables are inherited from the parent process (typically the shell) used to launch the `dotnet` process or are defined within the scope of the `dotnet` process itself. Once the dotnet process ends, these latter environment variables cease to exist.
 
-Per-machine and per-user environment variables are not supported. A `target` value of <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> returns an empty array.
+Per-machine and per-user environment variables aren't supported. A `target` value of <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> returns an empty array.
+
+> [!NOTE]
+> On Unix-like systems, in-process environment modifications made by native libraries aren't seen by managed callers.
 
 ## Examples
 
-The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-based systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
+The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-like systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
 
 :::code language="csharp" source="~/snippets/csharp/System/Environment/GetEnvironmentVariable/gsev.cs":::
 :::code language="fsharp" source="~/snippets/fsharp/System/Environment/GetEnvironmentVariable/gsev.fs":::
@@ -2002,9 +2008,10 @@ If the executable is renamed or deleted before this property is first accessed, 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
  Calling this method is equivalent to calling the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> overload with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> for the `target` argument.
 
- On non-Windows systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%29> method have no effect on any native libraries that are, or will be, loaded.
+ On Unix-like systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%29> method have no effect on any native libraries that are, or will be, loaded. (Conversely, in-process environment modifications made by native libraries aren't seen by managed callers.)
 
  If the `value` argument is not empty (see the discussion of deleting an environment variable later in this section for the definition of an empty value) and the environment variable named by the `variable` parameter does not exist, the environment variable is created and assigned the contents of `value`. If it does exist, its value is modified. Because the environment variable is defined in the environment block of the current process only, it does not persist after the process has ended.
 
@@ -2014,15 +2021,13 @@ If the executable is renamed or deleted before this property is first accessed, 
 
  If `value` is empty and the environment variable named by `variable` exists, the environment variable is deleted. If `variable` does not exist, no error occurs even though the operation cannot be performed. `value` is considered empty under any of the following conditions:
 
--   It is `null`.
-
--   It is <xref:System.String.Empty?displayProperty=nameWithType>.
-
--   It consists of a single character whose value is U+0000.
+- It is `null`.
+- It is <xref:System.String.Empty?displayProperty=nameWithType>.
+- It consists of a single character whose value is U+0000.
 
 ## Examples
 
-The following example attempts to retrieve the value of an environment variable named `Test1` from the process environment block. If the variable doesn't exist, the example creates the variable and retrieves its value. The example displays the value of the variable. For .NET implementations running on Windows systems, it also calls the <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> method with each member of the <xref:System.EnvironmentVariableTarget> enumeration to establish that the variable can be retrieved only from the current process environment block. (.NET implementations on Unix-based systems only support variables in the process environment block.) Finally, if the example created the variable, it deletes it.
+The following example attempts to retrieve the value of an environment variable named `Test1` from the process environment block. If the variable doesn't exist, the example creates the variable and retrieves its value. The example displays the value of the variable. For .NET implementations running on Windows systems, it also calls the <xref:System.Environment.GetEnvironmentVariables%28System.EnvironmentVariableTarget%29> method with each member of the <xref:System.EnvironmentVariableTarget> enumeration to establish that the variable can be retrieved only from the current process environment block. (.NET implementations on Unix-like systems only support variables in the process environment block.) Finally, if the example created the variable, it deletes it.
 
  :::code language="csharp" source="~/snippets/csharp/System/Environment/GetEnvironmentVariable/getenvironmentvariableex1.cs":::
  :::code language="fsharp" source="~/snippets/fsharp/System/Environment/GetEnvironmentVariable/getenvironmentvariableex1.fs":::
@@ -2116,39 +2121,37 @@ The <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.Str
 
 In addition, on Windows systems only, the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method lets you define an environment variable that is available to all processes that run on a machine (the <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> value) and to all processes run by a user (the <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> value). Per-machine and per-user environment variables are copied into the environment block of the current process.
 
-On non-Windows systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a value of <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> are ignored.
+On Unix-like systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a value of <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> are ignored.
 
-On non-Windows systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> have no effect on any native libraries that are, or will be, loaded.
+On Unix-like systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> have no effect on any native libraries that are, or will be, loaded. (Conversely, in-process environment modifications made by native libraries aren't seen by managed callers.)
 
- If the `value` argument is not empty (see the discussion of deleting an environment variable later in this section for the definition of an empty value) and the environment variable named by the `variable` argument does not exist, the environment variable is created and assigned the contents of `value`.  If it does exist, its value is modified.
+If the `value` argument is not empty (see the discussion of deleting an environment variable later in this section for the definition of an empty value) and the environment variable named by the `variable` argument does not exist, the environment variable is created and assigned the contents of `value`.  If it does exist, its value is modified.
 
- If `variable` contains a non-initial hexadecimal zero character, the characters before the zero character are considered the environment variable name and all subsequent characters are ignored.
+If `variable` contains a non-initial hexadecimal zero character, the characters before the zero character are considered the environment variable name and all subsequent characters are ignored.
 
- If `value` contains a non-initial hexadecimal zero character, the characters before the zero character are assigned to the environment variable and all subsequent characters are ignored.
+If `value` contains a non-initial hexadecimal zero character, the characters before the zero character are assigned to the environment variable and all subsequent characters are ignored.
 
- If `value` is empty and the environment variable named by `variable` exists, the environment variable is deleted. `value` is considered empty under any of the following conditions:
+If `value` is empty and the environment variable named by `variable` exists, the environment variable is deleted. `value` is considered empty under any of the following conditions:
 
 -   It is `null`.
-
 -   It is <xref:System.String.Empty?displayProperty=nameWithType>.
-
 -   It consists of a single character whose value is U+0000.
 
- If `variable` does not exist, no error occurs although the operation cannot be performed. Be careful when `target` is <xref:System.EnvironmentVariableTarget.Machine>, because you can accidentally delete an environment variable that affects your entire local machine, not just the current process or user.
+If `variable` does not exist, no error occurs although the operation cannot be performed. Be careful when `target` is <xref:System.EnvironmentVariableTarget.Machine>, because you can accidentally delete an environment variable that affects your entire local machine, not just the current process or user.
 
 ### EnvironmentVariableTarget.Machine and EnvironmentVariableTarget.User on Windows systems
 
 If `target` is <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, the environment variable is stored in the HKEY_CURRENT_USER\Environment key of the local computer's registry. It is also copied to instances of File Explorer that are running as the current user. The environment variable is then inherited by any new processes that the user launches from File Explorer.
 
- Similarly, if `target` is <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType>, the environment variable is stored in the HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment key of the local computer's registry. It is also copied to all instances of File Explorer. The environment variable is then inherited by any new processes that are launched from File Explorer.
+Similarly, if `target` is <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType>, the environment variable is stored in the HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment key of the local computer's registry. It is also copied to all instances of File Explorer. The environment variable is then inherited by any new processes that are launched from File Explorer.
 
- If `target` is <xref:System.EnvironmentVariableTarget.User> or <xref:System.EnvironmentVariableTarget.Machine>, other applications are notified of the set operation by a Windows `WM_SETTINGCHANGE` message.
+If `target` is <xref:System.EnvironmentVariableTarget.User> or <xref:System.EnvironmentVariableTarget.Machine>, other applications are notified of the set operation by a Windows `WM_SETTINGCHANGE` message.
 
- If `target` is <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType>, we recommend that the length of `value` be less than 2048 characters.
+If `target` is <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType> or <xref:System.EnvironmentVariableTarget.Machine?displayProperty=nameWithType>, we recommend that the length of `value` be less than 2048 characters.
 
 ## Examples
 
-The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-based systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
+The following example creates environment variables for the <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType>, <xref:System.EnvironmentVariableTarget.User?displayProperty=nameWithType>, and <xref:System.EnvironmentVariableTarget.Machine> targets, checks whether the operating system registry contains the user and machine environment variables, then deletes the environment variables. Because .NET on Unix-like systems does not support per-user and per-machine environment variables, only <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)> and <xref:System.Environment.SetEnvironmentVariable(System.String,System.String,System.EnvironmentVariableTarget)> with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> successfully store an environment variable to the process environment block.
 
 :::code language="csharp" source="~/snippets/csharp/System/Environment/GetEnvironmentVariable/gsev.cs":::
 :::code language="fsharp" source="~/snippets/fsharp/System/Environment/GetEnvironmentVariable/gsev.fs":::
