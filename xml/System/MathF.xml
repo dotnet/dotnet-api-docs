@@ -1690,32 +1690,34 @@ The value of this field is 3.14159274.
 
 The following table indicates the return value when various values or ranges of values are specified for the `x` and `y` parameters. For more information, see <xref:System.Single.PositiveInfinity?displayProperty=nameWithType>, <xref:System.Single.NegativeInfinity?displayProperty=nameWithType>, and <xref:System.Single.NaN?displayProperty=nameWithType>.
 
-| x                              | y                                                         | Return value                   |
-|--------------------------------|-----------------------------------------------------------|--------------------------------|
-| `NaN`                          | Any value except 0                                        | `NaN`                          |
-| `NaN`                          | 0                                                         | 1 (`NaN` on .NET Framework)    |
-| Any value except `NaN`         | 0                                                         | 1                              |
-| 1                              | Any value except `NaN`                                    | 1                              |
-| 1                              | `NaN`                                                     | 1 (`NaN` on .NET Framework)    |
-| Any value except 1             | `NaN`                                                     | `NaN`                          |
-| `NegativeInfinity`             | < 0 and finite and odd integer                            | -0                             |
-| `NegativeInfinity`             | > 0 and finite and odd integer                            | `NegativeInfinity`             |
-| `NegativeInfinity`             | < 0 and finite and not an odd integer                     | +0                             |
-| `NegativeInfinity`             | > 0 and finite and not an odd integer                     | `PositiveInfinity`             |
-| -1                             | `NegativeInfinity` or `PositiveInfinity`                  | 1                              |
-| -1 < x < 1                     | `NegativeInfinity`                                        | `PositiveInfinity`             |
-| -1 < x < 1                     | `PositiveInfinity`                                        | +0                             |
-| < -1 or > 1                    | `NegativeInfinity`                                        | +0                             |
-| < -1 or > 1                    | `PositiveInfinity`                                        | `PositiveInfinity`             |
-| 0                              | < 0 and an odd integer                                    | `PositiveInfinity`             |
-| 0                              | `NegativeInfinity`                                        | `PositiveInfinity`             |
-| 0                              | `PositiveInfinity`                                        | +0                             |
-| 0                              | > 0 and an odd integer                                    | ±0                             |
-| 0                              | < 0 and finite and not an odd integer                     | `PositiveInfinity`             |
-| 0                              | > 0 and finite and not an odd integer                     | +0                             |
-| `PositiveInfinity`             | < 0                                                       | +0                             |
-| `PositiveInfinity`             | > 0                                                       | `PositiveInfinity`             |
-| < 0 but not `NegativeInfinity` | Finite non-integer                                        | `NaN`                          |
+| x                              | y                                        | Return value                             |
+| ------------------------------ | ---------------------------------------- | ---------------------------------------- |
+| Any value except `NaN`         | ±0                                       | 1                                        |
+| `NaN`                          | ±0                                       | 1 (`NaN` on .NET Framework)\*            |
+| `NaN`                          | Any value except 0                       | `NaN`\*                                  |
+| ±0                             | < 0 and an odd integer                   | `NegativeInfinity` or `PositiveInfinity` |
+| ±0                             | `NegativeInfinity`                       | `PositiveInfinity`                       |
+| ±0                             | `PositiveInfinity`                       | +0                                       |
+| ±0                             | > 0 and an odd integer                   | ±0                                       |
+| -1                             | `NegativeInfinity` or `PositiveInfinity` | 1                                        |
+| +1                             | Any value except `NaN`                   | 1                                        |
+| +1                             | `NaN`                                    | 1 (`NaN` on .NET Framework)\*            |
+| Any value except 1             | `NaN`                                    | `NaN`\*                                  |
+| -1 < x < 1                     | `PositiveInfinity`                       | +0                                       |
+| < -1 or > 1                    | `PositiveInfinity`                       | `PositiveInfinity`                       |
+| -1 < x < 1                     | `NegativeInfinity`                       | `PositiveInfinity`                       |
+| < -1 or > 1                    | `NegativeInfinity`                       | +0                                       |
+| `PositiveInfinity`             | < 0                                      | +0                                       |
+| `PositiveInfinity`             | > 0                                      | `PositiveInfinity`                       |
+| `NegativeInfinity`             | < 0 and finite and odd integer           | -0                                       |
+| `NegativeInfinity`             | > 0 and finite and odd integer           | `NegativeInfinity`                       |
+| `NegativeInfinity`             | < 0 and finite and not an odd integer    | +0                                       |
+| `NegativeInfinity`             | > 0 and finite and not an odd integer    | `PositiveInfinity`                       |
+| ±0                             | < 0 and finite and not an odd integer    | `PositiveInfinity`                       |
+| ±0                             | > 0 and finite and not an odd integer    | +0                                       |
+| < 0 but not `NegativeInfinity` | Finite non-integer                       | `NaN`                                    |
+
+\* These rows don't appear in the full set of rules for `pow` as defined by the [IEEE Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/). They're included here because .NET disables IEEE 754 floating-point exceptions and thus doesn't differentiate between `qNaN` (quiet NaN) and `sNaN` (signalling NaN). The [IEEE 754](https://standards.ieee.org/ieee/754/6210/) specification allows this exception disablement.
 
 This method calls into the underlying C runtime, and the exact result or valid input range may differ between different operating systems or architectures.
 
