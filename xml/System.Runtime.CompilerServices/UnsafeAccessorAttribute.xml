@@ -126,22 +126,22 @@ By default, the attributed method's name dictates the name of the method/field. 
           private T _field;
           private void M(T t) { }
           private void GM&lt;U&gt;(U u) { }
-          private void GMWithConstraints&lt;U&gt;(T t, U u) where T: U, IEquatable&lt;T&gt; { }
+          private void GMWithConstraints&lt;U, V&gt;(U u, V v) where U : V, IEquatable&lt;U&gt; { }
       }
 
       class Accessors&lt;V&gt;
       {
           [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_field")]
-          extern static ref V GetSetPrivateField(Class&lt;V&gt; c);
+          public extern static ref V GetSetPrivateField(Class&lt;V&gt; c);
 
           [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "M")]
-          extern static void CallM(Class&lt;V&gt; c, V v);
+          public extern static void CallM(Class&lt;V&gt; c, V v);
 
           [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "GM")]
-          extern static void CallGM&lt;W&gt;(Class&lt;V&gt; c, W w);
+          public extern static void CallGM&lt;X&gt;(Class&lt;V&gt; c, X x);
 
           [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "GMWithConstraints")]
-          extern static void CallGMWithConstraints&lt;W&gt;(Class&lt;V&gt; c, V v, W w) where V: W, IEquatable&lt;V&gt;;
+          public extern static void CallGMWithConstraints&lt;X, Y&gt;(Class&lt;V&gt; c, X x, Y y) where X : Y, IEquatable&lt;X&gt;;
       }
 
       public void AccessGenericType(Class&lt;int&gt; c)
@@ -152,7 +152,7 @@ By default, the attributed method's name dictates the name of the method/field. 
 
           Accessors&lt;int&gt;.CallGM&lt;string&gt;(c, string.Empty);
 
-          Accessors&lt;string&gt;.CallGMWithConstraints&lt;object&gt;(c, string.Empty, new object());
+          Accessors&lt;int&gt;.CallGMWithConstraints&lt;string, object&gt;(c, string.Empty, new object());
       }
       </code>
     </example>
