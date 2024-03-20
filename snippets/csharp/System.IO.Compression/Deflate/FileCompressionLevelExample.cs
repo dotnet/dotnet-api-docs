@@ -9,7 +9,7 @@ public static class FileCompressionLevelExample
     private const string OriginalFileName = "original.txt";
     private const string CompressedFileName = "compressed.dfl";
 
-    public static void Main()
+    public static void Run()
     {
         CreateFileToCompress();
         CompressFile();
@@ -18,8 +18,8 @@ public static class FileCompressionLevelExample
 
         /*
          Output:
-            The original file 'original.txt' weighs 445 bytes.
-            The compressed file 'compressed.dfl' weighs 259 bytes.
+            The original file 'original.txt' is 445 bytes.
+            The compressed file 'compressed.dfl' is 259 bytes.
          */
     }
 
@@ -37,9 +37,9 @@ public static class FileCompressionLevelExample
     {
         long originalSize = new FileInfo(OriginalFileName).Length;
         long compressedSize = new FileInfo(CompressedFileName).Length;
-        
-        Console.WriteLine($"The original file '{OriginalFileName}' weighs {originalSize} bytes.");
-        Console.WriteLine($"The compressed file '{CompressedFileName}' weighs {compressedSize} bytes.");
+
+        Console.WriteLine($"The original file '{OriginalFileName}' is {originalSize} bytes.");
+        Console.WriteLine($"The compressed file '{CompressedFileName}' is {compressedSize} bytes.");
     }
 
     private static void DeleteFiles()
