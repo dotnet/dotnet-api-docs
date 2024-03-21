@@ -6126,42 +6126,46 @@ The following example demonstrates how to use the <xref:System.Math.Min%2A> meth
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- The following table indicates the return value when various values or ranges of values are specified for the `x` and `y` parameters. For more information, see <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>, <xref:System.Double.NegativeInfinity?displayProperty=nameWithType>, and <xref:System.Double.NaN?displayProperty=nameWithType>.
+The following table indicates the return value when various values or ranges of values are specified for the `x` and `y` parameters. For more information, see <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>, <xref:System.Double.NegativeInfinity?displayProperty=nameWithType>, and <xref:System.Double.NaN?displayProperty=nameWithType>.
 
-| x                              | y                                                         | Return value                   |
-|--------------------------------|-----------------------------------------------------------|--------------------------------|
-| `NaN`                          | Any value except 0                                        | `NaN`                          |
-| `NaN`                          | 0                                                         | 1 (`NaN` on .NET Framework)    |
-| Any value except `NaN`         | 0                                                         | 1                              |
-| 1                              | Any value except `NaN`                                    | 1                              |
-| 1                              | `NaN`                                                     | 1 (`NaN` on .NET Framework)    |
-| Any value except 1             | `NaN`                                                     | `NaN`                          |
-| `NegativeInfinity`             | < 0                                                       | 0                              |
-| `NegativeInfinity`             | Positive odd integer                                      | `NegativeInfinity`             |
-| `NegativeInfinity`             | Positive but not an odd integer                           | `PositiveInfinity`             |
-| < 0 but not `NegativeInfinity` | Not an integer, `NegativeInfinity`, or `PositiveInfinity` | `NaN`                          |
-| -1                             | = `NegativeInfinity` or `PositiveInfinity`                | `NaN`                          |
-| -1 < x < 1                     | `NegativeInfinity`                                        | `PositiveInfinity`             |
-| -1 < x < 1                     | `PositiveInfinity`                                        | 0                              |
-| < -1 or > 1                    | `NegativeInfinity`                                        | 0                              |
-| < -1 or > 1                    | `PositiveInfinity`                                        | `PositiveInfinity`             |
-| 0                              | < 0                                                       | `PositiveInfinity`             |
-| 0                              | > 0                                                       | 0                              |
-| `PositiveInfinity`             | < 0                                                       | 0                              |
-| `PositiveInfinity`             | > 0                                                       | `PositiveInfinity`             |
+| x                              | y                                        | Return value                             |
+| ------------------------------ | ---------------------------------------- | ---------------------------------------- |
+| Any value except `NaN`         | ±0                                       | 1                                        |
+| `NaN`                          | ±0                                       | 1 (`NaN` on .NET Framework)\*            |
+| `NaN`                          | Any value except 0                       | `NaN`\*                                  |
+| ±0                             | < 0 and an odd integer                   | `NegativeInfinity` or `PositiveInfinity` |
+| ±0                             | `NegativeInfinity`                       | `PositiveInfinity`                       |
+| ±0                             | `PositiveInfinity`                       | +0                                       |
+| ±0                             | > 0 and an odd integer                   | ±0                                       |
+| -1                             | `NegativeInfinity` or `PositiveInfinity` | 1                                        |
+| +1                             | Any value except `NaN`                   | 1                                        |
+| +1                             | `NaN`                                    | 1 (`NaN` on .NET Framework)\*            |
+| Any value except 1             | `NaN`                                    | `NaN`\*                                  |
+| -1 < x < 1                     | `PositiveInfinity`                       | +0                                       |
+| < -1 or > 1                    | `PositiveInfinity`                       | `PositiveInfinity`                       |
+| -1 < x < 1                     | `NegativeInfinity`                       | `PositiveInfinity`                       |
+| < -1 or > 1                    | `NegativeInfinity`                       | +0                                       |
+| `PositiveInfinity`             | < 0                                      | +0                                       |
+| `PositiveInfinity`             | > 0                                      | `PositiveInfinity`                       |
+| `NegativeInfinity`             | < 0 and finite and odd integer           | -0                                       |
+| `NegativeInfinity`             | > 0 and finite and odd integer           | `NegativeInfinity`                       |
+| `NegativeInfinity`             | < 0 and finite and not an odd integer    | +0                                       |
+| `NegativeInfinity`             | > 0 and finite and not an odd integer    | `PositiveInfinity`                       |
+| ±0                             | < 0 and finite and not an odd integer    | `PositiveInfinity`                       |
+| ±0                             | > 0 and finite and not an odd integer    | +0                                       |
+| < 0 but not `NegativeInfinity` | Finite non-integer                       | `NaN`                                    |
 
- This method calls into the underlying C runtime, and the exact result or valid input range may differ between different operating systems or architectures.
+\* These rows don't appear in the full set of rules for `pow` as defined by the [IEEE Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/). They're included here because .NET disables IEEE 754 floating-point exceptions and thus doesn't differentiate between `qNaN` (quiet NaN) and `sNaN` (signalling NaN). The [IEEE 754](https://standards.ieee.org/ieee/754/6210/) specification allows this exception disablement.
 
-
+This method calls into the underlying C runtime, and the exact result or valid input range may differ between different operating systems or architectures.
 
 ## Examples
 
- The following example uses the <xref:System.Math.Pow%2A> method to calculate the value that results from raising 2 to a power ranging from 0 to 32.
+The following example uses the <xref:System.Math.Pow%2A> method to calculate the value that results from raising 2 to a power ranging from 0 to 32.
 
- :::code language="csharp" source="~/snippets/csharp/System/Math/Pow/pow1.cs" interactive="try-dotnet-method" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/Math/Pow/pow1.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.math.pow/vb/pow1.vb" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System/Math/Pow/pow1.cs" interactive="try-dotnet-method" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Math/Pow/pow1.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.math.pow/vb/pow1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -6293,7 +6297,7 @@ In this section:
 
 You can use the following table to select an appropriate rounding method. In addition to the `Math.Round` methods, it also includes <xref:System.Math.Ceiling%2A?displayProperty=nameWithType> and <xref:System.Math.Floor%2A?displayProperty=nameWithType>.
 
-|To|Call|
+| To     | Call     |
 |--------|----------|
 |Round a number to an integer by using the rounding-to-nearest convention.|<xref:System.Math.Round%28System.Decimal%29><br />-or-<br /><xref:System.Math.Round%28System.Double%29>|
 |Round a number to an integer by using a specified rounding convention.|<xref:System.Math.Round%28System.Decimal%2CSystem.MidpointRounding%29><br />-or-<br /><xref:System.Math.Round%28System.Double%2CSystem.MidpointRounding%29>|
@@ -6333,16 +6337,16 @@ The following example illustrates the bias that can result from consistently rou
 
 By default, the <xref:System.Math.Round%2A> method uses the round to nearest even convention. The following table lists the overloads of the <xref:System.Math.Round%2A> method and the rounding convention that each uses.
 
-|Overload|Rounding convention|
-|--------------|-------------------------|
-|<xref:System.Math.Round%28System.Decimal%29>|<xref:System.MidpointRounding.ToEven>|
-|<xref:System.Math.Round%28System.Double%29>|<xref:System.MidpointRounding.ToEven>|
-|<xref:System.Math.Round%28System.Decimal%2CSystem.Int32%29>|<xref:System.MidpointRounding.ToEven>|
-|<xref:System.Math.Round%28System.Double%2CSystem.Int32%29>|<xref:System.MidpointRounding.ToEven>|
-|<xref:System.Math.Round%28System.Decimal%2CSystem.MidpointRounding%29>|Determined by `mode` parameter.|
-|<xref:System.Math.Round%28System.Double%2CSystem.MidpointRounding%29>|Determined by `mode` parameter|
-|<xref:System.Math.Round%28System.Decimal%2CSystem.Int32%2CSystem.MidpointRounding%29>|Determined by `mode` parameter|
-|<xref:System.Math.Round%28System.Double%2CSystem.Int32%2CSystem.MidpointRounding%29>|Determined by `mode` parameter|
+| Overload                                                                              | Rounding convention                   |
+| ------------------------------------------------------------------------------------- | ------------------------------------- |
+| <xref:System.Math.Round%28System.Decimal%29>                                          | <xref:System.MidpointRounding.ToEven> |
+| <xref:System.Math.Round%28System.Double%29>                                           | <xref:System.MidpointRounding.ToEven> |
+| <xref:System.Math.Round%28System.Decimal%2CSystem.Int32%29>                           | <xref:System.MidpointRounding.ToEven> |
+| <xref:System.Math.Round%28System.Double%2CSystem.Int32%29>                            | <xref:System.MidpointRounding.ToEven> |
+| <xref:System.Math.Round%28System.Decimal%2CSystem.MidpointRounding%29>                | Determined by `mode` parameter.       |
+| <xref:System.Math.Round%28System.Double%2CSystem.MidpointRounding%29>                 | Determined by `mode` parameter        |
+| <xref:System.Math.Round%28System.Decimal%2CSystem.Int32%2CSystem.MidpointRounding%29> | Determined by `mode` parameter        |
+| <xref:System.Math.Round%28System.Double%2CSystem.Int32%2CSystem.MidpointRounding%29>  | Determined by `mode` parameter        |
 
 <a name="precision"></a>
 ### Rounding and precision
