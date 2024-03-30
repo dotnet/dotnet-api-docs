@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Class1
+public class Class2
 {
     public static void Main()
     {
@@ -9,7 +9,7 @@ public class Class1
         var rand = new Random();
 
         // Generate and display 5 random byte (integer) values.
-        var bytes = new byte[5];
+        byte[] bytes = new byte[5];
         rand.NextBytes(bytes);
         Console.WriteLine("Five random byte values:");
         foreach (byte byteValue in bytes)
