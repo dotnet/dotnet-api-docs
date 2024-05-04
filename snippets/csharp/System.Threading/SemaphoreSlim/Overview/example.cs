@@ -73,7 +73,7 @@ public class Example
 //       Task 4 releases the semaphore; previous count: 0.
 //       Task 2 enters the semaphore.
 //       Task 1 releases the semaphore; previous count: 0.
-//       Task 3 releases the semaphore; previous count: 0.
+//       Task 3 releases the semaphore; previous count: 1.
 //       Task 5 enters the semaphore.
 //       Task 2 releases the semaphore; previous count: 1.
 //       Task 5 releases the semaphore; previous count: 2.
