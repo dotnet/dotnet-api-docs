@@ -13,15 +13,36 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
-  <Attributes>
-    <Attribute>
-      <AttributeName Language="C#">[System.Runtime.Versioning.RequiresPreviewFeatures]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.Versioning.RequiresPreviewFeatures&gt;]</AttributeName>
-    </Attribute>
-  </Attributes>
+  <Attributes />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Provides a mechanism for achieving mutual exclusion in regions of code between different threads.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The <xref:System.Threading.Lock> class can be used to define regions of code that require mutually exclusive access between threads of a process, commonly called critical sections, to prevent concurrent accesses to a resource. A `Lock` may be entered and exited, where the region of code between the enter and exit would be a critical section associated with the lock. A thread that enters a lock is said to hold or own the lock until it exits the lock. At most one thread may hold a lock at any given time. A thread may hold multiple locks. A thread may enter a lock multiple times before exiting it, such as recursively. A thread that cannot enter a lock immediately may wait until the lock can be entered or until a specified timeout expires.
+
+When using the <xref:System.Threading.Lock.Enter%2A> or <xref:System.Threading.Lock.TryEnter%2A> methods to enter a lock:
+- Ensure that the thread exits the lock with <xref:System.Threading.Lock.Exit%2A> even in case of exceptions, such as in C# by using a `try/finally` block.
+- When the lock is being entered and exited in a C# `async` method, ensure that there is no `await` between the enter and exit. Locks are held by threads and the code following an `await` may run on a different thread.
+
+It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a safe dispose pattern such as with the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases and may also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
+
+:::code language="csharp" source="~/snippets/csharp/System.Threading/Lock/Overview/UsagePatterns.cs" id="Snippet1":::
+
+When using the C# `lock` keyword or similar to enter and exit a lock, the type of the expression must be precisely `System.Threading.Lock`. If the type of the expression is anything else, such as `Object` or a generic type like `T`, a different implementation that is not interchangeable may be used instead (such as <xref:System.Threading.Monitor>). For more information, see the relevant [the compiler speclet](https://github.com/dotnet/csharplang/blob/main/proposals/lock-object.md).
+
+<xref:System.Threading.Thread.Interrupt%2A> can interrupt threads that are waiting to enter a lock. On Windows STA threads, waits for locks allow message pumping that may run other code on the same thread during a wait. Some features of the waits may be overridden by a custom <xref:System.Threading.SynchronizationContext>.
+
+> [!NOTE]
+> A thread that enters a lock, including multiple times such as recursively, must exit the lock the same number of times to fully exit the lock and allow other threads to enter the lock. If a thread exits while holding a `Lock`, the behavior of the `Lock` becomes undefined.
+
+> [!CAUTION]
+> If on a code path a thread may enter multiple locks before exiting them, ensure that all code paths that may enter any two of those locks on the same thread enter them in the same order. Otherwise, it could lead to deadlocks. For example, consider that on one code path thread `T1` enters lock `L1` then lock `L2` before exiting both, and on another code path thread `T2` enters both locks in the inverse order. In that scenario, it would be possible for the following order of events to occur: `T1` enters `L1`, `T2` enters `L2`, `T1` tries to enter `L2` and waits, `T2` tries to enter `L1` and waits - there's a deadlock between `T1` and `T2` that cannot be resolved, and any other threads that try to enter either lock in the future will also hang.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -37,8 +58,7 @@
       </AssemblyInfo>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.Lock" /> class.</summary>
       </Docs>
     </Member>
     <Member MemberName="Enter">
@@ -58,8 +78,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Enters the lock, waiting if necessary until the lock can be entered.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns, the current thread would be the only thread that holds the lock. If the lock cannot be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. The current thread should exit the lock as many times as it had entered the lock to fully exit the lock and allow other threads to enter the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="System.Threading.LockRecursionException">The lock has reached the limit of repeated enters by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
       </Docs>
     </Member>
     <Member MemberName="EnterScope">
@@ -79,9 +110,22 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Enters the lock, waiting if necessary until the lock can be entered.</summary>
+        <returns>A <see cref="T:System.Threading.Lock.Scope"/> that may be disposed to exit the lock.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the lock cannot be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. The current thread should dispose the returned <xref:System.Threading.Lock.Scope> to exit the lock as many times as it had entered the lock to fully exit the lock and allow other threads to enter the lock.
+
+This method is intended to be used along with a language construct that would automatically dispose the <xref:System.Threading.Lock.Scope>, such as with the C# `using` keyword.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="System.Threading.LockRecursionException">The lock has reached the limit of repeated enters by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
       </Docs>
     </Member>
     <Member MemberName="Exit">
@@ -101,8 +145,19 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Exits the lock.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the current thread holds the lock multiple times, such as recursively, the lock is exited only once. The current thread should ensure that each enter is matched with an exit.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="System.Threading.SynchronizationLockException">The current thread does not hold the lock.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsHeldByCurrentThread">
@@ -121,9 +176,8 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Indicates whether the lock is held by the current thread.</summary>
+        <value><see langword="true" /> if the current thread holds the lock; otherwise, <see langword="false" />.</value>
       </Docs>
     </Member>
     <Member MemberName="TryEnter">
@@ -143,9 +197,20 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Tries to enter the lock without waiting.</summary>
+        <returns><see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns `true`, the current thread would be the only thread that holds the lock. If the lock cannot be entered immediately, the method returns `false` without waiting for the lock. If the lock is already held by the current thread, the lock is entered again. The current thread should exit the lock as many times as it had entered the lock to fully exit the lock and allow other threads to enter the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="System.Threading.LockRecursionException">The lock has reached the limit of repeated enters by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryEnter">
@@ -167,10 +232,22 @@
         <Parameter Name="millisecondsTimeout" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="millisecondsTimeout">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="millisecondsTimeout">The number of milliseconds to wait until the lock can be entered. The value may be <see cref="F:System.Threading.Timeout.Infinite" /> (<code>-1</code>) to wait indefinitely, or <code>0</code> to not wait.</param>
+        <summary>Tries to enter the lock, waiting if necessary for the specified number of milliseconds until the lock can be entered.</summary>
+        <returns><see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns `true`, the current thread would be the only thread that holds the lock. If the lock cannot be entered immediately, the method waits until the lock can be entered or until the timeout specified by the `millisecondsTimeout` parameter expires. If the timeout expires before entering the lock, the method returns `false`. If the lock is already held by the current thread, the lock is entered again. The current thread should exit the lock as many times as it had entered the lock to fully exit the lock and allow other threads to enter the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="System.Threading.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is less than <code>-1</code>.</exception>
+        <exception cref="System.Threading.LockRecursionException">The lock has reached the limit of repeated enters by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryEnter">
@@ -192,10 +269,22 @@
         <Parameter Name="timeout" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="timeout">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="timeout">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait until the lock can be entered. A value that represents <see cref="F:System.Threading.Timeout.Infinite" /> (<code>-1</code>) milliseconds specifies to wait indefinitely, and a value that represents <code>0</code> milliseconds specifies to not wait.</param>
+        <summary>Tries to enter the lock, waiting if necessary until the lock can be entered or until the specified timeout expires.</summary>
+        <returns><see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns `true`, the current thread would be the only thread that holds the lock. If the lock cannot be entered immediately, the method waits until the lock can be entered or until the specified `timeout` expires. If the timeout expires before entering the lock, the method returns `false`. If the lock is already held by the current thread, the lock is entered again. The current thread should exit the lock as many times as it had entered the lock to fully exit the lock and allow other threads to enter the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="System.Threading.ArgumentOutOfRangeException"><paramref name="timeout"/>, after its conversion to an integer millisecond value, represents a value that is less than <code>-1</code> milliseconds or greater than <see cref="int.MaxValue"/> milliseconds.</exception>
+        <exception cref="System.Threading.LockRecursionException">The lock has reached the limit of repeated enters by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
       </Docs>
     </Member>
   </Members>
