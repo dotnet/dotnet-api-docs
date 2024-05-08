@@ -5,7 +5,7 @@ using System.Threading;
 
 public class Continent
 {
-   public string Name { get; set; }
+   public string? Name { get; set; }
    public int Population { get; set; }
    public Decimal Area { get; set; }
 }
@@ -13,7 +13,7 @@ public class Continent
 public class Example11
 {
    static List<Continent> continents = new List<Continent>();
-   static string msg;
+   static string? s_msg;
 
    public static void Main()
    {
@@ -25,7 +25,7 @@ public class Example11
          var th = new Thread(PopulateContinents);
          th.Start(name);
       }
-      Console.WriteLine(msg);
+      Console.WriteLine(s_msg);
       Console.WriteLine();
 
       // Display the list.
@@ -37,10 +37,10 @@ public class Example11
       }
    }
 
-   private static void PopulateContinents(Object obj)
+   private static void PopulateContinents(Object? obj)
    {
-      string name = obj.ToString();
-      msg += string.Format("Adding '{0}' to the list.\n", name);
+      string? name = obj?.ToString();
+      s_msg += string.Format("Adding '{0}' to the list.\n", name);
       var continent = new Continent();
       continent.Name = name;
       // Sleep to simulate retrieving remaining data.

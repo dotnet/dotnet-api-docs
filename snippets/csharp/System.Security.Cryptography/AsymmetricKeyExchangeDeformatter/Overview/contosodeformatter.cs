@@ -8,10 +8,10 @@ namespace Contoso
 {
     public class ContosoDeformatter : AsymmetricKeyExchangeDeformatter
     {
-        private RSA rsaKey;
+        private RSA _rsaKey;
 
         // Default constructor.
-        public ContosoDeformatter(){}
+        public ContosoDeformatter() { }
 
         // Constructor with the public key to use for encryption.
         //<Snippet2>
@@ -23,24 +23,25 @@ namespace Contoso
 
         // Set the public key for encyption operations.
         //<Snippet5>
-        public override void SetKey(AsymmetricAlgorithm key) {
+        public override void SetKey(AsymmetricAlgorithm key)
+        {
             if (key != null)
             {
-                rsaKey = (RSA)key;
+                _rsaKey = (RSA)key;
             }
             else
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
         }
         //</Snippet5>
 
         // Disallow access to the parameters of the formatter.
         //<Snippet3>
-        public override String Parameters 
+        public override string Parameters
         {
             get { return null; }
-            set { ; }
+            set {; }
         }
         //</Snippet3>
 
@@ -49,15 +50,14 @@ namespace Contoso
         // data. This method uses the RSA class only. To
         // support additional providers or provide custom decryption logic,
         // add logic to this member.
-        public override byte[] DecryptKeyExchange(byte[] rgbData) {
+        public override byte[] DecryptKeyExchange(byte[] rgbData)
+        {
             byte[] decryptedBytes = null;
 
-            if (rsaKey != null)
+            if (_rsaKey != null)
             {
-                if (rsaKey is RSA)
+                if (_rsaKey is RSA rsa)
                 {
-                    RSA rsa = (RSA)rsaKey;
-
                     decryptedBytes = rsa.Decrypt(rgbData, RSAEncryptionPadding.OaepSHA1);
                 }
                 // Add custom decryption logic here.

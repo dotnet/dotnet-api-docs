@@ -8,7 +8,7 @@ class Sample0
     {
         String str1 = "change";
         String str2 = "dollar";
-        String relation = null;
+        String relation;
 
         relation = symbol(String.Compare(str1, str2, false, new CultureInfo("en-US")));
         Console.WriteLine("For en-US: {0} {1} {2}", str1, relation, str2);

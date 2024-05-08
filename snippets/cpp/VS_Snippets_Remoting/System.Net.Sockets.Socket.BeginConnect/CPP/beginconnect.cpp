@@ -12,7 +12,6 @@ ref class ConnectTester
 {
 public:
 
-   //<Snippet1>
    static ManualResetEvent^ allDone = gcnew ManualResetEvent( false );
 
    // handles the completion of the prior asynchronous 
@@ -25,9 +24,6 @@ public:
       s->EndConnect( ar );
    }
 
-
-   //</Snippet1>
-   //<Snippet7>
    // Asynchronous connect using the host name, resolved via 
    // IPAddress
    static void BeginConnect1( String^ host, int port )
@@ -44,9 +40,6 @@ public:
       Console::WriteLine( "Connection established" );
    }
 
-
-   //</Snippet7>
-   //<Snippet2>
    // Asynchronous connect, using DNS.ResolveToAddresses
    static void BeginConnect2( String^ host, int port )
    {
@@ -62,9 +55,6 @@ public:
       Console::WriteLine( "Connection established" );
    }
 
-
-   //</Snippet2>
-   //<Snippet3>
    // Asynchronous connect using host name (resolved by the 
    // BeginConnect call.)
    static void BeginConnect3( String^ host, int port )
@@ -80,8 +70,6 @@ public:
       Console::WriteLine( "Connection established" );
    }
 
-
-   //</Snippet3>
    //<Snippet4>
    // Synchronous connect using IPAddress to resolve the 
    // host name.

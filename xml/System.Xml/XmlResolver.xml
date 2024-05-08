@@ -26,74 +26,40 @@
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-8.0;net-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute FrameworkAlternate="net-8.0;net-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>Resolves external XML resources named by a Uniform Resource Identifier (URI).</summary>
-    <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Xml.XmlResolver> type is used to resolve external XML resources, such as entities, document type definitions (DTDs), or schemas. It is also used to process include and import elements found in Extensible Stylesheet Language (XSL) style sheets or XML Schema definition language (XSD) schemas.  
-  
- <xref:System.Xml.XmlResolver> handles all aspects of negotiating the connection to the resources, including handling security credentials, opening the connection to the data source, and returning the resource in the form of a stream or other object type. The object that calls <xref:System.Xml.XmlResolver> has the task of interpreting the stream.  
-  
- The <xref:System.Xml> namespace includes two concrete implementations of the <xref:System.Xml.XmlResolver> class:  
-  
--   <xref:System.Xml.XmlUrlResolver> is the default resolver for all classes in the <xref:System.Xml> namespace. It supports the `file://` and `http://` protocols and requests from the <xref:System.Net.WebRequest?displayProperty=nameWithType> class. For examples of extending the class to improve performance, see the <xref:System.Xml.XmlUrlResolver> reference page.  
-  
--   <xref:System.Xml.XmlSecureResolver> helps secure another <xref:System.Xml.XmlResolver> object by wrapping the object and restricting the resources that it can access. For example, the <xref:System.Xml.XmlSecureResolver> can prohibit access to specific Internet sites or zones.  
-  
- You can create and specify your own resolver. If you don't specify a resolver, the reader uses a default <xref:System.Xml.XmlUrlResolver> with no user credentials.  
-  
- You specify the <xref:System.Xml.XmlResolver> to use by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A?displayProperty=nameWithType> property and passing the <xref:System.Xml.XmlReaderSettings> object to the <xref:System.Xml.XmlReader.Create%2A> method.  
-  
- If the resource is stored on a system that requires authentication, you use the <xref:System.Xml.XmlResolver.Credentials%2A?displayProperty=nameWithType> property to specify the necessary credentials.  
-  
-## Supplying authentication credentials  
- The file that contains the XML data to read may have a restricted access policy. If authentication is required to access a network resource, use the <xref:System.Xml.XmlResolver.Credentials%2A> property to specify the necessary credentials. If the <xref:System.Xml.XmlResolver.Credentials%2A> property is not set, credentials are set to `null`.  
-  
- For example, assume that credentials are needed when requesting data from the web for authentication purposes. Unless the web virtual directory allows anonymous access, you must set the <xref:System.Xml.XmlResolver.Credentials%2A> property to supply credentials. The following example creates an <xref:System.Xml.XmlReader> object that uses an <xref:System.Xml.XmlUrlResolver> with default credentials to access the `http://localhost/bookstore/inventory.xml` site.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.cctor/CPP/XmlReaderSettings.cctor.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlReader/Create/factory_rdr_cctor2.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.cctor/VB/factory_rdr_cctor2.vb" id="Snippet2":::  
-  
- You can supply different credentials for different URIs and add them to a cache. These credentials are used to check authentication for the different URIs regardless of the original source of the XML. The following example shows how to add credentials to a cache.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlResolver/Overview/Xslt_Load_v2.cs" id="Snippet11":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XslCompiledTransform.Load/VB/Xslt_Load_v2.vb" id="Snippet11":::  
-  
-## Security considerations  
- Consider the following items when working with the <xref:System.Xml.XmlResolver> class.  
-  
--   <xref:System.Xml.XmlResolver> objects can contain sensitive information such as user credentials. You should be careful when caching <xref:System.Xml.XmlResolver> objects and should not pass the <xref:System.Xml.XmlResolver> object to an untrusted component.  
-  
--   If you are designing a class property that uses the <xref:System.Xml.XmlResolver> class, the property should be defined as a write-only property. The property can be used to specify the <xref:System.Xml.XmlResolver> to use, but it cannot be used to return an <xref:System.Xml.XmlResolver> object.  
-  
--   If your application accepts <xref:System.Xml.XmlResolver> objects from untrusted code, you cannot assume that the URI passed into the <xref:System.Xml.XmlResolver.GetEntity%2A> method will be the same as that returned by the <xref:System.Xml.XmlResolver.ResolveUri%2A> method. Classes derived from the <xref:System.Xml.XmlResolver> class can override the <xref:System.Xml.XmlResolver.GetEntity%2A> method and return data that is different than what was contained in the original URI.  
-  
--   Your application can mitigate memory denial of service threats to the <xref:System.Xml.XmlResolver.GetEntity%2A> method by implementing an <xref:System.Runtime.InteropServices.ComTypes.IStream> that limits the number of bytes read. This helps guard against situations where malicious code attempts to pass an infinite stream of bytes to the <xref:System.Xml.XmlResolver.GetEntity%2A> method.  
-  
-   
-  
-## Examples  
- The following example creates an <xref:System.Xml.XmlUrlResolver> with default credentials. A <xref:System.Xml.XmlReader> is used to read and display the resulting data stream.  
-  
- :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlResolver/Overview/XmlResolver_ex.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlResolver_ex/VB/XmlResolver_ex.vb" id="Snippet1":::  
-  
- ]]></format>
-    </remarks>
+    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmlresolver">Supplemental API remarks for XmlResolver</see>.</remarks>
+    <example>
+      <format type="text/markdown"><![CDATA[
+The following example creates an <xref:System.Xml.XmlUrlResolver> with default credentials. A <xref:System.Xml.XmlReader> is used to read and display the resulting data stream.
+
+:::code language="csharp" source="~/snippets/csharp/System.Xml/XmlResolver/Overview/XmlResolver_ex.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlResolver_ex/VB/XmlResolver_ex.vb" id="Snippet1":::
+      ]]></format>
+    </example>
     <related type="Article" href="/dotnet/standard/data/xml/">XML Documents and Data</related>
   </Docs>
   <Members>
@@ -125,6 +91,7 @@
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -136,22 +103,22 @@
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.XmlResolver" /> class.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor is called by derived class constructors to initialize state in this type.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor is called by derived class constructors to initialize state in this type.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="Credentials">
-      <MemberSignature Language="C#" Value="public virtual System.Net.ICredentials Credentials { set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Net.ICredentials Credentials { set; }" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.ICredentials Credentials" />
       <MemberSignature Language="DocId" Value="P:System.Xml.XmlResolver.Credentials" />
-      <MemberSignature Language="VB.NET" Value="Public Overridable Property Credentials As ICredentials" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Property Credentials As ICredentials" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="F#" Value="member this.Credentials : System.Net.ICredentials" Usage="System.Xml.XmlResolver.Credentials" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Net::ICredentials ^ Credentials {  void set(System::Net::ICredentials ^ value); };" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Net::ICredentials ^ Credentials {  void set(System::Net::ICredentials ^ value); };" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="C#" Value="public abstract System.Net.ICredentials Credentials { set; }" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
       <MemberSignature Language="VB.NET" Value="Public MustOverride Property Credentials As ICredentials" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract property System::Net::ICredentials ^ Credentials {  void set(System::Net::ICredentials ^ value); };" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0" />
@@ -177,6 +144,7 @@
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.ICredentials</ReturnType>
@@ -185,49 +153,74 @@
         <summary>When overridden in a derived class, sets the credentials used to authenticate web requests.</summary>
         <value>The credentials to be used to authenticate web requests. If this property is not set, the value defaults to <see langword="null" />; that is, the <see langword="XmlResolver" /> has no user credentials.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the virtual directory does not require authentication, this property doesn't have to be set. Otherwise, the credentials of the user must be supplied.  
-  
- The following C# code sets credentials on the <xref:System.Xml.XmlResolver> object.  
-  
-```csharp  
-NetworkCredential nc = new NetworkCredential(UserName, SecurelyStoredPassword, Domain);  
-XmlUrlResolver resolver = new XmlUrlResolver();  
-resolver.Credentials = nc;  
-```  
-  
- You can associate different credentials with different URIs and add them to a cache. You can then use the credentials to check authentication for different URIs regardless of the original source of the XML.  
-  
-```csharp  
-NetworkCredential myCred = new NetworkCredential(UserName, SecurelyStoredPassword, Domain);   
-CredentialCache myCache = new CredentialCache();   
-myCache.Add(new Uri("http://www.contoso.com/"), "Basic", myCred);   
-myCache.Add(new Uri("http://app.contoso.com/"), "Basic", myCred);  
-XmlUrlResolver resolver = new XmlUrlResolver();  
-resolver.Credentials = myCache;  
-```  
-  
-   
-  
-## Examples  
- See <xref:System.Xml.XmlUrlResolver.Credentials%2A?displayProperty=nameWithType> for an example that uses this property.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the virtual directory does not require authentication, this property doesn't have to be set. Otherwise, the credentials of the user must be supplied.
+
+ The following C# code sets credentials on the <xref:System.Xml.XmlResolver> object.
+
+```csharp
+NetworkCredential nc = new NetworkCredential(UserName, SecurelyStoredPassword, Domain);
+XmlUrlResolver resolver = new XmlUrlResolver();
+resolver.Credentials = nc;
+```
+
+ You can associate different credentials with different URIs and add them to a cache. You can then use the credentials to check authentication for different URIs regardless of the original source of the XML.
+
+```csharp
+NetworkCredential myCred = new NetworkCredential(UserName, SecurelyStoredPassword, Domain);
+CredentialCache myCache = new CredentialCache();
+myCache.Add(new Uri("http://www.contoso.com/"), "Basic", myCred);
+myCache.Add(new Uri("http://app.contoso.com/"), "Basic", myCred);
+XmlUrlResolver resolver = new XmlUrlResolver();
+resolver.Credentials = myCache;
+```
+
+
+
+## Examples
+ See <xref:System.Xml.XmlUrlResolver.Credentials%2A?displayProperty=nameWithType> for an example that uses this property.
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Net.CredentialCache" />
         <altmember cref="T:System.Net.NetworkCredential" />
       </Docs>
     </Member>
+    <Member MemberName="FileSystemResolver">
+      <MemberSignature Language="C#" Value="public static System.Xml.XmlResolver FileSystemResolver { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property class System.Xml.XmlResolver FileSystemResolver" />
+      <MemberSignature Language="DocId" Value="P:System.Xml.XmlResolver.FileSystemResolver" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property FileSystemResolver As XmlResolver" />
+      <MemberSignature Language="F#" Value="static member FileSystemResolver : System.Xml.XmlResolver" Usage="System.Xml.XmlResolver.FileSystemResolver" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Xml::XmlResolver ^ FileSystemResolver { System::Xml::XmlResolver ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Xml.XmlResolver</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="GetEntity">
-      <MemberSignature Language="C#" Value="public abstract object? GetEntity (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+      <MemberSignature Language="C#" Value="public abstract object? GetEntity (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object GetEntity(class System.Uri absoluteUri, string role, class System.Type ofObjectToReturn) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlResolver.GetEntity(System.Uri,System.String,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public MustOverride Function GetEntity (absoluteUri As Uri, role As String, ofObjectToReturn As Type) As Object" />
       <MemberSignature Language="F#" Value="abstract member GetEntity : Uri * string * Type -&gt; obj" Usage="xmlResolver.GetEntity (absoluteUri, role, ofObjectToReturn)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; abstract System::Object ^ GetEntity(Uri ^ absoluteUri, System::String ^ role, Type ^ ofObjectToReturn);" />
-      <MemberSignature Language="C#" Value="public abstract object GetEntity (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public abstract object GetEntity (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -250,12 +243,26 @@ resolver.Credentials = myCache;
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0;net-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="absoluteUri" Type="System.Uri" />
+        <Parameter Name="absoluteUri" Type="System.Uri">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="role" Type="System.String" />
         <Parameter Name="ofObjectToReturn" Type="System.Type" />
       </Parameters>
@@ -266,21 +273,21 @@ resolver.Credentials = myCache;
         <summary>When overridden in a derived class, maps a URI to an object that contains the actual resource.</summary>
         <returns>A stream object or <see langword="null" /> if a type other than stream is specified.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method is used when the caller wants to map a given URI into the object containing the actual resource that the URI represents. The type of object returned is negotiable; however, the implementation must always support <xref:System.IO.Stream?displayProperty=nameWithType>.  
-  
- For the asynchronous version of this method, see <xref:System.Xml.XmlResolver.GetEntityAsync%2A>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method is used when the caller wants to map a given URI into the object containing the actual resource that the URI represents. The type of object returned is negotiable; however, the implementation must always support <xref:System.IO.Stream?displayProperty=nameWithType>.
+
+ For the asynchronous version of this method, see <xref:System.Xml.XmlResolver.GetEntityAsync%2A>.
+
 > [!IMPORTANT]
->  Your application can mitigate memory denial of service threats to the <xref:System.Xml.XmlResolver.GetEntity%2A> method by implementing an <xref:System.Runtime.InteropServices.ComTypes.IStream> that limits the number of bytes read. This helps guard against situations where malicious code attempts to pass an infinite stream of bytes to the <xref:System.Xml.XmlResolver.GetEntity%2A> method.  
-  
-   
-  
-## Examples  
- See <xref:System.Xml.XmlUrlResolver.GetEntity%2A?displayProperty=nameWithType> for an example using this method.  
-  
+>  Your application can mitigate memory denial of service threats to the <xref:System.Xml.XmlResolver.GetEntity%2A> method by implementing an <xref:System.Runtime.InteropServices.ComTypes.IStream> that limits the number of bytes read. This helps guard against situations where malicious code attempts to pass an infinite stream of bytes to the <xref:System.Xml.XmlResolver.GetEntity%2A> method.
+
+
+
+## Examples
+ See <xref:System.Xml.XmlUrlResolver.GetEntity%2A?displayProperty=nameWithType> for an example using this method.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Xml.XmlException">
@@ -292,13 +299,13 @@ resolver.Credentials = myCache;
       </Docs>
     </Member>
     <Member MemberName="GetEntityAsync">
-      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string? role, Type? ofObjectToReturn);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;object&gt; GetEntityAsync(class System.Uri absoluteUri, string role, class System.Type ofObjectToReturn) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlResolver.GetEntityAsync(System.Uri,System.String,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetEntityAsync (absoluteUri As Uri, role As String, ofObjectToReturn As Type) As Task(Of Object)" />
       <MemberSignature Language="F#" Value="abstract member GetEntityAsync : Uri * string * Type -&gt; System.Threading.Tasks.Task&lt;obj&gt;&#xA;override this.GetEntityAsync : Uri * string * Type -&gt; System.Threading.Tasks.Task&lt;obj&gt;" Usage="xmlResolver.GetEntityAsync (absoluteUri, role, ofObjectToReturn)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Threading::Tasks::Task&lt;System::Object ^&gt; ^ GetEntityAsync(Uri ^ absoluteUri, System::String ^ role, Type ^ ofObjectToReturn);" />
-      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;object&gt; GetEntityAsync (Uri absoluteUri, string role, Type ofObjectToReturn);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -319,14 +326,29 @@ resolver.Credentials = myCache;
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Object&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="absoluteUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="role" Type="System.String" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="ofObjectToReturn" Type="System.Type" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="absoluteUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="role" Type="System.String" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="ofObjectToReturn" Type="System.Type" Index="2" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="absoluteUri">The URI returned from <see cref="M:System.Xml.XmlResolver.ResolveUri(System.Uri,System.String)" />.</param>
@@ -335,11 +357,11 @@ resolver.Credentials = myCache;
         <summary>Asynchronously maps a URI to an object that contains the actual resource.</summary>
         <returns>A stream object or <see langword="null" /> if a type other than stream is specified.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This is the asynchronous version of <xref:System.Xml.XmlResolver.GetEntity%2A>, with the same functionality. To use this method, you must set the <xref:System.Xml.XmlReaderSettings.Async%2A> flag to `true`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This is the asynchronous version of <xref:System.Xml.XmlResolver.GetEntity%2A>, with the same functionality. To use this method, you must set the <xref:System.Xml.XmlReaderSettings.Async%2A> flag to `true`.
+
  This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.Xml.XmlResolver.GetEntity(System.Uri,System.String,System.Type)>.
 
 ]]></format>
@@ -349,13 +371,13 @@ resolver.Credentials = myCache;
       </Docs>
     </Member>
     <Member MemberName="ResolveUri">
-      <MemberSignature Language="C#" Value="public virtual Uri ResolveUri (Uri? baseUri, string? relativeUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+      <MemberSignature Language="C#" Value="public virtual Uri ResolveUri (Uri? baseUri, string? relativeUri);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Uri ResolveUri(class System.Uri baseUri, string relativeUri) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlResolver.ResolveUri(System.Uri,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function ResolveUri (baseUri As Uri, relativeUri As String) As Uri" />
       <MemberSignature Language="F#" Value="abstract member ResolveUri : Uri * string -&gt; Uri&#xA;override this.ResolveUri : Uri * string -&gt; Uri" Usage="xmlResolver.ResolveUri (baseUri, relativeUri)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual Uri ^ ResolveUri(Uri ^ baseUri, System::String ^ relativeUri);" />
-      <MemberSignature Language="C#" Value="public virtual Uri ResolveUri (Uri baseUri, string relativeUri);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public virtual Uri ResolveUri (Uri baseUri, string relativeUri);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -378,7 +400,14 @@ resolver.Credentials = myCache;
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-8.0;net-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Uri</ReturnType>
       </ReturnValue>
@@ -392,16 +421,16 @@ resolver.Credentials = myCache;
         <summary>When overridden in a derived class, resolves the absolute URI from the base and relative URIs.</summary>
         <returns>The absolute URI or <see langword="null" /> if the relative URI cannot be resolved.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The absolute URI may be used as the base URI for any subsequent requests for entities that are relative to this URI.  
-  
-   
-  
-## Examples  
- See <xref:System.Xml.XmlUrlResolver.GetEntity%2A?displayProperty=nameWithType> for an example that uses this method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The absolute URI may be used as the base URI for any subsequent requests for entities that are relative to this URI.
+
+
+
+## Examples
+ See <xref:System.Xml.XmlUrlResolver.GetEntity%2A?displayProperty=nameWithType> for an example that uses this method.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -409,13 +438,13 @@ resolver.Credentials = myCache;
       </Docs>
     </Member>
     <Member MemberName="SupportsType">
-      <MemberSignature Language="C#" Value="public virtual bool SupportsType (Uri absoluteUri, Type? type);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0" />
+      <MemberSignature Language="C#" Value="public virtual bool SupportsType (Uri absoluteUri, Type? type);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool SupportsType(class System.Uri absoluteUri, class System.Type type) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlResolver.SupportsType(System.Uri,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function SupportsType (absoluteUri As Uri, type As Type) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member SupportsType : Uri * Type -&gt; bool&#xA;override this.SupportsType : Uri * Type -&gt; bool" Usage="xmlResolver.SupportsType (absoluteUri, type)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool SupportsType(Uri ^ absoluteUri, Type ^ type);" />
-      <MemberSignature Language="C#" Value="public virtual bool SupportsType (Uri absoluteUri, Type type);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public virtual bool SupportsType (Uri absoluteUri, Type type);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -436,13 +465,21 @@ resolver.Credentials = myCache;
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="absoluteUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-        <Parameter Name="type" Type="System.Type" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+        <Parameter Name="absoluteUri" Type="System.Uri" Index="0" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="type" Type="System.Type" Index="1" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="absoluteUri">The URI.</param>
@@ -465,6 +502,7 @@ resolver.Credentials = myCache;
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>netstandard</AssemblyName>

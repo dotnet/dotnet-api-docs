@@ -53,7 +53,7 @@ public class Utility
 
    public static bool IsFloat(ValueType value) 
    {         
-      return (value is float | value is double | value is Decimal);
+      return (value is float || value is double || value is Decimal);
    }
 
    public static bool IsNumeric(ValueType value)

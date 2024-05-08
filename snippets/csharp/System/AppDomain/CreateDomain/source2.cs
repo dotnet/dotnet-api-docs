@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-class AppDomain3
+class CreateDomainSnippet2
 {
     public static void Main()
     {

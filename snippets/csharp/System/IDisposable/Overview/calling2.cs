@@ -16,7 +16,7 @@ public class WordCount2
 
         this.filename = filename;
         string txt = String.Empty;
-        StreamReader sr = null;
+        StreamReader? sr = null;
         try
         {
             sr = new StreamReader(filename);

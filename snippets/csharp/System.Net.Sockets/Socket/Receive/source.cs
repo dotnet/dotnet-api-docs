@@ -394,7 +394,7 @@ public class Sync_Send_Receive
         // Send or receive the test messages.
         if (isServer)
         {
-            Socket sender = null;
+            Socket? sender;
             s.Bind(endPoint);
             s.Listen(1);
             while (true)
