@@ -1,20 +1,21 @@
-id:
 name: GitOps.PullRequestIssueManagement
 description: GitOps.PullRequestIssueManagement primitive
-owner:
 resource: repository
-disabled: false
-where:
+
 configuration:
   resourceManagementConfiguration:
     eventResponderTasks:
-    - if:
+    - description: Label PRs from Dotnet Policy Service
+      triggerOnOwnActions: true
+      if:
       - payloadType: Pull_Request
-      - isActivitySender:
-          user: dotnet-policy-service
-          issueAuthor: False
+      - isAction:
+          action: Opened
+      - titleContains:
+          pattern: Merge main into live
+          isRegex: False
       then:
       - addLabel:
           label: ':octocat: auto-merge'
-      triggerOnOwnActions: true
-      description: Label PRs from Dotnet Policy Service
+
+
