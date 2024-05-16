@@ -13,7 +13,6 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
-  <Attributes />
   <Docs>
     <summary>Provides a mechanism for achieving mutual exclusion in regions of code between different threads.</summary>
     <remarks>
@@ -21,13 +20,13 @@
 
 ## Remarks
 
-The <xref:System.Threading.Lock> class can be used to define regions of code that require mutually exclusive access between threads of a process, commonly called critical sections, to prevent concurrent accesses to a resource. A `Lock` can be entered and exited, where the region of code between the enter and exit is a critical section associated with the lock. A thread that enters a lock is said to hold or own the lock until it exits the lock. At most one thread can hold a lock at any given time. A thread can hold multiple locks. A thread can enter a lock multiple times before exiting it, such as recursively. A thread that cannot enter a lock immediately can wait until the lock can be entered or until a specified timeout expires.
+The <xref:System.Threading.Lock> class can be used to define regions of code that require mutually exclusive access between threads of a process, commonly called critical sections, to prevent concurrent accesses to a resource. A `Lock` can be entered and exited, where the region of code between the enter and exit is a critical section associated with the lock. A thread that enters a lock is said to hold or own the lock until it exits the lock. At most one thread can hold a lock at any given time. A thread can hold multiple locks. A thread can enter a lock multiple times before exiting it, such as recursively. A thread that can't enter a lock immediately can wait until the lock can be entered or until a specified timeout expires.
 
 When using the <xref:System.Threading.Lock.Enter%2A> or <xref:System.Threading.Lock.TryEnter%2A> methods to enter a lock:
 - Ensure that the thread exits the lock with <xref:System.Threading.Lock.Exit%2A> even in case of exceptions, such as in C# by using a `try/finally` block.
 - When the lock is being entered and exited in a C# `async` method, ensure that there is no `await` between the enter and exit. Locks are held by threads and the code following an `await` might run on a different thread.
 
-It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a safe dispose pattern such as with the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
+It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a language construct that automatically disposes the returned <xref:System.Threading.Lock.Scope> such as the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
 
 :::code language="csharp" source="~/snippets/csharp/System.Threading/Lock/Overview/UsagePatterns.cs" id="Snippet1":::
 
@@ -84,7 +83,7 @@ When using the C# `lock` keyword or similar to enter and exit a lock, the type o
 
 ## Remarks
 
-When the method returns, the current thread is the only thread that holds the lock. If the lock cannot be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should exit the lock as many times as it has entered.
+When the method returns, the current thread is the only thread that holds the lock. If the lock can't be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should exit the lock as many times as it has entered the lock.
 
 For more information, see the Remarks for <xref:System.Threading.Lock>.
 
@@ -117,7 +116,7 @@ For more information, see the Remarks for <xref:System.Threading.Lock>.
 
 ## Remarks
 
-If the lock cannot be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should dispose the returned <xref:System.Threading.Lock.Scope> to exit the lock as many times as it has entered the lock.
+If the lock can't be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should dispose the returned <xref:System.Threading.Lock.Scope> to exit the lock as many times as it has entered the lock.
 
 This method is intended to be used with a language construct that automatically disposes the <xref:System.Threading.Lock.Scope>, such as the C# `using` keyword.
 
@@ -270,7 +269,7 @@ For more information, see the Remarks for <xref:System.Threading.Lock>.
         <Parameter Name="timeout" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
-        <param name="timeout">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait until the lock can be entered. Specify <see cref="F:System.Threading.Timeout.Infinite">Timeout.Infinite</see> (<code>-1</code>) milliseconds to wait indefinitely, or a value that represents <code>0</code> milliseconds to not wait.</param>
+        <param name="timeout">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait until the lock can be entered. Specify a value that represents <see cref="F:System.Threading.Timeout.Infinite">Timeout.Infinite</see> (<code>-1</code>) milliseconds to wait indefinitely, or a value that represents <code>0</code> milliseconds to not wait.</param>
         <summary>Tries to enter the lock, waiting if necessary until the lock can be entered or until the specified timeout expires.</summary>
         <returns><see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
         <remarks>
