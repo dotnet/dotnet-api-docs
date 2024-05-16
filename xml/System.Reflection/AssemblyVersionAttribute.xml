@@ -92,15 +92,17 @@
  The <xref:System.Reflection.AssemblyVersionAttribute> attribute allows to specify an asterisk (\*) in place of the build or revision number. A version number such as `[assembly:AssemblyVersion("1.2.*")]` specifies 1 as the major version, 2 as the minor version, and accepts the default build and revision numbers. A version number such as `[assembly:AssemblyVersion("1.2.15.*")]` specifies 1 as the major version, 2 as the minor version, 15 as the build number, and accepts the default revision number. The default build number increments daily. The default revision number is the number of seconds since midnight local time (without taking into account time zone adjustments for daylight saving time), divided by 2. If you specify an asterisk for the build number, you cannot specify a revision number.  
 
 > [!IMPORTANT] 
-> Use of <xref:System.Reflection.AssemblyVersionAttribute> attribute that specifies an asterisk makes the build outputs non-reproducible (see [Reproducible Builds](https://reproducible-builds.org/)).
-
-> [!IMPORTANT] 
+> Use of the <xref:System.Reflection.AssemblyVersionAttribute> attribute that specifies an asterisk:
+>
+> - Makes the build outputs non-reproducible (see [Reproducible builds](https://reproducible-builds.org/)).
+> - Might degrade build performance, as it prevents build from caching compiler outputs.
+> - Is incompatible with the [Edit & Continue](/visualstudio/debugger/edit-and-continue-visual-csharp) and [Hot Reload](/visualstudio/debugger/hot-reload) features.
 > Use of <xref:System.Reflection.AssemblyVersionAttribute> attribute that specifies an asterisk may degrade build performance as it prevents build from caching compiler outputs.
 
 > [!IMPORTANT] 
 > Use of <xref:System.Reflection.AssemblyVersionAttribute> attribute that specifies an asterisk is incompatible with [Edit & Continue](https://learn.microsoft.com/en-us/visualstudio/debugger/edit-and-continue-visual-csharp) and [Hot Reload](https://learn.microsoft.com/en-us/visualstudio/debugger/hot-reload) features.
 
- Some of these issues can be mitigated by limiting the use of time-based versions to release builds using conditional compilation like so:
+You can mitigate some of these issues by limiting the use of time-based versions to release builds using conditional compilation, like so:
 
 ```
 #if DEBUG
@@ -110,7 +112,7 @@
 #endif
 ```
 
- A better approach to versioning is to derive the assembly and/or file version from the HEAD commit SHA (for git repositories). See, for example, [Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning).
+ A better approach to versioning is to derive the assembly or file version from the `HEAD` commit SHA (for git repositories). See, for example, [Nerdbank.GitVersioning](https://github.com/dotnet/Nerdbank.GitVersioning).
 
  The assembly major and minor versions are used as the type library version number when the assembly is exported. Some COM hosts do not accept type libraries with the version number 0.0. Therefore, if you want to expose an assembly to COM clients, set the assembly version explicitly to 1.0 in the `AssemblyVersionAttribute` page for projects created outside Visual Studio 2005 and with no `AssemblyVersionAttribute` specified. Do this even when the assembly version is 0.0. All projects created in Visual Studio 2005 have a default assembly version of 1.0.*.  
   
