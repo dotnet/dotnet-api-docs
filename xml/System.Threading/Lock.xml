@@ -26,7 +26,9 @@ When using the <xref:System.Threading.Lock.Enter%2A> or <xref:System.Threading.L
 - Ensure that the thread exits the lock with <xref:System.Threading.Lock.Exit%2A> even in case of exceptions, such as in C# by using a `try/finally` block.
 - When the lock is being entered and exited in a C# `async` method, ensure that there is no `await` between the enter and exit. Locks are held by threads and the code following an `await` might run on a different thread.
 
-It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a language construct that automatically disposes the returned <xref:System.Threading.Lock.Scope> such as the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`.
+It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a language construct that automatically disposes the returned <xref:System.Threading.Lock.Scope> such as the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
+
+:::code language="csharp" source="~/snippets/csharp/System.Threading/Lock/Overview/UsagePatterns.cs" id="Snippet1":::
 
 When using the C# `lock` keyword or similar to enter and exit a lock, the type of the expression must be precisely `System.Threading.Lock`. If the type of the expression is anything else, such as `Object` or a generic type like `T`, a different implementation that is not interchangeable can be used instead (such as <xref:System.Threading.Monitor>). For more information, see the relevant [compiler speclet](https://github.com/dotnet/csharplang/blob/main/proposals/lock-object.md).
 
