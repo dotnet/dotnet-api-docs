@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Threading;
 
+static class Program
+{
+    private static void Main()
+    {
+        var dataStructure = new ExampleDataStructure();
+        dataStructure.Modify();
+    }
+}
+
 // <Snippet1>
 public sealed class ExampleDataStructure
 {
     private readonly Lock _lockObj = new();
 
-    private void Modify()
+    public void Modify()
     {
         lock (_lockObj)
         {
