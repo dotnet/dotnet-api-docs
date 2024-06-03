@@ -5,17 +5,19 @@ resource: repository
 configuration:
   resourceManagementConfiguration:
     eventResponderTasks:
-    - if:
+    - description: Label publish PRs with auto-merge
+      triggerOnOwnActions: true
+      if:
       - payloadType: Pull_Request
       - isAction:
           action: Opened
+      - isActivitySender:
+          user: dotnet-policy-service[bot]
       - titleContains:
           pattern: Merge main into live
           isRegex: False
       then:
       - addLabel:
           label: ':octocat: auto-merge'
-      description: Label main to live PRs
-      triggerOnOwnActions: true
 
 
