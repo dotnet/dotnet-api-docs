@@ -5,15 +5,17 @@ resource: repository
 configuration:
   resourceManagementConfiguration:
     eventResponderTasks:
-      - if:
+      - description: Needs-author-action notification
+        if:
         - payloadType: Issues
         - labelAdded:
             label: needs-author-action
         then:
         - addReply:
-            reply: This issue has been marked `needs-author-action` and may be missing some important information.
-        description: Needs-author-action notification
-      - if:
+            reply: This issue has been marked `needs-author-action` and might be missing some important information.
+
+      - description: PR reviews with "changes requested" applies the needs-author-action label
+        if:
         - payloadType: Pull_Request_Review
         - not:
             activitySenderHasPermission:
@@ -25,8 +27,9 @@ configuration:
         then:
         - addLabel:
             label: needs-author-action
-        description: PR reviews with "changes requested" applies the needs-author-action label
-      - if:
+
+      - description: Replace `needs-author-action` label with `needs-further-triage` label when the author comments on an issue that's not "untriaged"
+        if:
         - payloadType: Issue_Comment
         - isAction:
             action: Created
@@ -43,8 +46,9 @@ configuration:
             label: needs-further-triage
         - removeLabel:
             label: needs-author-action
-        description: Replace `needs-author-action` label with `needs-further-triage` label when the author comments on an issue that is not still untriaged
-      - if:
+
+      - description: Remove `needs-author-action` label when the author comments on an `untriaged` issue
+        if:
         - payloadType: Issue_Comment
         - isAction:
             action: Created
@@ -58,8 +62,9 @@ configuration:
         then:
         - removeLabel:
             label: needs-author-action
-        description: Remove `needs-author-action` label when the author comments on an `untriaged` issue
-      - if:
+
+      - description: Pushing changes to PR branch removes the needs-author-action label
+        if:
         - payloadType: Pull_Request
         - isAction:
             action: Synchronize
@@ -68,8 +73,9 @@ configuration:
         then:
         - removeLabel:
             label: needs-author-action
-        description: Pushing changes to PR branch removes the needs-author-action label
-      - if:
+
+      - description: Author commenting in PR removes the needs-author-action label
+        if:
         - payloadType: Issue_Comment
         - isActivitySender:
             issueAuthor: True
@@ -81,8 +87,9 @@ configuration:
         then:
         - removeLabel:
             label: needs-author-action
-        description: Author commenting in PR removes the needs-author-action label
-      - if:
+
+      - description: Author responding to a PR review comment removes the needs-author-action label
+        if:
         - payloadType: Pull_Request_Review
         - isActivitySender:
             issueAuthor: True
@@ -94,4 +101,3 @@ configuration:
         then:
         - removeLabel:
             label: needs-author-action
-        description: Author responding to a pull request review comment removes the needs-author-action label
