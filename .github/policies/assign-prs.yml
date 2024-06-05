@@ -1,0 +1,19 @@
+name: GitOps.PullRequestIssueManagement
+description: Assign team-authored PRs to author
+resource: repository
+
+configuration:
+  resourceManagementConfiguration:
+    eventResponderTasks:
+      - description: Assign team PRs to author
+        if:
+        - payloadType: Pull_Request
+        - isAction:
+            action: Opened
+        - not:
+            activitySenderHasPermission:
+              permission: Read
+        then:
+        - assignTo:
+            author: True
+
