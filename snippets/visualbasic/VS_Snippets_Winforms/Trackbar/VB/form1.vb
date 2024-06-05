@@ -6,7 +6,7 @@ Imports System.Windows.Forms
 Imports System.Data
 
 namespace TrackBar
- 
+
 	' <summary>
 	' Summary description for Form1.
 	' </summary>
@@ -103,14 +103,14 @@ namespace TrackBar
             '
             'label2
             '
-            Me.label2.Location = New System.Drawing.Point(8, 16)
+            Me.label2.Location = New System.Drawing.Point(600, 16)
             Me.label2.Name = "label2"
             Me.label2.Size = New System.Drawing.Size(120, 16)
             Me.label2.TabIndex = 5
             '
             'label3
             '
-            Me.label3.Location = New System.Drawing.Point(600, 16)
+            Me.label3.Location = New System.Drawing.Point(8, 16)
             Me.label3.Name = "label3"
             Me.label3.Size = New System.Drawing.Size(120, 16)
             Me.label3.TabIndex = 6
@@ -138,8 +138,8 @@ namespace TrackBar
         ' The main entry point for the application.
         ' </summary>
         ' [STAThread]
-        ' static void Main() 
-        ' 
+        ' static void Main()
+        '
         '	Application.Run(new Form1())
         ' }
 
@@ -147,11 +147,11 @@ namespace TrackBar
             showColorValueLabels()
         End Sub
 
-        '<Snippet3>   
+        '<Snippet3>
         Private Sub showColorValueLabels()
             label1.Text = "Red value is : " & trackBar1.Value.ToString()
-            label3.Text = "Green Value is : " & trackBar2.Value.ToString()
-            label2.Text = "Blue Value is : " & trackBar3.Value.ToString()
+            label2.Text = "Green Value is : " & trackBar2.Value.ToString()
+            label3.Text = "Blue Value is : " & trackBar3.Value.ToString()
         End Sub
 
         Private Sub trackBar_Scroll(ByVal sender As Object, ByVal e As System.EventArgs) Handles trackBar1.Scroll, trackBar2.Scroll, trackBar3.Scroll
@@ -166,7 +166,7 @@ namespace TrackBar
       Public Shared Sub Main()
          Application.Run(new Form1())
       End Sub
-      
+
     End Class
 End Namespace
 '</Snippet1>
