@@ -2,7 +2,7 @@
 ' the StringSplitOptions enumeration.
 Class Sample
     '<snippet1>
-    Public Shared Sub Main()
+    Public Shared Sub StringSplitOptionsExamples()
         ' This example demonstrates the String.Split() methods that use
         ' the StringSplitOptions enumeration.
 
