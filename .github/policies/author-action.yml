@@ -1,0 +1,103 @@
+name: GitOps.PullRequestIssueManagement
+description: Add and remove needs-author-action label to issues and PRs
+resource: repository
+
+configuration:
+  resourceManagementConfiguration:
+    eventResponderTasks:
+      - description: Needs-author-action notification
+        if:
+        - payloadType: Issues
+        - labelAdded:
+            label: needs-author-action
+        then:
+        - addReply:
+            reply: This issue has been marked `needs-author-action` and might be missing some important information.
+
+      - description: PR reviews with "changes requested" applies the needs-author-action label
+        if:
+        - payloadType: Pull_Request_Review
+        - not:
+            activitySenderHasPermission:
+              permission: Read
+        - isAction:
+            action: Submitted
+        - isReviewState:
+            reviewState: Changes_requested
+        then:
+        - addLabel:
+            label: needs-author-action
+
+      - description: Replace `needs-author-action` label with `needs-further-triage` label when the author comments on an issue that's not "untriaged"
+        if:
+        - payloadType: Issue_Comment
+        - isAction:
+            action: Created
+        - isActivitySender:
+            issueAuthor: True
+        - hasLabel:
+            label: needs-author-action
+        - not:
+            hasLabel:
+              label: untriaged
+        - isOpen
+        then:
+        - addLabel:
+            label: needs-further-triage
+        - removeLabel:
+            label: needs-author-action
+
+      - description: Remove `needs-author-action` label when the author comments on an `untriaged` issue
+        if:
+        - payloadType: Issue_Comment
+        - isAction:
+            action: Created
+        - isActivitySender:
+            issueAuthor: True
+        - hasLabel:
+            label: needs-author-action
+        - hasLabel:
+            label: untriaged
+        - isOpen
+        then:
+        - removeLabel:
+            label: needs-author-action
+
+      - description: Pushing changes to PR branch removes the needs-author-action label
+        if:
+        - payloadType: Pull_Request
+        - isAction:
+            action: Synchronize
+        - hasLabel:
+            label: needs-author-action
+        then:
+        - removeLabel:
+            label: needs-author-action
+
+      - description: Author commenting in PR removes the needs-author-action label
+        if:
+        - payloadType: Issue_Comment
+        - isActivitySender:
+            issueAuthor: True
+        - isAction:
+            action: Created
+        - hasLabel:
+            label: needs-author-action
+        - isOpen
+        then:
+        - removeLabel:
+            label: needs-author-action
+
+      - description: Author responding to a PR review comment removes the needs-author-action label
+        if:
+        - payloadType: Pull_Request_Review
+        - isActivitySender:
+            issueAuthor: True
+        - hasLabel:
+            label: needs-author-action
+        - isAction:
+            action: Submitted
+        - isOpen
+        then:
+        - removeLabel:
+            label: needs-author-action
