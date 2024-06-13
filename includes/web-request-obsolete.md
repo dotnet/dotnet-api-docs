@@ -1,2 +1,2 @@
 > [!CAUTION]
-> We recommend that you don't use `WebRequest`, as it's considered obsolete. Instead, use `HttpClient`. For more information, see the [System.Net.Http.HttpClient](/dotnet/api/system.net.http.httpclient?view=net-7.0) class.
+`WebRequest`, `HttpWebRequest`, `ServicePoint`, and `WebClient` are obsolete, and you shouldn't use them for new development. Use <xref:System.Net.Http.HttpClient> instead.
