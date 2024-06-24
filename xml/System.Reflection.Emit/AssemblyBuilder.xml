@@ -576,7 +576,9 @@ The following code example shows how to define and use a dynamic assembly. The e
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- It is an error to define multiple dynamic modules with the same name in an assembly.
+ In .NET Core and .NET 5+, only one dynamic module may be defined in each dynamic assembly.
+
+ In .NET Framework, it is an error to define multiple dynamic modules with the same name in an assembly.
 
  The defined dynamic module is transient. The dynamic module is not saved, even if the parent dynamic assembly was created with <xref:System.Reflection.Emit.AssemblyBuilderAccess.RunAndSave>.
 
@@ -607,9 +609,15 @@ The following code example shows how to define and use a dynamic assembly. The e
 
  -or-
 
- The length of <paramref name="name" /> is greater than the system-defined maximum length.</exception>
+ The length of <paramref name="name" /> is greater than the system-defined maximum length.
+
+ -or-
+
+ .NET Framework only: A module with the same <paramref name="name" /> has already been defined in this assembly.
+ </exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">.NET Core and .NET 5+ only: A dynamic module has already been defined in this assembly.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <exception cref="T:System.ExecutionEngineException">The assembly for default symbol writer cannot be loaded.
 
@@ -916,7 +924,7 @@ The following code example shows how to define and use a dynamic assembly. The e
         <param name="name">The name of the dynamic module.</param>
         <summary>When overridden in a derived class, defines a dynamic module in this assembly.</summary>
         <returns>A <see cref="T:System.Reflection.Emit.ModuleBuilder" /> representing the defined dynamic module.</returns>
-        <remarks>.NET Core supports only one module.</remarks>
+        <remarks>.NET Core and .NET 5+ support only one module per assembly.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="DefineResource">
@@ -1772,7 +1780,7 @@ The following code example shows how to define and use a dynamic assembly. The e
         <param name="name">The name of the requested dynamic module.</param>
         <summary>When overridden in a derived class, returns the dynamic module with the specified name.</summary>
         <returns>A <see cref="T:System.Reflection.Emit.ModuleBuilder" /> representing the requested dynamic module.</returns>
-        <remarks>.NET Core supports only one module.</remarks>
+        <remarks>.NET Core and .NET 5+ support only one module per assembly..</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetExportedTypes">
