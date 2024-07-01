@@ -1,67 +1,52 @@
-﻿// The following code example shows how sorting with CompareOptions.StringSort differs from sorting without CompareOptions.StringSort.
-
-// <snippet1>
+// <snippet2>
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 
-public class SamplesCompareOptions  {
+public class StringSort
+{
+    public static void Main()
+    {
+        var wordList = new List<string>
+        {
+            "cant", "bill's", "coop", "cannot", "billet", "can't", "con", "bills", "co-op"
+        };
 
-   private class MyStringComparer: IComparer {
-      private CompareInfo myComp;
-      private CompareOptions myOptions = CompareOptions.None;
+        Console.WriteLine("Before sorting:");
+        foreach (string word in wordList)
+        {
+            Console.WriteLine(word);
+        }
 
-      // Constructs a comparer using the specified CompareOptions.
-      public MyStringComparer( CompareInfo cmpi, CompareOptions options )  {
-         myComp = cmpi;
-         this.myOptions = options;
-      }
+        Console.WriteLine(Environment.NewLine + "After sorting with CompareOptions.None:");
+        SortAndDisplay(wordList, CompareOptions.None);
 
-      // Compares strings with the CompareOptions specified in the constructor.
-      public int Compare(Object a, Object b) {
-         if (a == b) return 0;
-         if (a == null) return -1;
-         if (b == null) return 1;
+        Console.WriteLine(Environment.NewLine + "After sorting with CompareOptions.StringSort:");
+        SortAndDisplay(wordList, CompareOptions.StringSort);
+    }
 
-         String sa = a as String;
-         String sb = b as String;
-         if (sa != null && sb != null)
-            return myComp.Compare(sa, sb, myOptions);
-         throw new ArgumentException("a and b should be strings.");
-      }
-   }
+    // Sort the list of words with the supplied CompareOptions.
+    private static void SortAndDisplay(List<string> unsorted, CompareOptions options)
+    {
+        // Create a copy of the original list to sort.
+        var words = new List<string>(unsorted);
+        // Define the CompareInfo to use to compare strings.
+        var comparer = CultureInfo.InvariantCulture.CompareInfo;
 
-   public static void Main()  {
-
-      // Creates and initializes an array of strings to sort.
-      String[] myArr = new String[9] { "cant", "bill's", "coop", "cannot", "billet", "can't", "con", "bills", "co-op" };
-      Console.WriteLine( "\nInitially," );
-      foreach ( String myStr in myArr )
-         Console.WriteLine( myStr );
-
-      // Creates and initializes a Comparer to use.
-      //CultureInfo myCI = new CultureInfo( "en-US", false );
-      MyStringComparer myComp = new MyStringComparer(CompareInfo.GetCompareInfo("en-US"), CompareOptions.None);
-
-      // Sorts the array without StringSort.
-      Array.Sort( myArr, myComp );
-      Console.WriteLine( "\nAfter sorting without CompareOptions.StringSort:" );
-      foreach ( String myStr in myArr )
-         Console.WriteLine( myStr );
-
-      // Sorts the array with StringSort.
-      myComp = new MyStringComparer(CompareInfo.GetCompareInfo("en-US"), CompareOptions.StringSort);
-      Array.Sort( myArr, myComp );
-      Console.WriteLine( "\nAfter sorting with CompareOptions.StringSort:" );
-      foreach ( String myStr in myArr )
-         Console.WriteLine( myStr );
-   }
+        // Sort the copy with the supplied CompareOptions then display.
+        words.Sort((str1, str2) => comparer.Compare(str1, str2, options));
+        foreach (string word in words)
+        {
+            Console.WriteLine(word);
+        }
+    }
 }
 
 /*
-This code produces the following output.
+CompareOptions.None and CompareOptions.StringSort provide identical ordering by default
+in .NET 5 and later, but in prior versions, the output will be the following:
 
-Initially,
+Before sorting:
 cant
 bill's
 coop
@@ -72,7 +57,7 @@ con
 bills
 co-op
 
-After sorting without CompareOptions.StringSort:
+After sorting with CompareOptions.None:
 billet
 bills
 bill's
@@ -93,6 +78,5 @@ cant
 co-op
 con
 coop
-
 */
-// </snippet1>
+// </snippet2>
