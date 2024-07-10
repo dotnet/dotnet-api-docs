@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace QueryableExamples
 {
-    public class Program
+    static class Program
     {
         // This part is just for testing the examples
-        static void Main(string[] args)
+        static void Main()
         {
             All.AllEx1();
             All2.AllEx2();
@@ -17,7 +17,7 @@ namespace QueryableExamples
         static void AggregateEx1()
         {
             // <Snippet1>
-            string sentence = "the quick brown fox jumps over the lazy dog";
+            const string sentence = "the quick brown fox jumps over the lazy dog";
 
             // Split the string into individual words.
             string[] words = sentence.Split(' ');
@@ -40,7 +40,7 @@ namespace QueryableExamples
         static void AggregateEx2()
         {
             // <Snippet2>
-            int[] ints = { 4, 8, 8, 3, 9, 0, 7, 8, 2 };
+            int[] ints = [4, 8, 8, 3, 9, 0, 7, 8, 2];
 
             // Count the even numbers in the array, using a seed value of 0.
             int numEven =
@@ -60,16 +60,16 @@ namespace QueryableExamples
         static void AggregateEx3()
         {
             // <Snippet3>
-            string[] fruits = { "apple", "mango", "orange", "passionfruit", "grape" };
+            string[] fruits = ["apple", "mango", "orange", "passionfruit", "grape"];
 
             // Determine whether any string in the array is longer than "banana".
             string longestName =
-                fruits.AsQueryable().Aggregate(
-                "banana",
-                (longest, next) => next.Length > longest.Length ? next : longest,
-                // Return the final result as an uppercase string.
-                fruit => fruit.ToUpper()
-                );
+                fruits.AsQueryable()
+                    .Aggregate(
+                        "banana",
+                        (longest, next) => next.Length > longest.Length ? next : longest,
+                        // Return the final result as an uppercase string.
+                        fruit => fruit.ToUpper());
 
             Console.WriteLine(
                 "The fruit with the longest name is {0}.",
@@ -96,13 +96,13 @@ namespace QueryableExamples
             public static void AllEx1()
             {
                 // Create an array of Pets.
-                Pet[] pets = { new Pet { Name="Barley", Age=10 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=6 } };
+                Pet[] pets = [ new() { Name="Barley", Age=10 },
+                               new() { Name="Boots", Age=4 },
+                               new() { Name="Whiskers", Age=6 } ];
 
                 // Determine whether all pet names in the array start with 'B'.
                 bool allStartWithB =
-                    pets.AsQueryable().All(pet => pet.Name.StartsWith("B"));
+                    pets.AsQueryable().All(pet => pet.Name.StartsWith('B'));
 
                 Console.WriteLine(
                     "{0} pet names start with 'B'.",
@@ -132,19 +132,19 @@ namespace QueryableExamples
 
             public static void AllEx2()
             {
-                List<Person> people = new List<Person>
-                    { new Person { LastName = "Haas",
-                                   Pets = new Pet[] { new Pet { Name="Barley", Age=10 },
-                                                      new Pet { Name="Boots", Age=14 },
-                                                      new Pet { Name="Whiskers", Age=6 }}},
+                List<Person> people =
+                [ new Person { LastName = "Haas",
+                                   Pets = [ new() { Name="Barley", Age=10 },
+                                                      new() { Name="Boots", Age=14 },
+                                                      new() { Name="Whiskers", Age=6 }]},
                       new Person { LastName = "Fakhouri",
-                                   Pets = new Pet[] { new Pet { Name = "Snowball", Age = 1}}},
+                                   Pets = [new() { Name = "Snowball", Age = 1}]},
                       new Person { LastName = "Antebi",
-                                   Pets = new Pet[] { new Pet { Name = "Belle", Age = 8} }},
+                                   Pets = [new() { Name = "Belle", Age = 8}]},
                       new Person { LastName = "Philips",
-                                   Pets = new Pet[] { new Pet { Name = "Sweetie", Age = 2},
-                                                      new Pet { Name = "Rover", Age = 13}} }
-                    };
+                                   Pets = [ new() { Name = "Sweetie", Age = 2},
+                                                      new() { Name = "Rover", Age = 13}] }
+                    ];
 
                 // Determine which people have pets that are all older than 5.
                 IEnumerable<string> names = from person in people
@@ -165,12 +165,12 @@ namespace QueryableExamples
         #endregion
 
         #region Any
-        class Any1
+        static class Any1
         {
             public static void AnyEx1()
             {
                 // <Snippet5>
-                List<int> numbers = new List<int> { 1, 2 };
+                List<int> numbers = [1, 2];
 
                 // Determine if the list contains any elements.
                 bool hasElements = numbers.AsQueryable().Any();
@@ -199,19 +199,19 @@ namespace QueryableExamples
 
             public static void AnyEx2()
             {
-                List<Person> people = new List<Person>
-                    { new Person { LastName = "Haas",
-                                   Pets = new Pet[] { new Pet { Name="Barley", Age=10 },
-                                                      new Pet { Name="Boots", Age=14 },
-                                                      new Pet { Name="Whiskers", Age=6 }}},
+                List<Person> people =
+                [ new Person { LastName = "Haas",
+                                   Pets = [ new() { Name="Barley", Age=10 },
+                                                      new() { Name="Boots", Age=14 },
+                                                      new() { Name="Whiskers", Age=6 }]},
                       new Person { LastName = "Fakhouri",
-                                   Pets = new Pet[] { new Pet { Name = "Snowball", Age = 1}}},
+                                   Pets = [new() { Name = "Snowball", Age = 1}]},
                       new Person { LastName = "Antebi",
-                                   Pets = new Pet[] { }},
+                                   Pets = []},
                       new Person { LastName = "Philips",
-                                   Pets = new Pet[] { new Pet { Name = "Sweetie", Age = 2},
-                                                      new Pet { Name = "Rover", Age = 13}} }
-                    };
+                                   Pets = [ new() { Name = "Sweetie", Age = 2},
+                                                      new() { Name = "Rover", Age = 13}] }
+                    ];
 
                 // Determine which people have a non-empty Pet array.
                 IEnumerable<string> names = from person in people
@@ -245,13 +245,13 @@ namespace QueryableExamples
             {
                 // Create an array of Pet objects.
                 Pet[] pets =
-                    { new Pet { Name="Barley", Age=8, Vaccinated=true },
-                      new Pet { Name="Boots", Age=4, Vaccinated=false },
-                      new Pet { Name="Whiskers", Age=1, Vaccinated=false } };
+                    [ new() { Name="Barley", Age=8, Vaccinated=true },
+                      new() { Name="Boots", Age=4, Vaccinated=false },
+                      new() { Name="Whiskers", Age=1, Vaccinated=false } ];
 
                 // Determine whether any pets over age 1 are also unvaccinated.
                 bool unvaccinated =
-                    pets.AsQueryable().Any(p => p.Age > 1 && p.Vaccinated == false);
+                    pets.AsQueryable().Any(p => p.Age > 1 && !p.Vaccinated);
 
                 Console.WriteLine(
                     "There {0} unvaccinated animals over age one.",
@@ -270,7 +270,7 @@ namespace QueryableExamples
         static void AsQueryableEx1()
         {
             // <Snippet125>
-            List<int> grades = new List<int> { 78, 92, 100, 37, 81 };
+            List<int> grades = [78, 92, 100, 37, 81];
 
             // Convert the List to an IQueryable<int>.
             IQueryable<int> iqueryable = grades.AsQueryable();
@@ -299,7 +299,7 @@ namespace QueryableExamples
         static void AverageEx1()
         {
             // <Snippet8>
-            List<int> grades = new List<int> { 78, 92, 100, 37, 81 };
+            List<int> grades = [78, 92, 100, 37, 81];
 
             double average = grades.AsQueryable().Average();
 
@@ -315,7 +315,7 @@ namespace QueryableExamples
         static void AverageEx2()
         {
             // <Snippet12>
-            long?[] longs = { null, 10007L, 37L, 399846234235L };
+            long?[] longs = [null, 10007L, 37L, 399846234235L];
 
             double? average = longs.AsQueryable().Average();
 
@@ -331,7 +331,7 @@ namespace QueryableExamples
         static void AverageEx3()
         {
             // <Snippet18>
-            string[] fruits = { "apple", "banana", "mango", "orange", "passionfruit", "grape" };
+            string[] fruits = ["apple", "banana", "mango", "orange", "passionfruit", "grape"];
 
             // Determine the average string length in the array.
             double average = fruits.AsQueryable().Average(s => s.Length);
@@ -351,7 +351,7 @@ namespace QueryableExamples
         static void CastEx1()
         {
             // Get a list of the methods available on the String type.
-            List<System.Reflection.MethodInfo> methods = typeof(String).GetMethods().ToList();
+            List<System.Reflection.MethodInfo> methods = [.. typeof(string).GetMethods()];
 
             // Cast each MethodInfo object to a MemberInfo object.
             // Then select the names of those methods whose names
@@ -388,7 +388,7 @@ namespace QueryableExamples
 
             // Create a list of objects.
             List<object> words =
-                new List<object> { "green", "blue", "violet" };
+                ["green", "blue", "violet"];
 
             // Cast the objects in the list to type 'string'
             // and project the first letter of each string.
@@ -424,18 +424,18 @@ namespace QueryableExamples
             // This method creates and returns an array of Pet objects.
             static Pet[] GetCats()
             {
-                Pet[] cats = { new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } };
+                Pet[] cats = [ new() { Name="Barley", Age=8 },
+                               new() { Name="Boots", Age=4 },
+                               new() { Name="Whiskers", Age=1 } ];
                 return cats;
             }
 
             // This method creates and returns an array of Pet objects.
             static Pet[] GetDogs()
             {
-                Pet[] dogs = { new Pet { Name="Bounder", Age=3 },
-                               new Pet { Name="Snoopy", Age=14 },
-                               new Pet { Name="Fido", Age=9 } };
+                Pet[] dogs = [ new() { Name="Bounder", Age=3 },
+                               new() { Name="Snoopy", Age=14 },
+                               new() { Name="Fido", Age=9 } ];
                 return dogs;
             }
 
@@ -475,7 +475,8 @@ namespace QueryableExamples
                 // Concatenate a collection of cat names to a
                 // collection of dog names by using SelectMany().
                 IEnumerable<string> query =
-                    new[] { cats.Select(cat => cat.Name), dogs.Select(dog => dog.Name) }
+                    new[] { cats.Select(cat => cat.Name),
+                            dogs.Select(dog => dog.Name) }
                     .AsQueryable().SelectMany(name => name);
 
                 foreach (string name in query)
@@ -499,11 +500,11 @@ namespace QueryableExamples
         static void ContainsEx1()
         {
             // <Snippet21>
-            string[] fruits = { "apple", "banana", "mango",
-                                "orange", "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango",
+                                "orange", "passionfruit", "grape" ];
 
             // The string to search for in the array.
-            string mango = "mango";
+            const string mango = "mango";
 
             bool hasMango = fruits.AsQueryable().Contains(mango);
 
@@ -524,8 +525,8 @@ namespace QueryableExamples
         static void CountEx1()
         {
             // <Snippet22>
-            string[] fruits = { "apple", "banana", "mango",
-                                "orange", "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango",
+                                "orange", "passionfruit", "grape" ];
 
             int numberOfFruits = fruits.AsQueryable().Count();
 
@@ -552,13 +553,13 @@ namespace QueryableExamples
             public static void CountEx2()
             {
                 // Create an array of Pet objects.
-                Pet[] pets = { new Pet { Name="Barley", Vaccinated=true },
-                               new Pet { Name="Boots", Vaccinated=false },
-                               new Pet { Name="Whiskers", Vaccinated=false } };
+                Pet[] pets = [ new() { Name="Barley", Vaccinated=true },
+                               new() { Name="Boots", Vaccinated=false },
+                               new() { Name="Whiskers", Vaccinated=false } ];
 
                 // Count the number of unvaccinated pets in the array.
                 int numberUnvaccinated =
-                    pets.AsQueryable().Count(p => p.Vaccinated == false);
+                    pets.AsQueryable().Count(p => !p.Vaccinated);
 
                 Console.WriteLine(
                     "There are {0} unvaccinated animals.",
@@ -587,18 +588,17 @@ namespace QueryableExamples
             {
                 // Create a list of Pet objects.
                 List<Pet> pets =
-                    new List<Pet>{ new Pet { Name="Barley", Age=8 },
+                    [ new Pet { Name="Barley", Age=8 },
                                    new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 } };
+                                   new Pet { Name="Whiskers", Age=1 } ];
 
                 // Call DefaultIfEmtpy() on the collection that Select()
                 // returns, so that if the initial list is empty, there
                 // will always be at least one item in the returned array.
                 string[] names =
-                    pets.AsQueryable()
+                    [.. pets.AsQueryable()
                     .Select(pet => pet.Name)
-                    .DefaultIfEmpty()
-                    .ToArray();
+                    .DefaultIfEmpty()];
 
                 string first = names[0];
                 Console.WriteLine(first);
@@ -616,30 +616,28 @@ namespace QueryableExamples
                 // <Snippet25>
                 // Create a list of Pet objects.
                 List<Pet> pets =
-                    new List<Pet>{ new Pet { Name="Barley", Age=8 },
+                    [ new Pet { Name="Barley", Age=8 },
                                    new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 } };
+                                   new Pet { Name="Whiskers", Age=1 } ];
 
                 // This query selects only those pets that are 10 or older.
                 // In case there are no pets that meet that criteria, call
                 // DefaultIfEmpty(). This code passes an (optional) default
                 // value to DefaultIfEmpty().
                 string[] oldPets =
-                    pets.AsQueryable()
+                    [.. pets.AsQueryable()
                     .Where(pet => pet.Age >= 10)
                     .Select(pet => pet.Name)
-                    .DefaultIfEmpty("[EMPTY]")
-                    .ToArray();
+                    .DefaultIfEmpty("[EMPTY]")];
 
                 Console.WriteLine("First query: " + oldPets[0]);
 
                 // This query selects only those pets that are 10 or older.
                 // This code does not call DefaultIfEmpty().
                 string[] oldPets2 =
-                    pets.AsQueryable()
+                    [.. pets.AsQueryable()
                     .Where(pet => pet.Age >= 10)
-                    .Select(pet => pet.Name)
-                    .ToArray();
+                    .Select(pet => pet.Name)];
 
                 // There may be no elements in the array, so directly
                 // accessing element 0 may throw an exception.
@@ -668,7 +666,7 @@ namespace QueryableExamples
         static void DistinctEx1()
         {
             // <Snippet27>
-            List<int> ages = new List<int> { 21, 46, 46, 55, 17, 21, 55, 55 };
+            List<int> ages = [21, 46, 46, 55, 17, 21, 55, 55];
 
             IEnumerable<int> distinctAges = ages.AsQueryable().Distinct();
 
@@ -695,11 +693,11 @@ namespace QueryableExamples
         static void ElementAtEx1()
         {
             // <Snippet28>
-            string[] names = { "Hartono, Tommy", "Adams, Terry",
+            string[] names = [ "Hartono, Tommy", "Adams, Terry",
                                "Andersen, Henriette Thaulow",
-                               "Hedlund, Magnus", "Ito, Shu" };
+                               "Hedlund, Magnus", "Ito, Shu" ];
 
-            Random random = new Random(DateTime.Now.Millisecond);
+            Random random = new(DateTime.Now.Millisecond);
 
             string name =
                 names.AsQueryable().ElementAt(random.Next(0, names.Length));
@@ -721,18 +719,18 @@ namespace QueryableExamples
         static void ElementAtOrDefaultEx1()
         {
             // <Snippet29>
-            string[] names = { "Hartono, Tommy", "Adams, Terry",
+            string[] names = [ "Hartono, Tommy", "Adams, Terry",
                                "Andersen, Henriette Thaulow",
-                               "Hedlund, Magnus", "Ito, Shu" };
+                               "Hedlund, Magnus", "Ito, Shu" ];
 
-            int index = 20;
+            const int index = 20;
 
             string name = names.AsQueryable().ElementAtOrDefault(index);
 
             Console.WriteLine(
                 "The name chosen at index {0} is '{1}'.",
                 index,
-                String.IsNullOrEmpty(name) ? "[NONE AT THIS INDEX]" : name);
+                string.IsNullOrEmpty(name) ? "[NONE AT THIS INDEX]" : name);
 
             /*
                 This code produces the following output:
@@ -748,8 +746,8 @@ namespace QueryableExamples
         static void ExceptEx1()
         {
             // <Snippet34>
-            double[] numbers1 = { 2.0, 2.1, 2.2, 2.3, 2.4, 2.5 };
-            double[] numbers2 = { 2.2 };
+            double[] numbers1 = [2.0, 2.1, 2.2, 2.3, 2.4, 2.5];
+            double[] numbers2 = [2.2];
 
             // Get the numbers from the first array that
             // are NOT in the second array.
@@ -777,8 +775,8 @@ namespace QueryableExamples
         static void FirstEx1()
         {
             // <Snippet35>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
-                                83, 23, 87, 435, 67, 12, 19 };
+            int[] numbers = [ 9, 34, 65, 92, 87, 435, 3, 54,
+                                83, 23, 87, 435, 67, 12, 19 ];
 
             int first = numbers.AsQueryable().First();
 
@@ -796,8 +794,8 @@ namespace QueryableExamples
         static void FirstEx2()
         {
             // <Snippet36>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
-                              83, 23, 87, 435, 67, 12, 19 };
+            int[] numbers = [ 9, 34, 65, 92, 87, 435, 3, 54,
+                              83, 23, 87, 435, 67, 12, 19 ];
 
             // Get the first number in the array that is greater than 80.
             int first = numbers.AsQueryable().First(number => number > 80);
@@ -819,7 +817,7 @@ namespace QueryableExamples
         {
             // <Snippet37>
             // Create an empty array.
-            int[] numbers = { };
+            int[] numbers = [];
             // Get the first item in the array, or else the
             // default value for type int (0).
             int first = numbers.AsQueryable().FirstOrDefault();
@@ -838,9 +836,9 @@ namespace QueryableExamples
         static void FirstOrDefaultEx2()
         {
             // <Snippet38>
-            string[] names = { "Hartono, Tommy", "Adams, Terry",
+            string[] names = [ "Hartono, Tommy", "Adams, Terry",
                                  "Andersen, Henriette Thaulow",
-                                 "Hedlund, Magnus", "Ito, Shu" };
+                                 "Hedlund, Magnus", "Ito, Shu" ];
 
             // Get the first string in the array that is longer
             // than 20 characters, or the default value for type
@@ -873,7 +871,7 @@ namespace QueryableExamples
         static void FirstOrDefaultEx3()
         {
             // <Snippet131>
-            List<int> months = new List<int> { };
+            List<int> months = [];
 
             // Setting the default value to 1 after the query.
             int firstMonth1 = months.AsQueryable().FirstOrDefault();
@@ -912,17 +910,18 @@ namespace QueryableExamples
             {
                 // Create a list of Pet objects.
                 List<Pet> pets =
-                    new List<Pet>{ new Pet { Name="Barley", Age=8 },
+                    [ new Pet { Name="Barley", Age=8 },
                                    new Pet { Name="Boots", Age=4 },
                                    new Pet { Name="Whiskers", Age=1 },
-                                   new Pet { Name="Daisy", Age=4 } };
+                                   new Pet { Name="Daisy", Age=4 } ];
 
                 // Group the pets using Pet.Age as the key.
                 // Use Pet.Name as the value for each entry.
-                var query = pets.AsQueryable().GroupBy(pet => pet.Age);
+                IQueryable<IGrouping<int, Pet>> query = pets.AsQueryable()
+                    .GroupBy(pet => pet.Age);
 
                 // Iterate over each IGrouping in the collection.
-                foreach (var ageGroup in query)
+                foreach (IGrouping<int, Pet> ageGroup in query)
                 {
                     Console.WriteLine("Age group: {0}  Number of pets: {1}", ageGroup.Key, ageGroup.Count());
                 }
@@ -953,10 +952,10 @@ namespace QueryableExamples
             {
                 // Create a list of Pet objects.
                 List<Pet> pets =
-                    new List<Pet>{ new Pet { Name="Barley", Age=8 },
+                    [ new Pet { Name="Barley", Age=8 },
                                    new Pet { Name="Boots", Age=4 },
                                    new Pet { Name="Whiskers", Age=1 },
-                                   new Pet { Name="Daisy", Age=4 } };
+                                   new Pet { Name="Daisy", Age=4 } ];
 
                 // Group the pets using Pet.Age as the key.
                 // Use Pet.Name as the value for each entry.
@@ -1004,10 +1003,10 @@ namespace QueryableExamples
             {
                 // Create a list of pets.
                 List<Pet> petsList =
-                    new List<Pet>{ new Pet { Name="Barley", Age=8.3 },
+                    [ new Pet { Name="Barley", Age=8.3 },
                                    new Pet { Name="Boots", Age=4.9 },
                                    new Pet { Name="Whiskers", Age=1.5 },
-                                   new Pet { Name="Daisy", Age=4.3 } };
+                                   new Pet { Name="Daisy", Age=4.3 } ];
 
                 // Group Pet objects by the Math.Floor of their age.
                 // Then project an anonymous type from each group
@@ -1067,10 +1066,10 @@ namespace QueryableExamples
             {
                 // Create a list of pets.
                 List<Pet> petsList =
-                    new List<Pet>{ new Pet { Name="Barley", Age=8.3 },
+                    [ new Pet { Name="Barley", Age=8.3 },
                                    new Pet { Name="Boots", Age=4.9 },
                                    new Pet { Name="Whiskers", Age=1.5 },
-                                   new Pet { Name="Daisy", Age=4.3 } };
+                                   new Pet { Name="Daisy", Age=4.3 } ];
 
                 // Group Pet.Age values by the Math.Floor of the age.
                 // Then project an anonymous type from each group
@@ -1135,17 +1134,17 @@ namespace QueryableExamples
 
             public static void GroupJoinEx1()
             {
-                Person magnus = new Person { Name = "Hedlund, Magnus" };
-                Person terry = new Person { Name = "Adams, Terry" };
-                Person charlotte = new Person { Name = "Weiss, Charlotte" };
+                Person magnus = new() { Name = "Hedlund, Magnus" };
+                Person terry = new() { Name = "Adams, Terry" };
+                Person charlotte = new() { Name = "Weiss, Charlotte" };
 
-                Pet barley = new Pet { Name = "Barley", Owner = terry };
-                Pet boots = new Pet { Name = "Boots", Owner = terry };
-                Pet whiskers = new Pet { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new Pet { Name = "Daisy", Owner = magnus };
+                Pet barley = new() { Name = "Barley", Owner = terry };
+                Pet boots = new() { Name = "Boots", Owner = terry };
+                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
+                Pet daisy = new() { Name = "Daisy", Owner = magnus };
 
-                List<Person> people = new List<Person> { magnus, terry, charlotte };
-                List<Pet> pets = new List<Pet> { barley, boots, whiskers, daisy };
+                List<Person> people = [magnus, terry, charlotte];
+                List<Pet> pets = [barley, boots, whiskers, daisy];
 
                 // Create a list where each element is an anonymous
                 // type that contains a person's name and a collection
@@ -1191,8 +1190,8 @@ namespace QueryableExamples
         static void IntersectEx1()
         {
             // <Snippet41>
-            int[] id1 = { 44, 26, 92, 30, 71, 38 };
-            int[] id2 = { 39, 59, 83, 47, 26, 4, 30 };
+            int[] id1 = [44, 26, 92, 30, 71, 38];
+            int[] id2 = [39, 59, 83, 47, 26, 4, 30];
 
             // Get the numbers that occur in both arrays (id1 and id2).
             IEnumerable<int> both = id1.AsQueryable().Intersect(id2);
@@ -1228,17 +1227,17 @@ namespace QueryableExamples
 
             public static void JoinEx1()
             {
-                Person magnus = new Person { Name = "Hedlund, Magnus" };
-                Person terry = new Person { Name = "Adams, Terry" };
-                Person charlotte = new Person { Name = "Weiss, Charlotte" };
+                Person magnus = new() { Name = "Hedlund, Magnus" };
+                Person terry = new() { Name = "Adams, Terry" };
+                Person charlotte = new() { Name = "Weiss, Charlotte" };
 
-                Pet barley = new Pet { Name = "Barley", Owner = terry };
-                Pet boots = new Pet { Name = "Boots", Owner = terry };
-                Pet whiskers = new Pet { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new Pet { Name = "Daisy", Owner = magnus };
+                Pet barley = new() { Name = "Barley", Owner = terry };
+                Pet boots = new() { Name = "Boots", Owner = terry };
+                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
+                Pet daisy = new() { Name = "Daisy", Owner = magnus };
 
-                List<Person> people = new List<Person> { magnus, terry, charlotte };
-                List<Pet> pets = new List<Pet> { barley, boots, whiskers, daisy };
+                List<Person> people = [magnus, terry, charlotte];
+                List<Pet> pets = [barley, boots, whiskers, daisy];
 
                 // Join the list of Person objects and the list of Pet objects
                 // to create a list of person-pet pairs where each element is
@@ -1276,8 +1275,8 @@ namespace QueryableExamples
         static void LastEx1()
         {
             // <Snippet43>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
-                                83, 23, 87, 67, 12, 19 };
+            int[] numbers = [ 9, 34, 65, 92, 87, 435, 3, 54,
+                                83, 23, 87, 67, 12, 19 ];
 
             int last = numbers.AsQueryable().Last();
 
@@ -1295,8 +1294,8 @@ namespace QueryableExamples
         static void LastEx2()
         {
             // <Snippet44>
-            int[] numbers = { 9, 34, 65, 92, 87, 435, 3, 54,
-                                83, 23, 87, 67, 12, 19 };
+            int[] numbers = [ 9, 34, 65, 92, 87, 435, 3, 54,
+                                83, 23, 87, 67, 12, 19 ];
 
             // Get the last number in the array that is greater than 80.
             int last = numbers.AsQueryable().Last(num => num > 80);
@@ -1318,14 +1317,14 @@ namespace QueryableExamples
         {
             // <Snippet45>
             // Create an empty array.
-            string[] fruits = { };
+            string[] fruits = [];
 
             // Get the last item in the array, or else the default
             // value for type string (null).
             string last = fruits.AsQueryable().LastOrDefault();
 
             Console.WriteLine(
-                String.IsNullOrEmpty(last) ? "[STRING IS NULL OR EMPTY]" : last);
+                string.IsNullOrEmpty(last) ? "[STRING IS NULL OR EMPTY]" : last);
 
             /*
                 This code produces the following output:
@@ -1339,19 +1338,21 @@ namespace QueryableExamples
         static void LastOrDefaultEx2()
         {
             // <Snippet46>
-            double[] numbers = { 49.6, 52.3, 51.0, 49.4, 50.2, 48.3 };
+            double[] numbers = [49.6, 52.3, 51.0, 49.4, 50.2, 48.3];
 
             // Get the last number in the array that rounds to 50.0,
             // or else the default value for type double (0.0).
             double last50 =
-                numbers.AsQueryable().LastOrDefault(n => Math.Round(n) == 50.0);
+                numbers.AsQueryable()
+                    .LastOrDefault(n => Math.Round(n) == 50.0);
 
             Console.WriteLine("The last number that rounds to 50 is {0}.", last50);
 
             // Get the last number in the array that rounds to 40.0,
             // or else the default value for type double (0.0).
             double last40 =
-                numbers.AsQueryable().LastOrDefault(n => Math.Round(n) == 40.0);
+                numbers.AsQueryable()
+                    .LastOrDefault(n => Math.Round(n) == 40.0);
 
             Console.WriteLine(
                 "The last number that rounds to 40 is {0}.",
@@ -1370,7 +1371,7 @@ namespace QueryableExamples
         static void LastOrDefaultEx3()
         {
             // <Snippet132>
-            List<int> daysOfMonth = new List<int> { };
+            List<int> daysOfMonth = [];
 
             // Setting the default value to 1 after the query.
             int lastDay1 = daysOfMonth.AsQueryable().LastOrDefault();
@@ -1398,8 +1399,8 @@ namespace QueryableExamples
         public static void LongCountEx1()
         {
             // <Snippet47>
-            string[] fruits = { "apple", "banana", "mango",
-                                  "orange", "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango",
+                                  "orange", "passionfruit", "grape" ];
 
             long count = fruits.AsQueryable().LongCount();
 
@@ -1425,14 +1426,15 @@ namespace QueryableExamples
 
             public static void LongCountEx2()
             {
-                Pet[] pets = { new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } };
+                Pet[] pets = [ new() { Name="Barley", Age=8 },
+                               new() { Name="Boots", Age=4 },
+                               new() { Name="Whiskers", Age=1 } ];
 
                 const int Age = 3;
 
                 // Count the number of Pet objects where Pet.Age is greater than 3.
-                long count = pets.AsQueryable().LongCount(pet => pet.Age > Age);
+                long count = pets.AsQueryable()
+                        .LongCount(pet => pet.Age > Age);
 
                 Console.WriteLine("There are {0} animals over age {1}.", count, Age);
             }
@@ -1451,7 +1453,7 @@ namespace QueryableExamples
         static void MaxEx1()
         {
             // <Snippet52>
-            List<long> longs = new List<long> { 4294967296L, 466855135L, 81125L };
+            List<long> longs = [4294967296L, 466855135L, 81125L];
 
             long max = longs.AsQueryable().Max();
 
@@ -1477,9 +1479,9 @@ namespace QueryableExamples
 
             public static void MaxEx2()
             {
-                Pet[] pets = { new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } };
+                Pet[] pets = [ new() { Name="Barley", Age=8 },
+                               new() { Name="Boots", Age=4 },
+                               new() { Name="Whiskers", Age=1 } ];
 
                 // Add Pet.Age to the length of Pet.Name
                 // to determine the "maximum" Pet object in the array.
@@ -1506,7 +1508,7 @@ namespace QueryableExamples
         static void MinEx1()
         {
             // <Snippet60>
-            double[] doubles = { 1.5E+104, 9E+103, -2E+103 };
+            double[] doubles = [1.5E+104, 9E+103, -2E+103];
 
             double min = doubles.AsQueryable().Min();
 
@@ -1532,9 +1534,9 @@ namespace QueryableExamples
 
             public static void MinEx2()
             {
-                Pet[] pets = { new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } };
+                Pet[] pets = [ new() { Name="Barley", Age=8 },
+                               new() { Name="Boots", Age=4 },
+                               new() { Name="Whiskers", Age=1 } ];
 
                 // Get the Pet object that has the smallest Age value.
                 int min = pets.AsQueryable().Min(pet => pet.Age);
@@ -1557,7 +1559,7 @@ namespace QueryableExamples
         {
             // <Snippet69>
             // Create a list of MemberInfo objects.
-            List<System.Reflection.MemberInfo> members = typeof(String).GetMembers().ToList();
+            List<System.Reflection.MemberInfo> members = [.. typeof(string).GetMembers()];
 
             // Return only those items that can be cast to type PropertyInfo.
             IQueryable<System.Reflection.PropertyInfo> propertiesOnly =
@@ -1591,9 +1593,9 @@ namespace QueryableExamples
 
             public static void OrderByEx1()
             {
-                Pet[] pets = { new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } };
+                Pet[] pets = [ new() { Name="Barley", Age=8 },
+                               new() { Name="Boots", Age=4 },
+                               new() { Name="Whiskers", Age=1 } ];
 
                 // Sort the Pet objects in the array by Pet.Age.
                 IEnumerable<Pet> query =
@@ -1659,7 +1661,7 @@ namespace QueryableExamples
                     }
 
                     if (fractional1 == fractional2)
-                        return Decimal.Compare(d1, d2);
+                        return decimal.Compare(d1, d2);
                     else if (fractional1 > fractional2)
                         return 1;
                     else
@@ -1670,7 +1672,7 @@ namespace QueryableExamples
             public static void OrderByDescendingEx1()
             {
                 List<decimal> decimals =
-                    new List<decimal> { 6.2m, 8.3m, 0.5m, 1.3m, 6.3m, 9.7m };
+                    [6.2m, 8.3m, 0.5m, 1.3m, 6.3m, 9.7m];
 
                 // Sort the decimal values in descending order
                 // by using a custom comparer.
@@ -1701,7 +1703,7 @@ namespace QueryableExamples
         static void ReverseEx1()
         {
             // <Snippet74>
-            char[] apple = { 'a', 'p', 'p', 'l', 'e' };
+            char[] apple = ['a', 'p', 'p', 'l', 'e'];
 
             // Reverse the order of the characters in the collection.
             IQueryable<char> reversed = apple.AsQueryable().Reverse();
@@ -1725,7 +1727,7 @@ namespace QueryableExamples
         {
             // <Snippet75>
             List<int> range =
-                new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
             // Project the square of each int value.
             IEnumerable<int> squares =
@@ -1755,8 +1757,8 @@ namespace QueryableExamples
         static void SelectEx2()
         {
             // <Snippet76>
-            string[] fruits = { "apple", "banana", "mango", "orange",
-                                  "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango", "orange",
+                                  "passionfruit", "grape" ];
 
             // Project an anonymous type that contains the
             // index of the string in the source array, and
@@ -1792,22 +1794,23 @@ namespace QueryableExamples
             class PetOwner
             {
                 public string Name { get; set; }
-                public List<String> Pets { get; set; }
+                public List<string> Pets { get; set; }
             }
 
             public static void SelectManyEx1()
             {
                 PetOwner[] petOwners =
-                    { new PetOwner { Name="Higa, Sidney",
-                          Pets = new List<string>{ "Scruffy", "Sam" } },
-                      new PetOwner { Name="Ashkenazi, Ronen",
-                          Pets = new List<string>{ "Walker", "Sugar" } },
-                      new PetOwner { Name="Price, Vernette",
-                          Pets = new List<string>{ "Scratches", "Diesel" } } };
+                    [ new() { Name="Higa, Sidney",
+                          Pets = ["Scruffy", "Sam"] },
+                      new() { Name="Ashkenazi, Ronen",
+                          Pets = ["Walker", "Sugar"] },
+                      new() { Name="Price, Vernette",
+                          Pets = ["Scratches", "Diesel"] } ];
 
                 // Query using SelectMany().
                 IEnumerable<string> query1 =
-                    petOwners.AsQueryable().SelectMany(petOwner => petOwner.Pets);
+                    petOwners.AsQueryable()
+                        .SelectMany(petOwner => petOwner.Pets);
 
                 Console.WriteLine("Using SelectMany():");
 
@@ -1817,14 +1820,15 @@ namespace QueryableExamples
                     Console.WriteLine(pet);
 
                 // This code shows how to use Select() instead of SelectMany().
-                IEnumerable<List<String>> query2 =
-                    petOwners.AsQueryable().Select(petOwner => petOwner.Pets);
+                IEnumerable<List<string>> query2 =
+                    petOwners.AsQueryable()
+                        .Select(petOwner => petOwner.Pets);
 
                 Console.WriteLine("\nUsing Select():");
 
                 // Notice that two foreach loops are required to iterate through
                 // the results because the query returns a collection of arrays.
-                foreach (List<String> petList in query2)
+                foreach (List<string> petList in query2)
                 {
                     foreach (string pet in petList)
                     {
@@ -1871,14 +1875,14 @@ namespace QueryableExamples
             public static void SelectManyEx2()
             {
                 PetOwner[] petOwners =
-                    { new PetOwner { Name="Higa, Sidney",
-                          Pets = new List<string>{ "Scruffy", "Sam" } },
-                      new PetOwner { Name="Ashkenazi, Ronen",
-                          Pets = new List<string>{ "Walker", "Sugar" } },
-                      new PetOwner { Name="Price, Vernette",
-                          Pets = new List<string>{ "Scratches", "Diesel" } },
-                      new PetOwner { Name="Hines, Patrick",
-                          Pets = new List<string>{ "Dusty" } } };
+                    [ new() { Name="Higa, Sidney",
+                          Pets = ["Scruffy", "Sam"] },
+                      new() { Name="Ashkenazi, Ronen",
+                          Pets = ["Walker", "Sugar"] },
+                      new() { Name="Price, Vernette",
+                          Pets = ["Scratches", "Diesel"] },
+                      new() { Name="Hines, Patrick",
+                          Pets = ["Dusty"] } ];
 
                 // For each PetOwner element in the source array,
                 // project a sequence of strings where each string
@@ -1925,22 +1929,22 @@ namespace QueryableExamples
             public static void SelectManyEx3()
             {
                 PetOwner[] petOwners =
-                    { new PetOwner { Name="Higa",
-                          Pets = new List<Pet>{
-                              new Pet { Name="Scruffy", Breed="Poodle" },
-                              new Pet { Name="Sam", Breed="Hound" } } },
-                      new PetOwner { Name="Ashkenazi",
-                          Pets = new List<Pet>{
-                              new Pet { Name="Walker", Breed="Collie" },
-                              new Pet { Name="Sugar", Breed="Poodle" } } },
-                      new PetOwner { Name="Price",
-                          Pets = new List<Pet>{
-                              new Pet { Name="Scratches", Breed="Dachshund" },
-                              new Pet { Name="Diesel", Breed="Collie" } } },
-                      new PetOwner { Name="Hines",
-                          Pets = new List<Pet>{
-                              new Pet { Name="Dusty", Breed="Collie" } } }
-                    };
+                    [ new() { Name="Higa",
+                          Pets = [
+                              new() { Name="Scruffy", Breed="Poodle" },
+                              new() { Name="Sam", Breed="Hound" } ] },
+                      new() { Name="Ashkenazi",
+                          Pets = [
+                              new() { Name="Walker", Breed="Collie" },
+                              new() { Name="Sugar", Breed="Poodle" } ] },
+                      new() { Name="Price",
+                          Pets = [
+                              new() { Name="Scratches", Breed="Dachshund" },
+                              new() { Name="Diesel", Breed="Collie" } ] },
+                      new() { Name="Hines",
+                          Pets = [
+                              new() { Name="Dusty", Breed="Collie" } ] }
+                    ];
 
                 // This query demonstrates how to obtain a sequence of
                 // the names of all the pets whose breed is "Collie", while
@@ -1992,12 +1996,12 @@ namespace QueryableExamples
 
             public static void SequenceEqualEx1()
             {
-                Pet pet1 = new Pet { Name = "Turbo", Age = 2 };
-                Pet pet2 = new Pet { Name = "Peanut", Age = 8 };
+                Pet pet1 = new() { Name = "Turbo", Age = 2 };
+                Pet pet2 = new() { Name = "Peanut", Age = 8 };
 
                 // Create two lists of pets.
-                List<Pet> pets1 = new List<Pet> { pet1, pet2 };
-                List<Pet> pets2 = new List<Pet> { pet1, pet2 };
+                List<Pet> pets1 = [pet1, pet2];
+                List<Pet> pets2 = [pet1, pet2];
 
                 // Determine if the lists are equal.
                 bool equal = pets1.AsQueryable().SequenceEqual(pets2);
@@ -2027,15 +2031,16 @@ namespace QueryableExamples
 
             public static void SequenceEqualEx2()
             {
-                Pet pet1 = new Pet() { Name = "Turbo", Age = 2 };
-                Pet pet2 = new Pet() { Name = "Peanut", Age = 8 };
+                Pet pet1 = new() { Name = "Turbo", Age = 2 };
+                Pet pet2 = new() { Name = "Peanut", Age = 8 };
 
                 // Create two lists of pets.
-                List<Pet> pets1 = new List<Pet> { pet1, pet2 };
-                List<Pet> pets2 = new List<Pet> {
+                List<Pet> pets1 = [pet1, pet2];
+                List<Pet> pets2 =
+                [
                     new Pet { Name = "Turbo", Age = 2 },
                     new Pet { Name = "Peanut", Age = 8 }
-                };
+                ];
 
                 // Determine if the lists are equal.
                 bool equal = pets1.AsQueryable().SequenceEqual(pets2);
@@ -2058,8 +2063,8 @@ namespace QueryableExamples
         {
             // <Snippet79>
             // Create two arrays.
-            string[] fruits1 = { "orange" };
-            string[] fruits2 = { "orange", "apple" };
+            string[] fruits1 = ["orange"];
+            string[] fruits2 = ["orange", "apple"];
 
             // Get the only item in the first array.
             string fruit1 = fruits1.AsQueryable().Single();
@@ -2095,11 +2100,12 @@ namespace QueryableExamples
         static void SingleEx2()
         {
             // <Snippet81>
-            string[] fruits = { "apple", "banana", "mango",
-                                  "orange", "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango",
+                                  "orange", "passionfruit", "grape" ];
 
             // Get the only string in the array whose length is greater than 10.
-            string fruit1 = fruits.AsQueryable().Single(fruit => fruit.Length > 10);
+            string fruit1 = fruits.AsQueryable()
+                .Single(fruit => fruit.Length > 10);
 
             Console.WriteLine("First Query: " + fruit1);
 
@@ -2107,7 +2113,8 @@ namespace QueryableExamples
             {
                 // Try to get the only string in the array
                 // whose length is greater than 15.
-                string fruit2 = fruits.AsQueryable().Single(fruit => fruit.Length > 15);
+                string fruit2 = fruits.AsQueryable()
+                    .Single(fruit => fruit.Length > 15);
                 Console.WriteLine("Second Query: " + fruit2);
             }
             catch (System.InvalidOperationException)
@@ -2133,8 +2140,8 @@ namespace QueryableExamples
         {
             // <Snippet83>
             // Create two arrays. The second is empty.
-            string[] fruits1 = { "orange" };
-            string[] fruits2 = { };
+            string[] fruits1 = ["orange"];
+            string[] fruits2 = [];
 
             // Get the only item in the first array, or else
             // the default value for type string (null).
@@ -2145,7 +2152,7 @@ namespace QueryableExamples
             // the default value for type string (null).
             string fruit2 = fruits2.AsQueryable().SingleOrDefault();
             Console.WriteLine("Second Query: " +
-                (String.IsNullOrEmpty(fruit2) ? "No such string!" : fruit2));
+                (string.IsNullOrEmpty(fruit2) ? "No such string!" : fruit2));
 
             /*
                 This code produces the following output:
@@ -2160,21 +2167,21 @@ namespace QueryableExamples
         static void SingleOrDefaultEx2()
         {
             // <Snippet85>
-            string[] fruits = { "apple", "banana", "mango",
-                                  "orange", "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango",
+                                  "orange", "passionfruit", "grape" ];
 
             // Get the single string in the array whose length is greater
             // than 10, or else the default value for type string (null).
-            string fruit1 =
-                fruits.AsQueryable().SingleOrDefault(fruit => fruit.Length > 10);
+            string fruit1 = fruits.AsQueryable()
+                .SingleOrDefault(fruit => fruit.Length > 10);
             Console.WriteLine("First Query: " + fruit1);
 
             // Get the single string in the array whose length is greater
             // than 15, or else the default value for type string (null).
-            string fruit2 =
-               fruits.AsQueryable().SingleOrDefault(fruit => fruit.Length > 15);
+            string fruit2 = fruits.AsQueryable()
+                .SingleOrDefault(fruit => fruit.Length > 15);
             Console.WriteLine("Second Query: " +
-                (String.IsNullOrEmpty(fruit2) ? "No such string!" : fruit2));
+                (string.IsNullOrEmpty(fruit2) ? "No such string!" : fruit2));
 
             /*
                 This code produces the following output:
@@ -2189,7 +2196,7 @@ namespace QueryableExamples
         static void SingleOrDefaultEx3()
         {
             // <Snippet133>
-            int[] pageNumbers = { };
+            int[] pageNumbers = [];
 
             // Setting the default value to 1 after the query.
             int pageNumber1 = pageNumbers.AsQueryable().SingleOrDefault();
@@ -2218,12 +2225,12 @@ namespace QueryableExamples
         static void SkipEx1()
         {
             // <Snippet87>
-            int[] grades = { 59, 82, 70, 56, 92, 98, 85 };
+            int[] grades = [59, 82, 70, 56, 92, 98, 85];
 
             // Sort the grades in descending order and
             // get all except the first three.
-            IEnumerable<int> lowerGrades =
-                grades.AsQueryable().OrderByDescending(g => g).Skip(3);
+            IEnumerable<int> lowerGrades = grades.AsQueryable()
+                .OrderByDescending(g => g).Skip(3);
 
             Console.WriteLine("All grades except the top three are:");
             foreach (int grade in lowerGrades)
@@ -2247,7 +2254,7 @@ namespace QueryableExamples
         static void SkipWhileEx1()
         {
             // <Snippet88>
-            int[] grades = { 59, 82, 70, 56, 92, 98, 85 };
+            int[] grades = [59, 82, 70, 56, 92, 98, 85];
 
             // Get all grades less than 80 by first
             // sorting the grades in descending order and then
@@ -2277,8 +2284,8 @@ namespace QueryableExamples
         static void SkipWhileEx2()
         {
             // <Snippet89>
-            int[] amounts = { 5000, 2500, 9000, 8000,
-                                6500, 4000, 1500, 5500 };
+            int[] amounts = [ 5000, 2500, 9000, 8000,
+                                6500, 4000, 1500, 5500 ];
 
             // Skip over amounts in the array until the first amount
             // that is less than or equal to the product of its
@@ -2306,7 +2313,7 @@ namespace QueryableExamples
         static void SumEx1()
         {
             // <Snippet120>
-            List<float> numbers = new List<float> { 43.68F, 1.25F, 583.7F, 6.5F };
+            List<float> numbers = [43.68F, 1.25F, 583.7F, 6.5F];
 
             float sum = numbers.AsQueryable().Sum();
 
@@ -2324,7 +2331,7 @@ namespace QueryableExamples
         static void SumEx2()
         {
             // <Snippet121>
-            float?[] points = { null, 0, 92.83F, null, 100.0F, 37.46F, 81.1F };
+            float?[] points = [null, 0, 92.83F, null, 100.0F, 37.46F, 81.1F];
 
             float? sum = points.AsQueryable().Sum();
 
@@ -2351,14 +2358,14 @@ namespace QueryableExamples
             public static void SumEx3()
             {
                 List<Package> packages =
-                    new List<Package>
-                        { new Package { Company = "Coho Vineyard", Weight = 25.2 },
+                    [ new Package { Company = "Coho Vineyard", Weight = 25.2 },
                           new Package { Company = "Lucerne Publishing", Weight = 18.7 },
                           new Package { Company = "Wingtip Toys", Weight = 6.0 },
-                          new Package { Company = "Adventure Works", Weight = 33.8 } };
+                          new Package { Company = "Adventure Works", Weight = 33.8 } ];
 
                 // Calculate the sum of all package weights.
-                double totalWeight = packages.AsQueryable().Sum(pkg => pkg.Weight);
+                double totalWeight = packages.AsQueryable()
+                    .Sum(pkg => pkg.Weight);
 
                 Console.WriteLine("The total weight of the packages is: {0}", totalWeight);
             }
@@ -2377,11 +2384,11 @@ namespace QueryableExamples
         static void TakeEx1()
         {
             // <Snippet99>
-            int[] grades = { 59, 82, 70, 56, 92, 98, 85 };
+            int[] grades = [59, 82, 70, 56, 92, 98, 85];
 
             // Sort the grades in descending order and take the first three.
-            IEnumerable<int> topThreeGrades =
-                grades.AsQueryable().OrderByDescending(grade => grade).Take(3);
+            IEnumerable<int> topThreeGrades = grades.AsQueryable()
+                .OrderByDescending(grade => grade).Take(3);
 
             Console.WriteLine("The top three grades are:");
             foreach (int grade in topThreeGrades)
@@ -2404,14 +2411,14 @@ namespace QueryableExamples
         static void TakeWhileEx1()
         {
             // <Snippet100>
-            string[] fruits = { "apple", "banana", "mango", "orange",
-                                  "passionfruit", "grape" };
+            string[] fruits = [ "apple", "banana", "mango", "orange",
+                                  "passionfruit", "grape" ];
 
             // Take strings from the array until a string
             // that is equal to "orange" is found.
             IEnumerable<string> query =
                 fruits.AsQueryable()
-                .TakeWhile(fruit => String.Compare("orange", fruit, true) != 0);
+                .TakeWhile(fruit => string.Compare("orange", fruit, true) != 0);
 
             foreach (string fruit in query)
                 Console.WriteLine(fruit);
@@ -2430,8 +2437,8 @@ namespace QueryableExamples
         static void TakeWhileEx2()
         {
             // <Snippet101>
-            string[] fruits = { "apple", "passionfruit", "banana", "mango",
-                                  "orange", "blueberry", "grape", "strawberry" };
+            string[] fruits = [ "apple", "passionfruit", "banana", "mango",
+                                  "orange", "blueberry", "grape", "strawberry" ];
 
             // Take strings from the array until a string whose length
             // is less than its index in the array is found.
@@ -2461,14 +2468,14 @@ namespace QueryableExamples
         static void ThenByEx1()
         {
             // <Snippet102>
-            string[] fruits = { "grape", "passionfruit", "banana", "apple",
-                                  "orange", "raspberry", "mango", "blueberry" };
+            string[] fruits = [ "grape", "passionfruit", "banana", "apple",
+                                  "orange", "raspberry", "mango", "blueberry" ];
 
             // Sort the strings first by their length and then
             // alphabetically by passing the identity selector function.
-            IEnumerable<string> query =
-                fruits.AsQueryable()
-                .OrderBy(fruit => fruit.Length).ThenBy(fruit => fruit);
+            IEnumerable<string> query = fruits.AsQueryable()
+                .OrderBy(fruit => fruit.Length)
+                .ThenBy(fruit => fruit);
 
             foreach (string fruit in query)
                 Console.WriteLine(fruit);
@@ -2494,25 +2501,17 @@ namespace QueryableExamples
         static class ThenByDescending
         {
             // <Snippet103>
-            public class CaseInsensitiveComparer : IComparer<string>
-            {
-                public int Compare(string x, string y)
-                {
-                    return string.Compare(x, y, true);
-                }
-            }
-
             public static void ThenByDescendingEx1()
             {
                 string[] fruits =
-                { "apPLe", "baNanA", "apple", "APple", "orange", "BAnana", "ORANGE", "apPLE" };
+                ["apPLe", "baNanA", "apple", "APple", "orange", "BAnana", "ORANGE", "apPLE"];
 
                 // Sort the strings first ascending by their length and
                 // then descending using a custom case insensitive comparer.
                 IEnumerable<string> query =
                     fruits.AsQueryable()
                     .OrderBy(fruit => fruit.Length)
-                    .ThenByDescending(fruit => fruit, new CaseInsensitiveComparer());
+                    .ThenByDescending(fruit => fruit, StringComparer.OrdinalIgnoreCase);
 
                 foreach (string fruit in query)
                     Console.WriteLine(fruit);
@@ -2539,8 +2538,8 @@ namespace QueryableExamples
         static void UnionEx1()
         {
             // <Snippet109>
-            int[] ints1 = { 5, 3, 9, 7, 5, 9, 3, 7 };
-            int[] ints2 = { 8, 3, 6, 4, 4, 9, 1, 0 };
+            int[] ints1 = [5, 3, 9, 7, 5, 9, 3, 7];
+            int[] ints2 = [8, 3, 6, 4, 4, 9, 1, 0];
 
             // Get the set union of the items in the two arrays.
             IEnumerable<int> union = ints1.AsQueryable().Union(ints2);
@@ -2565,12 +2564,12 @@ namespace QueryableExamples
         {
             // <Snippet110>
             List<string> fruits =
-                new List<string> { "apple", "passionfruit", "banana", "mango",
-                                   "orange", "blueberry", "grape", "strawberry" };
+                [ "apple", "passionfruit", "banana", "mango",
+                    "orange", "blueberry", "grape", "strawberry" ];
 
             // Get all strings whose length is less than 6.
-            IEnumerable<string> query =
-                fruits.AsQueryable().Where(fruit => fruit.Length < 6);
+            IEnumerable<string> query = fruits.AsQueryable()
+                .Where(fruit => fruit.Length < 6);
 
             foreach (string fruit in query)
                 Console.WriteLine(fruit);
@@ -2589,7 +2588,7 @@ namespace QueryableExamples
         static void WhereEx2()
         {
             // <Snippet111>
-            int[] numbers = { 0, 30, 20, 15, 90, 85, 40, 75 };
+            int[] numbers = [0, 30, 20, 15, 90, 85, 40, 75];
 
             // Get all the numbers that are less than or equal to
             // the product of their index in the array and 10.
@@ -2617,12 +2616,13 @@ namespace QueryableExamples
         static void ZipEx()
         {
             // <Snippet200>
-            int[] numbers = { 1, 2, 3, 4 };
-            string[] words = { "one", "two", "three" };
+            int[] numbers = [1, 2, 3, 4];
+            string[] words = ["one", "two", "three"];
 
-            var numbersAndWords = numbers.AsQueryable().Zip(words, (first, second) => first + " " + second);
+            IQueryable<string> numbersAndWords = numbers.AsQueryable()
+                .Zip(words, (first, second) => first + " " + second);
 
-            foreach (var item in numbersAndWords)
+            foreach (string item in numbersAndWords)
                 Console.WriteLine(item);
 
             // This code produces the following output:

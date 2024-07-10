@@ -7,10 +7,7 @@ namespace SequenceExamples
 {
     static class ILookup
     {
-        static void Main(string[] args)
-        {
-            ILookupExample();
-        }
+        static void Main() => ILookupExample();
 
         // <Snippet1>
         class Package
@@ -23,11 +20,12 @@ namespace SequenceExamples
         public static void ILookupExample()
         {
             // Create a list of Packages to put into an ILookup data structure.
-            List<Package> packages = new List<Package> { new Package { Company = "Coho Vineyard", Weight = 25.2, TrackingNumber = 89453312L },
+            List<Package> packages =
+            [ new Package { Company = "Coho Vineyard", Weight = 25.2, TrackingNumber = 89453312L },
                                                          new Package { Company = "Lucerne Publishing", Weight = 18.7, TrackingNumber = 89112755L },
                                                          new Package { Company = "Wingtip Toys", Weight = 6.0, TrackingNumber = 299456122L },
                                                          new Package { Company = "Contoso Pharmaceuticals", Weight = 9.3, TrackingNumber = 670053128L },
-                                                         new Package { Company = "Wide World Importers", Weight = 33.8, TrackingNumber = 4665518773L } };
+                                                         new Package { Company = "Wide World Importers", Weight = 33.8, TrackingNumber = 4665518773L } ];
 
             // Create a Lookup to organize the packages. Use the first character of Company as the key value.
             // Select Company appended to TrackingNumber for each element value in the ILookup object.
@@ -37,7 +35,7 @@ namespace SequenceExamples
                 );
 
             // Iterate through each value in the ILookup and output the contents.
-            foreach (var packageGroup in packageLookup)
+            foreach (IGrouping<char, string> packageGroup in packageLookup)
             {
                 // Print the key value.
                 Console.WriteLine(packageGroup.Key);

@@ -8,19 +8,17 @@ namespace SequenceExamples
 {
     static class IGrouping
     {
-        static void Main(string[] args)
-        {
+        static void Main() =>
             //Console.WriteLine("\n");
             //GroupKey();
             EnumerateGroup();
-        }
 
         private static void EnumerateGroup()
         {
             // <Snippet1>
             // Get an IGrouping object.
             IGrouping<System.Reflection.MemberTypes, System.Reflection.MemberInfo> group =
-                typeof(String).GetMembers().
+                typeof(string).GetMembers().
                 GroupBy(member => member.MemberType).
                 First();
 
@@ -59,7 +57,7 @@ namespace SequenceExamples
             // <Snippet2>
             // Get a sequence of IGrouping objects.
             IEnumerable<IGrouping<System.Reflection.MemberTypes, System.Reflection.MemberInfo>> memberQuery =
-                typeof(String).GetMembers().
+                typeof(string).GetMembers().
                 GroupBy(member => member.MemberType);
 
             // Output the key of each IGrouping object and the count of values.
@@ -78,7 +76,7 @@ namespace SequenceExamples
         private static void Test()
         {
             IOrderedEnumerable<IGrouping<System.Reflection.MemberTypes, System.Reflection.MemberInfo>> memberQuery =
-                typeof(String).GetMembers().
+                typeof(string).GetMembers().
                 GroupBy(member => member.MemberType).
                 OrderBy(group => group.Count());
 

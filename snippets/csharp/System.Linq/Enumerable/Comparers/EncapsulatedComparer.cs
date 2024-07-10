@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+namespace Comparers;
+
 //<Snippet1>
 public class MyProduct : IEquatable<MyProduct>
 {
@@ -11,10 +13,10 @@ public class MyProduct : IEquatable<MyProduct>
     public bool Equals(MyProduct other)
     {
         //Check whether the compared object is null.
-        if (Object.ReferenceEquals(other, null)) return false;
+        if (other is null) return false;
 
         //Check whether the compared object references the same data.
-        if (Object.ReferenceEquals(this, other)) return true;
+        if (ReferenceEquals(this, other)) return true;
 
         //Check whether the products' properties are equal.
         return Code.Equals(other.Code) && Name.Equals(other.Name);
@@ -25,20 +27,21 @@ public class MyProduct : IEquatable<MyProduct>
 
     public override int GetHashCode()
     {
+        //Get hash code for the Name field
+        var hashProductName = Name.GetHashCode();
 
-        //Get hash code for the Name field if it is not null.
-        int hashProductName = Name == null ? 0 : Name.GetHashCode();
-
-        //Get hash code for the Code field.
-        int hashProductCode = Code.GetHashCode();
+        //Get hash code for the Code field
+        var hashProductCode = Code.GetHashCode();
 
         //Calculate the hash code for the product.
         return hashProductName ^ hashProductCode;
     }
+
+    public override bool Equals(object obj) => Equals(obj as MyProduct);
 }
 //</Snippet1>
 
-class Program1
+static class Program1
 {
     static void Main(string[] args)
     {
@@ -46,11 +49,11 @@ class Program1
         // Some samples here need to use ProductA in conjunction with
         // ProductComparer, which implements IEqualityComparer (not IEquatable).
         //<Snippet10>
-        ProductA[] store1 = { new ProductA { Name = "apple", Code = 9 },
-                               new ProductA { Name = "orange", Code = 4 } };
+        ProductA[] store1 = [ new() { Name = "apple", Code = 9 },
+                               new() { Name = "orange", Code = 4 } ];
 
-        ProductA[] store2 = { new ProductA { Name = "apple", Code = 9 },
-                               new ProductA { Name = "lemon", Code = 12 } };
+        ProductA[] store2 = [ new() { Name = "apple", Code = 9 },
+                               new() { Name = "lemon", Code = 12 } ];
         //</Snippet10>
 
         //<Intersect>
@@ -60,7 +63,7 @@ class Program1
         IEnumerable<ProductA> duplicates =
             store1.Intersect(store2);
 
-        foreach (var product in duplicates)
+        foreach (ProductA product in duplicates)
             Console.WriteLine(product.Name + " " + product.Code);
 
         /*
@@ -76,7 +79,7 @@ class Program1
         IEnumerable<ProductA> union =
           store1.Union(store2);
 
-        foreach (var product in union)
+        foreach (ProductA product in union)
             Console.WriteLine(product.Name + " " + product.Code);
 
         /*
@@ -89,17 +92,17 @@ class Program1
         //</Union>
 
         //<Distinct>
-        MyProduct[] products = { new MyProduct { Name = "apple", Code = 9 },
-                               new MyProduct { Name = "orange", Code = 4 },
-                               new MyProduct { Name = "apple", Code = 9 },
-                               new MyProduct { Name = "lemon", Code = 12 } };
+        MyProduct[] products = [ new() { Name = "apple", Code = 9 },
+                               new() { Name = "orange", Code = 4 },
+                               new() { Name = "apple", Code = 9 },
+                               new() { Name = "lemon", Code = 12 } ];
 
         // Exclude duplicates.
 
         IEnumerable<MyProduct> noduplicates =
             products.Distinct();
 
-        foreach (var product in noduplicates)
+        foreach (MyProduct product in noduplicates)
             Console.WriteLine(product.Name + " " + product.Code);
 
         /*
@@ -111,11 +114,11 @@ class Program1
         //</Distinct>
 
         //<Except>
-        ProductA[] fruits1 = { new ProductA { Name = "apple", Code = 9 },
-                               new ProductA { Name = "orange", Code = 4 },
-                                new ProductA { Name = "lemon", Code = 12 } };
+        ProductA[] fruits1 = [ new() { Name = "apple", Code = 9 },
+                               new() { Name = "orange", Code = 4 },
+                                new() { Name = "lemon", Code = 12 } ];
 
-        ProductA[] fruits2 = { new ProductA { Name = "apple", Code = 9 } };
+        ProductA[] fruits2 = [new() { Name = "apple", Code = 9 }];
 
         // Get all the elements from the first array
         // except for the elements from the second array.
@@ -123,7 +126,7 @@ class Program1
         IEnumerable<ProductA> except =
             fruits1.Except(fruits2);
 
-        foreach (var product in except)
+        foreach (ProductA product in except)
             Console.WriteLine(product.Name + " " + product.Code);
 
         /*
@@ -136,13 +139,13 @@ class Program1
 
         //<SequenceEqual>
 
-        ProductA[] storeA = { new ProductA { Name = "apple", Code = 9 },
-                               new ProductA { Name = "orange", Code = 4 } };
+        ProductA[] storeA = [ new() { Name = "apple", Code = 9 },
+                               new() { Name = "orange", Code = 4 } ];
 
-        ProductA[] storeB = { new ProductA { Name = "apple", Code = 9 },
-                               new ProductA { Name = "orange", Code = 4 } };
+        ProductA[] storeB = [ new() { Name = "apple", Code = 9 },
+                               new() { Name = "orange", Code = 4 } ];
 
-        bool equalAB = storeA.SequenceEqual(storeB);
+        var equalAB = storeA.SequenceEqual(storeB);
 
         Console.WriteLine("Equal? " + equalAB);
 
@@ -166,7 +169,7 @@ class Program1
             if (other is null)
                 return false;
 
-            return this.Name == other.Name && this.Code == other.Code;
+            return Name == other.Name && Code == other.Code;
         }
 
         public override bool Equals(object obj) => Equals(obj as ProductA);
