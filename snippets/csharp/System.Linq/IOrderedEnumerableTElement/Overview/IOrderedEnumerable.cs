@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,25 +6,25 @@ namespace IOrderedSequence
 {
     static class IOrderedSequence
     {
-        static void Main(string[] args)
-        {
-            Example2();
-        }
+        static void Main() => Example2();
 
         static void Example1()
         {
             // <Snippet1>
             // Create an array of strings to sort.
-            string[] fruits = { "apricot", "orange", "banana", "mango", "apple", "grape", "strawberry" };
+            string[] fruits = ["apricot", "orange", "banana", "mango", "apple", "grape", "strawberry"];
 
             // Sort the strings first by their length and then alphabetically
             // by passing the identity selector function.
             IOrderedEnumerable<string> sortedFruits1 =
-                fruits.OrderBy(fruit => fruit.Length).ThenBy(fruit => fruit);
+                fruits.OrderBy(fruit => fruit.Length)
+                    .ThenBy(fruit => fruit);
 
             // Output the resulting sequence of strings.
             foreach (string fruit in sortedFruits1)
+            {
                 Console.WriteLine(fruit);
+            }
 
             // This code produces the following output:
             //
@@ -46,7 +45,7 @@ namespace IOrderedSequence
         {
             // <Snippet2>
             // Create an array of strings to sort.
-            string[] fruits = { "apricot", "orange", "banana", "mango", "apple", "grape", "strawberry" };
+            string[] fruits = ["apricot", "orange", "banana", "mango", "apple", "grape", "strawberry"];
             // First sort the strings by their length.
             IOrderedEnumerable<string> sortedFruits2 =
                 fruits.OrderBy(fruit => fruit.Length);
@@ -58,7 +57,9 @@ namespace IOrderedSequence
 
             // Output the resulting sequence of strings.
             foreach (string fruit in sortedFruits3)
+            {
                 Console.WriteLine(fruit);
+            }
 
             // This code produces the following output:
             //
