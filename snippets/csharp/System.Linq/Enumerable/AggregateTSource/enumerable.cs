@@ -238,7 +238,7 @@ namespace SequenceExamples
                       new Pet { Name="Boots", Age=4, Vaccinated=false },
                       new Pet { Name="Whiskers", Age=1, Vaccinated=false } ];
 
-                // Determine whether any pets over age 1 are also unvaccinated.
+                // Determine whether any pets over _age 1 are also unvaccinated.
                 bool unvaccinated =
                     pets.Any(p => p.Age > 1 && !p.Vaccinated);
 
@@ -964,7 +964,7 @@ namespace SequenceExamples
                                    new Pet { Name="Daisy", Age=4 } ];
 
                 // Group the pets using Age as the key value
-                // and selecting only the pet's Name for each value.
+                // and selecting only the pet's name for each value.
                 // <Snippet122>
                 IEnumerable<IGrouping<int, string>> query =
                     from pet in pets
