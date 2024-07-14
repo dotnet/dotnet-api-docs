@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 //using System.Reflection;
@@ -8,26 +7,30 @@ namespace SequenceExamples
 {
     static class IGrouping
     {
-        static void Main() =>
+        static void Main()
+        {
             //Console.WriteLine("\n");
             //GroupKey();
             EnumerateGroup();
+        }
 
-        private static void EnumerateGroup()
+        static void EnumerateGroup()
         {
             // <Snippet1>
             // Get an IGrouping object.
             IGrouping<System.Reflection.MemberTypes, System.Reflection.MemberInfo> group =
-                typeof(string).GetMembers().
-                GroupBy(member => member.MemberType).
-                First();
+                typeof(string).GetMembers()
+                    .GroupBy(member => member.MemberType)
+                    .First();
 
             // Output the key of the IGrouping, then iterate
             // through each value in the sequence of values
             // of the IGrouping and output its Name property.
             Console.WriteLine("\nValues that have the key '{0}':", group.Key);
             foreach (System.Reflection.MemberInfo mi in group)
+            {
                 Console.WriteLine(mi.Name);
+            }
 
             // The output is similar to:
 
@@ -52,7 +55,7 @@ namespace SequenceExamples
             // </Snippet1>
         }
 
-        private static void GroupKey()
+        static void GroupKey()
         {
             // <Snippet2>
             // Get a sequence of IGrouping objects.
@@ -62,7 +65,9 @@ namespace SequenceExamples
 
             // Output the key of each IGrouping object and the count of values.
             foreach (IGrouping<System.Reflection.MemberTypes, System.Reflection.MemberInfo> group in memberQuery)
+            {
                 Console.WriteLine("(Key) {0} (Member count) {1}", group.Key, group.Count());
+            }
 
             // The output is similar to:
             // (Key) Method (Member count) 113
@@ -73,7 +78,7 @@ namespace SequenceExamples
             // </Snippet2>
         }
 
-        private static void Test()
+        static void Test()
         {
             IOrderedEnumerable<IGrouping<System.Reflection.MemberTypes, System.Reflection.MemberInfo>> memberQuery =
                 typeof(string).GetMembers().
@@ -84,7 +89,9 @@ namespace SequenceExamples
             {
                 Console.WriteLine("\n(Key) {0}", group.Key);
                 foreach (System.Reflection.MemberInfo mi in group)
+                {
                     Console.WriteLine(mi.Name);
+                }
             }
         }
     }

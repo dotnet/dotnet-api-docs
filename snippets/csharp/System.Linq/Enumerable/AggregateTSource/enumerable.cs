@@ -74,23 +74,22 @@ namespace SequenceExamples
         static class All
         {
             // <Snippet4>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void AllEx()
             {
                 // Create an array of Pets.
-                Pet[] pets = [ new Pet { Name="Barley", Age=10 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=6 } ];
+                Pet[] pets = [ new ("Barley", 10 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 6 ) ];
 
                 // Determine whether all pet names
                 // in the array start with 'B'.
-                bool allStartWithB = pets.All(pet =>
-                                                  pet.Name.StartsWith('B'));
+                bool allStartWithB = pets.All(pet => pet.Name.StartsWith('B'));
 
                 Console.WriteLine(
                     "{0} pet names start with 'B'.",
@@ -106,31 +105,31 @@ namespace SequenceExamples
         static class All2
         {
             // <Snippet129>
-            class Pet
+            class Pet (string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
-            class Person
+            class Person(string lastName, Pet[] pets)
             {
-                public string LastName { get; set; }
-                public Pet[] Pets { get; set; }
+                public string LastName { get; set; } = lastName;
+                public Pet[] Pets { get; set; } = pets;
             }
 
             public static void AllEx2()
             {
                 List<Person> people =
-                    [ new Person { LastName = "Haas",
-                                   Pets = [ new Pet { Name="Barley", Age=10 },
-                                                      new Pet { Name="Boots", Age=14 },
-                                                      new Pet { Name="Whiskers", Age=6 }]},
-                      new Person { LastName = "Fakhouri",
-                                   Pets = [new Pet { Name = "Snowball", Age = 1}]},
-                      new Person { LastName = "Antebi",
-                                   Pets = [new Pet { Name = "Belle", Age = 8}]},
-                      new Person { LastName = "Philips",
-                                   Pets = [ new Pet { Name = "Sweetie", Age = 2},
-                                                      new Pet { Name = "Rover", Age = 13}] }
+                    [ new Person ("Haas",
+                        [ new ("Barley", 10 ),
+                            new ("Boots", 14 ),
+                            new ("Whiskers", 6 )]),
+                      new Person ("Fakhouri",
+                        [new ("Snowball",  1)]),
+                      new Person ("Antebi",
+                        [new ("Belle",  8)]),
+                      new Person ("Philips",
+                        [ new ("Sweetie",  2),
+                            new ("Rover",  13)] )
                     ];
 
                 // Determine which people have pets that are all older than 5.
@@ -173,31 +172,31 @@ namespace SequenceExamples
             }
 
             // <Snippet130>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
-            class Person
+            class Person(string lastName, Pet[] pets)
             {
-                public string LastName { get; set; }
-                public Pet[] Pets { get; set; }
+                public string LastName { get; set; } = lastName;
+                public Pet[] Pets { get; set; } = pets;
             }
 
             public static void AnyEx2()
             {
                 List<Person> people =
-                    [ new Person { LastName = "Haas",
-                                   Pets = [ new Pet { Name="Barley", Age=10 },
-                                                      new Pet { Name="Boots", Age=14 },
-                                                      new Pet { Name="Whiskers", Age=6 }]},
-                      new Person { LastName = "Fakhouri",
-                                   Pets = [new Pet { Name = "Snowball", Age = 1}]},
-                      new Person { LastName = "Antebi",
-                                   Pets = []},
-                      new Person { LastName = "Philips",
-                                   Pets = [ new Pet { Name = "Sweetie", Age = 2},
-                                                      new Pet { Name = "Rover", Age = 13}] }
+                    [ new Person ("Haas",
+                                   [ new ("Barley", 10 ),
+                                        new ("Boots", 14 ),
+                                        new ("Whiskers", 6 )]),
+                      new Person ("Fakhouri",
+                                   [new ("Snowball",  1)]),
+                      new Person ("Antebi",
+                                   []),
+                      new Person ("Philips",
+                                   [ new ("Sweetie",  2),
+                                        new ("Rover",  13)] )
                     ];
 
                 // Determine which people have a non-empty Pet array.
@@ -223,22 +222,22 @@ namespace SequenceExamples
         static class Any2
         {
             // <Snippet6>
-            class Pet
+            class Pet(string name, int age, bool vaccinated)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
-                public bool Vaccinated { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
+                public bool Vaccinated { get; set; } = vaccinated;
             }
 
             public static void AnyEx3()
             {
                 // Create an array of Pets.
                 Pet[] pets =
-                    [ new Pet { Name="Barley", Age=8, Vaccinated=true },
-                      new Pet { Name="Boots", Age=4, Vaccinated=false },
-                      new Pet { Name="Whiskers", Age=1, Vaccinated=false } ];
+                    [ new ("Barley", 8, true ),
+                      new ("Boots", 4, false ),
+                      new ("Whiskers", 1, false ) ];
 
-                // Determine whether any pets over _age 1 are also unvaccinated.
+                // Determine whether any pets over age 1 are also unvaccinated.
                 bool unvaccinated =
                     pets.Any(p => p.Age > 1 && !p.Vaccinated);
 
@@ -338,7 +337,7 @@ namespace SequenceExamples
             // <Snippet16>
             string[] numbers = ["10007", "37", "299846234235"];
 
-            double average = numbers.Average(num => long.Parse(num));
+            double average = numbers.Average(long.Parse);
 
             Console.WriteLine("The average is {0}.", average);
 
@@ -370,12 +369,12 @@ namespace SequenceExamples
             // <Snippet19>
             System.Collections.ArrayList fruits = ["mango", "apple", "lemon"];
 
-            IEnumerable<string> query =
-                fruits.Cast<string>().OrderBy(fruit => fruit).Select(fruit => fruit);
+            IEnumerable<string> query = fruits.Cast<string>()
+                .OrderBy(fruit => fruit)
+                .Select(fruit => fruit);
 
-            // The following code, without the cast, doesn't compile.
-            //IEnumerable<string> query1 =
-            //    fruits.OrderBy(fruit => fruit).Select(fruit => fruit);
+            //The following code, without the cast, doesn't compile (no System.Linq.Enumerable.OrderBy extension method for ArrayList)
+            //var query1 = fruits.OrderBy(fruit => fruit).Select(fruit => fruit);
 
             foreach (string fruit in query)
             {
@@ -395,25 +394,25 @@ namespace SequenceExamples
         static class Concat
         {
             // <Snippet20>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             static Pet[] GetCats()
             {
-                Pet[] cats = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] cats = [ new ("Barley", 8 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 1 ) ];
                 return cats;
             }
 
             static Pet[] GetDogs()
             {
-                Pet[] dogs = [ new Pet { Name="Bounder", Age=3 },
-                               new Pet { Name="Snoopy", Age=14 },
-                               new Pet { Name="Fido", Age=9 } ];
+                Pet[] dogs = [ new ("Bounder", 3 ),
+                               new ("Snoopy", 14 ),
+                               new ("Fido", 9 ) ];
                 return dogs;
             }
 
@@ -422,9 +421,9 @@ namespace SequenceExamples
                 Pet[] cats = GetCats();
                 Pet[] dogs = GetDogs();
 
-                IEnumerable<string> query =
-                    cats.Select(cat => cat.Name)
-                        .Concat(dogs.Select(dog => dog.Name));
+                IEnumerable<string> query = cats
+                    .Select(cat => cat.Name)
+                    .Concat(dogs.Select(dog => dog.Name));
 
                 foreach (string name in query)
                 {
@@ -448,8 +447,9 @@ namespace SequenceExamples
                 Pet[] cats = GetCats();
                 Pet[] dogs = GetDogs();
 
-                IEnumerable<string> query =
-                    new[] { cats.Select(cat => cat.Name), dogs.Select(dog => dog.Name) }
+                IEnumerable<string> query = new[]
+                    { cats.Select(cat => cat.Name),
+                        dogs.Select(dog => dog.Name) }
                     .SelectMany(name => name);
 
                 foreach (string name in query)
@@ -519,18 +519,18 @@ namespace SequenceExamples
 
         static class Count
         {
-            // <Snippet23>
-            class Pet
-            {
-                public string Name { get; set; }
-                public bool Vaccinated { get; set; }
-            }
+    // <Snippet23>
+    class Pet(string name, bool vaccinated)
+    {
+        public string Name { get; set; } = name;
+        public bool Vaccinated { get; set; } = vaccinated;
+    }
 
             public static void CountEx2()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Vaccinated=true },
-                               new Pet { Name="Boots", Vaccinated=false },
-                               new Pet { Name="Whiskers", Vaccinated=false } ];
+                Pet[] pets = [ new ("Barley", true ),
+                               new ("Boots", false ),
+                               new ("Whiskers", false ) ];
 
                 try
                 {
@@ -555,22 +555,22 @@ namespace SequenceExamples
         static class DefaultIfEmpty1
         {
             // <Snippet24>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void DefaultIfEmptyEx1()
             {
                 List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 } ];
+                    [ new ("Barley", 8 ),
+                        new ("Boots", 4 ),
+                        new ("Whiskers", 1 ) ];
 
-                foreach (Pet pet in pets.DefaultIfEmpty())
+                foreach (var pet in pets.DefaultIfEmpty())
                 {
-                    Console.WriteLine(pet.Name);
+                    Console.WriteLine(pet?.Name);
                 }
             }
 
@@ -605,20 +605,20 @@ namespace SequenceExamples
         static class DefaultIfEmtpy2
         {
             // <Snippet26>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void DefaultIfEmptyEx2()
             {
-                Pet defaultPet = new() { Name = "Default Pet", Age = 0 };
+                Pet defaultPet = new("Default Pet", 0);
 
-                List<Pet> pets1 =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 } ];
+        List<Pet> pets1 =
+            [ new ("Barley", 8 ),
+                new ("Boots", 4 ),
+                new ("Whiskers", 1 ) ];
 
                 foreach (Pet pet in pets1.DefaultIfEmpty(defaultPet))
                 {
@@ -707,12 +707,13 @@ namespace SequenceExamples
 
             const int index = 20;
 
-            string name = names.ElementAtOrDefault(index);
+            var name = names.ElementAtOrDefault(index);
+            //var name = names[index];
 
             Console.WriteLine(
                 "The name chosen at index {0} is '{1}'.",
                 index,
-                string.IsNullOrEmpty(name) ? "<no name at this index>" : name);
+                name ?? "<no name at this index>");
 
             /*
              This code produces the following output:
@@ -781,7 +782,9 @@ namespace SequenceExamples
             IEnumerable<double> onlyInFirstSet = numbers1.Except(numbers2);
 
             foreach (double number in onlyInFirstSet)
+            {
                 Console.WriteLine(number);
+            }
 
             /*
              This code produces the following output:
@@ -857,15 +860,14 @@ namespace SequenceExamples
                                  "Andersen, Henriette Thaulow",
                                  "Hedlund, Magnus", "Ito, Shu" ];
 
-            string firstLongName = names.FirstOrDefault(name => name.Length > 20);
+            var firstLongName = names.FirstOrDefault(name => name.Length > 20);
 
             Console.WriteLine("The first long name is '{0}'.", firstLongName);
 
-            string firstVeryLongName = names.FirstOrDefault(name => name.Length > 30);
+            var firstVeryLongName = names.FirstOrDefault(name => name.Length > 30);
 
-            Console.WriteLine(
-                "There is {0} name longer than 30 characters.",
-                string.IsNullOrEmpty(firstVeryLongName) ? "not a" : "a");
+            Console.WriteLine("There is {0} name longer than 30 characters.",
+                firstVeryLongName is null ? "not a" : "a");
 
             /*
              This code produces the following output:
@@ -907,10 +909,10 @@ namespace SequenceExamples
         static class GroupBy
         {
             // <Snippet39>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             // Uses method-based query syntax.
@@ -918,10 +920,10 @@ namespace SequenceExamples
             {
                 // Create a list of pets.
                 List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 },
-                                   new Pet { Name="Daisy", Age=4 } ];
+                    [ new ("Barley", 8 ),
+                        new ("Boots", 4 ),
+                        new ("Whiskers", 1 ),
+                        new ("Daisy", 4 ) ];
 
                 // Group the pets using Age as the key value
                 // and selecting only the pet's Name for each value.
@@ -936,7 +938,9 @@ namespace SequenceExamples
                     // Iterate over each value in the
                     // IGrouping and print the value.
                     foreach (string name in petGroup)
+                    {
                         Console.WriteLine("  {0}", name);
+                    }
                 }
             }
 
@@ -958,10 +962,10 @@ namespace SequenceExamples
             {
                 // Create a list of pets.
                 List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 },
-                                   new Pet { Name="Daisy", Age=4 } ];
+                    [ new ("Barley", 8 ),
+                        new ("Boots", 4 ),
+                        new ("Whiskers", 1 ),
+                        new ("Daisy", 4 ) ];
 
                 // Group the pets using Age as the key value
                 // and selecting only the pet's name for each value.
@@ -979,7 +983,9 @@ namespace SequenceExamples
                     // Iterate over each value in the IGrouping
                     // and print the value.
                     foreach (string name in petGroup)
+                    {
                         Console.WriteLine("  {0}", name);
+                    }
                 }
             }
         }
@@ -987,30 +993,30 @@ namespace SequenceExamples
         static class GroupBy3
         {
             // <Snippet15>
-            class Pet
+            class Pet(string name, float age)
             {
-                public string Name { get; set; }
-                public double Age { get; set; }
+                public string Name { get; set; } = name;
+                public float Age { get; set; } = age;
             }
 
             public static void GroupByEx3()
             {
                 // Create a list of pets.
                 List<Pet> petsList =
-                    [ new Pet { Name="Barley", Age=8.3 },
-                                   new Pet { Name="Boots", Age=4.9 },
-                                   new Pet { Name="Whiskers", Age=1.5 },
-                                   new Pet { Name="Daisy", Age=4.3 } ];
+                    [ new ("Barley", 8.3f ),
+                        new ("Boots", 4.9f ),
+                        new ("Whiskers", 1.5f ),
+                        new ("Daisy", 4.3f ) ];
 
                 // Group Pet objects by the Math.Floor of their age.
                 // Then project an anonymous type from each group
                 // that consists of the key, the count of the group's
                 // elements, and the minimum and maximum age in the group.
                 var query = petsList.GroupBy(
-                    pet => Math.Floor(pet.Age),
-                    (age, pets) => new
+                    pet => (int)Math.Floor(pet.Age),
+                    (baseAge, pets) => new
                     {
-                        Key = age,
+                        Key = baseAge,
                         Count = pets.Count(),
                         Min = pets.Min(pet => pet.Age),
                         Max = pets.Max(pet => pet.Age)
@@ -1050,27 +1056,27 @@ namespace SequenceExamples
         static class GroupBy4
         {
             // <Snippet125>
-            class Pet
+            class Pet(string name, float age)
             {
-                public string Name { get; set; }
-                public double Age { get; set; }
+                public string Name { get; set; } = name;
+                public float Age { get; set; } = age;
             }
 
             public static void GroupByEx4()
             {
                 // Create a list of pets.
                 List<Pet> petsList =
-                    [ new Pet { Name="Barley", Age=8.3 },
-                                   new Pet { Name="Boots", Age=4.9 },
-                                   new Pet { Name="Whiskers", Age=1.5 },
-                                   new Pet { Name="Daisy", Age=4.3 } ];
+                    [ new ("Barley", 8.3f ),
+                        new ("Boots", 4.9f ),
+                        new ("Whiskers", 1.5f ),
+                        new ("Daisy", 4.3f ) ];
 
                 // Group Pet.Age values by the Math.Floor of the age.
                 // Then project an anonymous type from each group
                 // that consists of the key, the count of the group's
                 // elements, and the minimum and maximum age in the group.
                 var query = petsList.GroupBy(
-                    pet => Math.Floor(pet.Age),
+                    pet => (int)Math.Floor(pet.Age),
                     pet => pet.Age,
                     (baseAge, ages) => new
                     {
@@ -1115,27 +1121,27 @@ namespace SequenceExamples
         static class GroupJoin
         {
             // <Snippet40>
-            class Person
+            class Person(string name)
             {
-                public string Name { get; set; }
+                public string Name { get; set; } = name;
             }
 
-            class Pet
+            class Pet(string name, Person owner)
             {
-                public string Name { get; set; }
-                public Person Owner { get; set; }
+                public string Name { get; set; } = name;
+                public Person Owner { get; set; } = owner;
             }
 
             public static void GroupJoinEx1()
             {
-                Person magnus = new() { Name = "Hedlund, Magnus" };
-                Person terry = new() { Name = "Adams, Terry" };
-                Person charlotte = new() { Name = "Weiss, Charlotte" };
+                Person magnus = new("Hedlund, Magnus" );
+                Person terry = new("Adams, Terry" );
+                Person charlotte = new("Weiss, Charlotte" );
 
-                Pet barley = new() { Name = "Barley", Owner = terry };
-                Pet boots = new() { Name = "Boots", Owner = terry };
-                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new() { Name = "Daisy", Owner = magnus };
+                Pet barley = new("Barley", terry );
+                Pet boots = new("Boots", terry );
+                Pet whiskers = new("Whiskers", charlotte );
+                Pet daisy = new("Daisy", magnus );
 
                 List<Person> people = [magnus, terry, charlotte];
                 List<Pet> pets = [barley, boots, whiskers, daisy];
@@ -1182,27 +1188,28 @@ namespace SequenceExamples
             // Uses query syntax.
             public static void GroupJoinEx2()
             {
-                Person magnus = new() { Name = "Hedlund, Magnus" };
-                Person terry = new() { Name = "Adams, Terry" };
-                Person charlotte = new() { Name = "Weiss, Charlotte" };
+                Person magnus = new("Hedlund, Magnus" );
+                Person terry = new("Adams, Terry" );
+                Person charlotte = new("Weiss, Charlotte" );
 
-                Pet barley = new() { Name = "Barley", Owner = terry };
-                Pet boots = new() { Name = "Boots", Owner = terry };
-                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new() { Name = "Daisy", Owner = magnus };
+                Pet barley = new("Barley", terry );
+                Pet boots = new("Boots", terry );
+                Pet whiskers = new("Whiskers", charlotte );
+                Pet daisy = new("Daisy", magnus );
 
                 List<Person> people = [magnus, terry, charlotte];
                 List<Pet> pets = [barley, boots, whiskers, daisy];
 
                 // <Snippet123>
-                var query = from person in people
-                            join pet in pets
-                            on person equals pet.Owner into petCollection
-                            select new
-                            {
-                                OwnerName = person.Name,
-                                Pets = petCollection.Select(p => p.Name)
-                            };
+                var query =
+                    from person in people
+                    join pet in pets
+                    on person equals pet.Owner into petCollection
+                    select new
+                    {
+                        OwnerName = person.Name,
+                        Pets = petCollection.Select(p => p.Name)
+                    };
                 // </Snippet123>
 
                 foreach (var obj in query)
@@ -1229,7 +1236,9 @@ namespace SequenceExamples
             IEnumerable<int> both = id1.Intersect(id2);
 
             foreach (int id in both)
+            {
                 Console.WriteLine(id);
+            }
 
             /*
              This code produces the following output:
@@ -1245,27 +1254,27 @@ namespace SequenceExamples
         static class Join
         {
             // <Snippet42>
-            class Person
+            class Person(string name)
             {
-                public string Name { get; set; }
+                public string Name { get; set; } = name;
             }
 
-            class Pet
+            class Pet(string name, Person owner)
             {
-                public string Name { get; set; }
-                public Person Owner { get; set; }
+                public string Name { get; set; } = name;
+                public Person Owner { get; set; } = owner;
             }
 
             public static void JoinEx1()
             {
-                Person magnus = new() { Name = "Hedlund, Magnus" };
-                Person terry = new() { Name = "Adams, Terry" };
-                Person charlotte = new() { Name = "Weiss, Charlotte" };
+                Person magnus = new ("Hedlund, Magnus" );
+                Person terry = new("Adams, Terry" );
+                Person charlotte = new("Weiss, Charlotte" );
 
-                Pet barley = new() { Name = "Barley", Owner = terry };
-                Pet boots = new() { Name = "Boots", Owner = terry };
-                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new() { Name = "Daisy", Owner = magnus };
+                Pet barley = new("Barley", terry );
+                Pet boots = new("Boots", terry );
+                Pet whiskers = new("Whiskers", charlotte );
+                Pet daisy = new("Daisy", magnus );
 
                 List<Person> people = [magnus, terry, charlotte];
                 List<Pet> pets = [barley, boots, whiskers, daisy];
@@ -1344,9 +1353,8 @@ namespace SequenceExamples
         {
             // <Snippet45>
             string[] fruits = [];
-            string last = fruits.LastOrDefault();
-            Console.WriteLine(
-                string.IsNullOrEmpty(last) ? "<string is null or empty>" : last);
+            var last = fruits.LastOrDefault();
+            Console.WriteLine(last ?? "<string is null or empty>");
 
             /*
              This code produces the following output:
@@ -1429,17 +1437,17 @@ namespace SequenceExamples
         static class LongCount
         {
             // <Snippet48>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void LongCountEx2()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [ new ("Barley", 8 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 1 ) ];
 
                 const int Age = 3;
 
@@ -1463,7 +1471,7 @@ namespace SequenceExamples
             // <Snippet52>
             List<long> longs = [4294967296L, 466855135L, 81125L];
 
-            long max = longs.Max();
+            var max = longs.Max();
 
             Console.WriteLine("The largest number is {0}.", max);
 
@@ -1480,7 +1488,7 @@ namespace SequenceExamples
             // <Snippet54>
             double?[] doubles = [null, 1.5E+104, 9E+103, -2E+103];
 
-            double? max = doubles.Max();
+            var max = doubles.Max();
 
             Console.WriteLine("The largest number is {0}.", max);
 
@@ -1499,10 +1507,11 @@ namespace SequenceExamples
             /// This class implements IComparable to be able to
             /// compare one Pet to another Pet.
             /// </summary>
-            class Pet : IComparable<Pet>
+            public class Pet(string name, int? age) : IComparable<Pet>
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; } = name;
+
+                public int Age { get; } = age ?? 0;
 
                 /// <summary>
                 /// Compares this Pet to another Pet by
@@ -1512,37 +1521,41 @@ namespace SequenceExamples
                 /// <returns>-1 if this Pet is 'less' than the other Pet,
                 /// 0 if they are equal,
                 /// or 1 if this Pet is 'greater' than the other Pet.</returns>
-                int IComparable<Pet>.CompareTo(Pet other)
+                public int CompareTo(Pet? other)
                 {
+                    if (other is null) return -1;
                     int sumOther = other.Age + other.Name.Length;
                     int sumThis = Age + Name.Length;
 
-                    if (sumOther > sumThis)
-                        return -1;
-                    else if (sumOther == sumThis)
-                        return 0;
-                    else
-                        return 1;
+                    return (sumOther > sumThis)
+                        ? -1
+                        : (sumOther == sumThis)
+                            ? 0 : 1;
                 }
             }
 
             public static void MaxEx3()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [ new ("Barley", age:8 ),
+                               new ("Boots", age:4 ),
+                               new ("Whiskers", age:1 ) ];
 
-                Pet max = pets.Max();
+                //if (pets.Length > 0)
+                {
+                    var maxage = pets.Max(p => p.Age);
+                    var oldest = pets.First(p => p.Age == maxage);
+                    var oldest2 = pets.OrderByDescending(p => p.Age)
+                        .ThenBy(p => p.Name).First();
 
-                Console.WriteLine(
-                    "The 'maximum' animal is {0}.",
-                    max.Name);
+                    Console.WriteLine("The oldest animal is {0} at {1} years old.",
+                        oldest, oldest.Age);
+                }
             }
 
             /*
              This code produces the following output:
 
-             The 'maximum' animal is Barley.
+             The oldest animal is Barley at 8 years old.
             */
             // </Snippet57>
         }
@@ -1550,17 +1563,17 @@ namespace SequenceExamples
         static class Max10 // with a selector
         {
             // <Snippet58>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void MaxEx4()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [ new ("Barley", 8 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 1 ) ];
 
                 int max = pets.Max(pet => pet.Age + pet.Name.Length);
 
@@ -1585,7 +1598,7 @@ namespace SequenceExamples
             // <Snippet60>
             double[] doubles = [1.5E+104, 9E+103, -2E+103];
 
-            double min = doubles.Min();
+            var min = doubles.Min();
 
             Console.WriteLine("The smallest number is {0}.", min);
 
@@ -1602,7 +1615,7 @@ namespace SequenceExamples
             // <Snippet63>
             int?[] grades = [78, 92, null, 99, 37, 81];
 
-            int? min = grades.Min();
+            var min = grades.Min();
 
             Console.WriteLine("The lowest grade is {0}.", min);
 
@@ -1621,10 +1634,10 @@ namespace SequenceExamples
             /// This class implements IComparable in order to
             /// be able to compare different Pet objects.
             /// </summary>
-            class Pet : IComparable<Pet>
+            class Pet (string name , int age): IComparable<Pet>
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
 
                 /// <summary>
                 /// Compares this Pet's age to another Pet's age.
@@ -1633,34 +1646,31 @@ namespace SequenceExamples
                 /// <returns>-1 if this Pet's age is smaller,
                 /// 0 if the Pets' ages are equal, or
                 /// 1 if this Pet's age is greater.</returns>
-                int IComparable<Pet>.CompareTo(Pet other)
-                {
-                    if (other.Age > Age)
-                        return -1;
-                    else if (other.Age == Age)
-                        return 0;
-                    else
-                        return 1;
-                }
+                public int CompareTo(Pet? other) =>
+                    (other is null || other.Age > Age)
+                        ? -1
+                        : (other.Age == Age)
+                            ? 0 : 1;
             }
 
             public static void MinEx3()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [ new ("Barley", 8 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 1 ) ];
 
-                Pet min = pets.Min();
+                var min = pets.Min(p => p.Age);
+                var youngest = pets.First(p => p.Age == min);
+                //var youngest2 = pets.OrderByDescending(p => p.Age).ThenBy(p => p.Name).FirstOrDefault();
 
-                Console.WriteLine(
-                    "The 'minimum' animal is {0}.",
-                    min.Name);
+                Console.WriteLine("The youngest animal is {0} at {1} years old.",
+                    youngest.Name, youngest.Age);
             }
 
             /*
              This code produces the following output:
 
-             The 'minimum' animal is Whiskers.
+             The youngest animal is Whiskers at 1 years old.
             */
             // </Snippet67>
         }
@@ -1668,19 +1678,19 @@ namespace SequenceExamples
         static class Min10 // with a selector
         {
             // <Snippet68>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void MinEx4()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [ new ("Barley", 8 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 1 ) ];
 
-                int min = pets.Min(pet => pet.Age);
+                var min = pets.Min(pet => pet.Age);
 
                 Console.WriteLine("The youngest animal is age {0}.", min);
             }
@@ -1721,7 +1731,7 @@ namespace SequenceExamples
             // Where() can be applied to the ArrayList type after calling OfType().
             IEnumerable<string> query2 =
                 fruits.OfType<string>().Where(fruit =>
-                fruit.Contains('n', StringComparison.CurrentCultureIgnoreCase));
+                    fruit.Contains('n', StringComparison.CurrentCultureIgnoreCase));
 
             Console.WriteLine("\nThe following strings contain 'n':");
             foreach (string fruit in query2)
@@ -1749,17 +1759,17 @@ namespace SequenceExamples
         static class OrderBy
         {
             // <Snippet70>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void OrderByEx1()
             {
-                Pet[] pets = [ new Pet { Name="Barley", Age=8 },
-                               new Pet { Name="Boots", Age=4 },
-                               new Pet { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [ new ("Barley", 8 ),
+                               new ("Boots", 4 ),
+                               new ("Whiskers", 1 ) ];
 
                 IEnumerable<Pet> query = pets.OrderBy(pet => pet.Age);
 
@@ -1801,7 +1811,7 @@ namespace SequenceExamples
             }
 
             // Change the lambda expression to sort by the length of each string.
-            sortedArray = unsortedArray.OrderBy(a => (a.Length).ToString(), StringComparer.OrdinalIgnoreCase);
+            sortedArray = unsortedArray.OrderBy(a => a.Length);
             Console.WriteLine("\nSort based on the lengths of the strings in the array:");
             foreach (string element in sortedArray)
             {
@@ -1879,12 +1889,10 @@ namespace SequenceExamples
                         fractional2 = d2;
                     }
 
-                    if (fractional1 == fractional2)
-                        return decimal.Compare(d1, d2);
-                    else if (fractional1 > fractional2)
-                        return 1;
-                    else
-                        return -1;
+                    return (fractional1 == fractional2)
+                        ? decimal.Compare(d1, d2)
+                        : (fractional1 > fractional2)
+                            ? 1 : -1;
                 }
             }
 
@@ -2042,7 +2050,7 @@ namespace SequenceExamples
 
             var query =
                 fruits.Select((fruit, index) =>
-                                  new { index, str = fruit.Substring(0, index) });
+                                  new { index, str = fruit[..index] });
 
             foreach (var obj in query)
             {
@@ -2067,21 +2075,21 @@ namespace SequenceExamples
         static class SelectMany1
         {
             // <Snippet77>
-            class PetOwner
+            class PetOwner(string name, List<string> pets)
             {
-                public string Name { get; set; }
-                public List<string> Pets { get; set; }
+                public string Name { get; set; } = name;
+                public List<string> Pets { get; set; } = pets;
             }
 
             public static void SelectManyEx1()
             {
                 PetOwner[] petOwners =
-                    [ new PetOwner { Name="Higa, Sidney",
-                          Pets = ["Scruffy", "Sam"] },
-                      new PetOwner { Name="Ashkenazi, Ronen",
-                          Pets = ["Walker", "Sugar"] },
-                      new PetOwner { Name="Price, Vernette",
-                          Pets = ["Scratches", "Diesel"] } ];
+                    [ new ("Higa, Sidney",
+                          ["Scruffy", "Sam"] ),
+                      new ("Ashkenazi, Ronen",
+                          ["Walker", "Sugar"] ),
+                      new ("Price, Vernette",
+                          ["Scratches", "Diesel"] ) ];
 
                 // Query using SelectMany().
                 IEnumerable<string> query1 = petOwners.SelectMany(petOwner => petOwner.Pets);
@@ -2143,23 +2151,23 @@ namespace SequenceExamples
         static class SelectMany2
         {
             // <Snippet78>
-            class PetOwner
+            class PetOwner(string name, List<string> pets)
             {
-                public string Name { get; set; }
-                public List<string> Pets { get; set; }
+                public string Name { get; set; } = name;
+                public List<string> Pets { get; set; } = pets;
             }
 
             public static void SelectManyEx2()
             {
                 PetOwner[] petOwners =
-                    [ new PetOwner { Name="Higa, Sidney",
-                          Pets = ["Scruffy", "Sam"] },
-                      new PetOwner { Name="Ashkenazi, Ronen",
-                          Pets = ["Walker", "Sugar"] },
-                      new PetOwner { Name="Price, Vernette",
-                          Pets = ["Scratches", "Diesel"] },
-                      new PetOwner { Name="Hines, Patrick",
-                          Pets = ["Dusty"] } ];
+                    [ new ("Higa, Sidney",
+                          ["Scruffy", "Sam"] ),
+                      new ("Ashkenazi, Ronen",
+                          ["Walker", "Sugar"] ),
+                      new ("Price, Vernette",
+                          ["Scratches", "Diesel"] ),
+                      new ("Hines, Patrick",
+                          ["Dusty"] ) ];
 
                 // Project the items in the array by appending the index
                 // of each PetOwner to each pet's name in that petOwner's
@@ -2189,27 +2197,26 @@ namespace SequenceExamples
         static class SelectMany3
         {
             // <Snippet124>
-            class PetOwner
+            class PetOwner(string name, List<string> pets)
             {
-                public string Name { get; set; }
-                public List<string> Pets { get; set; }
+                public string Name { get; set; } = name;
+                public List<string> Pets { get; set; } = pets;
             }
 
             public static void SelectManyEx3()
             {
                 PetOwner[] petOwners =
-                    [ new PetOwner { Name="Higa",
-                          Pets = ["Scruffy", "Sam"] },
-                      new PetOwner { Name="Ashkenazi",
-                          Pets = ["Walker", "Sugar"] },
-                      new PetOwner { Name="Price",
-                          Pets = ["Scratches", "Diesel"] },
-                      new PetOwner { Name="Hines",
-                          Pets = ["Dusty"] } ];
+                    [ new ("Higa",
+                          ["Scruffy", "Sam"] ),
+                      new ("Ashkenazi",
+                          ["Walker", "Sugar"] ),
+                      new ("Price",
+                          ["Scratches", "Diesel"] ),
+                      new ("Hines",
+                          ["Dusty"] ) ];
 
                 // Project the pet owner's name and the pet's name.
-                var query =
-                    petOwners
+                var query = petOwners
                     .SelectMany(petOwner => petOwner.Pets,
                         (petOwner, petName) => new { petOwner, petName })
                     .Where(ownerAndPet => ownerAndPet.petName.StartsWith('S'))
@@ -2242,16 +2249,16 @@ namespace SequenceExamples
         static class SequenceEqual1
         {
             // <Snippet32>
-            class Pet
+            class Pet(string name, int age)
             {
-                public string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void SequenceEqualEx1()
             {
-                Pet pet1 = new() { Name = "Turbo", Age = 2 };
-                Pet pet2 = new() { Name = "Peanut", Age = 8 };
+                Pet pet1 = new("Turbo",  2 );
+                Pet pet2 = new("Peanut",  8 );
 
                 // Create two lists of pets.
                 List<Pet> pets1 = [pet1, pet2];
@@ -2274,23 +2281,23 @@ namespace SequenceExamples
 
         static class SequenceEqual2
         {
-            // <Snippet33>
-            class Pet
-            {
-                public string Name { get; set; }
-                public int Age { get; set; }
-            }
+    // <Snippet33>
+    class Pet(string name, int age)
+    {
+        public string Name { get; set; } = name;
+        public int Age { get; set; } = age;
+    }
 
-            public static void SequenceEqualEx2()
+    public static void SequenceEqualEx2()
             {
-                Pet pet1 = new() { Name = "Turbo", Age = 2 };
-                Pet pet2 = new() { Name = "Peanut", Age = 8 };
+                Pet pet1 = new("Turbo",  2 );
+                Pet pet2 = new("Peanut",  8 );
 
                 // Create two lists of pets.
                 List<Pet> pets1 = [pet1, pet2];
                 List<Pet> pets2 =
-                    [ new Pet { Name = "Turbo", Age = 2 },
-                                new Pet { Name = "Peanut", Age = 8 } ];
+                    [ new ( "Turbo",  2 ),
+                        new ( "Peanut",  8 ) ];
 
                 bool equal = pets1.SequenceEqual(pets2);
 
@@ -2325,7 +2332,7 @@ namespace SequenceExamples
 
             // <Snippet80>
             string[] fruits2 = ["orange", "apple"];
-            string fruit2 = null;
+            string? fruit2 = null;
 
             try
             {
@@ -2336,7 +2343,7 @@ namespace SequenceExamples
                 Console.WriteLine("The collection does not contain exactly one element.");
             }
 
-            Console.WriteLine(fruit2);
+            Console.WriteLine(fruit2 ?? "none");
 
             /*
              This code produces the following output:
@@ -2367,19 +2374,16 @@ namespace SequenceExamples
             // </Snippet81>
 
             // <Snippet82>
-            string fruit2 = null;
-
             try
             {
-                fruit2 = fruits.Single(fruit => fruit.Length > 15);
+                var fruit2 = fruits.Single(fruit => fruit.Length > 15);
+                Console.WriteLine("sole long Name = {0}", fruit2);
             }
             catch (System.InvalidOperationException)
             {
-                Console.WriteLine(@"The collection does not contain exactly
-                                one element whose length is greater than 15.");
+                Console.WriteLine("The collection does not contain exactly\n"+
+                                "one element whose length is greater than 15.");
             }
-
-            Console.WriteLine(fruit2);
 
             // This code produces the following output:
             //
@@ -2395,7 +2399,7 @@ namespace SequenceExamples
             // <Snippet83>
             string[] fruits1 = ["orange"];
 
-            string fruit1 = fruits1.SingleOrDefault();
+            var fruit1 = fruits1.SingleOrDefault();
 
             Console.WriteLine(fruit1);
 
@@ -2409,10 +2413,9 @@ namespace SequenceExamples
             // <Snippet84>
             string[] fruits2 = [];
 
-            string fruit2 = fruits2.SingleOrDefault();
+            var fruit2 = fruits2.SingleOrDefault();
 
-            Console.WriteLine(
-                string.IsNullOrEmpty(fruit2) ? "No such string!" : fruit2);
+            Console.WriteLine(fruit2 ?? "No such string!");
 
             /*
              This code produces the following output:
@@ -2428,9 +2431,9 @@ namespace SequenceExamples
             string[] fruits = [ "apple", "banana", "mango",
                                   "orange", "passionfruit", "grape" ];
 
-            string fruit1 = fruits.SingleOrDefault(fruit => fruit.Length > 10);
+            var fruit1 = fruits.SingleOrDefault(fruit => fruit.Length > 10);
 
-            Console.WriteLine(fruit1);
+            Console.WriteLine(fruit1 ?? "none");
 
             /*
              This code produces the following output:
@@ -2440,11 +2443,11 @@ namespace SequenceExamples
             // </Snippet85>
 
             // <Snippet86>
-            string fruit2 =
+            var fruit2 =
                 fruits.SingleOrDefault(fruit => fruit.Length > 15);
 
             Console.WriteLine(
-                string.IsNullOrEmpty(fruit2) ? "No such string!" : fruit2);
+                fruit2 ?? "No such string!");
 
             /*
              This code produces the following output:
@@ -2563,19 +2566,19 @@ namespace SequenceExamples
         static class Sum9
         {
             // <Snippet98>
-            class Package
+            class Package(string company, double weight)
             {
-                public string Company { get; set; }
-                public double Weight { get; set; }
+                public string Company { get; set; } = company;
+                public double Weight { get; set; } = weight;
             }
 
             public static void SumEx1()
             {
                 List<Package> packages =
-                    [ new Package { Company = "Coho Vineyard", Weight = 25.2 },
-                          new Package { Company = "Lucerne Publishing", Weight = 18.7 },
-                          new Package { Company = "Wingtip Toys", Weight = 6.0 },
-                          new Package { Company = "Adventure Works", Weight = 33.8 } ];
+                    [ new ("Coho Vineyard", 25.2 ),
+                        new ("Lucerne Publishing", 18.7 ),
+                        new ("Wingtip Toys", 6.0 ),
+                        new ("Adventure Works", 33.8 ) ];
 
                 double totalWeight = packages.Sum(pkg => pkg.Weight);
 
@@ -2750,8 +2753,7 @@ namespace SequenceExamples
 
                 // Sort the strings first ascending by their length and
                 // then descending using a custom case insensitive comparer.
-                IEnumerable<string> query =
-                    fruits
+                IEnumerable<string> query = fruits
                     .OrderBy(fruit => fruit.Length)
                     .ThenByDescending(fruit => fruit, StringComparer.OrdinalIgnoreCase);
 
@@ -2781,19 +2783,19 @@ namespace SequenceExamples
         static class ToArray
         {
             // <Snippet104>
-            class Package
+            class Package(string company, double weight)
             {
-                public string Company { get; set; }
-                public double Weight { get; set; }
+                public string Company { get; set; } = company;
+                public double Weight { get; set; } = weight;
             }
 
             public static void ToArrayEx1()
             {
                 List<Package> packages =
-                    [ new Package { Company = "Coho Vineyard", Weight = 25.2 },
-                          new Package { Company = "Lucerne Publishing", Weight = 18.7 },
-                          new Package { Company = "Wingtip Toys", Weight = 6.0 },
-                          new Package { Company = "Adventure Works", Weight = 33.8 } ];
+                    [ new ("Coho Vineyard", 25.2 ),
+                          new ("Lucerne Publishing", 18.7 ),
+                          new ("Wingtip Toys", 6.0 ),
+                          new ("Adventure Works", 33.8 ) ];
 
                 string[] companies = packages.Select(pkg => pkg.Company).ToArray();
 
@@ -2819,21 +2821,21 @@ namespace SequenceExamples
         // overloads call each other
         static class ToDictionary
         {
-            // <Snippet105>
-            class Package
-            {
-                public string Company { get; set; }
-                public double Weight { get; set; }
-                public long TrackingNumber { get; set; }
-            }
+    // <Snippet105>
+    class Package(string company, double weight, long trackingNumber)
+    {
+        public string Company { get; set; } = company;
+        public double Weight { get; set; } = weight;
+        public long TrackingNumber { get; set; } = trackingNumber;
+    }
 
             public static void ToDictionaryEx1()
             {
                 List<Package> packages =
-                    [ new Package { Company = "Coho Vineyard", Weight = 25.2, TrackingNumber = 89453312L },
-                          new Package { Company = "Lucerne Publishing", Weight = 18.7, TrackingNumber = 89112755L },
-                          new Package { Company = "Wingtip Toys", Weight = 6.0, TrackingNumber = 299456122L },
-                          new Package { Company = "Adventure Works", Weight = 33.8, TrackingNumber = 4665518773L } ];
+                    [ new ("Coho Vineyard", 25.2, 89453312L ),
+                          new ("Lucerne Publishing", 18.7, 89112755L ),
+                          new ("Wingtip Toys", 6.0, 299456122L ),
+                          new ("Adventure Works", 33.8, 4665518773L ) ];
 
                 // Create a Dictionary of Package objects,
                 // using TrackingNumber as the key.
@@ -2897,34 +2899,33 @@ namespace SequenceExamples
         static class ToLookup
         {
             // <Snippet107>
-            class Package
+            class Package(string company, double weight, long trackingNumber)
             {
-                public string Company { get; set; }
-                public double Weight { get; set; }
-                public long TrackingNumber { get; set; }
+                public string Company { get; set; } = company;
+                public double Weight { get; set; } = weight;
+                public long TrackingNumber { get; set; } = trackingNumber;
             }
 
             public static void ToLookupEx1()
             {
                 // Create a list of Packages.
                 List<Package> packages =
-                    [ new Package { Company = "Coho Vineyard",
-                              Weight = 25.2, TrackingNumber = 89453312L },
-                          new Package { Company = "Lucerne Publishing",
-                              Weight = 18.7, TrackingNumber = 89112755L },
-                          new Package { Company = "Wingtip Toys",
-                              Weight = 6.0, TrackingNumber = 299456122L },
-                          new Package { Company = "Contoso Pharmaceuticals",
-                              Weight = 9.3, TrackingNumber = 670053128L },
-                          new Package { Company = "Wide World Importers",
-                              Weight = 33.8, TrackingNumber = 4665518773L } ];
+                    [ new ("Coho Vineyard",
+                              25.2, 89453312L ),
+                          new ("Lucerne Publishing",
+                              18.7, 89112755L ),
+                          new ("Wingtip Toys",
+                              6.0, 299456122L ),
+                          new ("Contoso Pharmaceuticals",
+                              9.3, 670053128L ),
+                          new ("Wide World Importers",
+                              33.8, 4665518773L ) ];
 
                 // Create a Lookup to organize the packages.
                 // Use the first character of Company as the key value.
                 // Select Company appended to TrackingNumber
                 // as the element values of the Lookup.
-                ILookup<char, string> lookup =
-                    packages
+                ILookup<char, string> lookup = packages
                     .ToLookup(p => p.Company[0],
                               p => p.Company + " " + p.TrackingNumber);
 
@@ -2936,7 +2937,9 @@ namespace SequenceExamples
                     // Iterate through each value in the
                     // IGrouping and print its value.
                     foreach (string str in packageGroup)
+                    {
                         Console.WriteLine("    {0}", str);
+                    }
                 }
             }
 
@@ -3039,7 +3042,9 @@ namespace SequenceExamples
             IEnumerable<string> numbersAndWords = numbers.Zip(words, (first, second) => first + " " + second);
 
             foreach (string item in numbersAndWords)
+            {
                 Console.WriteLine(item);
+            }
 
             // This code produces the following output:
 

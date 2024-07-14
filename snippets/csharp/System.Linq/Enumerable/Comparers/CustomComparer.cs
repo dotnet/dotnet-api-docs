@@ -1,31 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.CodeDom;
 
 namespace Comparers;
 
 //<Snippet1>
-public class Product
+public class Product(string name, int code)
 {
-    public string Name { get; set; }
-    public int Code { get; set; }
+    public string Name { get; set; } = name;
+    public int Code { get; set; } = code;
 }
 
 // Custom comparer for the Product class
 class ProductComparer : IEqualityComparer<Product>
 {
     // Products are equal if their names and product numbers are equal.
-    public bool Equals(Product x, Product y)
-    {
+    public bool Equals(Product? x, Product? y) =>
         //Check whether the compared objects reference the same data.
-        if (ReferenceEquals(x, y)) return true;
-
-        return x is not null &&     //Check if any of the compared objects is null
+        ReferenceEquals(x, y) ||
+        (   x is not null &&          //Check if any of the compared objects is null
             y is not null &&
             x.Code == y.Code &&     //Check if the products' properties are equal.
-            x.Name == y.Name;
-    }
+            x.Name == y.Name);
 
     // If Equals() returns true for a pair of objects
     // then GetHashCode() must return the same value for these objects.
@@ -49,14 +45,14 @@ class ProductComparer : IEqualityComparer<Product>
 
 static class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
         //<Intersect>
-        Product[] store1 = [ new() { Name = "apple", Code = 9 },
-                            new() { Name = "orange", Code = 4 } ];
+        Product[] store1 = [ new("apple",9 ),
+                            new("orange",4 ) ];
 
-        Product[] store2 = [ new() { Name = "apple", Code = 9 },
-                            new() { Name = "lemon", Code = 12 } ];
+        Product[] store2 = [ new("apple",9 ),
+                            new("lemon",12 ) ];
 
         // Get the products from the first array
         // that have duplicates in the second array.
@@ -65,7 +61,9 @@ static class Program
             store1.Intersect(store2, new ProductComparer());
 
         foreach (Product product in duplicates)
+        {
             Console.WriteLine(product.Name + " " + product.Code);
+        }
 
         /*
             This code produces the following output:
@@ -74,11 +72,11 @@ static class Program
         //</Intersect>
 
         //<Union>
-        Product[] store10 = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "orange", Code = 4 } ];
+        Product[] store10 = [ new("apple",9 ),
+                               new("orange",4 ) ];
 
-        Product[] store20 = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "lemon", Code = 12 } ];
+        Product[] store20 = [ new("apple",9 ),
+                               new("lemon",12 ) ];
 
         //Get the products from the both arrays
         //excluding duplicates.
@@ -87,7 +85,9 @@ static class Program
           store10.Union(store20, new ProductComparer());
 
         foreach (Product product in union)
+        {
             Console.WriteLine(product.Name + " " + product.Code);
+        }
 
         /*
             This code produces the following output:
@@ -99,10 +99,10 @@ static class Program
         //</Union>
 
         //<Distinct>
-        Product[] products = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "orange", Code = 4 },
-                               new() { Name = "apple", Code = 9 },
-                               new() { Name = "lemon", Code = 12 } ];
+        Product[] products = [ new("apple",9 ),
+                               new("orange",4 ),
+                               new("apple",9 ),
+                               new("lemon",12 ) ];
 
         // Exclude duplicates.
 
@@ -110,7 +110,9 @@ static class Program
             products.Distinct(new ProductComparer());
 
         foreach (Product product in noduplicates)
+        {
             Console.WriteLine(product.Name + " " + product.Code);
+        }
 
         /*
             This code produces the following output:
@@ -121,12 +123,12 @@ static class Program
         //</Distinct>
 
         //<Contains>
-        Product[] fruits = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "orange", Code = 4 },
-                               new() { Name = "lemon", Code = 12 } ];
+        Product[] fruits = [ new("apple",9 ),
+                               new("orange",4 ),
+                               new("lemon",12 ) ];
 
-        Product apple = new() { Name = "apple", Code = 9 };
-        Product kiwi = new() { Name = "kiwi", Code = 8 };
+        Product apple = new("apple", 9);
+        Product kiwi = new("kiwi", 8);
 
         ProductComparer prodc = new();
 
@@ -146,11 +148,11 @@ static class Program
         //</Contains>
 
         //<Except>
-        Product[] fruits1 = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "orange", Code = 4 },
-                                new() { Name = "lemon", Code = 12 } ];
+        Product[] fruits1 = [ new("apple",9 ),
+                               new("orange",4 ),
+                                new("lemon",12 ) ];
 
-        Product[] fruits2 = [new() { Name = "apple", Code = 9 }];
+        Product[] fruits2 = [new("apple", 9)];
 
         // Get all the elements from the first array
         // except for the elements from the second array.
@@ -159,7 +161,9 @@ static class Program
             fruits1.Except(fruits2, new ProductComparer());
 
         foreach (Product product in except)
+        {
             Console.WriteLine(product.Name + " " + product.Code);
+        }
 
         /*
           This code produces the following output:
@@ -172,11 +176,11 @@ static class Program
 
         //<SequenceEqual>
 
-        Product[] storeA = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "orange", Code = 4 } ];
+        Product[] storeA = [ new("apple",9 ),
+                               new("orange",4 ) ];
 
-        Product[] storeB = [ new() { Name = "apple", Code = 9 },
-                               new() { Name = "orange", Code = 4 } ];
+        Product[] storeB = [ new("apple",9 ),
+                               new("orange",4 ) ];
 
         var equalAB = storeA.SequenceEqual(storeB, new ProductComparer());
 
@@ -190,6 +194,6 @@ static class Program
 
         //</SequenceEqual>
 
-        Console.ReadLine();
+        _ = Console.ReadLine();
     }
 }

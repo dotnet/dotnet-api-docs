@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +22,9 @@ namespace IOrderedSequence
 
             // Output the resulting sequence of strings.
             foreach (string fruit in sortedFruits1)
+            {
                 Console.WriteLine(fruit);
+            }
 
             // This code produces the following output:
             //
@@ -56,7 +57,9 @@ namespace IOrderedSequence
 
             // Output the resulting sequence of strings.
             foreach (string fruit in sortedFruits3)
+            {
                 Console.WriteLine(fruit);
+            }
 
             // This code produces the following output:
             //
