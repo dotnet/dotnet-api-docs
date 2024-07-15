@@ -2014,15 +2014,14 @@ If the executable is renamed or deleted before this property is first accessed, 
 
  On Unix-like systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%29> method have no effect on any native libraries that are, or will be, loaded. (Conversely, in-process environment modifications made by native libraries aren't seen by managed callers.)
 
- If the `value` argument is not empty (see the discussion of deleting an environment variable later in this section for the definition of an empty value) and the environment variable named by the `variable` parameter does not exist, the environment variable is created and assigned the contents of `value`. If it does exist, its value is modified. Because the environment variable is defined in the environment block of the current process only, it does not persist after the process has ended.
+ If the `value` argument is not `null` and the environment variable named by the `variable` parameter doesn't exist, the environment variable is created and assigned the contents of `value`. If it does exist, its value is modified. Because the environment variable is defined in the environment block of the current process only, it does not persist after the process has ended.
 
  If `variable` contains a non-initial hexadecimal zero character, the characters before the zero character are considered the environment variable name and all subsequent characters are ignored.
 
  If `value` contains a non-initial hexadecimal zero character, the characters before the zero character are assigned to the environment variable and all subsequent characters are ignored.
 
- If `value` is empty and the environment variable named by `variable` exists, the environment variable is deleted. If `variable` does not exist, no error occurs even though the operation cannot be performed. `value` is considered empty under any of the following conditions:
+ If `value` is `null` (or empty in versions prior to .NET 9) and the environment variable named by `variable` exists, the environment variable is deleted. If `variable` doesn't exist, no error occurs even though the operation cannot be performed. `value` is considered empty under any of the following conditions:
 
-- It is `null`.
 - It is <xref:System.String.Empty?displayProperty=nameWithType>.
 - It consists of a single character whose value is U+0000.
 
@@ -2126,19 +2125,18 @@ On Unix-like systems, calls to the <xref:System.Environment.SetEnvironmentVariab
 
 On Unix-like systems, calls to the <xref:System.Environment.SetEnvironmentVariable%28System.String%2CSystem.String%2CSystem.EnvironmentVariableTarget%29> method with a value of <xref:System.EnvironmentVariableTarget.Process?displayProperty=nameWithType> have no effect on any native libraries that are, or will be, loaded. (Conversely, in-process environment modifications made by native libraries aren't seen by managed callers.)
 
-If the `value` argument is not empty (see the discussion of deleting an environment variable later in this section for the definition of an empty value) and the environment variable named by the `variable` argument does not exist, the environment variable is created and assigned the contents of `value`.  If it does exist, its value is modified.
+If the `value` argument is not `null` and the environment variable named by the `variable` argument doesn't exist, the environment variable is created and assigned the contents of `value`. If it does exist, its value is modified.
 
 If `variable` contains a non-initial hexadecimal zero character, the characters before the zero character are considered the environment variable name and all subsequent characters are ignored.
 
 If `value` contains a non-initial hexadecimal zero character, the characters before the zero character are assigned to the environment variable and all subsequent characters are ignored.
 
-If `value` is empty and the environment variable named by `variable` exists, the environment variable is deleted. `value` is considered empty under any of the following conditions:
+If `value` is `null` (or empty in versions prior to .NET 9) and the environment variable named by `variable` exists, the environment variable is deleted. `value` is considered empty under any of the following conditions:
 
--   It is `null`.
--   It is <xref:System.String.Empty?displayProperty=nameWithType>.
--   It consists of a single character whose value is U+0000.
+- It is <xref:System.String.Empty?displayProperty=nameWithType>.
+- It consists of a single character whose value is U+0000.
 
-If `variable` does not exist, no error occurs although the operation cannot be performed. Be careful when `target` is <xref:System.EnvironmentVariableTarget.Machine>, because you can accidentally delete an environment variable that affects your entire local machine, not just the current process or user.
+If `variable` doesn't exist, no error occurs although the operation can't be performed. Be careful when `target` is <xref:System.EnvironmentVariableTarget.Machine>, because you can accidentally delete an environment variable that affects your entire local machine, not just the current process or user.
 
 ### EnvironmentVariableTarget.Machine and EnvironmentVariableTarget.User on Windows systems
 
@@ -2562,7 +2560,7 @@ The following example creates environment variables for the <xref:System.Environ
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The domain account credentials for a user are formatted as the user's domain name, the '\\' character, and user name. Use the <xref:System.Environment.UserDomainName%2A> property to obtain the user's domain name without the user name, and the <xref:System.Environment.UserName%2A> property to obtain the user name without the domain name.  For example, if a user's domain name and user name are CORPORATENETWORK\john, the <xref:System.Environment.UserDomainName%2A> property returns "CORPORATENETWORK".
+ The domain account credentials for a user are formatted as the user's domain name, the '\\' character, and user name. Use the <xref:System.Environment.UserDomainName%2A> property to obtain the user's domain name without the user name, and the <xref:System.Environment.UserName%2A> property to obtain the user name without the domain name. For example, if a user's domain name and user name are CORPORATENETWORK\john, the <xref:System.Environment.UserDomainName%2A> property returns "CORPORATENETWORK".
 
  The <xref:System.Environment.UserDomainName%2A> property first attempts to get the domain name component of the Windows account name for the current user. If that attempt fails, this property attempts to get the domain name associated with the user name provided by the <xref:System.Environment.UserName%2A> property. If that attempt fails because the host computer is not joined to a domain, then the host computer name is returned.
 
