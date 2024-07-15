@@ -158,7 +158,7 @@ namespace SequenceExamples
             {
                 // <Snippet5>
                 List<int> numbers = [1, 2];
-                bool hasElements = numbers.Count != 0;
+                bool hasElements = numbers.Count > 0;
 
                 Console.WriteLine("The list {0} empty.",
                     hasElements ? "is not" : "is");
@@ -567,7 +567,7 @@ namespace SequenceExamples
                     new ("Boots", 4 ),
                     new ("Whiskers", 1 ) ];
 
-                foreach (var pet in pets.DefaultIfEmpty())
+                foreach (Pet? pet in pets.DefaultIfEmpty())
                 {
                     Console.WriteLine(pet?.Name);
                 }
@@ -601,7 +601,7 @@ namespace SequenceExamples
             // </Snippet25>
         }
 
-        static class DefaultIfEmtpy2
+        static class DefaultIfEmpty2
         {
             // <Snippet26>
             class Pet(string name, int age)
@@ -619,14 +619,14 @@ namespace SequenceExamples
                     new ("Boots", 4 ),
                     new ("Whiskers", 1 ) ];
 
-                foreach (Pet pet in pets1.DefaultIfEmpty(defaultPet))
+                foreach (var pet in pets1.DefaultIfEmpty(defaultPet))
                 {
                     Console.WriteLine("Name: {0}", pet.Name);
                 }
 
                 List<Pet> pets2 = [];
 
-                foreach (Pet pet in pets2.DefaultIfEmpty(defaultPet))
+                foreach (var pet in pets2.DefaultIfEmpty(defaultPet))
                 {
                     Console.WriteLine("\nName: {0}", pet.Name);
                 }

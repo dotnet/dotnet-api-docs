@@ -50,12 +50,12 @@ static class Program1
         // ProductComparer, which implements IEqualityComparer (not IEquatable).
         //<Snippet10>
         ProductA[] store1 = [
-            new("apple", 9 ),
-            new("orange", 4 ) ];
+            new ("apple", 9 ),
+            new ("orange", 4 ) ];
 
         ProductA[] store2 = [
-            new("apple", 9 ),
-            new("lemon", 12 ) ];
+            new ("apple", 9 ),
+            new ("lemon", 12 ) ];
         //</Snippet10>
 
         //<Intersect>
@@ -99,10 +99,10 @@ static class Program1
 
         //<Distinct>
         MyProduct[] products = [
-            new("apple", 9 ),
-            new("orange", 4 ),
-            new("apple", 9 ),
-            new("lemon", 12 ) ];
+            new ("apple", 9 ),
+            new ("orange", 4 ),
+            new ("apple", 9 ),
+            new ("lemon", 12 ) ];
 
         // Exclude duplicates.
 
@@ -124,9 +124,9 @@ static class Program1
 
         //<Except>
         ProductA[] fruits1 = [
-            new("apple", 9 ),
-            new("orange", 4 ),
-            new("lemon", 12 ) ];
+            new ("apple", 9 ),
+            new ("orange", 4 ),
+            new ("lemon", 12 ) ];
 
         ProductA[] fruits2 = [new("apple", 9)];
 
@@ -152,12 +152,12 @@ static class Program1
         //<SequenceEqual>
 
         ProductA[] storeA = [
-            new("apple", 9 ),
-            new("orange", 4 ) ];
+            new ("apple", 9 ),
+            new ("orange", 4 ) ];
 
         ProductA[] storeB = [
-            new("apple", 9 ),
-            new("orange", 4 ) ];
+            new ("apple", 9 ),
+            new ("orange", 4 ) ];
 
         var equalAB = storeA.SequenceEqual(storeB);
 

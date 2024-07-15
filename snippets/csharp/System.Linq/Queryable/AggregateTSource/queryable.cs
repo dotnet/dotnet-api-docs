@@ -138,11 +138,11 @@ namespace QueryableExamples
                         new ("Barley",10 ),
                         new ("Boots",14 ),
                         new ("Whiskers",6 ) ]),
-                    new("Fakhouri", [ new("Snowball", 1) ]),
-                    new("Antebi", [ new("Belle", 8) ]),
+                    new ("Fakhouri", [ new ("Snowball", 1) ]),
+                    new ("Antebi", [ new ("Belle", 8) ]),
                     new ("Philips", [
-                        new("Sweetie", 2),
-                        new("Rover", 13) ] ) ];
+                        new ("Sweetie", 2),
+                        new ("Rover", 13) ] ) ];
 
                 // Determine which people have pets that are all older than 5.
                 IEnumerable<string> names = from person in people
@@ -173,7 +173,7 @@ namespace QueryableExamples
                 List<int> numbers = [1, 2];
 
                 // Determine if the list contains any elements.
-                bool hasElements = numbers.Any();       // [CA1860] better to use "numbers.Count != 0;" !
+                bool hasElements = numbers.Any();       // [CA1860] better to use "numbers.Count > 0;" !
 
                 Console.WriteLine("The list {0} empty.",
                     hasElements ? "is not" : "is");
@@ -204,11 +204,11 @@ namespace QueryableExamples
                         new ("Barley",10 ),
                         new ("Boots",14 ),
                         new ("Whiskers",6 ) ]),
-                    new("Fakhouri", [ new("Snowball", 1) ]),
-                    new("Antebi",[]),
-                    new("Philips", [
-                        new("Sweetie", 2),
-                        new("Rover", 13) ] )
+                    new ("Fakhouri", [ new ("Snowball", 1) ]),
+                    new ("Antebi",[]),
+                    new ("Philips", [
+                        new ("Sweetie", 2),
+                        new ("Rover", 13) ] )
                     ];
 
                 // Determine which people have a non-empty Pet array.
@@ -598,7 +598,7 @@ namespace QueryableExamples
                     new ("Boots",4 ),
                     new ("Whiskers",1 ) ];
 
-                // Call DefaultIfEmtpy() on the collection that Select()
+                // Call DefaultIfEmpty() on the collection that Select()
                 // returns, so that if the initial list is empty, there
                 // will always be at least one item in the returned array.
                 string[] names = [.. pets
@@ -1246,7 +1246,7 @@ namespace QueryableExamples
                 Person terry = new("Adams, Terry");
                 Person charlotte = new("Weiss, Charlotte");
 
-                Pet barley = new Pet("Barley", terry);
+                Pet barley = new("Barley", terry);
                 Pet boots = new("Boots", terry);
                 Pet whiskers = new("Whiskers", charlotte);
                 Pet daisy = new("Daisy", magnus);
@@ -2064,8 +2064,8 @@ namespace QueryableExamples
                 // Create two lists of pets.
                 List<Pet> pets1 = [pet1, pet2];
                 List<Pet> pets2 = [
-                    new Pet ("Turbo", 2 ),
-                        new Pet ("Peanut", 8 ) ];
+                    new ("Turbo", 2 ),
+                    new ("Peanut", 8 ) ];
 
                 // Determine if the lists are equal.
                 bool equal = pets1.SequenceEqual(pets2);
@@ -2387,10 +2387,10 @@ namespace QueryableExamples
             public static void SumEx3()
             {
                 List<Package> packages = [
-                    new Package ("Coho Vineyard", 25.2 ),
-                    new Package ("Lucerne Publishing", 18.7 ),
-                    new Package ("Wingtip Toys", 6.0 ),
-                    new Package ("Adventure Works", 33.8 ) ];
+                    new ("Coho Vineyard", 25.2 ),
+                    new ("Lucerne Publishing", 18.7 ),
+                    new ("Wingtip Toys", 6.0 ),
+                    new ("Adventure Works", 33.8 ) ];
 
                 // Calculate the sum of all package weights.
                 double totalWeight = packages
