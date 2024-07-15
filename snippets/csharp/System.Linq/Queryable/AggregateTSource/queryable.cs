@@ -87,18 +87,19 @@ namespace QueryableExamples
         public static class All
         {
             // <Snippet4>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void AllEx1()
             {
                 // Create an array of Pets.
-                Pet[] pets = [ new() { Name="Barley", Age=10 },
-                               new() { Name="Boots", Age=4 },
-                               new() { Name="Whiskers", Age=6 } ];
+                Pet[] pets = [
+                    new ("Barley",10 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",6 ) ];
 
                 // Determine whether all pet names in the array start with 'B'.
                 bool allStartWithB =
@@ -119,32 +120,29 @@ namespace QueryableExamples
         static class All2
         {
             // <Snippet134>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
-            class Person
+            class Person(string lastName, Pet[] pets)
             {
-                public required string LastName { get; set; }
-                public required Pet[] Pets { get; set; }
+                public string LastName { get; set; } = lastName;
+                public Pet[] Pets { get; set; } = pets;
             }
 
             public static void AllEx2()
             {
-                List<Person> people =
-                [ new Person { LastName = "Haas",
-                                   Pets = [ new() { Name="Barley", Age=10 },
-                                                      new() { Name="Boots", Age=14 },
-                                                      new() { Name="Whiskers", Age=6 }]},
-                      new Person { LastName = "Fakhouri",
-                                   Pets = [new() { Name = "Snowball", Age = 1}]},
-                      new Person { LastName = "Antebi",
-                                   Pets = [new() { Name = "Belle", Age = 8}]},
-                      new Person { LastName = "Philips",
-                                   Pets = [ new() { Name = "Sweetie", Age = 2},
-                                                      new() { Name = "Rover", Age = 13}] }
-                    ];
+                List<Person> people = [
+                    new ("Haas", [
+                        new ("Barley",10 ),
+                        new ("Boots",14 ),
+                        new ("Whiskers",6 ) ]),
+                    new("Fakhouri", [ new("Snowball", 1) ]),
+                    new("Antebi", [ new("Belle", 8) ]),
+                    new ("Philips", [
+                        new("Sweetie", 2),
+                        new("Rover", 13) ] ) ];
 
                 // Determine which people have pets that are all older than 5.
                 IEnumerable<string> names = from person in people
@@ -188,31 +186,29 @@ namespace QueryableExamples
             }
 
             // <Snippet135>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
-            class Person
+            class Person(string lastName, Pet[] pets)
             {
-                public required string LastName { get; set; }
-                public required Pet[] Pets { get; set; }
+                public string LastName { get; set; } = lastName;
+                public Pet[] Pets { get; set; } = pets;
             }
 
             public static void AnyEx2()
             {
-                List<Person> people =
-                [ new Person { LastName = "Haas",
-                                   Pets = [ new() { Name="Barley", Age=10 },
-                                                      new() { Name="Boots", Age=14 },
-                                                      new() { Name="Whiskers", Age=6 }]},
-                      new Person { LastName = "Fakhouri",
-                                   Pets = [new() { Name = "Snowball", Age = 1}]},
-                      new Person { LastName = "Antebi",
-                                   Pets = []},
-                      new Person { LastName = "Philips",
-                                   Pets = [ new() { Name = "Sweetie", Age = 2},
-                                                      new() { Name = "Rover", Age = 13}] }
+                List<Person> people = [
+                    new ("Haas", [
+                        new ("Barley",10 ),
+                        new ("Boots",14 ),
+                        new ("Whiskers",6 ) ]),
+                    new("Fakhouri", [ new("Snowball", 1) ]),
+                    new("Antebi",[]),
+                    new("Philips", [
+                        new("Sweetie", 2),
+                        new("Rover", 13) ] )
                     ];
 
                 // Determine which people have a non-empty Pet array.
@@ -234,24 +230,23 @@ namespace QueryableExamples
             }
             // </Snippet135>
         }
-
         static class Any2
         {
             // <Snippet6>
-            class Pet
+            public class Pet(string name, int age, bool vaccinated)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
-                public bool Vaccinated { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
+                public bool Vaccinated { get; set; } = vaccinated;
             }
 
             public static void AnyEx3()
             {
                 // Create an array of Pet objects.
-                Pet[] pets =
-                    [ new() { Name="Barley", Age=8, Vaccinated=true },
-                      new() { Name="Boots", Age=4, Vaccinated=false },
-                      new() { Name="Whiskers", Age=1, Vaccinated=false } ];
+                Pet[] pets = [
+                    new ("Barley",8, true ),
+                      new ("Boots",4, false ),
+                      new ("Whiskers",1, false ) ];
 
                 // Determine whether any pets over age 1 are also unvaccinated.
                 bool unvaccinated =
@@ -396,11 +391,11 @@ namespace QueryableExamples
 
             // Cast the objects in the list to type 'string'
             // and project the first letter of each string.
-            IEnumerable<string> query = words
+            var query = words
                 .Cast<string>()
-                .Select(str => str.Substring(0, 1));
+                .Select(str => str[0]);
 
-            foreach (string s in query)
+            foreach (var s in query)
             {
                 Console.WriteLine(s);
             }
@@ -420,27 +415,29 @@ namespace QueryableExamples
         static class Concat
         {
             // <Snippet20>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             // This method creates and returns an array of Pet objects.
             static Pet[] GetCats()
             {
-                Pet[] cats = [ new() { Name="Barley", Age=8 },
-                               new() { Name="Boots", Age=4 },
-                               new() { Name="Whiskers", Age=1 } ];
+                Pet[] cats = [
+                    new ("Barley",8 ),
+                        new ("Boots",4 ),
+                        new ("Whiskers",1 ) ];
                 return cats;
             }
 
             // This method creates and returns an array of Pet objects.
             static Pet[] GetDogs()
             {
-                Pet[] dogs = [ new() { Name="Bounder", Age=3 },
-                               new() { Name="Snoopy", Age=14 },
-                               new() { Name="Fido", Age=9 } ];
+                Pet[] dogs = [
+                    new ("Bounder",3 ),
+                        new ("Snoopy",14 ),
+                        new ("Fido",9 ) ];
                 return dogs;
             }
 
@@ -552,18 +549,19 @@ namespace QueryableExamples
         static class Count
         {
             // <Snippet23>
-            class Pet
+            class Pet(string name, bool vaccinated)
             {
-                public required string Name { get; set; }
-                public bool Vaccinated { get; set; }
+                public string Name { get; set; } = name;
+                public bool Vaccinated { get; set; } = vaccinated;
             }
 
             public static void CountEx2()
             {
                 // Create an array of Pet objects.
-                Pet[] pets = [ new() { Name="Barley", Vaccinated=true },
-                               new() { Name="Boots", Vaccinated=false },
-                               new() { Name="Whiskers", Vaccinated=false } ];
+                Pet[] pets = [
+                    new ("Barley", true ),
+                        new ("Boots", false ),
+                        new ("Whiskers", false ) ];
 
                 // Count the number of unvaccinated pets in the array.
                 int numberUnvaccinated =
@@ -586,27 +584,26 @@ namespace QueryableExamples
         static class DefaultIfEmpty1
         {
             // <Snippet24>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void DefaultIfEmptyEx1()
             {
                 // Create a list of Pet objects.
-                List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 } ];
+                List<Pet> pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ) ];
 
                 // Call DefaultIfEmtpy() on the collection that Select()
                 // returns, so that if the initial list is empty, there
                 // will always be at least one item in the returned array.
-                string[] names =
-                    [.. pets
-                    .Select(pet => pet.Name)
-                    .DefaultIfEmpty()];
+                string[] names = [.. pets
+                        .Select(pet => pet.Name)
+                        .DefaultIfEmpty() ];
 
                 string first = names[0];
                 Console.WriteLine(first);
@@ -623,29 +620,27 @@ namespace QueryableExamples
             {
                 // <Snippet25>
                 // Create a list of Pet objects.
-                List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 } ];
+                List<Pet> pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ) ];
 
                 // This query selects only those pets that are 10 or older.
                 // In case there are no pets that meet that criteria, call
                 // DefaultIfEmpty(). This code passes an (optional) default
                 // value to DefaultIfEmpty().
-                string[] oldPets =
-                    [.. pets
+                string[] oldPets = [.. pets
                         .Where(pet => pet.Age >= 10)
                         .Select(pet => pet.Name)
-                        .DefaultIfEmpty("[EMPTY]")];
+                        .DefaultIfEmpty("[EMPTY]") ];
 
                 Console.WriteLine("First query: " + oldPets[0]);
 
                 // This query selects only those pets that are 10 or older.
                 // This code does not call DefaultIfEmpty().
-                string[] oldPets2 =
-                    [.. pets
-                    .Where(pet => pet.Age >= 10)
-                    .Select(pet => pet.Name)];
+                string[] oldPets2 = [.. pets
+                        .Where(pet => pet.Age >= 10)
+                        .Select(pet => pet.Name) ];
 
                 // There may be no elements in the array, so directly
                 // accessing element 0 may throw an exception.
@@ -711,7 +706,7 @@ namespace QueryableExamples
 
             string name =
                 names.ElementAt(random.Next(0, names.Length));
-                //names[random.Next(0, names.Length)];      // simpler
+            //names[random.Next(0, names.Length) ];      // simpler
 
             Console.WriteLine("The name chosen at random is '{0}'.", name);
 
@@ -914,20 +909,20 @@ namespace QueryableExamples
         static class GroupBy
         {
             // <Snippet14>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void GroupByEx1()
             {
                 // Create a list of Pet objects.
-                List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 },
-                                   new Pet { Name="Daisy", Age=4 } ];
+                List<Pet> pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ),
+                    new ("Daisy",4 ) ];
 
                 // Group the pets using Pet.Age as the key.
                 // Use Pet.Name as the value for each entry.
@@ -956,20 +951,20 @@ namespace QueryableExamples
         static class GroupBy2
         {
             // <Snippet39>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void GroupByEx2()
             {
                 // Create a list of Pet objects.
-                List<Pet> pets =
-                    [ new Pet { Name="Barley", Age=8 },
-                                   new Pet { Name="Boots", Age=4 },
-                                   new Pet { Name="Whiskers", Age=1 },
-                                   new Pet { Name="Daisy", Age=4 } ];
+                List<Pet> pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ),
+                    new ("Daisy",4 ) ];
 
                 // Group the pets using Pet.Age as the key.
                 // Use Pet.Name as the value for each entry.
@@ -1009,20 +1004,20 @@ namespace QueryableExamples
         static class GroupBy3
         {
             // <Snippet15>
-            class Pet
+            class Pet(string name, float age)
             {
-                public required string Name { get; set; }
-                public double Age { get; set; }
+                public string Name { get; set; } = name;
+                public float Age { get; set; } = age;
             }
 
             public static void GroupByEx3()
             {
                 // Create a list of pets.
-                List<Pet> petsList =
-                    [ new Pet { Name="Barley", Age=8.3 },
-                                   new Pet { Name="Boots", Age=4.9 },
-                                   new Pet { Name="Whiskers", Age=1.5 },
-                                   new Pet { Name="Daisy", Age=4.3 } ];
+                List<Pet> petsList = [
+                    new ("Barley",8.3f ),
+                        new ("Boots",4.9f ),
+                        new ("Whiskers",1.5f ),
+                        new ("Daisy",4.3f ) ];
 
                 // Group Pet objects by the Math.Floor of their age.
                 // Then project an anonymous type from each group
@@ -1072,20 +1067,20 @@ namespace QueryableExamples
         static class GroupBy4
         {
             // <Snippet130>
-            class Pet
+            class Pet(string name, float age)
             {
-                public required string Name { get; set; }
-                public double Age { get; set; }
+                public string Name { get; set; } = name;
+                public float Age { get; set; } = age;
             }
 
             public static void GroupByEx4()
             {
                 // Create a list of pets.
-                List<Pet> petsList =
-                    [ new Pet { Name="Barley", Age=8.3 },
-                                   new Pet { Name="Boots", Age=4.9 },
-                                   new Pet { Name="Whiskers", Age=1.5 },
-                                   new Pet { Name="Daisy", Age=4.3 } ];
+                List<Pet> petsList = [
+                    new ("Barley",8.3f ),
+                        new ("Boots",4.9f ),
+                        new ("Whiskers",1.5f ),
+                        new ("Daisy",4.3f ) ];
 
                 // Group Pet.Age values by the Math.Floor of the age.
                 // Then project an anonymous type from each group
@@ -1137,27 +1132,27 @@ namespace QueryableExamples
         static class GroupJoin
         {
             // <Snippet40>
-            class Person
+            class Person(string name)
             {
-                public required string Name { get; set; }
+                public string Name { get; set; } = name;
             }
 
-            class Pet
+            class Pet(string name, Person owner)
             {
-                public required string Name { get; set; }
-                public required Person Owner { get; set; }
+                public string Name { get; set; } = name;
+                public Person Owner { get; set; } = owner;
             }
 
             public static void GroupJoinEx1()
             {
-                Person magnus = new() { Name = "Hedlund, Magnus" };
-                Person terry = new() { Name = "Adams, Terry" };
-                Person charlotte = new() { Name = "Weiss, Charlotte" };
+                Person magnus = new("Hedlund, Magnus");
+                Person terry = new("Adams, Terry");
+                Person charlotte = new("Weiss, Charlotte");
 
-                Pet barley = new() { Name = "Barley", Owner = terry };
-                Pet boots = new() { Name = "Boots", Owner = terry };
-                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new() { Name = "Daisy", Owner = magnus };
+                Pet barley = new("Barley", terry);
+                Pet boots = new("Boots", terry);
+                Pet whiskers = new("Whiskers", charlotte);
+                Pet daisy = new("Daisy", magnus);
 
                 List<Person> people = [magnus, terry, charlotte];
                 List<Pet> pets = [barley, boots, whiskers, daisy];
@@ -1234,27 +1229,27 @@ namespace QueryableExamples
         static class Join
         {
             // <Snippet42>
-            class Person
+            class Person(string name)
             {
-                public required string Name { get; set; }
+                public string Name { get; set; } = name;
             }
 
-            class Pet
+            class Pet(string name, Person owner)
             {
-                public required string Name { get; set; }
-                public required Person Owner { get; set; }
+                public string Name { get; set; } = name;
+                public Person Owner { get; set; } = owner;
             }
 
             public static void JoinEx1()
             {
-                Person magnus = new() { Name = "Hedlund, Magnus" };
-                Person terry = new() { Name = "Adams, Terry" };
-                Person charlotte = new() { Name = "Weiss, Charlotte" };
+                Person magnus = new("Hedlund, Magnus");
+                Person terry = new("Adams, Terry");
+                Person charlotte = new("Weiss, Charlotte");
 
-                Pet barley = new() { Name = "Barley", Owner = terry };
-                Pet boots = new() { Name = "Boots", Owner = terry };
-                Pet whiskers = new() { Name = "Whiskers", Owner = charlotte };
-                Pet daisy = new() { Name = "Daisy", Owner = magnus };
+                Pet barley = new Pet("Barley", terry);
+                Pet boots = new("Boots", terry);
+                Pet whiskers = new("Whiskers", charlotte);
+                Pet daisy = new("Daisy", magnus);
 
                 List<Person> people = [magnus, terry, charlotte];
                 List<Pet> pets = [barley, boots, whiskers, daisy];
@@ -1439,17 +1434,18 @@ namespace QueryableExamples
         static class LongCount
         {
             // <Snippet48>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void LongCountEx2()
             {
-                Pet[] pets = [ new() { Name="Barley", Age=8 },
-                               new() { Name="Boots", Age=4 },
-                               new() { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [
+                    new ("Barley",8 ),
+                        new ("Boots",4 ),
+                        new ("Whiskers",1 ) ];
 
                 const int Age = 3;
 
@@ -1492,17 +1488,18 @@ namespace QueryableExamples
         static class Max2 // with a selector
         {
             // <Snippet58>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void MaxEx2()
             {
-                Pet[] pets = [ new() { Name="Barley", Age=8 },
-                               new() { Name="Boots", Age=4 },
-                               new() { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ) ];
 
                 // Add Pet.Age to the length of Pet.Name
                 // to determine the "maximum" Pet object in the array.
@@ -1546,17 +1543,18 @@ namespace QueryableExamples
         static class Min2 // with a selector
         {
             // <Snippet68>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void MinEx2()
             {
-                Pet[] pets = [ new() { Name="Barley", Age=8 },
-                               new() { Name="Boots", Age=4 },
-                               new() { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ) ];
 
                 // Get the Pet object that has the smallest Age value.
                 var min = pets.Min(pet => pet.Age);
@@ -1607,17 +1605,18 @@ namespace QueryableExamples
         static class OrderBy
         {
             // <Snippet70>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void OrderByEx1()
             {
-                Pet[] pets = [ new() { Name="Barley", Age=8 },
-                               new() { Name="Boots", Age=4 },
-                               new() { Name="Whiskers", Age=1 } ];
+                Pet[] pets = [
+                    new ("Barley",8 ),
+                    new ("Boots",4 ),
+                    new ("Whiskers",1 ) ];
 
                 // Sort the Pet objects in the array by Pet.Age.
                 IEnumerable<Pet> query = pets.OrderBy(pet => pet.Age);
@@ -1820,21 +1819,21 @@ namespace QueryableExamples
         static class SelectMany1
         {
             // <Snippet77>
-            class PetOwner
+            class PetOwner(string name, List<string> pets)
             {
-                public required string Name { get; set; }
-                public required List<string> Pets { get; set; }
+                public string Name { get; set; } = name;
+                public List<string> Pets { get; set; } = pets;
             }
 
             public static void SelectManyEx1()
             {
-                PetOwner[] petOwners =
-                    [ new() { Name="Higa, Sidney",
-                          Pets = ["Scruffy", "Sam"] },
-                      new() { Name="Ashkenazi, Ronen",
-                          Pets = ["Walker", "Sugar"] },
-                      new() { Name="Price, Vernette",
-                          Pets = ["Scratches", "Diesel"] } ];
+                PetOwner[] petOwners = [
+                    new ("Higa, Sidney",
+                          ["Scruffy", "Sam"] ),
+                    new ("Ashkenazi, Ronen",
+                          ["Walker", "Sugar"] ),
+                    new ("Price, Vernette",
+                          ["Scratches", "Diesel"] ) ];
 
                 // Query using SelectMany().
                 IEnumerable<string> query1 =
@@ -1897,23 +1896,23 @@ namespace QueryableExamples
         static class SelectMany2
         {
             // <Snippet78>
-            class PetOwner
+            class PetOwner(string name, List<string> pets)
             {
-                public required string Name { get; set; }
-                public required List<string> Pets { get; set; }
+                public string Name { get; set; } = name;
+                public List<string> Pets { get; set; } = pets;
             }
 
             public static void SelectManyEx2()
             {
-                PetOwner[] petOwners =
-                    [ new() { Name="Higa, Sidney",
-                          Pets = ["Scruffy", "Sam"] },
-                      new() { Name="Ashkenazi, Ronen",
-                          Pets = ["Walker", "Sugar"] },
-                      new() { Name="Price, Vernette",
-                          Pets = ["Scratches", "Diesel"] },
-                      new() { Name="Hines, Patrick",
-                          Pets = ["Dusty"] } ];
+                PetOwner[] petOwners = [
+                    new ("Higa, Sidney",
+                          ["Scruffy", "Sam"] ),
+                    new ("Ashkenazi, Ronen",
+                          ["Walker", "Sugar"] ),
+                    new ("Price, Vernette",
+                          ["Scratches", "Diesel"] ),
+                    new ("Hines, Patrick",
+                          ["Dusty"] ) ];
 
                 // For each PetOwner element in the source array,
                 // project a sequence of strings where each string
@@ -1946,46 +1945,41 @@ namespace QueryableExamples
         static class SelectMany3
         {
             // <Snippet124>
-            class PetOwner
+            class PetOwner(string name, List<Pet> pets)
             {
-                public required string Name { get; set; }
-                public required List<Pet> Pets { get; set; }
+                public string Name { get; set; } = name;
+                public List<Pet> Pets { get; set; } = pets;
             }
 
-            class Pet
+            class Pet(string name, string breed)
             {
-                public required string Name { get; set; }
-                public required string Breed { get; set; }
+                public string Name { get; set; } = name;
+                public string Breed { get; set; } = breed;
             }
 
             public static void SelectManyEx3()
             {
-                PetOwner[] petOwners =
-                    [ new() { Name="Higa",
-                          Pets = [
-                              new() { Name="Scruffy", Breed="Poodle" },
-                              new() { Name="Sam", Breed="Hound" } ] },
-                      new() { Name="Ashkenazi",
-                          Pets = [
-                              new() { Name="Walker", Breed="Collie" },
-                              new() { Name="Sugar", Breed="Poodle" } ] },
-                      new() { Name="Price",
-                          Pets = [
-                              new() { Name="Scratches", Breed="Dachshund" },
-                              new() { Name="Diesel", Breed="Collie" } ] },
-                      new() { Name="Hines",
-                          Pets = [
-                              new() { Name="Dusty", Breed="Collie" } ] }
+                PetOwner[] petOwners = [
+                    new ("Higa", [
+                        new ("Scruffy","Poodle" ),
+                        new ("Sam","Hound" ) ] ),
+                    new ("Ashkenazi", [
+                        new ("Walker","Collie" ),
+                        new ("Sugar","Poodle" ) ] ),
+                    new ("Price", [
+                        new ("Scratches","Dachshund" ),
+                        new ("Diesel","Collie" ) ] ),
+                    new ("Hines", [new ("Dusty","Collie" ) ] )
                     ];
 
                 // This query demonstrates how to obtain a sequence of
                 // the names of all the pets whose breed is "Collie", while
                 // keeping an association with the owner that owns the pet.
                 var query = petOwners
-                    // Create a sequence of ALL the Pet objects. Then
-                    // project an anonymous type that consists of each
-                    // Pet in the new sequence and the PetOwner object
-                    // from the initial array that corresponds to that pet.
+                   // Create a sequence of ALL the Pet objects. Then
+                   // project an anonymous type that consists of each
+                   // Pet in the new sequence and the PetOwner object
+                   // from the initial array that corresponds to that pet.
                    .SelectMany(owner => owner.Pets,
                                (owner, pet) => new { owner, pet })
                     // Filter the sequence of anonymous types to only
@@ -2021,16 +2015,16 @@ namespace QueryableExamples
         static class SequenceEqual1
         {
             // <Snippet32>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void SequenceEqualEx1()
             {
-                Pet pet1 = new() { Name = "Turbo", Age = 2 };
-                Pet pet2 = new() { Name = "Peanut", Age = 8 };
+                Pet pet1 = new("Turbo", 2);
+                Pet pet2 = new("Peanut", 8);
 
                 // Create two lists of pets.
                 List<Pet> pets1 = [pet1, pet2];
@@ -2056,24 +2050,22 @@ namespace QueryableExamples
         static class SequenceEqual2
         {
             // <Snippet33>
-            class Pet
+            class Pet(string name, int age)
             {
-                public required string Name { get; set; }
-                public int Age { get; set; }
+                public string Name { get; set; } = name;
+                public int Age { get; set; } = age;
             }
 
             public static void SequenceEqualEx2()
             {
-                Pet pet1 = new() { Name = "Turbo", Age = 2 };
-                Pet pet2 = new() { Name = "Peanut", Age = 8 };
+                Pet pet1 = new("Turbo", 2);
+                Pet pet2 = new("Peanut", 8);
 
                 // Create two lists of pets.
                 List<Pet> pets1 = [pet1, pet2];
-                List<Pet> pets2 =
-                [
-                    new Pet { Name = "Turbo", Age = 2 },
-                    new Pet { Name = "Peanut", Age = 8 }
-                ];
+                List<Pet> pets2 = [
+                    new Pet ("Turbo", 2 ),
+                        new Pet ("Peanut", 8 ) ];
 
                 // Determine if the lists are equal.
                 bool equal = pets1.SequenceEqual(pets2);
@@ -2394,11 +2386,11 @@ namespace QueryableExamples
 
             public static void SumEx3()
             {
-                List<Package> packages =
-                    [ new Package ("Coho Vineyard", 25.2 ),
-                          new Package ("Lucerne Publishing", 18.7 ),
-                          new Package ("Wingtip Toys", 6.0 ),
-                          new Package ("Adventure Works", 33.8 ) ];
+                List<Package> packages = [
+                    new Package ("Coho Vineyard", 25.2 ),
+                    new Package ("Lucerne Publishing", 18.7 ),
+                    new Package ("Wingtip Toys", 6.0 ),
+                    new Package ("Adventure Works", 33.8 ) ];
 
                 // Calculate the sum of all package weights.
                 double totalWeight = packages
@@ -2609,8 +2601,7 @@ namespace QueryableExamples
         static void WhereEx1()
         {
             // <Snippet110>
-            List<string> fruits =
-                [ "apple", "passionfruit", "banana", "mango",
+            List<string> fruits = [ "apple", "passionfruit", "banana", "mango",
                     "orange", "blueberry", "grape", "strawberry" ];
 
             // Get all strings whose length is less than 6.

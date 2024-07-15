@@ -48,11 +48,13 @@ static class Program
     static void Main()
     {
         //<Intersect>
-        Product[] store1 = [ new("apple",9 ),
-                            new("orange",4 ) ];
+        Product[] store1 = [
+            new("apple",9 ),
+            new("orange",4 ) ];
 
-        Product[] store2 = [ new("apple",9 ),
-                            new("lemon",12 ) ];
+        Product[] store2 = [
+            new("apple",9 ),
+            new("lemon",12 ) ];
 
         // Get the products from the first array
         // that have duplicates in the second array.
@@ -72,11 +74,13 @@ static class Program
         //</Intersect>
 
         //<Union>
-        Product[] store10 = [ new("apple",9 ),
-                               new("orange",4 ) ];
+        Product[] store10 = [
+            new("apple",9 ),
+            new("orange",4 ) ];
 
-        Product[] store20 = [ new("apple",9 ),
-                               new("lemon",12 ) ];
+        Product[] store20 = [
+            new("apple",9 ),
+            new("lemon",12 ) ];
 
         //Get the products from the both arrays
         //excluding duplicates.
@@ -99,10 +103,11 @@ static class Program
         //</Union>
 
         //<Distinct>
-        Product[] products = [ new("apple",9 ),
-                               new("orange",4 ),
-                               new("apple",9 ),
-                               new("lemon",12 ) ];
+        Product[] products = [
+            new("apple",9 ),
+            new("orange",4 ),
+            new("apple",9 ),
+            new("lemon",12 ) ];
 
         // Exclude duplicates.
 
@@ -123,9 +128,10 @@ static class Program
         //</Distinct>
 
         //<Contains>
-        Product[] fruits = [ new("apple",9 ),
-                               new("orange",4 ),
-                               new("lemon",12 ) ];
+        Product[] fruits = [
+            new("apple",9 ),
+            new("orange",4 ),
+            new("lemon",12 ) ];
 
         Product apple = new("apple", 9);
         Product kiwi = new("kiwi", 8);
@@ -148,9 +154,10 @@ static class Program
         //</Contains>
 
         //<Except>
-        Product[] fruits1 = [ new("apple",9 ),
-                               new("orange",4 ),
-                                new("lemon",12 ) ];
+        Product[] fruits1 = [
+            new("apple",9 ),
+            new("orange",4 ),
+            new("lemon",12 ) ];
 
         Product[] fruits2 = [new("apple", 9)];
 
@@ -176,11 +183,13 @@ static class Program
 
         //<SequenceEqual>
 
-        Product[] storeA = [ new("apple",9 ),
-                               new("orange",4 ) ];
+        Product[] storeA = [
+            new("apple",9 ),
+            new("orange",4 ) ];
 
-        Product[] storeB = [ new("apple",9 ),
-                               new("orange",4 ) ];
+        Product[] storeB = [
+            new("apple",9 ),
+            new("orange",4 ) ];
 
         var equalAB = storeA.SequenceEqual(storeB, new ProductComparer());
 

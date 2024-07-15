@@ -19,12 +19,12 @@ namespace SequenceExamples
         public static void ILookupExample()
         {
             // Create a list of Packages to put into an ILookup data structure.
-            List<Package> packages =
-            [ new Package ("Coho Vineyard", 25.2, 89453312L ),
-                    new Package ("Lucerne Publishing", 18.7, 89112755L ),
-                    new Package ("Wingtip Toys", 6.0, 299456122L ),
-                    new Package ("Contoso Pharmaceuticals", 9.3, 670053128L ),
-                    new Package ("Wide World Importers", 33.8, 4665518773L ) ];
+            List<Package> packages = [
+                new Package ("Coho Vineyard", 25.2, 89453312L ),
+                new Package ("Lucerne Publishing", 18.7, 89112755L ),
+                new Package ("Wingtip Toys", 6.0, 299456122L ),
+                new Package ("Contoso Pharmaceuticals", 9.3, 670053128L ),
+                new Package ("Wide World Importers", 33.8, 4665518773L ) ];
 
             // Create a Lookup to organize the packages. Use the first character of Company as the key value.
             // Select Company appended to TrackingNumber for each element value in the ILookup object.

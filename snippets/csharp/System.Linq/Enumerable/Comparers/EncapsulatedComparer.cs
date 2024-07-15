@@ -49,11 +49,13 @@ static class Program1
         // Some samples here need to use ProductA in conjunction with
         // ProductComparer, which implements IEqualityComparer (not IEquatable).
         //<Snippet10>
-        ProductA[] store1 = [ new("apple", 9 ),
-                               new("orange", 4 ) ];
+        ProductA[] store1 = [
+            new("apple", 9 ),
+            new("orange", 4 ) ];
 
-        ProductA[] store2 = [ new("apple", 9 ),
-                               new("lemon", 12 ) ];
+        ProductA[] store2 = [
+            new("apple", 9 ),
+            new("lemon", 12 ) ];
         //</Snippet10>
 
         //<Intersect>
@@ -96,10 +98,11 @@ static class Program1
         //</Union>
 
         //<Distinct>
-        MyProduct[] products = [ new("apple", 9 ),
-                               new("orange", 4 ),
-                               new("apple", 9 ),
-                               new("lemon", 12 ) ];
+        MyProduct[] products = [
+            new("apple", 9 ),
+            new("orange", 4 ),
+            new("apple", 9 ),
+            new("lemon", 12 ) ];
 
         // Exclude duplicates.
 
@@ -120,11 +123,12 @@ static class Program1
         //</Distinct>
 
         //<Except>
-        ProductA[] fruits1 = [ new("apple", 9 ),
-                               new("orange", 4 ),
-                                new("lemon", 12 ) ];
+        ProductA[] fruits1 = [
+            new("apple", 9 ),
+            new("orange", 4 ),
+            new("lemon", 12 ) ];
 
-        ProductA[] fruits2 = [new("apple", 9 )];
+        ProductA[] fruits2 = [new("apple", 9)];
 
         // Get all the elements from the first array
         // except for the elements from the second array.
@@ -147,11 +151,13 @@ static class Program1
 
         //<SequenceEqual>
 
-        ProductA[] storeA = [ new("apple", 9 ),
-                               new("orange", 4 ) ];
+        ProductA[] storeA = [
+            new("apple", 9 ),
+            new("orange", 4 ) ];
 
-        ProductA[] storeB = [ new("apple", 9 ),
-                               new("orange", 4 ) ];
+        ProductA[] storeB = [
+            new("apple", 9 ),
+            new("orange", 4 ) ];
 
         var equalAB = storeA.SequenceEqual(storeB);
 
