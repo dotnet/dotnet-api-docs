@@ -1418,7 +1418,7 @@ namespace QueryableExamples
             string[] fruits = [ "apple", "banana", "mango",
                                   "orange", "passionfruit", "grape" ];
 
-            long count = fruits.LongCount();        // [CA1829] better to use "fruits.Length;"
+            long count = fruits.LongCount();        // [CA1829, RCS1077] better to use "fruits.Length;"
 
             Console.WriteLine("There are {0} fruits in the collection.", count);
 
