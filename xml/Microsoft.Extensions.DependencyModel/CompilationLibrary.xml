@@ -29,8 +29,22 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a compile time library dependency in a dependency manifest.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[  
+
+## Remarks
+
+A compile time library dependency is a library used to compile an application. It can be a [reference assembly](/dotnet/standard/assembly/reference-assemblies) or an implementation assembly. You can use the <xref:Microsoft.Extensions.DependencyModel.DependencyContext.CompileLibraries> property to get the list of compile time library dependencies for a dependency context. This is useful when you need to dynamically compile code (for example, using Roslyn Emit API) referencing the same dependencies as your main application.
+
+## Examples
+
+The following example shows how to display the list of libraries used to compile the current application. Include `<PreserveCompilationContext>true</PreserveCompilationContext>` in your project file to run this example.
+
+:::code language="csharp" source="~/snippets/csharp/Microsoft.Extensions.DependencyModel/CompilationLibrary/Overview/CompilationLibrarySnippets.cs" id="SnippetPrintLibraries":::
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -63,15 +77,19 @@
         <Parameter Name="serviceable" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="version">To be added.</param>
-        <param name="hash">To be added.</param>
-        <param name="assemblies">To be added.</param>
-        <param name="dependencies">To be added.</param>
-        <param name="serviceable">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="type">The library's type.</param>
+        <param name="name">The library's name.</param>
+        <param name="version">The library's version.</param>
+        <param name="hash">The library package's hash.</param>
+        <param name="assemblies">The library's assemblies.</param>
+        <param name="dependencies">The library's dependencies.</param>
+        <param name="serviceable">Whether the library is serviceable.</param>
+        <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.DependencyModel.CompilationLibrary"/> class using the specified library properties.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="type" />, or <paramref name="name" />, or <paramref name="version" /> is <see langword="null" /> or an empty string.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="dependencies" /> or <paramref name="assemblies" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -120,17 +138,21 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="version">To be added.</param>
-        <param name="hash">To be added.</param>
-        <param name="assemblies">To be added.</param>
-        <param name="dependencies">To be added.</param>
-        <param name="serviceable">To be added.</param>
-        <param name="path">To be added.</param>
-        <param name="hashPath">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="type">The library's type.</param>
+        <param name="name">The library's name.</param>
+        <param name="version">The library's version.</param>
+        <param name="hash">The library package's hash.</param>
+        <param name="assemblies">The library's assemblies.</param>
+        <param name="dependencies">The library's dependencies.</param>
+        <param name="serviceable">Whether the library is serviceable.</param>
+        <param name="path">The library package's path.</param>
+        <param name="hashPath">The library package's hash path.</param>
+        <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.DependencyModel.CompilationLibrary"/> class using the specified library properties and path.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="type" />, or <paramref name="name" />, or <paramref name="version" /> is <see langword="null" /> or an empty string.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="dependencies" /> or <paramref name="assemblies" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Assemblies">
@@ -150,8 +172,8 @@
         <ReturnType>System.Collections.Generic.IReadOnlyList&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the list of assemblies for this library.</summary>
+        <value>The list of assemblies for this library.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -173,9 +195,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Gets the collection of absolute reference paths for this library.</summary>
+        <returns>The collection of absolute reference paths for this library.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+          Library location is not found.</exception>
       </Docs>
     </Member>
     <Member MemberName="ResolveReferencePaths">
@@ -205,10 +229,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="customResolvers">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="customResolvers">The array of custom assembly resolvers.</param>
+        <summary>Gets the collection of absolute reference paths for this library using specified custom resolvers.</summary>
+        <returns>The collection of absolute reference paths for this library.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">
+          Library location is not found.</exception>
       </Docs>
     </Member>
   </Members>
