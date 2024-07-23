@@ -27,7 +27,7 @@ This code produces the following output:
 
  CULTURE    PROPERTY VALUE
   en-US     dddd, MMMM d, yyyy
-  ja-JP     yyyy'年'M'月'd'日'
+  ja-JP     yyyy年M月d日dddd
   fr-FR     dddd d MMMM yyyy
 
 */

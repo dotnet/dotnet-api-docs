@@ -26,8 +26,8 @@ public class SamplesDTFI  {
 This code produces the following output.  The question marks take the place of native script characters.
 
  CULTURE    PROPERTY VALUE
-  en-US     MMMM dd
-  ja-JP     M'?'d'?'
+  en-US     MMMM d
+  ja-JP     M月d日
   fr-FR     d MMMM
 
 */
