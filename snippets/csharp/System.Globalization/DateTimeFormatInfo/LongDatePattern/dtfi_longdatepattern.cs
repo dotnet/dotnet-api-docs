@@ -23,11 +23,11 @@ public class SamplesDTFI  {
 }
 
 /*
-This code produces the following output:
+This code produces the following output. Note that the exact output format depends on the OS, the OS version, and the native globalization library used by the OS.
 
  CULTURE    PROPERTY VALUE
   en-US     dddd, MMMM d, yyyy
-  ja-JP     yyyy'年'M'月'd'日'
+  ja-JP     yyyy年M月d日dddd
   fr-FR     dddd d MMMM yyyy
 
 */
