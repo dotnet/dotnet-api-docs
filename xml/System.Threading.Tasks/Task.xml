@@ -2760,6 +2760,7 @@ End Sub
         <exception cref="T:System.ArgumentOutOfRangeException">The <paramref name="millisecondsDelay" /> argument is less than -1.</exception>
         <exception cref="T:System.OperationCanceledException">The task has been canceled. This exception is stored into the returned task.</exception>
         <exception cref="T:System.ObjectDisposedException">The provided <paramref name="cancellationToken" /> has already been disposed.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
       </Docs>
     </Member>
     <Member MemberName="Delay">
@@ -2846,6 +2847,7 @@ Task t Status: RanToCompletion, Result: 42
  The <paramref name="delay" /> argument's <see cref="P:System.TimeSpan.TotalMilliseconds" /> property is greater than 4294967294 on .NET 6 and later versions, or <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see> on all previous versions.</exception>
         <exception cref="T:System.OperationCanceledException">The task has been canceled. This exception is stored into the returned task.</exception>
         <exception cref="T:System.ObjectDisposedException">The provided <paramref name="cancellationToken" /> has already been disposed.</exception>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
       </Docs>
     </Member>
     <Member MemberName="Delay">
@@ -4077,6 +4079,7 @@ This method is intended for compiler use rather than use directly in code.
         <exception cref="T:System.OperationCanceledException">The task has been canceled. This exception is stored into the returned task.</exception>
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> associated with <paramref name="cancellationToken" /> was disposed.</exception>
         <related type="Article" href="/dotnet/standard/parallel-programming/exception-handling-task-parallel-library">Exception Handling (Task Parallel Library)</related>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
       </Docs>
     </Member>
     <Member MemberName="Run">
@@ -4146,6 +4149,7 @@ This method is intended for compiler use rather than use directly in code.
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> associated with <paramref name="cancellationToken" /> was disposed.</exception>
         <related type="Article" href="/dotnet/standard/parallel-programming/task-cancellation">Task Cancellation</related>
         <related type="Article" href="/dotnet/standard/parallel-programming/exception-handling-task-parallel-library">Exception Handling (Task Parallel Library)</related>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
       </Docs>
     </Member>
     <Member MemberName="Run&lt;TResult&gt;">
@@ -4387,6 +4391,7 @@ This method is intended for compiler use rather than use directly in code.
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> associated with <paramref name="cancellationToken" /> was disposed.</exception>
         <related type="Article" href="/dotnet/standard/parallel-programming/task-cancellation">Task Cancellation</related>
         <related type="Article" href="/dotnet/standard/parallel-programming/exception-handling-task-parallel-library">Exception Handling (Task Parallel Library)</related>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
       </Docs>
     </Member>
     <Member MemberName="Run&lt;TResult&gt;">
@@ -4486,6 +4491,7 @@ This method is intended for compiler use rather than use directly in code.
         <exception cref="T:System.ObjectDisposedException">The <see cref="T:System.Threading.CancellationTokenSource" /> associated with <paramref name="cancellationToken" /> was disposed.</exception>
         <related type="Article" href="/dotnet/standard/parallel-programming/task-cancellation">Task Cancellation</related>
         <related type="Article" href="/dotnet/standard/parallel-programming/exception-handling-task-parallel-library">Exception Handling (Task Parallel Library)</related>
+        <exception cref="T:System.Threading.Tasks.TaskCanceledException">The task has been canceled.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="RunSynchronously">
@@ -5436,9 +5442,16 @@ timeout is greater than
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="tasks">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="tasks">An array of <see cref="T:System.Threading.Tasks.Task" /> instances on which to wait.</param>
+        <summary>Waits for all of the provided <see cref="T:System.Threading.Tasks.Task" /> objects to complete execution.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument contains a <see langword="null" /> element.</exception>
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled
+
+-or-
+
+an exception was thrown during
+            the execution of at least one of the <see cref="T:System.Threading.Tasks.Task" /> instances.</exception>
       </Docs>
     </Member>
     <Member MemberName="WaitAll">
@@ -5553,10 +5566,16 @@ timeout is greater than
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="tasks">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="tasks">An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of Task instances on which to wait.</param>
+        <param name="cancellationToken">A <see cref="P:System.Threading.Tasks.Task.CancellationToken" /> to observe while waiting for the tasks to complete.</param>
+        <summary>Waits for all of the provided <see cref="T:System.Threading.Tasks.Task" /> objects to complete execution unless the wait is cancelled.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="tasks" /> argument is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> argument contains a <see langword="null" /> element.</exception>
+        <exception cref="T:System.ObjectDisposedException">One or more of the <see cref="T:System.Threading.Tasks.Task" /> objects in tasks has been disposed.</exception>
+        <exception cref="T:System.OperationCanceledException">The <paramref name="cancellationToken" /> was canceled.</exception>
+        <exception cref="T:System.AggregateException">At least one of the <see cref="T:System.Threading.Tasks.Task" /> instances was canceled. If a task was canceled, the <see cref="T:System.AggregateException" />
+            contains an <see cref="T:System.OperationCanceledException" /> in its <see cref="P:System.AggregateException.InnerExceptions" /> collection.</exception>
       </Docs>
     </Member>
     <Member MemberName="WaitAll">
@@ -6463,10 +6482,20 @@ timeout is greater than
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="tasks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tasks">The tasks to wait on for completion.</param>
+        <summary>Creates a task that will complete when all of the supplied tasks have completed.</summary>
+        <returns>A task that represents the completion of all of the supplied tasks.</returns>
+        <remarks>
+          <para> If any of the supplied tasks completes in a faulted state, the returned task will also complete in a Faulted state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.
+ </para>
+          <para> If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the Canceled state.
+ </para>
+          <para> If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the RanToCompletion state.
+ </para>
+          <para> If the supplied span contains no tasks, the returned task will immediately transition to a RanToCompletion state before it's returned to the caller.
+ </para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> array contained a <see langword="null" /> task.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAll">
@@ -6692,10 +6721,21 @@ timeout is greater than
       </Parameters>
       <Docs>
         <typeparam name="TResult">To be added.</typeparam>
-        <param name="tasks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tasks">The tasks to wait on for completion.</param>
+        <summary>Creates a task that will complete when all of the supplied tasks have completed.</summary>
+        <returns>A task that represents the completion of all of the supplied tasks.</returns>
+        <remarks>
+          <para> If any of the supplied tasks completes in a faulted state, the returned task will also complete in a Faulted state, where its exceptions will contain the aggregation of the set of unwrapped exceptions from each of the supplied tasks.
+ </para>
+          <para> If none of the supplied tasks faulted but at least one of them was canceled, the returned task will end in the Canceled state.
+ </para>
+          <para> If none of the tasks faulted and none of the tasks were canceled, the resulting task will end in the RanToCompletion state.
+ The Result of the returned task will be set to an array containing all of the results of the supplied tasks in the same order as they were provided (e.g. if the input tasks array contained t1, t2, t3, the output task's Result will return an TResult[] where arr[0] == t1.Result, arr[1] == t2.Result, and arr[2] == t3.Result).
+ </para>
+          <para> If the supplied array/enumerable contains no tasks, the returned task will immediately transition to a RanToCompletion state before it's returned to the caller.  The returned TResult[] will be an array of 0 elements.
+ </para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> array contained a <see langword="null" /> task.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAll&lt;TResult&gt;">
@@ -6898,10 +6938,11 @@ timeout is greater than
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="tasks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tasks">The tasks to wait on for completion.</param>
+        <summary>Creates a task that will complete when any of the supplied tasks have completed.</summary>
+        <returns>A task that represents the completion of one of the supplied tasks.  The return Task's Result is the task that completed.</returns>
+        <remarks>The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the RanToCompletion state with its Result set to the first task to complete.  This is <see langword="true" /> even if the first task to complete ended in the Canceled or Faulted state.</remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> array contained a <see langword="null" /> task, or was empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAny">
@@ -7138,10 +7179,11 @@ The returned task will complete when any of the supplied tasks has completed.  T
       </Parameters>
       <Docs>
         <typeparam name="TResult">To be added.</typeparam>
-        <param name="tasks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tasks">The tasks to wait on for completion.</param>
+        <summary>Creates a task that will complete when any of the supplied tasks have completed.</summary>
+        <returns>A task that represents the completion of one of the supplied tasks.  The return Task's Result is the task that completed.</returns>
+        <remarks>The returned task will complete when any of the supplied tasks has completed.  The returned task will always end in the RanToCompletion state with its Result set to the first task to complete.  This is <see langword="true" /> even if the first task to complete ended in the Canceled or Faulted state.</remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="tasks" /> array contained a <see langword="null" /> task, or was empty.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenAny&lt;TResult&gt;">
@@ -7314,6 +7356,7 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Threading.Tasks.Task.WhenEach(System.Threading.Tasks.Task[])" />
       </Docs>
     </Member>
     <Member MemberName="WhenEach">
@@ -7355,6 +7398,7 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Threading.Tasks.Task.WhenEach(System.Threading.Tasks.Task[])" />
       </Docs>
     </Member>
     <Member MemberName="WhenEach">
@@ -7392,10 +7436,14 @@ The returned task will complete when any of the supplied tasks has completed.  T
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="tasks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tasks">The task to iterate through when completed.</param>
+        <summary>Creates an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that will yield the supplied tasks as those tasks complete.</summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> for iterating through the supplied tasks.</returns>
+        <remarks>The supplied tasks will become available to be output via the enumerable once they've completed. The exact order in which the tasks will become available is not defined.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="tasks" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="tasks" /> contains a <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WhenEach&lt;TResult&gt;">
@@ -7441,6 +7489,7 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Threading.Tasks.Task.WhenEach(System.Threading.Tasks.Task[])" />
       </Docs>
     </Member>
     <Member MemberName="WhenEach&lt;TResult&gt;">
@@ -7493,6 +7542,7 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Threading.Tasks.Task.WhenEach(System.Threading.Tasks.Task[])" />
       </Docs>
     </Member>
     <Member MemberName="WhenEach&lt;TResult&gt;">
@@ -7545,6 +7595,7 @@ The returned task will complete when any of the supplied tasks has completed.  T
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Threading.Tasks.Task.WhenEach(System.Threading.Tasks.Task[])" />
       </Docs>
     </Member>
     <Member MemberName="Yield">
