@@ -2298,27 +2298,17 @@ On .NET 7 and earlier versions, when using this method on Windows, the <xref:Sys
 
 The method does not verify that the path exists or test to see if the current process can access the path.
 
- This method checks for the existence of environment variables in the following order and returns the first path found:
-
 # [Windows](#tab/windows)
 
-1.  The path specified by the TMP environment variable.
+If the current Windows version exposes the [`GetTempPath2`](https://learn.microsoft.com/windows/win32/api/fileapi/nf-fileapi-gettemppath2w) Win32 API, this method invokes that API and returns the resolved path. See [the _Remarks_ section](https://learn.microsoft.com/windows/win32/api/fileapi/nf-fileapi-gettemppath2w#remarks) of the GetTempPath2 documentation for more information on how this resolution is performed, including how to control the return value through the use of environment variables. The GetTempPath2 API may not be available on all versions of Windows.
 
-2.  The path specified by the TEMP environment variable.
-
-3.  The path specified by the USERPROFILE environment variable.
-
-4.  The Windows directory.
-
-In .NET Framework and .NET 6.0.32+, if your operating system is Windows 11 or Windows Server build 20348 or later, when the process calling the method is running as `SYSTEM`, the method skips the preceding sequence and returns `C:\Windows\SystemTemp`. This location is inaccessible to processes not running as `SYSTEM`.
-
-On .NET Framework, this behavior can be opted out by setting the `COMPlus_Disable_GetTempPath2` environment variable to `true` (all other values are ignored).
+On Windows versions which do not expose GetTempPath2, this method instead invokes the [`GetTempPath`](https://learn.microsoft.com/windows/win32/api/fileapi/nf-fileapi-gettemppathw) Win32 API and returns the resolved path. See [the _Remarks_ section](https://learn.microsoft.com/windows/win32/api/fileapi/nf-fileapi-gettemppathw#remarks) of the GetTempPath documentation for more information on how this resolution is performed, including how to control the return value through the use of environment variables.
 
 # [Linux](#tab/linux)
 
-1.  The path specified by the TMPDIR environment variable.
+If the `TMPDIR` environment variable has been set, this method returns the value specified by that environment variable.
 
-2.  The path `/tmp/`.
+Otherwise, this method returns `/tmp/`.
 
 ---
 
