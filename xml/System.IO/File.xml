@@ -77,9 +77,9 @@
 
  Many of the <xref:System.IO.File> methods return other I/O types when you create or open files. You can use these other types to further manipulate a file. For more information, see specific <xref:System.IO.File> members such as <xref:System.IO.File.OpenText%2A>, <xref:System.IO.File.CreateText%2A>, or <xref:System.IO.File.Create%2A>.
 
- Because all <xref:System.IO.File> methods are static, it might be more efficient to use a <xref:System.IO.File> method rather than a corresponding <xref:System.IO.FileInfo> instance method if you want to perform only one action. All <xref:System.IO.File> methods require the path to the file that you are manipulating.
+ Because all <xref:System.IO.File> methods are static, if you want to perform only one action, it might be more efficient to use a <xref:System.IO.File> method than a corresponding <xref:System.IO.FileInfo> instance method. All <xref:System.IO.File> methods require the path to the file that you are manipulating.
 
- The static methods of the <xref:System.IO.File> class perform security checks on all methods. If you are going to reuse an object several times, consider using the corresponding instance method of <xref:System.IO.FileInfo> instead, because the security check will not always be necessary.
+ The static methods of the <xref:System.IO.File> class perform security checks on all methods. If you are going to reuse an object several times, consider using the corresponding instance method of <xref:System.IO.FileInfo> instead, because the security check won't always be necessary.
 
  By default, full read/write access to new files is granted to all users.
 
@@ -97,16 +97,11 @@
  In members that accept a path, the path can refer to a file or just a directory. The specified path can also refer to a relative path or a Universal Naming Convention (UNC) path for a server and share name. For example, all the following are acceptable paths:
 
 -   `"c:\\\MyDir\\\MyFile.txt"` in C#, or `"c:\MyDir\MyFile.txt"` in Visual Basic.
-
 -   `"c:\\\MyDir"` in C#, or `"c:\MyDir"` in Visual Basic.
-
 -   `"MyDir\\\MySubdir"` in C#, or `"MyDir\MySubDir"` in Visual Basic.
-
 -   `"\\\\\\\MyServer\\\MyShare"` in C#, or `"\\\MyServer\MyShare"` in Visual Basic.
 
  For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
-
-
 
 ## Examples
  The following example demonstrates how to use the <xref:System.IO.File> class to check whether a file exists, and depending on the result, either create a new file and write to it, or open the existing file and read from it. Before running the code, create a `c:\temp` folder.
@@ -5479,20 +5474,18 @@ The following example moves a file.
         <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destinationFileName" />.</param>
         <param name="destinationFileName">The name of the file being replaced.</param>
         <param name="destinationBackupFileName">The name of the backup file.</param>
-        <summary>Replaces the contents of a specified file with the contents of another file, deleting the original file, and creating a backup of the replaced file.</summary>
+        <summary>Replaces the contents of a specified file with the contents of another file, deleting the original file and creating a backup of the replaced file.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
  The <xref:System.IO.File.Replace%2A> method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.
 
- If the `sourceFileName` and `destinationFileName` are on different volumes, this method will raise an exception. If the `destinationBackupFileName` is on a different volume from the source file, the backup file will be deleted.
+ If the `sourceFileName` and `destinationFileName` are on different volumes, this method raises an exception. If the `destinationBackupFileName` is on a different volume from the source file, the backup file will be deleted.
 
- Pass `null` to the `destinationBackupFileName` parameter if you do not want to create a backup of the file being replaced.
+ Pass `null` to the `destinationBackupFileName` parameter if you don't want to create a backup of the file being replaced.
 
- If the `destinationBackupFileName` already exists it will be replaced with the contents of the `destinationFileName` file.
-
-
+ If the `destinationBackupFileName` already exists, it's replaced with the contents of the `destinationFileName` file.
 
 ## Examples
  The following code example uses the <xref:System.IO.File.Replace%2A> method to replace a file with another file and create a backup of the replaced file.
@@ -5504,18 +5497,10 @@ The following example moves a file.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The path described by the <paramref name="destinationFileName" /> parameter was not of a legal form.
-
- -or-
-
- The path described by the <paramref name="destinationBackupFileName" /> parameter was not of a legal form.</exception>
+        <exception cref="T:System.ArgumentException">The path described by the <paramref name="destinationFileName" /> or <paramref name="destinationBackupFileName" /> parameter is not of a legal form.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="destinationFileName" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.IO.DriveNotFoundException">An invalid drive was specified.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">The file described by the current <see cref="T:System.IO.FileInfo" /> object could not be found.
-
- -or-
-
- The file described by the <paramref name="destinationBackupFileName" /> parameter could not be found.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The file described by <paramref name="sourceFileName" /> or <paramref name="destinationFileName" /> parameter could not be found.</exception>
         <exception cref="T:System.IO.IOException">An I/O error occurred while opening the file.
 
 -or-
@@ -5603,20 +5588,18 @@ The caller does not have the required permission.
         <param name="destinationBackupFileName">The name of the backup file.</param>
         <param name="ignoreMetadataErrors">
           <see langword="true" /> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; otherwise, <see langword="false" />.</param>
-        <summary>Replaces the contents of a specified file with the contents of another file, deleting the original file, and creating a backup of the replaced file and optionally ignores merge errors.</summary>
+        <summary>Replaces the contents of a specified file with the contents of another file, deleting the original file and creating a backup of the replaced file, and optionally ignores merge errors.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
  The <xref:System.IO.File.Replace%2A> method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.
 
- If the `sourceFileName` and `destinationFileName` are on different volumes, this method will raise an exception. If the `destinationBackupFileName` is on a different volume from the source file, the backup file will be deleted.
+ If the `sourceFileName` and `destinationFileName` are on different volumes, this method raises an exception. If the `destinationBackupFileName` is on a different volume from the source file, the backup file will be deleted.
 
- Pass `null` to the `destinationBackupFileName` parameter if you do not want to create a backup of the file being replaced.
+ Pass `null` to the `destinationBackupFileName` parameter if you don't want to create a backup of the file being replaced.
 
- If the `destinationBackupFileName` already exists it will be replaced with the contents of the `destinationFileName` file.
-
-
+ If the `destinationBackupFileName` already exists, it's replaced with the contents of the `destinationFileName` file.
 
 ## Examples
  The following code example uses the <xref:System.IO.File.Replace%2A> method to replace a file with another file and create a backup of the replaced file.
@@ -5628,23 +5611,15 @@ The caller does not have the required permission.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The path described by the <paramref name="destinationFileName" /> parameter was not of a legal form.
-
- -or-
-
- The path described by the <paramref name="destinationBackupFileName" /> parameter was not of a legal form.</exception>
+        <exception cref="T:System.ArgumentException">The path described by the <paramref name="destinationFileName" /> or <paramref name="destinationBackupFileName" /> parameter is not of a legal form.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="destinationFileName" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.IO.DriveNotFoundException">An invalid drive was specified.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">The file described by the current <see cref="T:System.IO.FileInfo" /> object could not be found.
-
- -or-
-
- The file described by the <paramref name="destinationBackupFileName" /> parameter could not be found.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The file described by <paramref name="sourceFileName" /> or <paramref name="destinationFileName" /> parameter could not be found.</exception>
         <exception cref="T:System.IO.IOException">An I/O error occurred while opening the file.
 
 -or-
 
- The <paramref name="sourceFileName" /> and <paramref name="destinationFileName" /> parameters specify the same file.</exception>
+<paramref name="sourceFileName" /> and <paramref name="destinationFileName" /> specify the same file.</exception>
         <exception cref="T:System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. </exception>
         <exception cref="T:System.UnauthorizedAccessException">The <paramref name="sourceFileName" /> or <paramref name="destinationFileName" /> parameter specifies a file that is read-only.
 
@@ -5701,13 +5676,13 @@ The caller does not have the required permission.
         <param name="returnFinalTarget">
           <see langword="true" /> to follow links to the final target; <see langword="false" /> to return the immediate next link.</param>
         <summary>Gets the target of the specified file link.</summary>
-        <returns>A <see cref="T:System.IO.FileInfo" /> instance if <paramref name="linkPath" /> exists, independently if the target exists or not. <see langword="null" /> if <paramref name="linkPath" /> is not a link.</returns>
+        <returns>A <see cref="T:System.IO.FileInfo" /> instance if <paramref name="linkPath" /> exists, independently of whether the target exists or not. <see langword="null" /> if <paramref name="linkPath" /> is not a link.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
-When `returnFinalTarget` is `true`, the maximum number of symbolic links that are followed are 40 on Unix and 63 on Windows.
+When `returnFinalTarget` is `true`, the maximum number of symbolic links that are followed is 40 on Unix and 63 on Windows.
 
 Symbolic links and junctions are the types of links this API can resolve.
 
@@ -6114,8 +6089,7 @@ It is not possible to change the compression status of a <xref:System.IO.File> o
       </Parameters>
       <Docs>
         <param name="fileHandle">A <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> to the file or directory for which to set the creation date and time information.</param>
-        <param name="creationTimeUtc">A <see cref="T:System.DateTime" /> containing the value to set for the creation date and time of <paramref name="fileHandle" />.
-            This value is expressed in UTC time.</param>
+        <param name="creationTimeUtc">The value to set for the creation date and time of <paramref name="fileHandle" />. This value is expressed in UTC time.</param>
         <summary>Sets the date and time, in Coordinated Universal Time (UTC), that the file or directory was created.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -6177,7 +6151,7 @@ It is not possible to change the compression status of a <xref:System.IO.File> o
       </Parameters>
       <Docs>
         <param name="path">The file for which to set the creation date and time information.</param>
-        <param name="creationTimeUtc">A <see cref="T:System.DateTime" /> containing the value to set for the creation date and time of <paramref name="path" />. This value is expressed in UTC time.</param>
+        <param name="creationTimeUtc">The value to set for the creation date and time of <paramref name="path" />. This value is expressed in UTC time.</param>
         <summary>Sets the date and time, in Coordinated Universal Time (UTC), that the file was created.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -6198,7 +6172,7 @@ It is not possible to change the compression status of a <xref:System.IO.File> o
         <exception cref="T:System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. </exception>
         <exception cref="T:System.IO.IOException">An I/O error occurred while performing the operation.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="creationTime" /> specifies a value outside the range of dates, times, or both permitted for this operation.</exception>
+          <paramref name="creationTimeUtc" /> specifies a value outside the range of dates, times, or both permitted for this operation.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="path" /> is in an invalid format.</exception>

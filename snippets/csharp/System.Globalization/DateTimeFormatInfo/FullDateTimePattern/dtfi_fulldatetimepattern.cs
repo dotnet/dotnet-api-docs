@@ -23,11 +23,11 @@ public class SamplesDTFI  {
 }
 
 /*
-This code produces the following output.  The question marks take the place of native script characters.
+This code produces the following output. Note that the exact output format depends on the OS, the OS version, and the native globalization library used by the OS.
 
  CULTURE    PROPERTY VALUE
-  en-US     dddd, MMMM dd, yyyy h:mm:ss tt
-  ja-JP     yyyy'年'M'月'd'日' H:mm:ss
+  en-US     dddd, MMMM d, yyyy h:mm:ss tt
+  ja-JP     yyyy年M月d日dddd H:mm:ss
   fr-FR     dddd d MMMM yyyy HH:mm:ss
 
 */
