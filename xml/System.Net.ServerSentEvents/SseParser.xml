@@ -24,7 +24,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides a parser for parsing server-sent events.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -47,10 +47,12 @@
         <Parameter Name="sseStream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="sseStream">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="sseStream">The stream containing the data to parse.</param>
+        <summary>Creates a parser for parsing a <paramref name="sseStream" /> of server-sent events into a sequence of <see cref="T:System.Net.ServerSentEvents.SseItem`1" /> values.</summary>
+        <returns>The enumerable of strings, which may be enumerated synchronously or asynchronously. The strings are decoded from the UTF8-encoded bytes of the payload of each event.</returns>
+        <remarks>This overload has behavior equivalent to calling <see cref="M:System.Net.ServerSentEvents.SseParser.Create``1(System.IO.Stream,System.Net.ServerSentEvents.SseItemParser{``0})" /> with a delegate that decodes the data of each event using <see cref="P:System.Text.Encoding.UTF8" />'s GetString method.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sseStream" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create&lt;T&gt;">
@@ -83,12 +85,14 @@
         <Parameter Name="itemParser" Type="System.Net.ServerSentEvents.SseItemParser&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="sseStream">To be added.</param>
-        <param name="itemParser">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="T">Specifies the type of data in each event.</typeparam>
+        <param name="sseStream">The stream containing the data to parse.</param>
+        <param name="itemParser">The parser to use to transform each payload of bytes into a data element.</param>
+        <summary>Creates a parser for parsing a <paramref name="sseStream" /> of server-sent events into a sequence of <see cref="T:System.Net.ServerSentEvents.SseItem`1" /> values.</summary>
+        <returns>The enumerable, which may be enumerated synchronously or asynchronously.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="sseStream" /> or <paramref name="itemParser" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="EventTypeDefault">
@@ -107,7 +111,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The default <see cref="P:System.Net.ServerSentEvents.SseItem`1.EventType" /> ("message") for an event that did not explicitly specify a type.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
