@@ -24,7 +24,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Provides stateless methods for decoding .NET Remoting Binary Format (NRBF) encoded data.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -55,12 +55,21 @@
         <Parameter Name="leaveOpen" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="payload">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="leaveOpen">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="payload">The NRBF payload.</param>
+        <param name="options">Options to control behavior during parsing.</param>
+        <param name="leaveOpen">
+          <see langword="true" /> to leave <paramref name="payload" /> payload open after the reading is finished; otherwise, <see langword="false" />.</param>
+        <summary>Decodes the provided NRBF payload.</summary>
+        <returns>A <see cref="T:System.Formats.Nrbf.SerializationRecord" /> that represents the root object.
+ It can be either <see cref="T:System.Formats.Nrbf.PrimitiveTypeRecord`1" />, a <see cref="T:System.Formats.Nrbf.ClassRecord" />, or an <see cref="T:System.Formats.Nrbf.ArrayRecord" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="payload" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="payload" /> does not support reading or is already closed.</exception>
+        <exception cref="T:System.Runtime.Serialization.SerializationException">Reading from <paramref name="payload" /> encounters invalid NRBF data.</exception>
+        <exception cref="T:System.Text.DecoderFallbackException">Reading from <paramref name="payload" />
+            encounters an invalid UTF8 sequence.</exception>
       </Docs>
     </Member>
     <Member MemberName="Decode">
@@ -92,13 +101,16 @@
         <Parameter Name="leaveOpen" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="payload">To be added.</param>
-        <param name="recordMap">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="leaveOpen">To be added.</param>
+        <param name="payload">The NRBF payload.</param>
+        <param name="recordMap">When this method returns, contains a mapping of <see cref="T:System.Formats.Nrbf.SerializationRecordId" /> to the associated serialization record.
+ This parameter is treated as uninitialized.</param>
+        <param name="options">An object that describes optional <see cref="T:System.Formats.Nrbf.PayloadOptions" /> parameters to use.</param>
+        <param name="leaveOpen">
+          <see langword="true" /> to leave <paramref name="payload" /> payload open after the reading is finished; otherwise, <see langword="false" />.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Formats.Nrbf.NrbfDecoder.Decode(System.IO.Stream,System.Formats.Nrbf.PayloadOptions,System.Boolean)" />
       </Docs>
     </Member>
     <Member MemberName="DecodeClassRecord">
@@ -131,9 +143,10 @@
         <param name="payload">To be added.</param>
         <param name="options">To be added.</param>
         <param name="leaveOpen">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Decodes the provided NRBF payload that is expected to contain an instance of any class (or struct) that is not an <see cref="T:System.Array" /> or a primitive type.</summary>
+        <returns>A <see cref="T:System.Formats.Nrbf.ClassRecord" /> that represents the root object.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Formats.Nrbf.NrbfDecoder.Decode(System.IO.Stream,System.Formats.Nrbf.PayloadOptions,System.Boolean)" />
       </Docs>
     </Member>
     <Member MemberName="StartsWithPayloadHeader">
@@ -180,10 +193,17 @@
         <Parameter Name="stream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="stream">The stream to inspect. The stream must be both readable and seekable.</param>
+        <summary>Checks if given stream starts with <see href="https://learn.microsoft.com/openspecs/windows_protocols/ms-nrbf/a7e578d3-400a-4249-9424-7529d10d1b3c">NRBF payload header</see>.</summary>
+        <returns>
+          <see langword="true" /> if it starts with NRBF payload header; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <para>When this method returns, <paramref name="stream" /> will be restored to its original position.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.NotSupportedException">The stream does not support reading or seeking.</exception>
+        <exception cref="T:System.ObjectDisposedException">The stream was closed.</exception>
       </Docs>
     </Member>
   </Members>
