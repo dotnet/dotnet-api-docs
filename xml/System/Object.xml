@@ -606,26 +606,21 @@ For an additional example that overrides the <xref:System.Object.Finalize%2A> me
 ## Remarks
  The <xref:System.Object.MemberwiseClone%2A> method creates a shallow copy by creating a new object, and then copying the nonstatic fields of the current object to the new object. If a field is a value type, a bit-by-bit copy of the field is performed. If a field is a reference type, the reference is copied but the referred object is not; therefore, the original object and its clone refer to the same object.
 
- For example, consider an object called X that references objects A and B. Object B, in turn, references object C. A shallow copy of X creates new object X2 that also references objects A and B. In contrast, a deep copy of X creates a new object X2 that references the new objects A2 and B2, which are copies of A and B. B2, in turn, references the new object C2, which is a copy of C. The example illustrates the difference between a shallow and a deep copy operation.
+To illustrate the difference between a shallow and a deep copy operation, consider an object called X that references objects A and B. Object B, in turn, references object C. A shallow copy of X creates new object X2 that also references objects A and B. In contrast, a deep copy of X creates a new object X2 that references the new objects A2 and B2, which are copies of A and B. B2, in turn, references the new object C2, which is a copy of C.
 
- There are numerous ways to implement a deep copy operation if the shallow copy operation performed by the <xref:System.Object.MemberwiseClone%2A> method does not meet your needs. These include the following:
+ There are numerous ways to implement a deep copy operation if the shallow copy operation performed by the <xref:System.Object.MemberwiseClone%2A> method doesn't meet your needs. These include the following:
 
--   Call a class constructor of the object to be copied to create a second object with property values taken from the first object. This assumes that the values of an object are entirely defined by its class constructor.
-
--   Call the <xref:System.Object.MemberwiseClone%2A> method to create a shallow copy of an object, and then assign new objects whose values are the same as the original object to any properties or fields whose values are reference types. The `DeepCopy` method in the example illustrates this approach.
-
--   Serialize the object to be deep copied, and then restore the serialized data to a different object variable.
-
--   Use reflection with recursion to perform the deep copy operation.
-
-
+- Call a class constructor of the object to be copied to create a second object with property values taken from the first object. This assumes that the values of an object are entirely defined by its class constructor.
+- Call the <xref:System.Object.MemberwiseClone%2A> method to create a shallow copy of an object, and then assign new objects whose values are the same as the original object to any properties or fields whose values are reference types. The `DeepCopy` method in the example illustrates this approach.
+- Serialize the object to be deep copied, and then restore the serialized data to a different object variable.
+- Use reflection with recursion to perform the deep copy operation.
 
 ## Examples
  The following example illustrates the <xref:System.Object.MemberwiseClone%2A> method. It defines a `ShallowCopy` method that calls the <xref:System.Object.MemberwiseClone%2A> method to perform a shallow copy operation on a `Person` object. It also defines a `DeepCopy` method that performs a deep copy operation on a `Person` object.
 
  :::code language="csharp" source="~/snippets/csharp/System/Object/MemberwiseClone/memberwiseclone1.cs" interactive="try-dotnet" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/System/Object/MemberwiseClone/memberwiseclone1.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.object.memberwiseclone/vb/memberwiseclone1.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System/Object/MemberwiseClone/memberwiseclone1.vb" id="Snippet1":::
 
  In this example, the `Person.IdInfo` property returns an `IdInfo` object. As the output from the example shows, when a `Person` object is cloned by calling the <xref:System.Object.MemberwiseClone%2A> method, the cloned `Person` object is an independent copy of the original object, except that they share the same `Person.IdInfo` object reference. As a result, modifying the clone's `Person.IdInfo` property changes the original object's `Person.IdInfo` property. On the other hand, when a deep copy operation is performed, the cloned `Person` object, including its `Person.IdInfo` property, can be modified without affecting the original object.
 
