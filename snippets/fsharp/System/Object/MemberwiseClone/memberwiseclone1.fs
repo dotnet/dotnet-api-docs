@@ -18,7 +18,6 @@ type Person() =
     member this.DeepCopy() =
        let other = this.MemberwiseClone() :?> Person
        other.IdInfo <- IdInfo this.IdInfo.IdNumber
-       other.Name <- String.Copy this.Name
        other
 
 let displayValues (p: Person) =
@@ -54,14 +53,15 @@ displayValues p2
 // Make a deep copy of p1 and assign it to p3.
 let p3 = p1.DeepCopy()
 // Change the members of the p1 class to new values to show the deep copy.
-p1.Name <- "George"
 p1.Age <- 39
+p1.Name <- "George"
 p1.IdInfo.IdNumber <- 8641
 printfn "\nValues of p1 and p3 after changes to p1:"
 printfn "   p1 instance values: "
 displayValues p1
 printfn "   p3 instance values:"
 displayValues p3
+
 // The example displays the following output:
 //       Original values of p1 and p2:
 //          p1 instance values:
@@ -87,4 +87,3 @@ displayValues p3
 //             Name: Frank, Age: 32
 //             Value: 7878
 // </Snippet1>
-// Copied from /snippets/csharp/System/Object/MemberwiseClone/memberwiseclone1.cs
