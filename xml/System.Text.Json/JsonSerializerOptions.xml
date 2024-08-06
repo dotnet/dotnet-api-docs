@@ -187,9 +187,15 @@ similar to how <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoResolve
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Allows JSON metadata properties to be specified after regular properties in a deserialized JSON object.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>When set to <see langword="true" />, removes the requirement that JSON metadata properties</para>
+          <para>such as $id and $type should be specified at the very start of the deserialized JSON object.</para>
+          <para>It should be noted that enabling this setting can result in over-buffering</para>
+          <para>when deserializing large JSON payloads in the context of streaming deserialization.</para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllowTrailingCommas">
@@ -725,9 +731,12 @@ For more information, see [How to ignore properties with System.Text.Json](/dotn
         <ReturnType>System.Char</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Defines the indentation character being used when <see cref="P:System.Text.Json.JsonSerializerOptions.WriteIndented" /> is enabled. Defaults to the space character.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Allowed characters are space and horizontal tab.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" /> contains an invalid character.</exception>
+        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="IndentSize">
@@ -746,9 +755,12 @@ For more information, see [How to ignore properties with System.Text.Json](/dotn
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Defines the indentation size being used when <see cref="P:System.Text.Json.JsonSerializerOptions.WriteIndented" /> is enabled. Defaults to two.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>Allowed values are all integers between 0 and 127, included.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="value" /> is out of the allowed range.</exception>
+        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
@@ -891,9 +903,15 @@ Going past this depth throws a <xref:System.Text.Json.JsonException>.
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+          <para>Gets or sets the new line string to use when <see cref="P:System.Text.Json.JsonSerializerOptions.WriteIndented" /> is <see langword="true" />.</para>
+          <para>The default is the value of <see cref="P:System.Environment.NewLine" />.</para>
+        </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">Thrown when the new line string is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the new line string is not <c>\n</c> or <c>\r\n</c>.</exception>
+        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="NumberHandling">
@@ -1141,9 +1159,22 @@ Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable un
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets a value that indicates whether nullability annotations should be respected during serialization and deserialization.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>Nullability annotations are resolved from the properties, fields and constructor parameters</para>
+          <para>that are used by the serializer. This includes annotations stemming from attributes such as</para>
+          <para>
+            <see cref="T:System.Diagnostics.CodeAnalysis.NotNullAttribute" />, <see cref="T:System.Diagnostics.CodeAnalysis.MaybeNullAttribute" />,</para>
+          <para>
+            <see cref="T:System.Diagnostics.CodeAnalysis.AllowNullAttribute" /> and <see cref="T:System.Diagnostics.CodeAnalysis.DisallowNullAttribute" />.</para>
+          <para>Due to restrictions in how nullable reference types are represented at run time,</para>
+          <para>this setting only governs nullability annotations of non-generic properties and fields.</para>
+          <para>It cannot be used to enforce nullability annotations of root-level types or generic parameters.</para>
+          <para>The default setting for this property can be toggled application-wide using the</para>
+          <para>"System.Text.Json.Serialization.RespectNullableAnnotationsDefault" feature switch.</para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="RespectRequiredConstructorParameters">
@@ -1162,9 +1193,15 @@ Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable un
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets a value that indicates whether non-optional constructor parameters should be specified during deserialization.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>For historical reasons constructor-based deserialization treats all constructor parameters as optional by default.</para>
+          <para>This flag allows users to toggle that behavior as necessary for each <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance.</para>
+          <para>The default setting for this property can be toggled application-wide using the</para>
+          <para>"System.Text.Json.Serialization.RespectRequiredConstructorParametersDefault" feature switch.</para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetTypeInfo">
@@ -1355,9 +1392,13 @@ A `null` setting is equivalent to using the reflection-based <xref:System.Text.J
         <ReturnType>System.Text.Json.JsonSerializerOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a read-only, singleton instance of <see cref="T:System.Text.Json.JsonSerializerOptions" /> that uses the web configuration.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>Each <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance encapsulates its own serialization metadata caches,</para>
+          <para>so using fresh default instances every time one is needed can result in redundant recomputation of converters.</para>
+          <para>This property provides a shared instance that can be consumed by any number of components without necessitating any converter recomputation.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteIndented">
