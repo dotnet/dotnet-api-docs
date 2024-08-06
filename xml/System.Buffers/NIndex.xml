@@ -24,8 +24,14 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represent a type can be used to index a collection either from the start or the end.</summary>
     <remarks>To be added.</remarks>
+    <example>
+      <code>
+int[] someArray = new int[5] { 1, 2, 3, 4, 5 } ;
+int lastElement = someArray[^1]; // lastElement = 5
+      </code>
+    </example>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -44,9 +50,9 @@
         <Parameter Name="index" Type="System.Index" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="index">The <see cref="T:System.Index" /> to create the <see cref="T:System.Buffers.NIndex" /> from.</param>
+        <summary>Construct a <see cref="T:System.Buffers.NIndex" /> from a <see cref="T:System.Index" /></summary>
+        <remarks>If the NIndex constructed from the end, index value 1 means pointing at the last element and index value 0 means pointing at beyond last element.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -65,10 +71,10 @@
         <Parameter Name="fromEnd" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="fromEnd">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">The index value. it has to be zero or positive number.</param>
+        <param name="fromEnd">Indicating if the index is from the start or from the end.</param>
+        <summary>Construct an NIndex using a value and indicating if the NIndex is from the start or from the end.</summary>
+        <remarks>If the NIndex constructed from the end, index value 1 means pointing at the last element and index value 0 means pointing at beyond last element.</remarks>
       </Docs>
     </Member>
     <Member MemberName="End">
@@ -87,7 +93,7 @@
         <ReturnType>System.Buffers.NIndex</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Create an NIndex pointing at beyond last element.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -114,8 +120,8 @@
         <Parameter Name="other" Type="System.Buffers.NIndex" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="other">An object to compare with this object</param>
+        <summary>Indicates whether the current NIndex object is equal to another NIndex object.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -152,8 +158,8 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">An object to compare with this object</param>
+        <summary>Indicates whether the current NIndex object is equal to another object of the same type.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -177,8 +183,8 @@
         <Parameter Name="value" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The index value from the end.</param>
+        <summary>Create an NIndex from the end at the position indicated by the value.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -202,8 +208,8 @@
         <Parameter Name="value" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="value">The index value from the start.</param>
+        <summary>Create an NIndex from the start at the position indicated by the value.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -225,7 +231,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the hash code for this instance.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -249,10 +255,15 @@
         <Parameter Name="length" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="length">The length of the collection that the NIndex will be used with. length has to be a positive value</param>
+        <summary>Calculate the offset from the start using the giving collection length.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>For performance reason, we don't validate the input length parameter and the returned offset value against negative values.</para>
+          <para>we don't validate either the returned offset is greater than the input length.</para>
+          <para>It is expected NIndex will be used with collections which always have non negative length/count. If the returned offset is negative and</para>
+          <para>then used to NIndex a collection will get out of range exception which will be same affect as the validation.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="IsFromEnd">
@@ -271,7 +282,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Indicates whether the NIndex is from the start or the end.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -321,7 +332,7 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Converts a <see cref="T:System.Buffers.NIndex" /> to an <see cref="T:System.Index" />."/&gt;</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -346,7 +357,7 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Converts native integer number to an NIndex.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -371,7 +382,7 @@
       </Parameters>
       <Docs>
         <param name="value">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Converts integer number to an NIndex.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -392,7 +403,7 @@
         <ReturnType>System.Buffers.NIndex</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Create an NIndex pointing at first element.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -464,7 +475,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Converts the value of the current NIndex object to its equivalent string representation.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -485,7 +496,7 @@
         <ReturnType>System.IntPtr</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Returns the NIndex value.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
