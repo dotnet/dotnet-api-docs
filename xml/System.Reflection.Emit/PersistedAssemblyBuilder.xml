@@ -24,7 +24,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>AssemblyBuilder implementation that can persist assembly to a disk or stream.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -52,11 +52,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="coreAssembly">To be added.</param>
-        <param name="assemblyAttributes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">The name of the assembly.</param>
+        <param name="coreAssembly">The assembly that denotes the "system assembly" that houses the well-known types such as <see cref="T:System.Object" /></param>
+        <param name="assemblyAttributes">A collection that contains the attributes of the assembly.</param>
+        <summary>Creates a <see cref="T:System.Reflection.Emit.PersistedAssemblyBuilder" /> instance that can be saved to a file or stream.</summary>
+        <remarks>Currently the persisted assembly doesn't support running, need to save it and load back to run.</remarks>
+        <exception cref="T:System.ArgumentNullException">The <paramref name="name" /> or <paramref name="name.Name.Name" /> or <paramref name="coreAssembly" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DefineDynamicModuleCore">
@@ -147,11 +148,13 @@
         <Parameter Name="mappedFieldData" Type="System.Reflection.Metadata.BlobBuilder" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="ilStream">To be added.</param>
-        <param name="mappedFieldData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ilStream">Outputs <see cref="T:System.Reflection.Metadata.BlobBuilder" /> bytes that includes all method's IL (body) emitted.</param>
+        <param name="mappedFieldData">Outputs <see cref="T:System.Reflection.Metadata.BlobBuilder" /> bytes that includes all field RVA data defined in the assembly.</param>
+        <summary>Generates the metadata for the <see cref="T:System.Reflection.Emit.PersistedAssemblyBuilder" />.</summary>
+        <returns>A <see cref="T:System.Reflection.Metadata.Ecma335.MetadataBuilder" /> that includes all members defined in the Assembly.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">A module not defined for the assembly.</exception>
+        <exception cref="T:System.InvalidOperationException">The metadata already populated for the assembly previously.</exception>
       </Docs>
     </Member>
     <Member MemberName="GenerateMetadata">
@@ -181,12 +184,14 @@
         <Parameter Name="pdbBuilder" Type="System.Reflection.Metadata.Ecma335.MetadataBuilder" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="ilStream">To be added.</param>
-        <param name="mappedFieldData">To be added.</param>
-        <param name="pdbBuilder">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ilStream">Outputs <see cref="T:System.Reflection.Metadata.BlobBuilder" /> bytes that includes all method's IL (body) emitted.</param>
+        <param name="mappedFieldData">Outputs <see cref="T:System.Reflection.Metadata.BlobBuilder" /> bytes that includes all field RVA data defined in the assembly.</param>
+        <param name="pdbBuilder">Outputs <see cref="T:System.Reflection.Metadata.Ecma335.MetadataBuilder" /> that includes PDB metadata.</param>
+        <summary>Generates the metadata for the <see cref="T:System.Reflection.Emit.PersistedAssemblyBuilder" />.</summary>
+        <returns>A <see cref="T:System.Reflection.Metadata.Ecma335.MetadataBuilder" /> that includes all members defined in the Assembly.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.InvalidOperationException">A module not defined for the assembly.</exception>
+        <exception cref="T:System.InvalidOperationException">The metadata already populated for the assembly previously.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetDynamicModuleCore">
@@ -306,9 +311,13 @@
         <Parameter Name="stream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="stream">The <see cref="T:System.IO.Stream" /> to which the assembly serialized.</param>
+        <summary>Serializes the assembly to <see cref="T:System.IO.Stream" />.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">A module not defined for the assembly.</exception>
+        <exception cref="T:System.InvalidOperationException">The metadata already populated for the assembly before.</exception>
       </Docs>
     </Member>
     <Member MemberName="Save">
@@ -330,9 +339,13 @@
         <Parameter Name="assemblyFileName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="assemblyFileName">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="assemblyFileName">The file name of the assembly.</param>
+        <summary>Saves the assembly to disk.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="assemblyFileName" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">A module not defined for the assembly.</exception>
+        <exception cref="T:System.InvalidOperationException">The metadata already populated for the assembly before.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetCustomAttributeCore">
