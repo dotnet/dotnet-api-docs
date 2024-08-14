@@ -1163,17 +1163,26 @@ Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable un
         <value>To be added.</value>
         <remarks>
           <para>
-            Nullability annotations are resolved from the properties, fields and constructor parameters
+            Configures the serializer to throw an exception when trying to serialize a <see langword="null" /> value from a non-nullable property getter,
+            or when deserializing a <see langword="null" /> value into a non-nullable property setter or constructor parameter.
+            Nullability annotations are resolved from the properties, fields, and constructor parameters
             that are used by the serializer. This includes annotations stemming from attributes such as
             <see cref="T:System.Diagnostics.CodeAnalysis.NotNullAttribute" />, <see cref="T:System.Diagnostics.CodeAnalysis.MaybeNullAttribute" />,
             <see cref="T:System.Diagnostics.CodeAnalysis.AllowNullAttribute" /> and <see cref="T:System.Diagnostics.CodeAnalysis.DisallowNullAttribute" />.
           </para>
           <para>
             Due to restrictions in how nullable reference types are represented at run time,
-            this setting only governs nullability annotations of non-generic properties and fields.
+            this setting only governs nullability annotations of non-generic properties, fields, and constructor parameters.
             It cannot be used to enforce nullability annotations of root-level types, collection elements, or generic parameters.
             The default setting for this property can be toggled application-wide using the
             "System.Text.Json.Serialization.RespectNullableAnnotationsDefault" feature switch.
+          </para>
+          <para>
+            Nullability validation functions independently of required-ness validation, 
+            that is to say the setting has no effect in scenaria where the payload is missing a required property.
+            This can be configured independently using the <see langword="required" /> keyword, 
+            the <see cref="P:System.Text.Json.Serialization.JsonRequiredAttribute" /> attribute, 
+            or the <see cref="P:System.Text.Json.JsonSerializerOptions.RespectRequiredConstructorParameters" /> property.
           </para>
           <para>
             It is recommended that new applications always set this property to <see langword="true" />,
