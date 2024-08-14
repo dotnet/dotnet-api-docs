@@ -1162,17 +1162,23 @@ Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable un
         <summary>Gets or sets a value that indicates whether nullability annotations should be respected during serialization and deserialization.</summary>
         <value>To be added.</value>
         <remarks>
-          <para>Nullability annotations are resolved from the properties, fields and constructor parameters</para>
-          <para>that are used by the serializer. This includes annotations stemming from attributes such as</para>
           <para>
-            <see cref="T:System.Diagnostics.CodeAnalysis.NotNullAttribute" />, <see cref="T:System.Diagnostics.CodeAnalysis.MaybeNullAttribute" />,</para>
+            Nullability annotations are resolved from the properties, fields and constructor parameters
+            that are used by the serializer. This includes annotations stemming from attributes such as
+            <see cref="T:System.Diagnostics.CodeAnalysis.NotNullAttribute" />, <see cref="T:System.Diagnostics.CodeAnalysis.MaybeNullAttribute" />,
+            <see cref="T:System.Diagnostics.CodeAnalysis.AllowNullAttribute" /> and <see cref="T:System.Diagnostics.CodeAnalysis.DisallowNullAttribute" />.
+          </para>
           <para>
-            <see cref="T:System.Diagnostics.CodeAnalysis.AllowNullAttribute" /> and <see cref="T:System.Diagnostics.CodeAnalysis.DisallowNullAttribute" />.</para>
-          <para>Due to restrictions in how nullable reference types are represented at run time,</para>
-          <para>this setting only governs nullability annotations of non-generic properties and fields.</para>
-          <para>It cannot be used to enforce nullability annotations of root-level types or generic parameters.</para>
-          <para>The default setting for this property can be toggled application-wide using the</para>
-          <para>"System.Text.Json.Serialization.RespectNullableAnnotationsDefault" feature switch.</para>
+            Due to restrictions in how nullable reference types are represented at run time,
+            this setting only governs nullability annotations of non-generic properties and fields.
+            It cannot be used to enforce nullability annotations of root-level types, collection elements, or generic parameters.
+            The default setting for this property can be toggled application-wide using the
+            "System.Text.Json.Serialization.RespectNullableAnnotationsDefault" feature switch.
+          </para>
+          <para>
+            It is recommended that new applications always set this property to <see langword="true" />,
+            in combination with the closely related <see cref="P:System.Text.Json.JsonSerializerOptions.RespectRequiredConstructorParameters" /> property.
+          </para>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
@@ -1196,10 +1202,17 @@ Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable un
         <summary>Gets or sets a value that indicates whether non-optional constructor parameters should be specified during deserialization.</summary>
         <value>To be added.</value>
         <remarks>
-          <para>For historical reasons constructor-based deserialization treats all constructor parameters as optional by default.</para>
-          <para>This flag allows users to toggle that behavior as necessary for each <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance.</para>
-          <para>The default setting for this property can be toggled application-wide using the</para>
-          <para>"System.Text.Json.Serialization.RespectRequiredConstructorParametersDefault" feature switch.</para>
+          <para>
+            For historical reasons constructor-based deserialization treats all constructor parameters as optional by default,
+            filling missing parameters with default values when they are not present in the JSON payload.
+            This flag allows users to toggle that behavior as necessary for each <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance.
+            The default setting for this property can be toggled application-wide using the
+            "System.Text.Json.Serialization.RespectRequiredConstructorParametersDefault" feature switch.
+          </para>
+          <para>
+            It is recommended that new applications always set this property to <see langword="true" />,
+            in combination with the closely related <see cref="P:System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations" /> property.
+          </para>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
       </Docs>
