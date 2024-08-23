@@ -29,14 +29,35 @@
   </Attributes>
   <Docs>
     <summary>
-      <para>Indicates that the specified public static boolean get-only property</para>
-      <para>guards access to the specified feature.</para>
+      <para>
+        Indicates that the specified public static boolean get-only property
+        guards access to the specified feature.</para>
     </summary>
     <remarks>
-      <para>Analyzers can use this to prevent warnings on calls to code that is</para>
-      <para>annotated as requiring that feature, when the callsite is guarded by a</para>
-      <para>call to the property.</para>
+      <para>
+        Analyzers can use this to prevent warnings on calls to code that is
+        annotated as requiring that feature, when the callsite is guarded by a
+        call to the property.</para>
     </remarks>
+    <example>
+      <code language="csharp">
+          if (Feature.IsSupported)
+              Feature.Implementation();
+
+          public class Feature
+          {
+              [FeatureGuard(typeof(RequiresDynamicCodeAttribute))]
+              internal static bool IsSupported => RuntimeFeature.IsDynamicCodeSupported;
+
+              [RequiresDynamicCode("Feature requires dynamic code support.")]
+              internal static Implementation() => ...; // Uses dynamic code
+          }
+      </code>
+      When the app is built with `&ltPublishAot&gt;true&lt/PublishAot&gt;`, the call to
+      `Feature.Implementation()` doesn't produce analyzer warning
+      <see href="https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/warnings/il3050">IL3050</see>,
+      and `Feature.Implementation` code is removed when publishing.
+    </example>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
