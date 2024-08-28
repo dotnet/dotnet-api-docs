@@ -1,26 +1,22 @@
 ﻿//<snippetUsingSerialization>
 //<snippetUsing>
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Data;
-using System.Data.Common;
-using System.Data.Objects;
-using System.Data.Objects.DataClasses;
-//</snippetUsing>
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-//</snippetUsingSerialization>
-using System.Xml.Serialization;
-using System.Data.Common.CommandTrees;
-using System.Data.Metadata.Edm;
-using System.Data.EntityClient;
 //<snippetUsingEvents>
 using System.ComponentModel;
+using System.Data;
+using System.Data.Common;
+using System.Data.EntityClient;
+using System.Data.Metadata.Edm;
+using System.Data.Objects;
+using System.Data.Objects.DataClasses;
 //</snippetUsingEvents>
 using System.Data.SqlClient;
+//</snippetUsing>
+using System.IO;
+using System.Linq;
+//</snippetUsingSerialization>
+using System.Xml.Serialization;
 
 namespace ObjectServicesConceptsCS
 {
@@ -1581,102 +1577,6 @@ namespace ObjectServicesConceptsCS
                 Console.WriteLine(writer.ToString());
             }
         }
-        #region StreamToBinary
-        //<snippetStreamToBinary>
-        public static void ReadFromBinaryStream()
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            using (AdventureWorksEntities context = new AdventureWorksEntities())
-            {
-                try
-                {
-                    // Get the object graph for the selected customer
-                    // as a binary stream.
-                    MemoryStream stream = SerializeToBinaryStream(@"Adams");
-
-                    // Read from the begining of the stream.
-                    stream.Seek(0, SeekOrigin.Begin);
-
-                    // Deserialize the customer graph from the binary stream
-                    // and attach to an ObjectContext.
-                    Contact contact = (Contact)formatter.Deserialize(stream);
-                    context.Attach(contact);
-
-                    // Display information for each item
-                    // in the orders that belong to the first contact.
-                    foreach (SalesOrderHeader order in contact.SalesOrderHeaders)
-                    {
-                        Console.WriteLine(String.Format("PO Number: {0}",
-                            order.PurchaseOrderNumber));
-                        Console.WriteLine(String.Format("Order Date: {0}",
-                            order.OrderDate.ToString()));
-                        Console.WriteLine("Order items:");
-                        foreach (SalesOrderDetail item in order.SalesOrderDetails)
-                        {
-                            Console.WriteLine(String.Format("Product: {0} "
-                                + "Quantity: {1}", item.ProductID.ToString(),
-                                item.OrderQty.ToString()));
-                        }
-                    }
-                }
-
-                catch (SerializationException ex)
-                {
-                    Console.WriteLine("The object graph could not be deserialized from "
-                                  + "the binary stream because of the following error:");
-                    Console.WriteLine(ex.ToString());
-                }
-            }
-        }
-        private static MemoryStream SerializeToBinaryStream(string lastName)
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            MemoryStream stream = new MemoryStream();
-
-            using (AdventureWorksEntities context = new AdventureWorksEntities())
-            {
-                //<snippetQueryTimeout>
-                // Specify a timeout for queries in this context, in seconds.
-                context.CommandTimeout = 120;
-                //</snippetQueryTimeout>
-
-                // Define a customer contact.
-                Contact customer;
-
-                // Create a Contact query with a path that returns
-                // orders and items for a contact.
-                ObjectQuery<Contact> query =
-                    context.Contacts.Include("SalesOrderHeaders.SalesOrderDetails");
-
-                try
-                {
-                    // Return the first contact with the specified last name
-                    // along with its related orders and items.
-                    customer = query.Where("it.LastName = @lastname",
-                        new ObjectParameter("lastname", lastName)).First();
-
-                    // Serialize the customer object graph.
-                    formatter.Serialize(stream, customer);
-                }
-                catch (EntitySqlException ex)
-                {
-                    throw new InvalidOperationException("The object query failed", ex);
-                }
-                catch (EntityCommandExecutionException ex)
-                {
-                    throw new InvalidOperationException("The object query failed", ex);
-                }
-                catch (SerializationException ex)
-                {
-                    throw new InvalidOperationException("The object graph could not be serialized", ex);
-                }
-
-                // Return the streamed object graph.
-                return stream;
-            }
-        }
-        //</snippetStreamToBinary>
-        #endregion
 
         public static Boolean CleanupOrders()
         {

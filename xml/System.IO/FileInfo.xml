@@ -935,16 +935,12 @@ C:\Users\userName\AppData\Local\Temp\tmp70CB.tmp was successfully deleted.
 ## Remarks  
  To get the parent directory as a <xref:System.IO.DirectoryInfo> object, use the <xref:System.IO.FileInfo.Directory%2A> property.  
   
- When first called, <xref:System.IO.FileInfo> calls <xref:System.IO.FileSystemInfo.Refresh%2A> and caches information about the file. On subsequent calls, you must call <xref:System.IO.FileSystemInfo.Refresh%2A> to get the latest copy of the information.  
-  
-   
+ When first called, <xref:System.IO.FileInfo> calls <xref:System.IO.FileSystemInfo.Refresh%2A> and caches information about the file. On subsequent calls, you must call <xref:System.IO.FileSystemInfo.Refresh%2A> to get the latest copy of the information.     
   
 ## Examples  
  The following example retrieves the full path of the specified file.  
   
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.IO.FileInfo members/CPP/fileinfomembers.cpp" id="Snippet3":::
  :::code language="csharp" source="~/snippets/csharp/System.IO/FileInfo/DirectoryName/fileinfomembers.cs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.IO.FileInfo members/VB/fileinfomembers.vb" id="Snippet3":::  
   
  ]]></format>
         </remarks>
@@ -1297,19 +1293,21 @@ C:\Users\userName\AppData\Local\Temp\tmp70CB.tmp was successfully deleted.
       <Docs>
         <summary>Gets or sets a value that determines if the current file is read only.</summary>
         <value>
-          <see langword="true" /> if the current file is read only; otherwise, <see langword="false" />.</value>
+          <see langword="true" /> if the current file is read only or could not be found; otherwise, <see langword="false" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
 ## Remarks  
  Use the <xref:System.IO.FileInfo.IsReadOnly%2A> property to quickly determine or change whether the current file is read only.  
   
+ If the current file does not exist, getting this property will always return `true`, but attempts to set will throw a <xref:System.IO.FileNotFoundException>.
+
  When first called, <xref:System.IO.FileInfo> calls <xref:System.IO.FileSystemInfo.Refresh%2A> and caches information about the file. On subsequent calls, you must call <xref:System.IO.FileSystemInfo.Refresh%2A> to get the latest copy of the information.  
   
    
   
 ## Examples  
- The following example uses the <xref:System.IO.FileInfo.IsReadOnly%2A> property to mark a file as read only and then mark it as read-write.  
+ The following example creates a temporary file, uses the <xref:System.IO.FileInfo.IsReadOnly> property to first check and then set its read-only status, and finally marks it as read-write in order to delete it.  
   
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/IO.FileInfo.isReadOnly/cpp/sample.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.IO/FileInfo/IsReadOnly/sample.cs" id="Snippet1":::
@@ -1317,7 +1315,7 @@ C:\Users\userName\AppData\Local\Temp\tmp70CB.tmp was successfully deleted.
   
  ]]></format>
         </remarks>
-        <exception cref="T:System.IO.FileNotFoundException">The file described by the current <see cref="T:System.IO.FileInfo" /> object could not be found.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">The file described by the current <see cref="T:System.IO.FileInfo" /> object could not be found when trying to set the IsReadOnly property. (Note that getting this property for a nonexistent file will not throw an exception, but rather returns <see langword="true" />.)</exception>
         <exception cref="T:System.IO.IOException">An I/O error occurred while opening the file.</exception>
         <exception cref="T:System.UnauthorizedAccessException">This operation is not supported on the current platform.  
   

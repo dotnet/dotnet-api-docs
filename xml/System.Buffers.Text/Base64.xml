@@ -78,10 +78,10 @@
       <Docs>
         <param name="utf8">The input span that contains UTF-8 encoded text in base 64 that needs to be decoded.</param>
         <param name="bytes">The output span that contains the result of the operation, that is, the decoded binary data.</param>
-        <param name="bytesConsumed">The number of input bytes consumed during the operation. This can be used to slice the input for subsequent calls, if necessary.</param>
-        <param name="bytesWritten">The number of bytes written into the output span. This can be used to slice the output for subsequent calls, if necessary.</param>
+        <param name="bytesConsumed">When this method returns, contains the number of input bytes consumed during the operation. This can be used to slice the input for subsequent calls, if necessary.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes written into the output span. This can be used to slice the output for subsequent calls, if necessary.</param>
         <param name="isFinalBlock">
-          <see langword="true" /> (default) if the input span contains the entire data to decode. <see langword="false" /> if the input span contains partial data with more data to follow.</param>
+          <see langword="true" /> (default) to indicate that the input span contains the entire data to decode. <see langword="false" /> to indicate that the input span contains partial data with more data to follow.</param>
         <summary>Decodes the span of UTF-8 encoded text represented as base 64 into binary data. If the input is not a multiple of 4, it will decode as much as it can, to the closest multiple of 4.</summary>
         <returns>One of the enumeration values that indicates the status of the decoding operation.</returns>
         <remarks>
@@ -94,7 +94,7 @@ The return value can be as follows:
 - <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Processing of the entire input span succeeded.
 - <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>: There is not enough space in the output span to write the decoded input.
 - <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>: `isFinalBlock` is `false` and the input is not a multiple of 4. Otherwise, the partial input is considered <xref:System.Buffers.OperationStatus.InvalidData>.
-- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range, has invalid or more than two padding characters, or is incomplete (that is, not a multiple of 4) and `isFinalBlock` is `true`.
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range, or is incomplete (that is, not a multiple of 4) and `isFinalBlock` is `true`. In .NET 7 and earlier versions, this value can also indicate that the input has invalid or more than two padding characters.
 
  ]]></format>
         </remarks>
@@ -135,7 +135,7 @@ The return value can be as follows:
       </Parameters>
       <Docs>
         <param name="buffer">The input span that contains the base-64 text data that needs to be decoded.</param>
-        <param name="bytesWritten">The number of bytes written into the buffer.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes written into the buffer.</param>
         <summary>Decodes the span of UTF-8 encoded text in base 64 (in-place) into binary data. The decoded binary output is smaller than the text data contained in the input (the operation deflates the data). If the input is not a multiple of 4, the method will not decode any data.</summary>
         <returns>One of the enumeration values that indicates the status of the decoding operation.</returns>
         <remarks>
@@ -146,7 +146,7 @@ The return value can be as follows:
 The return value can be as follows:
 
 - <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Processing of the entire input span succeeded.
-- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range, has invalid or more than two padding characters, or is incomplete (that is, not a multiple of 4).
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range or is incomplete (that is, not a multiple of 4). In .NET 7 and earlier versions, this value can also indicate that the input has invalid or more than two padding characters.
 
 This method cannot return the <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType> and <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType> values.
 
@@ -192,10 +192,10 @@ This method cannot return the <xref:System.Buffers.OperationStatus.DestinationTo
       <Docs>
         <param name="bytes">The input span that contains binary data that needs to be encoded.</param>
         <param name="utf8">The output span that contains the result of the operation, that is, the UTF-8 encoded text in base 64.</param>
-        <param name="bytesConsumed">The number of input bytes consumed during the operation. This can be used to slice the input for subsequent calls, if necessary.</param>
-        <param name="bytesWritten">The number of bytes written into the output span. This can be used to slice the output for subsequent calls, if necessary.</param>
+        <param name="bytesConsumed">When this method returns, contains the number of input bytes consumed during the operation. This can be used to slice the input for subsequent calls, if necessary.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes written into the output span. This can be used to slice the output for subsequent calls, if necessary.</param>
         <param name="isFinalBlock">
-          <see langword="true" /> (the default) if the input span contains the entire data to encode. <see langword="false" /> if the input span contains partial data with more data to follow.</param>
+          <see langword="true" /> (the default) to indicate that the input span contains the entire data to encode. <see langword="false" /> to indicate that the input span contains partial data with more data to follow.</param>
         <summary>Encodes the span of binary data into UTF-8 encoded text represented as base 64.</summary>
         <returns>One of the enumeration values that indicates the status of the encoding operation.</returns>
         <remarks>
@@ -252,7 +252,7 @@ This method cannot return <xref:System.Buffers.OperationStatus.InvalidData?displ
       <Docs>
         <param name="buffer">The input span that contains binary data that needs to be encoded. Because the method performs an in-place conversion, it needs to be large enough to store the result of the operation.</param>
         <param name="dataLength">The number of bytes of binary data contained within the buffer that needs to be encoded. This value must be smaller than the buffer length.</param>
-        <param name="bytesWritten">The number of bytes written into the buffer.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes written into the buffer.</param>
         <summary>Encodes the span of binary data (in-place) into UTF-8 encoded text represented as base 64. The encoded text output is larger than the binary data contained in the input (the operation inflates the data).</summary>
         <returns>One of the enumeration values that indicates the status of the encoding operation.</returns>
         <remarks>
@@ -351,6 +351,134 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="length" /> is less than 0 or larger than 1610612733 (since encode inflates the data by 4/3).</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="public static bool IsValid (ReadOnlySpan&lt;byte&gt; base64TextUtf8);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; base64TextUtf8) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Buffers.Text.Base64.IsValid(System.ReadOnlySpan{System.Byte})" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function IsValid (base64TextUtf8 As ReadOnlySpan(Of Byte)) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsValid : ReadOnlySpan&lt;byte&gt; -&gt; bool" Usage="System.Buffers.Text.Base64.IsValid base64TextUtf8" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(ReadOnlySpan&lt;System::Byte&gt; base64TextUtf8);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="base64TextUtf8" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="base64TextUtf8">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="public static bool IsValid (ReadOnlySpan&lt;char&gt; base64Text);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(valuetype System.ReadOnlySpan`1&lt;char&gt; base64Text) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Buffers.Text.Base64.IsValid(System.ReadOnlySpan{System.Char})" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function IsValid (base64Text As ReadOnlySpan(Of Char)) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsValid : ReadOnlySpan&lt;char&gt; -&gt; bool" Usage="System.Buffers.Text.Base64.IsValid base64Text" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(ReadOnlySpan&lt;char&gt; base64Text);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="base64Text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="base64Text">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="public static bool IsValid (ReadOnlySpan&lt;byte&gt; base64TextUtf8, out int decodedLength);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; base64TextUtf8, [out] int32&amp; decodedLength) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Buffers.Text.Base64.IsValid(System.ReadOnlySpan{System.Byte},System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function IsValid (base64TextUtf8 As ReadOnlySpan(Of Byte), ByRef decodedLength As Integer) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsValid : ReadOnlySpan&lt;byte&gt; * int -&gt; bool" Usage="System.Buffers.Text.Base64.IsValid (base64TextUtf8, decodedLength)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(ReadOnlySpan&lt;System::Byte&gt; base64TextUtf8, [Runtime::InteropServices::Out] int % decodedLength);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="base64TextUtf8" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="decodedLength" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="base64TextUtf8">To be added.</param>
+        <param name="decodedLength">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="public static bool IsValid (ReadOnlySpan&lt;char&gt; base64Text, out int decodedLength);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(valuetype System.ReadOnlySpan`1&lt;char&gt; base64Text, [out] int32&amp; decodedLength) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Buffers.Text.Base64.IsValid(System.ReadOnlySpan{System.Char},System.Int32@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function IsValid (base64Text As ReadOnlySpan(Of Char), ByRef decodedLength As Integer) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsValid : ReadOnlySpan&lt;char&gt; * int -&gt; bool" Usage="System.Buffers.Text.Base64.IsValid (base64Text, decodedLength)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool IsValid(ReadOnlySpan&lt;char&gt; base64Text, [Runtime::InteropServices::Out] int % decodedLength);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Memory</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="base64Text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-8.0" />
+        <Parameter Name="decodedLength" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="net-8.0" />
+      </Parameters>
+      <Docs>
+        <param name="base64Text">To be added.</param>
+        <param name="decodedLength">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>
