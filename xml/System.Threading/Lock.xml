@@ -1,0 +1,298 @@
+<Type Name="Lock" FullName="System.Threading.Lock">
+  <TypeSignature Language="C#" Value="public sealed class Lock" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit Lock extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Threading.Lock" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class Lock" />
+  <TypeSignature Language="F#" Value="type Lock = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class Lock sealed" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Provides a mechanism for achieving mutual exclusion in regions of code between different threads.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The <xref:System.Threading.Lock> class can be used to define regions of code that require mutually exclusive access between threads of a process, commonly called critical sections, to prevent concurrent accesses to a resource. A `Lock` can be entered and exited, where the region of code between the enter and exit is a critical section associated with the lock. A thread that enters a lock is said to hold or own the lock until it exits the lock. At most one thread can hold a lock at any given time. A thread can hold multiple locks. A thread can enter a lock multiple times before exiting it, such as recursively. A thread that can't enter a lock immediately can wait until the lock can be entered or until a specified timeout expires.
+
+When using the <xref:System.Threading.Lock.Enter%2A> or <xref:System.Threading.Lock.TryEnter%2A> methods to enter a lock:
+- Ensure that the thread exits the lock with <xref:System.Threading.Lock.Exit%2A> even in case of exceptions, such as in C# by using a `try/finally` block.
+- When the lock is being entered and exited in a C# `async` method, ensure that there is no `await` between the enter and exit. Locks are held by threads and the code following an `await` might run on a different thread.
+
+It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a language construct that automatically disposes the returned <xref:System.Threading.Lock.Scope> such as the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
+
+:::code language="csharp" source="~/snippets/csharp/System.Threading/Lock/Overview/UsagePatterns.cs" id="Snippet1":::
+
+When using the C# `lock` keyword or similar to enter and exit a lock, the type of the expression must be precisely `System.Threading.Lock`. If the type of the expression is anything else, such as `Object` or a generic type like `T`, a different implementation that is not interchangeable can be used instead (such as <xref:System.Threading.Monitor>). For more information, see the relevant [compiler speclet](https://github.com/dotnet/csharplang/blob/main/proposals/lock-object.md).
+
+<xref:System.Threading.Thread.Interrupt%2A> can interrupt threads that are waiting to enter a lock. On Windows STA threads, waits for locks allow message pumping that can run other code on the same thread during a wait. Some features of the waits can be overridden by a custom <xref:System.Threading.SynchronizationContext>.
+
+> [!NOTE]
+> A thread that enters a lock, including multiple times such as recursively, must exit the lock the same number of times to fully exit the lock and allow other threads to enter the lock. If a thread exits while holding a `Lock`, the behavior of the `Lock` becomes undefined.
+
+> [!CAUTION]
+> If, on a code path, a thread might enter multiple locks before exiting them, ensure that all code paths that might enter any two of those locks on the same thread enter them in the same order. Otherwise, it could lead to deadlocks. For example, consider that on one code path thread `T1` enters lock `L1` then lock `L2` before exiting both, and on another code path thread `T2` enters both locks in the inverse order. In that scenario, it would be possible for the following order of events to occur: `T1` enters `L1`, `T2` enters `L2`, `T1` tries to enter `L2` and waits, `T2` tries to enter `L1` and waits. There's a deadlock between `T1` and `T2` that can't be resolved, and any other threads that try to enter either lock in the future will also hang.
+
+      ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Lock ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Lock();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.Lock" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Enter">
+      <MemberSignature Language="C#" Value="public void Enter ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Enter() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.Enter" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Enter ()" />
+      <MemberSignature Language="F#" Value="member this.Enter : unit -&gt; unit" Usage="lock.Enter " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Enter();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Enters the lock, waiting if necessary until the lock can be entered.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns, the current thread is the only thread that holds the lock. If the lock can't be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should exit the lock as many times as it has entered the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Threading.LockRecursionException">The lock has reached the limit of repeated entries by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="EnterScope">
+      <MemberSignature Language="C#" Value="public System.Threading.Lock.Scope EnterScope ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Threading.Lock/Scope EnterScope() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.EnterScope" />
+      <MemberSignature Language="VB.NET" Value="Public Function EnterScope () As Lock.Scope" />
+      <MemberSignature Language="F#" Value="member this.EnterScope : unit -&gt; System.Threading.Lock.Scope" Usage="lock.EnterScope " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Threading::Lock::Scope EnterScope();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Lock+Scope</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Enters the lock, waiting if necessary until the lock can be entered.</summary>
+        <returns>A <see cref="T:System.Threading.Lock.Scope" /> that can be disposed to exit the lock.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the lock can't be entered immediately, the method waits until the lock can be entered. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should dispose the returned <xref:System.Threading.Lock.Scope> to exit the lock as many times as it has entered the lock.
+
+This method is intended to be used with a language construct that automatically disposes the <xref:System.Threading.Lock.Scope>, such as the C# `using` keyword.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Threading.LockRecursionException">The lock has reached the limit of repeated entries by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Exit">
+      <MemberSignature Language="C#" Value="public void Exit ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Exit() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.Exit" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Exit ()" />
+      <MemberSignature Language="F#" Value="member this.Exit : unit -&gt; unit" Usage="lock.Exit " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Exit();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Exits the lock.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+If the current thread holds the lock multiple times, such as recursively, the lock is exited only once. The current thread should ensure that each enter is matched with an exit.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Threading.SynchronizationLockException">The current thread does not hold the lock.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsHeldByCurrentThread">
+      <MemberSignature Language="C#" Value="public bool IsHeldByCurrentThread { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsHeldByCurrentThread" />
+      <MemberSignature Language="DocId" Value="P:System.Threading.Lock.IsHeldByCurrentThread" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsHeldByCurrentThread As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsHeldByCurrentThread : bool" Usage="System.Threading.Lock.IsHeldByCurrentThread" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsHeldByCurrentThread { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value that indicates whether the lock is held by the current thread.</summary>
+        <value>
+          <see langword="true" /> if the current thread holds the lock; otherwise, <see langword="false" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TryEnter">
+      <MemberSignature Language="C#" Value="public bool TryEnter ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnter() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.TryEnter" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryEnter () As Boolean" />
+      <MemberSignature Language="F#" Value="member this.TryEnter : unit -&gt; bool" Usage="lock.TryEnter " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnter();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Tries to enter the lock without waiting.</summary>
+        <returns>
+          <see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns `true`, the current thread is the only thread that holds the lock. If the lock can't be entered immediately, the method returns `false` without waiting for the lock. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should exit the lock as many times as it has entered the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.Threading.LockRecursionException">The lock has reached the limit of repeated entries by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="TryEnter">
+      <MemberSignature Language="C#" Value="public bool TryEnter (int millisecondsTimeout);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnter(int32 millisecondsTimeout) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.TryEnter(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryEnter (millisecondsTimeout As Integer) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.TryEnter : int -&gt; bool" Usage="lock.TryEnter millisecondsTimeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnter(int millisecondsTimeout);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="millisecondsTimeout" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="millisecondsTimeout">The number of milliseconds to wait until the lock can be entered. Specify <see cref="F:System.Threading.Timeout.Infinite">Timeout.Infinite</see> (<code>-1</code>) to wait indefinitely, or <code>0</code> to not wait.</param>
+        <summary>Tries to enter the lock, waiting if necessary for the specified number of milliseconds until the lock can be entered.</summary>
+        <returns>
+          <see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns `true`, the current thread is the only thread that holds the lock. If the lock can't be entered immediately, the method waits until the lock can be entered or until the timeout specified by the `millisecondsTimeout` parameter expires. If the timeout expires before entering the lock, the method returns `false`. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should exit the lock as many times as it has entered the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="millisecondsTimeout" /> is less than <code>-1</code>.</exception>
+        <exception cref="T:System.Threading.LockRecursionException">The lock has reached the limit of repeated entries by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="TryEnter">
+      <MemberSignature Language="C#" Value="public bool TryEnter (TimeSpan timeout);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryEnter(valuetype System.TimeSpan timeout) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Lock.TryEnter(System.TimeSpan)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryEnter (timeout As TimeSpan) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.TryEnter : TimeSpan -&gt; bool" Usage="lock.TryEnter timeout" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryEnter(TimeSpan timeout);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="timeout" Type="System.TimeSpan" />
+      </Parameters>
+      <Docs>
+        <param name="timeout">A <see cref="T:System.TimeSpan" /> that represents the number of milliseconds to wait until the lock can be entered. Specify a value that represents <see cref="F:System.Threading.Timeout.Infinite">Timeout.Infinite</see> (<code>-1</code>) milliseconds to wait indefinitely, or a value that represents <code>0</code> milliseconds to not wait.</param>
+        <summary>Tries to enter the lock, waiting if necessary until the lock can be entered or until the specified timeout expires.</summary>
+        <returns>
+          <see langword="true" /> if the lock was entered by the current thread; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+When the method returns `true`, the current thread is the only thread that holds the lock. If the lock can't be entered immediately, the method waits until the lock can be entered or until the specified `timeout` expires. If the timeout expires before entering the lock, the method returns `false`. If the lock is already held by the current thread, the lock is entered again. To fully exit the lock and allow other threads to enter the lock, the current thread should exit the lock as many times as it has entered the lock.
+
+For more information, see the Remarks for <xref:System.Threading.Lock>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="timeout" />, after its conversion to an integer millisecond value, represents a value that is less than <code>-1</code> milliseconds or greater than <see cref="F:System.Int32.MaxValue">Int32.MaxValue</see> milliseconds.</exception>
+        <exception cref="T:System.Threading.LockRecursionException">The lock has reached the limit of repeated entries by the current thread. The limit is implementation-defined and is intended to be high enough that it would not be reached in normal situations.</exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

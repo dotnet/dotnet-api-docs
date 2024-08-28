@@ -1,5 +1,4 @@
 ﻿// <snippet1>
-
 using System;
 using System.Xml;
 using System.Security.Cryptography;
@@ -9,7 +8,6 @@ class Program
 {
     static void Main(string[] args)
     {
-
         // Create an XmlDocument object.
         XmlDocument xmlDoc = new XmlDocument();
 

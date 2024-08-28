@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-class Test {
+class AssemblyLoadSnippet {
 
    public static void Main() {
       AppDomain currentDomain = AppDomain.CurrentDomain;

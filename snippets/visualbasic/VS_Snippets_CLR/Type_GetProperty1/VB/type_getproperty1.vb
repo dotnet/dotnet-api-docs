@@ -21,7 +21,7 @@ Public Class MyTypeClass
             Dim myType As Type = GetType(MyClass1)
             ' Get PropertyInfo object by passing property name.
             Dim myPropInfo As PropertyInfo = myType.GetProperty("MyProperty")
-            ' Display Name propety to console.
+            ' Display Name property to console.
             Console.WriteLine("The {0} property exists in MyClass.", myPropInfo.Name)
         Catch e As NullReferenceException
             Console.WriteLine("The property does not exist in MyClass.", e.Message.ToString())

@@ -64,7 +64,6 @@ public:
    }
    // </Snippet7>
 
-   // <Snippet4>
    static void DoBeginConnect1( String^ host, int port )
    {
       // Connect asynchronously to the specifed host.
@@ -79,9 +78,7 @@ public:
       connectDone->WaitOne();
       Console::WriteLine( "Connection established" );
    }
-   // </Snippet4>
 
-   // <Snippet5>
    // Connect asynchronously to the specifed host.
    static void DoBeginConnect2( String^ host, int port )
    {
@@ -95,9 +92,7 @@ public:
       connectDone->WaitOne();
       Console::WriteLine( "Connection established" );
    }
-   // </Snippet5>
 
-   // <Snippet6>
    // Connect asynchronously to the specifed host.
    static void DoBeginConnect3( String^ host, int port )
    {
@@ -110,7 +105,6 @@ public:
       connectDone->WaitOne();
       Console::WriteLine( "Connection established" );
    }
-   // </Snippet6>
 };
 
 int main()

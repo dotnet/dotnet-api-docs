@@ -1,7 +1,7 @@
 ﻿using System;
 
 // <Snippet1>
-class Test {
+class ExecuteAssemblySnippet {
    public static void Main() {
       AppDomain currentDomain = AppDomain.CurrentDomain;
       AppDomain otherDomain = AppDomain.CreateDomain("otherDomain");

@@ -5,9 +5,9 @@ Imports System.IO
 Imports System.Text
 
 
-' To run this sample use the Certificate Creation Tool (Makecert.exe) to generate a test X.509 certificate and 
-' place it in the local user store. 
-' To generate an exchange key and make the key exportable run the following command from a Visual Studio command prompt: 
+' To run this sample use the Certificate Creation Tool (Makecert.exe) to generate a test X.509 certificate and
+' place it in the local user store.
+' To generate an exchange key and make the key exportable run the following command from a Visual Studio command prompt:
 'makecert -r -pe -n "CN=CERT_SIGN_TEST_CERT" -b 01/01/2010 -e 01/01/2012 -sky exchange -ss my
 
 Class Program
@@ -27,7 +27,7 @@ Class Program
         sw.WriteLine("Test data to be encrypted")
         sw.Close()
 
-        ' Get the certifcate to use to encrypt the key.
+        ' Get the certificate to use to encrypt the key.
         Dim cert As X509Certificate2 = GetCertificateFromStore("CN=CERT_SIGN_TEST_CERT")
         If cert Is Nothing Then
             Console.WriteLine("Certificate 'CN=CERT_SIGN_TEST_CERT' not found.")
@@ -80,7 +80,7 @@ Class Program
         Dim aes As Aes = Aes.Create()
         Try
             ' Create instance of Aes for
-            ' symetric encryption of the data.
+            ' symmetric encryption of the data.
             aes.KeySize = 256
             aes.Mode = CipherMode.CBC
             Dim transform As ICryptoTransform = aes.CreateEncryptor()
@@ -102,7 +102,7 @@ Class Program
                 ' for the encrypted file (outFs):
                 ' - length of the key
                 ' - length of the IV
-                ' - ecrypted key
+                ' - encrypted key
                 ' - the IV
                 ' - the encrypted cipher content
                 Dim startFileName As Integer = inFile.LastIndexOf("\") + 1
@@ -169,7 +169,7 @@ Class Program
     Private Shared Sub DecryptFile(ByVal inFile As String, ByVal rsaPrivateKey As RSA)
 
         ' Create instance of Aes for
-        ' symetric decryption of the data.
+        ' symmetric decryption of the data.
         Dim aes As Aes = Aes.Create()
         Try
             aes.KeySize = 256
