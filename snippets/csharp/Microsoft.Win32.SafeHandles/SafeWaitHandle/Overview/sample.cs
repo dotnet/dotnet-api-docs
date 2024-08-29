@@ -56,8 +56,7 @@ class UnmanagedMutex
 
     public void Create()
     {
-        if (nameValue == null || nameValue.Length == 0)
-            throw new ArgumentException(nameof(nameValue));
+        ArgumentException.ThrowIfNullOrEmpty(nameValue);
 
         handleValue = CreateMutex(mutexAttrValue,
                                         true, nameValue);
