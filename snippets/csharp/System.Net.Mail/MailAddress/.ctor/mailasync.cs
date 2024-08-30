@@ -74,6 +74,7 @@ namespace Examples.SmtpExamples.Async
             }
             // Clean up.
             message.Dispose();
+            client.Dispose();
             Console.WriteLine("Goodbye.");
         }
     }

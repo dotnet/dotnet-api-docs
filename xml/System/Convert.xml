@@ -50,6 +50,7 @@
     <TypeForwarding From="System.Runtime.Extensions" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
     <TypeForwarding From="System.Runtime.Extensions" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="4.1.1.1" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -932,12 +933,12 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="charsConsumed">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The span to convert.</param>
+        <param name="destination">The span in which to write the converted 8-bit unsigned integers. When this method returns value different than <see cref="F:System.Buffers.OperationStatus.Done" />, either the span remains unmodified or contains an incomplete conversion of <paramref name="source" />, up to the last valid character.</param>
+        <param name="charsConsumed">When this method returns, contains the number of characters that were consumed from <paramref name="source" />.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes that were written to <paramref name="destination" />.</param>
+        <summary>Converts the span of chars, which encodes binary data as hex characters, to an equivalent 8-bit unsigned integer span.</summary>
+        <returns>An <see cref="T:System.Buffers.OperationStatus" /> describing the result of the operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -985,13 +986,14 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="charsConsumed">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The string to convert.</param>
+        <param name="destination">The span in which to write the converted 8-bit unsigned integers. When this method returns value different than <see cref="F:System.Buffers.OperationStatus.Done" />, either the span remains unmodified or contains an incomplete conversion of <paramref name="source" />, up to the last valid character.</param>
+        <param name="charsConsumed">When this method returns, contains the number of characters that were consumed from <paramref name="source" />.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes that were written to <paramref name="destination" />.</param>
+        <summary>Converts the string, which encodes binary data as hex characters, to an equivalent 8-bit unsigned integer span.</summary>
+        <returns>An <see cref="T:System.Buffers.OperationStatus" /> describing the result of the operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">Passed string <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetTypeCode">
@@ -1592,7 +1594,7 @@
         <param name="bytes">A read-only span of 8-bit unsigned integers.</param>
         <param name="options">One of the enumeration values that specify whether to insert line breaks in the return value. The default value is <see cref="F:System.Base64FormattingOptions.None" />.</param>
         <summary>Converts the 8-bit unsigned integers inside the specified read-only span into their equivalent string representation that is encoded with base-64 digits. You can optionally specify whether to insert line breaks in the return value.</summary>
-        <returns>The string representation in base 64 of the elements in <paramref name="inArray" />. If the length of <paramref name="bytes" /> is 0, an empty string is returned.</returns>
+        <returns>The string representation in base 64 of the elements in <paramref name="bytes" />. If the length of <paramref name="bytes" /> is 0, an empty string is returned.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="options" /> is not a valid <see cref="T:System.Base64FormattingOptions" /> value.</exception>
@@ -9073,10 +9075,14 @@
         <Parameter Name="inArray" Type="System.Byte[]" Index="0" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="inArray">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="inArray">An array of 8-bit unsigned integers.</param>
+        <summary>Converts an array of 8-bit unsigned integers to its equivalent string representation that is encoded with lowercase hex characters.</summary>
+        <returns>The string representation in hex of the elements in <paramref name="inArray" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="inArray" /> is <code>null</code>.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="inArray" /> is too large to be encoded.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToHexStringLower">
@@ -9119,10 +9125,12 @@
         <Parameter Name="bytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="bytes">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="bytes">A span of 8-bit unsigned integers.</param>
+        <summary>Converts a span of 8-bit unsigned integers to its equivalent string representation that is encoded with lowercase hex characters.</summary>
+        <returns>The string representation in hex of the elements in <paramref name="bytes" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="bytes" /> is too large to be encoded.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToHexStringLower">
@@ -9161,12 +9169,25 @@
         <Parameter Name="length" Type="System.Int32" Index="2" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="inArray">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="inArray">An array of 8-bit unsigned integers.</param>
+        <param name="offset">An offset in <paramref name="inArray" />.</param>
+        <param name="length">The number of elements of <paramref name="inArray" /> to convert.</param>
+        <summary>Converts a subset of an array of 8-bit unsigned integers to its equivalent string representation that is encoded with lowercase hex characters.
+ Parameters specify the subset as an offset in the input array and the number of elements in the array to convert.</summary>
+        <returns>The string representation in hex of <paramref name="length" /> elements of <paramref name="inArray" />, starting at position <paramref name="offset" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="inArray" /> is <code>null</code>.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="offset" /> or <paramref name="length" /> is negative.
+
+-or-
+
+<paramref name="offset" /> + <paramref name="length" /> is greater than the length of <paramref name="inArray" />.
+
+-or-
+
+<paramref name="inArray" /> is too large to be encoded.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="ToInt16">
@@ -22794,7 +22815,7 @@
       </Parameters>
       <Docs>
         <param name="bytes">A read-only span of 8-bit unsigned integers.</param>
-        <param name="chars">The span in which to write the string representation in base 64 of the elements in <paramref name="bytes" />. If the length of <paramref name="bytes" /> is 0, or when this method returns <paramref name="false" />, nothing is written into this parameter.</param>
+        <param name="chars">The span in which to write the string representation in base 64 of the elements in <paramref name="bytes" />. If the length of <paramref name="bytes" /> is 0, or when this method returns <see langword="false" />, nothing is written into this parameter.</param>
         <param name="charsWritten">When this method returns, contains the total number of characters written into <paramref name="chars" />.</param>
         <param name="options">One of the enumeration values that specify whether to insert line breaks in the return value. The default value is <see cref="F:System.Base64FormattingOptions.None" />.</param>
         <summary>Tries to convert the 8-bit unsigned integers inside the specified read-only span into their equivalent string representation that is encoded with base-64 digits. You can optionally specify whether to insert line breaks in the return value.</summary>
@@ -22841,11 +22862,12 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">A span of 8-bit unsigned integers.</param>
+        <param name="destination">The span representation in hex of the elements in <paramref name="source" />.</param>
+        <param name="charsWritten">When this method returns, contains the number of chars that were written in <paramref name="destination" />.</param>
+        <summary>Converts a span of 8-bit unsigned integers to its equivalent span representation that is encoded with uppercase hex characters.</summary>
+        <returns>
+          <see langword="true" /> if the conversion was successful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -22885,11 +22907,12 @@
         <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="charsWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">A span of 8-bit unsigned integers.</param>
+        <param name="destination">The span representation in hex of the elements in <paramref name="source" />.</param>
+        <param name="charsWritten">When this method returns, contains the number of chars that were written in <paramref name="destination" />.</param>
+        <summary>Converts a span of 8-bit unsigned integers to its equivalent span representation that is encoded with lowercase hex characters.</summary>
+        <returns>
+          <see langword="true" /> if the conversion was successful; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -4,8 +4,7 @@ Imports System.Linq
 Namespace SequenceExamples
     Module EnumerableSnippets
         Sub Main()
-            CountEx1()
-            Count.CountEx2()
+            OfTypeEx1()
         End Sub
 
 #Region "Aggregate"
@@ -816,7 +815,7 @@ Namespace SequenceExamples
         Sub ExceptEx1()
             ' <Snippet34>
             ' Create two arrays of doubles.
-            Dim numbers1() As Double = { 2.0, 2.0, 2.1, 2.2, 2.3, 2.3, 2.4, 2.5 }
+            Dim numbers1() As Double = {2.0, 2.0, 2.1, 2.2, 2.3, 2.3, 2.4, 2.5}
             Dim numbers2() As Double = {2.2}
 
             ' Select the elements from the first array that are not
@@ -1726,12 +1725,14 @@ Namespace SequenceExamples
         Sub OfTypeEx1()
             ' <Snippet69>
             ' Create an ArrayList and add items to it.
-            Dim fruits As New System.Collections.ArrayList(4)
-            fruits.Add("Mango")
-            fruits.Add("Orange")
-            fruits.Add("Apple")
-            fruits.Add(3.0)
-            fruits.Add("Banana")
+            Dim fruits As New ArrayList() From {
+                "Mango",
+                "Orange",
+                Nothing,
+                "Apple",
+                3.0,
+                "Banana"
+            }
 
             ' Apply OfType(Of String)() to the ArrayList
             ' to filter out non-string items.
@@ -1748,7 +1749,7 @@ Namespace SequenceExamples
             ' Where() can be applied to the ArrayList type after calling OfType().
             Dim query2 As IEnumerable(Of String) =
             fruits.OfType(Of String)().Where(Function(fruit) _
-                                                 fruit.ToLower().Contains("n"))
+                                                 fruit.Contains("n"c, StringComparison.CurrentCultureIgnoreCase))
 
             output.AppendLine(vbCrLf & "The following strings contain 'n':")
             For Each fruit As String In query2

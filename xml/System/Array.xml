@@ -52,6 +52,7 @@
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Runtime" FromVersion="4.1.1.1" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -818,7 +819,7 @@
         <exception cref="T:System.ArgumentNullException">
           <paramref name="array" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">
-          <paramref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface.</exception>
+          <typeparamref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface.</exception>
         <altmember cref="T:System.IComparable`1" />
         <altmember cref="Overload:System.Array.Sort" />
         <related type="Article" href="/dotnet/standard/globalization-localization/performing-culture-insensitive-string-operations-in-arrays">Performing Culture-Insensitive String Operations in Arrays</related>
@@ -953,7 +954,7 @@
         <exception cref="T:System.ArgumentException">
           <paramref name="comparer" /> is <see langword="null" />, and <paramref name="value" /> is of a type that is not compatible with the elements of <paramref name="array" />.</exception>
         <exception cref="T:System.InvalidOperationException">
-          <paramref name="comparer" /> is <see langword="null" />, and <paramref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface</exception>
+          <paramref name="comparer" /> is <see langword="null" />, and <typeparamref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface</exception>
         <altmember cref="T:System.Collections.Generic.IComparer`1" />
         <altmember cref="T:System.IComparable`1" />
         <altmember cref="Overload:System.Array.Sort" />
@@ -1063,7 +1064,7 @@
 
  <paramref name="value" /> is of a type that is not compatible with the elements of <paramref name="array" />.</exception>
         <exception cref="T:System.InvalidOperationException">
-          <paramref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface.</exception>
+          <typeparamref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface.</exception>
         <altmember cref="T:System.IComparable`1" />
         <altmember cref="Overload:System.Array.Sort" />
         <related type="Article" href="/dotnet/standard/globalization-localization/performing-culture-insensitive-string-operations-in-arrays">Performing Culture-Insensitive String Operations in Arrays</related>
@@ -1194,7 +1195,7 @@
 
  <paramref name="comparer" /> is <see langword="null" />, and <paramref name="value" /> is of a type that is not compatible with the elements of <paramref name="array" />.</exception>
         <exception cref="T:System.InvalidOperationException">
-          <paramref name="comparer" /> is <see langword="null" />, and <paramref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface.</exception>
+          <paramref name="comparer" /> is <see langword="null" />, and <typeparamref name="T" /> does not implement the <see cref="T:System.IComparable`1" /> generic interface.</exception>
         <altmember cref="T:System.Collections.Generic.IComparer`1" />
         <altmember cref="T:System.IComparable`1" />
         <altmember cref="Overload:System.Array.Sort" />
@@ -3009,11 +3010,22 @@
         <Parameter Name="length" Type="System.Int32" Index="1" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="arrayType">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="arrayType">The type of the array (not of the array element type).</param>
+        <param name="length">The size of the <see cref="T:System.Array" /> to create.</param>
+        <summary>Creates a one-dimensional <see cref="T:System.Array" /> of the specified array type and length, with zero-based indexing.</summary>
+        <returns>A new one-dimensional <see cref="T:System.Array" /> of the specified <see cref="T:System.Type" /> with the specified length.</returns>
+        <remarks>When the array type is readily available, this method should be preferred over <see cref="M:System.Array.CreateInstance(System.Type,System.Int32)" />, as it has better performance and it is AOT-friendly.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="arrayType" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="length" /> is negative.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="arrayType" /> is not an array type.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="arrayType" /> is not one-dimensional array.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="CreateInstanceFromArrayType">
@@ -3049,11 +3061,28 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="arrayType">To be added.</param>
-        <param name="lengths">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="arrayType">The type of the array (not of the array element type).</param>
+        <param name="lengths">The dimension lengths, specified in an array of 32-bit integers.</param>
+        <summary>Creates a multidimensional <see cref="T:System.Array" /> of the specified <see cref="T:System.Type" /> and dimension lengths, with zero-based indexing.</summary>
+        <returns>A new multidimensional <see cref="T:System.Array" /> of the specified Type with the specified length for each dimension, using zero-based indexing.</returns>
+        <remarks>When the array type is readily available, this method should be preferred over <see cref="M:System.Array.CreateInstance(System.Type,System.Int32[])" />, as it has better performance and it is AOT-friendly.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <para>
+            <paramref name="arrayType" /> is <see langword="null" />.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="lengths" /> is <see langword="null" />.</para>
+        </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Any value in <paramref name="lengths" /> is less than zero.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>The lengths array is empty.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="arrayType" /> is not an array type.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="arrayType" /> rank does not match <paramref name="lengths" /> length.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="CreateInstanceFromArrayType">
@@ -3083,12 +3112,35 @@
         <Parameter Name="lowerBounds" Type="System.Int32[]" Index="2" FrameworkAlternate="net-9.0" />
       </Parameters>
       <Docs>
-        <param name="arrayType">To be added.</param>
-        <param name="lengths">To be added.</param>
-        <param name="lowerBounds">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="arrayType">The type of the array (not of the array element type).</param>
+        <param name="lengths">The dimension lengths, specified in an array of 32-bit integers.</param>
+        <param name="lowerBounds">A one-dimensional array that contains the lower bound (starting index) of each dimension of the <see cref="T:System.Array" /> to create.</param>
+        <summary>Creates a multidimensional <see cref="T:System.Array" /> of the specified <see cref="T:System.Type" /> and dimension lengths, with the specified lower bounds.</summary>
+        <returns>A new multidimensional <see cref="T:System.Array" /> of the specified <see cref="T:System.Type" /> with the specified length and lower bound for each dimension.</returns>
+        <remarks>When the array type is readily available, this method should be preferred over <see cref="M:System.Array.CreateInstance(System.Type,System.Int32[],System.Int32[])" />, as it has better performance and it is AOT-friendly.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <para>
+            <paramref name="arrayType" /> is <see langword="null" />.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="lengths" /> is <see langword="null" />.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="lowerBounds" /> is <see langword="null" />.</para>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <para>The <paramref name="lengths" /> and <paramref name="lowerBounds" /> arrays do not contain the same number of elements.</para>
+          <para>-or-</para>
+          <para>The lengths array is empty.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="arrayType" /> is not an array type.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="arrayType" /> rank does not match <paramref name="lengths" /> length.</para>
+        </exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">Any value in <paramref name="lengths" /> is less than zero.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">Native AOT: any value in <paramref name="lowerBounds" /> is different than zero.</exception>
       </Docs>
     </Member>
     <Member MemberName="Empty&lt;T&gt;">
@@ -3423,7 +3475,7 @@
         <param name="array">The one-dimensional, zero-based array to search.</param>
         <param name="match">The predicate that defines the conditions of the element to search for.</param>
         <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire <see cref="T:System.Array" />.</summary>
-        <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <paramref name="T" />.</returns>
+        <returns>The first element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparamref name="T" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -3939,7 +3991,7 @@
         <param name="array">The one-dimensional, zero-based <see cref="T:System.Array" /> to search.</param>
         <param name="match">The <see cref="T:System.Predicate`1" /> that defines the conditions of the element to search for.</param>
         <summary>Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire <see cref="T:System.Array" />.</summary>
-        <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <paramref name="T" />.</returns>
+        <returns>The last element that matches the conditions defined by the specified predicate, if found; otherwise, the default value for type <typeparamref name="T" />.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
