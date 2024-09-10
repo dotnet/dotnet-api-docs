@@ -3,7 +3,7 @@
 class stringReplace1 {
     public static void Main() {
         //<snippet1>
-        String str = "1 2 3 4 5 6 7 8 9";
+        string str = "1 2 3 4 5 6 7 8 9";
         Console.WriteLine("Original string: \"{0}\"", str);
         Console.WriteLine("CSV string:      \"{0}\"", str.Replace(' ', ','));
 

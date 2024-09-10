@@ -5,7 +5,7 @@ public class Example
     public static void Main()
     {
         // <Snippet2>
-        String s = new String('a', 3);
+        string s = new String('a', 3);
         Console.WriteLine("The initial string: '{0}'", s);
         s = s.Replace('a', 'b').Replace('b', 'c').Replace('c', 'd');
         Console.WriteLine("The final string: '{0}'", s);
