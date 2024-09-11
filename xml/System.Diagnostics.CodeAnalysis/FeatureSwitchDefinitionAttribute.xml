@@ -29,13 +29,40 @@
   </Attributes>
   <Docs>
     <summary>
-      <para>Indicates that the specified public static boolean get-only property</para>
-      <para>corresponds to the feature switch specified by name.</para>
+      <para>
+        Indicates that the specified public static Boolean read-only property
+        corresponds to the feature switch specified by name.</para>
     </summary>
     <remarks>
-      <para>IL rewriters and compilers can use this to substitute the return value</para>
-      <para>of the specified property with the value of the feature switch.</para>
+      <para>
+        IL rewriters and compilers can use this attribute to substitute the return value
+        of the specified property with the value of the feature switch.</para>
     </remarks>
+    <example>
+      <format type="text/markdown"><![CDATA[
+```csharp
+if (Feature.IsSupported)
+    Feature.Implementation();
+
+public class Feature
+{
+    [FeatureSwitchDefinition("Feature.IsSupported")]
+    internal static bool IsSupported => AppContext.TryGetSwitch("Feature.IsSupported", out bool isEnabled) ? isEnabled : true;
+
+    internal static Implementation() => ...;
+}
+```
+
+When the app is trimmed with the following feature settings in the project file,
+`Feature.IsSupported` is treated as `false`, and `Feature.Implementation` code is removed.
+
+```xml
+<ItemGroup>
+  <RuntimeHostConfigurationOption Include="Feature.IsSupported" Value="false" />
+</ItemGroup>
+```
+]]></format>
+    </example>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
