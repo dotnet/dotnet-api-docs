@@ -35,7 +35,7 @@
   </Attributes>
   <Docs>
     <summary>An abstract class that allows code to be instrumented for production-time logging of rich data payloads for consumption within the process that was instrumented.</summary>
-    <remarks>For more information, see [DiagnosticSource User's Guide](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md).</remarks>
+    <remarks>For more information, see <see href="https://github.com/dotnet/runtime/blob/main/src/libraries/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md">DiagnosticSource User's Guide</see>.</remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -151,9 +151,9 @@ If there is expensive setup for the notification, you can call IsEnabled before 
           <see langword="true" /> if the notification event is enabled, <see langword="false" /> otherwise.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-          
+
 If there is expensive setup for the notification, you can call this method and provide context before performing the setup.
-          
+
            ]]></format>
         </remarks>
       </Docs>
@@ -194,7 +194,7 @@ If there is expensive setup for the notification, you can call this method and p
         <param name="payload">An object that represents the outgoing request.</param>
         <summary>Transfers state from an activity to some event or operation, such as an outgoing HTTP request, that will occur outside the process.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 If an instrumentation site is at a location where activities leave the process (such as outgoing HTTP requests), that site will want to transfer state from the activity to the outgoing request.
 
@@ -202,8 +202,8 @@ To the extent possible, this should be done by the instrumentation site, because
 For this, the instrumentation site needs to call back out to the logging system and ask it to resolve policy. This is the purpose of the `OnActivityExport` method.
 
 The `OnActivityExport` method is given the <xref:System.Diagnostics.Activity> as well as a payload object that represents the outgoing request. A <xref:System.Diagnostics.DiagnosticSource> subscriber then has the ability to update the outgoing request before it is sent.
- 
-Note that this method is rarely used at instrumentation sites (only those sites that are on an outgoing boundary of the process).   Moreover, typically the default policy that the instrumentation site performs (for example, to transfer all activity state in a 
+
+Note that this method is rarely used at instrumentation sites (only those sites that are on an outgoing boundary of the process).   Moreover, typically the default policy that the instrumentation site performs (for example, to transfer all activity state in a
 particular outgoing convention) is likely to be fine. This method is only for cases where that is a problem. Thus, this method should be used very rarely and is mostly here for symetry with `OnActivityImport` and future-proofing.
 
 Note that `payload` is typed as an <xref:System.Object> here, but any particular instrumentation site and subscriber should know the type of the payload and thus cast and decode it if necessary.
@@ -248,11 +248,11 @@ Note that `payload` is typed as an <xref:System.Object> here, but any particular
         <param name="payload">A payload that represents the incoming request.</param>
         <summary>Transfers state to an activity from some event or operation, such as an incoming request, that occurred outside the process.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-If an instrumentation site creates a new activity in response to some event outside the process, such as an incoming HTTP request), the `OnActivityImport` method allows that site will want to create a new activity and transfer state from the incoming request to the activity. 
+If an instrumentation site creates a new activity in response to some event outside the process, such as an incoming HTTP request), the `OnActivityImport` method allows that site will want to create a new activity and transfer state from the incoming request to the activity.
 
-To the extent possible, this should be done by the instrumentation site, because there is a contract between the <xref:System.Diagnostics.Activity> and the incoming request logic at the instrumentation site.   However, the instrumentation site can't handle policy. (For example, if sampling is done, exactly which requests should be sampled?) In these cases, the instrumentation site needs to call back out to the logging system and ask it to resolve policy (for example, to decide if the activity's "sampling" bit should be set). This is the purpose of the `OnActivityImport` method. It is given the activity as well as a payload object that represents the incoming request. The subscribers to the <xref:System.Diagnostics.DiagnosticSource> then have the opportunity to update this activity as desired. 
+To the extent possible, this should be done by the instrumentation site, because there is a contract between the <xref:System.Diagnostics.Activity> and the incoming request logic at the instrumentation site.   However, the instrumentation site can't handle policy. (For example, if sampling is done, exactly which requests should be sampled?) In these cases, the instrumentation site needs to call back out to the logging system and ask it to resolve policy (for example, to decide if the activity's "sampling" bit should be set). This is the purpose of the `OnActivityImport` method. It is given the activity as well as a payload object that represents the incoming request. The subscribers to the <xref:System.Diagnostics.DiagnosticSource> then have the opportunity to update this activity as desired.
 
 This method is rarely used at instrumentation sites (only those sites that are on the boundary of the process), and the instrumetation site implements some default policy (it sets the activity in *some* way), and so it is not necessary to override this method if that default policy is fine. In other words, this method should be overridden in very rare (but often important) cases.
 
@@ -309,7 +309,7 @@ Note that `payload` is typed as <xref:System.Object> here, but any particular in
         <returns>The started activity for convenient chaining.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
-           
+
 The <xref:System.Diagnostics.Activity> describes the logical operation, its context, and parent relation; the current <xref:System.Diagnostics.Activity> flows through the operation processing.
 
 This method starts the given <xref:System.Diagnostics.Activity>, maintains a global <xref:System.Diagnostics.Activity.Current?displayProperty=nameWithType> and <xref:System.Diagnostics.Activity.Parent?displayProperty=nameWithType> activity for the given <xref:System.Diagnostics.Activity>, and notifies consumers that a new <xref:System.Diagnostics.Activity> was started. Consumers can access <xref:System.Diagnostics.Activity.Current?displayProperty=nameWithType> to add context and/or augment telemetry.
@@ -411,11 +411,11 @@ Producers may pass additional details to the consumer in the payload.
       <Docs>
         <param name="activity">The activity to be stopped.</param>
         <param name="args">An object that represents the value passed as a payload for the event.</param>
-        <summary>Stops the given <see cref="T:System.Diagnostics.Activity" />, maintains the global <see cref="P:System.Diagnostics.Activity.Current" /> activity, and notifies consumers that the <see cref="T:System.Diagnostics.Activity" /> was stopped. 
-            
+        <summary>Stops the given <see cref="T:System.Diagnostics.Activity" />, maintains the global <see cref="P:System.Diagnostics.Activity.Current" /> activity, and notifies consumers that the <see cref="T:System.Diagnostics.Activity" /> was stopped.
+
 </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
 Producers may pass additional details to the consumer in the payload.
 
@@ -518,12 +518,12 @@ Consumers can access <xref:System.Diagnostics.Activity.Current?displayProperty=n
       <Docs>
         <param name="name">The name of the event being written.</param>
         <param name="value">An object that represents the value being passed as a payload for the event. This is often an anonymous type which contains several sub-values.</param>
-        <summary>Provides a generic way of logging complex payloads. 
+        <summary>Provides a generic way of logging complex payloads.
 </summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
+          <format type="text/markdown"><![CDATA[
 
-Each notification is given a name that identifies it, as well as an object (typically an anonymous type) that provides arbitrary information to pass to the notification.  
+Each notification is given a name that identifies it, as well as an object (typically an anonymous type) that provides arbitrary information to pass to the notification.
 
 `name` should be short. Don't use a fully qualified name unless you have to to avoid ambiguity, since `name` must be globally unique. Typically, *componentName.eventName*, where *componentName* and *eventName* are strings less than 10 characters, are a good compromise.
 

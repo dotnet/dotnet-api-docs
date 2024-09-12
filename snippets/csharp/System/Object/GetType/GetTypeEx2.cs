@@ -26,7 +26,7 @@ public class Example
 
       // The example displays the following output:
       //    12 is a 32-bit integer.
-      //    10653 is a 32-bit integer.
+      //    10653 is a 64-bit integer.
       //    12 is an unsigned byte.
       //    -5 is a signed byte.
       //    16.3 is a double-precision floating point.
