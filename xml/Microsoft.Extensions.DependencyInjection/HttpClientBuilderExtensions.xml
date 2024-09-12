@@ -32,7 +32,8 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Extension methods for configuring an <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</summary>
+    <summary>
+            Extension methods for configuring an <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /></summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -55,11 +56,43 @@
         <Parameter Name="lifetime" Type="Microsoft.Extensions.DependencyInjection.ServiceLifetime" Index="1" FrameworkAlternate="net-8.0;net-9.0;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
       </Parameters>
       <Docs>
-        <param name="builder">To be added.</param>
-        <param name="lifetime">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
+        <param name="lifetime">Lifetime of the keyed services registered.</param>
+        <summary>
+            Registers a named <see cref="T:System.Net.Http.HttpClient" /> and the related handler pipeline <see cref="T:System.Net.Http.HttpMessageHandler" /> as keyed
+            services with the client's name as the key, and a lifetime provided in the <paramref name="lifetime" /> parameter.
+            By default, the lifetime is <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Scoped" />.
+            </summary>
+        <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
+        <remarks>
+          <para>
+            A named client resolved from DI as a keyed service will behave similarly to a client you would create with <see cref="M:System.Net.Http.IHttpClientFactory.CreateClient(System.String)" />. This
+            means that the client will continue reusing the same <see cref="T:System.Net.Http.HttpMessageHandler" /> instance for the duration of <see cref="P:Microsoft.Extensions.Http.HttpClientFactoryOptions.HandlerLifetime" />,
+            and it will continue to use the separate, handler's DI scope instead of the scope it was resolved from.
+            </para>
+          <para>
+            WARNING: Registering the client as a keyed <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Transient" /> service will lead to the <see cref="T:System.Net.Http.HttpClient" /> and <see cref="T:System.Net.Http.HttpMessageHandler" />
+            instances being captured by DI as both implement <see cref="T:System.IDisposable" />. This might lead to memory leaks if the client is resolved multiple times within a
+            <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton" /> service.
+            </para>
+          <para>
+            WARNING: In case of (1) a keyed <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton" /><see cref="T:System.Net.Http.HttpClient" /> registration, or (2) a keyed <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Transient" /><see cref="T:System.Net.Http.HttpClient" /> injected into a <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton" /> service, or (3) long-running application scopes,
+            the <see cref="T:System.Net.Http.HttpClient" /> instances will get captured by a singleton or a long-running scope, so they will NOT be able to participate in the handler rotation,
+            which can result in the loss of DNS changes. (This is a similar issue to the one with Typed Clients, that are registered as <see cref="F:Microsoft.Extensions.DependencyInjection.ServiceLifetime.Transient" /> services.)
+            </para>
+          <para>
+            If called twice with for a builder with the same name, the lifetime of the keyed service will be updated to the latest used <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime" /> value.
+            </para>
+          <para>
+            If called for a typed client, only the related named client and handler will be registered as keyed. The typed client itself will continue to be registered as
+            a transient service.
+            </para>
+          <para>
+            If used in conjuction with <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.ConfigureHttpClientDefaults(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.DependencyInjection.IHttpClientBuilder})" />,
+            the key <see cref="P:Microsoft.Extensions.DependencyInjection.KeyedService.AnyKey" /> is used, so any named <see cref="T:System.Net.Http.HttpClient" /> instance will be resolvable as a keyed service (unless explicitly opted-out
+            from the keyed registration via <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAsKeyed(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" />).
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddDefaultLogger">
@@ -83,7 +116,9 @@
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <summary>Adds back the default logging for a named <see cref="T:System.Net.Http.HttpClient" />, if it was removed previously by calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAllLoggers(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" />.</summary>
+        <summary>
+            Adds back the default logging for a named <see cref="T:System.Net.Http.HttpClient" />, if it was removed previously by calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAllLoggers(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -111,11 +146,13 @@
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureHandler">A delegate that is used to create a <see cref="T:System.Net.Http.DelegatingHandler" />.</param>
-        <summary>Adds a delegate that will be used to create an additional message handler for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to create an additional message handler for a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
           <para>
-            The <paramref name="configureHandler" /> delegate should return a new instance of the message handler each time it
+            The <see paramref="configureHandler" /> delegate should return a new instance of the message handler each time it
             is invoked.
             </para>
           <para>
@@ -148,10 +185,14 @@
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureHandler">A delegate that is used to create a <see cref="T:System.Net.Http.DelegatingHandler" />.</param>
-        <summary>Adds a delegate that will be used to create an additional message handler for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to create an additional message handler for a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
-        <remarks>The <paramref name="configureHandler" /> delegate should return a new instance of the message handler each time it
-            is invoked.</remarks>
+        <remarks>
+            The <see paramref="configureHandler" /> delegate should return a new instance of the message handler each time it
+            is invoked.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddHttpMessageHandler&lt;THandler&gt;">
@@ -188,9 +229,12 @@
       </Parameters>
       <Docs>
         <typeparam name="THandler">
-            The type of the <see cref="T:System.Net.Http.DelegatingHandler" />. The handler type must be registered as a transient service.</typeparam>
+            The type of the <see cref="T:System.Net.Http.DelegatingHandler" />. The handler type must be registered as a transient service.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <summary>Adds an additional message handler from the dependency injection container for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds an additional message handler from the dependency injection container for a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
           <para>
@@ -222,19 +266,37 @@
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <param name="httpClientLoggerFactory">A delegate that is used to create a custom logger. The logger should implement <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientLogger" /> or <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger" />.</param>
-        <param name="wrapHandlersPipeline">
-          <see langword="true" /> to add the logging handler with the custom logger to the beginning of the additional handlers chain; <see langword="false" /> to add it to the end of the chain.</param>
-        <summary>Adds a delegate that will be used to create an additional logger for a named <see cref="T:System.Net.Http.HttpClient" />. The custom logger would be invoked from a dedicated logging DelegatingHandler on every request of the corresponding named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <param name="httpClientLoggerFactory">A delegate that is used to create a custom logger. The logger should implement
+            <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientLogger" /> or <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger" />.</param>
+        <param name="wrapHandlersPipeline">Whether the logging handler with the custom logger would be added to the top
+            or to the bottom of the additional handlers chains.</param>
+        <summary>
+            Adds a delegate that will be used to create an additional logger for a named <see cref="T:System.Net.Http.HttpClient" />. The custom logger would be invoked
+            from a dedicated logging DelegatingHandler on every request of the corresponding named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
-          <para> If <paramref name="wrapHandlersPipeline" /> is `true`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed before all other additional handlers in the chain. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed after all other additional handlers, essentially wrapping the whole pipeline.
+          <para>
+            If the <see paramref="wrapHandlersPipeline" /> is `true`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed before all
+            other additional handlers in the chain. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed after all
+            other additional handlers, essentially wrapping the whole pipeline.
             </para>
-          <para> If <paramref name="wrapHandlersPipeline" /> is `false`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed after all other additional handlers in the chain, right before the primary handler. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed before all other additional handlers, right after the primary handler.
+          <para>
+            If the <see paramref="wrapHandlersPipeline" /> is `false`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed after all
+            other additional handlers in the chain, right before the primary handler. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed before all
+            other additional handlers, right after the primary handler.
             </para>
-          <para> The <see cref="T:System.IServiceProvider" /> argument provided to <paramref name="httpClientLoggerFactory" /> will be a reference to a scoped service provider that shares the lifetime of the handler chain being constructed.
+          <para>
+            The <see cref="T:System.IServiceProvider" /> argument provided to <paramref name="httpClientLoggerFactory" /> will be
+            a reference to a scoped service provider that shares the lifetime of the handler chain being constructed.
             </para>
-          <para> If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.IServiceProvider,Microsoft.Extensions.Http.Logging.IHttpClientLogger},System.Boolean)" /> is called multiple times, multiple loggers would be added. If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAllLoggers(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" /> was not called before calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.IServiceProvider,Microsoft.Extensions.Http.Logging.IHttpClientLogger},System.Boolean)" />, then new logger would be added in addition to the default ones.
+          <para>
+            If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.IServiceProvider,Microsoft.Extensions.Http.Logging.IHttpClientLogger},System.Boolean)" /> is called multiple times, multiple loggers would be added. If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAllLoggers(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" /> was
+            not called before calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.IServiceProvider,Microsoft.Extensions.Http.Logging.IHttpClientLogger},System.Boolean)" />, then new logger would be added in addition to the default ones.
             </para>
         </remarks>
       </Docs>
@@ -272,20 +334,40 @@
         <Parameter Name="wrapHandlersPipeline" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <typeparam name="TLogger">The service type of the custom logger as it was registered in DI. The logger should implement <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientLogger" /> or <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger" />.</typeparam>
+        <typeparam name="TLogger">
+            The service type of the custom logger as it was registered in DI. The logger should implement <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientLogger" />
+            or <see cref="T:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger" />.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <param name="wrapHandlersPipeline">
-          <see langword="true" /> to add the logging handler with the custom logger to the beginning of the additional handlers chain; <see langword="false" /> to add it to the end of the chain.</param>
-        <summary>Adds a delegate that will be used to create an additional logger for a named <see cref="T:System.Net.Http.HttpClient" />. The custom logger would be invoked from a dedicated logging DelegatingHandler on every request of the corresponding named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <param name="wrapHandlersPipeline">Whether the logging handler with the custom logger would be added to the top
+            or to the bottom of the additional handlers chains.</param>
+        <summary>
+            Adds a delegate that will be used to create an additional logger for a named <see cref="T:System.Net.Http.HttpClient" />. The custom logger would be invoked
+            from a dedicated logging DelegatingHandler on every request of the corresponding named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
-          <para> If <paramref name="wrapHandlersPipeline" /> is `true`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed before all other additional handlers in the chain. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed after all other additional handlers, essentially wrapping the whole pipeline.
+          <para>
+            If the <see paramref="wrapHandlersPipeline" /> is `true`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed before all
+            other additional handlers in the chain. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed after all
+            other additional handlers, essentially wrapping the whole pipeline.
             </para>
-          <para> If <paramref name="wrapHandlersPipeline" /> is `false`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed after all other additional handlers in the chain, right before the primary handler. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed before all other additional handlers, right after the primary handler.
+          <para>
+            If the <see paramref="wrapHandlersPipeline" /> is `false`, <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStart(System.Net.Http.HttpRequestMessage)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStartAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> would be executed after all
+            other additional handlers in the chain, right before the primary handler. <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientLogger.LogRequestStop(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan)" /> and
+            <see cref="M:Microsoft.Extensions.Http.Logging.IHttpClientAsyncLogger.LogRequestStopAsync(System.Object,System.Net.Http.HttpRequestMessage,System.Net.Http.HttpResponseMessage,System.TimeSpan,System.Threading.CancellationToken)" /> would be executed before all
+            other additional handlers, right after the primary handler.
             </para>
-          <para> The <typeparamref name="TLogger" /> will be resolved from a scoped service provider that shares the lifetime of the handler chain being constructed.
+          <para>
+            The <typeparamref name="TLogger" /> will be resolved from a scoped service provider that shares
+            the lifetime of the handler chain being constructed.
             </para>
-          <para> If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger``1(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Boolean)" /> is called multiple times, multiple loggers would be added. If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAllLoggers(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" /> was not called before calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger``1(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Boolean)" />, then new logger would be added in addition to the default ones.
+          <para>
+            If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger``1(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Boolean)" /> is called multiple times, multiple loggers would be added. If <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAllLoggers(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder)" /> was
+            not called before calling <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddLogger``1(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Boolean)" />, then new logger would be added in addition to the default ones.
             </para>
         </remarks>
       </Docs>
@@ -324,11 +406,14 @@
       </Parameters>
       <Docs>
         <typeparam name="TClient">
-            The type of the typed client. They type specified will be registered in the service collection as
-            a transient service. See <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> for more details about authoring typed clients.</typeparam>
+            The type of the typed client. The type specified will be registered in the service collection as
+            a transient service. See <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> for more details about authoring typed clients.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <summary>Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
-            associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</summary>
+        <summary>
+            Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
+            associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.
+            </summary>
         <returns>To be added.</returns>
         <remarks>
           <para>
@@ -378,11 +463,14 @@
       <Docs>
         <typeparam name="TClient">
             The type of the typed client. They type specified will be registered in the service collection as
-            a transient service.</typeparam>
+            a transient service.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="factory">A factory function that will be used to construct the typed client.</param>
-        <summary>Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
-            associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</summary>
+        <summary>
+            Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
+            associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.
+            </summary>
         <returns>To be added.</returns>
         <remarks>
           <para>
@@ -427,11 +515,14 @@
       <Docs>
         <typeparam name="TClient">
             The type of the typed client. They type specified will be registered in the service collection as
-            a transient service.</typeparam>
+            a transient service.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="factory">A factory function that will be used to construct the typed client.</param>
-        <summary>Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
-            associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</summary>
+        <summary>
+            Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
+            associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.
+            </summary>
         <returns>To be added.</returns>
         <remarks>
           <para>
@@ -487,14 +578,18 @@
       <Docs>
         <typeparam name="TClient">
             The declared type of the typed client. They type specified will be registered in the service collection as
-            a transient service. See <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> for more details about authoring typed clients.</typeparam>
+            a transient service. See <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" /> for more details about authoring typed clients.
+            </typeparam>
         <typeparam name="TImplementation">
             The implementation type of the typed client. The type specified by will be instantiated by the
-            <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" />.</typeparam>
+            <see cref="T:Microsoft.Extensions.Http.ITypedHttpClientFactory`1" />.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <summary>Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
+        <summary>
+            Configures a binding between the <typeparamref name="TClient" /> type and the named <see cref="T:System.Net.Http.HttpClient" />
             associated with the <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />. The created instances will be of type
-            <typeparamref name="TImplementation" />.</summary>
+            <typeparamref name="TImplementation" />.
+            </summary>
         <returns>To be added.</returns>
         <remarks>
           <para>
@@ -537,8 +632,11 @@
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <param name="configureAdditionalHandlers">A delegate that is used to configure a collection of <see cref="T:System.Net.Http.DelegatingHandler" /> objects.</param>
-        <summary>Adds a delegate that will be used to configure additional message handlers using <see cref="T:Microsoft.Extensions.Http.HttpMessageHandlerBuilder" /> for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <param name="configureAdditionalHandlers">A delegate that is used to configure a collection of <see cref="T:System.Net.Http.DelegatingHandler" />s.</param>
+        <summary>
+            Adds a delegate that will be used to configure additional message handlers using <see cref="T:Microsoft.Extensions.Http.HttpMessageHandlerBuilder" />
+            for a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -564,12 +662,16 @@
         <Parameter Name="configureClient" Type="System.Action&lt;System.IServiceProvider,System.Net.Http.HttpClient&gt;" />
       </Parameters>
       <Docs>
-        <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />.</param>
+        <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureClient">A delegate that is used to configure an <see cref="T:System.Net.Http.HttpClient" />.</param>
-        <summary>Adds a delegate that will be used to configure a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to configure a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
-        <remarks>The <see cref="T:System.IServiceProvider" /> provided to <paramref name="configureClient" /> will be the
-            same application's root service provider instance.</remarks>
+        <remarks>
+            The <see cref="T:System.IServiceProvider" /> provided to <paramref name="configureClient" /> will be the
+            same application's root service provider instance.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ConfigureHttpClient">
@@ -593,9 +695,11 @@
         <Parameter Name="configureClient" Type="System.Action&lt;System.Net.Http.HttpClient&gt;" />
       </Parameters>
       <Docs>
-        <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" />.</param>
+        <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureClient">A delegate that is used to configure an <see cref="T:System.Net.Http.HttpClient" />.</param>
-        <summary>Adds a delegate that will be used to configure a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to configure a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -629,8 +733,10 @@
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureBuilder">A delegate that is used to configure an <see cref="T:Microsoft.Extensions.Http.HttpMessageHandlerBuilder" />.</param>
-        <summary>Adds a delegate that will be used to configure message handlers using <see cref="T:Microsoft.Extensions.Http.HttpMessageHandlerBuilder" />
-            for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to configure message handlers using <see cref="T:Microsoft.Extensions.Http.HttpMessageHandlerBuilder" />
+            for a named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -658,10 +764,15 @@
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureHandler">A delegate that is used to configure a previously set or default primary <see cref="T:System.Net.Http.HttpMessageHandler" />.</param>
-        <summary>Adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> for a
+            named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
-          <para> The <see cref="T:System.IServiceProvider" /> argument provided to <paramref name="configureHandler" /> will be a reference to a scoped service provider that shares the lifetime of the handler being constructed.
+          <para>
+            The <see cref="T:System.IServiceProvider" /> argument provided to <paramref name="configureHandler" /> will be
+            a reference to a scoped service provider that shares the lifetime of the handler being constructed.
             </para>
         </remarks>
       </Docs>
@@ -689,12 +800,14 @@
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureHandler">A delegate that is used to create an <see cref="T:System.Net.Http.HttpMessageHandler" />.</param>
-        <summary>Adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> for a
-            named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> for a
+            named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
           <para>
-            The <paramref name="configureHandler" /> delegate should return a new instance of the message handler each time it
+            The <see paramref="configureHandler" /> delegate should return a new instance of the message handler each time it
             is invoked.
             </para>
           <para>
@@ -727,11 +840,15 @@
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureHandler">A delegate that is used to create an <see cref="T:System.Net.Http.HttpMessageHandler" />.</param>
-        <summary>Adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> for a
-            named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> for a
+            named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
-        <remarks>The <paramref name="configureHandler" /> delegate should return a new instance of the message handler each time it
-            is invoked.</remarks>
+        <remarks>
+            The <see paramref="configureHandler" /> delegate should return a new instance of the message handler each time it
+            is invoked.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="ConfigurePrimaryHttpMessageHandler&lt;THandler&gt;">
@@ -768,9 +885,13 @@
       </Parameters>
       <Docs>
         <typeparam name="THandler">
-            The type of the <see cref="T:System.Net.Http.DelegatingHandler" />. The handler type must be registered as a transient service.</typeparam>
+            The type of the <see cref="T:System.Net.Http.DelegatingHandler" />. The handler type must be registered as a transient service.
+            </typeparam>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <summary>Configures the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> from the dependency injection container for a named <see cref="T:System.Net.Http.HttpClient" />.</summary>
+        <summary>
+            Configures the primary <see cref="T:System.Net.Http.HttpMessageHandler" /> from the dependency injection container
+            for a  named <see cref="T:System.Net.Http.HttpClient" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
           <para>
@@ -802,8 +923,10 @@
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <param name="redactedLoggedHeaderNames">The collection of HTTP header names for which values should be redacted before logging.</param>
-        <summary>Sets the collection of HTTP header names for which values should be redacted before logging.</summary>
+        <param name="redactedLoggedHeaderNames">The collection of HTTP headers names for which values should be redacted before logging.</param>
+        <summary>
+            Sets the collection of HTTP headers names for which values should be redacted before logging.
+            </summary>
         <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -830,18 +953,13 @@
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <param name="shouldRedactHeaderValue">The <see cref="T:System.Func`2" /> which determines whether to redact the HTTP header value before logging.</param>
-        <summary>Sets the <see cref="T:System.Func`2" /> which determines whether to redact the HTTP header value before logging.</summary>
+        <param name="shouldRedactHeaderValue">The <see cref="T:System.Func`2" /> which determines whether to redact the HTTP header value given its corresponding header name before logging.</param>
+        <summary>
+            Sets the <see cref="T:System.Func`2" /> which determines whether to redact the HTTP header value given its corresponding header name before logging.
+            </summary>
         <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The provided `shouldRedactHeaderValue` predicate will be evaluated for each header value when logging. If the predicate returns `true` then the header value will be replaced with a marker value `*` in logs; otherwise the header value will be logged.
-
-          ]]></format>
-        </remarks>
+        <remarks>The provided <paramref name="shouldRedactHeaderValue" /> predicate will be evaluated for each header name when logging. If the predicate returns <see langword="true" /> then the header value will be replaced with a marker value <c>*</c> in logs; otherwise the header value will be logged.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="RemoveAllLoggers">
@@ -865,7 +983,9 @@ The provided `shouldRedactHeaderValue` predicate will be evaluated for each head
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <summary>Removes all previously added loggers for a named <see cref="T:System.Net.Http.HttpClient" />, including default ones.</summary>
+        <summary>
+            Removes all previously added loggers for a named <see cref="T:System.Net.Http.HttpClient" />, including default ones.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -889,10 +1009,18 @@ The provided `shouldRedactHeaderValue` predicate will be evaluated for each head
         <Parameter Name="builder" Type="Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" RefType="this" Index="0" FrameworkAlternate="net-8.0;net-9.0;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
       </Parameters>
       <Docs>
-        <param name="builder">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
+        <summary>
+            Removes the keyed registrations for the named <see cref="T:System.Net.Http.HttpClient" /> and <see cref="T:System.Net.Http.HttpMessageHandler" />.
+            </summary>
+        <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
+        <remarks>
+          <para>
+            If used in conjuction with <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.ConfigureHttpClientDefaults(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.DependencyInjection.IHttpClientBuilder})" />,
+            it will only affect the previous "global" <see cref="P:Microsoft.Extensions.DependencyInjection.KeyedService.AnyKey" /> registration, and won't affect the clients registered for a specific name
+            with <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddAsKeyed(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,Microsoft.Extensions.DependencyInjection.ServiceLifetime)" />.
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetHandlerLifetime">
@@ -918,9 +1046,11 @@ The provided `shouldRedactHeaderValue` predicate will be evaluated for each head
       <Docs>
         <param name="builder" />
         <param name="handlerLifetime" />
-        <summary>Sets the length of time that a <see cref="T:System.Net.Http.HttpMessageHandler" /> instance can be reused. Each named
+        <summary>
+            Sets the length of time that a <see cref="T:System.Net.Http.HttpMessageHandler" /> instance can be reused. Each named
             client can have its own configured handler lifetime value. The default value is two minutes. Set the lifetime to
-            <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" /> to disable handler expiry.</summary>
+            <see cref="F:System.Threading.Timeout.InfiniteTimeSpan" /> to disable handler expiry.
+            </summary>
         <returns>To be added.</returns>
         <remarks>
           <para>
@@ -971,11 +1101,20 @@ The provided `shouldRedactHeaderValue` predicate will be evaluated for each head
       </Parameters>
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
-        <param name="configureBuilder">Delegate that is used to set up the configuration of the the primary <see cref="T:System.Net.Http.SocketsHttpHandler" /> on <see cref="T:Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder" /> that will later be applied on the primary handler during its creation.</param>
-        <summary>Adds or updates <see cref="T:System.Net.Http.SocketsHttpHandler" /> as a primary handler for a named <see cref="T:System.Net.Http.HttpClient" /> and configures it using <see cref="T:Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder" />.</summary>
+        <param name="configureBuilder">Delegate that is used to set up the configuration of the primary <see cref="T:System.Net.Http.SocketsHttpHandler" />
+            on <see cref="T:Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder" /> that will later be applied on the primary handler during its creation.</param>
+        <summary>
+            Adds or updates <see cref="T:System.Net.Http.SocketsHttpHandler" /> as a primary handler for a named <see cref="T:System.Net.Http.HttpClient" />
+            and configures it using <see cref="T:Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
-          <para> If a primary handler was already set to be <see cref="T:System.Net.Http.SocketsHttpHandler" /> by previously calling, for example, <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.ConfigurePrimaryHttpMessageHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.Net.Http.HttpMessageHandler})" /> or <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.UseSocketsHttpHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Action{Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder})" />, then the configuration set on <see cref="T:Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder" /> will be applied to the existing instance. Otherwise, a new instance of <see cref="T:System.Net.Http.SocketsHttpHandler" /> will be created.
+          <para>
+            If a primary handler was already set to be <see cref="T:System.Net.Http.SocketsHttpHandler" /> by previously calling, for example,
+            <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.ConfigurePrimaryHttpMessageHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.Net.Http.HttpMessageHandler})" /> or
+            <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.UseSocketsHttpHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Action{Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder})" />, then the configuration set on
+            <see cref="T:Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder" /> will be applied to the existing instance. Otherwise, a new instance of
+            <see cref="T:System.Net.Http.SocketsHttpHandler" /> will be created.
             </para>
         </remarks>
       </Docs>
@@ -1015,10 +1154,17 @@ The provided `shouldRedactHeaderValue` predicate will be evaluated for each head
       <Docs>
         <param name="builder">The <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" />.</param>
         <param name="configureHandler">Optional delegate that is used to configure the primary <see cref="T:System.Net.Http.SocketsHttpHandler" />.</param>
-        <summary>Adds or updates <see cref="T:System.Net.Http.SocketsHttpHandler" /> as a primary handler for a named <see cref="T:System.Net.Http.HttpClient" />. If provided, also adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.SocketsHttpHandler" />.</summary>
+        <summary>
+            Adds or updates <see cref="T:System.Net.Http.SocketsHttpHandler" /> as a primary handler for a named <see cref="T:System.Net.Http.HttpClient" />. If provided,
+            also adds a delegate that will be used to configure the primary <see cref="T:System.Net.Http.SocketsHttpHandler" />.
+            </summary>
         <returns>An <see cref="T:Microsoft.Extensions.DependencyInjection.IHttpClientBuilder" /> that can be used to configure the client.</returns>
         <remarks>
-          <para> If a primary handler was already set to be <see cref="T:System.Net.Http.SocketsHttpHandler" /> by previously calling, for example, <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.ConfigurePrimaryHttpMessageHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.Net.Http.HttpMessageHandler})" /> or <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.UseSocketsHttpHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Action{Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder})" />, then the passed <paramref name="configureHandler" /> delegate will be applied to the existing instance. Otherwise, a new instance of <see cref="T:System.Net.Http.SocketsHttpHandler" /> will be created.
+          <para>
+            If a primary handler was already set to be <see cref="T:System.Net.Http.SocketsHttpHandler" /> by previously calling, for example,
+            <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.ConfigurePrimaryHttpMessageHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Func{System.Net.Http.HttpMessageHandler})" /> or
+            <see cref="M:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.UseSocketsHttpHandler(Microsoft.Extensions.DependencyInjection.IHttpClientBuilder,System.Action{Microsoft.Extensions.DependencyInjection.ISocketsHttpHandlerBuilder})" />, then the passed <paramref name="configureHandler" />
+            delegate will be applied to the existing instance. Otherwise, a new instance of <see cref="T:System.Net.Http.SocketsHttpHandler" /> will be created.
             </para>
         </remarks>
       </Docs>
