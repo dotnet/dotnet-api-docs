@@ -2,7 +2,7 @@
 using System;
 using System.Security;
 
-class Example
+class SecureStringExample
 {
     public static void Main()
     {
