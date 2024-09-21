@@ -252,9 +252,10 @@
         <ReturnType>System.Windows.Forms.SystemColorMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the default color mode (dark mode) for the application.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>This is the <see cref="P:System.Windows.Forms.Application.SystemColorMode" />; which either has been set by <see cref="M:System.Windows.Forms.Application.SetColorMode(System.Windows.Forms.SystemColorMode)" /> or its default value <see cref="F:System.Windows.Forms.SystemColorMode.Classic" />. 
+            If it has been set to <see cref="F:System.Windows.Forms.SystemColorMode.System" />, then the actual color mode is determined by the system settings (which can be retrieved by the static (shared in VB) <see cref="P:System.Windows.Forms.Application.SystemColorMode" /> property.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CommonAppDataPath">
@@ -982,9 +983,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value indicating whether the application is running in a dark system color context.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>In a high contrast mode, this will always return <see langword="false" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="LeaveThreadModal">
@@ -1811,9 +1812,25 @@
         <Parameter Name="systemColorMode" Type="System.Windows.Forms.SystemColorMode" Index="0" FrameworkAlternate="windowsdesktop-9.0" />
       </Parameters>
       <Docs>
-        <param name="systemColorMode">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="systemColorMode">The application's default color mode (dark mode) to set.</param>
+        <summary>Sets the default color mode (dark mode) for the application.</summary>
+        <remarks>
+          <para>
+            You should use this method to set the default color mode (dark mode) for the application. Set it before creating any UI elements to ensure that the correct color mode 
+            is used. You can set it to dark mode (<see cref="F:System.Windows.Forms.SystemColorMode.Dark" />), light mode (<see cref="F:System.Windows.Forms.SystemColorMode.Classic" />) 
+            or to the system setting (<see cref="F:System.Windows.Forms.SystemColorMode.System" />).
+          </para>
+          <para>
+            If you set it to <see cref="F:System.Windows.Forms.SystemColorMode.System" />, the actual color mode is determined by the Windows system settings. If the system setting is changed, 
+            the application will not automatically adapt to the new setting.
+          </para>
+          <para>
+            Note that the dark color mode is only available from Windows 11 on or later versions. If the system is set to a high contrast mode, the dark mode is not available.
+          </para>
+          <para>
+            <b>Note for Visual Basic:</b> If you are using the Visual Basic Application Framework, you should set the color mode by handling the Application Events (see <see cref="E:Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase.ApplyApplicationDefaults" />).
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="SetCompatibleTextRenderingDefault">
@@ -1930,6 +1947,7 @@ You can adjust text scale with the **Make text bigger** slider on the **Settings
         <exception cref="T:System.ArgumentNullException">
           <paramref name="font" /> is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">You can only call this method before the first window is created by your Windows Forms application.</exception>
+        <seealso href="https://docs.microsoft.com/windows/uwp/design/input/text-scaling" />
       </Docs>
     </Member>
     <Member MemberName="SetHighDpiMode">
@@ -2225,9 +2243,15 @@ The high DPI mode is set once per process. For more information about setting th
         <ReturnType>System.Windows.Forms.SystemColorMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets the system color mode setting of the OS system environment.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>
+            The color setting is determined based on the operating system version and its system settings. It returns <see cref="F:System.Windows.Forms.SystemColorMode.Dark" /> if the dark mode is enabled in the system settings, <see cref="F:System.Windows.Forms.SystemColorMode.Classic" /> if the color mode equals the light, standard color setting.
+          </para>
+          <para><c>SystemColorMode</c> is supported on Windows 11 or later versions.</para>
+          <para><c>SystemColorModes</c> is not supported if the Windows OS <c>High Contrast Mode</c> has been enabled in the system settings.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="ThreadException">
