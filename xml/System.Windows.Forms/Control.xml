@@ -8325,11 +8325,20 @@ MyControl.Font = New Font(MyControl.Font, _
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
       </Parameters>
       <Docs>
-        <param name="callback">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="callback">The synchronous action to execute.</param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Invokes the specified synchronous callback asynchronously on the thread that owns the control's handle.</summary>
+        <returns>A task that represents the asynchronous invoke operation.</returns>
+        <remarks>
+          <para>
+            When you pass a <see cref="T:System.Threading.CancellationToken" /> to this method, the method will return, but the callback will still be executed. 
+            The callback will be running on the UI thread and will be also blocking the UI thread. <c>InvokeAsync</c> in this case is just queuing the callback to the end of the message queue and returns immediately, but as soon as the callback gets executed, it will still block the UI thread for the time it is running. For this reason, it is recommended to only execute short sync running operations in the callback, like updating a control's property or similar.
+          </para>
+          <para>
+            If you want to execute a long-running operation, consider using asynchronous callbacks instead, by making sure that you use either the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask},System.Threading.CancellationToken)" /> 
+            or <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask{``0}},System.Threading.CancellationToken)" />.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InvokeAsync">
@@ -8357,11 +8366,21 @@ MyControl.Font = New Font(MyControl.Font, _
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
       </Parameters>
       <Docs>
-        <param name="callback">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="callback">
+          <para>The asynchronous function to execute, which takes a <see cref="T:System.Threading.CancellationToken" /> and returns a <see cref="T:System.Threading.Tasks.ValueTask" />.</para>
+        </param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Executes the specified asynchronous callback on the thread that owns the control's handle asynchronously.</summary>
+        <returns>A task that represents the asynchronous invoke operation.</returns>
+        <remarks>
+          <para>
+            The callback will be marshalled to the thread that owns the control's handle, and then awaited. Exceptions will be propagated back to the caller. Also note that the returned task is not the task associated with the callback, but a task representing the operation of marshalling the callback to the UI thread. If you need to pass a callback returning a <see cref="T:System.Threading.Tasks.Task" /> rather than a <see cref="T:System.Threading.Tasks.ValueTask" />, use the <see cref="M:System.Threading.Tasks.ValueTask.#ctor(System.Threading.Tasks.Task)" />'s constructor to create a new <see cref="T:System.Threading.Tasks.ValueTask" /> which wraps the original Task. The <see cref="T:System.Threading.CancellationToken" /> will be both taken into account when marshalling the callback to the thread that owns the control's handle, and when executing the callback.
+          </para>
+          <para>
+            If you want to asynchronously execute a synchronous callback, use the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{``0},System.Threading.CancellationToken)" /> or the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Action,System.Threading.CancellationToken)" />.
+          </para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The control's handle is not yet created.</exception>
       </Docs>
     </Member>
     <Member MemberName="InvokeAsync&lt;T&gt;">
@@ -8406,12 +8425,23 @@ MyControl.Font = New Font(MyControl.Font, _
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="callback">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The return type of the asynchronous callback.</typeparam>
+        <param name="callback">
+          <para>The asynchronous function to execute, which takes a <see cref="T:System.Threading.CancellationToken" /> and returns a <see cref="T:System.Threading.Tasks.ValueTask`1" />.</para>
+        </param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Executes the specified asynchronous callback on the thread that owns the control's handle.</summary>
+        <returns>A task representing the operation and containing the function's result of type <typeparamref name="T" />.</returns>
+        <remarks>
+          <para>
+            The callback will be marshalled to the thread that owns the control's handle, and then be awaited. Exceptions will be propagated back to the caller. Also note that the returned task is not the task associated with the callback,
+            but a task representing the operation of marshalling the callback to the UI thread. If you need to pass a callback returning a <see cref="T:System.Threading.Tasks.Task`1" /> rather than a <see cref="T:System.Threading.Tasks.ValueTask`1" />,
+            use the <see cref="M:System.Threading.Tasks.ValueTask`1.#ctor(System.Threading.Tasks.Task{`0})" />'s constructor to create a new <see cref="T:System.Threading.Tasks.ValueTask`1" /> which wraps the original Task. The <see cref="T:System.Threading.CancellationToken" /> will be both taken into account when marshalling the callback to the thread that owns the control's handle,
+            and when executing the callback.
+          </para>
+          <para>If you want to asynchronously execute a synchronous callback, use the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{``0},System.Threading.CancellationToken)" /> or the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Action,System.Threading.CancellationToken)" />.</para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The control's handle is not yet created.</exception>
       </Docs>
     </Member>
     <Member MemberName="InvokeAsync&lt;T&gt;">
@@ -8449,12 +8479,24 @@ MyControl.Font = New Font(MyControl.Font, _
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
       </Parameters>
       <Docs>
-        <typeparam name="T">To be added.</typeparam>
-        <param name="callback">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="T">The return type of the synchronous callback.</typeparam>
+        <param name="callback">The synchronous function to execute.</param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Invokes the specified synchronous callback asynchronously on the thread that owns the control's handle.</summary>
+        <returns>A task representing the operation and containing the function's result.</returns>
+        <remarks>
+          <para>
+            When you pass a <see cref="T:System.Threading.CancellationToken" /> to this method, the method will return, but the callback will still be executed. The callback will be running on the UI thread and will be also blocking the UI thread.
+            InvokeAsync in this case is just queuing the callback to the end of the message queue and returns immediately, but as soon as the callback is executed, it will still block the UI for the time it is running. For this reason, it is recommended to only 
+            execute short sync running operations in the callback, like updating a control's property or similar.
+          </para>
+          <para>If you want to execute a long-running operation, consider using asynchronous callbacks instead, which you use with the overloads of <c>InvokeAsync</c> described below.</para>
+          <para>
+            <b>Important:</b> Also note that if you use this overload to pass a callback which returns a <see cref="T:System.Threading.Tasks.Task" /> that this Task will NOT be awaited but return immediately and has the characteristics of an "engage-and-forget". 
+            If you want the task which you pass to be awaited, make sure that you use either the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask},System.Threading.CancellationToken)" />
+            or <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask{``0}},System.Threading.CancellationToken)" />.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InvokeGotFocus">
@@ -17847,7 +17889,7 @@ if (CanSelect && IsMnemonic(charCode, MyControl.Text) {
         <param name="deviceDpiOld">The DPI value prior to the change.</param>
         <param name="deviceDpiNew">The DPI value after the change.</param>
         <summary>Provides constants for rescaling the control when a DPI change occurs.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>This method is an opportunity to rescale any constant sizes, glyphs or bitmaps before re-painting.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ResetBackColor">
