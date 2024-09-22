@@ -1,14 +1,14 @@
 ﻿using System;
 
-public class Example
+public class Example1
 {
     public static void Main()
     {
         // <Snippet1>
-        String s = "aaa";
-        Console.WriteLine("The initial string: '{0}'", s);
+        string s = "aaa";
+        Console.WriteLine($"The initial string: '{s}'");
         s = s.Replace("a", "b").Replace("b", "c").Replace("c", "d");
-        Console.WriteLine("The final string: '{0}'", s);
+        Console.WriteLine($"The final string: '{s}'");
 
         // The example displays the following output:
         //       The initial string: 'aaa'

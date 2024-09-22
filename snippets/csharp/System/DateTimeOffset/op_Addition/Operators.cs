@@ -176,13 +176,13 @@ public class Class1
       difference = firstDate - thirdDate;
       Console.WriteLine("({0}) - ({1}): {2} days, {3}:{4:d2}",
                         firstDate.ToString(),
-                        secondDate.ToString(),
+                        thirdDate.ToString(),
                         difference.Days,
                         difference.Hours,
                         difference.Minutes);
       // The example produces the following output:
       //    (3/25/2008 6:00:00 PM -07:00) - (3/25/2008 6:00:00 PM -05:00): 0 days, 2:00
-      //    (3/25/2008 6:00:00 PM -07:00) - (3/25/2008 6:00:00 PM -05:00): 26 days, 9:00
+      //    (3/25/2008 6:00:00 PM -07:00) - (2/28/2008 9:00:00 AM -07:00): 26 days, 9:00
       // </Snippet14>
    }
 

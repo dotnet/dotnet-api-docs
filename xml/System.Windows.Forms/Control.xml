@@ -130,7 +130,7 @@
 
  The majority of the controls in the <xref:System.Windows.Forms> namespace use the underlying Windows common control as a base to build on. For more information about the Windows common controls, see [General Control Reference](/windows/win32/controls/common-control-reference).
 
- To identify Windows Forms controls from a separate process, use a standard `SendMessage` call to pass the WM_GETCONTROLNAME message. WM_GETCONTROLNAME is independent of the language and Windows hierarchy. For more information, see the "Recommended Solution for Windows Forms" topic in [Automating Windows Forms](https://docs.microsoft.com/previous-versions/dotnet/articles/ms996405(v=msdn.10)).
+ To identify Windows Forms controls from a separate process, use a standard `SendMessage` call to pass the WM_GETCONTROLNAME message. WM_GETCONTROLNAME is independent of the language and Windows hierarchy. For more information, see the "Recommended Solution for Windows Forms" topic in [Automating Windows Forms](https://learn.microsoft.com/previous-versions/dotnet/articles/ms996405(v=msdn.10)).
 
  Use the <xref:System.Windows.Forms.Control.InvokeRequired%2A> property to synchronize access to the control from multiple threads. For more information about multithreaded Windows Forms controls, see [How to: Make Thread-Safe Calls to Windows Forms Controls](/dotnet/framework/winforms/controls/how-to-make-thread-safe-calls-to-windows-forms-controls).
 
@@ -4280,8 +4280,8 @@ The following table lists Windows Forms controls and which event (<xref:System.W
         <ReturnType>System.Windows.Forms.Padding</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the internal spacing, in pixels, of the contents of a control.</summary>
-        <value>A <see cref="T:System.Windows.Forms.Padding" /> that represents the internal spacing of the contents of a control.</value>
+        <summary>Gets the default internal spacing, in pixels, of the contents of a control.</summary>
+        <value>The default internal spacing of the contents of a control.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -4572,9 +4572,9 @@ The following table lists Windows Forms controls and which event (<xref:System.W
         </remarks>
         <block subset="none" type="overrides">
           <para>
-            <see langword="Dispose" /> can be called multiple times by other objects. When overriding <see langword="Dispose(Boolean)" /> be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement <see langword="Dispose(Boolean)" />, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).
+            <see langword="Dispose" /> can be called multiple times by other objects. When overriding <see langword="Dispose(Boolean)" /> be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement <see langword="Dispose(Boolean)" />, see <see href="/dotnet/standard/garbage-collection/implementing-dispose">Implementing a Dispose Method</see>.
 
- For more information about <see langword="Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).</para>
+ For more information about <see langword="Dispose" /> and <see cref="M:System.Object.Finalize" />, see <see href="/dotnet/standard/garbage-collection/unmanaged">Cleaning Up Unmanaged Resources</see> and <see href="https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)">Overriding the Finalize Method</see>.</para>
         </block>
       </Docs>
     </Member>
@@ -8300,6 +8300,205 @@ MyControl.Font = New Font(MyControl.Font, _
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="InvokeAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task InvokeAsync (Action callback, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task InvokeAsync(class System.Action callback, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Forms.Control.InvokeAsync(System.Action,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync (callback As Action, Optional cancellationToken As CancellationToken = Nothing) As Task" />
+      <MemberSignature Language="F#" Value="member this.InvokeAsync : Action * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="control.InvokeAsync (callback, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Windows.Forms</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="windowsdesktop-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="callback" Type="System.Action" Index="0" FrameworkAlternate="windowsdesktop-9.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
+      </Parameters>
+      <Docs>
+        <param name="callback">The synchronous action to execute.</param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Invokes the specified synchronous callback asynchronously on the thread that owns the control's handle.</summary>
+        <returns>A task that represents the asynchronous invoke operation.</returns>
+        <remarks>
+          <para>
+            When you pass a <see cref="T:System.Threading.CancellationToken" /> to this method, the method will return, but the callback will still be executed. 
+            The callback will be running on the UI thread and will be also blocking the UI thread. <c>InvokeAsync</c> in this case is just queuing the callback to the end of the message queue and returns immediately, but as soon as the callback gets executed, it will still block the UI thread for the time it is running. For this reason, it is recommended to only execute short sync running operations in the callback, like updating a control's property or similar.
+          </para>
+          <para>
+            If you want to execute a long-running operation, consider using asynchronous callbacks instead, by making sure that you use either the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask},System.Threading.CancellationToken)" /> 
+            or <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask{``0}},System.Threading.CancellationToken)" />.
+          </para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="InvokeAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task InvokeAsync (Func&lt;System.Threading.CancellationToken,System.Threading.Tasks.ValueTask&gt; callback, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task InvokeAsync(class System.Func`2&lt;valuetype System.Threading.CancellationToken, valuetype System.Threading.Tasks.ValueTask&gt; callback, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Forms.Control.InvokeAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync (callback As Func(Of CancellationToken, ValueTask), Optional cancellationToken As CancellationToken = Nothing) As Task" />
+      <MemberSignature Language="F#" Value="member this.InvokeAsync : Func&lt;System.Threading.CancellationToken, System.Threading.Tasks.ValueTask&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="control.InvokeAsync (callback, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Windows.Forms</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="windowsdesktop-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="callback" Type="System.Func&lt;System.Threading.CancellationToken,System.Threading.Tasks.ValueTask&gt;" Index="0" FrameworkAlternate="windowsdesktop-9.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
+      </Parameters>
+      <Docs>
+        <param name="callback">
+          <para>The asynchronous function to execute, which takes a <see cref="T:System.Threading.CancellationToken" /> and returns a <see cref="T:System.Threading.Tasks.ValueTask" />.</para>
+        </param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Executes the specified asynchronous callback on the thread that owns the control's handle asynchronously.</summary>
+        <returns>A task that represents the asynchronous invoke operation.</returns>
+        <remarks>
+          <para>
+            The callback will be marshalled to the thread that owns the control's handle, and then awaited. Exceptions will be propagated back to the caller. Also note that the returned task is not the task associated with the callback, but a task representing the operation of marshalling the callback to the UI thread. If you need to pass a callback returning a <see cref="T:System.Threading.Tasks.Task" /> rather than a <see cref="T:System.Threading.Tasks.ValueTask" />, use the <see cref="M:System.Threading.Tasks.ValueTask.#ctor(System.Threading.Tasks.Task)" />'s constructor to create a new <see cref="T:System.Threading.Tasks.ValueTask" /> which wraps the original Task. The <see cref="T:System.Threading.CancellationToken" /> will be both taken into account when marshalling the callback to the thread that owns the control's handle, and when executing the callback.
+          </para>
+          <para>
+            If you want to asynchronously execute a synchronous callback, use the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{``0},System.Threading.CancellationToken)" /> or the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Action,System.Threading.CancellationToken)" />.
+          </para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The control's handle is not yet created.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="InvokeAsync&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;T&gt; InvokeAsync&lt;T&gt; (Func&lt;System.Threading.CancellationToken,System.Threading.Tasks.ValueTask&lt;T&gt;&gt; callback, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;!!T&gt; InvokeAsync&lt;T&gt;(class System.Func`2&lt;valuetype System.Threading.CancellationToken, valuetype System.Threading.Tasks.ValueTask`1&lt;!!T&gt;&gt; callback, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask{``0}},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync(Of T) (callback As Func(Of CancellationToken, ValueTask(Of T)), Optional cancellationToken As CancellationToken = Nothing) As Task(Of T)" />
+      <MemberSignature Language="F#" Value="member this.InvokeAsync : Func&lt;System.Threading.CancellationToken, System.Threading.Tasks.ValueTask&lt;'T&gt;&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;'T&gt;" Usage="control.InvokeAsync (callback, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Windows.Forms</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="windowsdesktop-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;T&gt;</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="callback" Type="System.Func&lt;System.Threading.CancellationToken,System.Threading.Tasks.ValueTask&lt;T&gt;&gt;" Index="0" FrameworkAlternate="windowsdesktop-9.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 0, 1 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 0, 1 })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">The return type of the asynchronous callback.</typeparam>
+        <param name="callback">
+          <para>The asynchronous function to execute, which takes a <see cref="T:System.Threading.CancellationToken" /> and returns a <see cref="T:System.Threading.Tasks.ValueTask`1" />.</para>
+        </param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Executes the specified asynchronous callback on the thread that owns the control's handle.</summary>
+        <returns>A task representing the operation and containing the function's result of type <typeparamref name="T" />.</returns>
+        <remarks>
+          <para>
+            The callback will be marshalled to the thread that owns the control's handle, and then be awaited. Exceptions will be propagated back to the caller. Also note that the returned task is not the task associated with the callback,
+            but a task representing the operation of marshalling the callback to the UI thread. If you need to pass a callback returning a <see cref="T:System.Threading.Tasks.Task`1" /> rather than a <see cref="T:System.Threading.Tasks.ValueTask`1" />,
+            use the <see cref="M:System.Threading.Tasks.ValueTask`1.#ctor(System.Threading.Tasks.Task{`0})" />'s constructor to create a new <see cref="T:System.Threading.Tasks.ValueTask`1" /> which wraps the original Task. The <see cref="T:System.Threading.CancellationToken" /> will be both taken into account when marshalling the callback to the thread that owns the control's handle,
+            and when executing the callback.
+          </para>
+          <para>If you want to asynchronously execute a synchronous callback, use the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{``0},System.Threading.CancellationToken)" /> or the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Action,System.Threading.CancellationToken)" />.</para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The control's handle is not yet created.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="InvokeAsync&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;T&gt; InvokeAsync&lt;T&gt; (Func&lt;T&gt; callback, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;!!T&gt; InvokeAsync&lt;T&gt;(class System.Func`1&lt;!!T&gt; callback, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{``0},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function InvokeAsync(Of T) (callback As Func(Of T), Optional cancellationToken As CancellationToken = Nothing) As Task(Of T)" />
+      <MemberSignature Language="F#" Value="member this.InvokeAsync : Func&lt;'T&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;'T&gt;" Usage="control.InvokeAsync (callback, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Windows.Forms</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="windowsdesktop-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;T&gt;</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </TypeParameter>
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="callback" Type="System.Func&lt;T&gt;" Index="0" FrameworkAlternate="windowsdesktop-9.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="windowsdesktop-9.0" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">The return type of the synchronous callback.</typeparam>
+        <param name="callback">The synchronous function to execute.</param>
+        <param name="cancellationToken">The cancellation token.</param>
+        <summary>Invokes the specified synchronous callback asynchronously on the thread that owns the control's handle.</summary>
+        <returns>A task representing the operation and containing the function's result.</returns>
+        <remarks>
+          <para>
+            When you pass a <see cref="T:System.Threading.CancellationToken" /> to this method, the method will return, but the callback will still be executed. The callback will be running on the UI thread and will be also blocking the UI thread.
+            InvokeAsync in this case is just queuing the callback to the end of the message queue and returns immediately, but as soon as the callback is executed, it will still block the UI for the time it is running. For this reason, it is recommended to only 
+            execute short sync running operations in the callback, like updating a control's property or similar.
+          </para>
+          <para>If you want to execute a long-running operation, consider using asynchronous callbacks instead, which you use with the overloads of <c>InvokeAsync</c> described below.</para>
+          <para>
+            <b>Important:</b> Also note that if you use this overload to pass a callback which returns a <see cref="T:System.Threading.Tasks.Task" /> that this Task will NOT be awaited but return immediately and has the characteristics of an "engage-and-forget". 
+            If you want the task which you pass to be awaited, make sure that you use either the overload <see cref="M:System.Windows.Forms.Control.InvokeAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask},System.Threading.CancellationToken)" />
+            or <see cref="M:System.Windows.Forms.Control.InvokeAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.ValueTask{``0}},System.Threading.CancellationToken)" />.
+          </para>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="InvokeGotFocus">
       <MemberSignature Language="C#" Value="protected void InvokeGotFocus (System.Windows.Forms.Control toInvoke, EventArgs e);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void InvokeGotFocus(class System.Windows.Forms.Control toInvoke, class System.EventArgs e) cil managed" />
@@ -9019,7 +9218,7 @@ MyControl.Font = New Font(MyControl.Font, _
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- A mirrored control displays both layout and text from right to left. For more information, see [How to: Create Mirrored Windows Forms and Controls](https://docs.microsoft.com/previous-versions/visualstudio/visual-studio-2010/xwbz5ws0(v=vs.100)).
+ A mirrored control displays both layout and text from right to left. For more information, see [How to: Create Mirrored Windows Forms and Controls](https://learn.microsoft.com/previous-versions/visualstudio/visual-studio-2010/xwbz5ws0(v=vs.100)).
 
  ]]></format>
         </remarks>
@@ -12288,12 +12487,16 @@ MyControl.Font = New Font(MyControl.Font, _
       </Docs>
     </Member>
     <Member MemberName="OnEnter">
-      <MemberSignature Language="C#" Value="protected virtual void OnEnter (EventArgs e);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnEnter(class System.EventArgs e) cil managed" />
+      <MemberSignature Language="C#" Value="protected virtual void OnEnter (EventArgs e);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnEnter(class System.EventArgs e) cil managed" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Forms.Control.OnEnter(System.EventArgs)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnEnter (e As EventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnEnter (e As EventArgs)" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberSignature Language="F#" Value="abstract member OnEnter : EventArgs -&gt; unit&#xA;override this.OnEnter : EventArgs -&gt; unit" Usage="control.OnEnter e" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnEnter(EventArgs ^ e);" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnEnter(EventArgs ^ e);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="protected internal virtual void OnEnter (EventArgs e);" FrameworkAlternate="windowsdesktop-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void OnEnter(class System.EventArgs e) cil managed" FrameworkAlternate="windowsdesktop-9.0" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Sub OnEnter (e As EventArgs)" FrameworkAlternate="windowsdesktop-9.0" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void OnEnter(EventArgs ^ e);" FrameworkAlternate="windowsdesktop-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Windows.Forms</AssemblyName>
@@ -13129,12 +13332,16 @@ MyControl.Font = New Font(MyControl.Font, _
       </Docs>
     </Member>
     <Member MemberName="OnLeave">
-      <MemberSignature Language="C#" Value="protected virtual void OnLeave (EventArgs e);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnLeave(class System.EventArgs e) cil managed" />
+      <MemberSignature Language="C#" Value="protected virtual void OnLeave (EventArgs e);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnLeave(class System.EventArgs e) cil managed" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberSignature Language="DocId" Value="M:System.Windows.Forms.Control.OnLeave(System.EventArgs)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnLeave (e As EventArgs)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub OnLeave (e As EventArgs)" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberSignature Language="F#" Value="abstract member OnLeave : EventArgs -&gt; unit&#xA;override this.OnLeave : EventArgs -&gt; unit" Usage="control.OnLeave e" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnLeave(EventArgs ^ e);" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void OnLeave(EventArgs ^ e);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="protected internal virtual void OnLeave (EventArgs e);" FrameworkAlternate="windowsdesktop-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance void OnLeave(class System.EventArgs e) cil managed" FrameworkAlternate="windowsdesktop-9.0" />
+      <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Sub OnLeave (e As EventArgs)" FrameworkAlternate="windowsdesktop-9.0" />
+      <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual void OnLeave(EventArgs ^ e);" FrameworkAlternate="windowsdesktop-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Windows.Forms</AssemblyName>
@@ -17682,7 +17889,7 @@ if (CanSelect && IsMnemonic(charCode, MyControl.Text) {
         <param name="deviceDpiOld">The DPI value prior to the change.</param>
         <param name="deviceDpiNew">The DPI value after the change.</param>
         <summary>Provides constants for rescaling the control when a DPI change occurs.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>This method is an opportunity to rescale any constant sizes, glyphs or bitmaps before re-painting.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ResetBackColor">
@@ -19659,7 +19866,7 @@ The following code example selects the specified <xref:System.Windows.Forms.Cont
         <block subset="none" type="overrides">
           <para>When overriding <see cref="M:System.Windows.Forms.Control.SetClientSizeCore(System.Int32,System.Int32)" /> in a derived class, be sure to call the base class's <see cref="M:System.Windows.Forms.Control.SetClientSizeCore(System.Int32,System.Int32)" /> method so that the <see cref="P:System.Windows.Forms.Control.ClientSize" /> property is adjusted.
 
- For more information about drawing on controls, see [Rendering a Windows Forms Control](/dotnet/framework/winforms/controls/rendering-a-windows-forms-control).</para>
+ For more information about drawing on controls, see <see href="/dotnet/framework/winforms/controls/rendering-a-windows-forms-control">Rendering a Windows Forms Control</see>.</para>
         </block>
         <altmember cref="P:System.Windows.Forms.Control.ClientSize" />
       </Docs>
