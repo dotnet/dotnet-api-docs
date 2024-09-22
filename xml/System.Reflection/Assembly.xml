@@ -68,6 +68,7 @@
     <TypeForwarding From="System.Reflection" FromVersion="4.2.0.0" To="System.Runtime" ToVersion="4.2.0.0" FrameworkAlternate="netcore-2.0" />
     <TypeForwarding From="System.Reflection" FromVersion="4.2.1.0" To="System.Runtime" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0" />
     <TypeForwarding From="System.Reflection" FromVersion="4.2.2.0" To="System.Runtime" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
+    <TypeForwarding From="System.Reflection" FromVersion="4.1.1.0" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -1588,12 +1589,15 @@ In .NET 5 and later versions, for bundled assemblies, this property throws an ex
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets the process executable in the default application domain. In other application domains, this is the first executable that was executed by <see cref="M:System.AppDomain.ExecuteAssembly(System.String)" />.</summary>
-        <returns>The assembly that is the process executable in the default application domain, or the first executable that was executed by <see cref="M:System.AppDomain.ExecuteAssembly(System.String)" />. Can return <see langword="null" /> when called from unmanaged code.</returns>
+        <summary>Gets the entry assembly for the running application.</summary>
+        <returns>The entry assembly for the running application. Can return <see langword="null" /> when called from unmanaged code.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+ **.NET Framework only:** In the default application domain, this method returns the process executable. In other application domains, this method returns the first executable that was executed by <xref:System.AppDomain.ExecuteAssembly%2A>.
+
  The <xref:System.Reflection.Assembly.GetEntryAssembly%2A> method can return `null` when a managed assembly has been loaded from an unmanaged application. For example, if an unmanaged application creates an instance of a COM component written in C#, a call to the <xref:System.Reflection.Assembly.GetEntryAssembly%2A> method from the C# component returns null, because the entry point for the process was unmanaged code rather than a managed assembly.
 
  ]]></format>
@@ -2377,7 +2381,7 @@ In .NET 5 and later versions, for bundled assemblies, this method throws an exce
         <exception cref="T:System.ArgumentException">The <paramref name="name" /> parameter is an empty string ("").</exception>
         <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.
 
-Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.IO.IOException" />, instead.
+Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://learn.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.IO.IOException" />, instead.
         </exception>
         <exception cref="T:System.IO.FileNotFoundException">
           <paramref name="name" /> was not found.</exception>
@@ -3227,7 +3231,7 @@ Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Win
 
  The current assembly was loaded into the reflection-only context, and <paramref name="name" /> requires a dependent assembly that was not preloaded.
 
-Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.IO.IOException" />, instead.
+Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://learn.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.IO.IOException" />, instead.
         </exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="typeName" /> requires a dependent assembly, but the file is not a valid assembly for the currently loaded runtime.
@@ -3897,7 +3901,10 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
       <Docs>
         <summary>Gets a value that indicates whether the current assembly is loaded with full trust.</summary>
         <value>
-          <see langword="true" /> if the current assembly is loaded with full trust; otherwise, <see langword="false" />.</value>
+          .NET Framework only: <see langword="true" /> if the current assembly is loaded with full trust; otherwise, <see langword="false" />.
+
+          .NET Core and .NET 5+: <see langword="true" /> in all cases.
+        </value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -4040,13 +4047,15 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name and the first assembly that matches the simple name has a different version, culture, or public key token. The loader does not continue probing for other assemblies that match the simple name. Starting with .NET Framework 4, because execution of code in remote assemblies is disabled by default, a <xref:System.IO.FileLoadException> is also thrown if `assemblyRef` specifies a remote assembly. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+ <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name and the first assembly that matches the simple name has a different version, culture, or public key token. The loader does not continue probing for other assemblies that match the simple name.
+
+  **.NET Framework only:** See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
 > [!NOTE]
->  Do not use an <xref:System.Reflection.AssemblyName> with only the <xref:System.Reflection.AssemblyName.CodeBase%2A> property set. The <xref:System.Reflection.AssemblyName.CodeBase%2A> property does not supply any elements of the assembly identity (such as name or version), so loading does not occur according to load-by-identity rules, as you would expect from the <xref:System.Reflection.Assembly.Load%2A> method. Instead, the assembly is loaded using load-from rules. For information about the disadvantages of using the load-from context, see the <xref:System.Reflection.Assembly.LoadFrom%2A?displayProperty=nameWithType> method overload or [Best Practices for Assembly Loading](/dotnet/framework/deployment/best-practices-for-assembly-loading).
+> **.NET Framework only:** Do not use an <xref:System.Reflection.AssemblyName> with only the <xref:System.Reflection.AssemblyName.CodeBase%2A> property set. The <xref:System.Reflection.AssemblyName.CodeBase%2A> property does not supply any elements of the assembly identity (such as name or version), so loading does not occur according to load-by-identity rules, as you would expect from the <xref:System.Reflection.Assembly.Load%2A> method. Instead, the assembly is loaded using load-from rules. For information about the disadvantages of using the load-from context, see the <xref:System.Reflection.Assembly.LoadFrom%2A?displayProperty=nameWithType> method overload or [Best Practices for Assembly Loading](/dotnet/framework/deployment/best-practices-for-assembly-loading).
 
 > [!NOTE]
->  If both the <xref:System.Reflection.AssemblyName.Name%2A?displayProperty=nameWithType> property and the <xref:System.Reflection.AssemblyName.CodeBase%2A?displayProperty=nameWithType> property are set, the first attempt to load the assembly uses the display name (including version, culture, and so on, as returned by the <xref:System.Reflection.Assembly.FullName%2A?displayProperty=nameWithType> property). If the file is not found, <xref:System.Reflection.AssemblyName.CodeBase%2A> is used to search for the assembly. If the assembly is found using <xref:System.Reflection.AssemblyName.CodeBase%2A>, the display name is matched against the assembly. If the match fails, a <xref:System.IO.FileLoadException> is thrown.
+> **.NET Framework only:** If both the <xref:System.Reflection.AssemblyName.Name%2A?displayProperty=nameWithType> property and the <xref:System.Reflection.AssemblyName.CodeBase%2A?displayProperty=nameWithType> property are set, the first attempt to load the assembly uses the display name (including version, culture, and so on, as returned by the <xref:System.Reflection.Assembly.FullName%2A?displayProperty=nameWithType> property). If the file is not found, <xref:System.Reflection.AssemblyName.CodeBase%2A> is used to search for the assembly. If the assembly is found using <xref:System.Reflection.AssemblyName.CodeBase%2A>, the display name is matched against the assembly. If the match fails, a <xref:System.IO.FileLoadException> is thrown.
 
 
 
@@ -4066,9 +4075,9 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
 
 -or-
 
-<paramref name="assemblyRef" /> specifies a remote assembly, but the ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.
+.NET Framework only: <paramref name="assemblyRef" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.
 
-Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://docs.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.IO.IOException" />, instead.
+Note: In <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for Windows Store apps</see> or the <see href="https://learn.microsoft.com/dotnet/standard/cross-platform/cross-platform-development-with-the-portable-class-library">Portable Class Library</see>, catch the base class exception, <see cref="T:System.IO.IOException" />, instead.
         </exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyRef" /> is not a valid assembly for the currently loaded runtime.
@@ -4297,7 +4306,9 @@ To load the correct assembly, it's recommended to call the `Load` method by pass
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name, and the first assembly that matches the simple name has a different version, culture, or public key token. The loader does not continue probing for other assemblies that match the simple name.  Starting with .NET Framework 4, because execution of code in remote assemblies is disabled by default, a <xref:System.IO.FileLoadException> is also thrown if `assemblyRef` specifies a remote assembly. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+ <xref:System.IO.FileLoadException> is thrown if `assemblyRef` specifies the full assembly name, and the first assembly that matches the simple name has a different version, culture, or public key token. The loader does not continue probing for other assemblies that match the simple name.
+
+ See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
 > [!NOTE]
 >  Do not use an <xref:System.Reflection.AssemblyName> with only the <xref:System.Reflection.AssemblyName.CodeBase%2A> property set. The <xref:System.Reflection.AssemblyName.CodeBase%2A> property does not supply any elements of the assembly identity (such as name or version), so loading does not occur according to load-by-identity rules, as you would expect from the <xref:System.Reflection.Assembly.Load%2A> method. Instead, the assembly is loaded using load-from rules. For information about the disadvantages of using the load-from context, see the <xref:System.Reflection.Assembly.LoadFrom%2A?displayProperty=nameWithType> method overload or [Best Practices for Assembly Loading](/dotnet/framework/deployment/best-practices-for-assembly-loading).
@@ -4330,7 +4341,7 @@ To load the correct assembly, it's recommended to call the `Load` method by pass
 
 -or-
 
-<paramref name="assemblyRef" /> specifies a remote assembly, but the ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+<paramref name="assemblyRef" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <altmember cref="T:System.Security.Policy.Evidence" />
         <related type="Article" href="/dotnet/framework/deployment/how-the-runtime-locates-assemblies">How the Runtime Locates Assemblies</related>
       </Docs>
@@ -4625,7 +4636,7 @@ The assembly is loaded using the supplied evidence. The raw bytes representing t
 ## Remarks
  Use the <xref:System.Reflection.Assembly.LoadFile%2A> method to load and examine assemblies that have the same identity, but are located in different paths. <xref:System.Reflection.Assembly.LoadFile%2A> does not load files into the load-from  context, and does not resolve dependencies using the load path, as the <xref:System.Reflection.Assembly.LoadFrom%2A> method does. <xref:System.Reflection.Assembly.LoadFile%2A> is useful in this limited scenario because <xref:System.Reflection.Assembly.LoadFrom%2A> cannot be used to load assemblies that have the same identities but different paths; it will load only the first such assembly.
 
-Starting with .NET Framework 4, if `path` specifies an assembly in a remote location, assembly loading is disabled by default, and the `LoadFile` method throws a <xref:System.IO.FileLoadException>. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+ **.NET Framework only:** See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
  ]]></format>
         </remarks>
@@ -4635,7 +4646,7 @@ Starting with .NET Framework 4, if `path` specifies an assembly in a remote loca
 
 -or-
 
-The ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+.NET Framework only: <paramref name="path" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The <paramref name="path" /> parameter is an empty string ("") or does not exist.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="path" /> is not a valid assembly for the currently loaded runtime.
@@ -4693,7 +4704,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 ## Remarks
  Use the <xref:System.Reflection.Assembly.LoadFile%2A> method to load and examine assemblies that have the same identity, but are located in different paths. <xref:System.Reflection.Assembly.LoadFile%2A> does not load files into the <xref:System.Reflection.Assembly.LoadFrom%2A> context, and does not resolve dependencies using the load path, as the <xref:System.Reflection.Assembly.LoadFrom%2A> method does. <xref:System.Reflection.Assembly.LoadFile%2A> is useful in this limited scenario because <xref:System.Reflection.Assembly.LoadFrom%2A> cannot be used to load assemblies that have the same identities but different paths; it will load only the first such assembly.
 
-Starting with .NET Framework 4, if `path` specifies an assembly in a remote location, assembly loading is disabled by default, and the `LoadFile` method throws a <xref:System.IO.FileLoadException>. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
  ]]></format>
         </remarks>
@@ -4704,7 +4715,7 @@ Starting with .NET Framework 4, if `path` specifies an assembly in a remote loca
 
 -or-
 
-The ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+<paramref name="path" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="path" /> is not a valid assembly for the currently loaded runtime.
         </exception>
@@ -4725,11 +4736,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 ## Remarks
 
-Starting with .NET Framework 4, the ability to execute code in assemblies loaded from remote locations is disabled by default, and the call to the `LoadFrom` method throws a <xref:System.IO.FileLoadException>. To load the assembly and execute its code, you must either:
-
-- Explicitly create a sandbox for the assembly. (See [How to: Run Partially Trusted Code in a Sandbox](/dotnet/framework/misc/how-to-run-partially-trusted-code-in-a-sandbox).)
-
-- Run the assembly's code in full trust by setting the `enabled` attribute of the [`<loadFromRemoteSources>` configuration element](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) to `true`. For more information, see the [`<loadFromRemoteSources>` configuration element](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) article.
+**.NET Framework only:** See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
        ]]></format>
         </remarks>
@@ -4800,19 +4807,17 @@ Starting with .NET Framework 4, the ability to execute code in assemblies loaded
 
  `assemblyFile` may be absolute or relative to the current directory.
 
- Assemblies can be loaded into one of three contexts, or can be loaded without context:
+ **.NET Framework only:** Assemblies can be loaded into one of three contexts, or can be loaded without context:
 
 -   The load context contains assemblies found by probing: in the GAC, in a host assembly store if the runtime is hosted, or in the <xref:System.AppDomainSetup.ApplicationBase%2A> and <xref:System.AppDomainSetup.PrivateBinPath%2A> of the application domain. Most overloads of the <xref:System.Reflection.Assembly.Load%2A> method load assemblies into this context.
 
--   The load-from context contains assemblies for which the user provided a path not included in the directories searched by probing. <xref:System.Reflection.Assembly.LoadFrom%2A>, <xref:System.AppDomain.CreateInstanceFrom%2A>, and <xref:System.AppDomain.ExecuteAssembly%2A> are examples of methods that load by path.
+-   The load-from context contains assemblies for which the user provided a path not included in the directories searched by probing. It also allows dependencies on that path to be found and loaded because the path information is maintained by the context. <xref:System.Reflection.Assembly.LoadFrom%2A>, <xref:System.AppDomain.CreateInstanceFrom%2A>, and <xref:System.AppDomain.ExecuteAssembly%2A> are examples of methods that load by path.
 
-    Starting with .NET Framework 4, if the URI of `assemblyFile` specifies a remote location, assembly loading is disabled by default, and the `LoadFrom` method throws a <xref:System.IO.FileLoadException>. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+    See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
 -   The reflection-only context contains assemblies loaded with the <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom%2A> methods; code in these contexts cannot be executed.
 
 -   If the user generated or found the assembly, it is not in any context. This applies to assemblies loaded using overloads of the <xref:System.Reflection.Assembly.Load%2A> method that specify a byte array containing an assembly, and to transient dynamic assemblies created with reflection emit and not saved to disk.
-
- The load-from context allows an assembly to be loaded from a path not included in probing, and yet allows dependencies on that path to be found and loaded because the path information is maintained by the context.
 
  The <xref:System.Reflection.Assembly.LoadFrom%2A> method has the following disadvantages. Consider using <xref:System.Reflection.Assembly.Load%2A> instead.
 
@@ -4849,7 +4854,7 @@ Starting with .NET Framework 4, the ability to execute code in assemblies loaded
 
 -or-
 
-The ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+.NET Framework only: <paramref name="assemblyFile" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime; for example, a 32-bit assembly in a 64-bit process.
         </exception>
@@ -4920,7 +4925,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 -   The load-from context contains assemblies for which the user provided a path not included in the directories searched by probing. <xref:System.Reflection.Assembly.LoadFrom%2A>, <xref:System.AppDomain.CreateInstanceFrom%2A>, and <xref:System.AppDomain.ExecuteAssembly%2A> are examples of methods that load by path.
 
-    Starting with .NET Framework 4, if the URI of `assemblyFile` specifies a remote location, assembly loading is disabled by default, and the `LoadFrom` method throws a <xref:System.IO.FileLoadException>. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+    See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
 -   The reflection-only context contains assemblies loaded with the <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom%2A> methods; code in these contexts cannot be executed.
 
@@ -4966,7 +4971,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 -or-
 
-The ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+<paramref name="assemblyFile" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime; for example, a 32-bit assembly in a 64-bit process.
         </exception>
@@ -5014,6 +5019,10 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Types and members the loaded assembly depends on might be removed")&gt;]</AttributeName>
         </Attribute>
+        <Attribute FrameworkAlternate="net-9.0">
+          <AttributeName Language="C#">[System.Obsolete("LoadFrom with a custom AssemblyHashAlgorithm is obsolete. Use overloads without an AssemblyHashAlgorithm.", DiagnosticId="SYSLIB0056", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("LoadFrom with a custom AssemblyHashAlgorithm is obsolete. Use overloads without an AssemblyHashAlgorithm.", DiagnosticId="SYSLIB0056", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
+        </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
           <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
@@ -5044,6 +5053,9 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+ In .NET Core and .NET 5+, this method throws <xref:System.NotSupportedException> when called. Use <xref:System.Reflection.Assembly.LoadFrom%28System.String%29> instead.
+
  The `assemblyFile` parameter must refer to a URI without escape characters. This method supplies escape characters for all invalid characters in the URI.
 
 > [!NOTE]
@@ -5057,7 +5069,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 -   The load-from context contains assemblies for which the user provided a path that is not included in probing. <xref:System.Reflection.Assembly.LoadFrom%2A>, <xref:System.AppDomain.CreateInstanceFrom%2A>, and <xref:System.AppDomain.ExecuteAssembly%2A> are examples of methods that load by path.
 
-    Starting with .NET Framework 4, if the URI of `assemblyFile` specifies a remote location, assembly loading is disabled by default, and the `LoadFrom` method throws a <xref:System.IO.FileLoadException>. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+    See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
 -   The reflection-only context contains assemblies loaded with the <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom%2A> methods; code in these contexts cannot be executed.
 
@@ -5081,6 +5093,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.NotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
@@ -5089,7 +5102,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 -or-
 
-The ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+<paramref name="assemblyFile" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime; for example, a 32-bit assembly in a 64-bit process.
         </exception>
@@ -5164,7 +5177,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 -   The load-from context contains assemblies for which the user provided a path not included in the directories searched by probing. <xref:System.Reflection.Assembly.LoadFrom%2A>, <xref:System.AppDomain.CreateInstanceFrom%2A>, and <xref:System.AppDomain.ExecuteAssembly%2A> are examples of methods that load by path.
 
-    Starting with .NET Framework 4, if the URI of `assemblyFile` specifies a remote location, assembly loading is disabled by default, and the `LoadFrom` method throws a <xref:System.IO.FileLoadException>. To enable execution of code loaded from remote locations, you can use the [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) configuration element.
+    See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
 
 -   The reflection-only context contains assemblies loaded with the <xref:System.Reflection.Assembly.ReflectionOnlyLoad%2A> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom%2A> methods; code in these contexts cannot be executed.
 
@@ -5210,7 +5223,7 @@ The ability to execute code in remote assemblies is disabled. See <see href="htt
 
 -or-
 
-The ability to execute code in remote assemblies is disabled. See <see href="https://docs.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>. </exception>
+<paramref name="assemblyFile" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime; for example, a 32-bit assembly in a 64-bit process.
         </exception>
@@ -6318,14 +6331,54 @@ In .NET 5 and later versions, for bundled assemblies, the value returned is an e
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- By default, assemblies that you compile with the .NET Framework 4 have [level 2](/dotnet/framework/misc/security-transparent-code-level-2) transparency, although you can explicitly make them [level 1](/dotnet/framework/misc/security-transparent-code-level-1) instead. Assemblies that were compiled with earlier versions of the .NET Framework have level 1 transparency.
-
- See [Security Changes](/dotnet/framework/security/security-changes).
+ **.NET Framework only:** By default, assemblies that you compile with the .NET Framework 4 have [level 2](/dotnet/framework/misc/security-transparent-code-level-2) transparency, although you can explicitly make them [level 1](/dotnet/framework/misc/security-transparent-code-level-1) instead. Assemblies that were compiled with earlier versions of the .NET Framework have level 1 transparency. See [Security Changes](/dotnet/framework/security/security-changes).
 
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/framework/misc/security-transparent-code">Security-Transparent Code</related>
         <related type="Article" href="/dotnet/framework/security/security-changes">Security Changes in the .NET Framework 4</related>
+      </Docs>
+    </Member>
+    <Member MemberName="SetEntryAssembly">
+      <MemberSignature Language="C#" Value="public static void SetEntryAssembly (System.Reflection.Assembly? assembly);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void SetEntryAssembly(class System.Reflection.Assembly assembly) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.Assembly.SetEntryAssembly(System.Reflection.Assembly)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub SetEntryAssembly (assembly As Assembly)" />
+      <MemberSignature Language="F#" Value="static member SetEntryAssembly : System.Reflection.Assembly -&gt; unit" Usage="System.Reflection.Assembly.SetEntryAssembly assembly" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void SetEntryAssembly(System::Reflection::Assembly ^ assembly);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="assembly" Type="System.Reflection.Assembly" Index="0" FrameworkAlternate="net-9.0" />
+      </Parameters>
+      <Docs>
+        <param name="assembly">Assembly object that represents the application's new entry assembly.</param>
+        <summary>Sets the application's entry assembly to the provided assembly object.</summary>
+        <remarks>
+          <para>The assembly passed to this function has to be a runtime defined Assembly</para>
+          <para>type object. Otherwise, an exception will be thrown.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Reflection.ICustomAttributeProvider.GetCustomAttributes">

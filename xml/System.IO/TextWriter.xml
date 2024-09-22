@@ -68,6 +68,7 @@
     <TypeForwarding From="System.IO" FromVersion="4.2.0.0" To="System.Runtime.Extensions" ToVersion="4.2.0.0" FrameworkAlternate="netcore-2.0" />
     <TypeForwarding From="System.IO" FromVersion="4.2.1.0" To="System.Runtime.Extensions" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0" />
     <TypeForwarding From="System.IO" FromVersion="4.2.2.0" To="System.Runtime.Extensions" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
+    <TypeForwarding From="System.IO" FromVersion="4.1.1.0" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -438,10 +439,16 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="writers">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="writers">The <see cref="T:System.IO.TextWriter" /> instances to which all operations should be broadcast (multiplexed).</param>
+        <summary>Creates an instance of <see cref="T:System.IO.TextWriter" /> that writes supplied inputs to each of the writers in <paramref name="writers" />.</summary>
+        <returns>An instance of <see cref="T:System.IO.TextWriter" /> that writes supplied inputs to each of the writers in <paramref name="writers" /></returns>
+        <remarks>
+          <para>The resulting instance will delegate each operation to each of the writers in <paramref name="writers" />. For example, calling <see cref="M:System.IO.TextWriter.Write(System.Char)" /> will write the specified char to each writer, one after the other. The writers will be written to in the same order as they are specified in <paramref name="writers" />. An exception from the operation on one writer will prevent the operation from being performed on subsequent writers.</para>
+          <para>
+            <see cref="P:System.IO.TextWriter.Encoding" /> and <see cref="P:System.IO.TextWriter.FormatProvider" /> will return the corresponding object from first writer in <paramref name="writers" />.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="writers" /> is <see langword="null" /> or it contains a <see langword="null" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -579,9 +586,9 @@
         </remarks>
         <block subset="none" type="overrides">
           <para>
-            <see cref="M:System.IO.TextWriter.Dispose(System.Boolean)" /> can be called multiple times by other objects. When overriding this method, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement this method, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).
+            <see cref="M:System.IO.TextWriter.Dispose(System.Boolean)" /> can be called multiple times by other objects. When overriding this method, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement this method, see <see href="/dotnet/standard/garbage-collection/implementing-dispose">Implementing a Dispose Method</see>.
 
- For more information about <see cref="M:System.IDisposable.Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).</para>
+ For more information about <see cref="M:System.IDisposable.Dispose" /> and <see cref="M:System.Object.Finalize" />, see <see href="/dotnet/standard/garbage-collection/unmanaged">Cleaning Up Unmanaged Resources</see>.</para>
         </block>
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
@@ -2413,6 +2420,66 @@ This method is equivalent to `Write(stringBuilder.ToString())`, but it uses the 
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
         <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+      </Docs>
+    </Member>
+    <Member MemberName="Write">
+      <MemberSignature Language="C#" Value="public virtual void Write (string format, scoped ReadOnlySpan&lt;object?&gt; arg);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Write(string format, valuetype System.ReadOnlySpan`1&lt;object&gt; arg) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.TextWriter.Write(System.String,System.ReadOnlySpan{System.Object})" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub Write (format As String, arg As ReadOnlySpan(Of Object))" />
+      <MemberSignature Language="F#" Value="abstract member Write : string * ReadOnlySpan&lt;obj&gt; -&gt; unit&#xA;override this.Write : string * ReadOnlySpan&lt;obj&gt; -&gt; unit" Usage="textWriter.Write (format, arg)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void Write(System::String ^ format, ReadOnlySpan&lt;System::Object ^&gt; arg);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.IO</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="format" Type="System.String" Index="0" FrameworkAlternate="net-9.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("CompositeFormat")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("CompositeFormat")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="arg" Type="System.ReadOnlySpan&lt;System.Object&gt;" Index="1" FrameworkAlternate="net-9.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })&gt;]</AttributeName>
+            </Attribute>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ParamCollection]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ParamCollection&gt;]</AttributeName>
+            </Attribute>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="format">A composite format string.</param>
+        <param name="arg">An object span that contains zero or more objects to format and write.</param>
+        <summary>Writes a formatted string to the text stream, using the same semantics as <see cref="M:System.String.Format(System.String,System.ReadOnlySpan{System.Object})" />.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -4510,6 +4577,66 @@ For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/commo
         <related type="Article" href="/dotnet/standard/io/">File and Stream I/O</related>
         <related type="Article" href="/dotnet/standard/io/how-to-read-text-from-a-file">How to: Read Text from a File</related>
         <related type="Article" href="/dotnet/standard/io/how-to-write-text-to-a-file">How to: Write Text to a File</related>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteLine">
+      <MemberSignature Language="C#" Value="public virtual void WriteLine (string format, scoped ReadOnlySpan&lt;object?&gt; arg);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void WriteLine(string format, valuetype System.ReadOnlySpan`1&lt;object&gt; arg) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.TextWriter.WriteLine(System.String,System.ReadOnlySpan{System.Object})" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Sub WriteLine (format As String, arg As ReadOnlySpan(Of Object))" />
+      <MemberSignature Language="F#" Value="abstract member WriteLine : string * ReadOnlySpan&lt;obj&gt; -&gt; unit&#xA;override this.WriteLine : string * ReadOnlySpan&lt;obj&gt; -&gt; unit" Usage="textWriter.WriteLine (format, arg)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual void WriteLine(System::String ^ format, ReadOnlySpan&lt;System::Object ^&gt; arg);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.IO</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="format" Type="System.String" Index="0" FrameworkAlternate="net-9.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("CompositeFormat")]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("CompositeFormat")&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="arg" Type="System.ReadOnlySpan&lt;System.Object&gt;" Index="1" FrameworkAlternate="net-9.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })&gt;]</AttributeName>
+            </Attribute>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ParamCollection]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ParamCollection&gt;]</AttributeName>
+            </Attribute>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="format">A composite format string.</param>
+        <param name="arg">An object span that contains zero or more objects to format and write.</param>
+        <summary>Writes out a formatted string and a new line to the text stream, using the same semantics as <see cref="M:System.String.Format(System.String,System.ReadOnlySpan{System.Object})" />.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="WriteLine">

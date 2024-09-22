@@ -210,7 +210,7 @@ class DemoAssemblyBuilder
         // property value.
         object? o2 = null;
         if (t is not null)
-            Activator.CreateInstance(t, new object[] { 5280 });
+            o2 = Activator.CreateInstance(t, new object[] { 5280 });
         Console.WriteLine("o2.Number: {0}", pi?.GetValue(o2, null));
     }
 }

@@ -1,21 +1,18 @@
 ﻿using System;
 
-public class ReplaceTest
+public class Example4
 {
     public static void Main()
     {
-
         //<snippet1>
         string errString = "This docment uses 3 other docments to docment the docmentation";
 
-        Console.WriteLine("The original string is:{0}'{1}'{0}", Environment.NewLine, errString);
+        Console.WriteLine($"The original string is:{Environment.NewLine}'{errString}'{Environment.NewLine}");
 
         // Correct the spelling of "document".
-
         string correctString = errString.Replace("docment", "document");
 
-        Console.WriteLine("After correcting the string, the result is:{0}'{1}'",
-                Environment.NewLine, correctString);
+        Console.WriteLine($"After correcting the string, the result is:{Environment.NewLine}'{correctString}'");
 
         // This code example produces the following output:
         //

@@ -82,6 +82,7 @@ int main(array<String^>^ args)
         }
         // Clean up.
         delete message;
+        delete client;
         client = nullptr;
         Console::WriteLine("Goodbye.");
     }

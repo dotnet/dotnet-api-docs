@@ -43,6 +43,7 @@
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Runtime" FromVersion="4.1.1.1" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -112,6 +113,48 @@
         <summary>Allocates memory that's associated with the <paramref name="type" /> and is freed if and when the <see cref="T:System.Type" /> is unloaded.</summary>
         <returns>The allocated memory.</returns>
         <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Box">
+      <MemberSignature Language="C#" Value="public static object? Box (ref byte target, RuntimeTypeHandle type);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Box(unsigned int8&amp; target, valuetype System.RuntimeTypeHandle type) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.CompilerServices.RuntimeHelpers.Box(System.Byte@,System.RuntimeTypeHandle)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Box (ByRef target As Byte, type As RuntimeTypeHandle) As Object" />
+      <MemberSignature Language="F#" Value="static member Box : byte * RuntimeTypeHandle -&gt; obj" Usage="System.Runtime.CompilerServices.RuntimeHelpers.Box (target, type)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Box(System::Byte % target, RuntimeTypeHandle type);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="target" Type="System.Byte" RefType="ref" Index="0" FrameworkAlternate="net-9.0" />
+        <Parameter Name="type" Type="System.RuntimeTypeHandle" Index="1" FrameworkAlternate="net-9.0" />
+      </Parameters>
+      <Docs>
+        <param name="target">The target data.</param>
+        <param name="type">The type of box to create.</param>
+        <summary>Creates a boxed object of the specified type from the data located at the target reference.</summary>
+        <returns>A boxed object containing the specified data.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">The specified type handle is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The specified type cannot have a boxed instance of itself created.</exception>
+        <exception cref="T:System.NotSupportedException">The passed in type is a byref-like type.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateSpan&lt;T&gt;">
@@ -727,10 +770,10 @@ This method is intended for compiler use rather than use directly in code. `T` m
       <Parameters />
       <Docs>
         <typeparam name="T">The type.</typeparam>
-        <summary>Returns a value that indicates whether the specified type is a reference type or a value type that contains references.</summary>
+        <summary>Returns a value that indicates whether the specified type is a reference type or a value type that contains references or by-refs.</summary>
         <returns>
-          <see langword="true" /> if the given type is reference type or value type that contains references; otherwise, <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+          <see langword="true" /> if the given type is a reference type or a value type that contains references or by-refs; otherwise, <see langword="false" />.</returns>
+        <remarks>Prior to .NET 9, this API doesn't support types that can contain by-refs.</remarks>
       </Docs>
     </Member>
     <Member MemberName="OffsetToStringData">
@@ -1364,6 +1407,38 @@ This method is intended for compiler use rather than use directly in code. `T` m
  ]]></format>
         </remarks>
         <exception cref="T:System.TypeInitializationException">The module constructor throws an exception.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SizeOf">
+      <MemberSignature Language="C#" Value="public static int SizeOf (RuntimeTypeHandle type);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 SizeOf(valuetype System.RuntimeTypeHandle type) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.CompilerServices.RuntimeHelpers.SizeOf(System.RuntimeTypeHandle)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function SizeOf (type As RuntimeTypeHandle) As Integer" />
+      <MemberSignature Language="F#" Value="static member SizeOf : RuntimeTypeHandle -&gt; int" Usage="System.Runtime.CompilerServices.RuntimeHelpers.SizeOf type" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static int SizeOf(RuntimeTypeHandle type);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.RuntimeTypeHandle" Index="0" FrameworkAlternate="net-9.0" />
+      </Parameters>
+      <Docs>
+        <param name="type">The type to get the size of.</param>
+        <summary>Gets the size of an object of the given type.</summary>
+        <returns>The size of instances of the type.</returns>
+        <remarks>This API returns the same value as <see cref="M:System.Runtime.CompilerServices.Unsafe.SizeOf``1" /> for the type that <paramref name="type" /> represents.</remarks>
+        <exception cref="T:System.ArgumentException">The passed-in type is not a valid type to get the size of.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryEnsureSufficientExecutionStack">
