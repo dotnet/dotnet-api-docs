@@ -47,13 +47,13 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The connection string builder lets developers programmatically create syntactically correct connection strings, and parse and rebuild existing connection strings, using properties and methods of the class. The connection string builder provides strongly typed properties corresponding to the known key/value pairs allowed by SQL Server. Developers needing to create connection strings as part of applications can use the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> class to build and modify connection strings. The class also makes it easy to manage connection strings stored in an application configuration file.
+ The connection string builder lets developers programmatically create syntactically correct connection strings, and parse and rebuild existing connection strings, using properties and methods of the class. The connection string builder provides strongly typed properties corresponding to the known key/value pairs allowed by SQL Server. If you need to create connection strings as part of your app, you can use the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> class to build and modify connection strings. The class also makes it easy to manage connection strings stored in an application configuration file.
 
- The <xref:System.Data.SqlClient.SqlConnectionStringBuilder> performs checks for valid key/value pairs. Therefore, you cannot use this class to create invalid connection strings; trying to add invalid pairs will throw an exception. The class maintains a fixed collection of synonyms and can translate from a synonym to the corresponding well-known key name.
+<xref:System.Data.SqlClient.SqlConnectionStringBuilder> performs checks for valid key/value pairs. Therefore, you cannot use this class to create invalid connection strings; trying to add invalid pairs will throw an exception. The class maintains a fixed collection of synonyms and can translate from a synonym to the corresponding well-known key name.
 
- For example, when you use the **Item** property to retrieve a value, you can specify a string that contains any synonym for the key you need. For example, you can specify "Network Address", "addr", or any other acceptable synonym for this key within a connection string when you use any member that requires a string that contains the key name, such as the **Item** property or the <xref:System.Data.SqlClient.SqlConnectionStringBuilder.Remove%2A> method. See the <xref:System.Data.SqlClient.SqlConnection.ConnectionString%2A> property for a full list of acceptable synonyms.
+ For example, when you use the `Item` property to retrieve a value, you can specify a string that contains any synonym for the key you need. For example, you can specify "Network Address", "addr", or any other acceptable synonym for this key within a connection string when you use any member that requires a string that contains the key name, such as the <xref:System.Data.SqlClient.SqlConnectionStringBuilder.Item> property or the <xref:System.Data.SqlClient.SqlConnectionStringBuilder.Remove%2A> method. See the <xref:System.Data.SqlClient.SqlConnection.ConnectionString%2A> property for a full list of acceptable synonyms.
 
- The **Item** property handles tries to insert malicious entries. For example, the following code, using the default Item property (the indexer, in C#) correctly escapes the nested key/value pair:
+ The <xref:System.Data.SqlClient.SqlConnectionStringBuilder.Item> property handles attempts to insert malicious entries. For example, the following code, using the default `Item` property (the indexer, in C#) correctly escapes the nested key/value pair:
 
 ```vb
 Dim builder As New System.Data.SqlClient.SqlConnectionStringBuilder
@@ -70,23 +70,18 @@ builder["Data Source"] = "(local)";
 builder["integrated Security"] = true;
 builder["Initial Catalog"] = "AdventureWorks;NewValue=Bad";
 Console.WriteLine(builder.ConnectionString);
-
 ```
 
- The result is the following connection string that handles the invalid value in a safe manner:
+The result is the following connection string that handles the invalid value in a safe manner:
 
 ```
 Source=(local);Initial Catalog="AdventureWorks;NewValue=Bad";
 Integrated Security=True
 ```
 
-
-
 ## Examples
- The following console application builds connection strings for a SQL Server database. The code uses a <xref:System.Data.SqlClient.SqlConnectionStringBuilder> class to create the connection string, and then passes the <xref:System.Data.Common.DbConnectionStringBuilder.ConnectionString%2A> property of the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> instance to the constructor of the connection class. The example also parses an existing connection string and demonstrates various ways of manipulating the connection string's contents.
 
-> [!NOTE]
->  This example includes a password to demonstrate how <xref:System.Data.SqlClient.SqlConnectionStringBuilder> works with connection strings. In your applications, we recommend that you use Windows Authentication. If you must use a password, do not include a hard-coded password in your application.
+The following console application builds connection strings for a SQL Server database. The code uses the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> class to create the connection string. The example then parses the connection string and demonstrates various ways of manipulating the its contents.
 
  :::code language="csharp" source="~/snippets/csharp/VS_Snippets_ADO.NET/DataWorks SqlConnectionStringBuilder/CS/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks SqlConnectionStringBuilder/VB/source.vb" id="Snippet1":::
@@ -2060,53 +2055,43 @@ False
 
  Because the collection of keys supported by the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> is fixed, every item within the collection has a known default value. The following table lists the keys, and the value for each when the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> is first initialized, or after the <xref:System.Data.SqlClient.SqlConnectionStringBuilder.Remove%2A> method has been called.
 
-|Key|Default value|
-|---------|-------------------|
-|Application Name|".Net SqlClient Data Provider"|
-|Asynchronous Processing|False|
-|AttachDBFilename|Empty string|
-|Connection Timeout|15|
-|Context Connection|False|
-|Current Language|Empty string|
-|Data Source|Empty string|
-|Encrypt|False|
-|Enlist|True|
-|Failover Partner|Empty string|
-|Initial Catalog|Empty string|
-|Integrated Security|False|
-|Load Balance Timeout|0|
-|Max Pool Size|100|
-|Min Pool Size|0|
-|MultipleActiveResultSets|False|
-|Network Library|Empty string|
-|Packet Size|8000|
-|Password|Empty string|
-|Persist Security Info|False|
-|Pooling|True|
-|Replication|False|
-|Transaction Binding|Implicit Unbind|
-|User ID|Empty string|
-|User Instance|False|
-|Workstation ID|Empty string|
-
-
+| Key                      | Default value                  |
+|--------------------------|--------------------------------|
+| Application Name         | ".Net SqlClient Data Provider" |
+| Asynchronous Processing  | False                          |
+| AttachDBFilename         | Empty string                   |
+| Connection Timeout       | 15                             |
+| Context Connection       | False                          |
+| Current Language         | Empty string                   |
+| Data Source              | Empty string                   |
+| Encrypt                  | False                          |
+| Enlist                   | True                           |
+| Failover Partner         | Empty string                   |
+| Initial Catalog          | Empty string                   |
+| Integrated Security      | False                          |
+| Load Balance Timeout     | 0                              |
+| Max Pool Size            | 100                            |
+| Min Pool Size            | 0                              |
+| MultipleActiveResultSets | False                          |
+| Network Library          | Empty string                   |
+| Packet Size              | 8000                           |
+| Password                 | Empty string                   |
+| Persist Security Info    | False                          |
+| Pooling                  | True                           |
+| Replication              | False                          |
+| Transaction Binding      | Implicit Unbind                |
+| User ID                  | Empty string                   |
+| User Instance            | False                          |
+| Workstation ID           | Empty string                   |
 
 ## Examples
- The following example converts an existing connection string from using Windows Authentication to using integrated security. The example works by removing the user name and password from the connection string, and then setting the <xref:System.Data.SqlClient.SqlConnectionStringBuilder.IntegratedSecurity%2A> property of the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> object.
 
-> [!NOTE]
->  This example includes a password to demonstrate how <xref:System.Data.SqlClient.SqlConnectionStringBuilder> works with connection strings. In your applications, we recommend that you use Windows Authentication. If you must use a password, do not include a hard-coded password in your application.
+The following example converts an existing connection string from using SQL Server Authentication to Windows Authentication (integrated security). The example works by removing the user name and password from the connection string, and then setting the <xref:System.Data.SqlClient.SqlConnectionStringBuilder.IntegratedSecurity%2A> property of the <xref:System.Data.SqlClient.SqlConnectionStringBuilder> object.
+
+[!INCLUDE[ROPC warning](~/includes/ropc-warning.md)]
 
  :::code language="csharp" source="~/snippets/csharp/VS_Snippets_ADO.NET/DataWorks SqlConnectionStringBuilder.Remove/CS/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks SqlConnectionStringBuilder.Remove/VB/source.vb" id="Snippet1":::
-
- The example displays the following text in the console window:
-
-```
-Original: Data Source=(local);Initial Catalog=AdventureWorks;User ID=ab;Password= a1Pass@@11
-Modified: Data Source=(local);Initial Catalog=AdventureWorks;Integrated Security=True
-Database = AdventureWorks
-```
 
  ]]></format>
         </remarks>
