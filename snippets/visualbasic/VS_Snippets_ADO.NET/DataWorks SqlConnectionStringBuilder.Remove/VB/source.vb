@@ -1,44 +1,35 @@
-﻿Option Explicit
-Option Strict
-
-Imports System.Data
-' <Snippet1>
+﻿Option Explicit On
+Option Strict On
 Imports System.Data.SqlClient
-    
+
 Module Module1
-  Sub Main()
-    Try
-      Dim connectString As String = _
-       "Data Source=(local);User ID=ab;Password=a1Pass@@11;" & _
-       "Initial Catalog=AdventureWorks"
+    Sub Main()
+        Try
+            ' <Snippet1>
+            Dim connectString As String =
+             "Data Source=(local);User ID=ab;Password=a1Pass@@11;" &
+             "Initial Catalog=AdventureWorks"
 
-      Dim builder As New SqlConnectionStringBuilder(connectString)
-      Console.WriteLine("Original: " & builder.ConnectionString)
+            Dim builder As New SqlConnectionStringBuilder(connectString)
+            Console.WriteLine("Original: " & builder.ConnectionString)
 
-      ' Use the Remove method
-      ' in order to reset the user ID and password back to their
-      ' default (empty string) values.
-      builder.Remove("User ID")
-      builder.Remove("Password")
+            ' Remove the user ID and password.
+            builder.Remove("User ID")
+            builder.Remove("Password")
 
-      ' Turn on integrated security:
-      builder.IntegratedSecurity = True
+            ' Turn on integrated security:
+            builder.IntegratedSecurity = True
 
-      Console.WriteLine("Modified: " & builder.ConnectionString)
+            Console.WriteLine("Modified: " & builder.ConnectionString)
 
-      Using connection As New SqlConnection(builder.ConnectionString)
-        connection.Open()
-        ' Now use the open connection.
-        Console.WriteLine("Database = " & connection.Database)
-      End Using
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        End Try
 
-    Catch ex As Exception
-      Console.WriteLine(ex.Message)
-    End Try
-
-    Console.WriteLine("Press any key to finish.")
-    Console.ReadLine()
-  End Sub
+        ' This code produces the following output:
+        ' Original: Data Source=(local);Initial Catalog=AdventureWorks;User ID=ab;Password=a1Pass@@11
+        ' Modified: Data Source = (local);Initial Catalog=AdventureWorks;Integrated Security=True
+        ' </Snippet1>
+    End Sub
 End Module
-' </Snippet1>
 
