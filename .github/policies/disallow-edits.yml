@@ -1,0 +1,35 @@
+name: GitOps.PullRequestIssueManagement
+description: GitOps.PullRequestIssueManagement primitive
+resource: repository
+
+configuration:
+  resourceManagementConfiguration:
+    eventResponderTasks:
+      - description: Close PRs that modify files whose "source of truth" is not in this repo.
+        if:
+          - payloadType: Pull_Request
+          - isAction:
+              action: Opened
+          - or:
+              - filesMatchPattern:
+                  pattern: xml/System.Composition/*.xml
+              - filesMatchPattern:
+                  pattern: xml/System.Formats.Cbor/*.xml
+              - filesMatchPattern:
+                  pattern: xml/System.Formats.Nrbf/*.xml
+              - filesMatchPattern:
+                  pattern: xml/System.Net.ServerSentEvents/*.xml
+              - filesMatchPattern:
+                  pattern: xml/System.Numerics.Tensors/*.xml
+              - filesMatchPattern:
+                  pattern: xml/System.Speech/*.xml
+              - includesModifiedFile:
+                  file: xml/System.Runtime.Serialization/ISerializationCodeDomSurrogateProvider.xml
+              - includesModifiedFile:
+                  file: xml/System.Runtime.Serialization/ImportOptions.xml
+              - includesModifiedFile:
+                  file: xml/System.Runtime.Serialization/XsdDataContractExporter.xml
+        then:
+          - addReply:
+              reply: "@${issueAuthor} This PR will be closed because it edits files whose 'source of truth' is not in the repo."
+          - closePullRequest
