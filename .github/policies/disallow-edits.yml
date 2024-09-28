@@ -3,56 +3,55 @@ description: GitOps.PullRequestIssueManagement primitive
 resource: repository
 
 configuration:
-    resourceManagementConfiguration:
-        eventResponderTasks:
-            - description: Close PRs that modify files whose "source of truth" is not in this repo.
-              if:
-                  - payloadType: Pull_Request
-                  - isAction:
-                        action: Opened
-                  - or:
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/Microsoft.Extensions*/*
-                              excludedFiles:
-                                  # These files use this repo as source-of-truth.
-                                  - xml/Microsoft.Extensions.FileSystemGlobbing/*
-                                  - xml/Microsoft.Extensions.FileSystemGlobbing.Abstractions/*
-                                  - xml/Microsoft.Extensions.FileSystemGlobbing.Internal*/*
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/System.Composition/*
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/System.Formats.Cbor/*
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/System.Formats.Nrbf/*
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/System.Net.ServerSentEvents/*
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/System.Numerics.Tensors/*
-                        - includesModifiedFiles:
-                              files:
-                                  - xml/System.Speech/*
-                        - includesModifiedFile:
-                              file: xml/System.Runtime.Serialization/ISerializationCodeDomSurrogateProvider.xml
-                        - includesModifiedFile:
-                              file: xml/System.Runtime.Serialization/ImportOptions.xml
-                        - includesModifiedFile:
-                              file: xml/System.Runtime.Serialization/XsdDataContractExporter.xml
-              then:
-                  - addReply:
-                        reply: >-
-                            @${issueAuthor} - This PR edits files whose 'source of truth' for documentation is not in this repo. If you're editing the documentation, please make these updates in the /// comments in the source repo (either dotnet/runtime or dotnet/extensions) instead.
-                  - if:
-                        - not:
-                              - or:
-                                    - activitySenderHasPermission:
-                                          permission: Write
-                                    - activitySenderHasPermission:
-                                          permission: Admin
-                    then:
-                        - closePullRequest
+  resourceManagementConfiguration:
+    eventResponderTasks:
+      - description: Close PRs that modify files whose "source of truth" is not in this repo.
+        if:
+          - payloadType: Pull_Request
+          - isAction:
+              action: Opened
+          - or:
+              - includesModifiedFiles:
+                  files:
+                    - xml/Microsoft.Extensions*/*
+                  excludedFiles:
+                    # These files use this repo as source-of-truth.
+                    - xml/Microsoft.Extensions.FileSystemGlobbing/*
+                    - xml/Microsoft.Extensions.FileSystemGlobbing.Abstractions/*
+                    - xml/Microsoft.Extensions.FileSystemGlobbing.Internal*/*
+              - includesModifiedFiles:
+                  files:
+                    - xml/System.Composition/*
+              - includesModifiedFiles:
+                  files:
+                    - xml/System.Formats.Cbor/*
+              - includesModifiedFiles:
+                  files:
+                    - xml/System.Formats.Nrbf/*
+              - includesModifiedFiles:
+                  files:
+                    - xml/System.Net.ServerSentEvents/*
+              - includesModifiedFiles:
+                  files:
+                    - xml/System.Numerics.Tensors/*
+              - includesModifiedFiles:
+                  files:
+                    - xml/System.Speech/*
+              - includesModifiedFile:
+                  file: xml/System.Runtime.Serialization/ISerializationCodeDomSurrogateProvider.xml
+              - includesModifiedFile:
+                  file: xml/System.Runtime.Serialization/ImportOptions.xml
+              - includesModifiedFile:
+                  file: xml/System.Runtime.Serialization/XsdDataContractExporter.xml
+        then:
+          - addReply:
+              reply: >-
+                @${issueAuthor} - This PR edits files whose 'source of truth' for documentation is not in this repo. If you're editing the documentation, please make these updates in the /// comments in the source repo (either dotnet/runtime or dotnet/extensions) instead.
+            if:
+              - or:
+                  - activitySenderHasPermission:
+                      permission: None
+                  - activitySenderHasPermission:
+                       permission: Read
+            then:
+              - closePullRequest
