@@ -11,7 +11,6 @@ class Program
         builder.Provider = "Microsoft.Jet.Oledb.4.0";
         builder.DataSource = @"C:\Sample.mdb";
         // Set properties using the Item property (the indexer, in C#).
-        builder["Jet OLEDB:Database Password"] = "DataPassword";
         builder["Jet OLEDB:Encrypt Database"] = true;
         builder["Jet OLEDB:System database"] = @"C:\Workgroup.mdw";
 

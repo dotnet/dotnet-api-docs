@@ -8,13 +8,6 @@ namespace SqlCommandCS
 {
     class Program
     {
-        static void Main()
-        {
-            string str = "Data Source=(local);Initial Catalog=Northwind;"
-                + "Integrated Security=SSPI";
-            string qs = "SELECT OrderID, CustomerID FROM dbo.Orders;";
-            CreateCommand(qs, str);
-        }
         // <Snippet1>
         private static void CreateCommand(string queryString,
             string connectionString)

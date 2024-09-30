@@ -6,14 +6,8 @@ using System.Data.OleDb;
 using System.Data.Odbc;
 
 class Program {
-   static void Main(string[] args) {
-
-      // string connectionTypeName = "SqlClient";
-      // string connectionString = @"Data Source=(local);Initial Catalog=AdventureWorks;Integrated Security=SSPI";
-
-      // string connectionTypeName = "Odbc";
-      // string connectionString = @"Driver={SQL Server Native Client 11.0};Server=(local);Database=AdventureWorks2012;Trusted_Connection=Yes";
-
+   static void Main(string[] args)
+   {
       string connectionTypeName = "OleDb";
       string connectionString = @"Provider=SQLNCLI11;Data Source=(local);Initial Catalog=AdventureWorks;Integrated Security=SSPI";
 

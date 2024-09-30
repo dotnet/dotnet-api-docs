@@ -8,15 +8,13 @@ namespace ConBuilderCS
 {
     class Program
     {
-        // <Snippet1>
         static void Main()
         {
+            // <Snippet1>
             DbConnectionStringBuilder builder =
                 new DbConnectionStringBuilder();
             builder.ConnectionString = @"Data Source=c:\MyData\MyDb.mdb";
             builder.Add("Provider", "Microsoft.Jet.Oledb.4.0");
-            builder.Add("Jet OLEDB:Database Password", "*******");
-            builder.Add("Jet OLEDB:System Database",
                 @"c:\MyData\Workgroup.mdb");
             // Set up row-level locking.
             builder.Add("Jet OLEDB:Database Locking Mode", 1);
@@ -26,7 +24,7 @@ namespace ConBuilderCS
             // build any type of connection string using
             // this class.
 
-            // The ConnectionString property may have been
+            // The ConnectionString property might have been
             // formatted by the DbConnectionStringBuilder class.
             OleDbConnection oledbConnect = new
                 OleDbConnection(builder.ConnectionString);
@@ -46,25 +44,13 @@ namespace ConBuilderCS
             // Pass the DbConnectionStringBuilder an existing
             // connection string, and you can retrieve and
             // modify any of the elements.
-            builder.ConnectionString = "server=(local);user id=*******;" +
-                "password=*******;initial catalog=AdventureWorks";
+            builder.ConnectionString = "server=(local);initial catalog=AdventureWorks";
             builder["Server"] = ".";
-            builder.Remove("User ID");
 
-            // Note that calling Remove on a nonexistent item doesn't
-            // throw an exception.
-            builder.Remove("BadItem");
-
-            // Setting the indexer adds the value if
-            // necessary.
+            // Setting the indexer adds the value, if necessary.
             builder["Integrated Security"] = true;
-            builder.Remove("password");
-            builder["User ID"] = "Hello";
             Console.WriteLine(builder.ConnectionString);
-
-            Console.WriteLine("Press Enter to finish.");
-            Console.ReadLine();
+            // </Snippet1>
         }
-        // </Snippet1>
     }
 }
