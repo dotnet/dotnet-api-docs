@@ -35,10 +35,10 @@ Module Module1
                 command.Transaction = transaction
 
                 ' Execute the commands.
-                command.CommandText = _
+                command.CommandText =
                     "Insert into Region (RegionID, RegionDescription) VALUES (100, 'Description')"
                 command.ExecuteNonQuery()
-                command.CommandText = _
+                command.CommandText =
                     "Insert into Region (RegionID, RegionDescription) VALUES (101, 'Description')"
                 command.ExecuteNonQuery()
 
