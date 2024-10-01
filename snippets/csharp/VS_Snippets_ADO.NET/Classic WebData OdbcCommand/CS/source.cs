@@ -4,10 +4,6 @@ using System.Data.Odbc;
 
 class Program
 {
-    static void Main()
-    {
-        //string connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\Samples\\Northwind.mdb";
-    }
     // <Snippet1>
     public void InsertRow(string connectionString, string insertSQL)
     {
@@ -31,6 +27,6 @@ class Program
             // The connection is automatically closed when the
             // code exits the using block.
         }
-        // </Snippet1>
     }
+    // </Snippet1>
 }
