@@ -2,13 +2,6 @@
 
 Module Module1
 
-    Sub Main()
-        Dim connectionString As String
-
-        connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\Samples\Northwind.mdb"
-        Call CreateOdbcConnection(connectionString)
-    End Sub
-
     ' <Snippet1>
     Private Sub CreateOdbcConnection(ByVal connectionString As String)
         Using connection As New OdbcConnection(connectionString)
@@ -20,7 +13,7 @@ Module Module1
 
             ' The connection is automatically closed
             ' at the end of the Using block.
-        End Using 
+        End Using
     End Sub
     ' </Snippet1>
 

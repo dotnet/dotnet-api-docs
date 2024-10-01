@@ -6,13 +6,6 @@ Imports System.Data.Odbc
 
 Module Module1
 
-    Sub Main()
-        Dim connectionString As String
-
-        connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\Samples\Northwind.mdb"
-        Call ExecuteTransaction(connectionString)
-    End Sub
-
     ' <Snippet1>
     Public Sub ExecuteTransaction(ByVal connectionString As String)
 
