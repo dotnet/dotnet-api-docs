@@ -323,9 +323,13 @@ namespace Microsoft.ServiceModel.Samples.Federation
         {
             // Create an array to store the key bytes.
             byte[] key = new byte[keySize/8];
+
             // Create some random bytes.
-            RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-            random.GetNonZeroBytes(key);
+            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+            {
+                random.GetNonZeroBytes(key);
+            }
+
             // Create a BinarySecretSecurityToken from the random bytes and return it.
             return new BinarySecretSecurityToken(key);
         }
@@ -409,9 +413,12 @@ namespace Microsoft.ServiceModel.Samples.Federation
             {
                 // Create an array to store the entropy bytes.
                 stsEntropy = new byte[keySize / 8];
+
                 // Create some random bytes.
-                RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-                random.GetNonZeroBytes(stsEntropy);
+                using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+                {
+                    random.GetNonZeroBytes(stsEntropy);
+                }
                 // Compute the combined key.
                 key = RequestSecurityTokenResponse.ComputeCombinedKey(senderEntropy, stsEntropy, keySize);
             }
@@ -419,9 +426,12 @@ namespace Microsoft.ServiceModel.Samples.Federation
             {
                 // Create an array to store the entropy bytes.
                 key = new byte[keySize / 8];
+
                 // Create some random bytes.
-                RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-                random.GetNonZeroBytes(key);
+                using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+                {
+                    random.GetNonZeroBytes(key);
+                }
             }
 
             // Create a BinarySecretSecurityToken to be the proof token, based on the key material

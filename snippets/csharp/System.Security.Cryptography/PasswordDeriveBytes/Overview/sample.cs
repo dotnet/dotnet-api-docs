@@ -79,11 +79,11 @@ public class PasswordDerivedBytesExample
             randBytes = new byte[1];
         }
 
-        // Create a new RNGCryptoServiceProvider.
-        RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
-
-        // Fill the buffer with random bytes.
-        rand.GetBytes(randBytes);
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        {
+            // Fill the buffer with random bytes.
+            rand.GetBytes(randBytes);
+        }
 
         // return the bytes.
         return randBytes;
