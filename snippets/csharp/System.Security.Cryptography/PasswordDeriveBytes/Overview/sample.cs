@@ -82,7 +82,7 @@ public class PasswordDerivedBytesExample
         using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
         {
             // Fill the buffer with random bytes.
-            rand.GetBytes(randBytes);
+            rng.GetBytes(randBytes);
         }
 
         // return the bytes.
