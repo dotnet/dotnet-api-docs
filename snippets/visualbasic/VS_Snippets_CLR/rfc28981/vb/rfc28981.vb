@@ -22,8 +22,8 @@ Public Class rfc2898test
             Dim pwd1 As String = passwordargs(0)
 
             Dim salt1(8) As Byte
-            Using rngCsp As New RNGCryptoServiceProvider()
-                rngCsp.GetBytes(salt1)
+            Using rng As RandomNumberGenerator = RandomNumberGenerator.Create()
+                rng.GetBytes(salt1)
             End Using
             'data1 can be a string or contents of a file.
             Dim data1 As String = "Some test data"

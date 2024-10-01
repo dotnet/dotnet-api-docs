@@ -320,9 +320,12 @@ Namespace Microsoft.ServiceModel.Samples.Federation
         Protected Shared Function CreateProofToken(ByVal keySize As Integer) As BinarySecretSecurityToken
             ' Create an array to store the key bytes.
             Dim key(keySize / 8 - 1) As Byte
+
             ' Create some random bytes.
-            Dim random As New RNGCryptoServiceProvider()
-            random.GetNonZeroBytes(key)
+            Using random As RandomNumberGenerator = RandomNumberGenerator.Create()
+                random.GetNonZeroBytes(key)
+            End Using
+
             ' Create a BinarySecretSecurityToken from the random bytes and return it.
             Return New BinarySecretSecurityToken(key)
         End Function
@@ -398,18 +401,23 @@ Namespace Microsoft.ServiceModel.Samples.Federation
             If Not (senderEntropy Is Nothing) Then
                 ' Create an array to store the entropy bytes.
                 stsEntropy = New Byte(keySize / 8) {}
+
                 ' Create some random bytes.
-                Dim random As New RNGCryptoServiceProvider()
-                random.GetNonZeroBytes(stsEntropy)
+                Using random As RandomNumberGenerator = RandomNumberGenerator.Create()
+                    random.GetNonZeroBytes(stsEntropy)
+                End Using
+
                 ' Compute the combined key.
                 key = RequestSecurityTokenResponse.ComputeCombinedKey(senderEntropy, stsEntropy, keySize)
                 ' Issuer entropy only...
             Else
                 ' Create an array to store the entropy bytes.
                 key = New Byte(keySize / 8) {}
+
                 ' Create some random bytes.
-                Dim random As New RNGCryptoServiceProvider()
-                random.GetNonZeroBytes(key)
+                Using random As RandomNumberGenerator = RandomNumberGenerator.Create()
+                    random.GetNonZeroBytes(key)
+                End Using
             End If
 
             ' Create a BinarySecretSecurityToken to be the proof token, based on the key material

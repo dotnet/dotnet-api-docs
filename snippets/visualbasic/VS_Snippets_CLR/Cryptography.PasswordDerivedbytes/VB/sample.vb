@@ -71,11 +71,11 @@ Module PasswordDerivedBytesExample
             randBytes = New Byte(0) {}
         End If
 
-        ' Create a new RNGCryptoServiceProvider.
-        Dim rand As New RNGCryptoServiceProvider()
-
-        ' Fill the buffer with random bytes.
-        rand.GetBytes(randBytes)
+        ' Create a new RandomNumberGenerator.
+        Using rand As RandomNumberGenerator = RandomNumberGenerator.Create()
+            ' Fill the buffer with random bytes.
+            rand.GetBytes(randBytes)
+        End Using
 
         ' return the bytes.
         Return randBytes
