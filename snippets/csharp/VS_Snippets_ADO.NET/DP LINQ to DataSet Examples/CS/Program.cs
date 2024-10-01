@@ -1,14 +1,12 @@
 ﻿// <SnippetImportsUsing>
 using System;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.Common;
 using System.Globalization;
-// </SnippetImportsUsing>
+using System.Linq;
 using System.Windows.Forms;
+// </SnippetImportsUsing>
 
 namespace LINQtoDataSetSamples
 {
@@ -2624,8 +2622,7 @@ namespace LINQtoDataSetSamples
                 // Create a new adapter and give it a query to fetch sales order, contact,
                 // address, and product information for sales in the year 2002. Point connection
                 // information to the configuration setting "AdventureWorks".
-                string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks;"
-                    + "Integrated Security=true;";
+                string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks;Integrated Security=true;";
 
                 SqlDataAdapter da = new SqlDataAdapter(
                     "SELECT SalesOrderID, ContactID, OrderDate, OnlineOrderFlag, " +
