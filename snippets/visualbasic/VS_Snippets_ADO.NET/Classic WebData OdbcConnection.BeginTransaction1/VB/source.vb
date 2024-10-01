@@ -6,13 +6,6 @@ Imports System.Data.Odbc
 
 Module Module1
 
-    Sub Main()
-        Dim connectionString As String
-
-        connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\Samples\Northwind.mdb"
-        Call ExecuteTransaction(connectionString)
-    End Sub
-
     ' <Snippet1>
     Public Sub ExecuteTransaction(ByVal connectionString As String)
 
@@ -35,10 +28,10 @@ Module Module1
                 command.Transaction = transaction
 
                 ' Execute the commands.
-                command.CommandText = _
+                command.CommandText =
                     "Insert into Region (RegionID, RegionDescription) VALUES (100, 'Description')"
                 command.ExecuteNonQuery()
-                command.CommandText = _
+                command.CommandText =
                     "Insert into Region (RegionID, RegionDescription) VALUES (101, 'Description')"
                 command.ExecuteNonQuery()
 

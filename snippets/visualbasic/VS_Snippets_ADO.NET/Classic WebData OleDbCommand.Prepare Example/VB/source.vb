@@ -5,13 +5,6 @@ Imports System.Data.OleDb
 
 Module Module1
 
-    Sub Main()
-        Dim connectionString As String = "Provider=sqloledb;Data Source=(local);Initial Catalog=Northwind;" _
-                & "Integrated Security=SSPI"
-        OleDbCommandPrepare(connectionString)
-        Console.ReadLine()
-    End Sub
-
     ' <Snippet1>
     Public Sub OleDbCommandPrepare(ByVal connectionString As String)
 

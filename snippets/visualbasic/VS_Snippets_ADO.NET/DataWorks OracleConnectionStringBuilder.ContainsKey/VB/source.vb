@@ -16,12 +16,6 @@ Module Module1
     ' Keys you have provided return true.
     Console.WriteLine(builder.ContainsKey("Integrated Security"))
 
-    ' Comparison is case insensitive, and synonyms for the 
-    ' keywords are translated to well-known names.
-    ' The following returns True because "PWD" is a 
-    ' synonym for "Password", a valid key.
-    Console.WriteLine(builder.ContainsKey("PWD"))
-
     ' Keys that are valid but have not been set return true.
     Console.WriteLine(builder.ContainsKey("Unicode"))
 
@@ -34,7 +28,7 @@ Module Module1
 
   Private Function GetConnectionString() As String
     ' To avoid storing the connection string in your code,
-    ' you can retrieve it from a configuration file. 
+    ' you can retrieve it from a configuration file.
     Return "Server=OracleDemo;Integrated Security=True"
   End Function
 End Module
