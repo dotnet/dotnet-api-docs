@@ -7,10 +7,6 @@ Imports System.IO
 
 Module Module1
 
-    Sub Main()
-        '       Dim x As String = "Provider=SQLOLEDB;Data Source=(local);Integrated Security=SSPI;Initial Catalog=Northwind"
-    End Sub
-
     ' <Snippet1>
     Public Function GetDataSetFromAdapter( _
         ByVal dataSet As DataSet, ByVal connectionString As String, _

@@ -1,5 +1,4 @@
-﻿' <Snippet1>
-Option Explicit On
+﻿Option Explicit On
 Option Strict On
 
 Imports System.Data
@@ -7,12 +6,7 @@ Imports System.Data.SqlClient
 
 Module Module1
 
-    Sub Main()
-        Dim str As String = "Data Source=(local);Initial Catalog=Northwind;" _
-       & "Integrated Security=SSPI;"
-        ReadOrderData(str)
-    End Sub
-
+    ' <Snippet1>
     Private Sub ReadOrderData(ByVal connectionString As String)
         Dim queryString As String = _
             "SELECT OrderID, CustomerID FROM dbo.Orders;"
@@ -35,8 +29,7 @@ Module Module1
 
     Private Sub ReadSingleRow(ByVal record As IDataRecord)
        Console.WriteLine(String.Format("{0}, {1}", record(0), record(1)))
-
     End Sub
+    ' </Snippet1>
 
 End Module
-' </Snippet1>

@@ -110,9 +110,8 @@ int main()
          // Create a random key using a random number generator. This would be the
          //  secret key shared by sender and receiver.
          array<Byte>^secretkey = gcnew array<Byte>(64);
-         
-         //RNGCryptoServiceProvider is an implementation of a random number generator.
-         RNGCryptoServiceProvider^ rng = gcnew RNGCryptoServiceProvider;
+
+         RandomNumberGenerator^ rng = RandomNumberGenerator::Create();
          
          // The array is now filled with cryptographically strong random bytes.
          rng->GetBytes( secretkey );

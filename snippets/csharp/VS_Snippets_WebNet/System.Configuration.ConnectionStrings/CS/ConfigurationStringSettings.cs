@@ -1,17 +1,12 @@
 ﻿// <Snippet21>
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Configuration;
-using System.Collections;
-using System.Text;
 
 namespace ConfigurationStringSettings
 {
-
     class ConfigurationStringSettings
     {
-
         static void DisplayConnectionStrings()
         {
             // Set the path of the config file.

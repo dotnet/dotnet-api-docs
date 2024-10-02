@@ -3,7 +3,7 @@ Option Strict
 
 Imports System.Data
 ' <Snippet1>
-Imports System.Data.OleDb    
+Imports System.Data.OleDb
 
 Module Module1
   Sub Main()
@@ -11,7 +11,6 @@ Module Module1
     builder.Provider = "Microsoft.Jet.Oledb.4.0"
     builder.DataSource = "C:\Sample.mdb"
     ' Set properties using the Item property.
-    builder.Item("Jet OLEDB:Database Password") = "DataPassword"
     builder.Item("Jet OLEDB:Encrypt Database") = True
 
     ' Because Item is the default property, you can leave out
@@ -25,8 +24,8 @@ Module Module1
     Console.WriteLine(builder.Item("Jet OLEDB:System database"))
     Console.WriteLine(builder("Jet OLEDB:Encrypt Database"))
 
-    ' You can set or retrieve any of the "default" values for the 
-    ' provider, as well, even if you did not set their values. Again, 
+    ' You can set or retrieve any of the "default" values for the
+    ' provider, as well, even if you did not set their values. Again,
     ' explicitly specifying the Item property name is optional.
     Console.WriteLine(builder.Item("Jet OLEDB:Database Locking Mode"))
     Console.WriteLine(builder("Jet OLEDB:Global Partial Bulk Ops"))

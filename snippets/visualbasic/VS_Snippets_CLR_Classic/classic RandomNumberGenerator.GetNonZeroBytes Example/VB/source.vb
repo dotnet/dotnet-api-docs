@@ -8,9 +8,10 @@ Public Class Form1
     Public Sub Method()
 ' <Snippet1>
  Dim random() As Byte = New Byte(100) {}
- 'RNGCryptoServiceProvider is an implementation of an RNG
- Dim rng As New RNGCryptoServiceProvider()
- rng.GetNonZeroBytes(random) ' bytes in random are now random and none are zero
+
+ Using rng As RandomNumberGenerator = RandomNumberGenerator.Create()
+     rng.GetNonZeroBytes(random) ' bytes in random are now random and none are zero
+ End Using
 ' </Snippet1>
     End Sub
 End Class

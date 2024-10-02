@@ -27,8 +27,8 @@ Public Class HMACRIPEMD160example
             ' Create a random key using a random number generator. This would be the
             '  secret key shared by sender and receiver.
             Dim secretkey() As Byte = New [Byte](63) {}
-            'RNGCryptoServiceProvider is an implementation of a random number generator.
-            Using rng As New RNGCryptoServiceProvider()
+
+            Using rng As RandomNumberGenerator = RandomNumberGenerator.Create()
                 ' The array is now filled with cryptographically strong random bytes.
                 rng.GetBytes(secretkey)
 
