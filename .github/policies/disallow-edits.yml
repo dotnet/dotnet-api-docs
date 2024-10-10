@@ -10,158 +10,50 @@ configuration:
           - payloadType: Pull_Request
           - isAction:
               action: Opened
+          - or:
+              - filesMatchPattern:
+                  pattern: xml/Microsoft.Extensions*/*
+                  matchAny: true
+                  excludedFiles:
+                    - xml/Microsoft.Extensions.FileSystemGlobbing/*
+                    - xml/Microsoft.Extensions.FileSystemGlobbing.Abstractions/*
+                    - xml/Microsoft.Extensions.FileSystemGlobbing.Internal*/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Composition/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Formats.Cbor/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Formats.Nrbf/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Net.ServerSentEvents/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Numerics.Tensors/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Speech/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Runtime.Serialization/ISerializationCodeDomSurrogateProvider.xml
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Runtime.Serialization/ImportOptions.xml
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Runtime.Serialization/XsdDataContractExporter.xml
         then:
-          - if:
-              - includesModifiedFile:
-                  file: xml/Microsoft.Extensions*/*
-                    # TODO - These files do use this repo as source-of-truth - how to exclude them?
-                    # - xml/Microsoft.Extensions.FileSystemGlobbing/*
-                    # - xml/Microsoft.Extensions.FileSystemGlobbing.Abstractions/*
-                    # - xml/Microsoft.Extensions.FileSystemGlobbing.Internal*/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'Microsoft.Extensions' in the /// comments in the dotnet/runtime or dotnet/extensions repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Composition/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'System.Composition' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Formats.Cbor/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'System.Formats.Cbor' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Formats.Nrbf/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'System.Formats.Nrbf' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Net.ServerSentEvents/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'System.Net.ServerSentEvents' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Numerics.Tensors/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'System.Numerics.Tensors' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Speech/*
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'System.Speech' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Runtime.Serialization/ISerializationCodeDomSurrogateProvider.xml
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'ISerializationCodeDomSurrogateProvider' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Runtime.Serialization/ImportOptions.xml
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'ImportOptions' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
-          - if:
-              - includesModifiedFile:
-                  file: xml/System.Runtime.Serialization/XsdDataContractExporter.xml
-            then:
-              - addReply:
-                  reply: >-
-                    @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates for 'XsdDataContractExporter' in the /// comments in the dotnet/runtime repo instead.
-              - if:
-                  - or:
-                      - activitySenderHasPermission:
-                          permission: None
-                      - activitySenderHasPermission:
-                          permission: Read
-                then:
-                  - closePullRequest
+            - addReply:
+                reply: >-
+                  @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates in the /// comments in the dotnet/runtime repo (or dotnet/extensions repo) instead.
+            - if:
+                - or:
+                    - activitySenderHasPermission:
+                        permission: None
+                    - activitySenderHasPermission:
+                        permission: Read
+              then:
+                - closePullRequest
