@@ -43,12 +43,25 @@
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="net-8.0;net-9.0;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="ruleSet">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">The buffer containing encoded data.</param>
+        <param name="ruleSet">The encoding constraints to use when interpreting the data.</param>
+        <param name="bytesConsumed">
+          <para>When this method returns, contains the number of bytes from the beginning of <paramref name="source" /> that contributed to the length.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Decodes the data in <paramref name="source" /> as a length value under the specified encoding rules.</para>
+        </summary>
+        <returns>
+          <para>The decoded value of the length, or <see langword="null" /> if the encoded length represents the indefinite length.</para>
+        </returns>
+        <remarks>
+          <para>This method only processes the length portion of an ASN.1/BER Tag-Length-Value triplet, so <paramref name="source" /> needs to have already sliced off the encoded tag.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="ruleSet" /> is not a known <see cref="T:System.Formats.Asn1.AsnEncodingRules" /> value.</exception>
+        <exception cref="T:System.Formats.Asn1.AsnContentException">
+          <paramref name="source" /> does not decode as a length under the specified encoding rules.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadBitString">
@@ -1165,13 +1178,28 @@ The contents are not valid under the current encoding rules.</exception>
         <Parameter Name="bytesConsumed" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="net-8.0;net-9.0;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="ruleSet">To be added.</param>
-        <param name="decodedLength">To be added.</param>
-        <param name="bytesConsumed">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">The buffer containing encoded data.</param>
+        <param name="ruleSet">The encoding constraints to use when interpreting the data.</param>
+        <param name="decodedLength">
+          <para>When this method returns, contains the decoded value of the length, or <see langword="null" /> if the encoded length represents the indefinite length.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <param name="bytesConsumed">
+          <para>When this method returns, contains the number of bytes from the beginning of <paramref name="source" /> that contributed to the length.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Attempts to decode the data in <paramref name="source" /> as a length value under the specified encoding rules.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if the buffer represents a valid length under the specified encoding rules; otherwise, <see langword="false" /></para>
+        </returns>
+        <remarks>
+          <para>This method only processes the length portion of an ASN.1/BER Tag-Length-Value triplet, so <paramref name="source" /> needs to have already sliced off the encoded tag.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="ruleSet" /> is not a known <see cref="T:System.Formats.Asn1.AsnEncodingRules" /> value.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryReadBitString">
