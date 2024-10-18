@@ -21,7 +21,7 @@ class Example
       {
           await task1;
       }
-      catch (UnauthorizedAccessException ae)
+      catch (UnauthorizedAccessException)
       {
           Console.WriteLine("Caught unauthorized access exception-await behavior");
       }
