@@ -20,8 +20,29 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>A delegating chat client that updates or replaces the <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> used by the remainder of the pipeline.</summary>
+    <remarks>
+      <para>
+            The configuration callback is invoked with the caller-supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance. To override the caller-supplied options
+            with a new instance, the callback may simply return that new instance, for example <c>_ =&gt; new ChatOptions() { MaxTokens = 1000 }</c>. To provide
+            a new instance only if the caller-supplied instance is `null`, the callback may conditionally return a new instance, for example
+            <c>options =&gt; options ?? new ChatOptions() { MaxTokens = 1000 }</c>. Any changes to the caller-provided options instance will persist on the
+            original instance, so the callback must take care to only do so when such mutations are acceptable, such as by cloning the original instance
+            and mutating the clone, for example:
+            <c>
+            options =&gt;
+            {
+                var newOptions = options?.Clone() ?? new();
+                newOptions.MaxTokens = 1000;
+                return newOptions;
+            }
+            </c></para>
+      <para>
+            The provided implementation of <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is thread-safe for concurrent use so long as the employed configuration
+            callback is also thread-safe for concurrent requests. If callers employ a shared options instance, care should be taken in the
+            configuration callback, as multiple calls to it may end up running in parallel with the same options instance.
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -48,9 +69,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="innerClient">To be added.</param>
-        <param name="configureOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="innerClient">The inner client.</param>
+        <param name="configureOptions">
+            The delegate to invoke to configure the <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance. It is passed the caller-supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" />
+            instance and should return the configured <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance to use.
+            </param>
+        <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.ConfigureOptionsChatClient" /> class with the specified <paramref name="configureOptions" /> callback.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -87,6 +111,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="CompleteStreamingAsync">
@@ -135,6 +160,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
   </Members>
