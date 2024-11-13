@@ -45,9 +45,9 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="TInput">To be added.</typeparam>
-    <typeparam name="TEmbedding">To be added.</typeparam>
-    <summary>To be added.</summary>
+    <typeparam name="TInput">The type from which embeddings will be generated.</typeparam>
+    <typeparam name="TEmbedding">The type of embeddings to generate.</typeparam>
+    <summary>A delegating embedding generator that caches the results of embedding generation calls.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -67,8 +67,8 @@
         <Parameter Name="innerGenerator" Type="Microsoft.Extensions.AI.IEmbeddingGenerator&lt;TInput,TEmbedding&gt;" />
       </Parameters>
       <Docs>
-        <param name="innerGenerator">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="innerGenerator">The underlying <see cref="T:Microsoft.Extensions.AI.IEmbeddingGenerator`2" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.CachingEmbeddingGenerator`2" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -105,6 +105,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="GetCacheKey">
@@ -134,10 +135,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="value">The <typeparamref name="TInput" /> for which an embedding is being requested.</param>
+        <param name="options">The options to configure the request.</param>
+        <summary>
+            Computes a cache key for the specified call parameters.
+            </summary>
+        <returns>A string that will be used as a cache key.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -167,10 +170,10 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The cache key.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests.</param>
+        <summary>Returns a previously cached <see cref="T:Microsoft.Extensions.AI.Embedding`1" />, if available.</summary>
+        <returns>The previously cached data, if available, otherwise <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -195,11 +198,11 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The cache key.</param>
+        <param name="value">The <typeparamref name="TEmbedding" /> to be stored.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests.</param>
+        <summary>Stores a <typeparamref name="TEmbedding" /> in the underlying cache.</summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the completion of the operation.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

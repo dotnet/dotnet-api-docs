@@ -45,10 +45,34 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="TInput">To be added.</typeparam>
-    <typeparam name="TEmbedding">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="TInput">Specifies the type of the input passed to the generator.</typeparam>
+    <typeparam name="TEmbedding">Specifies the type of the embedding instance produced by the generator.</typeparam>
+    <summary>A delegating embedding generator that updates or replaces the <see cref="T:Microsoft.Extensions.AI.EmbeddingGenerationOptions" /> used by the remainder of the pipeline.</summary>
+    <remarks>
+      <para>
+            The configuration callback is invoked with the caller-supplied <see cref="T:Microsoft.Extensions.AI.EmbeddingGenerationOptions" /> instance. To override the caller-supplied options
+            with a new instance, the callback may simply return that new instance, for example <c>_ =&gt; new EmbeddingGenerationOptions() { Dimensions = 100 }</c>. To provide
+            a new instance only if the caller-supplied instance is <see langword="null" />, the callback may conditionally return a new instance, for example
+            <c>options =&gt; options ?? new EmbeddingGenerationOptions() { Dimensions = 100 }</c>. Any changes to the caller-provided options instance will persist on the
+            original instance, so the callback must take care to only do so when such mutations are acceptable, such as by cloning the original instance
+            and mutating the clone, for example:
+            <c>
+            options =&gt;
+            {
+                var newOptions = options?.Clone() ?? new();
+                newOptions.Dimensions = 100;
+                return newOptions;
+            }
+            </c></para>
+      <para>
+            The callback may return <see langword="null" />, in which case a <see langword="null" /> options will be passed to the next generator in the pipeline.
+            </para>
+      <para>
+            The provided implementation of <see cref="T:Microsoft.Extensions.AI.IEmbeddingGenerator`2" /> is thread-safe for concurrent use so long as the employed configuration
+            callback is also thread-safe for concurrent requests. If callers employ a shared options instance, care should be taken in the
+            configuration callback, as multiple calls to it may end up running in parallel with the same options instance.
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -75,9 +99,15 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="innerGenerator">To be added.</param>
-        <param name="configureOptions">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="innerGenerator">The inner generator.</param>
+        <param name="configureOptions">
+            The delegate to invoke to configure the <see cref="T:Microsoft.Extensions.AI.EmbeddingGenerationOptions" /> instance. It is passed the caller-supplied
+            <see cref="T:Microsoft.Extensions.AI.EmbeddingGenerationOptions" /> instance and should return the configured <see cref="T:Microsoft.Extensions.AI.EmbeddingGenerationOptions" /> instance to use.
+            </param>
+        <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.ConfigureOptionsEmbeddingGenerator`2" /> class with the
+            specified <paramref name="configureOptions" /> callback.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -114,6 +144,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
   </Members>
