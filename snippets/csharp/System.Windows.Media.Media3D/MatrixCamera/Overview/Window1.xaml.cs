@@ -252,13 +252,13 @@ namespace MatrixTransform3DView
             Vector3D convertVector3D = new Vector3D(OffsetXValue, OffsetYValue, OffsetZValue);
             myTranslateTransform3D = new TranslateTransform3D(OffsetXValue, OffsetYValue, OffsetZValue);
             
-            if (addTranslationCheck.IsChecked == false)
+            if (!addTranslationCheck.IsChecked)
             {
                 myprocTransformGroup.Children.Clear();
                 myprocTransformGroup.Children.Add(myTranslateTransform3D);
                 topModelVisual3D.Transform = myprocTransformGroup;
             }
-            if (addTranslationCheck.IsChecked == true)
+            if (addTranslationCheck.IsChecked)
             {
                 myprocTransformGroup.Children.Add(myTranslateTransform3D);
                 topModelVisual3D.Transform = myprocTransformGroup;

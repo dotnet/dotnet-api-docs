@@ -26,7 +26,7 @@ namespace PrintDialog_Sample
 
                 // Display the dialog. This returns true if the user presses the Print button.
                 Nullable<Boolean> print = pDialog.ShowDialog();
-                if (print == true)
+                if (print)
                 {
                     XpsDocument xpsDocument = new XpsDocument("C:\\FixedDocumentSequence.xps", FileAccess.ReadWrite);
                     FixedDocumentSequence fixedDocSeq = xpsDocument.GetFixedDocumentSequence();

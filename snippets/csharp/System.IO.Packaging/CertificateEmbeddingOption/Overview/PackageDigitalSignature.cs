@@ -184,7 +184,7 @@ namespace SDKSample
                 }// end:if (ValidateSignature(package))
 
                 // Display error message if signature validation fails.
-                else // if (ValidateSignatures(package) == false)
+                else // if (!ValidateSignatures(package))
                 {
                     string msg = "Digital signatures in '" + packageFilename +
                         "\n' failed validation.  Unpacking canceled.";

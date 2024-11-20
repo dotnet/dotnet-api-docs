@@ -51,12 +51,12 @@ namespace SDKSample
 			{
 				string s = m.ToString();
 			}
-            if (show == true)
+            if (show)
             {
                 modelGroup.Children.Add(_ambLight);
             }
 
-            if (show == false)
+            if (!show)
             {
 				modelGroup.Children.Remove(_ambLight);
             }
@@ -64,12 +64,12 @@ namespace SDKSample
 
 		public void ShowDirLight(int index, bool show, Model3DGroup modelGroup)
         {
-            if (show == true)
+            if (show)
             {
 				modelGroup.Children.Add(_dirLight[index]);
             }
 
-            if (show == false)
+            if (!show)
             {
 				modelGroup.Children.Remove(_dirLight[index]);
             }
@@ -77,12 +77,12 @@ namespace SDKSample
 
         public void ShowPointLight(int indexer, bool show, Model3DGroup modelGroup)
         {
-            if (show == true)
+            if (show)
             {
                 modelGroup.Children.Add(_ptLight);
             }
 
-            if (show == false)
+            if (!show)
             {
                 modelGroup.Children.Remove(_ptLight);
             }

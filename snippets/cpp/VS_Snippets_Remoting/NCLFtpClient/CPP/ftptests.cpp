@@ -458,7 +458,7 @@ public:
       // Example: ftp://contoso.com/someFile.txt.
       // 
       // The command parameter identifies the command to send to the server.
-      if ( serverUri->ToLower()->StartsWith( Uri::UriSchemeFtp ) == false )
+      if ( !serverUri->ToLower()->StartsWith( Uri::UriSchemeFtp ) )
       {
          return false;
       }

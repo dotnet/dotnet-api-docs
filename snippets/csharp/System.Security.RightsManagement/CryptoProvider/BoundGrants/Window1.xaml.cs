@@ -51,7 +51,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user
             // clicks "Cancel", cancel the File|Open operation.
-            if (dialog.ShowDialog() != true)
+            if (!dialog.ShowDialog())
                 return;
 
             // clicks "OK", load and display the specified file.
@@ -72,7 +72,7 @@ namespace SdkSample
 
             // If the file was successfully opened, show the file name,
             // enable File|Close, and give focus to the Image control.
-            if (opened == true)
+            if (opened)
             {
                 this.Title = "RightsManagedContentViewer SDK Sample - " +
                               Filename(_contentFile);
@@ -264,7 +264,7 @@ namespace SdkSample
                         rightsBlock.Text += "    Until: " + grant.ValidUntil + "\n";
                     }
 
-                    if (cryptoProvider.CanDecrypt == true)
+                    if (cryptoProvider.CanDecrypt)
                         ShowStatus("   Decryption granted.");
                     else
                         ShowStatus("   CANNOT DECRYPT!");

@@ -217,7 +217,7 @@ namespace SDKSample
             saveFileDialog.Filter = "XPS document files (*.xps)|*.xps";
             saveFileDialog.FilterIndex = 1;
 
-            if (saveFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog())
             {   // The user specified a valid path and filename.
                 return saveFileDialog.FileName;
             }

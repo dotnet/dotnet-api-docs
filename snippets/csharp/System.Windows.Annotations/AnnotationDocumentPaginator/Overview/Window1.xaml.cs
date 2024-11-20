@@ -326,7 +326,7 @@ namespace SDKSample
                 return; // DocumentViewer has not been initialized yet.
 
             // If Annotations are disabled, use normal DocuementViewer.Print()
-            if ((menuViewAnnotations.IsChecked==false) || (_annotHelper == null))
+            if (!menuViewAnnotations.IsChecked || (_annotHelper == null))
             {
                 docViewer.Print();
             }

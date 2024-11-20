@@ -251,7 +251,7 @@ namespace QueryableExamples
 
                 // Determine whether any pets over age 1 are also unvaccinated.
                 bool unvaccinated =
-                    pets.AsQueryable().Any(p => p.Age > 1 && p.Vaccinated == false);
+                    pets.AsQueryable().Any(p => p.Age > 1 && !p.Vaccinated);
 
                 Console.WriteLine(
                     "There {0} unvaccinated animals over age one.",
@@ -558,7 +558,7 @@ namespace QueryableExamples
 
                 // Count the number of unvaccinated pets in the array.
                 int numberUnvaccinated =
-                    pets.AsQueryable().Count(p => p.Vaccinated == false);
+                    pets.AsQueryable().Count(p => !p.Vaccinated);
 
                 Console.WriteLine(
                     "There are {0} unvaccinated animals.",

@@ -30,7 +30,7 @@ public partial class Insert : System.Web.UI.Page {
     protected void DetailsView1_DataBound(object sender, EventArgs e) {
 
         var dsc = DetailsView1.FindDataSourceControl() as LinqDataSource;
-        if (dsc == null || dsc.EnableInsert != true)
+        if (dsc == null || !dsc.EnableInsert)
             return;
 
         var mTbl = DetailsView1.FindMetaTable() as MetaTable;

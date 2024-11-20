@@ -207,7 +207,7 @@ namespace SDKSample
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.InitialDirectory = _contentDir;
 
-            if (saveFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog())
             {   // The user specified a valid path and filename.
                 return saveFileDialog.FileName;
             }

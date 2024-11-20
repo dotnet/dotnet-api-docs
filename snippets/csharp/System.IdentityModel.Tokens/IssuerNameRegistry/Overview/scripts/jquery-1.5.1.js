@@ -400,12 +400,12 @@ jQuery.extend({
 	// Handle when the DOM is ready
 	ready: function( wait ) {
 		// A third-party is pushing the ready event forwards
-		if ( wait === true ) {
+		if ( wait ) {
 			jQuery.readyWait--;
 		}
 
 		// Make sure that the DOM is not already loaded
-		if ( !jQuery.readyWait || (wait !== true && !jQuery.isReady) ) {
+		if ( !jQuery.readyWait || (!wait && !jQuery.isReady) ) {
 			// Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
 			if ( !document.body ) {
 				return setTimeout( jQuery.ready, 1 );
@@ -415,7 +415,7 @@ jQuery.extend({
 			jQuery.isReady = true;
 
 			// If a normal DOM Ready event fired, decrement, and wait if need be
-			if ( wait !== true && --jQuery.readyWait > 0 ) {
+			if ( !wait && --jQuery.readyWait > 0 ) {
 				return;
 			}
 
@@ -617,13 +617,13 @@ jQuery.extend({
 		if ( args ) {
 			if ( isObj ) {
 				for ( name in object ) {
-					if ( callback.apply( object[ name ], args ) === false ) {
+					if (! callback.apply( object[ name ], args )) {
 						break;
 					}
 				}
 			} else {
 				for ( ; i < length; ) {
-					if ( callback.apply( object[ i++ ], args ) === false ) {
+					if (! callback.apply( object[ i++ ], args )) {
 						break;
 					}
 				}
@@ -633,7 +633,7 @@ jQuery.extend({
 		} else {
 			if ( isObj ) {
 				for ( name in object ) {
-					if ( callback.call( object[ name ], name, object[ name ] ) === false ) {
+					if (! callback.call( object[ name ], name, object[ name ] )) {
 						break;
 					}
 				}
@@ -2161,7 +2161,7 @@ jQuery.event = {
 		}
 		catch ( e ) {}
 
-		if ( handler === false ) {
+		if (! handler) {
 			handler = returnFalse;
 		} else if ( !handler ) {
 			// Fixes bug #7229. Fix recommended by jdalton
@@ -2248,7 +2248,7 @@ jQuery.event = {
 				// Check for a special event handler
 				// Only use addEventListener/attachEvent if the special
 				// events handler returns false
-				if ( !special.setup || special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
+				if ( !special.setup || !special.setup.call( elem, data, namespaces, eventHandle ) ) {
 					// Bind the global event handler to the element
 					if ( elem.addEventListener ) {
 						elem.addEventListener( type, eventHandle, false );
@@ -2287,7 +2287,7 @@ jQuery.event = {
 			return;
 		}
 
-		if ( handler === false ) {
+		if (! handler) {
 			handler = returnFalse;
 		}
 
@@ -2379,7 +2379,7 @@ jQuery.event = {
 
 			// remove generic event handler if no more handlers exist
 			if ( eventType.length === 0 || pos != null && eventType.length === 1 ) {
-				if ( !special.teardown || special.teardown.call( elem, namespaces ) === false ) {
+				if ( !special.teardown || !special.teardown.call( elem, namespaces ) ) {
 					jQuery.removeEvent( elem, type, elemData.handle );
 				}
 
@@ -2476,7 +2476,7 @@ jQuery.event = {
 		// Trigger an inline bound script
 		try {
 			if ( !(elem && elem.nodeName && jQuery.noData[elem.nodeName.toLowerCase()]) ) {
-				if ( elem[ "on" + type ] && elem[ "on" + type ].apply( elem, data ) === false ) {
+				if ( elem[ "on" + type ] && !elem[ "on" + type ].apply( elem, data ) ) {
 					event.result = false;
 					event.preventDefault();
 				}
@@ -2495,7 +2495,7 @@ jQuery.event = {
 				isClick = jQuery.nodeName( target, "a" ) && targetType === "click",
 				special = jQuery.event.special[ targetType ] || {};
 
-			if ( (!special._default || special._default.call( elem, event ) === false) &&
+			if ( (!special._default || !special._default.call( elem, event )) &&
 				!isClick && !(target && target.nodeName && jQuery.noData[target.nodeName.toLowerCase()]) ) {
 
 				try {
@@ -2566,7 +2566,7 @@ jQuery.event = {
 
 					if ( ret !== undefined ) {
 						event.result = ret;
-						if ( ret === false ) {
+						if (! ret) {
 							event.preventDefault();
 							event.stopPropagation();
 						}
@@ -3022,7 +3022,7 @@ jQuery.each(["bind", "one"], function( i, name ) {
 			return this;
 		}
 
-		if ( jQuery.isFunction( data ) || data === false ) {
+		if ( jQuery.isFunction( data ) || !data ) {
 			fn = data;
 			data = undefined;
 		}
@@ -3256,10 +3256,10 @@ function liveHandler( event ) {
 
 		ret = match.handleObj.origHandler.apply( match.elem, arguments );
 
-		if ( ret === false || event.isPropagationStopped() ) {
+		if ( !ret || event.isPropagationStopped() ) {
 			maxLevel = match.level;
 
-			if ( ret === false ) {
+			if (! ret) {
 				stop = false;
 			}
 			if ( event.isImmediatePropagationStopped() ) {
@@ -3450,7 +3450,7 @@ var Sizzle = function( selector, context, results, seed ) {
 
 		} else if ( context && context.nodeType === 1 ) {
 			for ( i = 0; checkSet[i] != null; i++ ) {
-				if ( checkSet[i] && (checkSet[i] === true || checkSet[i].nodeType === 1 && Sizzle.contains(context, checkSet[i])) ) {
+				if ( checkSet[i] && (checkSet[i] || checkSet[i].nodeType === 1 && Sizzle.contains(context, checkSet[i])) ) {
 					results.push( set[i] );
 				}
 			}
@@ -3568,7 +3568,7 @@ Sizzle.filter = function( expr, set, inplace, not ) {
 					if ( !match ) {
 						anyFound = found = true;
 
-					} else if ( match === true ) {
+					} else if ( match ) {
 						continue;
 					}
 				}
@@ -6702,7 +6702,7 @@ jQuery.extend({
 			ifModifiedKey = s.url;
 
 			// Add anti-cache in url if needed
-			if ( s.cache === false ) {
+			if (! s.cache) {
 
 				var ts = jQuery.now(),
 					// try replacing _= if it is there
@@ -6714,7 +6714,7 @@ jQuery.extend({
 		}
 
 		// Set the correct header, if data is being sent
-		if ( s.data && s.hasContent && s.contentType !== false || options.contentType ) {
+		if ( s.data && s.hasContent && !s.contentType || options.contentType ) {
 			requestHeaders[ "Content-Type" ] = s.contentType;
 		}
 
@@ -6740,7 +6740,7 @@ jQuery.extend({
 		}
 
 		// Allow custom headers/mimetypes and early abort
-		if ( s.beforeSend && ( s.beforeSend.call( callbackContext, jqXHR, s ) === false || state === 2 ) ) {
+		if ( s.beforeSend && ( !s.beforeSend.call( callbackContext, jqXHR, s ) || state === 2 ) ) {
 				// Abort if not done already
 				jqXHR.abort();
 				return false;
@@ -7005,9 +7005,9 @@ function ajaxConvert( s, response ) {
 						conv2 = converters[ tmp[1] + " " + current ];
 						if ( conv2 ) {
 							conv1 = converters[ conv1 ];
-							if ( conv1 === true ) {
+							if ( conv1 ) {
 								conv = conv2;
-							} else if ( conv2 === true ) {
+							} else if ( conv2 ) {
 								conv = conv1;
 							}
 							break;
@@ -7020,7 +7020,7 @@ function ajaxConvert( s, response ) {
 				jQuery.error( "No conversion from " + conversion.replace(" "," to ") );
 			}
 			// If found converter is not an equivalence
-			if ( conv !== true ) {
+			if ( !conv ) {
 				// Convert with 1 or 2 converters accordingly
 				response = conv ? conv( response ) : conv2( conv1(response) );
 			}
@@ -7051,7 +7051,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 	if ( s.dataTypes[ 0 ] === "jsonp" ||
 		originalSettings.jsonpCallback ||
 		originalSettings.jsonp != null ||
-		s.jsonp !== false && ( jsre.test( s.url ) ||
+		!s.jsonp && ( jsre.test( s.url ) ||
 				dataIsString && jsre.test( s.data ) ) ) {
 
 		var responseContainer,
@@ -7070,7 +7070,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				}
 			};
 
-		if ( s.jsonp !== false ) {
+		if ( s.jsonp ) {
 			url = url.replace( jsre, replace );
 			if ( s.url === url ) {
 				if ( dataIsString ) {
@@ -7709,7 +7709,7 @@ jQuery.extend({
 		// Queueing
 		opt.old = opt.complete;
 		opt.complete = function() {
-			if ( opt.queue !== false ) {
+			if ( opt.queue ) {
 				jQuery(this).dequeue();
 			}
 			if ( jQuery.isFunction( opt.old ) ) {
@@ -7827,7 +7827,7 @@ jQuery.fx.prototype = {
 			this.options.curAnim[ this.prop ] = true;
 
 			for ( var i in this.options.curAnim ) {
-				if ( this.options.curAnim[i] !== true ) {
+				if ( !this.options.curAnim[i] ) {
 					done = false;
 				}
 			}

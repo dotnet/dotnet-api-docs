@@ -75,7 +75,7 @@ namespace SDKSampleHelper
 
             // Show the printer dialog.  If the return is "true",
             // the user made a valid selection and clicked "Ok".
-            if (dlg.ShowDialog() == true)
+            if (dlg.ShowDialog())
                 printDialog = dlg;  // return the dialog the user selections.
 
             return printDialog;

@@ -47,7 +47,7 @@ namespace SDKSample
         // Add or remove an ambient light from the 3D viewport.
         private void OnAmbientLightChange(object sender, EventArgs e)
         {
-            if (checkBoxAmbientLight.IsChecked == true)
+            if (checkBoxAmbientLight.IsChecked)
             {
 				myLights.ShowAmbientLight(true, modelGroup);
             }
@@ -62,7 +62,7 @@ namespace SDKSample
         // Add or remove a directional light from the 3D viewport.
         private void OnDirectionalLightOneChange(object sender, EventArgs e)
         {
-            if (checkBoxDirLightOne.IsChecked == true)
+            if (checkBoxDirLightOne.IsChecked)
             {
 				myLights.ShowDirLight(0, true, modelGroup);
             }
@@ -77,7 +77,7 @@ namespace SDKSample
         // Add or remove a directional light from the 3D viewport.
         private void OnDirectionalLightTwoChange(object sender, EventArgs e)
         {
-            if (checkBoxDirLightTwo.IsChecked == true)
+            if (checkBoxDirLightTwo.IsChecked)
             {
 				myLights.ShowDirLight(1, true, modelGroup);
             }
@@ -92,7 +92,7 @@ namespace SDKSample
         // Add or remove a point light from the 3D viewport.
         private void OnPointLight(object sender, EventArgs e)
         {
-            if (checkBoxPointLight.IsChecked == true)
+            if (checkBoxPointLight.IsChecked)
             {
                 currKeyMode = KeyMode.PointLight;
                 rbPosition2.IsChecked = true;
@@ -203,17 +203,17 @@ namespace SDKSample
 			modelGroup.Children.Add(objModel);
 
 			// Add ambient light to the model group.
-			if (checkBoxAmbientLight.IsChecked == true)
+			if (checkBoxAmbientLight.IsChecked)
 			{
 				myLights.ShowAmbientLight(true, modelGroup);
 			}
 
 			// Add directional lights to the model group.
-			if (checkBoxDirLightOne.IsChecked == true)
+			if (checkBoxDirLightOne.IsChecked)
 			{
 				myLights.ShowDirLight(0, true, modelGroup);
 			}
-			if (checkBoxDirLightTwo.IsChecked == true)
+			if (checkBoxDirLightTwo.IsChecked)
 			{
 				myLights.ShowDirLight(1, true, modelGroup);
 			}

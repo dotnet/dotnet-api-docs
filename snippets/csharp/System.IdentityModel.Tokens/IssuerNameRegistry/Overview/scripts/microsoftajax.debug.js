@@ -4543,7 +4543,7 @@ Sys.UI.DomElement.setVisibilityMode = function Sys$UI$DomElement$setVisibilityMo
     Sys.UI.DomElement._ensureOldDisplayMode(element);
     if (element._visibilityMode !== value) {
         element._visibilityMode = value;
-        if (Sys.UI.DomElement.getVisible(element) === false) {
+        if (!Sys.UI.DomElement.getVisible(element)) {
             if (element._visibilityMode === Sys.UI.VisibilityMode.hide) {
                 element.style.display = element._oldDisplayMode;
             }
@@ -6784,7 +6784,7 @@ Sys.Net.WebServiceProxy.invoke = function Sys$Net$WebServiceProxy$invoke(service
         {name: "jsonpCallbackParameter", type: String, mayBeNull: true, optional: true}
     ]);
     if (e) throw e;
-    var schemeHost = (enableJsonp !== false) ? Sys.Net.WebServiceProxy._xdomain.exec(servicePath) : null,
+    var schemeHost = (enableJsonp) ? Sys.Net.WebServiceProxy._xdomain.exec(servicePath) : null,
         tempCallback, jsonp = schemeHost && (schemeHost.length === 3) && 
             ((schemeHost[1] !== location.protocol) || (schemeHost[2] !== location.host));
     useGet = jsonp || useGet;

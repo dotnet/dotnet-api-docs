@@ -18,7 +18,7 @@ namespace CourseAndSpeed
 
             watcher.TryStart(true, TimeSpan.FromMilliseconds(1000));
 
-            if (watcher.Position.Location.IsUnknown != true)
+            if (!watcher.Position.Location.IsUnknown)
             {
                 GeoCoordinate coord = watcher.Position.Location;
 

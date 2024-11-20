@@ -74,7 +74,7 @@ namespace CSharp
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process open file dialog box results
-            if (result == true)
+            if (result)
             {
                 // Open document
                 string filename = dlg.FileName;
@@ -95,7 +95,7 @@ namespace CSharp
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process save file dialog box results
-            if (result == true)
+            if (result)
             {
                 // Save document
                 string filename = dlg.FileName;
@@ -115,7 +115,7 @@ namespace CSharp
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process save file dialog box results
-            if (result == true)
+            if (result)
             {
                 // Print document
             }

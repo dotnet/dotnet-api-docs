@@ -199,7 +199,7 @@ namespace StylusSamples
         //<Snippet18>
         void inkCanvas1_StylusInRange(object sender, StylusEventArgs e)
         {
-            if (e.StylusDevice.Inverted == true)
+            if (e.StylusDevice.Inverted)
             {
                 inkCanvas1.EditingMode = InkCanvasEditingMode.EraseByStroke;
                 inkCanvas1.Cursor = System.Windows.Input.Cursors.Hand;

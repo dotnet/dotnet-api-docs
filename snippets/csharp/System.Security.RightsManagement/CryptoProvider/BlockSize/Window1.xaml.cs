@@ -70,7 +70,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog())
                 OpenContent(dialog.FileName);
         }// end:OnOpen()
 
@@ -210,7 +210,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog())
                 OpenXrML(dialog.FileName);
         }// end:OnRights()
 
@@ -285,7 +285,7 @@ namespace SdkSample
                                 _contentFilepath.Length, ".protected" );
 
             // Show the "Save As" dialog. If the user clicks "Cancel", return.
-            if (dialog.ShowDialog() != true)  return;
+            if (!dialog.ShowDialog())  return;
 
             // Extract the filename without path.
             _rmContentFilepath = dialog.FileName;

@@ -102,7 +102,7 @@ namespace SDKSamples
             ThreadStart threadStartingPoint;
 
             // Determine which ThreadStart to use.
-            if (rbCheckAccess.IsChecked == true)
+            if (rbCheckAccess.IsChecked)
             {
                 threadStartingPoint = new ThreadStart(threadStartingCheckAccess);
             }

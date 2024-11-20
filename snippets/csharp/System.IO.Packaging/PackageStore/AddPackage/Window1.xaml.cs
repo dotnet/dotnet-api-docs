@@ -51,7 +51,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog())
             {
                 CloseDocument();            // Close current document if open.
                 _xpsFile = dialog.FileName; // Save the path and file name.
@@ -282,7 +282,7 @@ namespace SdkSample
                 //</SnippetRmPkgViewBind>
 
                 //<SnippetRmPkgViewDecrypt>
-                if (rmi.CryptoProvider.CanDecrypt == true)
+                if (rmi.CryptoProvider.CanDecrypt)
                     ShowStatus("   Decryption granted.");
                 else
                     ShowStatus("   CANNOT DECRYPT!");

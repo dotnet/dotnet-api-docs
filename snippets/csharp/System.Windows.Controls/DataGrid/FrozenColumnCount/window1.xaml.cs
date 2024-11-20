@@ -50,7 +50,7 @@ namespace DataGrid_FrozenColumns
         {
            //Get the column header that started the command and move that column left to freeze it.
            System.Windows.Controls.Primitives.DataGridColumnHeader header = (System.Windows.Controls.Primitives.DataGridColumnHeader)e.OriginalSource;
-           if (header.Column.IsFrozen ==true)
+           if (header.Column.IsFrozen)
            {
                return;
            }

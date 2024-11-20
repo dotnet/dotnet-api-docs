@@ -268,7 +268,7 @@ namespace WCSamples
 
             captureResult = mDevice.Capture(captureTarget);
 
-            if (captureResult == true)
+            if (captureResult)
             {
                 captureTarget.BorderBrush = Brushes.Red;
             }

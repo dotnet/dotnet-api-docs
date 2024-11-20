@@ -80,7 +80,7 @@ public class Evaluation
       bool booleanValue = false;
 
       // <Snippet11>
-      if (booleanValue == true) {
+      if (booleanValue ) {
       // </Snippet11>
       }
 
