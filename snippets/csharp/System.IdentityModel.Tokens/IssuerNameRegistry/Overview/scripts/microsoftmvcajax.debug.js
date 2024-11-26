@@ -309,7 +309,7 @@ Sys.Mvc.MvcHelpers._onComplete = function Sys_Mvc_MvcHelpers$_onComplete(request
     /// <param name="ajaxContext" type="Sys.Mvc.AjaxContext">
     /// </param>
     ajaxContext.set_response(request.get_executor());
-    if (!ajaxOptions.onComplete && ajaxOptions.onComplete(ajaxContext)) {
+    if (ajaxOptions.onComplete && !ajaxOptions.onComplete(ajaxContext)) {
         return;
     }
     var statusCode = ajaxContext.get_response().get_statusCode();
