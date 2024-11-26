@@ -6714,7 +6714,7 @@ jQuery.extend({
 		}
 
 		// Set the correct header, if data is being sent
-		if ( s.data && s.hasContent && !s.contentType || options.contentType ) {
+		if ( s.data && s.hasContent && s.contentType || options.contentType ) {
 			requestHeaders[ "Content-Type" ] = s.contentType;
 		}
 
