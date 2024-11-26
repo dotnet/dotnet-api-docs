@@ -6714,7 +6714,7 @@ jQuery.extend({
 		}
 
 		// Set the correct header, if data is being sent
-		if ( s.data && s.hasContent && !s.contentType || options.contentType ) {
+		if ( s.data && s.hasContent && s.contentType || options.contentType ) {
 			requestHeaders[ "Content-Type" ] = s.contentType;
 		}
 
@@ -7051,7 +7051,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 	if ( s.dataTypes[ 0 ] === "jsonp" ||
 		originalSettings.jsonpCallback ||
 		originalSettings.jsonp != null ||
-		!s.jsonp && ( jsre.test( s.url ) ||
+		s.jsonp && ( jsre.test( s.url ) ||
 				dataIsString && jsre.test( s.data ) ) ) {
 
 		var responseContainer,
