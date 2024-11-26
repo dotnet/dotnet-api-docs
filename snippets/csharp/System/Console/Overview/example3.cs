@@ -25,7 +25,7 @@ public static class DisplayChars
                setOutputEncodingToUnicode = true;
                break;
             case 3:
-               if (! uint.TryParse(args[0], NumberStyles.HexNumber, null, out rangeStart))
+               if (!uint.TryParse(args[0], NumberStyles.HexNumber, null, out rangeStart))
                   throw new ArgumentException(String.Format("{0} is not a valid hexadecimal number.", args[0]));
 
                if (!uint.TryParse(args[1], NumberStyles.HexNumber, null, out rangeEnd))

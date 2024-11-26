@@ -166,7 +166,7 @@ public class Example
                                      do {
                                         String output = String.Empty;
                                         items = sc.Count;
-                                        if (! desc) {
+                                        if (!desc) {
                                            start = 1;
                                            step = 1;
                                            last = items;

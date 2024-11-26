@@ -3459,7 +3459,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 			}
 
-			if(!scrolled && $.ui.ddmanager && !o.dropBehaviour)
+			if(scrolled && $.ui.ddmanager && !o.dropBehaviour)
 				$.ui.ddmanager.prepareOffsets(this, event);
 		}
 
@@ -5168,7 +5168,7 @@ $.widget( "ui.autocomplete", {
 		}
 
 		clearTimeout( this.closing );
-		if (! this._trigger( "search", event )) {
+		if (!this._trigger( "search", event )) {
 			return;
 		}
 
@@ -6913,7 +6913,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 							self._keySliding = true;
 							$( this ).addClass( "ui-state-active" );
 							allowed = self._start( event, index );
-							if (! allowed) {
+							if (!allowed) {
 								return;
 							}
 						}
@@ -7042,7 +7042,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		}
 
 		allowed = this._start( event, index );
-		if (! allowed) {
+		if (!allowed) {
 			return false;
 		}
 		this._mouseSliding = true;
@@ -7692,7 +7692,7 @@ $.widget( "ui.tabs", {
 		}
 
 		// reset cache if switching from cached to not cached
-		if (! o.cache) {
+		if (!o.cache) {
 			this.anchors.removeData( "cache.tabs" );
 		}
 

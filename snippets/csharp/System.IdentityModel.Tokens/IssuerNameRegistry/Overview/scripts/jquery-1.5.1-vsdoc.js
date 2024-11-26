@@ -2269,7 +2269,7 @@ jQuery.event = {
 			elem = window;
 		}
 
-		if (! handler) {
+		if (!handler) {
 			handler = returnFalse;
 		} else if ( !handler ) {
 			// Fixes bug #7229. Fix recommended by jdalton
@@ -2416,7 +2416,7 @@ jQuery.event = {
 			return;
 		}
 
-		if (! handler) {
+		if (!handler) {
 			handler = returnFalse;
 		}
 
@@ -2713,7 +2713,7 @@ jQuery.event = {
 
 					if ( ret !== undefined ) {
 						event.result = ret;
-						if (! ret) {
+						if (!ret) {
 							event.preventDefault();
 							event.stopPropagation();
 						}
@@ -3594,7 +3594,7 @@ function liveHandler( event ) {
 		if ( !ret || event.isPropagationStopped() ) {
 			maxLevel = match.level;
 
-			if (! ret) {
+			if (!ret) {
 				stop = false;
 			}
 			if ( event.isImmediatePropagationStopped() ) {

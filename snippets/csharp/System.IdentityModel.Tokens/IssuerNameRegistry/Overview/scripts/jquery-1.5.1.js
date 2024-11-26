@@ -617,13 +617,13 @@ jQuery.extend({
 		if ( args ) {
 			if ( isObj ) {
 				for ( name in object ) {
-					if (! callback.apply( object[ name ], args )) {
+					if (!callback.apply( object[ name ], args )) {
 						break;
 					}
 				}
 			} else {
 				for ( ; i < length; ) {
-					if (! callback.apply( object[ i++ ], args )) {
+					if (!callback.apply( object[ i++ ], args )) {
 						break;
 					}
 				}
@@ -633,7 +633,7 @@ jQuery.extend({
 		} else {
 			if ( isObj ) {
 				for ( name in object ) {
-					if (! callback.call( object[ name ], name, object[ name ] )) {
+					if (!callback.call( object[ name ], name, object[ name ] )) {
 						break;
 					}
 				}
@@ -2161,7 +2161,7 @@ jQuery.event = {
 		}
 		catch ( e ) {}
 
-		if (! handler) {
+		if (!handler) {
 			handler = returnFalse;
 		} else if ( !handler ) {
 			// Fixes bug #7229. Fix recommended by jdalton
@@ -2287,7 +2287,7 @@ jQuery.event = {
 			return;
 		}
 
-		if (! handler) {
+		if (!handler) {
 			handler = returnFalse;
 		}
 
@@ -2566,7 +2566,7 @@ jQuery.event = {
 
 					if ( ret !== undefined ) {
 						event.result = ret;
-						if (! ret) {
+						if (!ret) {
 							event.preventDefault();
 							event.stopPropagation();
 						}
@@ -3259,7 +3259,7 @@ function liveHandler( event ) {
 		if ( !ret || event.isPropagationStopped() ) {
 			maxLevel = match.level;
 
-			if (! ret) {
+			if (!ret) {
 				stop = false;
 			}
 			if ( event.isImmediatePropagationStopped() ) {
@@ -6702,7 +6702,7 @@ jQuery.extend({
 			ifModifiedKey = s.url;
 
 			// Add anti-cache in url if needed
-			if (! s.cache) {
+			if (!s.cache) {
 
 				var ts = jQuery.now(),
 					// try replacing _= if it is there

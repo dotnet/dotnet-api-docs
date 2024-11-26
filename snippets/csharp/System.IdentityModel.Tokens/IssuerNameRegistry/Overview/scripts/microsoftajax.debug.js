@@ -2430,7 +2430,7 @@ Date._parse = function Date$_parse(value, cultureInfo, args) {
             if (date) return date;
         }
     }
-    if (! custom) {
+    if (!custom) {
         formats = cultureInfo._getDateTimeFormats();
         for (i = 0, l = formats.length; i < l; i++) {
             date = Date._parseExact(value, formats[i], cultureInfo);
@@ -3141,7 +3141,7 @@ Sys.CultureInfo = function Sys$CultureInfo(name, numberFormat, dateTimeFormat) {
     this.dateTimeFormat = dateTimeFormat;
 }
     function Sys$CultureInfo$_getDateTimeFormats() {
-        if (! this._dateTimeFormats) {
+        if (!this._dateTimeFormats) {
             var dtf = this.dateTimeFormat;
             this._dateTimeFormats =
               [ dtf.MonthDayPattern,

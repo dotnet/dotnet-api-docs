@@ -64,7 +64,7 @@ public class DBNullExample
    private string AddFieldValue(string label, DataRow row,
                                 string fieldName)
    {
-      if (! DBNull.Value.Equals(row[fieldName]))
+      if (!DBNull.Value.Equals(row[fieldName]))
          return (string) row[fieldName] + " ";
       else
          return String.Empty;
