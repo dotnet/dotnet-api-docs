@@ -3459,7 +3459,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 			}
 
-			if(!scrolled && $.ui.ddmanager && !o.dropBehaviour)
+			if(scrolled && $.ui.ddmanager && !o.dropBehaviour)
 				$.ui.ddmanager.prepareOffsets(this, event);
 		}
 
