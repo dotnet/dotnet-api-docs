@@ -1,17 +1,13 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Threading;
 using System.Windows.Threading;
 
 namespace SDKSamples
 {
     public partial class Window1 : Window
-    {   
+    {
         // Delegate used to place a work item onto the Dispatcher.
         private delegate void UpdateUIDelegate(Button button);
 
@@ -20,7 +16,7 @@ namespace SDKSamples
             InitializeComponent();
 
             // Get the id of the UI thread for display purposes.
-            _uiThreadID = this.Dispatcher.Thread.ManagedThreadId;
+            _uiThreadID = Dispatcher.Thread.ManagedThreadId;
             lblUIThreadID.Content = _uiThreadID;
         }
 
@@ -34,7 +30,7 @@ namespace SDKSamples
             if (theButton != null)
             {
                 // Checking if this thread has access to the object
-                if(theButton.CheckAccess())
+                if (theButton.CheckAccess())
                 {
                     // This thread has access so it can update the UI thread
                     UpdateButtonUI(theButton);
@@ -73,7 +69,7 @@ namespace SDKSamples
                 catch (InvalidOperationException e)
                 {
                     // Exception error meessage.
-                    MessageBox.Show("Exception ToString: \n\n" + e.ToString(), 
+                    MessageBox.Show("Exception ToString: \n\n" + e.ToString(),
                         "Execption Caught! Thrown During AccessVerify().");
 
                     MessageBox.Show("Pushing job onto UI Thread Dispatcher");
@@ -88,7 +84,7 @@ namespace SDKSamples
         private void threadStartingCheckAccess()
         {
             // Try to update a Button created on the UI thread.
-            TryToUpdateButtonCheckAccess(ButtonOnUIThread);   
+            TryToUpdateButtonCheckAccess(ButtonOnUIThread);
         }
 
         private void threadStartingVerifyAccess()
@@ -102,7 +98,7 @@ namespace SDKSamples
             ThreadStart threadStartingPoint;
 
             // Determine which ThreadStart to use.
-            if (rbCheckAccess.IsChecked)
+            if (rbCheckAccess.IsChecked.Value)
             {
                 threadStartingPoint = new ThreadStart(threadStartingCheckAccess);
             }

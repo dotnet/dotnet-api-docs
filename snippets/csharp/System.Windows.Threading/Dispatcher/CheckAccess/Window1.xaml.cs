@@ -8,7 +8,7 @@ namespace SDKSamples
 {
     public partial class Window1 : Window
     {
-        // Delegate used to push a worker itme onto the Dispatcher.
+        // Delegate used to push a worker item onto the Dispatcher.
         private delegate void UpdateUIDelegate(Button button);
 
         public Window1()
@@ -21,7 +21,7 @@ namespace SDKSamples
         }
 
         //<SnippetDispatcherAccessCheckAccess>
-        // Uses the Dispatcher.CheckAccess method to determine if 
+        // Uses the Dispatcher.CheckAccess method to determine if
         // the calling thread has access to the thread the UI object is on.
         private void TryToUpdateButtonCheckAccess(object uiObject)
         {
@@ -47,7 +47,7 @@ namespace SDKSamples
         //</SnippetDispatcherAccessCheckAccess>
 
         //<SnippetDispatcherAccessVerifyAccess>
-        // Uses the Dispatcher.VerifyAccess method to determine if 
+        // Uses the Dispatcher.VerifyAccess method to determine if
         // the calling thread has access to the thread the UI object is on.
         private void TryToUpdateButtonVerifyAccess(object uiObject)
         {
@@ -69,7 +69,7 @@ namespace SDKSamples
                 {
                     // Exception Error Message.
                     MessageBox.Show("Exception ToString: \n\n" + e.ToString(),
-                        "Execption Caught! Thrown During AccessVerify().");
+                        "Exception Caught! Thrown During AccessVerify().");
 
                     MessageBox.Show("Pushing job onto UI Thread Dispatcher");
 
