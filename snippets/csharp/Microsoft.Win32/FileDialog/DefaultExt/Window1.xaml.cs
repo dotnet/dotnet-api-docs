@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CSharp
 {
@@ -74,7 +66,7 @@ namespace CSharp
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process open file dialog box results
-            if (result)
+            if (result.Value)
             {
                 // Open document
                 string filename = dlg.FileName;
@@ -95,7 +87,7 @@ namespace CSharp
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process save file dialog box results
-            if (result)
+            if (result.Value)
             {
                 // Save document
                 string filename = dlg.FileName;
@@ -115,7 +107,7 @@ namespace CSharp
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process save file dialog box results
-            if (result)
+            if (result.Value)
             {
                 // Print document
             }

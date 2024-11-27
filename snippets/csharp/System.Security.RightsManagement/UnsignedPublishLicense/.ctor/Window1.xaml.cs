@@ -9,12 +9,10 @@ using System.Net;
 using System.Security.RightsManagement;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Xps.Packaging;
-using System.Xml;
 using WinForms = Microsoft.Win32;
 
 namespace SdkSample
@@ -45,7 +43,7 @@ namespace SdkSample
             {
                 string msg =
                     "The currently open document needs to be closed before\n" +
-                    "opening a new document.  Ok to close '"+_xpsDocumentName+"'?";
+                    "opening a new document.  Ok to close '" + _xpsDocumentName + "'?";
                 MessageBoxResult result =
                     MessageBox.Show(msg, "Close Current Document?",
                         MessageBoxButton.OKCancel, MessageBoxImage.Question);
@@ -69,7 +67,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog())
+            if (dialog.ShowDialog().Value)
                 OpenDocument(dialog.FileName);
         }// end:OnOpen()
 
@@ -87,7 +85,7 @@ namespace SdkSample
             _xpsDocumentPath = filename;
 
             // Extract the document filename without the path.
-            _xpsDocumentName = filename.Remove(0, filename.LastIndexOf('\\')+1);
+            _xpsDocumentName = filename.Remove(0, filename.LastIndexOf('\\') + 1);
 
             _packageUri = new Uri(filename, UriKind.Absolute);
             try
@@ -130,8 +128,8 @@ namespace SdkSample
             docViewer.Document = fds;
 
             // Enable document menu controls.
-            menuFileClose.IsEnabled  = true;
-            menuFilePrint.IsEnabled  = true;
+            menuFileClose.IsEnabled = true;
+            menuFilePrint.IsEnabled = true;
             menuFileRights.IsEnabled = true;
             menuViewIncreaseZoom.IsEnabled = true;
             menuViewDecreaseZoom.IsEnabled = true;
@@ -186,7 +184,7 @@ namespace SdkSample
                 {
                     Stream inputPackageStream = webResponse.GetResponseStream();
                     if (inputPackageStream != null)
-                    {   
+                    {
                         // Retrieve the Package from that stream.
                         inputPackage = Package.Open(inputPackageStream);
                     }
@@ -317,7 +315,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog())
+            if (dialog.ShowDialog().Value)
                 OpenXrML(dialog.FileName);
         }// end:OnRights()
 
@@ -349,7 +347,7 @@ namespace SdkSample
 
             WriteStatus("Opened '" + _xrmlFilename + "'");
             WritePrompt("Click 'File | Publish...' to publish the document " +
-                "package with the permissions specified in '"+ _xrmlFilename+ "'.");
+                "package with the permissions specified in '" + _xrmlFilename + "'.");
             rightsBlockTitle.Text = "Rights - " + _xrmlFilename;
             return true;
         }// end:OpenXrML()
@@ -386,21 +384,22 @@ namespace SdkSample
             // "Content\" folder to write the encrypted package to.
             WinForms.SaveFileDialog dialog = new WinForms.SaveFileDialog();
             dialog.InitialDirectory = GetContentFolder();
-            dialog.Title  = "Publish Rights Managed Package As";
+            dialog.Title = "Publish Rights Managed Package As";
             dialog.Filter = "Rights Managed XPS package (*-RM.xps)|*-RM.xps";
 
             // Create a new package filename by prefixing
             // the document filename extension with "rm".
             dialog.FileName = _xpsDocumentPath.Insert(
-                                  _xpsDocumentPath.LastIndexOf('.'), "-RM" );
+                                  _xpsDocumentPath.LastIndexOf('.'), "-RM");
 
             // Show the "Save As" dialog. If the user clicks "Cancel", return.
-            if (!dialog.ShowDialog())  return;
+            if (!dialog.ShowDialog().Value)
+                return;
 
             // Extract the filename without path.
             _rmxpsPackagePath = dialog.FileName;
             _rmxpsPackageName = _rmxpsPackagePath.Remove(
-                                    0, _rmxpsPackagePath.LastIndexOf('\\')+1 );
+                                    0, _rmxpsPackagePath.LastIndexOf('\\') + 1);
 
             WriteStatus("Publishing '" + _rmxpsPackageName + "'.");
             PublishRMPackage(_xpsDocumentPath, _xrmlFilepath, dialog.FileName);
@@ -424,12 +423,12 @@ namespace SdkSample
             string xrmlString;
 
             // Extract individual filenames without the path.
-            string packageFilename   = packageFile.Remove( 0,
-                                            packageFile.LastIndexOf('\\')+1 );
-            string xrmlFilename      = xrmlFile.Remove( 0,
-                                            xrmlFile.LastIndexOf('\\')+1 );
-            string encryptedFilename = encryptedFile.Remove( 0,
-                                            encryptedFile.LastIndexOf('\\')+1 );
+            string packageFilename = packageFile.Remove(0,
+                                            packageFile.LastIndexOf('\\') + 1);
+            string xrmlFilename = xrmlFile.Remove(0,
+                                            xrmlFile.LastIndexOf('\\') + 1);
+            string encryptedFilename = encryptedFile.Remove(0,
+                                            encryptedFile.LastIndexOf('\\') + 1);
 
             try
             {
@@ -441,7 +440,7 @@ namespace SdkSample
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ERROR: '"+xrmlFilename+"' open failed.\n"+
+                    MessageBox.Show("ERROR: '" + xrmlFilename + "' open failed.\n" +
                         "Exception: " + ex.Message, "XrML File Error",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
@@ -474,7 +473,7 @@ namespace SdkSample
                 // with appropriate ValidFrom and ValidUntil date/time values.
                 foreach (ContentGrant grant in tmpGrants)
                 {
-                    unsignedLicense.Grants.Add( new ContentGrant(
+                    unsignedLicense.Grants.Add(new ContentGrant(
                         grant.User, grant.Right,
                         DateTime.MinValue,    // set ValidFrom as appropriate
                         DateTime.MaxValue));  // set ValidUntil as appropriate
@@ -532,7 +531,7 @@ namespace SdkSample
                         "XrML UnsignedPublishLicense owner name: " + author.Name,
                         "Incorrect Authentication Name",
                         MessageBoxButton.OK, MessageBoxImage.Error);
-                   return false;
+                    return false;
                 }
 
                 WriteStatus("   Signing the UnsignedPublishLicense\n" +
@@ -695,7 +694,7 @@ namespace SdkSample
         ///   Prints the DocumentViewer's content and annotations.</summary>
         public void PrintDocument()
         {
-            if (docViewer == null)  return;
+            if (docViewer == null) return;
             docViewer.Print();
         }// end:PrintDocument()
 
@@ -705,7 +704,7 @@ namespace SdkSample
         public DocumentViewer DocViewer
         {
             get
-                { return docViewer; }  // "docViewer" declared in Window1.xaml
+            { return docViewer; }  // "docViewer" declared in Window1.xaml
         }
         #endregion Utilities
 
@@ -713,12 +712,12 @@ namespace SdkSample
         private string _xrmlFilepath = null;    // xrml path and filename.
         private string _xrmlFilename = null;    // xrml filename without path.
         private string _xrmlString = null;      // xrml string.
-        private string _xpsDocumentPath=null;   // XPS doc path and filename.
-        private string _xpsDocumentName=null;   // XPS doc filename without path.
-        private string _rmxpsPackagePath=null;  // RM package path and filename.
-        private string _rmxpsPackageName=null;  // RM package name without path.
-        private Uri    _packageUri;             // XPS document path and filename URI.
-        private Package     _xpsPackage = null; // XPS document package.
+        private string _xpsDocumentPath = null;   // XPS doc path and filename.
+        private string _xpsDocumentName = null;   // XPS doc filename without path.
+        private string _rmxpsPackagePath = null;  // RM package path and filename.
+        private string _rmxpsPackageName = null;  // RM package name without path.
+        private Uri _packageUri;             // XPS document path and filename URI.
+        private Package _xpsPackage = null; // XPS document package.
         private XpsDocument _xpsDocument;       // XPS document within the package.
         private static SecureEnvironment _secureEnv = null;
         private static String _currentUserId = GetDefaultWindowsUserName();

@@ -3,17 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Packaging;
 using System.Printing;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Documents.Serialization;
 using System.Windows.Media;
 using System.Windows.Xps;
-using System.Windows.Xps.Packaging;
 using System.Windows.Xps.Serialization;
-using SDKSample;
 
 namespace SDKSampleHelper
 {
@@ -75,7 +71,7 @@ namespace SDKSampleHelper
 
             // Show the printer dialog.  If the return is "true",
             // the user made a valid selection and clicked "Ok".
-            if (dlg.ShowDialog())
+            if (dlg.ShowDialog().Value)
                 printDialog = dlg;  // return the dialog the user selections.
 
             return printDialog;
@@ -196,7 +192,7 @@ namespace SDKSampleHelper
                 PrintSingleFixedContentDocument(xdwPrint, fd);
         }// end:PrintSingleFixedContentDocument()
 
-		//<SnippetPrintMultipleFixedContentDocuments>
+        //<SnippetPrintMultipleFixedContentDocuments>
 
         // ---------------- PrintMultipleFixedContentDocuments ----------------
         /// <summary>
@@ -228,7 +224,7 @@ namespace SDKSampleHelper
                 PrintMultipleFixedContentDocuments(xdwPrint, fds);
         }// end:PrintMultipleFixedContentDocuments()
 
-		//</SnippetPrintMultipleFixedContentDocuments>
+        //</SnippetPrintMultipleFixedContentDocuments>
 
         // -------------------- PrintDocumentViewerContent --------------------
         /// <summary>
@@ -516,7 +512,7 @@ namespace SDKSampleHelper
             }
         }// end:AsyncPrintingProgress()
 
-		//<SnippetMultipleFixedContentDocuments_WritingPrintTicketRequired>
+        //<SnippetMultipleFixedContentDocuments_WritingPrintTicketRequired>
 
         // ----- MultipleFixedContentDocuments_WritingPrintTicketRequired -----
         /// <summary>
@@ -578,7 +574,7 @@ namespace SDKSampleHelper
             // to FixedPage as well.
         }// end:MultipleFixedContentDocuments_WritingPrintTicketRequired()
 
-		//</SnippetMultipleFixedContentDocuments_WritingPrintTicketRequired>
+        //</SnippetMultipleFixedContentDocuments_WritingPrintTicketRequired>
 
         // -------------- CreateFixedDocumentSequencePrintTicket --------------
         /// <summary>
@@ -633,7 +629,7 @@ namespace SDKSampleHelper
 
         #region Helper Methods
 
-		//<SnippetPrintQueueSnip>
+        //<SnippetPrintQueueSnip>
         // -------------------- GetPrintXpsDocumentWriter() -------------------
         /// <summary>
         ///   Returns an XpsDocumentWriter for the default print queue.</summary>
@@ -651,7 +647,7 @@ namespace SDKSampleHelper
             XpsDocumentWriter xpsdw = PrintQueue.CreateXpsDocumentWriter(pq);
             return xpsdw;
         }// end:GetPrintXpsDocumentWriter()
-		//</SnippetPrintQueueSnip>
+         //</SnippetPrintQueueSnip>
 
         // --------------- GetPrintXpsDocumentWriter(PrintQueue) --------------
         /// <summary>
@@ -703,12 +699,12 @@ namespace SDKSampleHelper
         #endregion // Helper Methods
 
         #region Private Data
-        private int                   _batchProgress = 0;
-        private int                   _firstDocumentPrintTicket = 0;
-        private String                _contentDir = null;
-        private WPFContent            _wpfContent = null;
-        private VisualsToXpsDocument  _activeVtoXPSD = null;
-        private XpsDocumentWriter     _xpsdwActive = null;
+        private int _batchProgress = 0;
+        private int _firstDocumentPrintTicket = 0;
+        private String _contentDir = null;
+        private WPFContent _wpfContent = null;
+        private VisualsToXpsDocument _activeVtoXPSD = null;
+        private XpsDocumentWriter _xpsdwActive = null;
         #endregion // Private Data
 
     }// end:class XpsPrintHelper

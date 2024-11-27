@@ -7,15 +7,12 @@ using System.IO;
 using System.IO.Packaging;
 using System.Net;
 using System.Security.RightsManagement;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Xps.Packaging;
-using System.Xml;
 using WinForms = Microsoft.Win32;
 
 namespace SdkSample
@@ -44,14 +41,16 @@ namespace SdkSample
         {
             // Create a "File Open" dialog positioned to the
             // "Content\" folder containing the sample fixed document.
-            WinForms.OpenFileDialog dialog = new WinForms.OpenFileDialog();
-            dialog.InitialDirectory = GetContentFolder();
-            dialog.CheckFileExists = true;
-            dialog.Filter = "XPS Document files (*.xps)|*.xps";
+            WinForms.OpenFileDialog dialog = new WinForms.OpenFileDialog
+            {
+                InitialDirectory = GetContentFolder(),
+                CheckFileExists = true,
+                Filter = "XPS Document files (*.xps)|*.xps"
+            };
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog())
+            if (dialog.ShowDialog().Value)
             {
                 CloseDocument();            // Close current document if open.
                 _xpsFile = dialog.FileName; // Save the path and file name.
