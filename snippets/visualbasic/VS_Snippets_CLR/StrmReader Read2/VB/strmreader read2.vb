@@ -24,7 +24,7 @@ Public Class Test
             Do While sr.Peek() >= 0
                 'This is an arbitrary size for this example.
                 Dim c(5) As Char
-                sr.Read(c, 0, c.Length)
+                sr.ReadBlock(c, 0, c.Length)
                 'The output will look odd, because
                 'only five characters are read at a time.
                 Console.WriteLine(c)
