@@ -6,7 +6,7 @@ public class Example
    public static void Main()
    {
       var pages = new Pages();
-      if (! String.IsNullOrEmpty(pages.CurrentPage.Title)) {
+      if (!String.IsNullOrEmpty(pages.CurrentPage.Title)) {
          String title = pages.CurrentPage.Title;
          Console.WriteLine("Current title: '{0}'", title);
       }

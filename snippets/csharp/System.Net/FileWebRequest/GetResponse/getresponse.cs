@@ -107,7 +107,7 @@ namespace Mssc.PluggableProtocols.File
             }
             else
       {
-        if (makeFileRequest(args[0])== true)
+        if (makeFileRequest(args[0]))
           readFile();
       }
     }

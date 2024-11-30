@@ -1,18 +1,14 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Threading;
 using System.Windows.Threading;
 
 namespace SDKSamples
 {
     public partial class Window1 : Window
-    {   
-        // Delegate used to push a worker itme onto the Dispatcher.
+    {
+        // Delegate used to push a worker item onto the Dispatcher.
         private delegate void UpdateUIDelegate(Button button);
 
         public Window1()
@@ -25,7 +21,7 @@ namespace SDKSamples
         }
 
         //<SnippetDispatcherAccessCheckAccess>
-        // Uses the Dispatcher.CheckAccess method to determine if 
+        // Uses the Dispatcher.CheckAccess method to determine if
         // the calling thread has access to the thread the UI object is on.
         private void TryToUpdateButtonCheckAccess(object uiObject)
         {
@@ -51,7 +47,7 @@ namespace SDKSamples
         //</SnippetDispatcherAccessCheckAccess>
 
         //<SnippetDispatcherAccessVerifyAccess>
-        // Uses the Dispatcher.VerifyAccess method to determine if 
+        // Uses the Dispatcher.VerifyAccess method to determine if
         // the calling thread has access to the thread the UI object is on.
         private void TryToUpdateButtonVerifyAccess(object uiObject)
         {
@@ -60,7 +56,7 @@ namespace SDKSamples
             if (theButton != null)
             {
                 try
-                {   
+                {
                     // Check if this thread has access to this object.
                     theButton.Dispatcher.VerifyAccess();
 
@@ -72,8 +68,8 @@ namespace SDKSamples
                 catch (InvalidOperationException e)
                 {
                     // Exception Error Message.
-                    MessageBox.Show("Exception ToString: \n\n" + e.ToString(), 
-                        "Execption Caught! Thrown During AccessVerify().");
+                    MessageBox.Show("Exception ToString: \n\n" + e.ToString(),
+                        "Exception Caught! Thrown During AccessVerify().");
 
                     MessageBox.Show("Pushing job onto UI Thread Dispatcher");
 
@@ -88,7 +84,7 @@ namespace SDKSamples
         private void threadStartingCheckAccess()
         {
             // Try to update a Button created on the UI thread.
-            TryToUpdateButtonCheckAccess(ButtonOnUIThread);   
+            TryToUpdateButtonCheckAccess(ButtonOnUIThread);
         }
 
         private void threadStartingVerifyAccess()
@@ -102,7 +98,7 @@ namespace SDKSamples
             ThreadStart threadStartingPoint;
 
             // Determine which ThreadStart to use.
-            if (rbCheckAccess.IsChecked == true)
+            if (rbCheckAccess.IsChecked.Value)
             {
                 threadStartingPoint = new ThreadStart(threadStartingCheckAccess);
             }

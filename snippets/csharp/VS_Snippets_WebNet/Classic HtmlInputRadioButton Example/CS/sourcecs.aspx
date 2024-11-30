@@ -11,11 +11,11 @@
       void Button1_Click(object sender, EventArgs e) 
       {
 
-         if (Radio1.Checked == true)
+         if (Radio1.Checked)
             Span1.InnerHtml = "Option 1 is selected";
-         else if (Radio2.Checked == true)
+         else if (Radio2.Checked)
             Span1.InnerHtml = "Option 2 is selected";
-         else if (Radio3.Checked == true)
+         else if (Radio3.Checked)
             Span1.InnerHtml = "Option 3 is selected";
       }
 

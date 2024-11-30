@@ -785,7 +785,7 @@ using System.Net.Sockets;
             foreach (NetworkInterface adapter in nics)
             {
                 // Only display informatin for interfaces that support IPv4.
-                if (adapter.Supports(NetworkInterfaceComponent.IPv4) == false)
+                if (!adapter.Supports(NetworkInterfaceComponent.IPv4))
                 {
                     continue;
                 }
@@ -831,7 +831,7 @@ using System.Net.Sockets;
             foreach (NetworkInterface adapter in nics)
             {
                 // Only display informatin for interfaces that support IPv6.
-                if (adapter.Supports(NetworkInterfaceComponent.IPv6) == false)
+                if (!adapter.Supports(NetworkInterfaceComponent.IPv6))
                 {
                     continue;
                 }

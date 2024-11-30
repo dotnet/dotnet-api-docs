@@ -12,9 +12,9 @@ public class Utility
    
    public static NumericRelationship Compare(ValueType value1, ValueType value2)
    {
-      if (! IsNumeric(value1)) 
+      if (!IsNumeric(value1)) 
          throw new ArgumentException("value1 is not a number.");
-      else if (! IsNumeric(value2))
+      else if (!IsNumeric(value2))
          throw new ArgumentException("value2 is not a number.");
 
       // Use BigInteger as common integral type

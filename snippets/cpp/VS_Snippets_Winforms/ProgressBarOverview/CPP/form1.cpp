@@ -75,7 +75,7 @@ private:
       for ( int x = 1; x <= filenames->Length; x++ )
       {
          // Copy the file and increment the ProgressBar if successful.
-         if ( CopyFile( filenames[ x - 1 ] ) == true )
+         if ( CopyFile( filenames[ x - 1 ] ))
          {
             // Perform the increment on the ProgressBar.
             pBar1->PerformStep();

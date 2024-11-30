@@ -58,7 +58,7 @@ public class TimeOffsets
    private void ShowPossibleUtcTimes(DateTime ambiguousTime, TimeZoneInfo timeZone)
    {
       // Determine if time is ambiguous in target time zone
-      if (! timeZone.IsAmbiguousTime(ambiguousTime))
+      if (!timeZone.IsAmbiguousTime(ambiguousTime))
       {
          Console.WriteLine("{0} is not ambiguous in time zone {1}.", 
                            ambiguousTime, 

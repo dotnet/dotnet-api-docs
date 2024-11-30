@@ -25,7 +25,7 @@ private:
       
       // Prints the name of each event in the collection.
       Object^ myEvent;
-      while ( ie->MoveNext() == true )
+      while ( ie->MoveNext() )
       {
          myEvent = ie->Current;
          textBox1->Text = String::Concat( textBox1->Text, myEvent, "\n" );

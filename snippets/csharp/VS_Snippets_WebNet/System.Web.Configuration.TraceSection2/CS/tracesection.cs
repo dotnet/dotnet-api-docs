@@ -98,7 +98,7 @@ traceSection.Enabled = false;
 // </Snippet8>
                 
                 // Update if not locked.
-                if (! traceSection.SectionInformation.IsLocked)
+                if (!traceSection.SectionInformation.IsLocked)
                 {
                     configuration.Save();
                     Console.WriteLine("** Configuration updated.");

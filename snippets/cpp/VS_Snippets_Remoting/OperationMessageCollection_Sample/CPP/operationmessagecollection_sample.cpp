@@ -93,7 +93,7 @@ int main()
       
       // <Snippet5>
       // <Snippet6>
-      if ( myOperationMessageCollection->Contains( myOperationMessage ) == true )
+      if ( myOperationMessageCollection->Contains( myOperationMessage ))
       {
          int myIndex = myOperationMessageCollection->IndexOf( myOperationMessage );
          Console::WriteLine( " The index of the Add operation message in the collection is : {0}", myIndex );

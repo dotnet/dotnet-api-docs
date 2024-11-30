@@ -108,7 +108,7 @@ namespace DesignerTransactionSample
 		
         private void LinkDTNotifications(object sender, EventArgs e)
         {
-            if(notification_mode == false)
+            if(!notification_mode)
             {
 	        IDesignerHost host = (IDesignerHost)GetService(typeof(IDesignerHost));							
                 if(host != null)

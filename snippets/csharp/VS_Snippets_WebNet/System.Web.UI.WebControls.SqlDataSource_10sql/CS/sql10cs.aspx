@@ -6,7 +6,7 @@
 <script runat="server">
 private void OnRecordDeleting(Object source, SqlDataSourceCommandEventArgs e) {    
     // Cancel the delete operation if the checkbox is not checked.
-    if (! CheckBox1.Checked) {
+    if (!CheckBox1.Checked) {
         e.Cancel = true;
         Label1.Text = "The command was cancelled because the CheckBox was not checked.";
     }

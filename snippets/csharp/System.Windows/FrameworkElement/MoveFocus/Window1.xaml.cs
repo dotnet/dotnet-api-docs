@@ -107,7 +107,7 @@ namespace FocusSample
         private void OnPredictFocusMouseUp(object sender, RoutedEventArgs e)
         {
 
-            if (_focusPredicted == true)
+            if (_focusPredicted)
             {
                 _predictedControl.Foreground = Brushes.Black;
                 _predictedControl.FontSize -= 10;

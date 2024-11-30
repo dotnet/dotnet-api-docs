@@ -44,7 +44,7 @@ private void Menu_Copy(System.Object sender, System.EventArgs e)
  private void Menu_Undo(System.Object sender, System.EventArgs e)
  {
     // Determine if last operation can be undone in text box.   
-    if(textBox1.CanUndo == true)
+    if (textBox1.CanUndo)
     {
        // Undo the last operation.
        textBox1.Undo();

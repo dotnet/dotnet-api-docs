@@ -51,7 +51,7 @@ public class MySample
 // <Snippet2>
          DiscoveryExceptionDictionary myExceptionDictionary
                                       = myDiscoveryClientProtocol2.Errors;
-         if ( myExceptionDictionary.Contains(myUrlKey) == true )
+         if ( myExceptionDictionary.Contains(myUrlKey))
          {
             Console.WriteLine("'myExceptionDictionary' contains " +
                       " a discovery exception for the key '" + myUrlKey + "'");
@@ -62,7 +62,7 @@ public class MySample
                       " a discovery exception for the key '" + myUrlKey + "'");
          }
 // </Snippet2>
-         if (myExceptionDictionary.Contains(myUrlKey) == true )
+         if (myExceptionDictionary.Contains(myUrlKey))
          {
             Console.WriteLine("System generated exceptions.");
 

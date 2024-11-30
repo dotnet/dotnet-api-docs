@@ -181,7 +181,7 @@ int main(array<String^>^ args)
     }
     String^ proxy = args[1];
 
-    if ((expression->Match(proxy))->Success != true)
+    if (!(expression->Match(proxy))->Success)
     {
         Console::WriteLine("Input string format not allowed.");
         return 0;

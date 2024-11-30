@@ -107,7 +107,7 @@ namespace Example
         {
         //<snippet1>
             char  testChar = 'e';
-            if (Uri.IsHexDigit(testChar) == true)
+            if (Uri.IsHexDigit(testChar))
                 Console.WriteLine("'{0}' is the hexadecimal representation of {1}", testChar, Uri.FromHex(testChar));
             else
                 Console.WriteLine("'{0}' is not a hexadecimal character", testChar);
@@ -204,7 +204,7 @@ namespace Example
             string uriString = String.Format("{0}{1}{2}/", Uri.UriSchemeHttp, Uri.SchemeDelimiter, address);
  #if OLDMETHOD
             Uri result;
-            if (Uri.TryParse(uriString, false, false, out result) == true)
+            if (Uri.TryParse(uriString, false, false, out result))
                 Console.WriteLine("{0} is a valid Uri", result.ToString());
             else
                 Console.WriteLine("Uri not created");

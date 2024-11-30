@@ -24,7 +24,7 @@ namespace ScrollChangedEventArgs_layout
         // <Snippet3>
         private void sChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (svrContent.CanContentScroll == true)
+            if (svrContent.CanContentScroll)
             {
                 tBlock1.Foreground = System.Windows.Media.Brushes.Red;
                 tBlock1.Text = "ScrollChangedEvent just Occurred";

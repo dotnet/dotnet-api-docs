@@ -823,7 +823,7 @@ void DisplayIPv4NetworkInterfaces()
       NetworkInterface ^ adapter = safe_cast<NetworkInterface ^>(myEnum23->Current);
 
       // Only display informatin for interfaces that support IPv4.
-      if ( adapter->Supports( NetworkInterfaceComponent::IPv4 ) == false )
+      if ( !adapter->Supports( NetworkInterfaceComponent::IPv4 ) )
       {
          continue;
       }
@@ -875,7 +875,7 @@ void DisplayIPv6NetworkInterfaces()
       NetworkInterface ^ adapter = safe_cast<NetworkInterface ^>(myEnum24->Current);
 
       // Only display informatin for interfaces that support IPv6.
-      if ( adapter->Supports( NetworkInterfaceComponent::IPv6 ) == false )
+      if ( !adapter->Supports( NetworkInterfaceComponent::IPv6 ) )
       {
          continue;
       }

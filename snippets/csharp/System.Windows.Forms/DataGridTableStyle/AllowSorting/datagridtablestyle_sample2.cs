@@ -191,7 +191,7 @@ namespace SampleDataGridTableStyle
 
          mylabel.Text = "Sorting Status :" + 
                myDataGridTableStyle1.AllowSorting.ToString();
-         if(myDataGridTableStyle1.AllowSorting == true)
+         if (myDataGridTableStyle1.AllowSorting)
          {
             btnApplyStyles.Text = "Remove Sorting";
          }
@@ -212,7 +212,7 @@ namespace SampleDataGridTableStyle
       private void btnApplyStyles_Click(object sender, EventArgs e)
       {       
 
-         if(myDataGridTableStyle1.AllowSorting == true)
+         if (myDataGridTableStyle1.AllowSorting)
          {            
             // Remove sorting.
             myDataGridTableStyle1.AllowSorting = false; 

@@ -79,7 +79,7 @@ namespace Menus
         //<SnippetMenuItemIsHighlighted>
         private void Highlight(object sender, RoutedEventArgs e)
         {
-            if (item1.IsHighlighted == true)
+            if (item1.IsHighlighted)
             {
                 hlbtn.Content = "Item is highlighted.";
             }
