@@ -174,7 +174,7 @@ private:
    // Set the 'ParentRowsVisible' property on click of a button.
    void ToggleVisible_Clicked( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
-      if ( myDataGrid->ParentRowsVisible == true )
+      if (myDataGrid->ParentRowsVisible)
             myDataGrid->ParentRowsVisible = false;
       else
             myDataGrid->ParentRowsVisible = true;

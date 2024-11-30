@@ -150,7 +150,7 @@ namespace TrackBarRendererSample
             if (!TrackBarRenderer.IsSupported)
                 return;
 
-            if (thumbClicked == true)
+            if (thumbClicked)
             {
                 if (e.Location.X > trackRectangle.X &&
                     e.Location.X < (trackRectangle.X +
@@ -172,7 +172,7 @@ namespace TrackBarRendererSample
                 return;
 
             // The user is moving the thumb.
-            if (thumbClicked == true)
+            if (thumbClicked)
             {
                 // Track movements to the next tick to the right, if 
                 // the cursor has moved halfway to the next tick.

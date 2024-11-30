@@ -543,7 +543,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathExamplesCS
             GraphicsPath myPath = new GraphicsPath();
             myPath.AddLine(20, 20, 100, 20);
             PointF lastPoint = myPath.GetLastPoint();
-            if(lastPoint.IsEmpty == false)
+            if(!lastPoint.IsEmpty)
             {
                 string lastPointXString = lastPoint.X.ToString();
                 string lastPointYString = lastPoint.Y.ToString();

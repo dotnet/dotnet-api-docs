@@ -9,7 +9,7 @@ class Sample
     int x = 0;
 //
     if ((args.Length == 1) &&
-        (Int32.TryParse(args[0], out x) == true) &&
+        (Int32.TryParse(args[0], out x)) &&
         ((x >= 1) && (x <= 9)))
         {
         for (int i = 1; i <= x; i++)

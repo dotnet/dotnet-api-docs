@@ -76,7 +76,7 @@ int main(array<String^>^ args)
         String^ answer = Console::ReadLine();
         // If the user canceled the send, and mail hasn't been 
         // sent yet,then cancel the pending operation.
-        if (answer->ToLower()->StartsWith("c") && mailSent == false)
+        if (answer->ToLower()->StartsWith("c") && !mailSent)
         {
             client->SendAsyncCancel();
         }

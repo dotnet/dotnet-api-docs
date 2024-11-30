@@ -145,7 +145,7 @@ namespace MenuPopupEx
       //<Snippet1>
       private void PopupMyMenu(object sender, System.EventArgs e)
       {
-         if (textBox1.Enabled == false || textBox1.Focused == false ||
+         if (!textBox1.Enabled || !textBox1.Focused ||
             textBox1.SelectedText.Length == 0)
          {
             menuCut.Enabled = false;

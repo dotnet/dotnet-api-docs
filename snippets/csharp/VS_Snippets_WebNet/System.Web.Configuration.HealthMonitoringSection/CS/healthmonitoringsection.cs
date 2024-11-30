@@ -516,7 +516,7 @@ healthMonitoringSection.Rules.Clear();
 // </Snippet8>
                 
                 // Update if not locked.
-                if (! healthMonitoringSection.SectionInformation.IsLocked)
+                if (!healthMonitoringSection.SectionInformation.IsLocked)
                 {
                     configuration.Save();
                     Console.WriteLine("** Configuration updated.");

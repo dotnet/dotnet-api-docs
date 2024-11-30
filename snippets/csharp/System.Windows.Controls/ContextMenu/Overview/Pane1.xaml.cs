@@ -34,7 +34,7 @@ namespace ContextMenus
         void IsOpenSnippet()
         {
             //<SnippetContextMenuIsOpen>
-            if (cm.IsOpen == true)
+            if (cm.IsOpen)
             {
                 cmButton.Content = "The ContextMenu opened and the IsOpen property is true.";
             }

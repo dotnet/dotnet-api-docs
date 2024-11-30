@@ -143,7 +143,7 @@ int main()
    }
 
    String^ proxy = args[ 1 ];
-   if ( (rex->Match(proxy))->Success != true )
+   if ( (!rex->Match(proxy))->Success)
    {
       Console::WriteLine( "Input string format not allowed." );
       return  -1;

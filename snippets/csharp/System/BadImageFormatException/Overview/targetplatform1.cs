@@ -17,7 +17,7 @@ public class Example
       // Loop through files and display information about their platform.
       for (int ctr = 1; ctr < args.Length; ctr++) {
          string fn = args[ctr];
-         if (! File.Exists(fn)) {
+         if (!File.Exists(fn)) {
             Console.WriteLine("File: {0}", fn);
             Console.WriteLine("The file does not exist.\n");
          }

@@ -137,7 +137,7 @@ class Sample
     string msgSuccess = "Parse for {0} = {1}";
     string msgFailure = "** Parse for {0} failed. Invalid input.";
 //
-    if (parseSuccess == true)
+    if (parseSuccess )
         Console.WriteLine(msgSuccess, typeName, parseValue);
     else
         Console.WriteLine(msgFailure, typeName);

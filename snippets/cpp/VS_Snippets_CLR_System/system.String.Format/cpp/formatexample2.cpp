@@ -21,7 +21,7 @@ public:
 	               Object^ arg, 
 	               IFormatProvider^ formatProvider) 
    {                       
-      if (! this->Equals(formatProvider))
+      if (!this->Equals(formatProvider))
       {
          return nullptr;
       }

@@ -45,7 +45,7 @@ class Sample
 // the set operation fails, but that programming technique is inefficient.
     Console.WriteLine("3c) Try to set the read-only clone's LineSeparator " +
                       "property.");
-    if (ti3.IsReadOnly == true)
+    if (ti3.IsReadOnly)
         {
         Console.WriteLine("3d) The set operation is invalid.");
         }

@@ -81,8 +81,7 @@ class MyOperationMessageCollectionSample
 
 // <Snippet5>
 // <Snippet6>
-         if(myOperationMessageCollection.Contains(myOperationMessage)
-            == true )
+         if(myOperationMessageCollection.Contains(myOperationMessage))
          {
             int myIndex =
                myOperationMessageCollection.IndexOf(myOperationMessage);

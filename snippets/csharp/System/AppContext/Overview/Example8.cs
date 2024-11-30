@@ -9,7 +9,7 @@ public static class StringLibrary
    public static int SubstringStartsAt(string fullString, string substr)
    {
       bool flag;
-      if (AppContext.TryGetSwitch("StringLibrary.DoNotUseCultureSensitiveComparison", out flag) && flag == true)
+      if (AppContext.TryGetSwitch("StringLibrary.DoNotUseCultureSensitiveComparison", out flag) && flag)
          return fullString.IndexOf(substr, StringComparison.Ordinal);
       else
          return fullString.IndexOf(substr, StringComparison.CurrentCulture);

@@ -54,7 +54,7 @@ using System.Web.UI.WebControls;
 
     public static void DeleteEmployee(NorthwindEmployee ne) {
       bool retval = ne.Delete();
-      if (! retval) { throw new NorthwindDataException("Employee delete failed."); }
+      if (!retval) { throw new NorthwindDataException("Employee delete failed."); }
       // Delete the object in memory.
       ne = null;
     }

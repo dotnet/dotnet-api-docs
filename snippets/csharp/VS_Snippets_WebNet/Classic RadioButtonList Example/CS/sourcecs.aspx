@@ -18,7 +18,7 @@
         void chkLayout_CheckedChanged(Object sender, EventArgs e) 
         {
         
-           if (chkLayout.Checked == true) 
+           if (chkLayout.Checked) 
            {
               RadioButtonList1.RepeatLayout = RepeatLayout.Table;
            }
@@ -31,7 +31,7 @@
         void chkDirection_CheckedChanged(Object sender, EventArgs e) 
         {
         
-           if (chkDirection.Checked == true) 
+           if (chkDirection.Checked) 
            {
               RadioButtonList1.RepeatDirection = RepeatDirection.Horizontal;
            }

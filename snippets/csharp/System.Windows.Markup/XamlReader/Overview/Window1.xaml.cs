@@ -109,7 +109,7 @@ namespace XamlReaderWriterSnippets
 
         private void xReader_LoadCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            if (e.Cancelled != true)
+            if (!e.Cancelled)
             {
                 // Load new button
             }

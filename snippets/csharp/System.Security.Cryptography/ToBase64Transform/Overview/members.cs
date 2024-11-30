@@ -99,7 +99,7 @@ class Members
 
         // Determine if the current transform can be reused.
         //<Snippet3>
-        if (! base64Transform.CanReuseTransform)
+        if (!base64Transform.CanReuseTransform)
         //</Snippet3>
         {
             // Free up any used resources.

@@ -41,10 +41,10 @@ public class BooleanFormatter : ICustomFormatter, IFormatProvider
    public string Format(string fmt, Object arg, IFormatProvider formatProvider)
    {
       // Exit if another format provider is used.
-      if (! formatProvider.Equals(this)) return null;
+      if (!formatProvider.Equals(this)) return null;
 
       // Exit if the type to be formatted is not a Boolean
-      if (! (arg is Boolean)) return null;
+      if (!(arg is Boolean)) return null;
 
       bool value = (bool) arg;
       switch (culture.Name) {
