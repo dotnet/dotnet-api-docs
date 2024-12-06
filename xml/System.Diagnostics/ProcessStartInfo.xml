@@ -71,9 +71,7 @@
  [!INCLUDE [untrusted-data-instance-note](~/includes/untrusted-data-instance-note.md)]
 
 > [!NOTE]
->  This class contains a link demand at the class level that applies to all members. A <xref:System.Security.SecurityException> is thrown when the immediate caller does not have full-trust permission. For details about security demands, see [Link Demands](/dotnet/framework/misc/link-demands).
-
-
+> This class contains a link demand at the class level that applies to all members. A <xref:System.Security.SecurityException> is thrown when the immediate caller does not have full-trust permission. For details about security demands, see [Link Demands](/dotnet/framework/misc/link-demands).
 
 ## Examples
  The following code example demonstrates how to use the <xref:System.Diagnostics.ProcessStartInfo> class to start Internet Explorer. The destination URLs are provided as <xref:System.Diagnostics.ProcessStartInfo> arguments.
@@ -309,34 +307,25 @@
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-`ArgumentList` and the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property are independent of one another and **only one of them can be used at the same time**. The main difference between both APIs is that `ArgumentList` takes care of escaping the provided arguments and **internally** builds a single string that is passed to operating system when calling `Process.Start(info)`. So if you are not sure how to properly escape your arguments, you should choose `ArgumentList` over <xref:System.Diagnostics.ProcessStartInfo.Arguments>.
+`ArgumentList` and the <xref:System.Diagnostics.ProcessStartInfo.Arguments> property are independent of one another and **only one of them can be used at the same time**. The main difference between these APIs is that `ArgumentList` escapes the provided arguments and **internally** builds a single string that's passed to the operating system when calling `Process.Start(info)`. So if you aren't sure how to properly escape your arguments, you should choose `ArgumentList` over <xref:System.Diagnostics.ProcessStartInfo.Arguments>.
 
 [!INCLUDE [untrusted-data-instance-note](~/includes/untrusted-data-instance-note.md)]
-```
 
 ## Examples
 
 This example adds three arguments to the process start info.
 
 ```csharp
-var info = new System.Diagnostics.ProcessStartInfo("cmd.exe");
-info.ArgumentList.Add("/c");
-info.ArgumentList.Add("dir");
-info.ArgumentList.Add(@"C:\Program Files\dotnet"); // there is no need to escape the space, the API takes care of it
-
-// or if you prefer collection property initializer syntax:
-
 var info = new System.Diagnostics.ProcessStartInfo("cmd.exe")
 {
     ArgumentList = {
         "/c",
         "dir",
-        @"C:\Program Files\dotnet"
+        @"C:\Program Files\dotnet" // The space character is escaped automatically.
     }
 };
 
 // The corresponding assignment to the Arguments property is:
-
 var info = new System.Diagnostics.ProcessStartInfo("cmd.exe")
 {
     Arguments = "/c dir \"C:\\Program Files\\dotnet\""
@@ -349,7 +338,6 @@ info.ArgumentList.Add("dir")
 info.ArgumentList.Add("C:\Program Files\dotnet")
 
 ' The corresponding assignment to the Arguments property is:
-
 info.Arguments = "/c dir ""C:\Program Files\dotnet"""
 ```
 ]]></format>
@@ -807,7 +795,7 @@ If you use this property to set command-line arguments, <xref:System.Diagnostics
 ## Remarks
 
 > [!NOTE]
->  <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> must be `true` if you want to set <xref:System.Diagnostics.ProcessStartInfo.ErrorDialog%2A> to `true`.
+> <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> must be `true` if you want to set <xref:System.Diagnostics.ProcessStartInfo.ErrorDialog%2A> to `true`.
 
  ]]></format>
         </remarks>
@@ -1124,17 +1112,17 @@ If you use this property to set command-line arguments, <xref:System.Diagnostics
 ## Remarks
 
 > [!IMPORTANT]
->  The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property must be set if <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A> are provided. If the property is not set, the default working directory is %SYSTEMROOT%\system32.
+> The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property must be set if <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A> are provided. If the property is not set, the default working directory is %SYSTEMROOT%\system32.
 
 > [!NOTE]
->  Setting the <xref:System.Diagnostics.ProcessStartInfo.Domain%2A>, <xref:System.Diagnostics.ProcessStartInfo.UserName%2A>, and the <xref:System.Diagnostics.ProcessStartInfo.Password%2A> properties in a <xref:System.Diagnostics.ProcessStartInfo> object is the recommended practice for starting a process with user credentials.
+> Setting the <xref:System.Diagnostics.ProcessStartInfo.Domain%2A>, <xref:System.Diagnostics.ProcessStartInfo.UserName%2A>, and the <xref:System.Diagnostics.ProcessStartInfo.Password%2A> properties in a <xref:System.Diagnostics.ProcessStartInfo> object is the recommended practice for starting a process with user credentials.
 
  A <xref:System.Security.SecureString> object is like a <xref:System.String> object in that it has a text value. However, the value of a <xref:System.Security.SecureString> object is automatically encrypted, it can be modified until your application marks it as read-only, and it can be deleted from computer memory by either your application or the .NET Framework garbage collector.
 
  For more information about secure strings and an example of how to obtain a password to set this property, see the <xref:System.Security.SecureString> class.
 
 > [!NOTE]
->  If you provide a value for the <xref:System.Diagnostics.ProcessStartInfo.Password%2A> property, the <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> property must be `false`, or an <xref:System.InvalidOperationException> will be thrown when the <xref:System.Diagnostics.Process.Start%28System.Diagnostics.ProcessStartInfo%29?displayProperty=nameWithType> method is called.
+> If you provide a value for the <xref:System.Diagnostics.ProcessStartInfo.Password%2A> property, the <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> property must be `false`, or an <xref:System.InvalidOperationException> will be thrown when the <xref:System.Diagnostics.Process.Start%28System.Diagnostics.ProcessStartInfo%29?displayProperty=nameWithType> method is called.
 
  ]]></format>
         </remarks>
@@ -1266,14 +1254,14 @@ If you use this property to set command-line arguments, <xref:System.Diagnostics
  When a <xref:System.Diagnostics.Process> writes text to its standard error stream, that text is typically displayed on the console. By redirecting the <xref:System.Diagnostics.Process.StandardError%2A> stream, you can manipulate or suppress the error output of a process. For example, you can filter the text, format it differently, or write the output to both the console and a designated log file.
 
 > [!NOTE]
->  You must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false` if you want to set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardError%2A> to `true`. Otherwise, reading from the <xref:System.Diagnostics.Process.StandardError%2A> stream throws an exception.
+> You must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false` if you want to set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardError%2A> to `true`. Otherwise, reading from the <xref:System.Diagnostics.Process.StandardError%2A> stream throws an exception.
 
  The redirected <xref:System.Diagnostics.Process.StandardError%2A> stream can be read synchronously or asynchronously. Methods such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A> and <xref:System.IO.StreamReader.ReadToEnd%2A> perform synchronous read operations on the error output stream of the process. These synchronous read operations do not complete until the associated <xref:System.Diagnostics.Process> writes to its <xref:System.Diagnostics.Process.StandardError%2A> stream, or closes the stream.
 
  In contrast, <xref:System.Diagnostics.Process.BeginErrorReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardError%2A> stream. This method enables a designated event handler for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.
 
 > [!NOTE]
->  The application that is processing the asynchronous output should call the <xref:System.Diagnostics.Process.WaitForExit%2A?displayProperty=nameWithType> method to ensure that the output buffer has been flushed.
+> The application that is processing the asynchronous output should call the <xref:System.Diagnostics.Process.WaitForExit%2A?displayProperty=nameWithType> method to ensure that the output buffer has been flushed.
 
  Synchronous read operations introduce a dependency between the caller reading from the <xref:System.Diagnostics.Process.StandardError%2A> stream and the child process writing to that stream. These dependencies can cause deadlock conditions. When the caller reads from the redirected stream of a child process, it is dependent on the child. The caller waits for the read operation until the child writes to the stream or closes the stream. When the child process writes enough data to fill its redirected stream, it is dependent on the parent. The child process waits for the next write operation until the parent reads from the full stream or closes the stream. The deadlock condition results when the caller and child process wait for each other to complete an operation, and neither can continue. You can avoid deadlocks by evaluating dependencies between the caller and child process.
 
@@ -1376,7 +1364,7 @@ You can use asynchronous read operations to avoid these dependencies and their d
  A <xref:System.Diagnostics.Process> can read input text from its standard input stream, typically the keyboard. By redirecting the <xref:System.Diagnostics.Process.StandardInput%2A> stream, you can programmatically specify the input of a process. For example, instead of using keyboard input, you can provide text from the contents of a designated file or output from another application.
 
 > [!NOTE]
->  You must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false` if you want to set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardInput%2A> to `true`. Otherwise, writing to the <xref:System.Diagnostics.Process.StandardInput%2A> stream throws an exception.
+> You must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false` if you want to set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardInput%2A> to `true`. Otherwise, writing to the <xref:System.Diagnostics.Process.StandardInput%2A> stream throws an exception.
 
 
 
@@ -1463,14 +1451,14 @@ You can use asynchronous read operations to avoid these dependencies and their d
  When a <xref:System.Diagnostics.Process> writes text to its standard stream, that text is typically displayed on the console. By setting <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput%2A> to `true` to redirect the <xref:System.Diagnostics.Process.StandardOutput%2A> stream, you can manipulate or suppress the output of a process. For example, you can filter the text, format it differently, or write the output to both the console and a designated log file.
 
 > [!NOTE]
->  You must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false` if you want to set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput%2A> to `true`. Otherwise, reading from the <xref:System.Diagnostics.Process.StandardOutput%2A> stream throws an exception.
+> You must set <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> to `false` if you want to set <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput%2A> to `true`. Otherwise, reading from the <xref:System.Diagnostics.Process.StandardOutput%2A> stream throws an exception.
 
  The redirected <xref:System.Diagnostics.Process.StandardOutput%2A> stream can be read synchronously or asynchronously. Methods such as <xref:System.IO.StreamReader.Read%2A>, <xref:System.IO.StreamReader.ReadLine%2A>, and <xref:System.IO.StreamReader.ReadToEnd%2A> perform synchronous read operations on the output stream of the process. These synchronous read operations do not complete until the associated <xref:System.Diagnostics.Process> writes to its <xref:System.Diagnostics.Process.StandardOutput%2A> stream, or closes the stream.
 
  In contrast, <xref:System.Diagnostics.Process.BeginOutputReadLine%2A> starts asynchronous read operations on the <xref:System.Diagnostics.Process.StandardOutput%2A> stream. This method enables a designated event handler (see <xref:System.Diagnostics.Process.OutputDataReceived>) for the stream output and immediately returns to the caller, which can perform other work while the stream output is directed to the event handler.
 
 > [!NOTE]
->  The application that is processing the asynchronous output should call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to ensure that the output buffer has been flushed.
+> The application that is processing the asynchronous output should call the <xref:System.Diagnostics.Process.WaitForExit%2A> method to ensure that the output buffer has been flushed.
 
  Synchronous read operations introduce a dependency between the caller reading from the <xref:System.Diagnostics.Process.StandardOutput%2A> stream and the child process writing to that stream. These dependencies can cause deadlock conditions. When the caller reads from the redirected stream of a child process, it is dependent on the child. The caller waits for the read operation until the child writes to the stream or closes the stream. When the child process writes enough data to fill its redirected stream, it is dependent on the parent. The child process waits for the next write operation until the parent reads from the full stream or closes the stream. The deadlock condition results when the caller and child process wait for each other to complete an operation, and neither can continue. You can avoid deadlocks by evaluating dependencies between the caller and child process.
 
@@ -1489,8 +1477,6 @@ There is a similar issue when you read all text from both the standard output an
 :::code language="vb" source="~/snippets/visualbasic/api/system.diagnostics/process/standardoutput/stdoutput-async.vb":::
 
 You can use asynchronous read operations to avoid these dependencies and their deadlock potential. Alternately, you can avoid the deadlock condition by creating two threads and reading the output of each stream on a separate thread.
-
-
 
 ## Examples
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ProcessOneStream/CPP/stdstr.cpp" id="Snippet1":::
@@ -1756,7 +1742,7 @@ You can use asynchronous read operations to avoid these dependencies and their d
 ## Remarks
 
 > [!IMPORTANT]
->  The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property must be set if <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A> are provided. If the property is not set, the default working directory is %SYSTEMROOT%\system32.
+> The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property must be set if <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A> are provided. If the property is not set, the default working directory is %SYSTEMROOT%\system32.
 
  If the <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> property is not `null` or an empty string, the <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> property must be `false`, or an <xref:System.InvalidOperationException> will be thrown when the <xref:System.Diagnostics.Process.Start%28System.Diagnostics.ProcessStartInfo%29?displayProperty=nameWithType> method is called.
 
@@ -1920,7 +1906,8 @@ Each file name extension has its own set of verbs, which can be obtained by usin
 When you use the <xref:System.Diagnostics.ProcessStartInfo.Verb%2A> property, you must include the file name extension when you set the value of the <xref:System.Diagnostics.ProcessStartInfo.FileName%2A> property. The file name does not need to have an extension if you manually enter a value for the <xref:System.Diagnostics.ProcessStartInfo.Verb%2A> property.
 
 ## Examples
- The following code example starts a new process by using the specified verb and file name. This code example is part of a larger example provided for the <xref:System.Diagnostics.ProcessStartInfo.Verbs%2A> property.
+
+The following code example starts a new process by using the specified verb and file name. This code example is part of a larger example provided for the <xref:System.Diagnostics.ProcessStartInfo.Verbs%2A> property.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/ProcessStartInfo/Verb/source.cs" id="Snippet4":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/ProcessVerbs_Diagnostics/VB/source.vb" id="Snippet4":::
@@ -2164,14 +2151,14 @@ When you use the <xref:System.Diagnostics.ProcessStartInfo.Verb%2A> property, yo
 ## Remarks
 
 > [!IMPORTANT]
->  The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property must be set if <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A> are provided. If the property is not set, the default working directory is %SYSTEMROOT%\system32.
+> The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property must be set if <xref:System.Diagnostics.ProcessStartInfo.UserName%2A> and <xref:System.Diagnostics.ProcessStartInfo.Password%2A> are provided. If the property is not set, the default working directory is %SYSTEMROOT%\system32.
 
  If the directory is already part of the system path variable, you do not have to repeat the directory's location in this property.
 
  The <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property behaves differently when <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true` than when <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `false`. When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true`, the <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property specifies the location of the executable. If <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> is an empty string, the current directory is understood to contain the executable.
 
 > [!NOTE]
->  When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true`, the working directory of the application that starts the executable is also the working directory of the executable.
+> When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `true`, the working directory of the application that starts the executable is also the working directory of the executable.
 
  When <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute%2A> is `false`, the <xref:System.Diagnostics.ProcessStartInfo.WorkingDirectory%2A> property is not used to find the executable. Instead, its value applies to the process that is started and only has meaning within the context of the new process.
 
