@@ -3,7 +3,7 @@ Option Strict
 
 Imports System.Data
 ' <Snippet1>
-Imports System.Data.Odbc    
+Imports System.Data.Odbc
 
 Module Module1
   Sub Main()
@@ -13,8 +13,6 @@ Module Module1
     ' Call the Add method to explicitly add key/value
     ' pairs to the internal collection.
     builder.Add("Dbq", "C:\info.mdb")
-    builder.Add("Uid", "Admin")
-    builder.Add("Pwd", "pass!word1")
 
     Console.WriteLine(builder.ConnectionString)
     Console.WriteLine()
@@ -23,22 +21,18 @@ Module Module1
     ' default values.
     builder.Clear()
 
-    ' Pass the OdbcConnectionStringBuilder an existing 
+    ' Pass the OdbcConnectionStringBuilder an existing
     ' connection string, and you can retrieve and
     ' modify any of the elements.
     builder.ConnectionString = _
         "driver={IBM DB2 ODBC DRIVER};Database=SampleDB;" & _
         "hostname=SampleServerName;port=SamplePortNum;" & _
-        "protocol=TCPIP;uid=Admin;pwd=pass!word1"
+        "protocol=TCPIP"
 
     Console.WriteLine("protocol = " & builder("protocol").ToString())
     Console.WriteLine()
 
-    ' Modify existing items:
-    builder("uid") = "NewUser"
-    builder("pwd") = "Pass@word2"
-
-    ' Call the Remove method to remove items from 
+    ' Call the Remove method to remove items from
     ' the collection of key/value pairs.
     builder.Remove("port")
 
@@ -48,8 +42,8 @@ Module Module1
     Console.WriteLine(builder.ConnectionString)
     Console.WriteLine()
 
-    ' The Item property is the default for the class, 
-    ' and setting the Item property adds the value, if 
+    ' The Item property is the default for the class,
+    ' and setting the Item property adds the value, if
     ' necessary.
     builder("NewKey") = "newValue"
     Console.WriteLine(builder.ConnectionString)

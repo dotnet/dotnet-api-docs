@@ -14,8 +14,6 @@ class Program
         // Call the Add method to explicitly add key/value
         // pairs to the internal collection.
         builder.Add("Dbq", "C:\\info.mdb");
-        builder.Add("Uid", "Admin");
-        builder.Add("Pwd", "pass!word1");
 
         Console.WriteLine(builder.ConnectionString);
         Console.WriteLine();
@@ -30,15 +28,10 @@ class Program
         builder.ConnectionString =
             "driver={IBM DB2 ODBC DRIVER};Database=SampleDB;" +
             "hostname=SampleServerName;port=SamplePortNum;" +
-            "protocol=TCPIP;uid=Admin;pwd=pass!word1";
+            "protocol=TCPIP";
 
-        Console.WriteLine("protocol = "
-            + builder["protocol"].ToString());
+        Console.WriteLine($"protocol = {builder["protocol"].ToString()}");
         Console.WriteLine();
-
-        // Modify existing items.
-        builder["uid"] = "NewUser";
-        builder["pwd"] = "Pass@word2";
 
         // Call the Remove method to remove items from
         // the collection of key/value pairs.
@@ -54,9 +47,6 @@ class Program
         // necessary.
         builder["NewKey"] = "newValue";
         Console.WriteLine(builder.ConnectionString);
-
-        Console.WriteLine("Press Enter to finish.");
-        Console.ReadLine();
     }
 }
 // </Snippet1>
