@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 // <Snippet1>
 using System.Data.Odbc;
 
@@ -7,9 +6,10 @@ class Program
 {
     static void Main()
     {
-        OdbcConnectionStringBuilder builder =
-            new OdbcConnectionStringBuilder();
-        builder.Driver = "Microsoft Access Driver (*.mdb)";
+        OdbcConnectionStringBuilder builder = new()
+            {
+                Driver = "Microsoft Access Driver (*.mdb)"
+            };
 
         // Call the Add method to explicitly add key/value
         // pairs to the internal collection.
