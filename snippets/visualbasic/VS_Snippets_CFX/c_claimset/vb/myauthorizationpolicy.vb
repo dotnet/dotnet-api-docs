@@ -1,15 +1,9 @@
-﻿
-Imports System.Collections.Generic
-Imports System.IdentityModel.Claims
+﻿Imports System.IdentityModel.Claims
 Imports System.IdentityModel.Policy
-Imports System.IdentityModel.Tokens
-Imports System.IdentityModel.Selectors
-Imports System.ServiceModel
 Imports System.Security.Permissions
+Imports System.ServiceModel
 
-
-
-<assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution := True)>
+<Assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution:=True)>
 ' <snippet1>
 Public Class MyServiceAuthorizationManager
     Inherits ServiceAuthorizationManager
@@ -46,10 +40,10 @@ Public Class MyServiceAuthorizationManager
         ' If this point is reached, return false to deny access.
         Return False
 
-    End Function 
+    End Function
     ' </snippet1>
-End Class 
- 
+End Class
+
 Public Class MyAuthorizationPolicy
     Implements IAuthorizationPolicy
     Private value_id As String
@@ -58,9 +52,9 @@ Public Class MyAuthorizationPolicy
     Public Sub New()
         value_id = Guid.NewGuid().ToString()
 
-    End Sub 
+    End Sub
 
-    Public Function Evaluate(ByVal evaluationContext As EvaluationContext, _
+    Public Function Evaluate(ByVal evaluationContext As EvaluationContext,
         ByRef state As Object) As Boolean Implements IAuthorizationPolicy.Evaluate
 
         Dim bRet As Boolean = False
@@ -90,14 +84,14 @@ Public Class MyAuthorizationPolicy
                     ' Get the list of operations that the given username is allowed to call.
                     Dim s As String
                     For Each s In GetAllowedOpList(c.Resource.ToString())
- 
-                       ' Add claims to the list.
-                        claims.Add(New Claim("http://example.org/claims/allowedoperation", _
+
+                        ' Add claims to the list.
+                        claims.Add(New Claim("http://example.org/claims/allowedoperation",
                                    s, Rights.PossessProperty))
                         Console.WriteLine("Claim added {0}", s)
                     Next s
                 Next c
-            Next cs 
+            Next cs
 
             ' Add claims to the evaluation context.
             evaluationContext.AddClaimSet(Me, New DefaultClaimSet(Me.Issuer, claims))
@@ -115,7 +109,7 @@ Public Class MyAuthorizationPolicy
 
         Return bRet
 
-    End Function 
+    End Function
 
     Public ReadOnly Property Issuer() As ClaimSet Implements IAuthorizationPolicy.Issuer
 
@@ -135,7 +129,6 @@ Public Class MyAuthorizationPolicy
     ' operations that the specified username is allowed to call.
     Private Shared Function GetAllowedOpList(ByVal username As String) As IEnumerable(Of String)
 
-
         Dim ret As New List(Of String)
 
         If username = "test1" Then
@@ -148,18 +141,16 @@ Public Class MyAuthorizationPolicy
         End If
         Return ret
 
-    End Function 
+    End Function
 
     ' This is an internal class for recording state.
 
     Class CustomAuthState
         Private bClaimsAdded As Boolean
 
-
         Public Sub New()
 
         End Sub
-
 
         Public Property ClaimsAdded() As Boolean
             Get
@@ -169,6 +160,6 @@ Public Class MyAuthorizationPolicy
                 bClaimsAdded = value
             End Set
         End Property
-    End Class 
-End Class 
+    End Class
+End Class
 ' 
