@@ -3,11 +3,11 @@ using System;
 
 namespace ConsoleApplication1
 {
-    class Program
+    public class Program1
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Counter c = new Counter(new Random().Next(10));
+            Counter c = new(new Random().Next(10));
             c.ThresholdReached += c_ThresholdReached;
 
             Console.WriteLine("press 'a' key to increase total");
@@ -27,18 +27,18 @@ namespace ConsoleApplication1
 
     class Counter
     {
-        private int threshold;
-        private int total;
+        private readonly int _threshold;
+        private int _total;
 
         public Counter(int passedThreshold)
         {
-            threshold = passedThreshold;
+            _threshold = passedThreshold;
         }
 
         public void Add(int x)
         {
-            total += x;
-            if (total >= threshold)
+            _total += x;
+            if (_total >= _threshold)
             {
                 OnThresholdReached(EventArgs.Empty);
             }

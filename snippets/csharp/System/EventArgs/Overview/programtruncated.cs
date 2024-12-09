@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace ConsoleApplication1
+namespace ConsoleApplication2
 {
     // <snippet2>
-    class Program
+    public class Program2
     {
-        static void Main()
+        public static void Main()
         {
             var c = new Counter();
             c.ThresholdReached += c_ThresholdReached;
