@@ -5,7 +5,7 @@ namespace ConsoleApplication4
 {
     class Program4
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             Counter c = new(new Random().Next(10));
             c.ThresholdReached += c_ThresholdReached;
@@ -18,7 +18,7 @@ namespace ConsoleApplication4
             }
         }
 
-        public static void c_ThresholdReached(object sender, ThresholdReachedEventArgs e)
+        public static void c_ThresholdReached(object? sender, ThresholdReachedEventArgs e)
         {
             Console.WriteLine("The threshold of {0} was reached at {1}.", e.Threshold, e.TimeReached);
             Environment.Exit(0);
@@ -40,23 +40,21 @@ namespace ConsoleApplication4
             _total += x;
             if (_total >= _threshold)
             {
-                ThresholdReachedEventArgs args = new ThresholdReachedEventArgs();
-                args.Threshold = _threshold;
-                args.TimeReached = DateTime.Now;
+                ThresholdReachedEventArgs args = new()
+                {
+                    Threshold = _threshold,
+                    TimeReached = DateTime.Now
+                };
                 OnThresholdReached(args);
             }
         }
 
         protected virtual void OnThresholdReached(ThresholdReachedEventArgs e)
         {
-            ThresholdReachedEventHandler handler = ThresholdReached;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ThresholdReached?.Invoke(this, e);
         }
 
-        public event ThresholdReachedEventHandler ThresholdReached;
+        public event ThresholdReachedEventHandler? ThresholdReached;
     }
 
     public class ThresholdReachedEventArgs : EventArgs
@@ -65,6 +63,6 @@ namespace ConsoleApplication4
         public DateTime TimeReached { get; set; }
     }
 
-    public delegate void ThresholdReachedEventHandler(Object sender, ThresholdReachedEventArgs e);
+    public delegate void ThresholdReachedEventHandler(object sender, ThresholdReachedEventArgs e);
 }
 // </snippet7>

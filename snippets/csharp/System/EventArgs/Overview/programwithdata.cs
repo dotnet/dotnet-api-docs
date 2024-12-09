@@ -5,7 +5,7 @@ namespace ConsoleApplication3
 {
     public class Program3
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             Counter c = new(new Random().Next(10));
             c.ThresholdReached += c_ThresholdReached;
@@ -40,23 +40,21 @@ namespace ConsoleApplication3
             _total += x;
             if (_total >= _threshold)
             {
-                ThresholdReachedEventArgs args = new ThresholdReachedEventArgs();
-                args.Threshold = _threshold;
-                args.TimeReached = DateTime.Now;
+                ThresholdReachedEventArgs args = new()
+                {
+                    Threshold = _threshold,
+                    TimeReached = DateTime.Now
+                };
                 OnThresholdReached(args);
             }
         }
 
         protected virtual void OnThresholdReached(ThresholdReachedEventArgs e)
         {
-            EventHandler<ThresholdReachedEventArgs> handler = ThresholdReached;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ThresholdReached?.Invoke(this, e);
         }
 
-        public event EventHandler<ThresholdReachedEventArgs> ThresholdReached;
+        public event EventHandler<ThresholdReachedEventArgs>? ThresholdReached;
     }
 
     public class ThresholdReachedEventArgs : EventArgs

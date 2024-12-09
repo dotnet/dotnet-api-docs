@@ -18,7 +18,7 @@ namespace ConsoleApplication1
             }
         }
 
-        static void c_ThresholdReached(object sender, EventArgs e)
+        static void c_ThresholdReached(object? sender, EventArgs e)
         {
             Console.WriteLine("The threshold was reached.");
             Environment.Exit(0);
@@ -46,14 +46,10 @@ namespace ConsoleApplication1
 
         protected virtual void OnThresholdReached(EventArgs e)
         {
-            EventHandler handler = ThresholdReached;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ThresholdReached?.Invoke(this, e);
         }
 
-        public event EventHandler ThresholdReached;
+        public event EventHandler? ThresholdReached;
     }
 }
 // </snippet5>

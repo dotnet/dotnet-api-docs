@@ -13,7 +13,7 @@ namespace ConsoleApplication2
             // provide remaining implementation for the class
         }
 
-        static void c_ThresholdReached(object sender, EventArgs e)
+        static void c_ThresholdReached(object? sender, EventArgs e)
         {
             Console.WriteLine("The threshold was reached.");
         }
@@ -23,11 +23,11 @@ namespace ConsoleApplication2
     // <snippet1>
     class Counter
     {
-        public event EventHandler ThresholdReached;
+        public event EventHandler? ThresholdReached;
 
         protected virtual void OnThresholdReached(EventArgs e)
         {
-            EventHandler handler = ThresholdReached;
+            EventHandler? handler = ThresholdReached;
             handler?.Invoke(this, e);
         }
 
