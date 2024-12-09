@@ -1,11 +1,11 @@
-using System;
-
-public class Example
+﻿public class Example
 {
     public static void Main()
     {
         // <Snippet5>
         Console.WriteLine("Generating 10 random numbers:");
+
+        Random rnd = new();
 
         for (uint ctr = 1; ctr <= 10; ctr++)
             Console.WriteLine($"{rnd.Next(),15:N0}");
