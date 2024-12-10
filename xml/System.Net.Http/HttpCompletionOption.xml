@@ -36,7 +36,27 @@
   </Base>
   <Docs>
     <summary>Indicates if <see cref="T:System.Net.Http.HttpClient" /> operations should be considered completed either as soon as a response is available, or after reading the entire response message including the content.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:HttpCompletionOption> value effectively affects the scope of the timeout specified in the <see cref="T:System.Net.Http.HttpClient" /> operation options when reading a response. The timeout on the <see cref="T:System.Net.Http.HttpClient" /> always applies on the relevant invoked methods up until the point where those methods complete/return. Crucially, when using the <see cref="F:System.Net.Http.HttpCompletionOptions.ResponseHeadersRead" /> option, the timeout applies only up to where the headers end and the content starts. The content reading operation needs to be timed out separately. Below is an example illustrating this point:
+
+```csharp
+var httpClient = new HttpClient();
+httpClient.Timeout = TimeSpan.FromSeconds(30);
+using (var response = await httpClient.GetAsync("http://localhost:12345/", HttpCompletionOption.ResponseHeadersRead)) // 30-second timeout but ONLY up until past the headers
+{
+    // Do other stuff that doesn't rely on the content first, like status code validation
+    // ...
+
+    var content = await response.Content.ReadAsStringAsync(); // NO TIMEOUT
+}
+```
+
+ ]]>
+      </format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="ResponseContentRead">
