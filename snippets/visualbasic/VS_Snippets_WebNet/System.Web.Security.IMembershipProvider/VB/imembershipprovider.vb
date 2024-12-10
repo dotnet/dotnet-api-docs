@@ -1,18 +1,13 @@
-﻿Imports System.Web.Security
-Imports System.Configuration.Provider
-Imports System.Collections.Specialized
-Imports System.Data
-Imports System.Data.Odbc
+﻿Imports System.Collections.Specialized
 Imports System.Configuration
-Imports System.Diagnostics
-Imports System.Web
-Imports System.Globalization
-Imports System.Web.Configuration
+Imports System.Configuration.Provider
+Imports System.Data.Odbc
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Web.Configuration
+Imports System.Web.Security
 
 
-'
 ' This provider works with the following schema for the table of user data.
 ' 
 ' CREATE TABLE Users
@@ -38,308 +33,300 @@ Imports System.Text
 '   FailedPasswordAnswerAttemptCount Integer,
 '   FailedPasswordAnswerAttemptWindowStart DateTime
 ' )
-'  
-
 
 Namespace Samples.AspNet.Membership
 
-  Public NotInheritable Class OdbcMembershipProvider
-  Inherits MembershipProvider
-  
-
-  Private newPasswordLength As Integer = 8
-
-  '
-  ' Used when determining encryption key values.
-  '
-
-  Private machineKey As MachineKeySection
+    Public NotInheritable Class OdbcMembershipProvider
+        Inherits MembershipProvider
 
 
-  
+        Private newPasswordLength As Integer = 8
+
+        '
+        ' Used when determining encryption key values.
+        '
+
+        Private machineKey As MachineKeySection
 
 
-  '
-  ' Database connection string.
-  '
+        '
+        ' Database connection string.
+        '
 
-  Private pConnectionStringSettings As ConnectionStringSettings 
+        Private pConnectionStringSettings As ConnectionStringSettings
 
-  Public ReadOnly Property ConnectionString As String 
-    Get
-  Return pConnectionStringSettings.ConnectionString
-    End Get
-  End Property
-
-
+        Public ReadOnly Property ConnectionString As String
+            Get
+                Return pConnectionStringSettings.ConnectionString
+            End Get
+        End Property
 
 
+        '
+        ' System.Configuration.Provider.ProviderBase.Initialize Method
+        '
 
-  '
-  ' System.Configuration.Provider.ProviderBase.Initialize Method
-  '
+        Public Overrides Sub Initialize(name As String, config As NameValueCollection)
 
-Public Overrides Sub Initialize(name As String, config As NameValueCollection)
-  
-      '
-      ' Initialize values from web.config.
-      '
+            '
+            ' Initialize values from web.config.
+            '
 
-      If config Is Nothing Then _
-        Throw New ArgumentNullException("config")
+            If config Is Nothing Then _
+              Throw New ArgumentNullException("config")
 
-      If name Is Nothing OrElse name.Length = 0 Then _
-        name = "OdbcMembershipProvider"
+            If name Is Nothing OrElse name.Length = 0 Then _
+              name = "OdbcMembershipProvider"
 
-      If String.IsNullOrEmpty(config("description")) Then
-        config.Remove("description")
-        config.Add("description", "Sample ODBC Membership provider")
-      End If
+            If String.IsNullOrEmpty(config("description")) Then
+                config.Remove("description")
+                config.Add("description", "Sample ODBC Membership provider")
+            End If
 
-      ' Initialize the abstract base class.
-      MyBase.Initialize(name, config)
-
-
-      pApplicationName           = GetConfigValue(config("applicationName"), _
-                                     System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath)
-      pMaxInvalidPasswordAttempts  = Convert.ToInt32(GetConfigValue(config("maxInvalidPasswordAttempts"), "5"))
-      pPasswordAttemptWindow = Convert.ToInt32(GetConfigValue(config("passwordAttemptWindow"), "10"))
-      pMinRequiredNonAlphanumericCharacters = Convert.ToInt32(GetConfigValue(config("minRequiredAlphaNumericCharacters"), "1"))
-      pMinRequiredPasswordLength = Convert.ToInt32(GetConfigValue(config("minRequiredPasswordLength"), "7"))
-      pPasswordStrengthRegularExpression = Convert.ToString(GetConfigValue(config("passwordStrengthRegularExpression"), ""))
-      pEnablePasswordReset       = Convert.ToBoolean(GetConfigValue(config("enablePasswordReset"), "True"))      
-      pEnablePasswordRetrieval   = Convert.ToBoolean(GetConfigValue(config("enablePasswordRetrieval"), "True"))
-      pRequiresQuestionAndAnswer = Convert.ToBoolean(GetConfigValue(config("requiresQuestionAndAnswer"), "False"))
-      pRequiresUniqueEmail       = Convert.ToBoolean(GetConfigValue(config("requiresUniqueEmail"), "True"))
-
-      Dim temp_format As String = config("passwordFormat")
-      If temp_format Is Nothing Then      
-        temp_format = "Hashed"
-      End If
-
-      Select Case temp_format      
-        Case "Hashed"
-          pPasswordFormat = MembershipPasswordFormat.Hashed
-        Case "Encrypted"
-          pPasswordFormat = MembershipPasswordFormat.Encrypted
-        Case "Clear"
-          pPasswordFormat = MembershipPasswordFormat.Clear
-        Case Else
-          Throw New ProviderException("Password format not supported.")
-      End Select
-    '
-    ' Initialize OdbcConnection.
-    '
-
-    pConnectionStringSettings = ConfigurationManager.ConnectionStrings(config("connectionStringName"))
-
-    If pConnectionStringSettings Is Nothing OrElse pConnectionStringSettings.ConnectionString.Trim() = "" Then
-      Throw New ProviderException("Connection string cannot be blank.")
-    End If
+            ' Initialize the abstract base class.
+            MyBase.Initialize(name, config)
 
 
-    ' Get encryption and decryption key information from the configuration.
-    Dim cfg As System.Configuration.Configuration = _
-      WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath)
-    machineKey = CType(cfg.GetSection("system.web/machineKey"), MachineKeySection)
-End Sub
+            pApplicationName = GetConfigValue(config("applicationName"),
+                                           System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath)
+            pMaxInvalidPasswordAttempts = Convert.ToInt32(GetConfigValue(config("maxInvalidPasswordAttempts"), "5"))
+            pPasswordAttemptWindow = Convert.ToInt32(GetConfigValue(config("passwordAttemptWindow"), "10"))
+            pMinRequiredNonAlphanumericCharacters = Convert.ToInt32(GetConfigValue(config("minRequiredAlphaNumericCharacters"), "1"))
+            pMinRequiredPasswordLength = Convert.ToInt32(GetConfigValue(config("minRequiredPasswordLength"), "7"))
+            pPasswordStrengthRegularExpression = Convert.ToString(GetConfigValue(config("passwordStrengthRegularExpression"), ""))
+            pEnablePasswordReset = Convert.ToBoolean(GetConfigValue(config("enablePasswordReset"), "True"))
+            pEnablePasswordRetrieval = Convert.ToBoolean(GetConfigValue(config("enablePasswordRetrieval"), "True"))
+            pRequiresQuestionAndAnswer = Convert.ToBoolean(GetConfigValue(config("requiresQuestionAndAnswer"), "False"))
+            pRequiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config("requiresUniqueEmail"), "True"))
 
-    '
-    ' A helper function to retrieve config values from the configuration file.
-    '
+            Dim temp_format As String = config("passwordFormat")
+            If temp_format Is Nothing Then
+                temp_format = "Hashed"
+            End If
 
-    Private Function GetConfigValue(configValue As String, defaultValue As String) As String
-      If configValue Is Nothing OrElse configValue.Trim() = "" Then _
-        Return defaultValue
+            Select Case temp_format
+                Case "Hashed"
+                    pPasswordFormat = MembershipPasswordFormat.Hashed
+                Case "Encrypted"
+                    pPasswordFormat = MembershipPasswordFormat.Encrypted
+                Case "Clear"
+                    pPasswordFormat = MembershipPasswordFormat.Clear
+                Case Else
+                    Throw New ProviderException("Password format not supported.")
+            End Select
+            '
+            ' Initialize OdbcConnection.
+            '
 
-      Return configValue
-    End Function
+            pConnectionStringSettings = ConfigurationManager.ConnectionStrings(config("connectionStringName"))
 
-
-  '
-  ' System.Web.Security.MembershipProvider properties.
-  '
-
-    Private pRequiresUniqueEmail       As Boolean
-
-    Public Overrides ReadOnly Property RequiresUniqueEmail As Boolean    
-      Get
-        Return pRequiresUniqueEmail
-      End Get
-    End Property
-
-    Private pMaxInvalidPasswordAttempts  As Integer
-
-    Public Overrides ReadOnly Property MaxInvalidPasswordAttempts As Integer
-      Get
-        Return pMaxInvalidPasswordAttempts
-      End Get
-    End Property
-
-    Private pPasswordAttemptWindow     As Integer
-
-    Public Overrides ReadOnly Property PasswordAttemptWindow As Integer
-      Get
-        Return pPasswordAttemptWindow
-      End Get
-    End Property
-
-    Private pPasswordFormat            As MembershipPasswordFormat
-
-    Public Overrides ReadOnly Property PasswordFormat As MembershipPasswordFormat
-      Get
-        Return pPasswordFormat
-      End Get
-    End Property
-
-    Private pMinRequiredNonAlphanumericCharacters As Integer
-
-    Public Overrides ReadOnly Property MinRequiredNonAlphanumericCharacters() As Integer
-      Get
-        Return pMinRequiredNonAlphanumericCharacters
-      End Get
-    End Property
-
-    Private pMinRequiredPasswordLength As Integer
-
-    Public Overrides ReadOnly Property MinRequiredPasswordLength() As Integer
-      Get
-        Return pMinRequiredPasswordLength
-      End Get
-    End Property
-
-    Private pPasswordStrengthRegularExpression As String
-
-    Public Overrides ReadOnly Property PasswordStrengthRegularExpression() As String
-      Get
-        Return pPasswordStrengthRegularExpression
-      End Get
-    End Property
-  
-'<Snippet17>
-Private pApplicationName As String
-
-Public Overrides Property ApplicationName As String
-  Get
-    Return pApplicationName
-  End Get
-  Set
-    pApplicationName = value
-  End Set
-End Property
-'</Snippet17>
-
-' <Snippet1>
-Private pEnablePasswordReset As Boolean
-
-Public Overrides ReadOnly Property EnablePasswordReset As Boolean
-  Get
-    Return pEnablePasswordReSet
-  End Get
-End Property
-' </Snippet1>
-
-' <Snippet2>
-Private pEnablePasswordRetrieval As Boolean
-
-Public Overrides ReadOnly Property EnablePasswordRetrieval As Boolean
-  Get
-    Return pEnablePasswordRetrieval
-  End Get
-End Property
-' </Snippet2>
+            If pConnectionStringSettings Is Nothing OrElse pConnectionStringSettings.ConnectionString.Trim() = "" Then
+                Throw New ProviderException("Connection string cannot be blank.")
+            End If
 
 
-' <Snippet3>
-Private pRequiresQuestionAndAnswer As Boolean
+            ' Get encryption and decryption key information from the configuration.
+            Dim cfg As System.Configuration.Configuration =
+              WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath)
+            machineKey = CType(cfg.GetSection("system.web/machineKey"), MachineKeySection)
+        End Sub
 
-Public Overrides ReadOnly Property RequiresQuestionAndAnswer As Boolean
-  Get
-    Return pRequiresQuestionAndAnswer
-  End Get
-End Property
-' </Snippet3>
+        '
+        ' A helper function to retrieve config values from the configuration file.
+        '
 
+        Private Function GetConfigValue(configValue As String, defaultValue As String) As String
+            If configValue Is Nothing OrElse configValue.Trim() = "" Then _
+              Return defaultValue
 
-  '
-  ' System.Web.Security.MembershipProvider methods.
-  '
-
-  '
-  ' MembershipProvider.ChangePassword
-  '
-
-' <Snippet4>
-Public Overrides Function ChangePassword(username As String, _
-                                         oldPwd As String, _
-                                         newPwd As String) As Boolean
-  
-  If Not ValidateUser(username, oldPwd) Then
-    Return False
-  End If
-
-  Dim args As ValidatePasswordEventArgs = _
-    New ValidatePasswordEventArgs(username, newPwd, True)
-
-  OnValidatingPassword(args)
-  
-  If args.Cancel Then
-    If Not args.FailureInformation Is Nothing Then
-      Throw args.FailureInformation
-    Else
-      Throw New MembershipPasswordException("Change password canceled due to New password validation failure.")
-    End If
-  End If
+            Return configValue
+        End Function
 
 
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users " & _
-                       " SET Password = ?, LastPasswordChangedDate = ? " & _
+        '
+        ' System.Web.Security.MembershipProvider properties.
+        '
+
+        Private pRequiresUniqueEmail As Boolean
+
+        Public Overrides ReadOnly Property RequiresUniqueEmail As Boolean
+            Get
+                Return pRequiresUniqueEmail
+            End Get
+        End Property
+
+        Private pMaxInvalidPasswordAttempts As Integer
+
+        Public Overrides ReadOnly Property MaxInvalidPasswordAttempts As Integer
+            Get
+                Return pMaxInvalidPasswordAttempts
+            End Get
+        End Property
+
+        Private pPasswordAttemptWindow As Integer
+
+        Public Overrides ReadOnly Property PasswordAttemptWindow As Integer
+            Get
+                Return pPasswordAttemptWindow
+            End Get
+        End Property
+
+        Private pPasswordFormat As MembershipPasswordFormat
+
+        Public Overrides ReadOnly Property PasswordFormat As MembershipPasswordFormat
+            Get
+                Return pPasswordFormat
+            End Get
+        End Property
+
+        Private pMinRequiredNonAlphanumericCharacters As Integer
+
+        Public Overrides ReadOnly Property MinRequiredNonAlphanumericCharacters() As Integer
+            Get
+                Return pMinRequiredNonAlphanumericCharacters
+            End Get
+        End Property
+
+        Private pMinRequiredPasswordLength As Integer
+
+        Public Overrides ReadOnly Property MinRequiredPasswordLength() As Integer
+            Get
+                Return pMinRequiredPasswordLength
+            End Get
+        End Property
+
+        Private pPasswordStrengthRegularExpression As String
+
+        Public Overrides ReadOnly Property PasswordStrengthRegularExpression() As String
+            Get
+                Return pPasswordStrengthRegularExpression
+            End Get
+        End Property
+
+        '<Snippet17>
+        Private pApplicationName As String
+
+        Public Overrides Property ApplicationName As String
+            Get
+                Return pApplicationName
+            End Get
+            Set
+                pApplicationName = Value
+            End Set
+        End Property
+        '</Snippet17>
+
+        ' <Snippet1>
+        Private pEnablePasswordReset As Boolean
+
+        Public Overrides ReadOnly Property EnablePasswordReset As Boolean
+            Get
+                Return pEnablePasswordReset
+            End Get
+        End Property
+        ' </Snippet1>
+
+        ' <Snippet2>
+        Private pEnablePasswordRetrieval As Boolean
+
+        Public Overrides ReadOnly Property EnablePasswordRetrieval As Boolean
+            Get
+                Return pEnablePasswordRetrieval
+            End Get
+        End Property
+        ' </Snippet2>
+
+
+        ' <Snippet3>
+        Private pRequiresQuestionAndAnswer As Boolean
+
+        Public Overrides ReadOnly Property RequiresQuestionAndAnswer As Boolean
+            Get
+                Return pRequiresQuestionAndAnswer
+            End Get
+        End Property
+        ' </Snippet3>
+
+
+        '
+        ' System.Web.Security.MembershipProvider methods.
+        '
+
+        '
+        ' MembershipProvider.ChangePassword
+        '
+
+        ' <Snippet4>
+        Public Overrides Function ChangePassword(username As String,
+                                                 oldPwd As String,
+                                                 newPwd As String) As Boolean
+
+            If Not ValidateUser(username, oldPwd) Then
+                Return False
+            End If
+
+            Dim args As ValidatePasswordEventArgs =
+              New ValidatePasswordEventArgs(username, newPwd, True)
+
+            OnValidatingPassword(args)
+
+            If args.Cancel Then
+                If Not args.FailureInformation Is Nothing Then
+                    Throw args.FailureInformation
+                Else
+                    Throw New MembershipPasswordException("Change password canceled due to New password validation failure.")
+                End If
+            End If
+
+
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users " &
+                       " SET Password = ?, LastPasswordChangedDate = ? " &
                        " WHERE Username = ? AND Password = ? AND ApplicationName = ?", conn)
 
-  cmd.Parameters.Add("@Password", OdbcType.VarChar, 128).Value = EncodePassword(newPwd)
-  cmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now
-  cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
-  cmd.Parameters.Add("@OldPassword", OdbcType.VarChar, 128).Value = oldPwd
-  cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = ApplicationName
+            cmd.Parameters.Add("@Password", OdbcType.VarChar, 128).Value = EncodePassword(newPwd)
+            cmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now
+            cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
+            cmd.Parameters.Add("@OldPassword", OdbcType.VarChar, 128).Value = oldPwd
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = ApplicationName
 
 
-  Dim rowsAffected As Integer = 0
+            Dim rowsAffected As Integer = 0
 
-  Try
-    conn.Open()
+            Try
+                conn.Open()
 
-    rowsAffected = cmd.ExecuteNonQuery()
-  Catch e As OdbcException
-    ' Handle exception.
-  Finally
-    conn.Close()
-  End Try
+                rowsAffected = cmd.ExecuteNonQuery()
+            Catch e As OdbcException
+                ' Handle exception.
+            Finally
+                conn.Close()
+            End Try
 
-  If rowsAffected > 0 Then Return True
+            If rowsAffected > 0 Then Return True
 
-  Return False
-End Function
-' </Snippet4>
+            Return False
+        End Function
+        ' </Snippet4>
 
 
 
-  '
-  ' MembershipProvider.ChangePasswordQuestionAndAnswer
-  '
+        '
+        ' MembershipProvider.ChangePasswordQuestionAndAnswer
+        '
 
-' <Snippet5>
-Public Overrides Function ChangePasswordQuestionAndAnswer(username As String, _
-                                                          password As String, _
-                                                          newPwdQuestion As String, _
-                                                          newPwdAnswer As String) _
-                                                          As Boolean
-  
-  If Not ValidateUser(username, password) Then Return False
+        ' <Snippet5>
+        Public Overrides Function ChangePasswordQuestionAndAnswer(username As String,
+                                                                  password As String,
+                                                                  newPwdQuestion As String,
+                                                                  newPwdAnswer As String) _
+                                                                  As Boolean
 
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users " & _
-                                  " SET PasswordQuestion = ?, PasswordAnswer = ?" & _
+            If Not ValidateUser(username, password) Then Return False
+
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users " &
+                                  " SET PasswordQuestion = ?, PasswordAnswer = ?" &
                                  " WHERE Username = ? AND Password = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Question", OdbcType.VarChar, 255).Value = newPwdQuestion
@@ -375,21 +362,21 @@ Public Overrides Function ChangePasswordQuestionAndAnswer(username As String, _
         '
 
         ' <Snippet6>
-        Public Overrides Function CreateUser(ByVal username As String, _
-        ByVal password As String, _
-        ByVal email As String, _
-        ByVal passwordQuestion As String, _
-        ByVal passwordAnswer As String, _
-        ByVal isApproved As Boolean, _
-        ByVal providerUserKey As Object, _
+        Public Overrides Function CreateUser(ByVal username As String,
+        ByVal password As String,
+        ByVal email As String,
+        ByVal passwordQuestion As String,
+        ByVal passwordAnswer As String,
+        ByVal isApproved As Boolean,
+        ByVal providerUserKey As Object,
                  ByRef status As MembershipCreateStatus) As MembershipUser
 
-            Dim Args As ValidatePasswordEventArgs = _
+            Dim Args As ValidatePasswordEventArgs =
               New ValidatePasswordEventArgs(username, password, True)
 
-            OnValidatingPassword(args)
+            OnValidatingPassword(Args)
 
-            If args.Cancel Then
+            If Args.Cancel Then
                 status = MembershipCreateStatus.InvalidPassword
                 Return Nothing
             End If
@@ -415,13 +402,13 @@ Public Overrides Function ChangePasswordQuestionAndAnswer(username As String, _
                 End If
 
                 Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-                Dim cmd As OdbcCommand = New OdbcCommand("INSERT INTO Users " & _
-                      " (PKID, Username, Password, Email, PasswordQuestion, " & _
-                      " PasswordAnswer, IsApproved," & _
-                      " Comment, CreationDate, LastPasswordChangedDate, LastActivityDate," & _
-                      " ApplicationName, IsLockedOut, LastLockedOutDate," & _
-                      " FailedPasswordAttemptCount, FailedPasswordAttemptWindowStart, " & _
-                      " FailedPasswordAnswerAttemptCount, FailedPasswordAnswerAttemptWindowStart)" & _
+                Dim cmd As OdbcCommand = New OdbcCommand("INSERT INTO Users " &
+                      " (PKID, Username, Password, Email, PasswordQuestion, " &
+                      " PasswordAnswer, IsApproved," &
+                      " Comment, CreationDate, LastPasswordChangedDate, LastActivityDate," &
+                      " ApplicationName, IsLockedOut, LastLockedOutDate," &
+                      " FailedPasswordAttemptCount, FailedPasswordAttemptWindowStart, " &
+                      " FailedPasswordAnswerAttemptCount, FailedPasswordAnswerAttemptWindowStart)" &
                       " Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", conn)
 
                 cmd.Parameters.Add("@PKID", OdbcType.UniqueIdentifier).Value = providerUserKey
@@ -469,19 +456,19 @@ Public Overrides Function ChangePasswordQuestionAndAnswer(username As String, _
 
             Return Nothing
         End Function
-' </Snippet6>
+        ' </Snippet6>
 
 
 
-  '
-  ' MembershipProvider.DeleteUser
-  '
+        '
+        ' MembershipProvider.DeleteUser
+        '
 
-' <Snippet7>
-Public Overrides Function DeleteUser(username As String, deleteAllRelatedData As Boolean) As Boolean
+        ' <Snippet7>
+        Public Overrides Function DeleteUser(username As String, deleteAllRelatedData As Boolean) As Boolean
 
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("DELETE FROM Users " & _
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("DELETE FROM Users " &
                                        " WHERE Username = ? AND Applicationname = ?", conn)
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
@@ -518,13 +505,13 @@ Public Overrides Function DeleteUser(username As String, deleteAllRelatedData As
         '
 
 
-        Public Overrides Function GetAllUsers(ByVal pageIndex As Integer, _
-        ByVal pageSize As Integer, _
+        Public Overrides Function GetAllUsers(ByVal pageIndex As Integer,
+        ByVal pageSize As Integer,
                                               ByRef totalRecords As Integer) _
                                               As MembershipUserCollection
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users  " & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users  " &
                                                      "WHERE ApplicationName = ?", conn)
             cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = ApplicationName
 
@@ -539,11 +526,11 @@ Public Overrides Function DeleteUser(username As String, deleteAllRelatedData As
 
                 If totalRecords <= 0 Then Return users
 
-                cmd.CommandText = "SELECT Username, Email, PasswordQuestion," & _
-                                  " Comment, IsApproved, CreationDate, LastLoginDate," & _
-                                  " LastActivityDate, LastPasswordChangedDate " & _
-                                  " FROM Users  " & _
-                                  " WHERE ApplicationName = ? " & _
+                cmd.CommandText = "SELECT Username, Email, PasswordQuestion," &
+                                  " Comment, IsApproved, CreationDate, LastLoginDate," &
+                                  " LastActivityDate, LastPasswordChangedDate " &
+                                  " FROM Users  " &
+                                  " WHERE ApplicationName = ? " &
                                   " ORDER BY Username Asc"
 
                 reader = cmd.ExecuteReader()
@@ -588,7 +575,7 @@ Public Overrides Function DeleteUser(username As String, deleteAllRelatedData As
             Dim compareTime As DateTime = DateTime.Now.Subtract(onlineSpan)
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users " & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users " &
                                          " WHERE LastActivityDate > ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@CompareDate", OdbcType.DateTime).Value = compareTime
@@ -608,28 +595,28 @@ Public Overrides Function DeleteUser(username As String, deleteAllRelatedData As
 
             Return numOnline
         End Function
-' </Snippet8>
+        ' </Snippet8>
 
 
 
 
-  '
-  ' MembershipProvider.GetPassword
-  '
+        '
+        ' MembershipProvider.GetPassword
+        '
 
-' <Snippet9>
-Public Overrides Function GetPassword(username As String, answer As String) As String
-    
-  If Not EnablePasswordRetrieval Then      
-    Throw New ProviderException("Password Retrieval Not Enabled.")
-  End If
+        ' <Snippet9>
+        Public Overrides Function GetPassword(username As String, answer As String) As String
 
-  If PasswordFormat = MembershipPasswordFormat.Hashed Then      
-    Throw New ProviderException("Cannot retrieve Hashed passwords.")
-  End If
+            If Not EnablePasswordRetrieval Then
+                Throw New ProviderException("Password Retrieval Not Enabled.")
+            End If
 
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Password, PasswordAnswer, IsLockedOut FROM Users " & _
+            If PasswordFormat = MembershipPasswordFormat.Hashed Then
+                Throw New ProviderException("Cannot retrieve Hashed passwords.")
+            End If
+
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Password, PasswordAnswer, IsLockedOut FROM Users " &
                   " WHERE Username = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
@@ -688,9 +675,9 @@ Public Overrides Function GetPassword(username As String, answer As String) As S
         Public Overrides Function GetUser(ByVal username As String, ByVal userIsOnline As Boolean) As MembershipUser
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT PKID, Username, Email, PasswordQuestion," & _
-                  " Comment, IsApproved, IsLockedOut, CreationDate, LastLoginDate," & _
-                  " LastActivityDate, LastPasswordChangedDate, LastLockedOutDate" & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT PKID, Username, Email, PasswordQuestion," &
+                  " Comment, IsApproved, IsLockedOut, CreationDate, LastLoginDate," &
+                  " LastActivityDate, LastPasswordChangedDate, LastLockedOutDate" &
                   " FROM Users  WHERE Username = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
@@ -709,8 +696,8 @@ Public Overrides Function GetPassword(username As String, answer As String) As S
                     u = GetUserFromReader(reader)
 
                     If userIsOnline Then
-                        Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users  " & _
-                                  "SET LastActivityDate = ? " & _
+                        Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users  " &
+                                  "SET LastActivityDate = ? " &
                                   "WHERE Username = ? AND Applicationname = ?", conn)
 
                         updateCmd.Parameters.Add("@LastActivityDate", OdbcType.DateTime).Value = DateTime.Now
@@ -768,18 +755,18 @@ Public Overrides Function GetPassword(username As String, answer As String) As S
             If Not reader.GetValue(11) Is DBNull.Value Then _
               lastLockedOutDate = reader.GetDateTime(11)
 
-            Dim u As MembershipUser = New MembershipUser(Me.Name, _
-                                                  username, _
-                                                  providerUserKey, _
-                                                  email, _
-                                                  passwordQuestion, _
-                                                  comment, _
-                                                  isApproved, _
-                                                  isLockedOut, _
-                                                  creationDate, _
-                                                  lastLoginDate, _
-                                                  lastActivityDate, _
-                                                  lastPasswordChangedDate, _
+            Dim u As MembershipUser = New MembershipUser(Me.Name,
+                                                  username,
+                                                  providerUserKey,
+                                                  email,
+                                                  passwordQuestion,
+                                                  comment,
+                                                  isApproved,
+                                                  isLockedOut,
+                                                  creationDate,
+                                                  lastLoginDate,
+                                                  lastActivityDate,
+                                                  lastPasswordChangedDate,
                                                   lastLockedOutDate)
 
             Return u
@@ -796,7 +783,7 @@ Public Overrides Function GetPassword(username As String, answer As String) As S
         Public Overrides Function GetUserNameByEmail(ByVal email As String) As String
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Username" & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Username" &
                              " FROM Users  WHERE Email = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Email", OdbcType.VarChar, 128).Value = email
@@ -816,50 +803,50 @@ Public Overrides Function GetPassword(username As String, answer As String) As S
 
             Return username
         End Function
-' </Snippet11>
+        ' </Snippet11>
 
 
 
 
 
-  '
-  ' MembershipProvider.ResetPassword
-  '
+        '
+        ' MembershipProvider.ResetPassword
+        '
 
 
-' <Snippet12>
-Public Overrides Function ResetPassword(username As String, answer As String) As String
-    
-  If Not EnablePasswordReset Then      
-    Throw New NotSupportedException("Password Reset is not enabled.")
-  End If
+        ' <Snippet12>
+        Public Overrides Function ResetPassword(username As String, answer As String) As String
 
-  If answer Is Nothing AndAlso RequiresQuestionAndAnswer Then      
-    UpdateFailureCount(username, "passwordAnswer")
+            If Not EnablePasswordReset Then
+                Throw New NotSupportedException("Password Reset is not enabled.")
+            End If
 
-    Throw New ProviderException("Password answer required for password Reset.")
-  End If
+            If answer Is Nothing AndAlso RequiresQuestionAndAnswer Then
+                UpdateFailureCount(username, "passwordAnswer")
 
-  Dim newPassword As String = _
-    System.Web.Security.Membership.GeneratePassword(newPasswordLength, pMinRequiredNonAlphanumericCharacters)
+                Throw New ProviderException("Password answer required for password Reset.")
+            End If
 
-
-  Dim Args As ValidatePasswordEventArgs = _
-    New ValidatePasswordEventArgs(username, newPassword, True)
-
-  OnValidatingPassword(args)
-  
-  If args.Cancel Then
-    If Not args.FailureInformation Is Nothing Then
-      Throw args.FailureInformation
-    Else
-      Throw New MembershipPasswordException("Reset password canceled due to password validation failure.")
-    End If
-  End If
+            Dim newPassword As String =
+              System.Web.Security.Membership.GeneratePassword(newPasswordLength, pMinRequiredNonAlphanumericCharacters)
 
 
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT PasswordAnswer, IsLockedOut FROM Users " & _
+            Dim Args As ValidatePasswordEventArgs =
+              New ValidatePasswordEventArgs(username, newPassword, True)
+
+            OnValidatingPassword(Args)
+
+            If Args.Cancel Then
+                If Not Args.FailureInformation Is Nothing Then
+                    Throw Args.FailureInformation
+                Else
+                    Throw New MembershipPasswordException("Reset password canceled due to password validation failure.")
+                End If
+            End If
+
+
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT PasswordAnswer, IsLockedOut FROM Users " &
                   " WHERE Username = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
@@ -891,8 +878,8 @@ Public Overrides Function ResetPassword(username As String, answer As String) As
                     Throw New MembershipPasswordException("Incorrect password answer.")
                 End If
 
-                Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users " & _
-                    " SET Password = ?, LastPasswordChangedDate = ?" & _
+                Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users " &
+                    " SET Password = ?, LastPasswordChangedDate = ?" &
                     " WHERE Username = ? AND ApplicationName = ? AND IsLockedOut = False", conn)
 
                 updateCmd.Parameters.Add("@Password", OdbcType.VarChar, 255).Value = EncodePassword(newPassword)
@@ -908,27 +895,27 @@ Public Overrides Function ResetPassword(username As String, answer As String) As
                 conn.Close()
             End Try
 
-  If rowsAffected > 0 Then      
-    Return newPassword
-  Else      
-    Throw New MembershipPasswordException("User not found, or user is locked out. Password not Reset.")
-  End If
-End Function
-' </Snippet12>
+            If rowsAffected > 0 Then
+                Return newPassword
+            Else
+                Throw New MembershipPasswordException("User not found, or user is locked out. Password not Reset.")
+            End If
+        End Function
+        ' </Snippet12>
 
 
 
-  '
-  ' MembershipProvider.UpdateUser
-  '
+        '
+        ' MembershipProvider.UpdateUser
+        '
 
-' <Snippet13>
-Public Overrides Sub UpdateUser(user As MembershipUser)
+        ' <Snippet13>
+        Public Overrides Sub UpdateUser(user As MembershipUser)
 
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users " & _
-                                                   " SET Email = ?, Comment = ?," & _
-                                                   " IsApproved = ?" & _
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users " &
+                                                   " SET Email = ?, Comment = ?," &
+                                                   " IsApproved = ?" &
                                                    " WHERE Username = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Email", OdbcType.VarChar, 128).Value = user.Email
@@ -962,7 +949,7 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
             Dim isValid As Boolean = False
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Password, IsApproved FROM Users " & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Password, IsApproved FROM Users " &
                                                      " WHERE Username = ? AND ApplicationName = ? AND IsLockedOut = False", conn)
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
@@ -988,7 +975,7 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
                 If isApproved AndAlso (password = pwd) Then
                     isValid = True
 
-                    Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users  SET LastLoginDate = ?" & _
+                    Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users  SET LastLoginDate = ?" &
                                                                    " WHERE Username = ? AND ApplicationName = ?", conn)
 
                     updateCmd.Parameters.Add("@LastLoginDate", OdbcType.DateTime).Value = DateTime.Now
@@ -1009,14 +996,14 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
         ' </Snippet14>
 
 
-        Public Overrides Function FindUsersByName(ByVal usernameToMatch As String, _
-        ByVal pageIndex As Integer, _
-        ByVal pageSize As Integer, _
+        Public Overrides Function FindUsersByName(ByVal usernameToMatch As String,
+        ByVal pageIndex As Integer,
+        ByVal pageSize As Integer,
                                                   ByRef totalRecords As Integer) _
                                                   As MembershipUserCollection
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users  " & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users  " &
                                                      "WHERE Username LIKE ? AND ApplicationName = ?", conn)
             cmd.Parameters.Add("@UsernameSearch", OdbcType.VarChar, 255).Value = usernameToMatch
             cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = ApplicationName
@@ -1032,11 +1019,11 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
 
                 If totalRecords <= 0 Then Return users
 
-                cmd.CommandText = "SELECT Username, Email, PasswordQuestion," & _
-                                  " Comment, IsApproved, CreationDate, LastLoginDate," & _
-                                  " LastActivityDate, LastPasswordChangedDate " & _
-                                  " FROM Users  " & _
-                                  " WHERE Username LIKE ? AND ApplicationName = ? " & _
+                cmd.CommandText = "SELECT Username, Email, PasswordQuestion," &
+                                  " Comment, IsApproved, CreationDate, LastLoginDate," &
+                                  " LastActivityDate, LastPasswordChangedDate " &
+                                  " FROM Users  " &
+                                  " WHERE Username LIKE ? AND ApplicationName = ? " &
                                   " ORDER BY Username Asc"
 
                 reader = cmd.ExecuteReader()
@@ -1066,14 +1053,14 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
         End Function
 
 
-        Public Overrides Function FindUsersByEmail(ByVal emailToMatch As String, _
-        ByVal pageIndex As Integer, _
-        ByVal pageSize As Integer, _
+        Public Overrides Function FindUsersByEmail(ByVal emailToMatch As String,
+        ByVal pageIndex As Integer,
+        ByVal pageSize As Integer,
                                                    ByRef totalRecords As Integer) _
                                                    As MembershipUserCollection
 
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users  " & _
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT Count(*) FROM Users  " &
                                                      "WHERE Email LIKE ? AND ApplicationName = ?", conn)
             cmd.Parameters.Add("@EmailSearch", OdbcType.VarChar, 255).Value = emailToMatch
             cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = ApplicationName
@@ -1089,11 +1076,11 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
 
                 If totalRecords <= 0 Then Return users
 
-                cmd.CommandText = "SELECT Username, Email, PasswordQuestion," & _
-                                  " Comment, IsApproved, CreationDate, LastLoginDate," & _
-                                  " LastActivityDate, LastPasswordChangedDate " & _
-                                  " FROM Users  " & _
-                                  " WHERE Email LIKE ? AND ApplicationName = ? " & _
+                cmd.CommandText = "SELECT Username, Email, PasswordQuestion," &
+                                  " Comment, IsApproved, CreationDate, LastLoginDate," &
+                                  " LastActivityDate, LastPasswordChangedDate " &
+                                  " FROM Users  " &
+                                  " WHERE Email LIKE ? AND ApplicationName = ? " &
                                   " ORDER BY Username Asc"
 
                 reader = cmd.ExecuteReader()
@@ -1128,8 +1115,8 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
 
         Public Overrides Function UnlockUser(ByVal username As String) As Boolean
             Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users  " & _
-                                              " SET IsLockedOut = False, LastLockedOutDate = ? " & _
+            Dim cmd As OdbcCommand = New OdbcCommand("UPDATE Users  " &
+                                              " SET IsLockedOut = False, LastLockedOutDate = ? " &
                                               " WHERE Username = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@LastLockedOutDate", OdbcType.DateTime).Value = DateTime.Now
@@ -1155,17 +1142,17 @@ Public Overrides Sub UpdateUser(user As MembershipUser)
         End Function
 
 
-'
-' MembershipProvider.GetUser(Object, Boolean)
-'
+        '
+        ' MembershipProvider.GetUser(Object, Boolean)
+        '
 
-Public Overrides Function GetUser(providerUserKey As Object, _
-                                  userIsOnline As Boolean) As MembershipUser
-    
-  Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT PKID, Username, Email, PasswordQuestion," & _
-                  " Comment, IsApproved, IsLockedOut, CreationDate, LastLoginDate," & _
-                  " LastActivityDate, LastPasswordChangedDate, LastLockedOutDate" & _
+        Public Overrides Function GetUser(providerUserKey As Object,
+                                          userIsOnline As Boolean) As MembershipUser
+
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT PKID, Username, Email, PasswordQuestion," &
+                  " Comment, IsApproved, IsLockedOut, CreationDate, LastLoginDate," &
+                  " LastActivityDate, LastPasswordChangedDate, LastLockedOutDate" &
                   " FROM Users  WHERE PKID = ?", conn)
 
             cmd.Parameters.Add("@PKID", OdbcType.UniqueIdentifier).Value = providerUserKey
@@ -1183,8 +1170,8 @@ Public Overrides Function GetUser(providerUserKey As Object, _
                     u = GetUserFromReader(reader)
 
                     If userIsOnline Then
-                        Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users  " & _
-                                  "SET LastActivityDate = ? " & _
+                        Dim updateCmd As OdbcCommand = New OdbcCommand("UPDATE Users  " &
+                                  "SET LastActivityDate = ? " &
                                   "WHERE PKID = ?", conn)
 
                         updateCmd.Parameters.Add("@LastActivityDate", OdbcType.DateTime).Value = DateTime.Now
@@ -1200,24 +1187,24 @@ Public Overrides Function GetUser(providerUserKey As Object, _
                 conn.Close()
             End Try
 
-  Return u      
-End Function
+            Return u
+        End Function
 
 
-    '
-    ' UpdateFailureCount
-    '   A helper method that performs the checks and updates associated with
-    ' password failure tracking.
-    '
+        '
+        ' UpdateFailureCount
+        '   A helper method that performs the checks and updates associated with
+        ' password failure tracking.
+        '
 
-    Private Sub UpdateFailureCount(username As String, failureType As String)
-    
-      Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
-            Dim cmd As OdbcCommand = New OdbcCommand("SELECT FailedPasswordAttemptCount, " & _
-                                              "  FailedPasswordAttemptWindowStart, " & _
-                                              "  FailedPasswordAnswerAttemptCount, " & _
-                                              "  FailedPasswordAnswerAttemptWindowStart " & _
-                                              "  FROM Users  " & _
+        Private Sub UpdateFailureCount(username As String, failureType As String)
+
+            Dim conn As OdbcConnection = New OdbcConnection(ConnectionString)
+            Dim cmd As OdbcCommand = New OdbcCommand("SELECT FailedPasswordAttemptCount, " &
+                                              "  FailedPasswordAttemptWindowStart, " &
+                                              "  FailedPasswordAnswerAttemptCount, " &
+                                              "  FailedPasswordAnswerAttemptWindowStart " &
+                                              "  FROM Users  " &
                                               "  WHERE Username = ? AND ApplicationName = ?", conn)
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username
@@ -1255,15 +1242,15 @@ End Function
                     ' Start a New password failure count from 1 and a New window starting now.
 
                     If failureType = "password" Then _
-                      cmd.CommandText = "UPDATE Users  " & _
-                                        "  SET FailedPasswordAttemptCount = ?, " & _
-                                        "      FailedPasswordAttemptWindowStart = ? " & _
+                      cmd.CommandText = "UPDATE Users  " &
+                                        "  SET FailedPasswordAttemptCount = ?, " &
+                                        "      FailedPasswordAttemptWindowStart = ? " &
                                         "  WHERE Username = ? AND ApplicationName = ?"
 
                     If failureType = "passwordAnswer" Then _
-                      cmd.CommandText = "UPDATE Users  " & _
-                                        "  SET FailedPasswordAnswerAttemptCount = ?, " & _
-                                        "      FailedPasswordAnswerAttemptWindowStart = ? " & _
+                      cmd.CommandText = "UPDATE Users  " &
+                                        "  SET FailedPasswordAnswerAttemptCount = ?, " &
+                                        "      FailedPasswordAnswerAttemptWindowStart = ? " &
                                         "  WHERE Username = ? AND ApplicationName = ?"
 
                     cmd.Parameters.Clear()
@@ -1282,8 +1269,8 @@ End Function
                         ' Password attempts have exceeded the failure threshold. Lock out
                         ' the user.
 
-                        cmd.CommandText = "UPDATE Users  " & _
-                                          "  SET IsLockedOut = ?, LastLockedOutDate = ? " & _
+                        cmd.CommandText = "UPDATE Users  " &
+                                          "  SET IsLockedOut = ?, LastLockedOutDate = ? " &
                                           "  WHERE Username = ? AND ApplicationName = ?"
 
                         cmd.Parameters.Clear()
@@ -1300,13 +1287,13 @@ End Function
                         ' the failure counts. Leave the window the same.
 
                         If failureType = "password" Then _
-                          cmd.CommandText = "UPDATE Users  " & _
-                                            "  SET FailedPasswordAttemptCount = ?" & _
+                          cmd.CommandText = "UPDATE Users  " &
+                                            "  SET FailedPasswordAttemptCount = ?" &
                                             "  WHERE Username = ? AND ApplicationName = ?"
 
                         If failureType = "passwordAnswer" Then _
-                          cmd.CommandText = "UPDATE Users  " & _
-                                            "  SET FailedPasswordAnswerAttemptCount = ?" & _
+                          cmd.CommandText = "UPDATE Users  " &
+                                            "  SET FailedPasswordAnswerAttemptCount = ?" &
                                             "  WHERE Username = ? AND ApplicationName = ?"
 
                         cmd.Parameters.Clear()
@@ -1325,99 +1312,99 @@ End Function
                 If Not reader Is Nothing Then reader.Close()
                 conn.Close()
             End Try
-    End Sub
+        End Sub
 
 
-    '
-    ' CheckPassword
-    '   Compares password values based on the MembershipPasswordFormat.
-    '
+        '
+        ' CheckPassword
+        '   Compares password values based on the MembershipPasswordFormat.
+        '
 
-    Private Function CheckPassword(password As String, dbpassword As String) As Boolean    
-      Dim pass1 As String = password
-      Dim pass2 As String = dbpassword
+        Private Function CheckPassword(password As String, dbpassword As String) As Boolean
+            Dim pass1 As String = password
+            Dim pass2 As String = dbpassword
 
-      Select Case PasswordFormat      
-        Case MembershipPasswordFormat.Encrypted
-          pass2 = UnEncodePassword(dbpassword)
-        Case MembershipPasswordFormat.Hashed
-          pass1 = EncodePassword(password)
-        Case Else
-      End Select
+            Select Case PasswordFormat
+                Case MembershipPasswordFormat.Encrypted
+                    pass2 = UnEncodePassword(dbpassword)
+                Case MembershipPasswordFormat.Hashed
+                    pass1 = EncodePassword(password)
+                Case Else
+            End Select
 
-      If pass1 = pass2 Then     
-        Return True
-      End If
+            If pass1 = pass2 Then
+                Return True
+            End If
 
-      Return False
-    End Function
-
-
-    '
-    ' EncodePassword
-    '   Encrypts, Hashes, or leaves the password clear based on the PasswordFormat.
-    '
-
-    Private Function EncodePassword(password As String) As String
-      Dim encodedPassword As String = password
-
-      Select Case PasswordFormat
-        Case MembershipPasswordFormat.Clear
-
-        Case MembershipPasswordFormat.Encrypted
-          encodedPassword = _
-            Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)))
-        Case MembershipPasswordFormat.Hashed
-          Dim hash As HMACSHA256 = New HMACSHA256()
-          hash.Key = HexToByte(machineKey.ValidationKey)
-          encodedPassword = _
-            Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)))
-        Case Else
-          Throw New ProviderException("Unsupported password format.")
-      End Select
-
-      Return encodedPassword
-    End Function
+            Return False
+        End Function
 
 
-    '
-    ' UnEncodePassword
-    '   Decrypts or leaves the password clear based on the PasswordFormat.
-    '
+        '
+        ' EncodePassword
+        '   Encrypts, Hashes, or leaves the password clear based on the PasswordFormat.
+        '
 
-    Private Function UnEncodePassword(encodedPassword As String) As String
-      Dim password As String = encodedPassword
+        Private Function EncodePassword(password As String) As String
+            Dim encodedPassword As String = password
 
-      Select Case PasswordFormat
-        Case MembershipPasswordFormat.Clear
+            Select Case PasswordFormat
+                Case MembershipPasswordFormat.Clear
 
-        Case MembershipPasswordFormat.Encrypted
-          password = _
-            Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)))
-        Case MembershipPasswordFormat.Hashed
-          Throw New ProviderException("Cannot unencode a hashed password.")
-        Case Else
-          throw new ProviderException("Unsupported password format.")
-      End Select
+                Case MembershipPasswordFormat.Encrypted
+                    encodedPassword =
+                      Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)))
+                Case MembershipPasswordFormat.Hashed
+                    Dim hash As HMACSHA256 = New HMACSHA256()
+                    hash.Key = HexToByte(machineKey.ValidationKey)
+                    encodedPassword =
+                      Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)))
+                Case Else
+                    Throw New ProviderException("Unsupported password format.")
+            End Select
 
-      Return password
-    End Function
-
-    '
-    ' HexToByte
-    '   Converts a hexadecimal string to a byte array. Used to convert encryption
-    ' key values from the configuration.
-    '
-
-    Private Function HexToByte(hexString As String) As Byte()
-      Dim ReturnBytes((hexString.Length \ 2) - 1) As Byte
-      For i As Integer = 0 To ReturnBytes.Length - 1
-        ReturnBytes(i) = Convert.ToByte(hexString.Substring(i*2, 2), 16)
-      Next
-      Return ReturnBytes
-    End Function
+            Return encodedPassword
+        End Function
 
 
+        '
+        ' UnEncodePassword
+        '   Decrypts or leaves the password clear based on the PasswordFormat.
+        '
 
-  End Class
+        Private Function UnEncodePassword(encodedPassword As String) As String
+            Dim password As String = encodedPassword
+
+            Select Case PasswordFormat
+                Case MembershipPasswordFormat.Clear
+
+                Case MembershipPasswordFormat.Encrypted
+                    password =
+                      Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)))
+                Case MembershipPasswordFormat.Hashed
+                    Throw New ProviderException("Cannot unencode a hashed password.")
+                Case Else
+                    Throw New ProviderException("Unsupported password format.")
+            End Select
+
+            Return password
+        End Function
+
+        '
+        ' HexToByte
+        '   Converts a hexadecimal string to a byte array. Used to convert encryption
+        ' key values from the configuration.
+        '
+
+        Private Function HexToByte(hexString As String) As Byte()
+            Dim ReturnBytes((hexString.Length \ 2) - 1) As Byte
+            For i As Integer = 0 To ReturnBytes.Length - 1
+                ReturnBytes(i) = Convert.ToByte(hexString.Substring(i * 2, 2), 16)
+            Next
+            Return ReturnBytes
+        End Function
+
+
+
+    End Class
 End Namespace
