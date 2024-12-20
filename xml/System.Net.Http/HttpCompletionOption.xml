@@ -42,17 +42,7 @@
 ## Remarks
  The <xref:HttpCompletionOption> value effectively affects the scope of the timeout specified in the <xref:System.Net.Http.HttpClient> operation options when reading a response. The timeout on the <xref:System.Net.Http.HttpClient> always applies on the relevant invoked methods up until the point where those methods complete/return. Crucially, when using the <xref:System.Net.Http.HttpCompletionOption.ResponseHeadersRead> option, the timeout applies only up to where the headers end and the content starts. The content reading operation needs to be timed out separately in case the server promptly returns the status line and headers but takes too long to return the content. Below is an example illustrating this point:
 
-```csharp
-var httpClient = new HttpClient();
-httpClient.Timeout = TimeSpan.FromSeconds(30);
-using (var response = await httpClient.GetAsync("http://localhost:12345/", HttpCompletionOption.ResponseHeadersRead)) // 30-second timeout but ONLY up until past the headers
-{
-    // Do other stuff that doesn't rely on the content first, like status code validation
-    response.EnsureSuccessStatusCode();
-
-    var content = await response.Content.ReadAsStringAsync(); // NO TIMEOUT
-}
-```
+ :::code language="csharp" source="~/snippets/csharp/System.Net.Http/HttpCompletionOption/HttpCompletionOptionSnippets.cs" id="SnippetHttpCompletionOption":::
 
  ]]>
       </format>
