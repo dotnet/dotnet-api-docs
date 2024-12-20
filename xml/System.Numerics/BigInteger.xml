@@ -288,16 +288,17 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The individual bytes in the `value` array should be in little-endian order, from lowest-order byte to highest-order byte. For example, the numeric value 1,000,000,000,000 is represented as shown in the following table:
 
-|||
+The individual bytes in the `value` array should be in little-endian order, from lowest-order byte to highest-order byte. For example, the numeric value 1,000,000,000,000 is represented as shown in the following table:
+
+| Representation | Value |
 |-|-|
 |Hexadecimal string|E8D4A51000|
 |Byte array (lowest index first)|00 10 A5 D4 E8 00|
 
  Most methods that convert numeric values to byte arrays, such as <xref:System.Numerics.BigInteger.ToByteArray%2A?displayProperty=nameWithType> and <xref:System.BitConverter.GetBytes%2A?displayProperty=nameWithType>, return byte arrays in little-endian order.
 
- The constructor expects positive values in the byte array to use sign-and-magnitude representation, and negative values to use two's complement representation. In other words, if the highest-order bit of the highest-order byte in `value` is set, the resulting <xref:System.Numerics.BigInteger> value is negative. Depending on the source of the byte array, this may cause a positive value to be misinterpreted as a negative value. Byte arrays are typically generated in the following ways:
+ The constructor expects positive values in the byte array to use sign-and-magnitude representation, and negative values to use two's complement representation. In other words, if the highest-order bit of the highest-order byte in `value` is set, the resulting <xref:System.Numerics.BigInteger> value is negative. Depending on the source of the byte array, this might cause a positive value to be misinterpreted as a negative value. Byte arrays are typically generated in the following ways:
 
 -   By calling the <xref:System.Numerics.BigInteger.ToByteArray%2A?displayProperty=nameWithType> method. Because this method returns a byte array with the highest-order bit of the highest-order byte in the array set to zero for positive values, there is no chance of misinterpreting a positive value as negative. Unmodified byte arrays created by the <xref:System.Numerics.BigInteger.ToByteArray%2A> method always successfully round-trip when they are passed to the <xref:System.Numerics.BigInteger.%23ctor%28System.Byte%5B%5D%29> constructor.
 
@@ -308,8 +309,6 @@
 -   By creating a byte array either dynamically or statically without necessarily calling any of the previous methods, or by modifying an existing byte array. To prevent positive values from being misinterpreted as negative values, you can add a zero-byte value to the end of the array.
 
  If `value` is an empty <xref:System.Byte> array, the new <xref:System.Numerics.BigInteger> object is initialized to a value of <xref:System.Numerics.BigInteger.Zero%2A?displayProperty=nameWithType>. If `value` is `null`, the constructor throws an <xref:System.ArgumentNullException>.
-
-
 
 ## Examples
  The following example instantiates a <xref:System.Numerics.BigInteger> object from a 5-element byte array whose value is {5, 4, 3, 2, 1}. It then displays the <xref:System.Numerics.BigInteger> value, represented as both decimal and hexadecimal numbers, to the console. A comparison of the input array with the text output makes it clear why this overload of the <xref:System.Numerics.BigInteger> class constructor creates a <xref:System.Numerics.BigInteger> object whose value is 4328719365 (or 0x102030405). The first element of the byte array, whose value is 5, defines the value of the lowest-order byte of the <xref:System.Numerics.BigInteger> object, which is 0x05. The second element of the byte array, whose value is 4, defines the value of the second byte of the <xref:System.Numerics.BigInteger> object, which is 0x04, and so on.
