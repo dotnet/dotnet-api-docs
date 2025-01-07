@@ -23,14 +23,14 @@
  This class is used by the <xref:System.Web.Security.Membership> and <xref:System.Web.Security.MembershipUser> classes to provide membership services for an ASP.NET application using an Active Directory (AD) or Active Directory Application Mode (ADAM) server.
 
 > [!NOTE]
->  Using an ADAM server requires specific configuration. For more information, see the ADAM Configuration section below.
+> Using an ADAM server requires specific configuration. For more information, see the ADAM Configuration section below.
 
 > [!IMPORTANT]
->  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance works only in the full-trust policy default configuration of ASP.NET. In order to use the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance at any partial-trust level, either you must make changes to the appropriate trust policy file for your application or you must create a "sandbox" assembly that is deployed in the GAC.
+> The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance works only in the full-trust policy default configuration of ASP.NET. In order to use the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance at any partial-trust level, either you must make changes to the appropriate trust policy file for your application or you must create a "sandbox" assembly that is deployed in the GAC.
 >
->  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class requires unrestricted <xref:System.DirectoryServices.DirectoryServicesPermission> permission to run. This permission is not added to any of the partial-trust policy files supplied with ASP.NET. Although adding the <xref:System.DirectoryServices.DirectoryServicesPermission> permission to a partial-trust policy file will enable use of the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class, doing so makes the <xref:System.DirectoryServices> namespace classes available to any code running in your ASP.NET pages. This option is not recommended for any Web servers that need to run in a secure, locked-down mode.
+> The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class requires unrestricted <xref:System.DirectoryServices.DirectoryServicesPermission> permission to run. This permission is not added to any of the partial-trust policy files supplied with ASP.NET. Although adding the <xref:System.DirectoryServices.DirectoryServicesPermission> permission to a partial-trust policy file will enable use of the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class, doing so makes the <xref:System.DirectoryServices> namespace classes available to any code running in your ASP.NET pages. This option is not recommended for any Web servers that need to run in a secure, locked-down mode.
 >
->  As an alternative, you can create a "sandbox" assembly that calls the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class. This assembly can contain either a wrapper class that forwards method calls to the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class or a class that derives from the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class. In either case, the wrapper class must assert unrestricted <xref:System.DirectoryServices.DirectoryServicesPermission> permission. Deploy the sandbox assembly in the GAC and mark the assembly with the <xref:System.Security.AllowPartiallyTrustedCallersAttribute> (APTCA) attribute. This will enable your partially trusted ASP.NET code to call your wrapper class, and since the wrapper class internally asserts the unrestricted <xref:System.DirectoryServices.DirectoryServicesPermission> permission, your wrapper class will be able to successfully call the provider
+> As an alternative, you can create a "sandbox" assembly that calls the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class. This assembly can contain either a wrapper class that forwards method calls to the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class or a class that derives from the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class. In either case, the wrapper class must assert unrestricted <xref:System.DirectoryServices.DirectoryServicesPermission> permission. Deploy the sandbox assembly in the GAC and mark the assembly with the <xref:System.Security.AllowPartiallyTrustedCallersAttribute> (APTCA) attribute. This will enable your partially trusted ASP.NET code to call your wrapper class, and since the wrapper class internally asserts the unrestricted <xref:System.DirectoryServices.DirectoryServicesPermission> permission, your wrapper class will be able to successfully call the provider
 
  You must create a [connectionStrings Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/bf7sd233(v=vs.100)) entry in the Web.config file that identifies the Active Directory server, Active Directory domain, or ADAM application partition to use. The provider will only operate at domain scope, or in a subscope within a domain. The following table lists allowed connection strings and the scope used.
 
@@ -44,7 +44,7 @@
  The following table lists the <xref:System.Web.Security.ActiveDirectoryMembershipUser> properties and their default attribute mappings.
 
 > [!IMPORTANT]
->  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class does not explicitly check that provider attributes are not mapped to core attributes of the user object in the directory. You must ensure that sensitive information from the directory is not exposed through mapped attributes.
+> The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class does not explicitly check that provider attributes are not mapped to core attributes of the user object in the directory. You must ensure that sensitive information from the directory is not exposed through mapped attributes.
 
 |Property|Default directory attribute|Can be mapped?|
 |--------------|---------------------------------|--------------------|
@@ -80,14 +80,14 @@
 
 |`connectionProtection` setting|Effect|
 |------------------------------------|------------|
-|<xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>|The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will connect to an Active Directory, with these restrictions.<br /><br /> -   Any method that sets a password will fail. Active Directory requires a secure connection when changing passwords.<br />-   You must explicitly set the `connectionUsername` and `connectionPassword` attributes using the [add Element for providers for membership (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/whae3t94(v=vs.100)) in the application configuration file; otherwise, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will throw a <xref:System.Configuration.Provider.ProviderException> exception.|
+|<xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>|The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will connect to an Active Directory, with these restrictions.<br /><br /> - Any method that sets a password will fail. Active Directory requires a secure connection when changing passwords.<br />- You must explicitly set the `connectionUsername` and `connectionPassword` attributes using the [add Element for providers for membership (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/whae3t94(v=vs.100)) in the application configuration file; otherwise, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will throw a <xref:System.Configuration.Provider.ProviderException> exception.|
 |`Secure`|The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will attempt to connect to Active Directory using SSL. If SSL fails, a second attempt to connect to Active Directory using sign-and-seal will be made. If both attempts fail, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will throw a <xref:System.Configuration.Provider.ProviderException> exception.<br /><br /> Both process credentials and explicit credentials are supported.|
 
  The following table shows the effect of the `connectionProtection` attribute when connecting to an ADAM server.
 
 |`connectionProtection` setting|Effect|
 |------------------------------------|------------|
-|<xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>|The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will connect to an ADAM server, with this restriction.<br /><br /> -   Any method that sets passwords will fail unless you explicitly configure the ADAM server to allow passwords to be sent and changed over an insecure connection.<br /><br /> Both process credentials and explicit credentials are supported.|
+|<xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>|The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will connect to an ADAM server, with this restriction.<br /><br /> - Any method that sets passwords will fail unless you explicitly configure the ADAM server to allow passwords to be sent and changed over an insecure connection.<br /><br /> Both process credentials and explicit credentials are supported.|
 |`Secure`|The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will attempt to connect to the ADAM server using SSL. If a connection cannot be made, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will throw a <xref:System.Configuration.Provider.ProviderException> exception.<br /><br /> Both process credentials and explicit credentials are supported.|
 
 ## ADAM Configuration
@@ -101,11 +101,10 @@
 |`Secure`|636|
 
 ## Examples
- The following code examples show the Web.config file for an ASP.NET application configured to use an <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance. The first example uses the default mappings for Active Directory attributes, and does not support password-reset security with question-and-answer nor the ability to call search methods. The second example shows all the attribute settings allowed for an <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance.
 
- The first example is a simple configuration file using default mappings for Active Directory attributes.
+The following example shows the Web.config file for an ASP.NET application configured to use an <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance. It uses the default mappings for Active Directory attributes. It doesn't support password-reset security with question-and-answer or the ability to call search methods.
 
-```
+```xml
 <configuration>
   <connectionStrings>
     <add name="ADService" connectionString="LDAP://ldapServer/" />
@@ -122,57 +121,6 @@
   </system.web>
 </configuration>
 ```
-
- This example shows all of the attribute settings that are available for an instance of <xref:System.Web.Security.ActiveDirectoryMembershipProvider>.
-
-```
-<configuration>
-  <connectionStrings>
-    <add name="ADService" connectionString="LDAP://ldapServer/" />
-  </connectionStrings>
-  <system.web>
-    <membership
-      defaultProvider="AspNetActiveDirectoryMembershipProvider">
-      <providers>
-        <add name="AspNetActiveDirectoryMembershipProvider"
-          type="System.Web.Security.ActiveDirectoryMembershipProvider,
-          System.Web, Version=1.0.3600, Culture=neutral,
-          PublicKeyToken=b03f5f7f11d50a3a"
-          connectionStringName="ADService"
-          connectionUsername="UserWithAppropriateRights"
-          connectionPassword="PasswordForUser"
-          connectionProtection="Secure"
-          enablePasswordReset="true"
-          enableSearchMethods="true"
-          requiresQuestionAndAnswer="true"
-          applicationName="/"
-          description="Default AD connection"
-          requiresUniqueEmail="false"
-          clientSearchTimeout="30"
-          serverSearchTimeout="30"
-          timeoutUnit="Minutes"
-          attributeMapPasswordQuestion="department"
-          attributeMapPasswordAnswer="division"
-          attributeMapFailedPasswordAnswerCount="singleIntAttribute"
-         attributeMapFailedPasswordAnswerTime="singleLargeIntAttribute"
-         attributeMapFailedPasswordAnswerLockoutTime="singleLargeIntAttribute"
-          attributeMapEmail = "mail"
-          attributeMapUsername = "userPrincipalName"
-          maxInvalidPasswordAttempts = "5"
-          passwordAttemptWindow = "10"
-          passwordAnswerAttemptLockoutDuration = "30"
-          minRequiredPasswordLength="7"
-          minRequiredNonalphanumericCharacters="1"
-          passwordStrengthRegularExpression="
-          @\"(?=.{6,})(?=(.*\d){1,})(?=(.*\W){1,})" />
-        />
-      </providers>
-    </membership>
-  </system.web>
-</configuration>
-```
-
- `clientSearchTimeout` and `serverSearchTimeout` default to minutes. To change the units, set the `timeoutUnit` attribute value to one of "Days", "Hours", "Minutes", "Seconds", or "Milliseconds". If the attribute is not specified, the default is "Minutes".
 
  ]]></format>
     </remarks>
@@ -373,9 +321,9 @@
 
  In order to use the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ChangePasswordQuestionAndAnswer%2A> method, you must set these additional attributes in your application's configuration file:
 
--   `requiresQuestionAndAnswer` must be `true`.
+- `requiresQuestionAndAnswer` must be `true`.
 
--   `attributeMapPasswordQuestion` and `attributeMapPasswordAnswer` must be mapped to attributes in the Active Directory schema.
+- `attributeMapPasswordQuestion` and `attributeMapPasswordAnswer` must be mapped to attributes in the Active Directory schema.
 
  If the above criteria are not met, a <xref:System.Configuration.Provider.ProviderException> is thrown at initialization.
 
@@ -523,7 +471,7 @@
  Leading and trailing spaces are trimmed from all string parameter values except `password`.
 
 > [!IMPORTANT]
->  You cannot create new users unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "create child instance," "delete child instance," and "set password" access rights. The "delete child instance" access right is required because creating a user is a multi-step process, and if any step of user creation fails, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will delete the user instance rather than leave a partially constructed user instance in the directory.
+> You cannot create new users unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "create child instance," "delete child instance," and "set password" access rights. The "delete child instance" access right is required because creating a user is a multi-step process, and if any step of user creation fails, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class will delete the user instance rather than leave a partially constructed user instance in the directory.
 
  ]]></format>
         </remarks>
@@ -635,7 +583,7 @@
  `username` must be 64 characters or less.
 
 > [!IMPORTANT]
->  You cannot delete users unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "delete child instances" access right.
+> You cannot delete users unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "delete child instances" access right.
 
  ]]></format>
         </remarks>
@@ -682,55 +630,21 @@
 ## Remarks
  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property indicates whether you can use the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ResetPassword%2A> method to reset a user's password. The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is set in your application's configuration file using the `enablePasswordReset` attribute of the [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) element.
 
- You can only set the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property `true` when the following [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) element settings have been made.
+ You can only set the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property to `true` when the following [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) element settings have been made:
 
--   `requiresQuestionAndAnswer` must be `true`.
-
--   The Active Directory schema must be modified to contain attributes for storing the password question and answer, as well as the three tracking fields for password-answer change attempts.
-
--   `attributeMapPasswordQuestion`, `attributeMapPasswordAnswer`, `attributeMapFailedPasswordAnswerCount`, `attributeMapFailedPasswordAnswerTime`, and `attributeMapFailedPasswordAnswerLockoutTime` must be mapped to attributes in the Active Directory schema.
+- `requiresQuestionAndAnswer` must be `true`.
+- The Active Directory schema must be modified to contain attributes for storing the password question and answer, as well as the three tracking fields for password-answer change attempts.
+- `attributeMapPasswordQuestion`, `attributeMapPasswordAnswer`, `attributeMapFailedPasswordAnswerCount`, `attributeMapFailedPasswordAnswerTime`, and `attributeMapFailedPasswordAnswerLockoutTime` must be mapped to attributes in the Active Directory schema.
 
  If the above criteria are not met, a <xref:System.Configuration.Provider.ProviderException> is thrown at initialization.
 
  When the connection string in the application configuration file specifies an Active Directory domain rather than a specific server, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will always connect to the domain controller that has the PDC role for the domain to ensure that password changes take effect and are available when the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ValidateUser%2A> method is called.
 
 > [!NOTE]
->  Even if the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is `true`, you cannot reset user passwords unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "reset password" access right.
-
-
-
-## Examples
- The following code example shows a Web.config entry that configures an <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance to enable password resets. It uses the explicit credentials of a user given the "reset password" access right.
+> Even if the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is `true`, you cannot reset user passwords unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "reset password" access right.
 
 > [!IMPORTANT]
->  When you place user credentials in your Web.config file, there are potential security threats. Users with access rights to the directory containing the Web.config file can read the file, and thus see the credentials. For details on how to protect against this threat, see [Encrypting Configuration Information Using Protected Configuration](https://learn.microsoft.com/previous-versions/aspnet/53tyfkaw(v=vs.100)).
-
-```
-<configuration>
-  <connectionStrings>
-    <add name="ADService" connectionString="LDAP://ldapServer/" />
-  </connectionStrings>
-  <system.web>
-    <membership defaultProvider="AspNetActiveDirectoryMembershipProvider">
-      <providers>
-        <add name="AspNetActiveDirectoryMembershipProvider"
-          type="System.Web.Security.ActiveDirectoryMembershipProvider,
-          System.Web, Version=2.0.3600, Culture=neutral,
-          PublicKeyToken=b03f5f7f11d50a3a"
-          connectionUsername="UserWithResetPasswordRights"
-          connectionPassword="PasswordForUser"
-          enablePasswordReset="true"
-          requiresQuestionAndAnswer="true"
-          attributeMapPasswordQuestion="PasswordQuestionADAttribute"
-          attributeMapPasswordAnswer="PasswordAnswerADAttribute"
-          attributeMapFailedPasswordAnswerCount="AnswerCountADAttribute"
-          attributeMapFailedPasswordAnswerTime="AnswerTimeADAttribute"
-          attributeMapFailedPasswordAnswerLockoutTime="LockOutTimeADAttribute" />
-      </providers>
-    </membership>
-  </system.web>
-</configuration>
-```
+> When you place user credentials in your Web.config file, there are potential security threats. Users with access rights to the directory containing the Web.config file can read the file, and thus see the credentials. For details on how to protect against this threat, see [Encrypting Configuration Information Using Protected Configuration](https://learn.microsoft.com/previous-versions/aspnet/53tyfkaw(v=vs.100)).
 
  ]]></format>
         </remarks>
@@ -797,11 +711,11 @@
 
  When the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnableSearchMethods%2A> property is `false`, the following methods are not available:
 
--   <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByName%2A>
+- <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByName%2A>
 
--   <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByEmail%2A>
+- <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByEmail%2A>
 
--   <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetAllUsers%2A>
+- <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetAllUsers%2A>
 
  The provider uses a subtree search starting at the search point specified in the connection string. See the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class topic for more information about connection strings.
 
@@ -1016,7 +930,7 @@
  The generated password will contain at least the number of non-alphanumeric characters specified in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MinRequiredNonAlphanumericCharacters%2A> property. The generated password will not be tested with the regular expression in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordStrengthRegularExpression%2A> property.
 
 > [!NOTE]
->  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class does not generate passwords that match complexity requirements set in the directory. It is possible to generate a random password that fails the password complexity rules set by the directory.
+> The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class does not generate passwords that match complexity requirements set in the directory. It is possible to generate a random password that fails the password complexity rules set by the directory.
 
  ]]></format>
         </remarks>
@@ -1294,7 +1208,7 @@
  We recommend that you do not enable searching on production systems until you have confirmed that the search queries issued by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class do not adversely impact your directory server's performance.
 
 > [!IMPORTANT]
->  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetUserNameByEmail%2A> method will run even when the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnableSearchMethods%2A> property is `false`.
+> The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetUserNameByEmail%2A> method will run even when the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnableSearchMethods%2A> property is `false`.
 
  Since the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class is designed for a stateless Web environment, it is unable to use the paging optimizations exposed by the underlying <xref:System.DirectoryServices> APIs. This means that paging operations during searches against large directories are very expensive and should be avoided. Search operations are always issued against the directory server configured in the connection string, or an automatically selected server in the case of a connection string pointing at a domain. The provider does not use a global catalog for its search methods.
 
@@ -1549,7 +1463,7 @@
  When the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is `true`, the user must answer the password question to reset their password. The user is allowed a limited number of answer attempts within the time window established by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAttemptWindow%2A> property. If the number of password answer attempts is greater than or equal to the value stored in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MaxInvalidPasswordAttempts%2A> property, the user is locked out of further attempts for the number of minutes stored in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAnswerAttemptLockoutDuration%2A> property.
 
 > [!NOTE]
->  This property does not control the number of failed logon attempts a user can make before being locked out. The Active Directory server handles failed logon attempts and is not affected by the value of this property.
+> This property does not control the number of failed logon attempts a user can make before being locked out. The Active Directory server handles failed logon attempts and is not affected by the value of this property.
 
  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MaxInvalidPasswordAttempts%2A> property is set in your application's configuration file using the `maxInvalidPasswordAttempts` attribute of the [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) element. If the property is not set in the application's configuration file, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MaxInvalidPasswordAttempts%2A> property is set to the default value of `5`.
 
@@ -1728,7 +1642,7 @@
  When the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is `true`, the user must answer the password question to reset their password. If the user fails to supply the correct answer a consecutive number of times equal to the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MaxInvalidPasswordAttempts%2A> property value within the observation time period specified by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAttemptWindow%2A> property, the user is locked out of further attempts for the number of minutes contained in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAnswerAttemptLockoutDuration%2A> property.
 
 > [!NOTE]
->  This property does not set the duration a user is locked out after failing to enter a valid password. The Active Directory server handles failed logon attempts and is not affected by the value of this property. We recommend that the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAnswerAttemptLockoutDuration%2A> property be set to the same value as the account lockout duration specified for too many failed logon attempts in the Active Directory configuration. This will present consistent auto-lockout behavior for users regardless of whether they were locked out due to failed logon attempts or to bad password answers.
+> This property does not set the duration a user is locked out after failing to enter a valid password. The Active Directory server handles failed logon attempts and is not affected by the value of this property. We recommend that the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAnswerAttemptLockoutDuration%2A> property be set to the same value as the account lockout duration specified for too many failed logon attempts in the Active Directory configuration. This will present consistent auto-lockout behavior for users regardless of whether they were locked out due to failed logon attempts or to bad password answers.
 
  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAnswerAttemptLockoutDuration%2A> property is set in your application's configuration file using the `passwordAnswerAttemptLockoutDuration` attribute of the [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) element. If the property is not set in the application's configuration file, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAnswerAttemptLockoutDuration%2A> property is set to the default value of 30 minutes.
 
@@ -1889,11 +1803,11 @@
 ## Examples
  The following example shows the [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) configuration element in the `system.web` section of the application's Web.config file. It specifies that the application use an instance of the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class to provide membership services and sets the `passwordStrengthRegularExpression` attribute to a regular expression that validates that the password meets the following criteria:
 
--   Is greater than seven characters.
+- Is greater than seven characters.
 
--   Contains at least one digit.
+- Contains at least one digit.
 
--   Contains at least one special (non-alphanumeric) character.
+- Contains at least one special (non-alphanumeric) character.
 
  If the password does not meet these criteria, the password is not accepted by the membership provider.
 
@@ -1949,49 +1863,13 @@
 ## Remarks
  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.RequiresQuestionAndAnswer%2A> property is set in your application's configuration file using the `requiresQuestionAndAnswer` attribute of the [membership Element (ASP.NET Settings Schema)](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/1b9hw62f(v=vs.100)) element. If the property is not set in the application's configuration file, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.RequiresQuestionAndAnswer%2A> property is set to the default value of `false`.
 
- When the `requiresQuestionAndAnswer` attribute is set to `true`, you must also set these additional attributes.
-
--   `attributeMapPasswordQuestion` and `attributeMapPasswordAnswer` must be mapped to attributes in the Active Directory schema.
-
- If the above criteria are not met, a <xref:System.Configuration.Provider.ProviderException> is thrown at initialization.
+ When the `requiresQuestionAndAnswer` attribute is set to `true`, you must also map `attributeMapPasswordQuestion` and `attributeMapPasswordAnswer` to attributes in the Active Directory schema. Otherwise, a <xref:System.Configuration.Provider.ProviderException> is thrown at initialization.
 
 > [!NOTE]
->  You can require a password question and answer when creating a user, but set the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property to `false` to prevent users from changing their passwords using the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class.
-
-
-
-## Examples
- The following code example shows a Web.config entry that configures an <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance to enable password resets. It uses the explicit credentials of a user given the "reset password" access right.
+> You can require a password question and answer when creating a user, but set the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property to `false` to prevent users from changing their passwords using the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class.
 
 > [!IMPORTANT]
->  When you place user credentials in your Web.config file, there are potential security threats. Users with access rights to the directory containing the Web.config file can read the file, and thus see the credentials. For details on how to protect against this threat, see [Encrypting Configuration Information Using Protected Configuration](https://learn.microsoft.com/previous-versions/aspnet/53tyfkaw(v=vs.100)).
-
-```
-<configuration>
-  <connectionStrings>
-    <add name="ADService" connectionString="LDAP://ldapServer/" />
-  </connectionStrings>
-  <system.web>
-    <membership defaultProvider="AspNetActiveDirectoryMembershipProvider">
-      <providers>
-        <add name="AspNetActiveDirectoryMembershipProvider"
-          type="System.Web.Security.ActiveDirectoryMembershipProvider,
-          System.Web, Version=2.0.3600, Culture=neutral,
-          PublicKeyToken=b03f5f7f11d50a3a"
-          connectionUsername="UserWithResetPasswordRights"
-          connectionPassword="PasswordForUser"
-          enablePasswordReset="true"
-          requiresQuestionAndAnswer="true"
-          attributeMapPasswordQuestion="PasswordQuestionADAttribute"
-          attributeMapPasswordAnswer="PasswordAnswerADAttribute"
-          attributeMapFailedPasswordAnswerCount="AnswerCountADAttribute"
-          attributeMapFailedPasswordAnswerTime="AnswerTimeADAttribute"
-          attributeMapFailedPasswordAnswerLockoutTime="LockOutTimeADAttribute" />
-      </providers>
-    </membership>
-  </system.web>
-</configuration>
-```
+> When you place user credentials in your Web.config file, there are potential security threats. Users with access rights to the directory containing the Web.config file can read the file, and thus see the credentials. For details on how to protect against this threat, see [Encrypting Configuration Information Using Protected Configuration](https://learn.microsoft.com/previous-versions/aspnet/53tyfkaw(v=vs.100)).
 
  ]]></format>
         </remarks>
@@ -2089,7 +1967,7 @@
  The method is called by the <xref:System.Web.Security.Membership> class to reset the password for a user in the Active Directory data store to a new randomly generated value. The new password is returned.
 
 > [!NOTE]
->  The random password created by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ResetPassword%2A> method is not guaranteed to pass the regular expression in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordStrengthRegularExpression%2A> property. However, the random password will meet the criteria established by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MinRequiredPasswordLength%2A> and <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MinRequiredNonAlphanumericCharacters%2A> properties.
+> The random password created by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ResetPassword%2A> method is not guaranteed to pass the regular expression in the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordStrengthRegularExpression%2A> property. However, the random password will meet the criteria established by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MinRequiredPasswordLength%2A> and <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MinRequiredNonAlphanumericCharacters%2A> properties.
 
  If an incorrect answer is supplied to the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ResetPassword%2A> method, the internal counter that tracks invalid password-answer attempts is incremented by one. This can result in the user being unable to log on until the lock status is cleared by a call to the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.UnlockUser%2A> method. If the correct password answer is supplied and the user is not currently locked out, then the internal counter that tracks invalid password attempts is reset to zero. For more information, see the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.MaxInvalidPasswordAttempts%2A> and <xref:System.Web.Security.ActiveDirectoryMembershipProvider.PasswordAttemptWindow%2A> properties.
 
@@ -2104,22 +1982,22 @@
  When using an ADAM server, the `connectionProtection` attribute can be set to <xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>, but only if you explicitly configure the ADAM server to allow password changes over unsecured connections.
 
 > [!IMPORTANT]
->  You cannot reset passwords unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "reset password" access right.
+> You cannot reset passwords unless the credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "reset password" access right.
 
  To reset a password, all of the following conditions must be true:
 
--   The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property must be set to `true`.
+- The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property must be set to `true`.
 
--   The Active Directory schema must be modified to contain attributes for storing the password question and answer, and the three tracking fields for password answer changes.
+- The Active Directory schema must be modified to contain attributes for storing the password question and answer, and the three tracking fields for password answer changes.
 
--   The `attributeMapPasswordQuestion`, `attributeMapPasswordAnswer`, `attributeMapFailedPasswordAnswerCount`, `attributeMapFailedPasswordAnswerTime`, and `attributeMapFailedPasswordAnswerLockedTime` attributes must be set in the application configuration file.
+- The `attributeMapPasswordQuestion`, `attributeMapPasswordAnswer`, `attributeMapFailedPasswordAnswerCount`, `attributeMapFailedPasswordAnswerTime`, and `attributeMapFailedPasswordAnswerLockedTime` attributes must be set in the application configuration file.
 
--   The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.RequiresQuestionAndAnswer%2A> property must be set to `true`.
+- The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.RequiresQuestionAndAnswer%2A> property must be set to `true`.
 
--   The security context for connecting to the Active Directory data store (either the process account or the explicit credentials) must have sufficient privileges to change passwords. The credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "reset password" access right.
+- The security context for connecting to the Active Directory data store (either the process account or the explicit credentials) must have sufficient privileges to change passwords. The credentials used to connect to the Active Directory server have either Domain Administrator rights (not recommended) or the "reset password" access right.
 
 > [!NOTE]
->  Security policies set on the Active Directory server may make it impossible for the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ResetPassword%2A> method to generate a password that satisfies the policies. The default implementation of the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GeneratePassword%2A> method will generate passwords that satisfy the default password policies on domain controllers running Windows Server 2003 SP1. If the password cannot be reset due to security policies on the Active Directory server, a <xref:System.Configuration.Provider.ProviderException> is thrown.
+> Security policies set on the Active Directory server may make it impossible for the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ResetPassword%2A> method to generate a password that satisfies the policies. The default implementation of the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GeneratePassword%2A> method will generate passwords that satisfy the default password policies on domain controllers running Windows Server 2003 SP1. If the password cannot be reset due to security policies on the Active Directory server, a <xref:System.Configuration.Provider.ProviderException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2347,24 +2225,24 @@
 
  However, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will connect to the directory using the configured credentials for the following reasons.
 
--   To confirm that a user exists within the search scope as determined by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance's connection string. The provider uses a subtree search starting at the search point specified in the connection string to determine whether a user exists. The user must exist in the specified container. Credentials that are valid outside the connection string's specified container will not be validated. See the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class topic for more information about connection strings.
+- To confirm that a user exists within the search scope as determined by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance's connection string. The provider uses a subtree search starting at the search point specified in the connection string to determine whether a user exists. The user must exist in the specified container. Credentials that are valid outside the connection string's specified container will not be validated. See the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class topic for more information about connection strings.
 
--   If the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is `true`, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will use the configured credentials to load the user instance to check whether the user has been locked out because they have made too many failed attempts to change the password answer.
+- If the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.EnablePasswordReset%2A> property is `true`, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will use the configured credentials to load the user instance to check whether the user has been locked out because they have made too many failed attempts to change the password answer.
 
 > [!IMPORTANT]
->  Connecting to an Active Directory domain controller with the "Guest" account enabled is a potential security threat. All validation attempts made on an Active Directory domain controller with the "Guest" account enabled will succeed. To improve security when using an Active Directory domain controller, you should disable the "Guest" account on the domain controller.
+> Connecting to an Active Directory domain controller with the "Guest" account enabled is a potential security threat. All validation attempts made on an Active Directory domain controller with the "Guest" account enabled will succeed. To improve security when using an Active Directory domain controller, you should disable the "Guest" account on the domain controller.
 
  The <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance will attempt a concurrent bind against Active Directory when one of the following conditions is met:
 
--   The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CurrentConnectionProtection%2A> property is set to <xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>.
+- The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CurrentConnectionProtection%2A> property is set to <xref:System.Web.Security.ActiveDirectoryConnectionProtection.None>.
 
--   The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CurrentConnectionProtection%2A> property is set to <xref:System.Web.Security.ActiveDirectoryConnectionProtection.SignAndSeal> and SSL is chosen by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance to secure the connection.
+- The <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CurrentConnectionProtection%2A> property is set to <xref:System.Web.Security.ActiveDirectoryConnectionProtection.SignAndSeal> and SSL is chosen by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance to secure the connection.
 
  In addition, for a concurrent bind to be made, the following conditions must be true:
 
--   The directory server must be running on Windows Server 2003.
+- The directory server must be running on Windows Server 2003.
 
--   The operating system of the Web server running the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance must support concurrent binds (for example, Windows Server 2003).
+- The operating system of the Web server running the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> instance must support concurrent binds (for example, Windows Server 2003).
 
  When a concurrent bind is used, the last logon date for the user is not updated in the directory; therefore, the <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate%2A> property cannot be relied on.
 
