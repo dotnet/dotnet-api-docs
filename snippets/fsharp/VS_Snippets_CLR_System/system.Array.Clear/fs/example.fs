@@ -7,13 +7,13 @@ printfn "One dimension (Rank=1):"
 let numbers1 = [| 1..9 |]
 
 for i in numbers1 do
-    printf $"{i} " 
+    printf $"{i} "
 printfn "\n\nArray.Clear(numbers1, 2, 5)"
 
 Array.Clear(numbers1, 2, 5)
 
 for i in numbers1 do
-    printf $"{i} " 
+    printf $"{i} "
 
 printfn "\n\nTwo dimensions (Rank=2):"
 
