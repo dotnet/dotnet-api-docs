@@ -107,15 +107,21 @@ class Example
  * Three dimensions (Rank=3):
  * 1 2
  * 3 4
- *
+ * 
  * 5 6
  * 7 8
- *
+ * 
+ * 9 10
+ * 11 12
+ * 
  * Array.Clear(numbers3, 2, 5)
  * 1 2
  * 0 0
- *
+ * 
  * 0 0
  * 0 8
+ * 
+ * 9 10
+ * 11 12
  */
 //</snippet1>
