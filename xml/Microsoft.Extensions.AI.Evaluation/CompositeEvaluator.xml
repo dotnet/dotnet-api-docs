@@ -24,7 +24,10 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>
+            An <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" /> that composes other <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s to execute multiple (concurrent)
+            evaluations on a supplied response.
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -51,8 +54,11 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="evaluators">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluators">An array of <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s that are to be composed.</param>
+        <summary>
+            Initializes a new <see cref="T:Microsoft.Extensions.AI.Evaluation.CompositeEvaluator" /> instance that composes the supplied
+            <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -72,8 +78,11 @@
         <Parameter Name="evaluators" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.Evaluation.IEvaluator&gt;" />
       </Parameters>
       <Docs>
-        <param name="evaluators">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="evaluators">An enumeration of <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s that are to be composed.</param>
+        <summary>
+            Initializes a new <see cref="T:Microsoft.Extensions.AI.Evaluation.CompositeEvaluator" /> instance that composes the supplied
+            <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -122,14 +131,37 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="messages">To be added.</param>
-        <param name="modelResponse">To be added.</param>
-        <param name="chatConfiguration">To be added.</param>
-        <param name="additionalContext">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="messages">
+            The conversation history including the request that produced the supplied <paramref name="modelResponse" />.
+            </param>
+        <param name="modelResponse">The response that is to be evaluated.</param>
+        <param name="chatConfiguration">
+            A <see cref="T:Microsoft.Extensions.AI.Evaluation.ChatConfiguration" /> that specifies the <see cref="T:Microsoft.Extensions.AI.IChatClient" /> and the
+            <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluationTokenCounter" /> that should be used if one or more composed <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s use
+            an AI model to perform evaluation.
+            </param>
+        <param name="additionalContext">
+            Additional contextual information (beyond that which is available in <paramref name="messages" />) that composed
+            <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s may need to accurately evaluate the supplied <paramref name="modelResponse" />.
+            </param>
+        <param name="cancellationToken">
+            A <see cref="T:System.Threading.CancellationToken" /> that can cancel the evaluation operation.
+            </param>
+        <summary>
+            Evaluates the supplied <paramref name="modelResponse" /> and returns an <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationResult" />
+            containing one or more <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationMetric" />s.
+            </summary>
+        <returns>An <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationResult" /> containing one or more <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationMetric" />s.</returns>
+        <remarks>
+          <para>
+            The <see cref="P:Microsoft.Extensions.AI.Evaluation.EvaluationMetric.Name" />s of the <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationMetric" />s contained in the returned
+            <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationResult" /> should match <see cref="P:Microsoft.Extensions.AI.Evaluation.CompositeEvaluator.EvaluationMetricNames" />.
+            </para>
+          <para>
+            Also note that <paramref name="chatConfiguration" /> must not be omitted if one or more composed
+            <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s use an AI model to perform evaluation.
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EvaluationMetricNames">
@@ -151,7 +183,10 @@
         <ReturnType>System.Collections.Generic.IReadOnlyCollection&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Identifies the <see cref="P:Microsoft.Extensions.AI.Evaluation.EvaluationMetric.Name" />s of all the <see cref="T:Microsoft.Extensions.AI.Evaluation.EvaluationMetric" />s produced by the
+            composed <see cref="T:Microsoft.Extensions.AI.Evaluation.IEvaluator" />s.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
