@@ -33,7 +33,7 @@
       <para>
             The provided implementation of <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is thread-safe for concurrent use so long as the
             <see cref="T:Microsoft.Extensions.AI.AIFunction" /> instances employed as part of the supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> are also safe.
-            The <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.ConcurrentInvocation" /> property may be used to control whether multiple function invocation
+            The <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.ConcurrentInvocation" /> property can be used to control whether multiple function invocation
             requests as part of the same request are invocable concurrently, but even with that set to <see langword="false" />
             (the default), multiple concurrent requests to this same instance and using the same tools could result in those
             tools being used concurrently (one per request). For example, a function that accesses the HttpContext of a specific
@@ -45,12 +45,11 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public FunctionInvokingChatClient (Microsoft.Extensions.AI.IChatClient innerClient);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Microsoft.Extensions.AI.IChatClient innerClient) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.#ctor(Microsoft.Extensions.AI.IChatClient)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (innerClient As IChatClient)" />
-      <MemberSignature Language="F#" Value="new Microsoft.Extensions.AI.FunctionInvokingChatClient : Microsoft.Extensions.AI.IChatClient -&gt; Microsoft.Extensions.AI.FunctionInvokingChatClient" Usage="new Microsoft.Extensions.AI.FunctionInvokingChatClient innerClient" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; FunctionInvokingChatClient(Microsoft::Extensions::AI::IChatClient ^ innerClient);" />
+      <MemberSignature Language="C#" Value="public FunctionInvokingChatClient (Microsoft.Extensions.AI.IChatClient innerClient, Microsoft.Extensions.Logging.ILogger? logger = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Microsoft.Extensions.AI.IChatClient innerClient, class Microsoft.Extensions.Logging.ILogger logger) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.#ctor(Microsoft.Extensions.AI.IChatClient,Microsoft.Extensions.Logging.ILogger)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (innerClient As IChatClient, Optional logger As ILogger = Nothing)" />
+      <MemberSignature Language="F#" Value="new Microsoft.Extensions.AI.FunctionInvokingChatClient : Microsoft.Extensions.AI.IChatClient * Microsoft.Extensions.Logging.ILogger -&gt; Microsoft.Extensions.AI.FunctionInvokingChatClient" Usage="new Microsoft.Extensions.AI.FunctionInvokingChatClient (innerClient, logger)" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
@@ -58,9 +57,18 @@
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="innerClient" Type="Microsoft.Extensions.AI.IChatClient" />
+        <Parameter Name="logger" Type="Microsoft.Extensions.Logging.ILogger">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="innerClient">The underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />, or the next instance in a chain of clients.</param>
+        <param name="logger">An <see cref="T:Microsoft.Extensions.Logging.ILogger" /> to use for logging information about function invocation.</param>
         <summary>
             Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> class.
             </summary>
@@ -150,8 +158,8 @@
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;CompleteStreamingAsync&gt;d__22))]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;CompleteStreamingAsync&gt;d__22))&gt;]</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;CompleteStreamingAsync&gt;d__24))]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;CompleteStreamingAsync&gt;d__24))&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -205,17 +213,16 @@
         <summary>
             Gets or sets a value indicating whether to allow concurrent invocation of functions.
             </summary>
-        <value>To be added.</value>
-        <remarks>
-          <para>
-            An individual response from the inner client may contain multiple function call requests.
-            By default, such function calls are processed serially. Set <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.ConcurrentInvocation" /> to
-            <see langword="true" /> to enable concurrent invocation such that multiple function calls may execute in parallel.
-            </para>
-          <para>
+        <value>
+          <see langword="true" /> if multiple function calls can execute in parallel.
+            <see langword="false" /> if function calls are processed serially.
             The default value is <see langword="false" />.
-            </para>
-        </remarks>
+            </value>
+        <remarks>
+            An individual response from the inner client might contain multiple function call requests.
+            By default, such function calls are processed serially. Set <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.ConcurrentInvocation" /> to
+            <see langword="true" /> to enable concurrent invocation such that multiple function calls can execute in parallel.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="DetailedErrors">
@@ -238,24 +245,27 @@
             Gets or sets a value indicating whether detailed exception information should be included
             in the chat history when calling the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />.
             </summary>
-        <value>To be added.</value>
+        <value>
+          <see langword="true" /> if the full exception message is added to the chat history
+            when calling the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />.
+            <see langword="false" /> if a generic error message is included in the chat history.
+            The default value is <see langword="false" />.
+            </value>
         <remarks>
           <para>
-            The default value is <see langword="false" />, meaning that only a generic error message will
-            be included in the chat history. This prevents the underlying language model from disclosing
-            raw exception details to the end user, since it does not receive that information. Even in this
+            Setting the value to <see langword="false" /> prevents the underlying language model from disclosing
+            raw exception details to the end user, since it doesn't receive that information. Even in this
             case, the raw <see cref="T:System.Exception" /> object is available to application code by inspecting
             the <see cref="P:Microsoft.Extensions.AI.FunctionResultContent.Exception" /> property.
             </para>
           <para>
-            If set to <see langword="true" />, the full exception message will be added to the chat history
-            when calling the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />. This can help it to bypass problems on
-            its own, for example by retrying the function call with different arguments. However it may
-            result in disclosing the raw exception information to external users, which may be a security
+            Setting the value to <see langword="true" /> can help the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> bypass problems on
+            its own, for example by retrying the function call with different arguments. However it might
+            result in disclosing the raw exception information to external users, which can be a security
             concern depending on the application scenario.
             </para>
           <para>
-            Changing the value of this property while the client is in use may result in inconsistencies
+            Changing the value of this property while the client is in use might result in inconsistencies
             as to whether detailed errors are provided during an in-flight request.
             </para>
         </remarks>
@@ -292,7 +302,7 @@
             </param>
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
         <summary>Invokes the function asynchronously.</summary>
-        <returns>The result of the function invocation. This may be null if the function invocation returned null.</returns>
+        <returns>The result of the function invocation, or <see langword="null" /> if the function invocation returned <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -315,7 +325,12 @@
         <summary>
             Gets or sets a value indicating whether to keep intermediate messages in the chat history.
             </summary>
-        <value>To be added.</value>
+        <value>
+          <see langword="true" /> if intermediate messages persist in the <see cref="T:System.Collections.Generic.IList`1" /> list provided
+            to <see cref="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" /> and <see cref="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteStreamingAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" /> by the caller.
+            <see langword="false" /> if intermediate messages are removed prior to completing the operation.
+            The default value is <see langword="true" />.
+            </value>
         <remarks>
           <para>
             When the inner <see cref="T:Microsoft.Extensions.AI.IChatClient" /> returns <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> to the
@@ -323,13 +338,12 @@
             those messages to the list of messages, along with <see cref="T:Microsoft.Extensions.AI.FunctionResultContent" /> instances
             it creates with the results of invoking the requested functions. The resulting augmented
             list of messages is then passed to the inner client in order to send the results back.
-            By default, <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.KeepFunctionCallingMessages" /> is <see langword="true" />, and those
-            messages will persist in the <see cref="T:System.Collections.Generic.IList`1" /> list provided to <see cref="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
+            By default, those messages persist in the <see cref="T:System.Collections.Generic.IList`1" /> list provided to <see cref="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
             and <see cref="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteStreamingAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" /> by the caller. Set <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.KeepFunctionCallingMessages" />
             to <see langword="false" /> to remove those messages prior to completing the operation.
             </para>
           <para>
-            Changing the value of this property while the client is in use may result in inconsistencies
+            Changing the value of this property while the client is in use might result in inconsistencies
             as to whether function calling messages are kept during an in-flight request.
             </para>
         </remarks>
@@ -354,22 +368,22 @@
         <summary>
             Gets or sets the maximum number of iterations per request.
             </summary>
-        <value>To be added.</value>
+        <value>
+            The maximum number of iterations per request.
+            The default value is <see langword="null" />.
+            </value>
         <remarks>
           <para>
-            Each request to this <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> may end up making
+            Each request to this <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> might end up making
             multiple requests to the inner client. Each time the inner client responds with
-            a function call request, this client may perform that invocation and send the results
+            a function call request, this client might perform that invocation and send the results
             back to the inner client in a new request. This property limits the number of times
             such a roundtrip is performed. If null, there is no limit applied. If set, the value
             must be at least one, as it includes the initial request.
             </para>
           <para>
-            Changing the value of this property while the client is in use may result in inconsistencies
+            Changing the value of this property while the client is in use might result in inconsistencies
             as to how many iterations are allowed for an in-flight request.
-            </para>
-          <para>
-            The default value is <see langword="null" />.
             </para>
         </remarks>
       </Docs>
@@ -393,25 +407,18 @@
         <summary>
             Gets or sets a value indicating whether to handle exceptions that occur during function calls.
             </summary>
-        <value>To be added.</value>
-        <remarks>
-          <para>
-            If the value is <see langword="false" />, then if a function call fails with an exception, the
+        <value>
+          <see langword="false" /> if the
             underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> will be instructed to give a response without invoking
-            any further functions.
-            </para>
-          <para>
-            If the value is <see langword="true" />, the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> will be allowed
+            any further functions if a function call fails with an exception.
+            <see langword="true" /> if the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is allowed
             to continue attempting function calls until <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.MaximumIterationsPerRequest" /> is reached.
-            </para>
-          <para>
-            Changing the value of this property while the client is in use may result in inconsistencies
-            as to whether errors are retried during an in-flight request.
-            </para>
-          <para>
             The default value is <see langword="false" />.
-            </para>
-        </remarks>
+            </value>
+        <remarks>
+            Changing the value of this property while the client is in use might result in inconsistencies
+            as to whether errors are retried during an in-flight request.
+            </remarks>
       </Docs>
     </Member>
   </Members>

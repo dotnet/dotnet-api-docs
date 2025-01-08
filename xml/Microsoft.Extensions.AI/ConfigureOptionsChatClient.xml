@@ -20,7 +20,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>A delegating chat client that updates or replaces the <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> used by the remainder of the pipeline.</summary>
+    <summary>Represents a delegating chat client that configures a <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance used by the remainder of the pipeline.</summary>
     <remarks>
       <para>
             The configuration callback is invoked with the caller-supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance. To override the caller-supplied options
@@ -49,12 +49,12 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ConfigureOptionsChatClient (Microsoft.Extensions.AI.IChatClient innerClient, Func&lt;Microsoft.Extensions.AI.ChatOptions?,Microsoft.Extensions.AI.ChatOptions?&gt; configureOptions);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Microsoft.Extensions.AI.IChatClient innerClient, class System.Func`2&lt;class Microsoft.Extensions.AI.ChatOptions, class Microsoft.Extensions.AI.ChatOptions&gt; configureOptions) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.ConfigureOptionsChatClient.#ctor(Microsoft.Extensions.AI.IChatClient,System.Func{Microsoft.Extensions.AI.ChatOptions,Microsoft.Extensions.AI.ChatOptions})" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (innerClient As IChatClient, configureOptions As Func(Of ChatOptions, ChatOptions))" />
-      <MemberSignature Language="F#" Value="new Microsoft.Extensions.AI.ConfigureOptionsChatClient : Microsoft.Extensions.AI.IChatClient * Func&lt;Microsoft.Extensions.AI.ChatOptions, Microsoft.Extensions.AI.ChatOptions&gt; -&gt; Microsoft.Extensions.AI.ConfigureOptionsChatClient" Usage="new Microsoft.Extensions.AI.ConfigureOptionsChatClient (innerClient, configureOptions)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ConfigureOptionsChatClient(Microsoft::Extensions::AI::IChatClient ^ innerClient, Func&lt;Microsoft::Extensions::AI::ChatOptions ^, Microsoft::Extensions::AI::ChatOptions ^&gt; ^ configureOptions);" />
+      <MemberSignature Language="C#" Value="public ConfigureOptionsChatClient (Microsoft.Extensions.AI.IChatClient innerClient, Action&lt;Microsoft.Extensions.AI.ChatOptions&gt; configure);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Microsoft.Extensions.AI.IChatClient innerClient, class System.Action`1&lt;class Microsoft.Extensions.AI.ChatOptions&gt; configure) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.ConfigureOptionsChatClient.#ctor(Microsoft.Extensions.AI.IChatClient,System.Action{Microsoft.Extensions.AI.ChatOptions})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (innerClient As IChatClient, configure As Action(Of ChatOptions))" />
+      <MemberSignature Language="F#" Value="new Microsoft.Extensions.AI.ConfigureOptionsChatClient : Microsoft.Extensions.AI.IChatClient * Action&lt;Microsoft.Extensions.AI.ChatOptions&gt; -&gt; Microsoft.Extensions.AI.ConfigureOptionsChatClient" Usage="new Microsoft.Extensions.AI.ConfigureOptionsChatClient (innerClient, configure)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ConfigureOptionsChatClient(Microsoft::Extensions::AI::IChatClient ^ innerClient, Action&lt;Microsoft::Extensions::AI::ChatOptions ^&gt; ^ configure);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
@@ -62,23 +62,20 @@
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="innerClient" Type="Microsoft.Extensions.AI.IChatClient" />
-        <Parameter Name="configureOptions" Type="System.Func&lt;Microsoft.Extensions.AI.ChatOptions,Microsoft.Extensions.AI.ChatOptions&gt;">
-          <Attributes>
-            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2, 2 })]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2, 2 })&gt;]</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
+        <Parameter Name="configure" Type="System.Action&lt;Microsoft.Extensions.AI.ChatOptions&gt;" />
       </Parameters>
       <Docs>
         <param name="innerClient">The inner client.</param>
-        <param name="configureOptions">
-            The delegate to invoke to configure the <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance. It is passed the caller-supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" />
-            instance and should return the configured <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance to use.
+        <param name="configure">
+            The delegate to invoke to configure the <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance. It is passed a clone of the caller-supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance
+            (or a newly constructed instance if the caller-supplied instance is <see langword="null" />).
             </param>
-        <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.ConfigureOptionsChatClient" /> class with the specified <paramref name="configureOptions" /> callback.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.ConfigureOptionsChatClient" /> class with the specified <paramref name="configure" /> callback.</summary>
+        <remarks>
+            The <paramref name="configure" /> delegate is passed either a new instance of <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> if
+            the caller didn't supply a <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance, or a clone (via <see cref="M:Microsoft.Extensions.AI.ChatOptions.Clone" /> of the caller-supplied
+            instance if one was supplied.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="CompleteAsync">
