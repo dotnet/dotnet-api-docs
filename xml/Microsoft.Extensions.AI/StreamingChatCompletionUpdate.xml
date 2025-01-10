@@ -21,9 +21,34 @@
   </Attributes>
   <Docs>
     <summary>
-            Represents a single response chunk from an <see cref="T:Microsoft.Extensions.AI.IChatClient" />.
+            Represents a single streaming response chunk from an <see cref="T:Microsoft.Extensions.AI.IChatClient" />.
             </summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <para>
+            Conceptually, this combines the roles of <see cref="T:Microsoft.Extensions.AI.ChatCompletion" /> and <see cref="T:Microsoft.Extensions.AI.ChatMessage" />
+            in streaming output. For ease of consumption, it also flattens the nested structure you see on
+            streaming chunks in some AI service, so instead of a dictionary of choices, each update represents a
+            single choice (and hence has its own role, choice ID, etc.).
+            </para>
+      <para>
+        <see cref="T:Microsoft.Extensions.AI.StreamingChatCompletionUpdate" /> is so named because it represents streaming updates
+            to a single chat completion. As such, it is considered erroneous for multiple updates that are part
+            of the same completion to contain competing values. For example, some updates that are part of
+            the same completion may have a <see langword="null" /><see cref="P:Microsoft.Extensions.AI.StreamingChatCompletionUpdate.Role" />
+            value, and others may have a non-<see langword="null" /> value, but all of those with a non-<see langword="null" />
+            value must have the same value (e.g. <see cref="P:Microsoft.Extensions.AI.ChatRole.Assistant" />. It should never be the case, for example,
+            that one <see cref="T:Microsoft.Extensions.AI.StreamingChatCompletionUpdate" /> in a completion has a role of <see cref="P:Microsoft.Extensions.AI.ChatRole.Assistant" />
+            while another has a role of "AI".
+            </para>
+      <para>
+            The relationship between <see cref="T:Microsoft.Extensions.AI.ChatCompletion" /> and <see cref="T:Microsoft.Extensions.AI.StreamingChatCompletionUpdate" /> is
+            codified in the <see cref="M:Microsoft.Extensions.AI.StreamingChatCompletionUpdateExtensions.ToChatCompletionAsync(System.Collections.Generic.IAsyncEnumerable{Microsoft.Extensions.AI.StreamingChatCompletionUpdate},System.Boolean,System.Threading.CancellationToken)" /> and
+            <see cref="M:Microsoft.Extensions.AI.ChatCompletion.ToStreamingChatCompletionUpdates" />, which enable bidirectional conversions
+            between the two. Note, however, that the conversion may be slightly lossy, for example if multiple updates
+            all have different <see cref="P:Microsoft.Extensions.AI.StreamingChatCompletionUpdate.RawRepresentation" /> objects whereas there's
+            only one slot for such an object available in <see cref="P:Microsoft.Extensions.AI.ChatCompletion.RawRepresentation" />.
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
