@@ -40,7 +40,11 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Net.Http.HttpCompletionOption> value effectively affects the scope of the timeout specified in the <xref:System.Net.Http.HttpClient> operation options when reading a response. The timeout on the <xref:System.Net.Http.HttpClient> always applies on the relevant invoked methods up until the point where those methods complete/return. Crucially, when using the <xref:System.Net.Http.HttpCompletionOption.ResponseHeadersRead> option, the timeout applies only up to where the headers end and the content starts. The content reading operation needs to be timed out separately in case the server promptly returns the status line and headers but takes too long to return the content. Below is an example illustrating this point:
+
+> [!WARNING]
+> The <xref:System.Net.Http.HttpCompletionOption> value affects the scope of the timeout specified in the <xref:System.Net.Http.HttpClient> options when reading a response. The timeout on the <xref:System.Net.Http.HttpClient> always applies on the relevant invoked methods up until the point where those methods complete/return. Crucially, when using the <xref:System.Net.Http.HttpCompletionOption.ResponseHeadersRead> option, the timeout applies only up to where the headers end and the content starts. The content reading operation needs to be timed out separately in case the server promptly returns the status line and headers but takes too long to return the content.
+> This consideration also applies to the <xref:System.Net.Http.HttpClient.MaxResponseContentBufferSize%2A> property. The limit is only enforced when using <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead>.
+> Below is an example illustrating this point:
 
  :::code language="csharp" source="~/snippets/csharp/System.Net.Http/HttpCompletionOption/HttpCompletionOptionSnippets.cs" id="SnippetHttpCompletionOption":::
 
