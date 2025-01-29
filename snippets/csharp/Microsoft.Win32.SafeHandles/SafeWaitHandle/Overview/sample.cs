@@ -5,14 +5,12 @@ using System.Runtime.InteropServices;
 
 class SafeHandlesExample
 {
-
     static void Main()
     {
-        UnmanagedMutex uMutex = new UnmanagedMutex("YourCompanyName_SafeHandlesExample_MUTEX");
+        UnmanagedMutex uMutex = new("YourCompanyName_SafeHandlesExample_MUTEX");
 
         try
         {
-
             uMutex.Create();
             Console.WriteLine("Mutex created. Press Enter to release it.");
             Console.ReadLine();
@@ -24,52 +22,43 @@ class SafeHandlesExample
         finally
         {
             uMutex.Release();
-            Console.WriteLine("Mutex Released.");
+            Console.WriteLine("Mutex released.");
         }
-
-        Console.ReadLine();
     }
 }
 
-class UnmanagedMutex
+partial class UnmanagedMutex(string Name)
 {
-
     // Use interop to call the CreateMutex function.
-    // For more information about CreateMutex,
-    // see the unmanaged MSDN reference library.
-    [DllImport("kernel32.dll", CharSet=CharSet.Unicode)]
-    static extern SafeWaitHandle CreateMutex(IntPtr lpMutexAttributes, bool bInitialOwner,
-    string lpName);
+    [LibraryImport("kernel32.dll", EntryPoint = "CreateMutexW", StringMarshalling = StringMarshalling.Utf16)]
+    private static partial SafeWaitHandle CreateMutex(
+        IntPtr lpMutexAttributes,
+        [MarshalAs(UnmanagedType.Bool)] bool bInitialOwner,
+        string lpName
+        );
 
     // Use interop to call the ReleaseMutex function.
     // For more information about ReleaseMutex,
     // see the unmanaged MSDN reference library.
-    [DllImport("kernel32.dll")]
-    public static extern bool ReleaseMutex(SafeWaitHandle hMutex);
+    [LibraryImport("kernel32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool ReleaseMutex(SafeWaitHandle hMutex);
 
-    private SafeWaitHandle handleValue = null;
-    private IntPtr mutexAttrValue = IntPtr.Zero;
-    private string nameValue = null;
-
-    public UnmanagedMutex(string Name)
-    {
-        nameValue = Name;
-    }
+    private SafeWaitHandle _handleValue = null;
+    private readonly IntPtr _mutexAttrValue = IntPtr.Zero;
+    private string nameValue = Name;
 
     public void Create()
     {
-        if (nameValue == null && nameValue.Length == 0)
-        {
-            throw new ArgumentNullException("nameValue");
-        }
+        ArgumentException.ThrowIfNullOrEmpty(nameValue);
 
-        handleValue = CreateMutex(mutexAttrValue,
+        _handleValue = CreateMutex(_mutexAttrValue,
                                         true, nameValue);
 
         // If the handle is invalid,
         // get the last Win32 error
         // and throw a Win32Exception.
-        if (handleValue.IsInvalid)
+        if (_handleValue.IsInvalid)
         {
             Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
         }
@@ -79,11 +68,9 @@ class UnmanagedMutex
     {
         get
         {
-            // If the handle is valid,
-            // return it.
-            if (!handleValue.IsInvalid)
+            if (!_handleValue.IsInvalid)
             {
-                return handleValue;
+                return _handleValue;
             }
             else
             {
@@ -92,17 +79,11 @@ class UnmanagedMutex
         }
     }
 
-    public string Name
-    {
-        get
-        {
-            return nameValue;
-        }
-    }
+    public string Name => nameValue;
 
     public void Release()
     {
-        ReleaseMutex(handleValue);
+        ReleaseMutex(_handleValue);
     }
 }
 //</Snippet1>

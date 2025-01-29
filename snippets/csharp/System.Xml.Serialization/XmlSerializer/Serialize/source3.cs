@@ -1,5 +1,4 @@
 ﻿// <Snippet1>
-
 using System;
 using System.IO;
 using System.Xml.Serialization;
@@ -91,5 +90,4 @@ public class Test3
             i.LineTotal);
     }
 }
-
 // </Snippet1>

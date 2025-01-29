@@ -41,7 +41,7 @@ public class DiscoveryDocument_Example
 // <Snippet3>
 // <Snippet4>
          // Check whether the given XmlTextReader is readable.
-         if( DiscoveryDocument.CanRead( myXmlTextReader ) == true )
+         if ( DiscoveryDocument.CanRead( myXmlTextReader ))
          {
             // Read the given XmlTextReader.
             myDiscoveryDocument = DiscoveryDocument.Read( myXmlTextReader );

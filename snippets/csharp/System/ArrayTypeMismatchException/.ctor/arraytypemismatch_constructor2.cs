@@ -9,7 +9,6 @@
    caught in the calling method.
  */
 // <Snippet1>
-
 using System;
 
 public class ArrayTypeMismatchConst2

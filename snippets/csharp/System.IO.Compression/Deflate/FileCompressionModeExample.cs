@@ -10,7 +10,7 @@ public static class FileCompressionModeExample
     private const string CompressedFileName = "compressed.dfl";
     private const string DecompressedFileName = "decompressed.txt";
 
-    public static void Main()
+    public static void Run()
     {
         CreateFileToCompress();
         CompressFile();
@@ -21,11 +21,11 @@ public static class FileCompressionModeExample
         /*
          Output:
 
-            The original file 'original.txt' weighs 445 bytes. Contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            The original file 'original.txt' is 445 bytes. Contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-            The compressed file 'compressed.dfl' weighs 265 bytes.
+            The compressed file 'compressed.dfl' is 265 bytes.
 
-            The decompressed file 'decompressed.txt' weighs 445 bytes. Contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            The decompressed file 'decompressed.txt' is 445 bytes. Contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
          */
     }
 
@@ -52,10 +52,10 @@ public static class FileCompressionModeExample
         long originalSize = new FileInfo(OriginalFileName).Length;
         long compressedSize = new FileInfo(CompressedFileName).Length;
         long decompressedSize = new FileInfo(DecompressedFileName).Length;
-        
-        Console.WriteLine($"The original file '{OriginalFileName}' weighs {originalSize} bytes. Contents: \"{File.ReadAllText(OriginalFileName)}\"");
-        Console.WriteLine($"The compressed file '{CompressedFileName}' weighs {compressedSize} bytes.");
-        Console.WriteLine($"The decompressed file '{DecompressedFileName}' weighs {decompressedSize} bytes. Contents: \"{File.ReadAllText(DecompressedFileName)}\"");
+
+        Console.WriteLine($"The original file '{OriginalFileName}' is {originalSize} bytes. Contents: \"{File.ReadAllText(OriginalFileName)}\"");
+        Console.WriteLine($"The compressed file '{CompressedFileName}' is {compressedSize} bytes.");
+        Console.WriteLine($"The decompressed file '{DecompressedFileName}' is {decompressedSize} bytes. Contents: \"{File.ReadAllText(DecompressedFileName)}\"");
     }
 
     private static void DeleteFiles()

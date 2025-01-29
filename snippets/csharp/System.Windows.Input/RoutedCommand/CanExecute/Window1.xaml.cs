@@ -102,7 +102,7 @@ namespace SDKSamples
             Slider target = e.Source as Slider;
             if (target != null)
             {
-                if (target.IsEnabled == true)
+                if (target.IsEnabled)
                 {
                     e.CanExecute = true;
                     e.Handled = true;

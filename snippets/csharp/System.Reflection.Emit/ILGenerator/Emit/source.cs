@@ -1,14 +1,11 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
 
 class DynamicJumpTableDemo
-
 {
-
    public static Type BuildMyType()
    {
 	AppDomain myDomain = Thread.GetDomain();
@@ -110,5 +107,4 @@ class DynamicJumpTableDemo
 			  		           new object[] {theValue}));
    }
 }
-
 // </Snippet1>

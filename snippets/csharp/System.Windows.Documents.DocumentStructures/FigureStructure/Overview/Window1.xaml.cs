@@ -47,7 +47,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog() != true)  return;
+            if (!dialog.ShowDialog())  return;
             
             // If the file is an XPS document, open it in the DocumentViewer.
             if (dialog.FileName.EndsWith(".xps"))
@@ -183,7 +183,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", set it as the XPS unstructured file.
-            if (openDialog.ShowDialog() != true)  return;
+            if (!openDialog.ShowDialog())  return;
             string xpsUnstructuredFile = openDialog.FileName;
             -----*/
             // For the sample, always use "Spec_withoutStructure.xps"
@@ -204,7 +204,7 @@ namespace SdkSample
 
             // Show the "File Save" dialog.  If the user picks a file and
             // clicks "OK", set it as the target ouput XPS structured file.
-            if (saveDialog.ShowDialog() != true)  return;
+            if (!saveDialog.ShowDialog())  return;
             string xpsTargetFile = saveDialog.FileName;
 
             // Add the document structure resource elements

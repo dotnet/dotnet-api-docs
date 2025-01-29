@@ -3,14 +3,11 @@ using System.Reflection;
 using System.Reflection.Emit;
 
 class MyDynamicAssembly
-
 {
-
    public static void BuildDynamicMethod(TypeBuilder myTypeBuilder,
 					 Type[] mthdParamTypes,
 					 Type returnType,
 					 int addrOfLegacyNumberObject)
-
    {
 	// <Snippet1>
 	MethodBuilder myMthdBuilder = myTypeBuilder.DefineMethod("MyMethod",

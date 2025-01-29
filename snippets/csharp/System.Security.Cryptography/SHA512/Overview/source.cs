@@ -12,8 +12,11 @@ public class Sample
 // <Snippet1>
 byte[] data = new byte[DATA_SIZE];
 byte[] result;
-SHA512 shaM = new SHA512Managed();
-result = shaM.ComputeHash(data);
+
+using (SHA512 sha512 = SHA512.Create())
+{
+    result = sha512.ComputeHash(data);
+}
 // </Snippet1>
  }
 }

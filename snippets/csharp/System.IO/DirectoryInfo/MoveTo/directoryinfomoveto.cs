@@ -11,14 +11,14 @@ public class MoveToTest
         DirectoryInfo di = new DirectoryInfo("TempDir");
 
         // Create the directory only if it does not already exist.
-        if (di.Exists == false)
+        if (!di.Exists)
             di.Create();
 
         // Create a subdirectory in the directory just created.
         DirectoryInfo dis = di.CreateSubdirectory("SubDir");
 
         // Move the main directory. Note that the contents move with the directory.
-        if (Directory.Exists("NewTempDir") == false)
+        if (!Directory.Exists("NewTempDir"))
             di.MoveTo("NewTempDir");
 
         try

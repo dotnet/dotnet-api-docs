@@ -23,20 +23,20 @@ namespace ComboBoxSimple
         void OnHover(object sender, RoutedEventArgs e)
         {
             //<Snippet3>
-            if (cbi1.IsHighlighted == true)
+            if (cbi1.IsHighlighted)
             {
                 cbi2.Content = "Item2";
                 cbi3.Content = "Item3";
                 cbi1.Content = "Highlighted Item";
             }
             //</Snippet3>
-            else if (cbi2.IsHighlighted == true)
+            else if (cbi2.IsHighlighted)
             {
                 cbi1.Content = "Item1";
                 cbi3.Content = "Item3";
                 cbi2.Content = "Highlighted Item";
             }
-            else if (cbi3.IsHighlighted == true)
+            else if (cbi3.IsHighlighted)
             {
                 cbi1.Content = "Item1";
                 cbi2.Content = "Item2";
@@ -47,7 +47,7 @@ namespace ComboBoxSimple
         //<SnippetComboBoxEvents2>
         void OnDropDownOpened(object sender, EventArgs e)
         {
-            if (cb.IsDropDownOpen == true)
+            if (cb.IsDropDownOpen)
             {
                 cb.Text = "Combo box opened";
             }
@@ -55,7 +55,7 @@ namespace ComboBoxSimple
 
         void OnDropDownClosed(object sender, EventArgs e)
         {
-            if (cb.IsDropDownOpen == false)
+            if (!cb.IsDropDownOpen)
             {
                 cb.Text = "Combo box closed";
             }

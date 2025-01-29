@@ -1,17 +1,10 @@
-﻿// <Snippet1>
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 
 class Program
 {
-    static void Main()
-    {
-        string str = "Data Source=(local);Initial Catalog=Northwind;"
-            + "Integrated Security=SSPI";
-        ReadOrderData(str);
-    }
-
+    // <Snippet1>
     private static void ReadOrderData(string connectionString)
     {
         string queryString =
@@ -41,5 +34,5 @@ class Program
     {
         Console.WriteLine(String.Format("{0}, {1}", dataRecord[0], dataRecord[1]));
     }
+    // </Snippet1>
 }
-// </Snippet1>

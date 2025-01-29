@@ -277,7 +277,7 @@ private:
 private:
    void checkBox1_CheckedChanged( Object^ /*sender*/, System::EventArgs^ /*e*/ )
    {
-      if ( checkBox1->Checked == true )
+      if ( checkBox1->Checked)
             monthCalendar1->ShowToday = true;
       else
             monthCalendar1->ShowToday = false;
@@ -288,7 +288,7 @@ private:
 private:
    void checkBox2_CheckedChanged( Object^ /*sender*/, System::EventArgs^ /*e*/ )
    {
-      if ( checkBox2->Checked == true )
+      if ( checkBox2->Checked)
             monthCalendar1->ShowTodayCircle = true;
       else
             monthCalendar1->ShowTodayCircle = false;
@@ -391,7 +391,7 @@ private:
    {
       StreamWriter^ myOutputStream = File::CreateText( "myDates.txt" );
       IEnumerator^ myDates = listBox1->Items->GetEnumerator();
-      while ( myDates->MoveNext() == true )
+      while ( myDates->MoveNext() )
       {
          myOutputStream->WriteLine( myDates->Current );
       }

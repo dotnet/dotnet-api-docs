@@ -10,7 +10,7 @@ public class CreateSubTest
         DirectoryInfo di = new DirectoryInfo("TempDir");
 
         // Create the directory only if it does not already exist.
-        if (di.Exists == false)
+        if (!di.Exists)
             di.Create();
 
         // Create a subdirectory in the directory just created.

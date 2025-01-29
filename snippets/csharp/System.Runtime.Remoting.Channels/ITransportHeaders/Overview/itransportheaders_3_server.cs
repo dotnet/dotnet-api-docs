@@ -9,7 +9,6 @@
 */
 
 // <Snippet1>
-
 using System;
 using System.Collections;
 using System.Runtime.Remoting;
@@ -88,5 +87,4 @@ class MyITransportHeadersClass : ITransportHeaders
 // </Snippet3>
 // </Snippet2>
 }
-
 // </Snippet1>

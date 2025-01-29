@@ -17,7 +17,7 @@ public class Example
       // Get group names.
       do {
          string name = rgx.GroupNameFromNumber(ctr);
-         if (! String.IsNullOrEmpty(name))
+         if (!String.IsNullOrEmpty(name))
          {
             ctr++;
             names.Add(name);
@@ -26,7 +26,7 @@ public class Example
          {
             exitFlag = true;
          }
-      } while (! exitFlag);
+      } while (!exitFlag);
 
       foreach (string cityLine in cityLines)
       {

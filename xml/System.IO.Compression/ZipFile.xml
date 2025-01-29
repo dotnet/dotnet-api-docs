@@ -44,10 +44,6 @@
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-8.0;net-9.0">
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
-    </Attribute>
   </Attributes>
   <Docs>
     <summary>Provides static methods for creating, extracting, and opening zip archives.</summary>
@@ -406,8 +402,8 @@ An I/O error occurred while opening a file to be archived.</exception>
         <param name="compressionLevel">One of the enumeration values that indicates whether to emphasize speed or compression effectiveness when creating the entry.</param>
         <param name="includeBaseDirectory">
           <see langword="true" /> to include the directory name from <paramref name="sourceDirectoryName" /> at the root of the archive; <see langword="false" /> to include only the contents of the directory.</param>
-        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
-        <summary>Creates a zip archive in the specified stream that contains the files and directories from the specified directory, uses the specified compression level and character encoding for entry names, and optionally includes the base directory.</summary>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names and comments in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names or comments.</param>
+        <summary>Creates a zip archive in the specified stream that contains the files and directories from the specified directory, uses the specified compression level and character encoding for entry names and comments, and optionally includes the base directory.</summary>
         <remarks>The directory structure from the file system is preserved in the archive. If the directory is empty, an empty archive is created.
              Use this method overload to specify the compression level and character encoding, and whether to include the base directory in the archive.
              If a file in the directory cannot be added to the archive, the archive is left incomplete and invalid, and the method throws an <see cref="T:System.IO.IOException" /> exception.</remarks>
@@ -488,8 +484,8 @@ An I/O error occurred while opening a file to be archived.</exception>
         <param name="compressionLevel">One of the enumeration values that indicates whether to emphasize speed or compression effectiveness when creating the entry.</param>
         <param name="includeBaseDirectory">
           <see langword="true" /> to include the directory name from <paramref name="sourceDirectoryName" /> at the root of the archive; <see langword="false" /> to include only the contents of the directory.</param>
-        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
-        <summary>Creates a zip archive that contains the files and directories from the specified directory, uses the specified compression level and character encoding for entry names, and optionally includes the base directory.</summary>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names and comments in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names or comments.</param>
+        <summary>Creates a zip archive that contains the files and directories from the specified directory, uses the specified compression level and character encoding for entry names and comments, and optionally includes the base directory.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -500,13 +496,13 @@ An I/O error occurred while opening a file to be archived.</exception>
   
  If a file in the directory cannot be added to the archive, the archive is left incomplete and invalid, and the method throws an <xref:System.IO.IOException> exception.  
   
- If `entryNameEncoding` is set to a value other than `null`, the entry names are encoded by using the specified encoding. If the specified encoding is a UTF-8, the language encoding flag (in the general-purpose bit flag of the local file header) is set for each entry,  
+ If `entryNameEncoding` is set to a value other than `null`, the entry names and comments are encoded by using the specified encoding. If the specified encoding is a UTF-8 encoding, the language encoding flag (in the general-purpose bit flag of the local file header) is set for each entry.  
   
- If `entryNameEncoding` is set to `null`, the entry names are encoded according to the following rules:  
+ If `entryNameEncoding` is set to `null`, the entry names and comments are encoded according to the following rules:  
   
--   For entry names that contain characters outside the ASCII range, the language encoding flag is set, and UTF-8 is used to encode the entry name.  
+-   For entry names and comments that contain characters outside the ASCII range, the language encoding flag is set, and UTF-8 is used to encode the entry name and comment.  
   
--   For entry names that contain only ASCII characters, the language encoding flag is set, and the current system default code page is used to encode the entry names.  
+-   For entry names and comments that contain only ASCII characters, the language encoding flag is not set, and the current system default code page is used to encode the entry names and comments.  
   
  ]]></format>
         </remarks>
@@ -800,8 +796,8 @@ An archive entry was compressed by using a compression method that is not suppor
       <Docs>
         <param name="source">The stream from which the zip archive is to be extracted.</param>
         <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
-        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
-        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system and uses the specified character encoding for entry names.</summary>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names and comments in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names or comments.</param>
+        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system and uses the specified character encoding for entry names and comments.</summary>
         <remarks>This method creates the specified directory and all subdirectories. The destination directory cannot already exist.
             Exceptions related to validating the paths in the <paramref name="destinationDirectoryName" /> or the files in the zip archive contained in <paramref name="source" /> parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted.
             Each extracted file has the same relative path to the directory specified by <paramref name="destinationDirectoryName" /> as its source entry has to the root of the archive.
@@ -986,8 +982,8 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
       <Docs>
         <param name="sourceArchiveFileName">The path to the archive that is to be extracted.</param>
         <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
-        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
-        <summary>Extracts all the files in the specified zip archive to a directory on the file system and uses the specified character encoding for entry names.</summary>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names and comments in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names or comments.</param>
+        <summary>Extracts all the files in the specified zip archive to a directory on the file system and uses the specified character encoding for entry names and comments.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[  
   
@@ -995,15 +991,15 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
 
 This method creates the specified directory and all subdirectories, if necessary. Exceptions related to validating the paths in the `destinationDirectoryName` or `sourceArchiveFileName` parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted. Each extracted file has the same relative path to the directory specified by `destinationDirectoryName` as its source entry has to the root of the archive.
 
-If `entryNameEncoding` is set to a value other than `null`, entry names are decoded according to the following rules:
+If `entryNameEncoding` is set to a value other than `null`, entry names and comments are decoded according to the following rules:
 
-- For entry names where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the entry names are decoded by using the specified encoding.  
-- For entries where the language encoding flag is set, the entry names are decoded by using UTF-8.
+- For entries where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the entry names and comments are decoded by using the specified encoding.  
+- For entries where the language encoding flag is set, the entry names and comments are decoded by using UTF-8.
 
-If `entryNameEncoding` is set to `null`, entry names are decoded according to the following rules:
+If `entryNameEncoding` is set to `null`, entry names and comments are decoded according to the following rules:
 
-- For entries where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, entry names are decoded by using the current system default code page.
-- For entries where the language encoding flag is set, the entry names are decoded by using UTF-8.
+- For entries where the language encoding flag (in the general-purpose bit flag of the local file header) is not set, entry names and comments are decoded by using the current system default code page.
+- For entries where the language encoding flag is set, the entry names and comments are decoded by using UTF-8.
 
  ]]></format>
         </remarks>
@@ -1077,10 +1073,10 @@ If `entryNameEncoding` is set to `null`, entry names are decoded according to th
       <Docs>
         <param name="source">The stream from which the zip archive is to be extracted.</param>
         <param name="destinationDirectoryName">The path to the directory in which to place the extracted files, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
-        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names and comments in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names or comments.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files; <see langword="false" /> otherwise.</param>
-        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system, uses the specified character encoding for entry names, and optionally allows choosing if the files in the destination directory should be overwritten.</summary>
+        <summary>Extracts all the files from the zip archive stored in the specified stream and places them in the specified destination directory on the file system, uses the specified character encoding for entry names and comments, and optionally allows choosing if the files in the destination directory should be overwritten.</summary>
         <remarks>This method creates the specified directory and all subdirectories. The destination directory cannot already exist.
             Exceptions related to validating the paths in the <paramref name="destinationDirectoryName" /> or the files in the zip archive contained in <paramref name="source" /> parameters are thrown before extraction. Otherwise, if an error occurs during extraction, the archive remains partially extracted.
             Each extracted file has the same relative path to the directory specified by <paramref name="destinationDirectoryName" /> as its source entry has to the root of the archive.
@@ -1164,7 +1160,7 @@ An archive entry was compressed by using a compression method that is not suppor
       <Docs>
         <param name="sourceArchiveFileName">The path on the file system to the archive that is to be extracted.</param>
         <param name="destinationDirectoryName">The path to the destination directory on the file system.</param>
-        <param name="entryNameEncoding">The encoding to use when reading entry names in this <see cref="T:System.IO.Compression.ZipArchive" />.</param>
+        <param name="entryNameEncoding">The encoding to use when reading entry names and comments in this <see cref="T:System.IO.Compression.ZipArchive" />.</param>
         <param name="overwriteFiles">
           <see langword="true" /> to overwrite files; <see langword="false" /> otherwise.</param>
         <summary>Extracts all of the files in the specified archive to a directory on the file system.</summary>
@@ -1391,8 +1387,8 @@ An unspecified I/O error occurred while opening the file.</exception>
       <Docs>
         <param name="archiveFileName">The path to the archive to open, specified as a relative or absolute path. A relative path is interpreted as relative to the current working directory.</param>
         <param name="mode">One of the enumeration values that specifies the actions that are allowed on the entries in the opened archive.</param>
-        <param name="entryNameEncoding">The encoding to use when reading or writing entry names in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names.</param>
-        <summary>Opens a zip archive at the specified path, in the specified mode, and by using the specified character encoding for entry names.</summary>
+        <param name="entryNameEncoding">The encoding to use when reading or writing entry names and comments in this archive. Specify a value for this parameter only when an encoding is required for interoperability with zip archive tools and libraries that do not support UTF-8 encoding for entry names or comments.</param>
+        <summary>Opens a zip archive at the specified path, in the specified mode, and by using the specified character encoding for entry names and comments.</summary>
         <returns>The opened zip archive.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[

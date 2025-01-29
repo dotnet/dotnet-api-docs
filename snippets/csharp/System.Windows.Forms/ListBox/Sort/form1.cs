@@ -93,7 +93,7 @@ public class SortByLengthListBox:
 					counter -= 1;
 				}
 			}
-			while((swapped==true));
+			while(swapped);
 		}
 	}
 }

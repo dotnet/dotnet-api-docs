@@ -14,7 +14,7 @@ public class Example
       bool flag = false;
 
       // Determine whether the caller has used the AppContext class directly.
-      if (! AppContext.TryGetSwitch(SwitchName, out flag)) {
+      if (!AppContext.TryGetSwitch(SwitchName, out flag)) {
          // If switch is not defined directly, attempt to retrieve it from a configuration file.
          try {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

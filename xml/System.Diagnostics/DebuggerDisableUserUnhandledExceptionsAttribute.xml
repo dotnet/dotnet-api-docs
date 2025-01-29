@@ -1,0 +1,76 @@
+<Type Name="DebuggerDisableUserUnhandledExceptionsAttribute" FullName="System.Diagnostics.DebuggerDisableUserUnhandledExceptionsAttribute">
+  <TypeSignature Language="C#" Value="public sealed class DebuggerDisableUserUnhandledExceptionsAttribute : Attribute" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit DebuggerDisableUserUnhandledExceptionsAttribute extends System.Attribute" />
+  <TypeSignature Language="DocId" Value="T:System.Diagnostics.DebuggerDisableUserUnhandledExceptionsAttribute" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class DebuggerDisableUserUnhandledExceptionsAttribute&#xA;Inherits Attribute" />
+  <TypeSignature Language="F#" Value="type DebuggerDisableUserUnhandledExceptionsAttribute = class&#xA;    inherit Attribute" />
+  <TypeSignature Language="C++ CLI" Value="public ref class DebuggerDisableUserUnhandledExceptionsAttribute sealed : Attribute" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Attribute</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.AttributeUsage(System.AttributeTargets.Method)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.AttributeUsage(System.AttributeTargets.Method)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      If a .NET Debugger is attached that supports the <see cref="M:System.Diagnostics.Debugger.BreakForUserUnhandledException(System.Exception)" /> API, the debugger won't break on user-unhandled exceptions when the exception is caught by a method with this attribute, unless <see cref="M:System.Diagnostics.Debugger.BreakForUserUnhandledException(System.Exception)" /> is called.
+    </summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+        ## Remarks
+        Visual Studio has added support for catching asynchronous user-unhandled exceptions and it's enabled by default. This feature has existed for a long time for synchronous methods, but not for `async`/`await` methods. The <xref:System.Diagnostics.Debugger.BreakForUserUnhandledException(System.Exception)> method disables the feature for specific methods. This is useful for exceptions that propagate through user code but are expected to be handled by framework code. This attribute is designed to be used along with <xref:System.Diagnostics.Debugger.BreakForUserUnhandledException(System.Exception)>.
+
+        ## Example
+
+        ```csharp
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        [DebuggerDisableUserUnhandledExceptions]
+        static async Task InvokeUserCode(Func<Task> userCode)
+        {
+          try
+          {
+              await userCode();
+          }
+          catch (Exception ex)
+          {
+              if (TryHandleWithFilter(ex))
+              {
+                  return; // example case where we don't want to break for user-unhandled exceptions
+              }
+
+              Debugger.BreakForUserUnhandledException(e); // debugger will stop here and show the exception if attached.
+          }
+        }
+        ```
+         ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DebuggerDisableUserUnhandledExceptionsAttribute ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.DebuggerDisableUserUnhandledExceptionsAttribute.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DebuggerDisableUserUnhandledExceptionsAttribute();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.DebuggerDisableUserUnhandledExceptionsAttribute" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

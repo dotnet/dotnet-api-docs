@@ -14,7 +14,7 @@ class Sample
            // Your code could perform some useful task in the following loop. However,
            // for the sake of this example we'll merely pause for a quarter second.
 
-           while (Console.KeyAvailable == false)
+           while (!Console.KeyAvailable)
                Thread.Sleep(250); // Loop until input is entered.
 
            cki = Console.ReadKey(true);

@@ -11,7 +11,6 @@
 */
 
 // <Snippet1>
-
 using System;
 using System.Net;
 using System.Security.Permissions;

@@ -121,35 +121,35 @@ namespace SDKSample
             switch (currentMode)
             {
                 case eGuiMode.SingleVisual:
-                {
-                    saveHelper.SaveSingleVisual(
-                        newContainerPath, async);
-                    break;
-                }
+                    {
+                        saveHelper.SaveSingleVisual(
+                            newContainerPath, async);
+                        break;
+                    }
                 case eGuiMode.MultipleVisuals:
-                {
-                    saveHelper.SaveMultipleVisuals(
-                        newContainerPath, async);
-                    break;
-                }
+                    {
+                        saveHelper.SaveMultipleVisuals(
+                            newContainerPath, async);
+                        break;
+                    }
                 case eGuiMode.SingleFlowDocument:
-                {
-                    saveHelper.SaveSingleFlowContentDocument(
-                        newContainerPath, async);
-                    break;
-                }
+                    {
+                        saveHelper.SaveSingleFlowContentDocument(
+                            newContainerPath, async);
+                        break;
+                    }
                 case eGuiMode.SingleFixedDocument:
-                {
-                    saveHelper.SaveSingleFixedContentDocument(
-                        newContainerPath, async);
-                    break;
-                }
+                    {
+                        saveHelper.SaveSingleFixedContentDocument(
+                            newContainerPath, async);
+                        break;
+                    }
                 case eGuiMode.MultipleFixedDocuments:
-                {
-                    saveHelper.SaveMultipleFixedContentDocuments(
-                        newContainerPath, async);
-                    break;
-                }
+                    {
+                        saveHelper.SaveMultipleFixedContentDocuments(
+                            newContainerPath, async);
+                        break;
+                    }
             }// end:switch (currentMode)
         }// end:ButtonHelperSave()
 
@@ -201,13 +201,14 @@ namespace SDKSample
         /// <returns></returns>
         private string GetContainerPathFromDialog()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "XPS Document files (*.xps)|*.xps",
+                FilterIndex = 1,
+                InitialDirectory = _contentDir
+            };
 
-            saveFileDialog.Filter = "XPS Document files (*.xps)|*.xps";
-            saveFileDialog.FilterIndex = 1;
-            saveFileDialog.InitialDirectory = _contentDir;
-
-            if (saveFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog().Value)
             {   // The user specified a valid path and filename.
                 return saveFileDialog.FileName;
             }

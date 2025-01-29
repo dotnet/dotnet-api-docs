@@ -17,7 +17,7 @@ private void MyEnumerator() {
 
     // Prints the type of each attribute in the collection.
     Object myAttribute;
-    while(ie.MoveNext()==true) {
+    while(ie.MoveNext()) {
        myAttribute = ie.Current;
        textBox1.Text += myAttribute.ToString();
        textBox1.Text += '\n';

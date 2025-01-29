@@ -31,7 +31,7 @@ public class Example
       for (int ctr = 0; ctr <= repetitions; ctr++)
       {
          // Perform some operation. If it fails, exit the loop.
-         if (! SomeOperationSucceeds()) break;
+         if (!SomeOperationSucceeds()) break;
          // The following code executes if the operation succeeds.
          number++;
       }
@@ -53,7 +53,7 @@ public class Example
       for (int ctr = 0; ctr <= repetitions; ctr++)
       {
          // Perform some operation. If it fails, exit the loop.
-         if (! SomeOperationSucceeds()) break;
+         if (!SomeOperationSucceeds()) break;
          // The following code executes if the operation succeeds.
          actualRepetitions++;
       }

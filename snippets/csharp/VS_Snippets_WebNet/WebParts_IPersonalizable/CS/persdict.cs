@@ -185,7 +185,7 @@ namespace PersTest
             }
             set
             {
-                if (base.Text.Equals(value) == false)
+                if (!base.Text.Equals(value))
                 {
                     base.Text = value;
                     SetPersonalizationDirty();
@@ -211,7 +211,7 @@ namespace PersTest
 
         public override void Load(PersonalizationDictionary state)
         {
-            if (_loading == false)
+            if (!_loading)
             {
                 throw new InvalidOperationException();
             }
@@ -219,7 +219,7 @@ namespace PersTest
 
         public override void Save(PersonalizationDictionary state)
         {
-            if (_saving == false)
+            if (!_saving)
             {
                 throw new InvalidOperationException();
             }
