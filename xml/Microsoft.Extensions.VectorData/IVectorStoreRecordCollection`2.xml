@@ -26,9 +26,11 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <typeparam name="TKey">To be added.</typeparam>
-    <typeparam name="TRecord">To be added.</typeparam>
-    <summary>To be added.</summary>
+    <typeparam name="TKey">The data type of the record key.</typeparam>
+    <typeparam name="TRecord">The record data model to use for adding, updating and retrieving data from the store.</typeparam>
+    <summary>
+            A schema aware interface for managing a named collection of records in a vector store and for creating or deleting the collection itself.
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -50,9 +52,12 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Check if the collection exists in the vector store.
+            </summary>
+        <returns>
+          <see langword="true" /> if the collection exists, <see langword="false" /> otherwise.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -72,7 +77,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets the name of the collection.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -95,9 +102,11 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Create this collection in the vector store.
+            </summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> that completes when the collection has been created.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -119,9 +128,11 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Create this collection in the vector store if it does not already exist.
+            </summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> that completes when the collection has been created.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -152,12 +163,15 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The unique id associated with the record to remove.</param>
+        <param name="options">Optional options for removing the record.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Deletes a record from the vector store. Does not guarantee that the collection exists.
+            </summary>
+        <returns>The unique identifier for the record.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreOperationException">Throw when the command fails to execute for any reason other than that the record does not exit.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeleteBatchAsync">
@@ -187,12 +201,18 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="keys">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="keys">The unique ids associated with the records to remove.</param>
+        <param name="options">Optional options for removing the records.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Deletes a batch of records from the vector store. Does not guarantee that the collection exists.
+            Deletes will be made in a single request or in a single parallel batch depending on the available store functionality.
+            If a record is not found, it will be ignored and the batch will succeed.
+            If any record cannot be deleted for any other reason, the operation will throw. Some records may have already been deleted, while others may not, so the entire operation should be retried.
+            </summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> that completes when the records have been deleted.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreOperationException">Throw when the command fails to execute for any reason other than that a record does not exist.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeleteCollectionAsync">
@@ -213,9 +233,11 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Delete the collection from the vector store.
+            </summary>
+        <returns>A <see cref="T:System.Threading.Tasks.Task" /> that completes when the collection has been deleted.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -252,12 +274,17 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The unique id associated with the record to get.</param>
+        <param name="options">Optional options for retrieving the record.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Gets a record from the vector store. Does not guarantee that the collection exists.
+            Returns null if the record is not found.
+            </summary>
+        <returns>The record if found, otherwise null.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreOperationException">Throw when the command fails to execute for any reason.</exception>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreRecordMappingException">Throw when mapping between the storage model and record data model fails.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetBatchAsync">
@@ -287,12 +314,19 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="keys">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="keys">The unique ids associated with the record to get.</param>
+        <param name="options">Optional options for retrieving the records.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Gets a batch of records from the vector store. Does not guarantee that the collection exists.
+            Gets will be made in a single request or in a single parallel batch depending on the available store functionality.
+            Only found records will be returned, so the resultset may be smaller than the requested keys.
+            Throws for any issues other than records not being found.
+            </summary>
+        <returns>The records associated with the unique keys provided.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreOperationException">Throw when the command fails to execute for any reason.</exception>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreRecordMappingException">Throw when mapping between the storage model and record data model fails.</exception>
       </Docs>
     </Member>
     <Member MemberName="UpsertAsync">
@@ -322,12 +356,18 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="record">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="record">The record to upsert.</param>
+        <param name="options">Optional options for upserting the record.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Upserts a record into the vector store. Does not guarantee that the collection exists.
+                If the record already exists, it will be updated.
+                If the record does not exist, it will be created.
+            </summary>
+        <returns>The unique identifier for the record.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreOperationException">Throw when the command fails to execute for any reason.</exception>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreRecordMappingException">Throw when mapping between the storage model and record data model fails.</exception>
       </Docs>
     </Member>
     <Member MemberName="UpsertBatchAsync">
@@ -357,12 +397,19 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="records">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="records">The records to upsert.</param>
+        <param name="options">Optional options for upserting the records.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>
+            Upserts a group of records into the vector store. Does not guarantee that the collection exists.
+                If the record already exists, it will be updated.
+                If the record does not exist, it will be created.
+            Upserts will be made in a single request or in a single parallel batch depending on the available store functionality.
+            </summary>
+        <returns>The unique identifiers for the records.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreOperationException">Throw when the command fails to execute for any reason.</exception>
+        <exception cref="T:Microsoft.Extensions.VectorData.VectorStoreRecordMappingException">Throw when mapping between the storage model and record data model fails.</exception>
       </Docs>
     </Member>
   </Members>
