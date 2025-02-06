@@ -32,7 +32,7 @@ int main()
          while ( sr->Peek() >= 0 )
          {
             c = gcnew array<Char>(5);
-            sr->Read( c, 0, c->Length );
+            sr->ReadBlock( c, 0, c->Length );
             
             //The output will look odd, because
             //only five characters are read at a time.
