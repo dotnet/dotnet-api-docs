@@ -1377,7 +1377,7 @@ This example is for the server process, which uses the <xref:System.IO.Pipes.Nam
 ## Remarks
  The connecting client's permissions are applied to the remote server. For example, if the connecting client tries to request the contents of a file on the server, the client can request only files that it has sufficient permissions to open.
 
-
+ On Windows, only the thread used for executing the delegate is updated to impersonate the client. On other platforms, all threads from the parent process impersonate the client when `RunAsClient` is called. This behavior affects multi-threaded servers such as the example shown.
 
 ## Examples
  The following example demonstrates a method to create a pipe server that can respond to multiple simultaneous client requests, and a method for client impersonation. This example creates a <xref:System.IO.Pipes.NamedPipeServerStream> object in a parent process, which then creates multiple threads that wait for <xref:System.IO.Pipes.NamedPipeClientStream> objects to connect. After a client is connected, it supplies a file name to the server and the contents of that file are read and sent back to the client. Because the <xref:System.IO.Pipes.NamedPipeServerStream> impersonates the client when opening the file, the client can request only files that it has sufficient permissions to open.
