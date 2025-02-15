@@ -326,7 +326,7 @@ public class AttributesDemoControl : UserControl
 
     void InitializeComponent()
     {
-        DataGridViewCellStyle dataGridViewCellStyle1 = new();
+        DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
         tableLayoutPanel1 = new TableLayoutPanel();
         dataGridView1 = new DataGridView();
         label1 = new Label();
@@ -338,8 +338,8 @@ public class AttributesDemoControl : UserControl
         // 
         tableLayoutPanel1.AutoSize = true;
         tableLayoutPanel1.ColumnCount = 1;
-        _ = tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
-        _ = tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
         tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
         tableLayoutPanel1.Controls.Add(label1, 0, 0);
         tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -347,9 +347,9 @@ public class AttributesDemoControl : UserControl
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.Padding = new Padding(10);
         tableLayoutPanel1.RowCount = 2;
-        _ = tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-        _ = tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-        _ = tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
         tableLayoutPanel1.Size = new Size(425, 424);
         tableLayoutPanel1.TabIndex = 0;
         // 
