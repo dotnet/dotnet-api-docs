@@ -1,144 +1,159 @@
 ﻿// <Snippet1>
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 class FibonacciNumber : Form
 {
-	[STAThread]
-	static void Main()
-	{
-		Application.EnableVisualStyles();
-		Application.Run(new FibonacciNumber());
-	}
+    [STAThread]
+    static void Main()
+    {
+        Application.EnableVisualStyles();
+        Application.Run(new FibonacciNumber());
+    }
 
-	private StatusStrip progressStatusStrip;
-	private ToolStripProgressBar toolStripProgressBar;
-	private NumericUpDown requestedCountControl;
-	private Button goButton;
-	private TextBox outputTextBox;
-	private BackgroundWorker backgroundWorker;
-	private ToolStripStatusLabel toolStripStatusLabel;
-	private int requestedCount;
+    readonly StatusStrip progressStatusStrip;
+    readonly ToolStripProgressBar toolStripProgressBar;
+    readonly NumericUpDown requestedCountControl;
+    readonly Button goButton;
+    readonly TextBox outputTextBox;
+    readonly BackgroundWorker backgroundWorker;
+    readonly ToolStripStatusLabel toolStripStatusLabel;
+    int requestedCount;
 
-	public FibonacciNumber()
-	{
-		Text = "Fibonacci";
-		
-		// Prepare the StatusStrip.
-		progressStatusStrip = new StatusStrip();
-		toolStripProgressBar = new ToolStripProgressBar();
-		toolStripProgressBar.Enabled = false;
-		toolStripStatusLabel = new ToolStripStatusLabel();
-		progressStatusStrip.Items.Add(toolStripProgressBar);
-		progressStatusStrip.Items.Add(toolStripStatusLabel);
+    public FibonacciNumber()
+    {
+        Text = "Fibonacci";
 
-		FlowLayoutPanel flp = new FlowLayoutPanel();
-		flp.Dock = DockStyle.Top;
+        // Prepare the StatusStrip.
+        progressStatusStrip = new StatusStrip();
+        toolStripProgressBar = new ToolStripProgressBar
+        {
+            Enabled = false
+        };
+        toolStripStatusLabel = new ToolStripStatusLabel();
+        _ = progressStatusStrip.Items.Add(toolStripProgressBar);
+        _ = progressStatusStrip.Items.Add(toolStripStatusLabel);
 
-		Label beforeLabel = new Label();
-		beforeLabel.Text = "Calculate the first ";
-		beforeLabel.AutoSize = true;
-		flp.Controls.Add(beforeLabel);
-                // <Snippet2>
-		requestedCountControl = new NumericUpDown();
-		requestedCountControl.Maximum = 1000;
-		requestedCountControl.Minimum = 1;
-		requestedCountControl.Value = 100;
-		flp.Controls.Add(requestedCountControl);
-                // </Snippet2>
-		Label afterLabel = new Label();
-		afterLabel.Text = "Numbers in the Fibonacci sequence.";
-		afterLabel.AutoSize = true;
-		flp.Controls.Add(afterLabel);
-		
-		goButton = new Button();
-		goButton.Text = "&Go";
-		goButton.Click += new System.EventHandler(button1_Click);
-		flp.Controls.Add(goButton);
+        FlowLayoutPanel flp = new()
+        {
+            Dock = DockStyle.Top
+        };
 
-		outputTextBox = new TextBox();
-		outputTextBox.Multiline = true;
-		outputTextBox.ReadOnly = true;
-		outputTextBox.ScrollBars = ScrollBars.Vertical;
-		outputTextBox.Dock = DockStyle.Fill;
+        Label beforeLabel = new()
+        {
+            Text = "Calculate the first ",
+            AutoSize = true
+        };
+        flp.Controls.Add(beforeLabel);
+        // <Snippet2>
+        requestedCountControl = new NumericUpDown
+        {
+            Maximum = 1000,
+            Minimum = 1,
+            Value = 100
+        };
+        flp.Controls.Add(requestedCountControl);
+        // </Snippet2>
+        Label afterLabel = new()
+        {
+            Text = "Numbers in the Fibonacci sequence.",
+            AutoSize = true
+        };
+        flp.Controls.Add(afterLabel);
 
-		Controls.Add(outputTextBox);
-		Controls.Add(progressStatusStrip);
-		Controls.Add(flp);
+        goButton = new Button
+        {
+            Text = "&Go"
+        };
+        goButton.Click += button1_Click;
+        flp.Controls.Add(goButton);
 
-		backgroundWorker = new BackgroundWorker();
-		backgroundWorker.WorkerReportsProgress = true;
-		backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
-		backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
-		backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
-	}
+        outputTextBox = new TextBox
+        {
+            Multiline = true,
+            ReadOnly = true,
+            ScrollBars = ScrollBars.Vertical,
+            Dock = DockStyle.Fill
+        };
+
+        Controls.Add(outputTextBox);
+        Controls.Add(progressStatusStrip);
+        Controls.Add(flp);
+
+        backgroundWorker = new BackgroundWorker
+        {
+            WorkerReportsProgress = true
+        };
+        backgroundWorker.DoWork += backgroundWorker1_DoWork;
+        backgroundWorker.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+        backgroundWorker.ProgressChanged += backgroundWorker1_ProgressChanged;
+    }
 
     // <snippet10>
-	private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-	{
-		// This method will run on a thread other than the UI thread.
-		// Be sure not to manipulate any Windows Forms controls created
-		// on the UI thread from this method.
-		backgroundWorker.ReportProgress(0, "Working...");
-		Decimal lastlast = 0;
-		Decimal last = 1;
-		Decimal current;
-		if (requestedCount >= 1)
-		{ AppendNumber(0); }
-		if (requestedCount >= 2)
-		{ AppendNumber(1); }
-		for (int i = 2; i < requestedCount; ++i)
-		{
-			// Calculate the number.
-			checked { current = lastlast + last; }
-			// Introduce some delay to simulate a more complicated calculation.
-			System.Threading.Thread.Sleep(100);
-			AppendNumber(current);
-			backgroundWorker.ReportProgress((100 * i) / requestedCount, "Working...");
-			// Get ready for the next iteration.
-			lastlast = last;
-			last = current;
-		}
+    void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+    {
+        // This method will run on a thread other than the UI thread.
+        // Be sure not to manipulate any Windows Forms controls created
+        // on the UI thread from this method.
+        backgroundWorker.ReportProgress(0, "Working...");
+        decimal lastlast = 0;
+        decimal last = 1;
+        decimal current;
+        if (requestedCount >= 1)
+        { AppendNumber(0); }
+        if (requestedCount >= 2)
+        { AppendNumber(1); }
+        for (int i = 2; i < requestedCount; ++i)
+        {
+            // Calculate the number.
+            checked { current = lastlast + last; }
+            // Introduce some delay to simulate a more complicated calculation.
+            System.Threading.Thread.Sleep(100);
+            AppendNumber(current);
+            backgroundWorker.ReportProgress(100 * i / requestedCount, "Working...");
+            // Get ready for the next iteration.
+            lastlast = last;
+            last = current;
+        }
 
-		backgroundWorker.ReportProgress(100, "Complete!");
-	}
+        backgroundWorker.ReportProgress(100, "Complete!");
+    }
     // </snippet10>
 
-	private delegate void AppendNumberDelegate(Decimal number);
-        // <Snippet3>
-	private void AppendNumber(Decimal number)
-	{
-		if (outputTextBox.InvokeRequired)
-		{ outputTextBox.Invoke(new AppendNumberDelegate(AppendNumber), number); }
-		else
-		{ outputTextBox.AppendText(number.ToString("N0") + Environment.NewLine); }
-	}
-        // </Snippet3>
-	private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-	{
-		toolStripProgressBar.Value = e.ProgressPercentage;
-		toolStripStatusLabel.Text = e.UserState as String;
-	}
+    delegate void AppendNumberDelegate(decimal number);
+    // <Snippet3>
+    void AppendNumber(decimal number)
+    {
+        if (outputTextBox.InvokeRequired)
+        { _ = outputTextBox.Invoke(new AppendNumberDelegate(AppendNumber), number); }
+        else
+        { outputTextBox.AppendText(number.ToString("N0") + Environment.NewLine); }
+    }
+    // </Snippet3>
+    void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+    {
+        toolStripProgressBar.Value = e.ProgressPercentage;
+        toolStripStatusLabel.Text = e.UserState as string;
+    }
 
-	private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-	{
-		if (e.Error is OverflowException)
-		{ outputTextBox.AppendText(Environment.NewLine + "**OVERFLOW ERROR, number is too large to be represented by the decimal data type**"); }
-		toolStripProgressBar.Enabled = false;
-		requestedCountControl.Enabled = true;
-		goButton.Enabled = true;
-	}
+    void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+        if (e.Error is OverflowException)
+        { outputTextBox.AppendText(Environment.NewLine + "**OVERFLOW ERROR, number is too large to be represented by the decimal data type**"); }
+        toolStripProgressBar.Enabled = false;
+        requestedCountControl.Enabled = true;
+        goButton.Enabled = true;
+    }
 
-	private void button1_Click(object sender, EventArgs e)
-	{
-		goButton.Enabled = false;
-		toolStripProgressBar.Enabled = true;
-		requestedCount = (int)requestedCountControl.Value;
-		requestedCountControl.Enabled = false;
-		outputTextBox.Clear();
-		backgroundWorker.RunWorkerAsync();
-	}
+    void button1_Click(object sender, EventArgs e)
+    {
+        goButton.Enabled = false;
+        toolStripProgressBar.Enabled = true;
+        requestedCount = (int)requestedCountControl.Value;
+        requestedCountControl.Enabled = false;
+        outputTextBox.Clear();
+        backgroundWorker.RunWorkerAsync();
+    }
 }
 // </Snippet1>
