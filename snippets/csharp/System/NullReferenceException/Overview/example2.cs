@@ -2,26 +2,26 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class NRE2Example
 {
-   public static void Main()
-   {
-      List<String> names = GetData();
-      PopulateNames(names);
-   }
+    public static void Main()
+    {
+        List<string> names = GetData();
+        PopulateNames(names);
+    }
 
-   private static void PopulateNames(List<String> names)
-   {
-      String[] arrNames = { "Dakota", "Samuel", "Nikita",
-                            "Koani", "Saya", "Yiska", "Yumaevsky" };
-      foreach (var arrName in arrNames)
-         names.Add(arrName);
-   }
+    private static void PopulateNames(List<string> names)
+    {
+        string[] arrNames = [ "Dakota", "Samuel", "Nikita",
+                            "Koani", "Saya", "Yiska", "Yumaevsky" ];
+        foreach (string arrName in arrNames)
+            names.Add(arrName);
+    }
 
-   private static List<String> GetData()
-   {
-      return null;
-   }
+    private static List<string> GetData()
+    {
+        return null;
+    }
 }
 // The example displays output like the following:
 //    Unhandled Exception: System.NullReferenceException: Object reference

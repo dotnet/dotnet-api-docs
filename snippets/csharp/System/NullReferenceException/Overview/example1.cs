@@ -1,18 +1,17 @@
 ﻿// <Snippet1>
-using System;
 using System.Collections.Generic;
 
-public class Example
+public class UseBeforeAssignExample
 {
-   public static void Main(string[] args)
-   {
-      int value = Int32.Parse(args[0]);
-      List<String> names;
-      if (value > 0)
-         names = new List<String>();
+    public static void Main(string[] args)
+    {
+        int value = int.Parse(args[0]);
+        List<string> names;
+        if (value > 0)
+            names = [];
 
-      names.Add("Major Major Major");
-   }
+        //names.Add("Major Major Major");
+    }
 }
 // Compilation displays a warning like the following:
 //    Example1.cs(10) : warning BC42104: Variable //names// is used before it

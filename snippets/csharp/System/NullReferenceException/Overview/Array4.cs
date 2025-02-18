@@ -1,17 +1,17 @@
 ﻿// <Snippet11>
 using System;
 
-public class Example
+public class Array4Example
 {
-   public static void Main()
-   {
-       int[] values = new int[10];
-       for (int ctr = 0; ctr <= 9; ctr++)
-          values[ctr] = ctr * 2;
+    public static void Main()
+    {
+        int[] values = new int[10];
+        for (int ctr = 0; ctr <= 9; ctr++)
+            values[ctr] = ctr * 2;
 
-       foreach (var value in values)
-          Console.WriteLine(value);
-   }
+        foreach (int value in values)
+            Console.WriteLine(value);
+    }
 }
 // The example displays the following output:
 //    0
