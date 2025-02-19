@@ -10,7 +10,7 @@ public class Chain2Example
         if (current != null)
         {
             string title = current.Title;
-            Console.WriteLine("Current title: '{0}'", title);
+            Console.WriteLine($"Current title: '{title}'");
         }
         else
         {

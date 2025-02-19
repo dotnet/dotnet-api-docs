@@ -19,7 +19,7 @@ namespace NullReturn
 
     public class Person
     {
-        public static Person[] AddRange(string[] firstNames)
+        public static Person[] AddRange(params string[] firstNames)
         {
             Person[] p = new Person[firstNames.Length];
             for (int ctr = 0; ctr < firstNames.Length; ctr++)

@@ -11,7 +11,7 @@ namespace Chain1
             if (!string.IsNullOrEmpty(pages.CurrentPage.Title))
             {
                 string title = pages.CurrentPage.Title;
-                Console.WriteLine("Current title: '{0}'", title);
+                Console.WriteLine($"Current title: '{title}'");
             }
         }
     }
@@ -44,7 +44,7 @@ namespace Chain1
             {
                 if (_ctr == 0)
                 {
-                    if (_page[0] == null)
+                    if (_page[0] is null)
                         return null;
                     else
                         return _page[0];
