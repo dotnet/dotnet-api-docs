@@ -1,5 +1,4 @@
 ﻿// <Snippet3>
-using System;
 using System.Collections.Generic;
 
 public class NRE2Example
@@ -23,9 +22,10 @@ public class NRE2Example
         return null;
     }
 }
+
 // The example displays output like the following:
 //    Unhandled Exception: System.NullReferenceException: Object reference
 //    not set to an instance of an object.
-//       at Example.PopulateNames(List`1 names)
-//       at Example.Main()
+//       at NRE2Example.PopulateNames(List`1 names)
+//       at NRE2Example.Main()
 // </Snippet3>

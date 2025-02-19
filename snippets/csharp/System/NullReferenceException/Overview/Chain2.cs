@@ -1,10 +1,10 @@
-﻿// <Snippet7>
-using System;
+﻿using System;
 
 public class Chain2Example
 {
     public static void Main()
     {
+        // <Snippet7>
         var pages = new Pages();
         Page current = pages.CurrentPage;
         if (current != null)
@@ -16,11 +16,12 @@ public class Chain2Example
         {
             Console.WriteLine("There is no page information in the cache.");
         }
+
+        // The example displays the following output:
+        //       There is no page information in the cache.
+        // </Snippet7>
     }
 }
-// The example displays the following output:
-//       There is no page information in the cache.
-// </Snippet7>
 
 public class Pages
 {

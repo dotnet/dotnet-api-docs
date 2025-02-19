@@ -1,4 +1,2 @@
-﻿// Do something
-using System;
-
-Console.WriteLine("Hello World");
+﻿//NullReturnExample.NoCheckExample();
+NullReturnExample.ExampleWithNullCheck();

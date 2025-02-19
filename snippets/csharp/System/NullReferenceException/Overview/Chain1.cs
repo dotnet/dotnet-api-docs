@@ -63,9 +63,10 @@ namespace Chain1
         public Uri URL;
         public string Title;
     }
+
     // The example displays the following output:
     //    Unhandled Exception:
     //       System.NullReferenceException: Object reference not set to an instance of an object.
-    //       at Example.Main()
+    //       at Chain1Example.Main()
     // </Snippet6>
 }
