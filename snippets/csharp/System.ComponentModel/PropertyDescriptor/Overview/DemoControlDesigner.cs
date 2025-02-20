@@ -3,26 +3,25 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms.Design;
 
-namespace ReadOnlyPropertyDescriptorTest
+namespace ReadOnlyPropertyDescriptorTest;
+
+class DemoControlDesigner : ControlDesigner
 {
-    class DemoControlDesigner : ControlDesigner
+    // The PostFilterProperties method replaces the control's 
+    // Size property with a read-only Size property by using 
+    // the SerializeReadOnlyPropertyDescriptor class.
+    protected override void PostFilterProperties(IDictionary properties)
     {
-        // The PostFilterProperties method replaces the control's 
-        // Size property with a read-only Size property by using 
-        // the SerializeReadOnlyPropertyDescriptor class.
-        protected override void PostFilterProperties(IDictionary properties)
+        if (properties.Contains("Size"))
         {
-            if (properties.Contains("Size"))
-            {
-                PropertyDescriptor original = properties["Size"] as PropertyDescriptor;
-                SerializeReadOnlyPropertyDescriptor readOnlyDescriptor = 
-                    new SerializeReadOnlyPropertyDescriptor(original);
+            PropertyDescriptor original = properties["Size"] as PropertyDescriptor;
+            SerializeReadOnlyPropertyDescriptor readOnlyDescriptor =
+                new(original);
 
-                properties["Size"] = readOnlyDescriptor;
-            }
-
-            base.PostFilterProperties(properties);
+            properties["Size"] = readOnlyDescriptor;
         }
+
+        base.PostFilterProperties(properties);
     }
 }
 // </snippet10>

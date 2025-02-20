@@ -2,186 +2,123 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Text;
 
-namespace ReadOnlyPropertyDescriptorTest
+namespace ReadOnlyPropertyDescriptorTest;
+
+// The SerializeReadOnlyPropertyDescriptor shows how to implement a 
+// custom property descriptor. It provides a read-only wrapper 
+// around the specified PropertyDescriptor. 
+sealed class SerializeReadOnlyPropertyDescriptor : PropertyDescriptor
 {
-    // The SerializeReadOnlyPropertyDescriptor shows how to implement a 
-    // custom property descriptor. It provides a read-only wrapper 
-    // around the specified PropertyDescriptor. 
-    internal sealed class SerializeReadOnlyPropertyDescriptor : PropertyDescriptor
+    readonly PropertyDescriptor _pd;
+
+    public SerializeReadOnlyPropertyDescriptor(PropertyDescriptor pd)
+        : base(pd) => _pd = pd;
+
+    public override AttributeCollection Attributes => AppendAttributeCollection(
+                _pd.Attributes,
+                ReadOnlyAttribute.Yes);
+
+    protected override void FillAttributes(IList attributeList) => attributeList.Add(ReadOnlyAttribute.Yes);
+
+    public override Type ComponentType => _pd.ComponentType;
+
+    // The type converter for this property.
+    // A translator can overwrite with its own converter.
+    public override TypeConverter Converter => _pd.Converter;
+
+    // Returns the property editor 
+    // A translator can overwrite with its own editor.
+    public override object GetEditor(Type editorBaseType) => _pd.GetEditor(editorBaseType);
+
+    // Specifies the property is read only.
+    public override bool IsReadOnly => true;
+
+    public override Type PropertyType => _pd.PropertyType;
+
+    public override bool CanResetValue(object component) => _pd.CanResetValue(component);
+
+    public override object GetValue(object component) => _pd.GetValue(component);
+
+    public override void ResetValue(object component) => _pd.ResetValue(component);
+
+    public override void SetValue(object component, object val) => _pd.SetValue(component, val);
+
+    // Determines whether a value should be serialized.
+    public override bool ShouldSerializeValue(object component)
     {
-        private PropertyDescriptor _pd = null;
+        bool result = _pd.ShouldSerializeValue(component);
 
-        public SerializeReadOnlyPropertyDescriptor(PropertyDescriptor pd)
-            : base(pd)
+        if (!result)
         {
-            this._pd = pd;
+            DefaultValueAttribute dva = (DefaultValueAttribute)_pd.Attributes[typeof(DefaultValueAttribute)];
+            result = dva == null || !Equals(_pd.GetValue(component), dva.Value);
         }
 
-        public override AttributeCollection Attributes
+        return result;
+    }
+
+    // The following Utility methods create a new AttributeCollection
+    // by appending the specified attributes to an existing collection.
+    public static AttributeCollection AppendAttributeCollection(
+        AttributeCollection existing,
+        params Attribute[] newAttrs) => new(AppendAttributes(existing, newAttrs));
+
+    public static Attribute[] AppendAttributes(
+        AttributeCollection existing,
+        params Attribute[] newAttrs)
+    {
+        if (existing == null)
         {
-            get
+            throw new ArgumentNullException(nameof(existing));
+        }
+
+        newAttrs ??= [];
+
+        Attribute[] attributes;
+
+        Attribute[] newArray = new Attribute[existing.Count + newAttrs.Length];
+        int actualCount = existing.Count;
+        existing.CopyTo(newArray, 0);
+
+        for (int idx = 0; idx < newAttrs.Length; idx++)
+        {
+            if (newAttrs[idx] == null)
             {
-                return( AppendAttributeCollection(
-                    this._pd.Attributes, 
-                    ReadOnlyAttribute.Yes) );
+                throw new ArgumentNullException(nameof(newAttrs));
             }
-        }
 
-        protected override void FillAttributes(IList attributeList)
-        {
-            attributeList.Add(ReadOnlyAttribute.Yes);
-        }
-
-        public override Type ComponentType
-        {
-            get
+            // Check if this attribute is already in the existing
+            // array.  If it is, replace it.
+            bool match = false;
+            for (int existingIdx = 0; existingIdx < existing.Count; existingIdx++)
             {
-                return this._pd.ComponentType;
-            }
-        }
-
-        // The type converter for this property.
-        // A translator can overwrite with its own converter.
-        public override TypeConverter Converter
-        {
-            get
-            {
-                return this._pd.Converter;
-            }
-        }
-
-        // Returns the property editor 
-        // A translator can overwrite with its own editor.
-        public override object GetEditor(Type editorBaseType)
-        {
-            return this._pd.GetEditor(editorBaseType);
-        }
-
-        // Specifies the property is read only.
-        public override bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override Type PropertyType
-        {
-            get
-            {
-                return this._pd.PropertyType;
-            }
-        }
-
-        public override bool CanResetValue(object component)
-        {
-            return this._pd.CanResetValue(component);
-        }
-
-        public override object GetValue(object component)
-        {
-            return this._pd.GetValue(component);
-        }
-
-        public override void ResetValue(object component)
-        {
-            this._pd.ResetValue(component);
-        }
-
-        public override void SetValue(object component, object val)
-        {
-            this._pd.SetValue(component, val);
-        }
-
-        // Determines whether a value should be serialized.
-        public override bool ShouldSerializeValue(object component)
-        {
-            bool result = this._pd.ShouldSerializeValue(component);
-
-            if (!result)
-            {
-                DefaultValueAttribute dva = (DefaultValueAttribute)_pd.Attributes[typeof(DefaultValueAttribute)];
-                if (dva != null)
+                if (newArray[existingIdx].TypeId.Equals(newAttrs[idx].TypeId))
                 {
-                    result = !Object.Equals(this._pd.GetValue(component), dva.Value);
-                }
-                else
-                {
-                    result = true;
+                    match = true;
+                    newArray[existingIdx] = newAttrs[idx];
+                    break;
                 }
             }
 
-            return result;
+            if (!match)
+            {
+                newArray[actualCount++] = newAttrs[idx];
+            }
         }
 
-        // The following Utility methods create a new AttributeCollection
-        // by appending the specified attributes to an existing collection.
-        static public AttributeCollection AppendAttributeCollection(
-            AttributeCollection existing, 
-            params Attribute[] newAttrs)
+        // If some attributes were collapsed, create a new array.
+        if (actualCount < newArray.Length)
         {
-            return new AttributeCollection(AppendAttributes(existing, newAttrs));
+            attributes = new Attribute[actualCount];
+            Array.Copy(newArray, 0, attributes, 0, actualCount);
         }
-
-        static public Attribute[] AppendAttributes(
-            AttributeCollection existing, 
-            params Attribute[] newAttrs)
+        else
         {
-            if (existing == null)
-            {
-                throw new ArgumentNullException(nameof(existing));
-            }
-
-            newAttrs ??= new Attribute[0];
-
-            Attribute[] attributes;
-
-            Attribute[] newArray = new Attribute[existing.Count + newAttrs.Length];
-            int actualCount = existing.Count;
-            existing.CopyTo(newArray, 0);
-
-            for (int idx = 0; idx < newAttrs.Length; idx++)
-            {
-                if (newAttrs[idx] == null)
-                {
-                    throw new ArgumentNullException("newAttrs");
-                }
-
-                // Check if this attribute is already in the existing
-                // array.  If it is, replace it.
-                bool match = false;
-                for (int existingIdx = 0; existingIdx < existing.Count; existingIdx++)
-                {
-                    if (newArray[existingIdx].TypeId.Equals(newAttrs[idx].TypeId))
-                    {
-                        match = true;
-                        newArray[existingIdx] = newAttrs[idx];
-                        break;
-                    }
-                }
-
-                if (!match)
-                {
-                    newArray[actualCount++] = newAttrs[idx];
-                }
-            }
-
-            // If some attributes were collapsed, create a new array.
-            if (actualCount < newArray.Length)
-            {
-                attributes = new Attribute[actualCount];
-                Array.Copy(newArray, 0, attributes, 0, actualCount);
-            }
-            else
-            {
-                attributes = newArray;
-            }
-
-            return attributes;
+            attributes = newArray;
         }
+
+        return attributes;
     }
 }
 // </snippet1>

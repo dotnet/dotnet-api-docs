@@ -1,30 +1,32 @@
-﻿using System;
-using System.Data;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 
-public class Form1: Form
+public class Form1 : Form
 {
- protected bool isDataSaved;
-// <Snippet1>
-// Call this method from the constructor of your form
-    private void OtherInitialize() {
-       this.Closing += new CancelEventHandler(this.Form1_Closing);
-       // Exchange commented line and note the difference.
-       this.isDataSaved = true;
-       //this.isDataSaved = false;
+    protected bool isDataSaved;
+    // <Snippet1>
+    // Call this method from the constructor of your form
+    void OtherInitialize()
+    {
+        Closing += Form1_Closing;
+        // Exchange commented line and note the difference.
+        isDataSaved = true;
+        //this.isDataSaved = false;
     }
 
-    private void Form1_Closing(Object sender, CancelEventArgs e) {
-       if (!isDataSaved) {
-          e.Cancel = true;
-          MessageBox.Show("You must save first.");
-       }
-       else {
-          e.Cancel = false;
-          MessageBox.Show("Goodbye.");
-       }
+    void Form1_Closing(object sender, CancelEventArgs e)
+    {
+        if (!isDataSaved)
+        {
+            e.Cancel = true;
+            _ = MessageBox.Show("You must save first.");
+        }
+        else
+        {
+            e.Cancel = false;
+            _ = MessageBox.Show("Goodbye.");
+        }
     }
- 
-// </Snippet1>
+
+    // </Snippet1>
 }

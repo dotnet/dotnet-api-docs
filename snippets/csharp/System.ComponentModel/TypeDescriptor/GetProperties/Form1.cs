@@ -4,34 +4,28 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Data;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
-using System.Windows.Forms.Design.Behavior;
 // </snippet2>
 
 public class Form1 : Form
 {
-	private DemoControl demoControl1;
+    DemoControl demoControl1;
 
-    private System.ComponentModel.IContainer components = null;
+    readonly IContainer _components;
 
-    public Form1()
-    {
-        InitializeComponent();
-    }
+    public Form1() => InitializeComponent();
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (components != null))
+        if (disposing && (_components != null))
         {
-            components.Dispose();
+            _components.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -45,30 +39,30 @@ public class Form1 : Form
 
     #region Windows Form Designer generated code
 
-    private void InitializeComponent()
+    void InitializeComponent()
     {
-		this.demoControl1 = new DemoControl();
-		this.SuspendLayout();
-		// 
-		// demoControl1
-		// 
-		this.demoControl1.AutoSize = true;
-		this.demoControl1.BackColor = System.Drawing.Color.Chartreuse;
-		this.demoControl1.Location = new System.Drawing.Point(0, 0);
-		this.demoControl1.Name = "demoControl1";
-		this.demoControl1.Size = new System.Drawing.Size(232, 14);
-		this.demoControl1.TabIndex = 0;
-		this.demoControl1.Text = "This text was set by CreateComponentsCore.";
-		// 
-		// Form1
-		// 
-		this.ClientSize = new System.Drawing.Size(492, 482);
-		this.Controls.Add(this.demoControl1);
-		this.Name = "Form1";
-		this.Text = "r";
-		this.ResumeLayout(false);
-		this.PerformLayout();
-	}
+        demoControl1 = new DemoControl();
+        SuspendLayout();
+        // 
+        // demoControl1
+        // 
+        demoControl1.AutoSize = true;
+        demoControl1.BackColor = Color.Chartreuse;
+        demoControl1.Location = new Point(0, 0);
+        demoControl1.Name = "demoControl1";
+        demoControl1.Size = new Size(232, 14);
+        demoControl1.TabIndex = 0;
+        demoControl1.Text = "This text was set by CreateComponentsCore.";
+        // 
+        // Form1
+        // 
+        ClientSize = new Size(492, 482);
+        Controls.Add(demoControl1);
+        Name = "Form1";
+        Text = "r";
+        ResumeLayout(false);
+        PerformLayout();
+    }
 
     #endregion
 
@@ -82,77 +76,71 @@ public class Form1 : Form
 // DemoControlDesigner class.
 
 // <snippet21>
-[DesignerAttribute(typeof(DemoControlDesigner))]
+[Designer(typeof(DemoControlDesigner))]
 [ToolboxItem(typeof(DemoToolboxItem))]
 public class DemoControl : Label
 {
-	// </snippet21>
+    // </snippet21>
 
-    private System.ComponentModel.IContainer components = null;
+    readonly IContainer _components;
 
     public DemoControl()
     {
         InitializeComponent();
 
-        MessageBox.Show("DemoControl", "Constructor");
+        _ = MessageBox.Show("DemoControl", "Constructor");
     }
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (components != null))
+        if (disposing && (_components != null))
         {
-            components.Dispose();
+            _components.Dispose();
         }
         base.Dispose(disposing);
     }
 
-    private void InitializeComponent()
-    {
+    void InitializeComponent() =>
         // 
         // DemoControl
         // 
-        this.Name = "DemoControl";
+        Name = "DemoControl";
+
+    // <snippet22>
+    // Toolbox items must be serializable.
+    [Serializable]
+    class DemoToolboxItem : ToolboxItem
+    {
+        // The add components dialog in VS looks for a public
+        // ctor that takes a type.
+        public DemoToolboxItem(Type toolType)
+            : base(toolType)
+        {
+        }
+
+        // And you must provide this special constructor for serialization.
+        // If you add additional data to MyToolboxItem that you
+        // want to serialize, you may override Deserialize and
+        // Serialize methods to add that data.  
+        DemoToolboxItem(SerializationInfo info, StreamingContext context) => Deserialize(info, context);
+
+        // This implementation sets the new control's Text and 
+        // AutoSize properties.
+        protected override IComponent[] CreateComponentsCore(
+            IDesignerHost host,
+            IDictionary defaultValues)
+        {
+            IComponent[] comps = base.CreateComponentsCore(host, defaultValues);
+
+            // The returned IComponent array contains a single 
+            // component, which is an instance of DemoControl.
+            ((DemoControl)comps[0]).Text = "This text was set by CreateComponentsCore.";
+            ((DemoControl)comps[0]).AutoSize = true;
+
+            return comps;
+        }
     }
-
-	// <snippet22>
-	// Toolbox items must be serializable.
-	[Serializable]
-	class DemoToolboxItem : ToolboxItem
-	{
-		// The add components dialog in VS looks for a public
-		// ctor that takes a type.
-		public DemoToolboxItem(Type toolType)
-			: base(toolType)
-		{
-		}
-
-		// And you must provide this special constructor for serialization.
-		// If you add additional data to MyToolboxItem that you
-		// want to serialize, you may override Deserialize and
-		// Serialize methods to add that data.  
-		DemoToolboxItem(SerializationInfo info, StreamingContext context)
-		{
-			Deserialize(info, context);
-		}
-
-		// This implementation sets the new control's Text and 
-		// AutoSize properties.
-		protected override IComponent[] CreateComponentsCore(
-			IDesignerHost host, 
-			IDictionary defaultValues)
-		{
-
-			IComponent[] comps = base.CreateComponentsCore(host, defaultValues);
-
-			// The returned IComponent array contains a single 
-			// component, which is an instance of DemoControl.
-			((DemoControl)comps[0]).Text = "This text was set by CreateComponentsCore.";
-			((DemoControl)comps[0]).AutoSize = true;
-
-			return comps;
-		}
-	}
-	// </snippet22>
+    // </snippet22>
 }
 // </snippet20>
 
@@ -161,39 +149,33 @@ public class DemoControl : Label
 // being designed.
 public class DemoControlDesigner : ControlDesigner
 {
-    // This member backs the Locked property.
-    private bool lockedValue = false;
-
     // This is the collection of DesignerActionLists that
     // defines the designer actions offered on the control. 
-    private DesignerActionListCollection actionLists = null;
+    DesignerActionListCollection actionLists;
 
     // This Timer is created when you select the Create Timer
     // designer action item.
-    private Timer createdTimer = null;
+    Timer createdTimer;
 
     // <snippet3>
     // These are the services which DemoControlDesigner will use.
-    private DesignerActionService actionService = null;
-	private DesignerActionUIService actionUiService = null;
-    private IComponentChangeService changeService = null;
-    private IDesignerEventService eventService = null;
-    private IDesignerHost host = null;
-    private IDesignerOptionService optionService = null;
-    private IEventBindingService eventBindingService = null;
-    private IExtenderListService listService = null;
-    private IReferenceService referenceService = null;
-    private ISelectionService selectionService = null;
-    private ITypeResolutionService typeResService = null;
-    private IComponentDiscoveryService componentDiscoveryService = null;
-    private IToolboxService toolboxService = null;
-    private UndoEngine undoEng = null;
+    DesignerActionService actionService;
+    DesignerActionUIService actionUiService;
+    IComponentChangeService changeService;
+    IDesignerEventService eventService;
+    IDesignerHost host;
+    IDesignerOptionService optionService;
+    IEventBindingService eventBindingService;
+    IExtenderListService listService;
+    IReferenceService referenceService;
+    ISelectionService selectionService;
+    ITypeResolutionService typeResService;
+    IComponentDiscoveryService componentDiscoveryService;
+    IToolboxService toolboxService;
+    UndoEngine undoEng;
     // </snippet3>
 
-    public DemoControlDesigner()
-    {
-        MessageBox.Show("DemoControlDesigner", "Constructor");
-    }
+    public DemoControlDesigner() => MessageBox.Show("DemoControlDesigner", "Constructor");
 
     // <snippet4>
     // The Dispose method override is implemented so event handlers
@@ -203,34 +185,34 @@ public class DemoControlDesigner : ControlDesigner
     {
         if (disposing)
         {
-            if (this.changeService != null)
+            if (changeService != null)
             {
                 // Unhook event handlers.
-                this.changeService.ComponentChanged -=
-                    new ComponentChangedEventHandler(
-                    ChangeService_ComponentChanged);
+                changeService.ComponentChanged -=
 
-                this.changeService.ComponentAdded -=
-                    new ComponentEventHandler(
-                    ChangeService_ComponentAdded);
+                    ChangeService_ComponentChanged;
 
-                this.changeService.ComponentRemoved -=
-                    new ComponentEventHandler(
-                    changeService_ComponentRemoved);
+                changeService.ComponentAdded -=
+
+                    ChangeService_ComponentAdded;
+
+                changeService.ComponentRemoved -=
+
+                    changeService_ComponentRemoved;
             }
 
-            if (this.eventService != null)
+            if (eventService != null)
             {
-                this.eventService.ActiveDesignerChanged -=
-                    new ActiveDesignerEventHandler(
-                    eventService_ActiveDesignerChanged);
+                eventService.ActiveDesignerChanged -=
+
+                    eventService_ActiveDesignerChanged;
             }
 
-            if (this.selectionService != null)
+            if (selectionService != null)
             {
-                this.selectionService.SelectionChanged -=
-                    new EventHandler(
-                    selectionService_SelectionChanged);
+                selectionService.SelectionChanged -=
+
+                    selectionService_SelectionChanged;
             }
         }
 
@@ -249,142 +231,129 @@ public class DemoControlDesigner : ControlDesigner
 
         // Set up the BackColor value that will be serialized.
         // This is the shadowed property on the designer.
-        this.BackColor = Color.Chartreuse;
+        BackColor = Color.Chartreuse;
 
         // Set up the BackColor value that will be displayed.
-        this.Control.BackColor = Color.AliceBlue;
+        Control.BackColor = Color.AliceBlue;
     }
     // </snippet5>
 
     // <snippet6>
     // This method creates the DesignerActionList on demand, causing
     // designer actions to appear on the control being designed.
-    public override DesignerActionListCollection ActionLists
-    {
-        get
-        {
-            if (null == actionLists)
-            {
-                actionLists = new DesignerActionListCollection();
-                actionLists.Add(
-                    new DemoActionList(this.Component));
-            }
-
-            return actionLists;
-        }
-    }
+    public override DesignerActionListCollection ActionLists => actionLists ??= [new DemoActionList(Component),];
     // </snippet6>
 
     // <snippet7>
     // This utility method connects the designer to various
     // services it will use. 
-    private void InitializeServices()
+    void InitializeServices()
     {
         // Acquire a reference to DesignerActionService.
-        this.actionService =
+        actionService =
             GetService(typeof(DesignerActionService))
             as DesignerActionService;
 
-		// Acquire a reference to DesignerActionUIService.
-		this.actionUiService =
-			GetService(typeof(DesignerActionUIService))
-			as DesignerActionUIService;
+        // Acquire a reference to DesignerActionUIService.
+        actionUiService =
+            GetService(typeof(DesignerActionUIService))
+            as DesignerActionUIService;
 
         // Acquire a reference to IComponentChangeService.
-        this.changeService =
+        changeService =
             GetService(typeof(IComponentChangeService))
             as IComponentChangeService;
 
         // <snippet14>
         // Hook the IComponentChangeService events.
-        if (this.changeService != null)
+        if (changeService != null)
         {
-            this.changeService.ComponentChanged +=
-                new ComponentChangedEventHandler(
-                ChangeService_ComponentChanged);
+            changeService.ComponentChanged +=
 
-            this.changeService.ComponentAdded +=
-                new ComponentEventHandler(
-                ChangeService_ComponentAdded);
+                ChangeService_ComponentChanged;
 
-            this.changeService.ComponentRemoved +=
-                new ComponentEventHandler(
-                changeService_ComponentRemoved);
+            changeService.ComponentAdded +=
+
+                ChangeService_ComponentAdded;
+
+            changeService.ComponentRemoved +=
+
+                changeService_ComponentRemoved;
         }
         // </snippet14>
 
         // Acquire a reference to ISelectionService.
-        this.selectionService =
+        selectionService =
             GetService(typeof(ISelectionService))
             as ISelectionService;
 
         // Hook the SelectionChanged event.
-        if (this.selectionService != null)
+        if (selectionService != null)
         {
-            this.selectionService.SelectionChanged +=
-                new EventHandler(selectionService_SelectionChanged);
+            selectionService.SelectionChanged +=
+                 selectionService_SelectionChanged;
         }
 
         // Acquire a reference to IDesignerEventService.
-        this.eventService =
+        eventService =
             GetService(typeof(IDesignerEventService))
             as IDesignerEventService;
 
-        if (this.eventService != null)
+        if (eventService != null)
         {
-            this.eventService.ActiveDesignerChanged +=
-                new ActiveDesignerEventHandler(
-                eventService_ActiveDesignerChanged);
+            eventService.ActiveDesignerChanged +=
+
+                eventService_ActiveDesignerChanged;
         }
 
         // Acquire a reference to IDesignerHost.
-        this.host =
+        host =
             GetService(typeof(IDesignerHost))
             as IDesignerHost;
 
         // Acquire a reference to IDesignerOptionService.
-        this.optionService =
+        optionService =
             GetService(typeof(IDesignerOptionService))
             as IDesignerOptionService;
 
         // Acquire a reference to IEventBindingService.
-        this.eventBindingService =
+        eventBindingService =
             GetService(typeof(IEventBindingService))
             as IEventBindingService;
 
         // Acquire a reference to IExtenderListService.
-        this.listService =
+        listService =
             GetService(typeof(IExtenderListService))
             as IExtenderListService;
 
         // Acquire a reference to IReferenceService.
-        this.referenceService =
+        referenceService =
             GetService(typeof(IReferenceService))
             as IReferenceService;
 
         // Acquire a reference to ITypeResolutionService.
-        this.typeResService =
+        typeResService =
             GetService(typeof(ITypeResolutionService))
             as ITypeResolutionService;
 
         // Acquire a reference to IComponentDiscoveryService.
-        this.componentDiscoveryService =
+        componentDiscoveryService =
             GetService(typeof(IComponentDiscoveryService))
             as IComponentDiscoveryService;
 
         // Acquire a reference to IToolboxService.
-        this.toolboxService =
+        toolboxService =
             GetService(typeof(IToolboxService))
             as IToolboxService;
 
         // Acquire a reference to UndoEngine.
-        this.undoEng =
+        undoEng =
             GetService(typeof(UndoEngine))
             as UndoEngine;
 
-        if (this.undoEng != null)
+        if (undoEng != null)
         {
-            MessageBox.Show("UndoEngine");
+            _ = MessageBox.Show("UndoEngine");
         }
     }
     // </snippet7>
@@ -395,25 +364,22 @@ public class DemoControlDesigner : ControlDesigner
     // value of the control's property.
     public Color BackColor
     {
-        get
-        {
-            return (Color)ShadowProperties["BackColor"];
-        }
+        get => (Color)ShadowProperties[nameof(BackColor)];
         set
         {
-            if (this.changeService != null)
+            if (changeService != null)
             {
                 PropertyDescriptor backColorDesc =
-                    TypeDescriptor.GetProperties(this.Control)["BackColor"];
+                    TypeDescriptor.GetProperties(Control)["BackColor"];
 
-                this.changeService.OnComponentChanging(
-                    this.Control,
+                changeService.OnComponentChanging(
+                    Control,
                     backColorDesc);
 
-                this.ShadowProperties["BackColor"] = value;
+                ShadowProperties[nameof(BackColor)] = value;
 
-                this.changeService.OnComponentChanged(
-                    this.Control,
+                changeService.OnComponentChanged(
+                    Control,
                     backColorDesc,
                     null,
                     null);
@@ -425,17 +391,7 @@ public class DemoControlDesigner : ControlDesigner
     // <snippet9>
     // This is the property added by the designer in the
     // PreFilterProperties method.
-    private bool Locked
-    {
-        get
-        {
-            return lockedValue;
-        }
-        set
-        {
-            lockedValue = value;
-        }
-    }
+    bool Locked { get; }
     // </snippet9>
 
     // <snippet10>
@@ -455,11 +411,10 @@ public class DemoControlDesigner : ControlDesigner
         properties.Remove("Visible");
 
         // Shadow the BackColor property.
-        PropertyDescriptor propertyDesc = TypeDescriptor.CreateProperty(
+        properties["BackColor"] = TypeDescriptor.CreateProperty(
             typeof(DemoControlDesigner),
             (PropertyDescriptor)properties["BackColor"],
-            new Attribute[0]);
-        properties["BackColor"] = propertyDesc;
+            []);
 
         // Create the Locked property.
         properties["Locked"] = TypeDescriptor.CreateProperty(
@@ -491,9 +446,9 @@ public class DemoControlDesigner : ControlDesigner
         pd = TypeDescriptor.CreateProperty(
             pd.ComponentType,
             pd,
-            new Attribute[2] { 
+            [
                 new BrowsableAttribute(false),
-                new EditorBrowsableAttribute(EditorBrowsableState.Never)});
+                new EditorBrowsableAttribute(EditorBrowsableState.Never)]);
 
         properties[pd.Name] = pd;
 
@@ -512,7 +467,7 @@ public class DemoControlDesigner : ControlDesigner
     {
         if (e.NewDesigner != null)
         {
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 e.NewDesigner.ToString(),
                 "ActiveDesignerChanged");
         }
@@ -523,41 +478,35 @@ public class DemoControlDesigner : ControlDesigner
         object sender,
         ComponentChangedEventArgs e)
     {
-        string msg = String.Format(
+        string msg = string.Format(
             "{0}, {1}", e.Component, e.Member);
 
-        MessageBox.Show(msg, "ComponentChanged");
+        _ = MessageBox.Show(msg, "ComponentChanged");
     }
 
     void ChangeService_ComponentAdded(
         object sender,
-        ComponentEventArgs e)
-    {
-        MessageBox.Show(
+        ComponentEventArgs e) => MessageBox.Show(
             e.Component.ToString(),
             "ComponentAdded");
-    }
 
     void changeService_ComponentRemoved(
         object sender,
-        ComponentEventArgs e)
-    {
-        MessageBox.Show(
+        ComponentEventArgs e) => MessageBox.Show(
             e.Component.ToString(),
             "ComponentRemoved");
-    }
     // </snippet15>
 
     void selectionService_SelectionChanged(
         object sender,
         EventArgs e)
     {
-        if (this.selectionService != null)
+        if (selectionService != null)
         {
-            if (this.selectionService.PrimarySelection == this.Control)
+            if (selectionService.PrimarySelection == Control)
             {
-                MessageBox.Show(
-                    this.Control.ToString(),
+                _ = MessageBox.Show(
+                    Control.ToString(),
                     "SelectionChanged");
             }
         }
@@ -570,30 +519,30 @@ public class DemoControlDesigner : ControlDesigner
     // This class defines the designer actions that appear on the control
     // that is being designed.
     internal class DemoActionList :
-          System.ComponentModel.Design.DesignerActionList
+          DesignerActionList
     {
         // Cache a reference to the designer host.
-        private IDesignerHost host = null;
+        readonly IDesignerHost host;
 
         // Cache a reference to the control.
-        private DemoControl relatedControl = null;
+        readonly DemoControl relatedControl;
 
         // Cache a reference to the designer.
-        private DemoControlDesigner relatedDesigner = null;
+        readonly DemoControlDesigner relatedDesigner;
 
         //The constructor associates the control 
         //with the designer action list.
         public DemoActionList(IComponent component)
             : base(component)
         {
-            this.relatedControl = component as DemoControl;
+            relatedControl = component as DemoControl;
 
-            this.host =
-                this.Component.Site.GetService(typeof(IDesignerHost))
+            host =
+                Component.Site.GetService(typeof(IDesignerHost))
                 as IDesignerHost;
 
-            IDesigner dcd = host.GetDesigner(this.Component);
-            this.relatedDesigner = dcd as DemoControlDesigner;
+            IDesigner dcd = host.GetDesigner(Component);
+            relatedDesigner = dcd as DemoControlDesigner;
         }
 
         // This method creates and populates the 
@@ -602,7 +551,7 @@ public class DemoControlDesigner : ControlDesigner
         public override DesignerActionItemCollection GetSortedActionItems()
         {
             DesignerActionItemCollection items =
-                new DesignerActionItemCollection();
+                [];
 
             // If the Timer component has not been created, show the
             // "Create Timer" DesignerAction item.
@@ -610,60 +559,60 @@ public class DemoControlDesigner : ControlDesigner
             // If the Timer component exists, show the timer-related
             // options.
 
-            if (this.relatedDesigner.createdTimer == null)
+            if (relatedDesigner.createdTimer == null)
             {
-                items.Add(new DesignerActionMethodItem(
+                _ = items.Add(new DesignerActionMethodItem(
                     this,
                     "CreateTimer",
                     "Create Timer",
                     true));
             }
             else
-            {   
-                items.Add(new DesignerActionMethodItem(
+            {
+                _ = items.Add(new DesignerActionMethodItem(
                     this,
                     "ShowEventHandlerCode",
                     "Show Event Handler Code",
                     true));
 
-                items.Add(new DesignerActionMethodItem(
+                _ = items.Add(new DesignerActionMethodItem(
                     this,
                     "RemoveTimer",
                     "Remove Timer",
                     true));
             }
 
-            items.Add(new DesignerActionMethodItem(
+            _ = items.Add(new DesignerActionMethodItem(
                this,
                "GetExtenderProviders",
                "Get Extender Providers",
                true));
 
-            items.Add(new DesignerActionMethodItem(
+            _ = items.Add(new DesignerActionMethodItem(
               this,
               "GetDemoControlReferences",
               "Get DemoControl References",
               true));
 
-            items.Add(new DesignerActionMethodItem(
+            _ = items.Add(new DesignerActionMethodItem(
               this,
               "GetPathOfAssembly",
               "Get Path of Executing Assembly",
               true));
 
-            items.Add(new DesignerActionMethodItem(
+            _ = items.Add(new DesignerActionMethodItem(
               this,
               "GetComponentTypes",
               "Get ScrollableControl Types",
               true));
 
-            items.Add(new DesignerActionMethodItem(
+            _ = items.Add(new DesignerActionMethodItem(
                 this,
                 "GetToolboxCategories",
                 "Get Toolbox Categories",
                 true));
 
-            items.Add(new DesignerActionMethodItem(
+            _ = items.Add(new DesignerActionMethodItem(
                 this,
                 "SetBackColor",
                 "Set Back Color",
@@ -677,36 +626,34 @@ public class DemoControlDesigner : ControlDesigner
         // IDesignerHost.CreateComponent method. It also 
         // creates an event handler for the Timer component's
         // tick event.
-        private void CreateTimer()
+        void CreateTimer()
         {
-            if (this.host != null)
+            if (host != null)
             {
-                if (this.relatedDesigner.createdTimer == null)
+                if (relatedDesigner.createdTimer == null)
                 {
                     // Create and configure the Timer object.
-                    this.relatedDesigner.createdTimer =
-                        this.host.CreateComponent(typeof(Timer)) as Timer;
-                    Timer t = this.relatedDesigner.createdTimer;
+                    relatedDesigner.createdTimer =
+                        host.CreateComponent(typeof(Timer)) as Timer;
+                    Timer t = relatedDesigner.createdTimer;
                     t.Interval = 1000;
                     t.Enabled = true;
 
                     EventDescriptorCollection eventColl =
-                        TypeDescriptor.GetEvents(t, new Attribute[0]);
+                        TypeDescriptor.GetEvents(t, []);
 
                     if (eventColl != null)
                     {
-                        EventDescriptor ed =
-                            eventColl["Tick"] as EventDescriptor;
-                        if (ed != null)
+                        if (eventColl["Tick"] is EventDescriptor ed)
                         {
                             PropertyDescriptor epd =
-                                this.relatedDesigner.eventBindingService.GetEventProperty(ed);
+                                relatedDesigner.eventBindingService.GetEventProperty(ed);
 
                             epd.SetValue(t, "timer_Tick");
                         }
                     }
 
-					this.relatedDesigner.actionUiService.Refresh(this.relatedControl);
+                    relatedDesigner.actionUiService.Refresh(relatedControl);
                 }
             }
         }
@@ -716,22 +663,17 @@ public class DemoControlDesigner : ControlDesigner
         // This method uses the IEventBindingService.ShowCode
         // method to start the Code Editor. It places the caret
         // in the timer_tick method created by the CreateTimer method.
-        private void ShowEventHandlerCode()
+        void ShowEventHandlerCode()
         {
-            Timer t = this.relatedDesigner.createdTimer;
+            Timer t = relatedDesigner.createdTimer;
 
             if (t != null)
             {
                 EventDescriptorCollection eventColl =
-                    TypeDescriptor.GetEvents(t, new Attribute[0]);
-                if (eventColl != null)
+                    TypeDescriptor.GetEvents(t, []);
+                if (eventColl != null && eventColl["Tick"] is EventDescriptor ed)
                 {
-                    EventDescriptor ed =
-                        eventColl["Tick"] as EventDescriptor;
-                    if (ed != null)
-                    {
-                        this.relatedDesigner.eventBindingService.ShowCode(t, ed);
-                    }
+                    _ = relatedDesigner.eventBindingService.ShowCode(t, ed);
                 }
             }
         }
@@ -740,19 +682,19 @@ public class DemoControlDesigner : ControlDesigner
         // <snippet19>
         // This method uses the IDesignerHost.DestroyComponent method
         // to remove the Timer component from the design environment.
-        private void RemoveTimer()
+        void RemoveTimer()
         {
-            if (this.host != null)
+            if (host != null)
             {
-                if (this.relatedDesigner.createdTimer != null)
+                if (relatedDesigner.createdTimer != null)
                 {
-                    this.host.DestroyComponent(
-                        this.relatedDesigner.createdTimer);
+                    host.DestroyComponent(
+                        relatedDesigner.createdTimer);
 
-                    this.relatedDesigner.createdTimer = null;
+                    relatedDesigner.createdTimer = null;
 
-					this.relatedDesigner.actionUiService.Refresh(
-                        this.relatedControl);
+                    relatedDesigner.actionUiService.Refresh(
+                        relatedControl);
                 }
             }
         }
@@ -762,23 +704,23 @@ public class DemoControlDesigner : ControlDesigner
         // This method uses IExtenderListService.GetExtenderProviders
         // to enumerate all the extender providers and display them 
         // in a MessageBox.
-        private void GetExtenderProviders()
+        void GetExtenderProviders()
         {
-            if (this.relatedDesigner.listService != null)
+            if (relatedDesigner.listService != null)
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
 
                 IExtenderProvider[] providers =
-                    this.relatedDesigner.listService.GetExtenderProviders();
+                    relatedDesigner.listService.GetExtenderProviders();
 
                 for (int i = 0; i < providers.Length; i++)
                 {
-                    sb.Append(providers[i].ToString());
-                    sb.Append("\r\n");
+                    _ = sb.Append(providers[i].ToString());
+                    _ = sb.Append("\r\n");
                 }
 
-                MessageBox.Show(
-                    sb.ToString(), 
+                _ = MessageBox.Show(
+                    sb.ToString(),
                     "Extender Providers");
             }
         }
@@ -787,37 +729,37 @@ public class DemoControlDesigner : ControlDesigner
         // This method uses the IReferenceService.GetReferences method
         // to enumerate all the instances of DemoControl on the 
         // design surface.
-        private void GetDemoControlReferences()
+        void GetDemoControlReferences()
         {
-            if (this.relatedDesigner.referenceService != null)
+            if (relatedDesigner.referenceService != null)
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
 
-                object[] refs = this.relatedDesigner.referenceService.GetReferences(typeof(DemoControl));
+                object[] refs = relatedDesigner.referenceService.GetReferences(typeof(DemoControl));
 
                 for (int i = 0; i < refs.Length; i++)
                 {
-                    sb.Append(refs[i].ToString());
-                    sb.Append("\r\n");
+                    _ = sb.Append(refs[i].ToString());
+                    _ = sb.Append("\r\n");
                 }
 
-                MessageBox.Show(
-                    sb.ToString(), 
+                _ = MessageBox.Show(
+                    sb.ToString(),
                     "DemoControl References");
             }
         }
 
         // This method uses the ITypeResolutionService.GetPathOfAssembly
         // method to display the path of the executing assembly.
-        private void GetPathOfAssembly()
+        void GetPathOfAssembly()
         {
-            if (this.relatedDesigner.typeResService != null)
+            if (relatedDesigner.typeResService != null)
             {
-                System.Reflection.AssemblyName name =
-                    System.Reflection.Assembly.GetExecutingAssembly().GetName();
+                AssemblyName name =
+                    Assembly.GetExecutingAssembly().GetName();
 
-                MessageBox.Show(
-                    this.relatedDesigner.typeResService.GetPathOfAssembly(name),
+                _ = MessageBox.Show(
+                    relatedDesigner.typeResService.GetPathOfAssembly(name),
                     "Path of executing assembly");
             }
         }
@@ -825,28 +767,28 @@ public class DemoControlDesigner : ControlDesigner
         // This method uses the IComponentDiscoveryService.GetComponentTypes 
         // method to find all the types that derive from 
         // ScrollableControl.
-        private void GetComponentTypes()
+        void GetComponentTypes()
         {
-            if (this.relatedDesigner.componentDiscoveryService != null)
+            if (relatedDesigner.componentDiscoveryService != null)
             {
-                ICollection components = this.relatedDesigner.componentDiscoveryService.GetComponentTypes(host, typeof(ScrollableControl));
+                ICollection components = relatedDesigner.componentDiscoveryService.GetComponentTypes(host, typeof(ScrollableControl));
 
                 if (components != null)
                 {
                     if (components.Count > 0)
                     {
-                        StringBuilder sb = new StringBuilder();
+                        StringBuilder sb = new();
 
                         IEnumerator e = components.GetEnumerator();
 
                         while (e.MoveNext())
                         {
-                            sb.Append(e.Current.ToString());
-                            sb.Append("\r\n");
+                            _ = sb.Append(e.Current.ToString());
+                            _ = sb.Append("\r\n");
                         }
 
-                        MessageBox.Show(
-                            sb.ToString(), 
+                        _ = MessageBox.Show(
+                            sb.ToString(),
                             "Controls derived from ScrollableControl");
                     }
                 }
@@ -856,33 +798,33 @@ public class DemoControlDesigner : ControlDesigner
         // This method uses the IToolboxService.CategoryNames
         // method to enumerate all the categories that appear
         // in the Toolbox.
-        private void GetToolboxCategories()
+        void GetToolboxCategories()
         {
-            if (this.relatedDesigner.toolboxService != null)
+            if (relatedDesigner.toolboxService != null)
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
 
-                CategoryNameCollection names = this.relatedDesigner.toolboxService.CategoryNames;
+                CategoryNameCollection names = relatedDesigner.toolboxService.CategoryNames;
 
                 foreach (string name in names)
                 {
-                    sb.Append(name.ToString());
-                    sb.Append("\r\n");
+                    _ = sb.Append(name);
+                    _ = sb.Append("\r\n");
                 }
 
-                MessageBox.Show(sb.ToString(), "Toolbox Categories");
+                _ = MessageBox.Show(sb.ToString(), "Toolbox Categories");
             }
         }
 
         // This method sets the shadowed BackColor property on the 
         // designer. This is the value that is serialized by the 
         // design environment.
-        private void SetBackColor()
+        void SetBackColor()
         {
-            ColorDialog d = new ColorDialog();
+            ColorDialog d = new();
             if (d.ShowDialog() == DialogResult.OK)
             {
-                this.relatedDesigner.BackColor = d.Color;
+                relatedDesigner.BackColor = d.Color;
             }
         }
     }

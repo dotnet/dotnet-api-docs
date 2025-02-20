@@ -1,63 +1,55 @@
 ﻿// <snippet10>
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
 
-namespace IListSourceCS
+namespace IListSourceCS;
+
+public class Employee : BusinessObjectBase
 {
-    public class Employee : BusinessObjectBase
+    string _name;
+    decimal parkingId;
+
+    public Employee() : this(string.Empty, 0) { }
+    public Employee(string name) : this(name, 0) { }
+
+    public Employee(string name, decimal parkingId) : base()
     {
-        private string      _id;
-        private string      _name;
-        private Decimal     parkingId;
+        ID = Guid.NewGuid().ToString();
 
-        public Employee() : this(string.Empty, 0) {}
-        public Employee(string name) : this(name, 0) {}
+        // Set values
+        Name = name;
+        ParkingID = parkingId;
+    }
 
-        public Employee(string name, Decimal parkingId) : base()
+    public string ID { get; }
+
+    const string NAME = "Name";
+    public string Name
+    {
+        get => _name;
+        set
         {
-            this._id = System.Guid.NewGuid().ToString();
-
-            // Set values
-            this.Name = name;
-            this.ParkingID = parkingId;
-        }
-
-        public string ID
-        {
-            get { return _id; }
-        }
-
-        const string NAME = "Name";
-        public string Name
-        {
-            get { return _name; }
-            set
+            if (_name != value)
             {
-                if (_name != value)
-                {
-                    _name = value;
+                _name = value;
 
-                    // Raise the PropertyChanged event.
-                    OnPropertyChanged(NAME);
-                }
+                // Raise the PropertyChanged event.
+                OnPropertyChanged(NAME);
             }
         }
+    }
 
-        const string PARKING_ID = "Salary";
-        public Decimal ParkingID
+    const string PARKING_ID = "Salary";
+    public decimal ParkingID
+    {
+        get => parkingId;
+        set
         {
-            get { return parkingId; }
-            set
+            if (parkingId != value)
             {
-                if (parkingId != value)
-                {
-                    parkingId = value;
+                parkingId = value;
 
-                    // Raise the PropertyChanged event.
-                    OnPropertyChanged(PARKING_ID);
-                }
+                // Raise the PropertyChanged event.
+                OnPropertyChanged(PARKING_ID);
             }
         }
     }
