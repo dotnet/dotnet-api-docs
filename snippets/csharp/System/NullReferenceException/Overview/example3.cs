@@ -9,7 +9,7 @@ public class NullReferenceExample
     public static void Main()
     {
         var listType = GetListType();
-        var listObj = GetList(listType);
+        _ = GetList(listType);
     }
 
     private static Type GetListType()
@@ -29,5 +29,5 @@ public class NullReferenceExample
 //    Unhandled Exception: System.NullReferenceException: 'Object reference
 //    not set to an instance of an object.'
 //    at System.Collections.Generic.List`1.System.Collections.IList.Add(Object item)
-//    at Example.GetList(Type type): line 24
+//    at NullReferenceExample.GetList(Type type): line 24
 // </Snippet12>
