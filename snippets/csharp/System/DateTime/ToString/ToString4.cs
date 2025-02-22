@@ -1,3 +1,4 @@
+﻿using System;
 using System.Globalization;
 
 public class ToStringExample3
