@@ -13,7 +13,7 @@ public class ToStringExample3
             new CultureInfo("de-DE"),
             new CultureInfo("es-ES"),
             new CultureInfo("ja-JP")
-            ];
+        ];
 
         DateTime thisDate = new(2025, 5, 1, 9, 0, 0);
 
