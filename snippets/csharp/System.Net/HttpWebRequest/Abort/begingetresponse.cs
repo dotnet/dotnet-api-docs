@@ -71,7 +71,7 @@ public static class WebRequestAPMSample
         }
         catch (Exception e)
         {
-            Console.WriteLine("\nMain Exception raised!");
+            Console.WriteLine("\nMain(): Exception raised!");
             Console.WriteLine("Source :{0} ", e.Source);
             Console.WriteLine("Message :{0} ", e.Message);
             Console.WriteLine("Press any key to continue..........");
@@ -120,7 +120,7 @@ public static class WebRequestAPMSample
         }
         catch (WebException e)
         {
-            Console.WriteLine("\nRespCallback Exception raised!");
+            Console.WriteLine("\nRespCallback(): Exception raised!");
             Console.WriteLine("\nMessage:{0}", e.Message);
             Console.WriteLine("\nStatus:{0}", e.Status);
             allDone.Set();
@@ -172,7 +172,7 @@ public static class WebRequestAPMSample
         }
         catch (WebException e)
         {
-            Console.WriteLine("\nReadCallBack Exception raised!");
+            Console.WriteLine("\nReadCallBack(): Exception raised!");
             Console.WriteLine("\nMessage:{0}", e.Message);
             Console.WriteLine("\nStatus:{0}", e.Status);
             allDone.Set();
