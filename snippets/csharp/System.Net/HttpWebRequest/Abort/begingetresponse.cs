@@ -38,7 +38,7 @@ public class RequestState
 class HttpWebRequest_BeginGetResponse
 {
     public static ManualResetEvent allDone = new ManualResetEvent(false);
-    const int BUFFER_SIZE = 1;
+    const int BUFFER_SIZE = 1024;
     const int DefaultTimeout = 2 * 60 * 1000; // 2 minutes timeout
 
     // Abort the request if the timer fires.
@@ -97,6 +97,29 @@ class HttpWebRequest_BeginGetResponse
             Console.Read();
         }
     }
+
+    private static void HandleSyncResponseReadCompletion(IAsyncResult asynchronousReadResult)
+    {
+        RequestState requestState = (RequestState)asynchronousReadResult.AsyncState;
+        Stream responseStream = requestState.ResponseStream;
+
+        bool readComplete = false;
+        while (asynchronousReadResult.CompletedSynchronously && !readComplete)
+        {
+            int read = responseStream.EndRead(asynchronousReadResult);
+            if (read > 0)
+            {
+                requestState.OnResponseBytesRead(read);
+                asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
+            }
+            else
+            {
+                readComplete = true;
+                OnReadComplete(requestState);
+            }
+        }
+    }
+
     private static void RespCallback(IAsyncResult asynchronousResult)
     {
         try
@@ -112,30 +135,16 @@ class HttpWebRequest_BeginGetResponse
 
             // Begin the Reading of the contents of the HTML page and print it to the console.
             IAsyncResult asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
-            while (asynchronousReadResult.CompletedSynchronously)
-            {
-                int read = responseStream.EndRead(asynchronousReadResult);
-                // Read the HTML page and then print it to the console.
-                if (read > 0)
-                {
-                    requestState.OnResponseBytesRead(read);
-                    asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
-                }
-                else
-                {
-                    OnReadComplete(requestState);
-                }
-            }
-
-            return;
+            HandleSyncResponseReadCompletion(asynchronousReadResult);
         }
         catch (WebException e)
         {
             Console.WriteLine("\nRespCallback Exception raised!");
             Console.WriteLine("\nMessage:{0}", e.Message);
             Console.WriteLine("\nStatus:{0}", e.Status);
+            allDone.Set();
         }
-        allDone.Set();
+        
     }
 
     private static void OnReadComplete(RequestState requestState)
@@ -151,6 +160,7 @@ class HttpWebRequest_BeginGetResponse
         Console.ReadLine();
 
         requestState.ResponseStream.Close();
+        allDone.Set();
     }
 
     private static void ReadCallBack(IAsyncResult asyncResult)
@@ -172,7 +182,7 @@ class HttpWebRequest_BeginGetResponse
             {
                 requestState.OnResponseBytesRead(read);
                 IAsyncResult asynchronousResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
-                return;
+                HandleSyncResponseReadCompletion(asynchronousResult);
             }
             else
             {
@@ -184,8 +194,8 @@ class HttpWebRequest_BeginGetResponse
             Console.WriteLine("\nReadCallBack Exception raised!");
             Console.WriteLine("\nMessage:{0}", e.Message);
             Console.WriteLine("\nStatus:{0}", e.Status);
+            allDone.Set();
         }
-        allDone.Set();
     }
     // </Snippet1>
 }
