@@ -16,69 +16,50 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-public class RequestState
+public static class WebRequestAPMSample
 {
-    // This class stores the State of the request.
-    const int BUFFER_SIZE = 1024;
-    public StringBuilder ResponseBuilder;
-    public byte[] ReadBuffer;
-    public HttpWebRequest Request;
-    public HttpWebResponse Response;
-    public Stream ResponseStream;
-    public RequestState()
-    {
-        ReadBuffer = new byte[BUFFER_SIZE];
-        ResponseBuilder = new StringBuilder();
-        Request = null;
-        ResponseStream = null;
-    }
-    public void OnResponseBytesRead(int read) => ResponseBuilder.Append(Encoding.UTF8.GetString(ReadBuffer, 0, read));
-}
+    private const int BufferSize = 1024;
 
-class HttpWebRequest_BeginGetResponse
-{
-    public static ManualResetEvent allDone = new ManualResetEvent(false);
-    const int BUFFER_SIZE = 1024;
-    const int DefaultTimeout = 2 * 60 * 1000; // 2 minutes timeout
-
-    // Abort the request if the timer fires.
-    private static void TimeoutCallback(object state, bool timedOut)
+    private class RequestState
     {
-        if (timedOut)
+        public StringBuilder ResponseBuilder { get; }
+        public byte[] ReadBuffer { get; }
+        public WebRequest Request { get; }
+        public WebResponse Response { get; set; }
+        public Stream ResponseStream { get; set; }
+        public RequestState(WebRequest request)
         {
-            HttpWebRequest request = state as HttpWebRequest;
-            if (request != null)
-            {
-                request.Abort();
-            }
+            ReadBuffer = new byte[BufferSize];
+            ResponseBuilder = new StringBuilder();
+            Request = request;
         }
+        public void OnResponseBytesRead(int read) => ResponseBuilder.Append(Encoding.UTF8.GetString(ReadBuffer, 0, read));
     }
 
-    static void Main()
-    {
+    public static ManualResetEvent allDone = new ManualResetEvent(false);
+    
 
+    public static void Main()
+    {
         try
         {
             // Create a HttpWebrequest object to the desired URL.
-            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://www.contoso.com");
+            WebRequest httpWebRequest = WebRequest.Create("http://www.contoso.com");
+            httpWebRequest.Timeout = 10_000; // Set 10sec timeout.
 
             // Create an instance of the RequestState and assign the previous myHttpWebRequest
             // object to its request field.
-            RequestState myRequestState = new RequestState();
-            myRequestState.Request = httpWebRequest;
+            RequestState requestState = new RequestState(httpWebRequest);
 
             // Start the asynchronous request.
-            IAsyncResult result = httpWebRequest.BeginGetResponse(new AsyncCallback(RespCallback), myRequestState);
-
-            // this line implements the timeout, if there is a timeout, the callback fires and the request becomes aborted
-            ThreadPool.RegisterWaitForSingleObject(result.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), httpWebRequest, DefaultTimeout, true);
+            IAsyncResult result = httpWebRequest.BeginGetResponse(new AsyncCallback(ResponseCallback), requestState);
 
             // The response came in the allowed time. The work processing will happen in the
             // callback function.
             allDone.WaitOne();
 
             // Release the HttpWebResponse resource.
-            myRequestState.Response.Close();
+            requestState.Response?.Close();
         }
         catch (WebException e)
         {
@@ -110,31 +91,31 @@ class HttpWebRequest_BeginGetResponse
             if (read > 0)
             {
                 requestState.OnResponseBytesRead(read);
-                asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
+                asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BufferSize, new AsyncCallback(ReadCallBack), requestState);
             }
             else
             {
                 readComplete = true;
-                OnReadComplete(requestState);
+                HandleReadCompletion(requestState);
             }
         }
     }
 
-    private static void RespCallback(IAsyncResult asynchronousResult)
+    private static void ResponseCallback(IAsyncResult asynchronousResult)
     {
         try
         {
             // State of request is asynchronous.
             RequestState requestState = (RequestState)asynchronousResult.AsyncState;
-            HttpWebRequest request = requestState.Request;
-            requestState.Response = (HttpWebResponse)request.EndGetResponse(asynchronousResult);
+            WebRequest request = requestState.Request;
+            requestState.Response = request.EndGetResponse(asynchronousResult);
 
             // Read the response into a Stream object.
             Stream responseStream = requestState.Response.GetResponseStream();
             requestState.ResponseStream = responseStream;
 
             // Begin the Reading of the contents of the HTML page and print it to the console.
-            IAsyncResult asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
+            IAsyncResult asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BufferSize, new AsyncCallback(ReadCallBack), requestState);
             HandleSyncResponseReadCompletion(asynchronousReadResult);
         }
         catch (WebException e)
@@ -147,7 +128,8 @@ class HttpWebRequest_BeginGetResponse
         
     }
 
-    private static void OnReadComplete(RequestState requestState)
+    // Print the webpage to the standard output, close the stream and signal completion.
+    private static void HandleReadCompletion(RequestState requestState)
     {
         Console.WriteLine("\nThe contents of the Html page are : ");
         if (requestState.ResponseBuilder.Length > 1)
@@ -181,12 +163,12 @@ class HttpWebRequest_BeginGetResponse
             if (read > 0)
             {
                 requestState.OnResponseBytesRead(read);
-                IAsyncResult asynchronousResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BUFFER_SIZE, new AsyncCallback(ReadCallBack), requestState);
+                IAsyncResult asynchronousResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BufferSize, new AsyncCallback(ReadCallBack), requestState);
                 HandleSyncResponseReadCompletion(asynchronousResult);
             }
             else
             {
-                OnReadComplete(requestState);
+                HandleReadCompletion(requestState);
             }
         }
         catch (WebException e)
@@ -197,5 +179,5 @@ class HttpWebRequest_BeginGetResponse
             allDone.Set();
         }
     }
-    // </Snippet1>
 }
+// </Snippet1>
