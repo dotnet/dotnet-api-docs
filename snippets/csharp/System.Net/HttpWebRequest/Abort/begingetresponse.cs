@@ -124,8 +124,7 @@ public static class WebRequestAPMSample
             Console.WriteLine("\nMessage:{0}", e.Message);
             Console.WriteLine("\nStatus:{0}", e.Status);
             allDone.Set();
-        }
-        
+        }   
     }
 
     // Print the webpage to the standard output, close the stream and signal completion.
