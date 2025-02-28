@@ -1,11 +1,9 @@
 ﻿/**
  * File name: Begingetresponse.cs
  * This program shows how to use BeginGetResponse and EndGetResponse methods of the
- * HttpWebRequest class. It also shows how to create a customized timeout.
- * This is important in case od asynchronous request, because the NCL classes do
- * not provide any off-the-shelf asynchronous timeout.
- * It uses an asynchronous approach to get the response for the HTTP Web Request.
- * The RequestState class is defined to chekc the state of the request.
+ * HttpWebRequest class.
+ * It uses the APM pattern to get the response for the HTTP Web Request.
+ * The RequestState class is defined to check the state of the request.
  * After a HttpWebRequest object is created, its BeginGetResponse method is used to start
  * the asynchronous response phase.
  * Finally, the EndGetResponse method is used to end the asynchronous response phase .*/
@@ -43,22 +41,21 @@ public static class WebRequestAPMSample
     {
         try
         {
-            // Create a HttpWebrequest object to the desired URL.
-            WebRequest httpWebRequest = WebRequest.Create("http://www.contoso.com");
-            httpWebRequest.Timeout = 10_000; // Set 10sec timeout.
+            // Create a WebRequest object to the desired URL.
+            WebRequest webRequest = WebRequest.Create("http://www.contoso.com");
+            webRequest.Timeout = 10_000; // Set 10sec timeout.
 
             // Create an instance of the RequestState and assign the previous myHttpWebRequest
             // object to its request field.
-            RequestState requestState = new RequestState(httpWebRequest);
+            RequestState requestState = new RequestState(webRequest);
 
             // Start the asynchronous request.
-            IAsyncResult result = httpWebRequest.BeginGetResponse(new AsyncCallback(ResponseCallback), requestState);
+            IAsyncResult result = webRequest.BeginGetResponse(new AsyncCallback(ResponseCallback), requestState);
 
-            // The response came in the allowed time. The work processing will happen in the
-            // callback function.
+            // Wait for the response or for failure. The processing happens in the callback.
             allDone.WaitOne();
 
-            // Release the HttpWebResponse resource.
+            // Release the WebResponse resources.
             requestState.Response?.Close();
         }
         catch (WebException e)
@@ -105,12 +102,12 @@ public static class WebRequestAPMSample
     {
         try
         {
-            // State of request is asynchronous.
+            // AsyncState is an instance of RequestState.
             RequestState requestState = (RequestState)asynchronousResult.AsyncState;
             WebRequest request = requestState.Request;
             requestState.Response = request.EndGetResponse(asynchronousResult);
 
-            // Read the response into a Stream object.
+            // Read the response into a Stream.
             Stream responseStream = requestState.Response.GetResponseStream();
             requestState.ResponseStream = responseStream;
 
