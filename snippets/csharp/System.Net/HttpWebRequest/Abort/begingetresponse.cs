@@ -79,19 +79,19 @@ public static class WebRequestAPMSample
         }
     }
 
-    private static void HandleSyncResponseReadCompletion(IAsyncResult asynchronousReadResult)
+    private static void HandleSyncResponseReadCompletion(IAsyncResult asyncResult)
     {
-        RequestState requestState = (RequestState)asynchronousReadResult.AsyncState;
+        RequestState requestState = (RequestState)asyncResult.AsyncState;
         Stream responseStream = requestState.ResponseStream;
 
         bool readComplete = false;
-        while (asynchronousReadResult.CompletedSynchronously && !readComplete)
+        while (asyncResult.CompletedSynchronously && !readComplete)
         {
-            int read = responseStream.EndRead(asynchronousReadResult);
+            int read = responseStream.EndRead(asyncResult);
             if (read > 0)
             {
                 requestState.OnResponseBytesRead(read);
-                asynchronousReadResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BufferSize, new AsyncCallback(ReadCallBack), requestState);
+                asyncResult = responseStream.BeginRead(requestState.ReadBuffer, 0, BufferSize, new AsyncCallback(ReadCallBack), requestState);
             }
             else
             {
