@@ -3,7 +3,7 @@ Option Strict On
 
 Imports System.Numerics
 
-Module Example
+Module Example2
    Public Sub Main()
       DecimalConstructor()
       Console.WriteLine("-----")
