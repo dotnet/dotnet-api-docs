@@ -1,0 +1,73 @@
+<Type Name="ITableLocator" FullName="System.Cloud.DocumentDb.ITableLocator">
+  <TypeSignature Language="C#" Value="public interface ITableLocator" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract ITableLocator" />
+  <TypeSignature Language="DocId" Value="T:System.Cloud.DocumentDb.ITableLocator" />
+  <TypeSignature Language="VB.NET" Value="Public Interface ITableLocator" />
+  <TypeSignature Language="F#" Value="type ITableLocator = interface" />
+  <TypeSignature Language="C++ CLI" Value="public interface class ITableLocator" />
+  <AssemblyInfo>
+    <AssemblyName>System.Cloud.DocumentDb.Abstractions</AssemblyName>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>
+            Provides a way to adjust table parameters based on a specific document.
+            </summary>
+    <remarks>
+            This interface may be useful if table settings such as name or region differs on data provided.
+            For example, a specific tenant's data should be isolated from other data or encrypted differently or live in other region.
+            This can be done on the user side, however if the user has a lot places to access, it is troublesome and error prone to be done in all places.
+            Instead, you can delegate the logic to an adapter to be applied every time a client makes a request.
+            </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="LocateTable">
+      <MemberSignature Language="C#" Value="public System.Cloud.DocumentDb.TableInfo? LocateTable (in System.Cloud.DocumentDb.TableInfo options, System.Cloud.DocumentDb.RequestOptions request);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance valuetype System.Nullable`1&lt;valuetype System.Cloud.DocumentDb.TableInfo&gt; LocateTable([in]valuetype System.Cloud.DocumentDb.TableInfo options, class System.Cloud.DocumentDb.RequestOptions request) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Cloud.DocumentDb.ITableLocator.LocateTable(System.Cloud.DocumentDb.TableInfo@|System.Runtime.InteropServices.InAttribute,System.Cloud.DocumentDb.RequestOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Function LocateTable (options As TableInfo, request As RequestOptions) As Nullable(Of TableInfo)" />
+      <MemberSignature Language="F#" Value="abstract member LocateTable : TableInfo * System.Cloud.DocumentDb.RequestOptions -&gt; Nullable&lt;System.Cloud.DocumentDb.TableInfo&gt;" Usage="iTableLocator.LocateTable (options, request)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Nullable&lt;System::Cloud::DocumentDb::TableInfo&gt; LocateTable(System::Cloud::DocumentDb::TableInfo ^ options, System::Cloud::DocumentDb::RequestOptions ^ request);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Cloud.DocumentDb.Abstractions</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.Cloud.DocumentDb.TableInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="options" Type="System.Cloud.DocumentDb.TableInfo">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="request" Type="System.Cloud.DocumentDb.RequestOptions" />
+      </Parameters>
+      <Docs>
+        <param name="options">The original table options.</param>
+        <param name="request">The target request.</param>
+        <summary>
+            Provides a way to adjust table and request parameters for a specified request.
+            </summary>
+        <returns>A new table options, or the input options if no adjustments are needed.</returns>
+        <remarks>
+            This method will be called only in cases <see cref="P:System.Cloud.DocumentDb.TableOptions.IsLocatorRequired" /> is set to true.
+            The input table options should not be modified; those are original options used to initialize reader / writer.
+            The method can adjust table name, region in request, or other options specific to the provided document or request.
+            For example:
+            - A specific region might have a different table name, throughput requirements, or TTL.
+            - A specific document might have a region or table requirement different from original.
+            Notes:
+            - The <paramref name="request" /> object is not shared between calls; it can be modified by the method directly.
+            - The <paramref name="request" /> is the same provided for the API call.
+            If a document is needed to implement locate logic, use <see cref="T:System.Cloud.DocumentDb.RequestOptions`1" /> for requests.
+            </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
