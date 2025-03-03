@@ -63,13 +63,13 @@ let longConstructor () =
         let assigned = number
         printfn $"{constructed} = {assigned}: {constructed.Equals assigned}"
     // The example displays the following output:
-    //       -2147483648 = -2147483648: True
+    //       -9223372036854775808 = -9223372036854775808: True
     //       -10534 = -10534: True
     //       -189 = -189: True
     //       0 = 0: True
     //       17 = 17: True
     //       113439 = 113439: True
-    //       2147483647 = 2147483647: True
+    //       9223372036854775807 = 9223372036854775807: True
     // </Snippet7>
 
 let singleConstructor () =
