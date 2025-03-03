@@ -1,16 +1,12 @@
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 
-public abstract class Coll1: EventDescriptorCollection {
-
-    public Coll1() : base(null) {
+public abstract class Coll1 : EventDescriptorCollection
+{
+    public Coll1() : base(null)
+    {
     }
 
-    protected void Method() {
+    protected void Method() =>
         // <Snippet1>
-        this.InternalSort(new string[]{"D", "B"});
-        // </Snippet1>
-    }
+        InternalSort(["D", "B"]);// </Snippet1>
 }

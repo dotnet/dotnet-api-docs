@@ -3,78 +3,60 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace BackgroundWorkerSimple
+namespace BackgroundWorkerSimple;
+
+public partial class Form1 : Form
 {
-    public partial class Form1 : Form
+    public Form1()
     {
-        public Form1()
+        InitializeComponent();
+        backgroundWorker1.WorkerReportsProgress = true;
+        backgroundWorker1.WorkerSupportsCancellation = true;
+    }
+
+    void startAsyncButton_Click(object sender, EventArgs e)
+    {
+        if (!backgroundWorker1.IsBusy)
         {
-            InitializeComponent();
-            backgroundWorker1.WorkerReportsProgress = true;
-            backgroundWorker1.WorkerSupportsCancellation = true;
+            // Start the asynchronous operation.
+            backgroundWorker1.RunWorkerAsync();
         }
+    }
 
-        private void startAsyncButton_Click(object sender, EventArgs e)
+    void cancelAsyncButton_Click(object sender, EventArgs e)
+    {
+        if (backgroundWorker1.WorkerSupportsCancellation)
         {
-            if (!backgroundWorker1.IsBusy)
-            {
-                // Start the asynchronous operation.
-                backgroundWorker1.RunWorkerAsync();
-            }
+            // Cancel the asynchronous operation.
+            backgroundWorker1.CancelAsync();
         }
+    }
 
-        private void cancelAsyncButton_Click(object sender, EventArgs e)
+    // This event handler is where the time-consuming work is done.
+    void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+    {
+        BackgroundWorker worker = sender as BackgroundWorker;
+
+        for (int i = 1; i <= 10; i++)
         {
-            if (backgroundWorker1.WorkerSupportsCancellation)
+            if (worker.CancellationPending)
             {
-                // Cancel the asynchronous operation.
-                backgroundWorker1.CancelAsync();
-            }
-        }
-
-        // This event handler is where the time-consuming work is done.
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
-            for (int i = 1; i <= 10; i++)
-            {
-                if (worker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-                else
-                {
-                    // Perform a time consuming operation and report progress.
-                    System.Threading.Thread.Sleep(500);
-                    worker.ReportProgress(i * 10);
-                }
-            }
-        }
-
-        // This event handler updates the progress.
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            resultLabel.Text = (e.ProgressPercentage.ToString() + "%");
-        }
-
-        // This event handler deals with the results of the background operation.
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled)
-            {
-                resultLabel.Text = "Canceled!";
-            }
-            else if (e.Error != null)
-            {
-                resultLabel.Text = "Error: " + e.Error.Message;
+                e.Cancel = true;
+                break;
             }
             else
             {
-                resultLabel.Text = "Done!";
+                // Perform a time consuming operation and report progress.
+                System.Threading.Thread.Sleep(500);
+                worker.ReportProgress(i * 10);
             }
         }
     }
+
+    // This event handler updates the progress.
+    void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) => resultLabel.Text = e.ProgressPercentage.ToString() + "%";
+
+    // This event handler deals with the results of the background operation.
+    void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => resultLabel.Text = e.Cancelled ? "Canceled!" : e.Error != null ? "Error: " + e.Error.Message : "Done!";
 }
 // </snippet1>

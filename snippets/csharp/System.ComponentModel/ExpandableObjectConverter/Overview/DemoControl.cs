@@ -5,136 +5,108 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace ExpandableObjectDemo
+namespace ExpandableObjectDemo;
+
+public partial class DemoControl : UserControl
 {
-    public partial class DemoControl : UserControl
+    Container components;
+
+    public DemoControl() => InitializeComponent();
+
+    protected override void Dispose(bool disposing)
     {
-        BorderAppearance borderAppearanceValue = new BorderAppearance();
-        private System.ComponentModel.IContainer components = null;
-
-        public DemoControl()
+        if (disposing && (components != null))
         {
-            InitializeComponent();
+            components.Dispose();
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        // <snippet2>
-        [Browsable(true)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
-        [Category("Demo")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public BorderAppearance Border
-        {
-            get
-            {
-                return this.borderAppearanceValue;
-            }
-
-            set
-            {
-                this.borderAppearanceValue = value;
-            }
-        }
-        // </snippet2>
-
-        private void InitializeComponent()
-        {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        }
+        base.Dispose(disposing);
     }
 
-    // <snippet3>
-    [TypeConverter(typeof(BorderAppearanceConverter))]
-    public class BorderAppearance
+    // <snippet2>
+    [Browsable(true)]
+    [EditorBrowsable(EditorBrowsableState.Always)]
+    [Category("Demo")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+    public BorderAppearance Border { get; set; } = new();
+    // </snippet2>
+
+    void InitializeComponent()
     {
-        private int borderSizeValue = 1;
-        private Color borderColorValue = Color.Empty;
-
-        [Browsable(true),
-        NotifyParentProperty(true),
-        EditorBrowsable(EditorBrowsableState.Always),
-        DefaultValue(1)]
-        public int BorderSize
-        {
-            get
-            {
-                return borderSizeValue;
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        "BorderSize",
-                        value,
-                        "must be >= 0");
-                }
-
-                if (borderSizeValue != value)
-                {
-                    borderSizeValue = value;
-                }
-            }
-        }
-
-        [Browsable(true)]
-        [NotifyParentProperty(true)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
-        [DefaultValue(typeof(Color), "")]
-        public Color BorderColor
-        {
-            get
-            {
-                return borderColorValue;
-            }
-            set
-            {
-                if (value.Equals(Color.Transparent))
-                {
-                    throw new NotSupportedException("Transparent colors are not supported.");
-                }
-
-                if (borderColorValue != value)
-                {
-                    borderColorValue = value;
-                }
-            }
-        }
+        components = new Container();
+        AutoScaleMode = AutoScaleMode.Font;
     }
-    // </snippet3>
-
-    // <snippet4>
-    public class BorderAppearanceConverter : ExpandableObjectConverter
-    {
-        // This override prevents the PropertyGrid from 
-        // displaying the full type name in the value cell.
-        public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
-            Type destinationType)
-        {
-            if (destinationType == typeof(string))
-            {
-                return "";
-            }
-
-            return base.ConvertTo(
-                context,
-                culture,
-                value,
-                destinationType);
-        }
-    }
-    // </snippet4>
 }
+
+// <snippet3>
+[TypeConverter(typeof(BorderAppearanceConverter))]
+public class BorderAppearance
+{
+    int borderSizeValue = 1;
+    Color borderColorValue = Color.Empty;
+
+    [Browsable(true),
+    NotifyParentProperty(true),
+    EditorBrowsable(EditorBrowsableState.Always),
+    DefaultValue(1)]
+    public int BorderSize
+    {
+        get => borderSizeValue;
+        set
+        {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "BorderSize",
+                    value,
+                    "must be >= 0");
+            }
+
+            if (borderSizeValue != value)
+            {
+                borderSizeValue = value;
+            }
+        }
+    }
+
+    [Browsable(true)]
+    [NotifyParentProperty(true)]
+    [EditorBrowsable(EditorBrowsableState.Always)]
+    [DefaultValue(typeof(Color), "")]
+    public Color BorderColor
+    {
+        get => borderColorValue;
+        set
+        {
+            if (value.Equals(Color.Transparent))
+            {
+                throw new NotSupportedException("Transparent colors are not supported.");
+            }
+
+            if (borderColorValue != value)
+            {
+                borderColorValue = value;
+            }
+        }
+    }
+}
+// </snippet3>
+
+// <snippet4>
+public class BorderAppearanceConverter : ExpandableObjectConverter
+{
+    // This override prevents the PropertyGrid from 
+    // displaying the full type name in the value cell.
+    public override object ConvertTo(
+        ITypeDescriptorContext context,
+        CultureInfo culture,
+        object value,
+        Type destinationType) => destinationType == typeof(string)
+            ? ""
+            : base.ConvertTo(
+            context,
+            culture,
+            value,
+            destinationType);
+}
+// </snippet4>
 // </snippet1>

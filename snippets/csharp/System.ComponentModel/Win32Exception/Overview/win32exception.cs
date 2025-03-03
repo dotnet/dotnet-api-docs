@@ -3,16 +3,16 @@ using System.ComponentModel;
 
 namespace Win32Exception_CS;
 
-class Class1
+static class Class1
 {
-    static void Main(string[] args)
+    static void Main()
     {
         //<snippet1>
         try
         {
             System.Diagnostics.Process myProc = new();
             myProc.StartInfo.FileName = @"c:\nonexist.exe"; // Attempt to start a non-existent executable
-            myProc.Start();
+            _ = myProc.Start();
         }
         catch (Win32Exception w)
         {
