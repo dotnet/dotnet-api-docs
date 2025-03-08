@@ -836,11 +836,6 @@ void DisplayIPv4NetworkInterfaces()
 
       // Try to get the IPv4 interface properties.
       IPv4InterfaceProperties ^ p = adapterProperties->GetIPv4Properties();
-      if ( !p )
-      {
-         Console::WriteLine( "No IPv4 information is available for this interface." );
-         continue;
-      }
 
       // Display the IPv4 specific data.
       Console::WriteLine( "  Index ............................. : {0}", 
