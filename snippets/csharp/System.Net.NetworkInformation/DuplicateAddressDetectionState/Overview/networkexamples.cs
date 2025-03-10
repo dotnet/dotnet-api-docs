@@ -796,12 +796,6 @@ using System.Net.Sockets;
                 // Try to get the IPv4 interface properties.
                 IPv4InterfaceProperties p = adapterProperties.GetIPv4Properties();
 
-                if (p == null)
-                {
-                    Console.WriteLine("No IPv4 information is available for this interface.");
-                    Console.WriteLine();
-                    continue;
-                }
                 // Display the IPv4 specific data.
                 Console.WriteLine("  Index ............................. : {0}", p.Index);
                 Console.WriteLine("  MTU ............................... : {0}", p.Mtu);
