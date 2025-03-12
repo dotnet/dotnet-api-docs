@@ -143,7 +143,7 @@ public class TransitionTimeExamples
          foreach (TimeZoneInfo.AdjustmentRule adjustmentRule in adjustmentRules)
          {
             TimeZoneInfo.TransitionTime daylightStart = adjustmentRule.DaylightTransitionStart;
-            if (! daylightStart.IsFixedDateRule)
+            if (!daylightStart.IsFixedDateRule)
                Console.WriteLine("{0}, {1:d}-{2:d}: Begins at {3:t} on the {4} {5} of {6}.", 
                                  zone.StandardName, 
                                  adjustmentRule.DateStart, 
@@ -154,7 +154,7 @@ public class TransitionTimeExamples
                                  dateInfo.GetMonthName(daylightStart.Month));
 
             TimeZoneInfo.TransitionTime daylightEnd = adjustmentRule.DaylightTransitionEnd;
-            if (! daylightEnd.IsFixedDateRule)
+            if (!daylightEnd.IsFixedDateRule)
                Console.WriteLine("{0}, {1:d}-{2:d}: Ends at {3:t} on the {4} {5} of {6}.", 
                                  zone.StandardName, 
                                  adjustmentRule.DateStart, 
@@ -289,7 +289,7 @@ public class AdditionalExamples
                // Get start of transition
                TimeZoneInfo.TransitionTime daylightStart = adjustmentRule.DaylightTransitionStart;
                // Display information on fixed date rule
-               if (! daylightStart.IsFixedDateRule)
+               if (!daylightStart.IsFixedDateRule)
                   Console.WriteLine("      Begins at {0:t} on the {1} {2} of {3}.", 
                                  daylightStart.TimeOfDay, 
                                  ((WeekOfMonth)daylightStart.Week).ToString(),  
@@ -306,7 +306,7 @@ public class AdditionalExamples
                // Get end of transition
                TimeZoneInfo.TransitionTime daylightEnd = adjustmentRule.DaylightTransitionEnd;
                // Display information on fixed date rule
-               if (! daylightEnd.IsFixedDateRule)
+               if (!daylightEnd.IsFixedDateRule)
                   Console.WriteLine("      Ends at {0:t} on the {1} {2} of {3}.", 
                                  daylightEnd.TimeOfDay, 
                                  ((WeekOfMonth)daylightEnd.Week).ToString(),  

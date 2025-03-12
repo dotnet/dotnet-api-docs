@@ -1,10 +1,9 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-		// Create a class having two public methods and one protected method.
+// Create a class having two public methods and one protected method.
 public class MyTypeClass
 {
     public void MyMethods()

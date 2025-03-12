@@ -132,7 +132,7 @@ foreach (HttpHandlerAction handlerAction in httpHandlersSection.Handlers)
 }
 
               // Update if not locked.
-                if (! httpHandlersSection.SectionInformation.IsLocked)
+                if (!httpHandlersSection.SectionInformation.IsLocked)
                 {
                     configuration.Save();
                     Console.WriteLine("** Configuration updated.");

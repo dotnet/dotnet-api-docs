@@ -4,17 +4,12 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Net;
+using System.Security.Permissions;
 using System.Security.RightsManagement;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media.Imaging;
-using System.Xml;
-using System.Security.Permissions;
 using WinForms = Microsoft.Win32;
 
 namespace SdkSample
@@ -51,7 +46,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user
             // clicks "Cancel", cancel the File|Open operation.
-            if (dialog.ShowDialog() != true)
+            if (!dialog.ShowDialog().Value)
                 return;
 
             // clicks "OK", load and display the specified file.
@@ -62,8 +57,8 @@ namespace SdkSample
             // Check to see if the file name shows as "protected" or
             // "encrypted".  If encrypted, use OpenEncryptedContent().
             bool opened;
-            if (   _contentFile.ToLower().Contains("protected")
-                || _contentFile.ToLower().Contains("encrypted")  )
+            if (_contentFile.ToLower().Contains("protected")
+                || _contentFile.ToLower().Contains("encrypted"))
                 opened = OpenEncryptedContent(_contentFile);
 
             // Otherwise open as unencrypted.
@@ -72,7 +67,7 @@ namespace SdkSample
 
             // If the file was successfully opened, show the file name,
             // enable File|Close, and give focus to the Image control.
-            if (opened == true)
+            if (opened)
             {
                 this.Title = "RightsManagedContentViewer SDK Sample - " +
                               Filename(_contentFile);
@@ -92,7 +87,7 @@ namespace SdkSample
         public bool OpenContent(string filename)
         {
             // If the file is not a supported image, do not try to display it.
-            if (   !filename.EndsWith(".png")
+            if (!filename.EndsWith(".png")
                 && !filename.EndsWith(".jpg")
                 && !filename.EndsWith(".jpeg"))
             {
@@ -140,9 +135,9 @@ namespace SdkSample
             // Get the ID of the current user log-in.
             string currentUserId;
             try
-                { currentUserId = GetDefaultWindowsUserName(); }
+            { currentUserId = GetDefaultWindowsUserName(); }
             catch
-                { currentUserId = null; }
+            { currentUserId = null; }
             if (currentUserId == null)
             {
                 MessageBox.Show("No valid user ID available", "Invalid User ID",
@@ -178,7 +173,7 @@ namespace SdkSample
                         _secureEnv = SecureEnvironment.Create(
                                                 applicationManifest,
                                                 new ContentUser(currentUserId,
-                                                    _authentication) );
+                                                    _authentication));
                     }
                     else // if user is not yet activated.
                     {
@@ -189,7 +184,7 @@ namespace SdkSample
                         _secureEnv = SecureEnvironment.Create(
                                                 applicationManifest,
                                                 _authentication,
-                                                UserActivationMode.Permanent );
+                                                UserActivationMode.Permanent);
 
                         // If not using the current Windows user, use
                         // UserActivationMode.Temporary to display the Windows
@@ -223,7 +218,7 @@ namespace SdkSample
                     if (encryptedFile.EndsWith(".protected"))
                     {   // Remove ".protected" from the file name.
                         useLicenseFile = useLicenseFile.Remove(
-                            useLicenseFile.Length - ".protected".Length );
+                            useLicenseFile.Length - ".protected".Length);
                     }
                     // Append ".UseLicense.xml" as the UseLicense file extension.
                     useLicenseFile = useLicenseFile + ".UseLicense.xml";
@@ -264,13 +259,13 @@ namespace SdkSample
                         rightsBlock.Text += "    Until: " + grant.ValidUntil + "\n";
                     }
 
-                    if (cryptoProvider.CanDecrypt == true)
+                    if (cryptoProvider.CanDecrypt)
                         ShowStatus("   Decryption granted.");
                     else
                         ShowStatus("   CANNOT DECRYPT!");
                     //</SnippetRMContViewUseLicense>
 
-                    ShowStatus("   Decrypting '"+Filename(encryptedFile)+"'.");
+                    ShowStatus("   Decrypting '" + Filename(encryptedFile) + "'.");
                     //<SnippetRMContViewDecrypt>
                     byte[] imageBuffer;
                     using (Stream cipherTextStream = File.OpenRead(encryptedFile))
@@ -292,7 +287,7 @@ namespace SdkSample
 
                         // decrypt cipherText to clearText block by block.
                         int imageBufferIndex = 0;
-                        for ( ; ; )
+                        for (; ; )
                         {   // Read cipherText block.
                             int readCount = ReliableRead(
                                                 cipherTextStream,
@@ -308,7 +303,7 @@ namespace SdkSample
 
                             // Copy the clearTextBlock to the imageBuffer.
                             int copySize = Math.Min(clearTextBlock.Length,
-                                                contentLength-imageBufferIndex);
+                                                contentLength - imageBufferIndex);
                             Array.Copy(clearTextBlock, 0,
                                 imageBuffer, imageBufferIndex, copySize);
                             imageBufferIndex += copySize;
@@ -516,7 +511,7 @@ namespace SdkSample
         ///   Sets rights management for Windows authentication.</summary>
         private void OnWindowsAuthentication(object sender, EventArgs e)
         {
-            menuViewWindows.IsChecked  = true;
+            menuViewWindows.IsChecked = true;
             menuViewPassport.IsChecked = false;
             _authentication = AuthenticationType.Windows;
         }
@@ -526,7 +521,7 @@ namespace SdkSample
         ///   Sets rights management for Windows authentication.</summary>
         private void OnPassportAuthentication(object sender, EventArgs e)
         {
-            menuViewWindows.IsChecked  = false;
+            menuViewWindows.IsChecked = false;
             menuViewPassport.IsChecked = true;
             _authentication = AuthenticationType.Passport;
         }
@@ -574,7 +569,7 @@ namespace SdkSample
         #endregion Utilities
 
         #region private fields
-        private string      _contentFile=null;  // content path and filename.
+        private string _contentFile = null;  // content path and filename.
         private AuthenticationType _authentication = AuthenticationType.Windows;
         private static SecureEnvironment _secureEnv = null;
         private static String _currentUserId = GetDefaultWindowsUserName();

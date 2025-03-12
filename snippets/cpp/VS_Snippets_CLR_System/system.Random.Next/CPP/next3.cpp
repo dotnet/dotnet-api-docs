@@ -8,7 +8,7 @@ void main()
    unsigned int numbers = 0;
    Random^ rnd = gcnew Random();
    
-   if (! UInt32::TryParse(line, numbers))
+   if (!UInt32::TryParse(line, numbers))
       numbers = 10;
    
    for (unsigned int ctr = 1; ctr <= numbers; ctr++)

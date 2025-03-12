@@ -1,11 +1,11 @@
 ﻿using System;
 
-public class Example
+public class Example9
 {
    public static void Main()
    {
       //<Snippet2>
-      Random rnd = new Random();
+      Random rnd = new();
 
       Console.WriteLine("\n20 random integers from -100 to 100:");
       for (int ctr = 1; ctr <= 20; ctr++)

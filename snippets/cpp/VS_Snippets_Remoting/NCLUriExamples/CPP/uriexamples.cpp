@@ -112,7 +112,7 @@ namespace Example
          
          //<snippet1>
          char testChar = 'e';
-         if ( Uri::IsHexDigit( testChar ) == true )
+         if ( Uri::IsHexDigit( testChar ) )
          {
             Console::WriteLine( "'{0}' is the hexadecimal representation of {1}",
                testChar, Uri::FromHex( testChar ) );
@@ -236,7 +236,7 @@ namespace Example
 
 #if OLDMETHOD           
          Uri^ result;
-         if ( Uri::TryParse( uriString, false, false, result ) == true )
+         if ( Uri::TryParse( uriString, false, false, result ) )
          {
             Console::WriteLine( "{0} is a valid Uri", result );
          }

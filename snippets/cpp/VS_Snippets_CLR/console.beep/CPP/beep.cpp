@@ -8,7 +8,7 @@ int main()
    int x = 0;
    
    //
-   if ( (args->Length == 2) && (Int32::TryParse( args[ 1 ],  x ) == true) && ((x >= 1) && (x <= 9)) )
+   if ( (args->Length == 2) && (Int32::TryParse( args[ 1 ],  x )) && ((x >= 1) && (x <= 9)) )
    {
       for ( int i = 1; i <= x; i++ )
       {

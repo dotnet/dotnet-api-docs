@@ -16,7 +16,7 @@ static void Show( bool parseResult, String^ typeName, String^ parseValue )
    String^ msgFailure = L"** Parse for {0} failed. Invalid input.";
    
    //
-   if ( parseResult == true )
+   if ( parseResult )
       Console::WriteLine( msgSuccess, typeName, parseValue );
    else
       Console::WriteLine( msgFailure, typeName );

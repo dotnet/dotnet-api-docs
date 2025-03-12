@@ -6,13 +6,6 @@ Imports System.Data.SqlClient
 
 Module Module1
 
-    Sub Main()
-        Dim connectionString As String = _
-           "Persist Security Info=False;Integrated Security=SSPI;database=Northwind;server=(local)"
-        ExecuteSqlTransaction(connectionString)
-        Console.ReadLine()
-
-    End Sub
     ' <Snippet1>
     Private Sub ExecuteSqlTransaction(ByVal connectionString As String)
         Using connection As New SqlConnection(connectionString)

@@ -18,7 +18,7 @@ namespace ResolveAddressSync
 
             CivicAddressResolver resolver = new CivicAddressResolver();
 
-            if (watcher.Position.Location.IsUnknown == false)
+            if (!watcher.Position.Location.IsUnknown)
             {
                 CivicAddress address = resolver.ResolveAddress(watcher.Position.Location);
 

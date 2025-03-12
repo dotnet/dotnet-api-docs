@@ -161,7 +161,7 @@ public class MyDataGrid : Form
    // Set the 'AllowNavigation' property on click of a button.
    private void myButton_Click(object sender, EventArgs e)
    {
-      if (myDataGrid.AllowNavigation == true)
+      if (myDataGrid.AllowNavigation)
          myDataGrid.AllowNavigation = false;
       else
          myDataGrid.AllowNavigation = true;

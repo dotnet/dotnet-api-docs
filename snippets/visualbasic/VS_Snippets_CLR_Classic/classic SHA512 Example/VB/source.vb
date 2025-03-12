@@ -2,15 +2,17 @@
 Imports System.ComponentModel
 Imports System.Security.Cryptography
 
-Public Class Sample
-    Protected DATA_SIZE As Integer = 1024
-    
-    Protected Sub Method()
+Public Module Sample
+    Private DATA_SIZE As Integer = 1024
+
+    Public Sub Main()
 ' <Snippet1>
- Dim data(DATA_SIZE) As Byte
- Dim result() As Byte
- Dim shaM As New SHA512Managed()
- result = shaM.ComputeHash(data)
+Dim data(DATA_SIZE) As Byte
+Dim result() As Byte
+
+Using sha512 As SHA512 = SHA512.Create()
+    result = sha512.ComputeHash(data)
+End Using
 ' </Snippet1>
     End Sub
-End Class
+End Module

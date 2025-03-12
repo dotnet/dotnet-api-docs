@@ -107,7 +107,7 @@ public:
          // This exception would be thrown if there is no (further) acknowledgment message
          // with the specified correlation Id. Only output a message if there are no messages;
          // not if the loop has found at least one.
-         if ( found == false )
+         if ( !found )
          {
             Console::WriteLine( e->Message );
          }

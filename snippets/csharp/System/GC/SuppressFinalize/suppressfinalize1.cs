@@ -75,7 +75,7 @@ public class ConsoleMonitor : IDisposable
       WriteConsole(handle, output, (uint) output.Length, out written, IntPtr.Zero);
 
       // Execute if resources have not already been disposed.
-      if (! disposed) {
+      if (!disposed) {
          // If the call is from Dispose, free managed resources.
          if (disposing) {
             Console.Error.WriteLine("Disposing of managed resources.");
@@ -87,7 +87,7 @@ public class ConsoleMonitor : IDisposable
          WriteConsole(handle, output, (uint) output.Length, out written, IntPtr.Zero);
 
          if (handle != IntPtr.Zero) {
-            if (! CloseHandle(handle))
+            if (!CloseHandle(handle))
                Console.Error.WriteLine("Handle cannot be closed.");
          }
       }

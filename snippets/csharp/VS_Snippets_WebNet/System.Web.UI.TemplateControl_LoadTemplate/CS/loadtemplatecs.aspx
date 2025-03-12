@@ -47,7 +47,7 @@
             DataList1.RepeatLayout = RepeatLayout.Flow;
          DataList1.RepeatColumns=DropDown3.SelectedIndex+1;
  
-         if ((Check1.Checked ==true) && (DataList1.RepeatLayout == RepeatLayout.Table)) 
+         if ((Check1.Checked) && (DataList1.RepeatLayout == RepeatLayout.Table)) 
          {
             DataList1.BorderWidth = Unit.Pixel(1);
             DataList1.GridLines = GridLines.Both;

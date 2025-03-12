@@ -16,7 +16,7 @@ void SampleTryCreate()
 
    // Parse the string and create a new Uri instance, if possible.
    Uri^ result;
-   if ( Uri::TryCreate( addressString, UriKind::RelativeOrAbsolute, result ) == true )
+   if ( Uri::TryCreate( addressString, UriKind::RelativeOrAbsolute, result ) )
    {
       // The call was successful.  Write the URI address to the console.
       Console::Write( result );

@@ -185,7 +185,7 @@ namespace SdkSample
             dialog.InitialDirectory = GetContentFolder();
             dialog.Filter = this.OpenFileFilter;
             bool result = (bool)dialog.ShowDialog(null);
-            if (result == false)  return false;
+            if (!result)  return false;
 
             fileName = dialog.FileName;
             return OpenFile(fileName);
@@ -500,7 +500,7 @@ namespace SdkSample
                 bool result = (bool)dialog.ShowDialog(null);
 
                 // If the user clicked "Cancel", cancel the saving the file.
-                if (result == false)  return false;
+                if (!result)  return false;
                 fileName = dialog.FileName;
             }
 

@@ -14,7 +14,7 @@ namespace newTcpClient
         static void GetAvailable()
         {
             // Find out how many bytes are ready to be read.
-            Console.WriteLine("Availabe value is {0}", t.Available);
+            Console.WriteLine("Available value is {0}", t.Available);
         }
         // </Snippet1>
 
@@ -64,9 +64,9 @@ namespace newTcpClient
 
         public static void DoBeginConnect1(string host, int port)
         {
-            // Connect asynchronously to the specifed host.
+            // Connect asynchronously to the specified host.
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
-//            IPAddress remoteHost = new IPAddress(host);
+            // IPAddress remoteHost = new IPAddress(host);
             IPAddress[] remoteHost = Dns.GetHostAddresses(host);
 
             connectDone.Reset();
@@ -82,7 +82,7 @@ namespace newTcpClient
             Console.WriteLine("Connection established");
         }
 
-        // Connect asynchronously to the specifed host.
+        // Connect asynchronously to the specified host.
         public static void DoBeginConnect2(string host, int port)
         {
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
@@ -100,7 +100,7 @@ namespace newTcpClient
             Console.WriteLine("Connection established");
         }
 
-        // Connect asynchronously to the specifed host.
+        // Connect asynchronously to the specified host.
         public static void DoBeginConnect3(string host, int port)
         {
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);

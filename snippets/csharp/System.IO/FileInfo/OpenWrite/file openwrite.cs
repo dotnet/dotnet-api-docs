@@ -34,18 +34,5 @@ class Test
     }
 }
 //This code produces output similar to the following;
-//results may vary based on the computer/file structure/etc.:
-//
 //This is to test the OpenWrite method.
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 // </Snippet1>

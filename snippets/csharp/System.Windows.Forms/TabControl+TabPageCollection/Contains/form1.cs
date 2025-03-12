@@ -23,7 +23,7 @@ public class Form1 : Form
 
         // Checks the tabControl1 controls collection for tabPage3.
         // Adds tabPage3 to tabControl1 if it is not in the collection.
-        if (tabControl1.TabPages.Contains(tabPage3) == false)
+        if (!tabControl1.TabPages.Contains(tabPage3))
             this.tabControl1.TabPages.Add(tabPage3);
 
         this.tabControl1.Location = new Point(25, 25);

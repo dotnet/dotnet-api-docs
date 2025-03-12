@@ -17,7 +17,7 @@ private void MyEnumerator() {
  
     // Prints the name of each event in the collection.
     Object myEvent;
-    while(ie.MoveNext() == true) {
+    while(ie.MoveNext()) {
        myEvent = ie.Current;
        textBox1.Text += myEvent.ToString() + '\n';
     }

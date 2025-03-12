@@ -5,13 +5,6 @@ using System.Data.SqlClient;
 
 class Program
 {
-    static void Main()
-    {
-        string str = "Data Source=(local);Initial Catalog=Northwind;"
-            + "Integrated Security=SSPI";
-        ReadGetOrdinal(str);
-    }
-
     // <Snippet1>
     private static void ReadGetOrdinal(string connectionString)
     {

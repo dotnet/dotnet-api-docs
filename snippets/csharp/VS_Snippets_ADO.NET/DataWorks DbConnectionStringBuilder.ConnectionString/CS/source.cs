@@ -15,7 +15,6 @@ namespace ConBuilderConnectionStringCS
                 DbConnectionStringBuilder();
             builder.Add("Data Source", @"c:\MyData\MyDb.mdb");
             builder.Add("Provider", "Microsoft.Jet.Oledb.4.0");
-            builder.Add("Jet OLEDB:Database Password", "********");
             builder.Add("Jet OLEDB:System Database",
                 @"c:\MyData\Workgroup.mdb");
 
@@ -62,10 +61,6 @@ namespace ConBuilderConnectionStringCS
             {
                 Console.WriteLine("Invalid connection string.");
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Press Enter to finish.");
-            Console.ReadLine();
         }
         // </Snippet1>
     }

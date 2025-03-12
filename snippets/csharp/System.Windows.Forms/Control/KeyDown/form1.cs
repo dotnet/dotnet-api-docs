@@ -117,7 +117,7 @@ namespace ControlKeyDownEx
         private void textBox1_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             // Check for the flag being set in the KeyDown event.
-            if (nonNumberEntered == true)
+            if (nonNumberEntered)
             {
                 // Stop the character from being entered into the control since it is non-numerical.
                 e.Handled = true;

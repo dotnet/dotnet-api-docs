@@ -36,7 +36,7 @@ public class Example
 
    private static Task<long> GetFileLengthsAsync(string filePath)
    {
-      if (! Directory.Exists(filePath)) {
+      if (!Directory.Exists(filePath)) {
          return Task.FromException<long>(
                      new DirectoryNotFoundException("Invalid directory name."));
       }

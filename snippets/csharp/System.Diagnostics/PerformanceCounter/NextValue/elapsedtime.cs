@@ -16,7 +16,6 @@ public class App
 {
     private static PerformanceCounter PC;
 
-
 	public static void Main()
 	{	
 		ArrayList samplesList = new ArrayList();
@@ -26,12 +25,10 @@ public class App
 		CollectSamples(samplesList);
 	}
 
-
     private static bool SetupCategory()
     {
         if ( !PerformanceCounterCategory.Exists("ElapsedTimeSampleCategory") )
         {
-
             CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
 
             // Add the counter.
@@ -60,12 +57,10 @@ public class App
         PC = new PerformanceCounter("ElapsedTimeSampleCategory",
             "ElapsedTimeSample",
             false);
-
     }
 
     private static void CollectSamples(ArrayList samplesList)
     {
-	
         long pcValue;
         DateTime Start;
 
@@ -98,7 +93,6 @@ public class App
 
         Console.WriteLine("Elapsed time = " + DateTime.Now.Subtract(Start).ToString());
     }
-
 	
 	private static void OutputSample(CounterSample s)
 	{
@@ -115,7 +109,6 @@ public class App
 		Console.WriteLine("++++++++++++++++++++++");
 	}
 
-
 	// Reads the counter information to enable setting the RawValue.
 	[DllImport("Kernel32.dll")]
 	public static extern bool QueryPerformanceCounter(out long value);
@@ -126,7 +119,6 @@ public class App
 // Build sample for Whidbey or higher.
 
 //<Snippet2>
-
 using System;
 using System.Collections;
 using System.Collections.Specialized;
@@ -135,7 +127,6 @@ using System.Runtime.InteropServices;
 
 public class App
 {
-
     public static void Main()
     {	
         CollectSamples();

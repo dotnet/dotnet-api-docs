@@ -5,7 +5,7 @@ ref class FileUtilities
     public:
        static String^ AppendDirectorySeparator(String^ dir)
       {
-         if (! dir->Trim()->EndsWith(System::IO::Path::DirectorySeparatorChar.ToString()))
+         if (!dir->Trim()->EndsWith(System::IO::Path::DirectorySeparatorChar.ToString()))
             return dir->Trim() + System::IO::Path::DirectorySeparatorChar;
          else
             return dir;

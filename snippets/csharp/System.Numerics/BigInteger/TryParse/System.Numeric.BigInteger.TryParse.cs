@@ -37,10 +37,10 @@ public class TryParse
       }
       else
       {
-         if (! succeeded1)
+         if (!succeeded1)
             Console.WriteLine("Unable to initialize the first BigInteger value.");
 
-         if (! succeeded2)
+         if (!succeeded2)
             Console.WriteLine("Unable to initialize the second BigInteger value.");
       }
       // The example displays the following output:

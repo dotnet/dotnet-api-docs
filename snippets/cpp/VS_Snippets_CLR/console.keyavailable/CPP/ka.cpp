@@ -11,7 +11,7 @@ int main()
       
       // Your code could perform some useful task in the following loop. However, 
       // for the sake of this example we'll merely pause for a quarter second.
-      while ( Console::KeyAvailable == false )
+      while ( !Console::KeyAvailable )
             Thread::Sleep( 250 );
       cki = Console::ReadKey( true );
       Console::WriteLine( "You pressed the '{0}' key.", cki.Key );

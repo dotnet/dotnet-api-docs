@@ -122,7 +122,7 @@ namespace OffsetPanel
                 {
                     if (child == null) { continue; }
 
-                    if (GetShareCoordinates(child) == true)
+                    if (GetShareCoordinates(child))
                     {
                         double x = GetOffsetLeft(child);
                         double y = GetOffsetTop(child);

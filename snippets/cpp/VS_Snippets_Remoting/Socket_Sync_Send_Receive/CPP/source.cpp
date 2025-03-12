@@ -345,7 +345,7 @@ void RunUdpTests()
    Thread^ myThread1 = gcnew Thread( myThreadDelegate );
    myThread1->Start();
 
-   while ( myThread1->IsAlive == true )
+   while ( myThread1->IsAlive )
    {
       NeedForDelegates::SendTo1();
    }
@@ -354,7 +354,7 @@ void RunUdpTests()
    Console::WriteLine(  "UDP test2" );
    Thread^ myThread2 = gcnew Thread( gcnew ThreadStart( &NeedForDelegates::ReceiveFrom2 ) );
    myThread2->Start();
-   while ( myThread2->IsAlive == true )
+   while ( myThread2->IsAlive )
    {
       NeedForDelegates::SendTo2();
    }
@@ -363,7 +363,7 @@ void RunUdpTests()
    Console::WriteLine(  "UDP test3" );
    Thread^ myThread3 = gcnew Thread( gcnew ThreadStart( &NeedForDelegates::ReceiveFrom3 ) );
    myThread3->Start();
-   while ( myThread3->IsAlive == true )
+   while ( myThread3->IsAlive )
    {
       NeedForDelegates::SendTo3();
    }
@@ -372,7 +372,7 @@ void RunUdpTests()
    Console::WriteLine(  "UDP test4" );
    Thread^ myThread4 = gcnew Thread( gcnew ThreadStart( &NeedForDelegates::ReceiveFrom4 ) );
    myThread4->Start();
-   while ( myThread4->IsAlive == true )
+   while ( myThread4->IsAlive )
    {
       NeedForDelegates::SendTo4();
    }

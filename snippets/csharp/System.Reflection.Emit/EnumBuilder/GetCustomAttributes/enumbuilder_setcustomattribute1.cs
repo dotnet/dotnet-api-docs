@@ -13,7 +13,6 @@
 */
 
 // <Snippet1>
-
 using System;
 using System.Threading;
 using System.Reflection;

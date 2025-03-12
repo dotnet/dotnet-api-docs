@@ -87,7 +87,7 @@ private:
 
    void Player_LoadCompleted( Object^ /*sender*/, System::ComponentModel::AsyncCompletedEventArgs^ /*e*/ )
    {
-      if (this->Player->IsLoadCompleted == true)
+      if (this->Player->IsLoadCompleted)
       {
          this->Player->PlaySync();
       }

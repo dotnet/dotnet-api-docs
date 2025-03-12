@@ -1,5 +1,4 @@
 ﻿// <Snippet3>
-
 using System;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;

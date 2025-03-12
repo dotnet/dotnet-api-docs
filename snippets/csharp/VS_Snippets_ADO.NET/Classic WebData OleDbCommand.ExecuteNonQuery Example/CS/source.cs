@@ -8,8 +8,7 @@ namespace OleDbCommandExecuteNonQueryCS
     {
         static void Main()
         {
-            string connectionString = "Provider=sqloledb;Data Source=(local);Initial Catalog=Northwind;"
-                + "Integrated Security=SSPI";
+            string connectionString = "Provider=sqloledb;Data Source=(local);Initial Catalog=Northwind;Integrated Security=SSPI";
             string queryString = "UPDATE Shippers SET CompanyName = 'Speedy Expresss' WHERE ShipperID = 1";
             CreateOleDbCommand(queryString, connectionString);
             Console.ReadLine();
