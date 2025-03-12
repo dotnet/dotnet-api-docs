@@ -45,6 +45,11 @@ on:
         required: true
         default: "staging"
 
+permissions:
+  issues: read
+  pull-requests: read
+  actions: write
+
 jobs:
   # Without specifying a pageSize of 1 for downloading pull requests, the requests time out
   # Directly invoking the individual workflows until https://github.com/dotnet/issue-labeler/issues/97 is addressed
@@ -111,7 +116,7 @@ jobs:
     with:
       data_cache_key: ${{ inputs.cache_key_suffix }}
       pull_limit: ${{ inputs.data_limit && fromJSON(inputs.data_limit) || 0 }}
-      page_size: ${{ inputs.pull_page_size }}
+      page_size: ${{ inputs.pull_page_size && fromJSON(inputs.pull_page_size) || 1 }}
       label_prefix: "area-"
 
   labeler-train-pulls:
