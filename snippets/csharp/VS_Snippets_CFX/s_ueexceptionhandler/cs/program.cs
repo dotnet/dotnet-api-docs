@@ -7,29 +7,29 @@ using System.ServiceModel.Dispatcher;
 
 namespace CS
 {
-    public class MyExceptionHandler: ExceptionHandler
+    public class MyExceptionHandler : ExceptionHandler
     {
-            // HandleException method override gives control to
-            // your code.
-            public override bool HandleException ( Exception ex )
-            {
-                // This method contains logic to decide whether
-                // the exception is serious enough
-                // to terminate the process.
-                return ShouldTerminateProcess (ex);
-            }
+        // HandleException method override gives control to
+        // your code.
+        public override bool HandleException(Exception ex)
+        {
+            // This method contains logic to decide whether
+            // the exception is serious enough
+            // to terminate the process.
+            return ShouldTerminateProcess(ex);
+        }
 
-            public bool ShouldTerminateProcess (Exception ex)
-            {
-                // Write your logic here.
-                return  true;
-            }
+        public bool ShouldTerminateProcess(Exception ex)
+        {
+            // Write your logic here.
+            return true;
+        }
     }
+    // </Snippet0>
 
-// </Snippet0>
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // <Snippet1>
             // Create an instance of the MyExceptionHandler class.
