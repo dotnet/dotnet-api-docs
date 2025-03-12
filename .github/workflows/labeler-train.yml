@@ -68,7 +68,7 @@ jobs:
   #     threshold: 0.40
 
   build-predictor:
-    uses: dotnet/issue-labeler/.github/workflows/build-predictor.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/build-predictor.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
 
   labeler-download-issues:
     needs: build-predictor
@@ -76,7 +76,7 @@ jobs:
     permissions:
       issues: read
       actions: write
-    uses: dotnet/issue-labeler/.github/workflows/download-issues.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/download-issues.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
     with:
       data_cache_key: ${{ inputs.cache_key_suffix }}
       issue_limit: ${{ inputs.data_limit && fromJSON(inputs.data_limit) || 0 }}
@@ -87,7 +87,7 @@ jobs:
     if: ${{ inputs.train_issues && always() && (needs.labeler-download-issues.result == 'success' || needs.labeler-download-issues.result == 'skipped') }}
     permissions:
       actions: write
-    uses: dotnet/issue-labeler/.github/workflows/train-issues.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/train-issues.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
     with:
       data_cache_key: ${{ inputs.cache_key_suffix }}
       model_cache_key: ${{ inputs.cache_key_suffix }}
@@ -95,7 +95,7 @@ jobs:
   labeler-test-issues:
     needs: [labeler-download-issues, labeler-train-issues]
     if: ${{ inputs.test_issues && always() && (needs.labeler-download-issues.result == 'success' || needs.labeler-download-issues.result == 'skipped') && (needs.labeler-train-issues.result == 'success' || needs.labeler-train-issues.result == 'skipped') }}
-    uses: dotnet/issue-labeler/.github/workflows/test-issues.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/test-issues.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
     with:
       model_cache_key: ${{ inputs.cache_key_suffix }}
       label_prefix: "area-"
@@ -107,7 +107,7 @@ jobs:
     permissions:
       pull-requests: read
       actions: write
-    uses: dotnet/issue-labeler/.github/workflows/download-pulls.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/download-pulls.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
     with:
       data_cache_key: ${{ inputs.cache_key_suffix }}
       pull_limit: ${{ inputs.data_limit && fromJSON(inputs.data_limit) || 0 }}
@@ -119,7 +119,7 @@ jobs:
     if: ${{ inputs.train_pulls && always() && (needs.labeler-download-pulls.result == 'success' || needs.labeler-download-pulls.result == 'skipped') }}
     permissions:
       actions: write
-    uses: dotnet/issue-labeler/.github/workflows/train-pulls.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/train-pulls.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
     with:
       data_cache_key: ${{ inputs.cache_key_suffix }}
       model_cache_key: ${{ inputs.cache_key_suffix }}
@@ -127,7 +127,7 @@ jobs:
   labeler-test-pulls:
     needs: [labeler-download-pulls, labeler-train-pulls]
     if: ${{ inputs.test_pulls && always() && (needs.labeler-download-pulls.result == 'success' || needs.labeler-download-pulls.result == 'skipped') && (needs.labeler-train-pulls.result == 'success' || needs.labeler-train-pulls.result == 'skipped') }}
-    uses: dotnet/issue-labeler/.github/workflows/test-pulls.yml@68a3df3b6444ec3e2a37af4d5e2569df1d45201d # v1.0.1
+    uses: dotnet/issue-labeler/.github/workflows/test-pulls.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
     with:
       model_cache_key: ${{ inputs.cache_key_suffix }}
       label_prefix: "area-"
