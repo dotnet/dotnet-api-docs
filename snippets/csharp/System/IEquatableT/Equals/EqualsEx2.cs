@@ -1,84 +1,41 @@
 ﻿// <Snippet3>
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
 public class Person : IEquatable<Person>
 {
-   private string uniqueSsn;
-   private string lName;
+    public Person(string lastName, string ssn)
+    {
+        LastName = lastName;
+        SSN = ssn;
+    }
 
-   public Person(string lastName, string ssn)
-   {
-      if (Regex.IsMatch(ssn, @"\d{9}"))
-        uniqueSsn = $"{ssn.Substring(0, 3)}-{ssn.Substring(3, 2)}-{ssn.Substring(5, 4)}";
-      else if (Regex.IsMatch(ssn, @"\d{3}-\d{2}-\d{4}"))
-         uniqueSsn = ssn;
-      else
-         throw new FormatException("The social security number has an invalid format.");
+    public string LastName { get; }
 
-      this.LastName = lastName;
-   }
+    public string SSN { get; }
 
-   public string SSN
-   {
-      get { return this.uniqueSsn; }
-   }
+    public bool Equals(Person? other) => other is not null && other.SSN == SSN;
 
-   public string LastName
-   {
-      get { return this.lName; }
-      set {
-         if (String.IsNullOrEmpty(value))
-            throw new ArgumentException("The last name cannot be null or empty.");
-         else
-            this.lName = value;
-      }
-   }
+    public override bool Equals(object? obj) => Equals(obj as Person);
 
-   public bool Equals(Person other)
-   {
-      if (other == null)
-         return false;
+    public override int GetHashCode() => SSN.GetHashCode();
 
-      if (this.uniqueSsn == other.uniqueSsn)
-         return true;
-      else
-         return false;
-   }
+    public static bool operator ==(Person person1, Person person2)
+    {
+        if (person1 is null)
+        {
+            return person2 is null;
+        }
 
-   public override bool Equals(Object obj)
-   {
-      if (obj == null)
-         return false;
+        return person1.Equals(person2);
+    }
 
-      Person personObj = obj as Person;
-      if (personObj == null)
-         return false;
-      else
-         return Equals(personObj);
-   }
+    public static bool operator !=(Person person1, Person person2)
+    {
+        if (person1 is null)
+        {
+            return person2 is not null;
+        }
 
-   public override int GetHashCode()
-   {
-      return this.SSN.GetHashCode();
-   }
-
-   public static bool operator == (Person person1, Person person2)
-   {
-      if (((object)person1) == null || ((object)person2) == null)
-         return Object.Equals(person1, person2);
-
-      return person1.Equals(person2);
-   }
-
-   public static bool operator != (Person person1, Person person2)
-   {
-      if (((object)person1) == null || ((object)person2) == null)
-         return ! Object.Equals(person1, person2);
-
-      return ! (person1.Equals(person2));
-   }
+        return !person1.Equals(person2);
+    }
 }
 // </Snippet3>
 

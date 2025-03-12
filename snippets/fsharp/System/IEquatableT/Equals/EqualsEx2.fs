@@ -2,56 +2,28 @@
 
 // <Snippet3>
 open System
-open System.Text.RegularExpressions
 
-type Person(lastName, ssn) =
-    let mutable lastName = lastName
-    let ssn = 
-        if Regex.IsMatch(ssn, @"\d{9}") then
-            $"{ssn.Substring(0, 3)}-{ssn.Substring(3, 2)}-{ssn.Substring(5, 4)}"
-        elif Regex.IsMatch(ssn, @"\d{3}-\d{2}-\d{4}") then
-            ssn
-        else
-            raise (FormatException "The social security number has an invalid format.")
-
-    member _.SSN =
-        ssn
-
-    member _.LastName
-        with get () = lastName
-        and set (value) =
-            if String.IsNullOrEmpty value then
-                invalidArg (nameof value) "The last name cannot be null or empty."
-            else
-                lastName <- value
-
-    static member op_Equality (person1: Person, person2: Person) =
-        if box person1 |> isNull || box person2 |> isNull then
-            Object.Equals(person1, person2)
-        else
-            person1.Equals person2
-
-    static member op_Inequality (person1: Person, person2: Person) =
-        if box person1 |> isNull || box person2 |> isNull then
-            Object.Equals(person1, person2) |> not
-        else
-            person1.Equals person2 |> not
-
-    override _.GetHashCode() =
-        ssn.GetHashCode()
-
-    override this.Equals(obj: obj) =
-        match obj with 
-        | :? Person as personObj ->
-            (this :> IEquatable<_>).Equals personObj
-        | _ -> false
+type Person(lastName: string, ssn: string) =
+    member this.LastName = lastName
+    member this.SSN = ssn
 
     interface IEquatable<Person> with
         member this.Equals(other: Person) =
-            match box other with 
-            | null -> false
-            | _ ->
-                this.SSN = other.SSN
+            other.SSN = this.SSN
+
+    override this.Equals(obj: obj) =
+        match obj with
+        | :? Person as person -> (this :> IEquatable<Person>).Equals(person)
+        | _ -> false
+
+    override this.GetHashCode() =
+        this.SSN.GetHashCode()
+
+    static member (==) (person1: Person, person2: Person) =
+        person1.Equals(person2)
+
+    static member (!=) (person1: Person, person2: Person) =
+        not (person1.Equals(person2))
 // </Snippet3>
 // Create a Person object for each job applicant.
 let applicant1 = Person("Jones", "099-29-4999")
