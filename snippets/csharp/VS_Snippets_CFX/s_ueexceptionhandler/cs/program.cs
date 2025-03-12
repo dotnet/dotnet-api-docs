@@ -1,7 +1,7 @@
 ﻿// Snippet for S_UE System.ServiceModel.Dispatcher.ExceptionHandler.HandleException
 // 06192006 Created by A.Hu
 
-// <snippet0>
+// <Snippet0>
 using System;
 using System.ServiceModel.Dispatcher;
 
@@ -26,12 +26,12 @@ namespace CS
             }
     }
 
-// </snippet0>
+// </Snippet0>
     class Program
     {
-// <snippet1>
         static void Main(string[] args)
         {
+            // <Snippet1>
             // Create an instance of the MyExceptionHandler class.
             MyExceptionHandler thisExceptionHandler =
                 new MyExceptionHandler();
@@ -43,8 +43,9 @@ namespace CS
                 thisExceptionHandler;
 
             // After the handler is set, write your call to
-            // System.ServiceModel.ICommunication.Open here
+            // System.ServiceModel.ICommunication.Open here.
+
+            // </Snippet1>
         }
     }
-// </snippet1>
 }
