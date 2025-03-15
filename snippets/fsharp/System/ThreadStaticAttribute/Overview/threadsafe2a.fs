@@ -7,10 +7,10 @@ type ThreadLocal() =
     static val mutable private requestId: string option
 
     static member PerformLogging() =
-        Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId}: Logging request {ThreadLocal.requestId.Value}")
+        Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Logging request {ThreadLocal.requestId.Value}")
 
     static member PerformDatabaseOperation() =
-        Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId}: Processing DB operation for request {ThreadLocal.requestId.Value}")
+        Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Processing DB operation for request {ThreadLocal.requestId.Value}")
 
     static member ProcessRequest(reqId: obj) =
         ThreadLocal.requestId <- Some(reqId :?> string)
