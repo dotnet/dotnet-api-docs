@@ -33,12 +33,12 @@ class Program
 
     static void PerformDatabaseOperation()
     {
-        Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId}: Processing DB operation for request {_requestId}");
+        Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Processing DB operation for request {_requestId}");
     }
 
     static void PerformLogging()
     {
-        Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId}: Logging request {_requestId}");
+        Console.WriteLine($"Thread {Environment.CurrentManagedThreadId}: Logging request {_requestId}");
     }
 }
 // </Snippet1>
