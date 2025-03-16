@@ -9,8 +9,8 @@ class Program
 
     static void Main()
     {
-        Thread thread1 = new Thread(ProcessRequest);
-        Thread thread2 = new Thread(ProcessRequest);
+        Thread thread1 = new(ProcessRequest);
+        Thread thread2 = new(ProcessRequest);
 
         thread1.Start("REQ-001");
         thread2.Start("REQ-002");
