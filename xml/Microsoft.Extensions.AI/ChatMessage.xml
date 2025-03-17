@@ -16,6 +16,10 @@
   </Base>
   <Interfaces />
   <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Diagnostics.DebuggerDisplay("[{Role}] {ContentForDebuggerDisplay}{EllipsesForDebuggerDisplay,nq}")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerDisplay("[{Role}] {ContentForDebuggerDisplay}{EllipsesForDebuggerDisplay,nq}")&gt;]</AttributeName>
+    </Attribute>
     <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
@@ -46,11 +50,11 @@
       <Parameters />
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.ChatMessage" /> class.</summary>
-        <remarks>To be added.</remarks>
+        <remarks>The instance defaults to having a role of <see cref="P:Microsoft.Extensions.AI.ChatRole.User" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ChatMessage (Microsoft.Extensions.AI.ChatRole role, System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AIContent&gt; contents);" />
+      <MemberSignature Language="C#" Value="public ChatMessage (Microsoft.Extensions.AI.ChatRole role, System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AIContent&gt;? contents);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype Microsoft.Extensions.AI.ChatRole role, class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.AIContent&gt; contents) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.ChatMessage.#ctor(Microsoft.Extensions.AI.ChatRole,System.Collections.Generic.IList{Microsoft.Extensions.AI.AIContent})" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (role As ChatRole, contents As IList(Of AIContent))" />
@@ -63,7 +67,14 @@
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="role" Type="Microsoft.Extensions.AI.ChatRole" />
-        <Parameter Name="contents" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AIContent&gt;" />
+        <Parameter Name="contents" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AIContent&gt;">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
         <param name="role">The role of the author of the message.</param>
@@ -90,7 +101,7 @@
       </Parameters>
       <Docs>
         <param name="role">The role of the author of the message.</param>
-        <param name="content">The contents of the message.</param>
+        <param name="content">The text content of the message.</param>
         <summary>Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.ChatMessage" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
@@ -242,18 +253,22 @@
       </Docs>
     </Member>
     <Member MemberName="Text">
-      <MemberSignature Language="C#" Value="public string? Text { get; set; }" />
+      <MemberSignature Language="C#" Value="public string Text { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string Text" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.ChatMessage.Text" />
-      <MemberSignature Language="VB.NET" Value="Public Property Text As String" />
-      <MemberSignature Language="F#" Value="member this.Text : string with get, set" Usage="Microsoft.Extensions.AI.ChatMessage.Text" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ Text { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Text As String" />
+      <MemberSignature Language="F#" Value="member this.Text : string" Usage="Microsoft.Extensions.AI.ChatMessage.Text" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ Text { System::String ^ get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+        </Attribute>
         <Attribute>
           <AttributeName Language="C#">[System.Text.Json.Serialization.JsonIgnore]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Text.Json.Serialization.JsonIgnore&gt;]</AttributeName>
@@ -263,13 +278,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>
-            Gets or sets the text of the first <see cref="T:Microsoft.Extensions.AI.TextContent" /> instance in <see cref="P:Microsoft.Extensions.AI.ChatMessage.Contents" />.
-            </summary>
+        <summary>Gets the text of this message.</summary>
         <value>To be added.</value>
         <remarks>
-            If there is no <see cref="T:Microsoft.Extensions.AI.TextContent" /> instance in <see cref="P:Microsoft.Extensions.AI.ChatMessage.Contents" />, then the getter returns <see langword="null" />,
-            and the setter adds a new <see cref="T:Microsoft.Extensions.AI.TextContent" /> instance with the provided value.
+            This property concatenates the text of all <see cref="T:Microsoft.Extensions.AI.TextContent" /> objects in <see cref="P:Microsoft.Extensions.AI.ChatMessage.Contents" />.
             </remarks>
       </Docs>
     </Member>
