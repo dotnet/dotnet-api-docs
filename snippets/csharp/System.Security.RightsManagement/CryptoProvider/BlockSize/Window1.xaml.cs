@@ -3,18 +3,11 @@
 
 using System;
 using System.IO;
-using System.IO.Packaging;
-using System.Net;
 using System.Security.RightsManagement;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media.Imaging;
-using System.Windows.Xps.Packaging;
-using System.Xml;
 using WinForms = Microsoft.Win32;
 
 namespace SdkSample
@@ -45,7 +38,7 @@ namespace SdkSample
             {
                 string msg =
                     "The currently open file needs to be closed before\n" +
-                    "opening a one.  Ok to close '"+_contentFilename+"'?";
+                    "opening a one.  Ok to close '" + _contentFilename + "'?";
                 MessageBoxResult result =
                     MessageBox.Show(msg, "Close Current File?",
                         MessageBoxButton.OKCancel, MessageBoxImage.Question);
@@ -70,7 +63,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog().Value)
                 OpenContent(dialog.FileName);
         }// end:OnOpen()
 
@@ -120,7 +113,7 @@ namespace SdkSample
             }
 
             // Enable document menu controls.
-            menuFileClose.IsEnabled  = true;
+            menuFileClose.IsEnabled = true;
             menuFileRights.IsEnabled = true;
 
             // Give the ImageViewer focus.
@@ -210,7 +203,7 @@ namespace SdkSample
 
             // Show the "File Open" dialog.  If the user picks a file and
             // clicks "OK", load and display the specified XPS document.
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog().Value)
                 OpenXrML(dialog.FileName);
         }// end:OnRights()
 
@@ -240,7 +233,7 @@ namespace SdkSample
 
             WriteStatus("Opened '" + _xrmlFilename + "'");
             WritePrompt("Click 'File | Publish...' to publish the document " +
-                "package with the permissions specified in '"+ _xrmlFilename+ "'.");
+                "package with the permissions specified in '" + _xrmlFilename + "'.");
             rightsBlockTitle.Text = "Rights - " + _xrmlFilename;
             return true;
         }// end:OpenXrML()
@@ -277,15 +270,15 @@ namespace SdkSample
             // "Content\" folder to write the encrypted content file to.
             WinForms.SaveFileDialog dialog = new WinForms.SaveFileDialog();
             dialog.InitialDirectory = GetContentFolder();
-            dialog.Title  = "Publish Rights Managed Content As";
+            dialog.Title = "Publish Rights Managed Content As";
             dialog.Filter = "Rights Managed content (*.protected)|*.protected";
 
             // Create a new content ".protected" file extension.
             dialog.FileName = _contentFilepath.Insert(
-                                _contentFilepath.Length, ".protected" );
+                                _contentFilepath.Length, ".protected");
 
             // Show the "Save As" dialog. If the user clicks "Cancel", return.
-            if (dialog.ShowDialog() != true)  return;
+            if (!dialog.ShowDialog().Value) return;
 
             // Extract the filename without path.
             _rmContentFilepath = dialog.FileName;
@@ -313,8 +306,8 @@ namespace SdkSample
             string xrmlString;
 
             // Extract individual filenames without the path.
-            string contentFilename   = FilenameOnly(contentFile);
-            string xrmlFilename      = FilenameOnly(xrmlFile);
+            string contentFilename = FilenameOnly(contentFile);
+            string xrmlFilename = FilenameOnly(xrmlFile);
             string encryptedFilename = FilenameOnly(encryptedFile);
 
             try
@@ -328,7 +321,7 @@ namespace SdkSample
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ERROR: '"+xrmlFilename+"' open failed.\n"+
+                    MessageBox.Show("ERROR: '" + xrmlFilename + "' open failed.\n" +
                         "Exception: " + ex.Message, "XrML File Error",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
@@ -394,7 +387,7 @@ namespace SdkSample
                         "XrML UnsignedPublishLicense owner name: " + author.Name,
                         "Incorrect Authentication Name",
                         MessageBoxButton.OK, MessageBoxImage.Error);
-                   return false;
+                    return false;
                 }
 
                 WriteStatus("   Signing the UnsignedPublishLicense\n" +
@@ -435,7 +428,7 @@ namespace SdkSample
                 {
                     WriteStatus("   Writing encrypted content.");
                     using (Stream clearTextStream =
-                                File.OpenRead(contentFile) )
+                                File.OpenRead(contentFile))
                     {
                         using (Stream cryptoTextStream =
                                     File.OpenWrite(encryptedFile))
@@ -451,14 +444,14 @@ namespace SdkSample
                                 new byte[cryptoProvider.BlockSize];
 
                             // Encrypt clearText to cryptoText block by block.
-                            for(;;)
+                            for (; ; )
                             {   // Read clearText block.
                                 int readCount = ReliableRead(
                                                     clearTextStream,
-                                                    clearTextBlock, 0 ,
+                                                    clearTextBlock, 0,
                                                     cryptoProvider.BlockSize);
                                 // readCount of zero is end of data.
-                                if (readCount == 0)  break; // for
+                                if (readCount == 0) break; // for
 
                                 // Encrypt clearText to cryptoText.
                                 byte[] cryptoTextBlock =
@@ -633,7 +626,7 @@ namespace SdkSample
                 int bytesRead = stream.Read(buffer,
                                 offset + totalBytesRead,
                                 requiredCount - totalBytesRead);
-                if (bytesRead == 0)  break; // while
+                if (bytesRead == 0) break; // while
                 totalBytesRead += bytesRead;
             }
             return totalBytesRead;
@@ -645,7 +638,7 @@ namespace SdkSample
         public Image ImageViewer
         {
             get
-                { return imageViewer; }  // "imageViewer" declared in Window1.xaml
+            { return imageViewer; }  // "imageViewer" declared in Window1.xaml
         }
         #endregion Utilities
 
@@ -653,10 +646,10 @@ namespace SdkSample
         private string _xrmlFilepath = null;    // xrml path and filename.
         private string _xrmlFilename = null;    // xrml filename without path.
         private string _xrmlString = null;      // xrml string.
-        private string _contentFilepath=null;   // content path and filename.
-        private string _contentFilename=null;   // content filename without path.
-        private string _rmContentFilepath=null; // RM content path and filename.
-        private string _rmContentFilename=null; // RM content filename without path.
+        private string _contentFilepath = null;   // content path and filename.
+        private string _contentFilename = null;   // content filename without path.
+        private string _rmContentFilepath = null; // RM content path and filename.
+        private string _rmContentFilename = null; // RM content filename without path.
         private static SecureEnvironment _secureEnv = null;
         private static String _currentUserId = GetDefaultWindowsUserName();
         #endregion private fields

@@ -16,7 +16,7 @@ namespace BackgroundWorkerSimple
 
         private void startAsyncButton_Click(object sender, EventArgs e)
         {
-            if (backgroundWorker1.IsBusy != true)
+            if (!backgroundWorker1.IsBusy)
             {
                 // Start the asynchronous operation.
                 backgroundWorker1.RunWorkerAsync();
@@ -25,7 +25,7 @@ namespace BackgroundWorkerSimple
 
         private void cancelAsyncButton_Click(object sender, EventArgs e)
         {
-            if (backgroundWorker1.WorkerSupportsCancellation == true)
+            if (backgroundWorker1.WorkerSupportsCancellation)
             {
                 // Cancel the asynchronous operation.
                 backgroundWorker1.CancelAsync();
@@ -39,7 +39,7 @@ namespace BackgroundWorkerSimple
 
             for (int i = 1; i <= 10; i++)
             {
-                if (worker.CancellationPending == true)
+                if (worker.CancellationPending)
                 {
                     e.Cancel = true;
                     break;
@@ -62,7 +62,7 @@ namespace BackgroundWorkerSimple
         // This event handler deals with the results of the background operation.
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Cancelled == true)
+            if (e.Cancelled)
             {
                 resultLabel.Text = "Canceled!";
             }

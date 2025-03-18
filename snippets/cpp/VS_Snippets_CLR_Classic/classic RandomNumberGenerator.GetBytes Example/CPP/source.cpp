@@ -16,8 +16,7 @@ public:
       // <Snippet1>
       array<Byte>^ random = gcnew array<Byte>(100);
       
-      //RNGCryptoServiceProvider is an implementation of a random number generator.
-      RNGCryptoServiceProvider^ rng = gcnew RNGCryptoServiceProvider;
+      RandomNumberGenerator^ rng = RandomNumberGenerator::Create();
       rng->GetBytes( random ); // The array is now filled with cryptographically strong random bytes.
       // </Snippet1>
    }

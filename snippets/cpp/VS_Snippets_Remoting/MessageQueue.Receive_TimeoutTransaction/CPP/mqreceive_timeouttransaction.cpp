@@ -23,7 +23,7 @@ public:
       MessageQueue^ myQueue = gcnew MessageQueue( ".\\myTransactionalQueue" );
 
       // Send a message to the queue.
-      if ( myQueue->Transactional == true )
+      if ( myQueue->Transactional)
       {
          // Create a transaction.
          MessageQueueTransaction^ myTransaction = gcnew MessageQueueTransaction;

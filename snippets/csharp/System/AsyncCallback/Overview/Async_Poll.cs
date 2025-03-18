@@ -35,7 +35,7 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
 
             // Poll for completion information.
             // Print periods (".") until the operation completes.
-            while (result.IsCompleted != true)
+            while (!result.IsCompleted)
             {
                 UpdateUserInterface();
             }

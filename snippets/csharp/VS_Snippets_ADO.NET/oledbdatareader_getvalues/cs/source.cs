@@ -16,7 +16,7 @@ class Class1 {
          connection.Open();
          OleDbDataReader reader = command.ExecuteReader();
 
-         if (reader.Read() == true) {
+         if (reader.Read()) {
             do {
                int NumberOfColums = reader.GetValues(meta);
 
@@ -25,7 +25,7 @@ class Class1 {
 
                Console.WriteLine();
                read = reader.Read();
-            } while (read == true);
+            } while (read);
          }
          reader.Close();
       }

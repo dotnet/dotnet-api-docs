@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Windows;
-using System.Collections;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
 
 namespace HitTest3D
 {
@@ -162,12 +157,12 @@ namespace HitTest3D
         //Toggle between camera projections.
         public void ToggleCamera(object sender, EventArgs e)
         {
-            if ((bool)CameraCheck.IsChecked == true)
+            if ((bool)CameraCheck.IsChecked)
             {
                 OrthographicCamera myOCamera = new OrthographicCamera(new Point3D(0, 0, -3), new Vector3D(0, 0, 1), new Vector3D(0, 1, 0), 3);
                 myViewport.Camera = myOCamera;
             }
-            if ((bool)CameraCheck.IsChecked != true)
+            if (!(bool)CameraCheck.IsChecked)
             {
                 PerspectiveCamera myPCamera = new PerspectiveCamera(new Point3D(0, 0, -3), new Vector3D(0, 0, 1), new Vector3D(0, 1, 0), 50);
                 myViewport.Camera = myPCamera;
@@ -178,14 +173,14 @@ namespace HitTest3D
         //<SnippetHitTest3D3DN13>
         public void AddAnimation(object sender, EventArgs e)
         {
-            if ((bool)CenterAnimCheck.IsChecked == true)
+            if ((bool)CenterAnimCheck.IsChecked)
             {
                 //Shift point around which model rotates to (-0.5, -0.5, -0.5).
                 myHorizontalRTransform.CenterX = -0.5;
                 myHorizontalRTransform.CenterY = -0.5;
                 myHorizontalRTransform.CenterZ = -0.5;
             }
-            if ((bool)CenterAnimCheck.IsChecked != true)
+            if (!(bool)CenterAnimCheck.IsChecked)
             {
                 //Set point around which model rotates back to (0, 0, 0).
                 myHorizontalRTransform.CenterX = 0;

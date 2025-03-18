@@ -1,10 +1,15 @@
 open System
 open System.Net
+open System.Net.Http
 
 // <Snippet1>
-let contoso = Uri "http://www.contoso.com/"
+let siteUri = Uri "http://www.contoso.com/"
 
-let wr = WebRequest.Create contoso
+// HttpClient lifecycle management best practices:
+// https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+use client = new HttpClient ()
+use request = new HttpRequestMessage (HttpMethod.Get, siteUri)
+use response = client.Send request
 // </Snippet1>
 
 // <Snippet2>

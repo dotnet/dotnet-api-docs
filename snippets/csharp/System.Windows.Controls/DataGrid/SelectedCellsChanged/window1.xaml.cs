@@ -50,7 +50,7 @@ namespace DataGrid_CellSelection
             foreach (DataRowView row in selectedrows)
             {
                 bool editable = row.DataView.AllowEdit;
-                if (editable == true)
+                if (editable)
                 {
                     //Copy a new value into the CompanyName, where clipboard contains a string
                     AdventureWorksLT2008DataSet.CustomerRow cr = (AdventureWorksLT2008DataSet.CustomerRow)row.Row;

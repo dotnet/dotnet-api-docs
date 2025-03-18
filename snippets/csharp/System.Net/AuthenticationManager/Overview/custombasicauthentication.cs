@@ -38,7 +38,7 @@ using System.Collections;
 
 namespace Mssc.Services.Authentication
 {
-  // The ClientAuthentication class performs the following main tasks:
+  // The TestAuthentication class performs the following main tasks:
   // 1) Obtains the user's credentials.
   // 2) Unregisters the standard Basic authentication.
   // 3) Registers the custom Basic authentication.
@@ -49,7 +49,7 @@ namespace Mssc.Services.Authentication
     private static string username, password, domain, uri;
 
     // This method invoked when the user does not enter the required input parameters.
-    private static void showusage()
+    private static void ShowUsage()
     {
       Console.WriteLine("Attempts to authenticate to a URL");
       Console.WriteLine("\r\nUse one of the following:");
@@ -59,7 +59,7 @@ namespace Mssc.Services.Authentication
 
 // <Snippet8>
     // Display registered authentication modules.
-    private static void displayRegisteredModules()
+    private static void DisplayRegisteredModules()
     {
       // The AuthenticationManager calls all authentication modules sequentially
       // until one of them responds with an authorization instance.  Show
@@ -75,9 +75,9 @@ namespace Mssc.Services.Authentication
     }
 // </Snippet8>
 
-    // The getPage method accesses the selected page and displays its content
+    // The GetPage method accesses the selected page and displays its content
     // on the console.
-    private static void getPage(String url)
+    private static void GetPage(String url)
     {
       try
       {
@@ -96,7 +96,7 @@ namespace Mssc.Services.Authentication
           req.Credentials = new NetworkCredential(username, password, domain);
 
         // Issue the request.
-        HttpWebResponse result = (HttpWebResponse) req.GetResponse();
+        using HttpWebResponse result = (HttpWebResponse) req.GetResponse();
 
         Console.WriteLine("\nAuthentication Succeeded:");
 
@@ -104,7 +104,7 @@ namespace Mssc.Services.Authentication
         Stream sData = result.GetResponseStream();
 
         // Display the response.
-        displayPageContent(sData);
+        DisplayPageContent(sData);
       }
       catch (WebException e)
       {
@@ -122,9 +122,9 @@ namespace Mssc.Services.Authentication
       }
     }
 
-    // The displayPageContent method display the content of the
+    // The DisplayPageContent method display the content of the
     // selected page.
-    private static void displayPageContent(Stream ReceiveStream)
+    private static void DisplayPageContent(Stream ReceiveStream)
     {
       // Create an ASCII encoding object.
       Encoding ASCII = Encoding.ASCII;
@@ -155,7 +155,7 @@ namespace Mssc.Services.Authentication
 
       if (args.Length < 3)
             {
-                showusage();
+                ShowUsage();
             }
             else
       {
@@ -183,10 +183,10 @@ namespace Mssc.Services.Authentication
         AuthenticationManager.Register(customBasicModule);
 
         // Display registered authorization modules.
-        displayRegisteredModules();
+        DisplayRegisteredModules();
 
         // Read the specified page and display it on the console.
-        getPage(uri);
+        GetPage(uri);
       }
       return;
     }
@@ -204,48 +204,25 @@ namespace Mssc.Services.Authentication
   {
 
 // <Snippet7>
-    private string m_authenticationType ;
-    private bool m_canPreAuthenticate ;
-
-    // The CustomBasic constructor initializes the properties of the customized
-    // authentication.
-    public CustomBasic()
-    {
-      m_authenticationType = "Basic";
-      m_canPreAuthenticate = false;
-    }
-
     // Define the authentication type. This type is then used to identify this
     // custom authentication module. The default is set to Basic.
-    public string AuthenticationType
-    {
-      get
-      {
-        return m_authenticationType;
-      }
-    }
+    public string AuthenticationType { get; } = "Basic";
 
     // Define the pre-authentication capabilities for the module. The default is set
     // to false.
-    public bool CanPreAuthenticate
-    {
-      get
-      {
-        return m_canPreAuthenticate;
-      }
-    }
+    public bool CanPreAuthenticate { get; }
 // </Snippet7>
 
-    // The checkChallenge method checks whether the challenge sent by the HttpWebRequest
+    // The CheckChallenge method checks whether the challenge sent by the HttpWebRequest
     // contains the correct type (Basic) and the correct domain name.
     // Note: The challenge is in the form BASIC REALM="DOMAINNAME";
     // the Internet Web site must reside on a server whose
     // domain name is equal to DOMAINNAME.
-    public bool checkChallenge(string Challenge, string domain)
+    public bool CheckChallenge(string challenge, string domain)
     {
       bool challengePasses = false;
 
-      String tempChallenge = Challenge.ToUpper();
+      String tempChallenge = challenge.ToUpper();
 
       // Verify that this is a Basic authorization request and that the requested domain
       // is correct.
@@ -290,7 +267,7 @@ namespace Mssc.Services.Authentication
       Encoding ASCII = Encoding.ASCII;
 
       // Get the username and password from the credentials
-      NetworkCredential MyCreds = credentials.GetCredential(request.RequestUri, "Basic");
+      NetworkCredential myCreds = credentials.GetCredential(request.RequestUri, "Basic");
 
       if (PreAuthenticate(request, credentials) == null)
         Console.WriteLine("\n Pre-authentication is not allowed.");
@@ -298,7 +275,7 @@ namespace Mssc.Services.Authentication
         Console.WriteLine("\n Pre-authentication is allowed.");
 
       // Verify that the challenge satisfies the authorization requirements.
-      bool challengeOk = checkChallenge(challenge, MyCreds.Domain);
+      bool challengeOk = CheckChallenge(challenge, myCreds.Domain);
 
       if (!challengeOk)
         return null;
@@ -310,12 +287,12 @@ namespace Mssc.Services.Authentication
       // b)Apply ASCII encoding to obtain a stream of bytes;
       // c)Apply Base64 encoding to this array of bytes to obtain the encoded
       // authorization.
-      string BasicEncrypt = MyCreds.UserName + ":" + MyCreds.Password;
+      string basicEncrypt = myCreds.UserName + ":" + myCreds.Password;
 
-      string BasicToken = "Basic " + Convert.ToBase64String(ASCII.GetBytes(BasicEncrypt));
+      string basicToken = "Basic " + Convert.ToBase64String(ASCII.GetBytes(basicEncrypt));
 
       // Create an Authorization object using the encoded authorization above.
-      Authorization resourceAuthorization = new Authorization(BasicToken);
+      Authorization resourceAuthorization = new Authorization(basicToken);
 
       // Get the Message property, which contains the authorization string that the
       // client returns to the server when accessing protected resources.

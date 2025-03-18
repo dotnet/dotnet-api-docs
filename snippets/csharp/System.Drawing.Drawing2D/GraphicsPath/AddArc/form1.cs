@@ -128,7 +128,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathExamplesCS
         private void AddClosedCurveExample(PaintEventArgs e)
         {
                      
-            // Creates a symetrical, closed curve.
+            // Creates a symmetrical, closed curve.
             Point[] myArray =
                      {
                          new Point(20,100),
@@ -194,7 +194,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathExamplesCS
         private void AddLineExample(PaintEventArgs e)
         {
                      
-            //Create a path and add a symetrical triangle using AddLine.
+            //Create a path and add a symmetrical triangle using AddLine.
             GraphicsPath myPath = new GraphicsPath();
             myPath.AddLine(30, 30, 60, 60);
             myPath.AddLine(60, 60, 0, 60);
@@ -211,7 +211,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathExamplesCS
         private void AddLinesExample(PaintEventArgs e)
         {
                      
-            // Create a symetrical triangle using an array of points.
+            // Create a symmetrical triangle using an array of points.
             Point[] myArray =
                      {
                          new Point(30,30),
@@ -543,7 +543,7 @@ namespace System.Drawing.Drawing2D.ClassicGraphicsPathExamplesCS
             GraphicsPath myPath = new GraphicsPath();
             myPath.AddLine(20, 20, 100, 20);
             PointF lastPoint = myPath.GetLastPoint();
-            if(lastPoint.IsEmpty == false)
+            if(!lastPoint.IsEmpty)
             {
                 string lastPointXString = lastPoint.X.ToString();
                 string lastPointYString = lastPoint.Y.ToString();

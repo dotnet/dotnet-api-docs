@@ -114,7 +114,7 @@ namespace SDKSamples
 
                 // If the cursor scope is set to the entire application
                 // Use OverrideCursor to force the cursor for all elements
-                if (cursorScopeElementOnly == false)
+                if (!cursorScopeElementOnly)
                 {
                     Mouse.OverrideCursor = DisplayArea.Cursor;
                 }

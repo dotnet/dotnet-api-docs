@@ -43,7 +43,7 @@ namespace ColumnsArtSample {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         protected AdventureWorksLT2008DataSet1(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
-            if ((this.IsBinarySerialized(info, context) == true)) {
+            if (this.IsBinarySerialized(info, context)) {
                 this.InitVars(false);
                 global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
@@ -189,7 +189,7 @@ namespace ColumnsArtSample {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
             this.tableSalesOrderHeader = ((SalesOrderHeaderDataTable)(base.Tables["SalesOrderHeader"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableSalesOrderHeader != null)) {
                     this.tableSalesOrderHeader.InitVars();
                 }
@@ -1624,7 +1624,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet1.SalesOrderHeaderDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);
@@ -1701,7 +1701,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
             this.Adapter.DeleteCommand.Parameters[1].Value = ((byte)(Original_RevisionNumber));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_OrderDate));
             this.Adapter.DeleteCommand.Parameters[3].Value = ((System.DateTime)(Original_DueDate));
-            if ((Original_ShipDate.HasValue == true)) {
+            if (Original_ShipDate.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((System.DateTime)(Original_ShipDate.Value));
             }
@@ -1734,7 +1734,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 this.Adapter.DeleteCommand.Parameters[12].Value = ((string)(Original_AccountNumber));
             }
             this.Adapter.DeleteCommand.Parameters[13].Value = ((int)(Original_CustomerID));
-            if ((Original_ShipToAddressID.HasValue == true)) {
+            if (Original_ShipToAddressID.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[15].Value = ((int)(Original_ShipToAddressID.Value));
             }
@@ -1742,7 +1742,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
-            if ((Original_BillToAddressID.HasValue == true)) {
+            if (Original_BillToAddressID.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[17].Value = ((int)(Original_BillToAddressID.Value));
             }
@@ -1813,7 +1813,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
             this.Adapter.InsertCommand.Parameters[0].Value = ((byte)(RevisionNumber));
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(OrderDate));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(DueDate));
-            if ((ShipDate.HasValue == true)) {
+            if (ShipDate.HasValue) {
                 this.Adapter.InsertCommand.Parameters[3].Value = ((System.DateTime)(ShipDate.Value));
             }
             else {
@@ -1834,13 +1834,13 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 this.Adapter.InsertCommand.Parameters[7].Value = ((string)(AccountNumber));
             }
             this.Adapter.InsertCommand.Parameters[8].Value = ((int)(CustomerID));
-            if ((ShipToAddressID.HasValue == true)) {
+            if (ShipToAddressID.HasValue) {
                 this.Adapter.InsertCommand.Parameters[9].Value = ((int)(ShipToAddressID.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
-            if ((BillToAddressID.HasValue == true)) {
+            if (BillToAddressID.HasValue) {
                 this.Adapter.InsertCommand.Parameters[10].Value = ((int)(BillToAddressID.Value));
             }
             else {
@@ -1934,7 +1934,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
             this.Adapter.UpdateCommand.Parameters[0].Value = ((byte)(RevisionNumber));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(OrderDate));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(DueDate));
-            if ((ShipDate.HasValue == true)) {
+            if (ShipDate.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((System.DateTime)(ShipDate.Value));
             }
             else {
@@ -1955,13 +1955,13 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(AccountNumber));
             }
             this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(CustomerID));
-            if ((ShipToAddressID.HasValue == true)) {
+            if (ShipToAddressID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(ShipToAddressID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
-            if ((BillToAddressID.HasValue == true)) {
+            if (BillToAddressID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(BillToAddressID.Value));
             }
             else {
@@ -1994,7 +1994,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
             this.Adapter.UpdateCommand.Parameters[20].Value = ((byte)(Original_RevisionNumber));
             this.Adapter.UpdateCommand.Parameters[21].Value = ((System.DateTime)(Original_OrderDate));
             this.Adapter.UpdateCommand.Parameters[22].Value = ((System.DateTime)(Original_DueDate));
-            if ((Original_ShipDate.HasValue == true)) {
+            if (Original_ShipDate.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[24].Value = ((System.DateTime)(Original_ShipDate.Value));
             }
@@ -2027,7 +2027,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 this.Adapter.UpdateCommand.Parameters[31].Value = ((string)(Original_AccountNumber));
             }
             this.Adapter.UpdateCommand.Parameters[32].Value = ((int)(Original_CustomerID));
-            if ((Original_ShipToAddressID.HasValue == true)) {
+            if (Original_ShipToAddressID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[33].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[34].Value = ((int)(Original_ShipToAddressID.Value));
             }
@@ -2035,7 +2035,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 this.Adapter.UpdateCommand.Parameters[33].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
             }
-            if ((Original_BillToAddressID.HasValue == true)) {
+            if (Original_BillToAddressID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[35].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[36].Value = ((int)(Original_BillToAddressID.Value));
             }
@@ -2287,7 +2287,7 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
             global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
             for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
                 global::System.Data.DataRow row = updatedRows[i];
-                if ((allAddedRows.Contains(row) == false)) {
+                if (!allAddedRows.Contains(row)) {
                     realUpdatedRows.Add(row);
                 }
             }
@@ -2303,11 +2303,11 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
-            if ((dataSet.HasChanges() == false)) {
+            if (!dataSet.HasChanges()) {
                 return 0;
             }
             if (((this._salesOrderHeaderTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._salesOrderHeaderTableAdapter.Connection) == false))) {
+                        && !this.MatchTableAdapterConnection(this._salesOrderHeaderTableAdapter.Connection))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -2489,15 +2489,15 @@ SELECT SalesOrderID, RevisionNumber, OrderDate, DueDate, ShipDate, Status, Onlin
                 global::System.Data.DataRow newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 for (
                 ; ((newParent != null) 
-                            && ((object.ReferenceEquals(newParent, child) == false) 
-                            && (object.ReferenceEquals(newParent, parent) == false))); 
+                            && ((!object.ReferenceEquals(newParent, child) ) 
+                            && (!object.ReferenceEquals(newParent, parent) ))); 
                 ) {
                     newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 }
                 if ((newParent == null)) {
                     for (newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original); ((newParent != null) 
-                                && ((object.ReferenceEquals(newParent, child) == false) 
-                                && (object.ReferenceEquals(newParent, parent) == false))); 
+                                && ((!object.ReferenceEquals(newParent, child) ) 
+                                && (!object.ReferenceEquals(newParent, parent) ))); 
                     ) {
                         newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
                     }

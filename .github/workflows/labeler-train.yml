@@ -1,0 +1,139 @@
+name: "Labeler: Train Models"
+
+on:
+  # Dispatched via the Actions UI, stages new models for promotion consideration
+  # Each step of the workflow can be run independently: Download, Train, and Test
+  workflow_dispatch:
+    inputs:
+      download_issues:
+        description: "Issues: Download Data"
+        type: boolean
+        default: true
+      train_issues:
+        description: "Issues: Train Model"
+        type: boolean
+        default: true
+      test_issues:
+        description: "Issues: Test Model"
+        type: boolean
+        default: true
+      download_pulls:
+        description: "Pulls: Download Data"
+        type: boolean
+        default: true
+      train_pulls:
+        description: "Pulls: Train Model"
+        type: boolean
+        default: true
+      test_pulls:
+        description: "Pulls: Test Model"
+        type: boolean
+        default: true
+
+      data_limit:
+        description: "Max number of items to include in the model"
+        type: number
+
+      pull_page_size:
+        description: "Max number of pulls to download per page"
+        type: number
+        default: 1
+
+      cache_key_suffix:
+        description: "The cache key suffix to use for staging data/models (use 'LIVE' to bypass staging)"
+        type: string
+        required: true
+        default: "staging"
+
+permissions:
+  issues: read
+  pull-requests: read
+  actions: write
+
+jobs:
+  # Without specifying a pageSize of 1 for downloading pull requests, the requests time out
+  # Directly invoking the individual workflows until https://github.com/dotnet/issue-labeler/issues/97 is addressed
+  #
+  # labeler-train:
+  #   permissions:
+  #     issues: read
+  #     pull-requests: read
+  #     actions: write
+  #   uses: dotnet/issue-labeler/.github/workflows/train.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+  #   with:
+  #     download_issues: ${{ inputs.download_issues }}
+  #     train_issues: ${{ inputs.train_issues }}
+  #     test_issues: ${{ inputs.test_issues }}
+  #     download_pulls: ${{ inputs.download_pulls }}
+  #     train_pulls: ${{ inputs.train_pulls }}
+  #     test_pulls: ${{ inputs.test_pulls }}
+  #     data_limit: ${{ inputs.data_limit && fromJSON(inputs.data_limit) || 0 }}
+  #     cache_key_suffix: ${{ inputs.cache_key_suffix }}
+  #     label_prefix: "area-"
+  #     threshold: 0.40
+
+  build-predictor:
+    uses: dotnet/issue-labeler/.github/workflows/build-predictor.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+
+  labeler-download-issues:
+    needs: build-predictor
+    if: ${{ inputs.download_issues }}
+    permissions:
+      issues: read
+      actions: write
+    uses: dotnet/issue-labeler/.github/workflows/download-issues.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+    with:
+      data_cache_key: ${{ inputs.cache_key_suffix }}
+      issue_limit: ${{ inputs.data_limit && fromJSON(inputs.data_limit) || 0 }}
+      label_prefix: "area-"
+
+  labeler-train-issues:
+    needs: labeler-download-issues
+    if: ${{ inputs.train_issues && always() && (needs.labeler-download-issues.result == 'success' || needs.labeler-download-issues.result == 'skipped') }}
+    permissions:
+      actions: write
+    uses: dotnet/issue-labeler/.github/workflows/train-issues.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+    with:
+      data_cache_key: ${{ inputs.cache_key_suffix }}
+      model_cache_key: ${{ inputs.cache_key_suffix }}
+
+  labeler-test-issues:
+    needs: [labeler-download-issues, labeler-train-issues]
+    if: ${{ inputs.test_issues && always() && (needs.labeler-download-issues.result == 'success' || needs.labeler-download-issues.result == 'skipped') && (needs.labeler-train-issues.result == 'success' || needs.labeler-train-issues.result == 'skipped') }}
+    uses: dotnet/issue-labeler/.github/workflows/test-issues.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+    with:
+      model_cache_key: ${{ inputs.cache_key_suffix }}
+      label_prefix: "area-"
+      threshold: 0.40
+
+  labeler-download-pulls:
+    needs: build-predictor
+    if: ${{ inputs.download_pulls }}
+    permissions:
+      pull-requests: read
+      actions: write
+    uses: dotnet/issue-labeler/.github/workflows/download-pulls.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+    with:
+      data_cache_key: ${{ inputs.cache_key_suffix }}
+      pull_limit: ${{ inputs.data_limit && fromJSON(inputs.data_limit) || 0 }}
+      page_size: ${{ inputs.pull_page_size && fromJSON(inputs.pull_page_size) || 1 }}
+      label_prefix: "area-"
+
+  labeler-train-pulls:
+    needs: labeler-download-pulls
+    if: ${{ inputs.train_pulls && always() && (needs.labeler-download-pulls.result == 'success' || needs.labeler-download-pulls.result == 'skipped') }}
+    permissions:
+      actions: write
+    uses: dotnet/issue-labeler/.github/workflows/train-pulls.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+    with:
+      data_cache_key: ${{ inputs.cache_key_suffix }}
+      model_cache_key: ${{ inputs.cache_key_suffix }}
+
+  labeler-test-pulls:
+    needs: [labeler-download-pulls, labeler-train-pulls]
+    if: ${{ inputs.test_pulls && always() && (needs.labeler-download-pulls.result == 'success' || needs.labeler-download-pulls.result == 'skipped') && (needs.labeler-train-pulls.result == 'success' || needs.labeler-train-pulls.result == 'skipped') }}
+    uses: dotnet/issue-labeler/.github/workflows/test-pulls.yml@f0c098669828a134c0313adf3f58c1909e555d86 # v1.0.1
+    with:
+      model_cache_key: ${{ inputs.cache_key_suffix }}
+      label_prefix: "area-"
+      threshold: 0.40

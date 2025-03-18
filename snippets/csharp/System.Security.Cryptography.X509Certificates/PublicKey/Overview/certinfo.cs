@@ -28,10 +28,9 @@ class CertInfo
 		}
 		try
 		{
-			X509Certificate2 x509 = new X509Certificate2();
-			//Create X509Certificate2 object from .cer file.
 			byte[] rawData = ReadFile(args[0]);
-			x509.Import(rawData);
+			//Create X509Certificate2 object from .cer file.
+			X509Certificate2 x509 = new X509Certificate2(rawData);
 
 			//Print to console information contained in the certificate.
 			Console.WriteLine("{0}Subject: {1}{0}", Environment.NewLine, x509.Subject);

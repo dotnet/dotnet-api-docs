@@ -14,16 +14,17 @@ Public Class Sync_Send_Receive
 
         Dim s As New Socket(lep.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
 
-        '<Snippet1>
-        'Send operations will time-out if confirmation is 
+        '<Snippet0>
+        'Send operations will time-out if confirmation is
         ' not received within 1000 milliseconds.
         s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 1000)
+        '</Snippet0>
 
+        '<Snippet1>
         ' The socket will linger for 10 seconds after Socket.Close is called.
         Dim lingerOption As New LingerOption(True, 10)
         s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Linger, lingerOption)
-
-        '</Snippet1>                  
+        '</Snippet1>
         s.Connect(lep)
         Dim msg As Byte() = Encoding.ASCII.GetBytes("This is a test")
 

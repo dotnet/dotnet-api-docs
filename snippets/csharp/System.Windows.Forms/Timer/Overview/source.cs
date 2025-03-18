@@ -35,7 +35,7 @@ public class Class1 {
        myTimer.Start();
  
        // Runs the timer, and raises the event.
-       while(exitFlag == false) {
+       while(!exitFlag) {
           // Processes all the events in the queue.
           Application.DoEvents();
        }

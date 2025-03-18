@@ -167,7 +167,7 @@ public class MyDataGrid : Form
    // Set the 'CaptionVisible' property on click of a button.
    private void myButton_Click(object sender, EventArgs e)
    {
-      if (myDataGrid.CaptionVisible == true)
+      if (myDataGrid.CaptionVisible)
          myDataGrid.CaptionVisible = false;
       else
          myDataGrid.CaptionVisible = true;

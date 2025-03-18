@@ -8,7 +8,7 @@ let main =
     task {
         // Call asynchronous network methods in a try/catch block to handle exceptions.
         try
-            let! response = client.GetAsync "http://www.contoso.com/"
+            use! response = client.GetAsync "http://www.contoso.com/"
             response.EnsureSuccessStatusCode() |> ignore
             let! responseBody = response.Content.ReadAsStringAsync()
             // Above three lines can be replaced with new helper method below

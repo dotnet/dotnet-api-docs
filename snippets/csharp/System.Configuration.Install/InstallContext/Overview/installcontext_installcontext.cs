@@ -47,7 +47,7 @@ namespace MyInstallContextNamespace
 // <Snippet4>
 // <Snippet5>
             // Check whether the "LogtoConsole" parameter has been set.
-            if( myInstallContext.IsParameterTrue( "LogtoConsole" ) == true )
+            if ( myInstallContext.IsParameterTrue( "LogtoConsole" ))
             {
                // Display the message to the console and add it to the logfile.
                myInstallContext.LogMessage( "The 'Install' method has been called" );
@@ -69,7 +69,7 @@ namespace MyInstallContextNamespace
       public override void Rollback( IDictionary mySavedState )
       {
          base.Rollback( mySavedState );
-         if( myInstallContext.IsParameterTrue( "LogtoConsole" ) == true )
+         if ( myInstallContext.IsParameterTrue( "LogtoConsole" ))
          {
             myInstallContext.LogMessage( "The 'Rollback' method has been called" );
          }
@@ -80,7 +80,7 @@ namespace MyInstallContextNamespace
       public override void Commit( IDictionary mySavedState )
       {
          base.Commit( mySavedState );
-         if( myInstallContext.IsParameterTrue( "LogtoConsole" ) == true )
+         if ( myInstallContext.IsParameterTrue( "LogtoConsole" ))
          {
             myInstallContext.LogMessage( "The 'Commit' method has been called" );
          }

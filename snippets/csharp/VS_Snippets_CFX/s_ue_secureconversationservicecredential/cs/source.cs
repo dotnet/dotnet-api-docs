@@ -87,7 +87,7 @@ namespace Example
                 throw new ArgumentNullException("protectionCertificate");
             }
 
-            if (protectionCertificate.HasPrivateKey == false)
+            if (!protectionCertificate.HasPrivateKey)
             {
                 throw new ArgumentException("protectionCertificate does not contain the private key which is required for performing encypt / decrypt operations.");
             }

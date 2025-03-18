@@ -23,7 +23,7 @@ namespace Examples
                    Console.WriteLine("{0}IPv4 Statistics ",Environment.NewLine);
                     break;
                 case NetworkInterfaceComponent.IPv6:
-                    ipstat = properties.GetIPv4GlobalStatistics();
+                    ipstat = properties.GetIPv6GlobalStatistics();
                     Console.WriteLine("{0}IPv6 Statistics ",Environment.NewLine);
                     break;
                 default:
@@ -524,8 +524,8 @@ namespace Examples
 
                 Console.WriteLine();
             }
-            //</Snippet12>
         }
+        //</Snippet12>
         //<Snippet16>
         public static void ShowInterfaceSummary()
         {

@@ -6,12 +6,6 @@ Imports System.Data.SqlClient
 
 Module Module1
 
-    Sub Main()
-        Dim str As String = "Data Source=(local);Initial Catalog=Northwind;" _
-       & "Integrated Security=SSPI;"
-        ReadOrderData(str)
-    End Sub
-
     ' <Snippet1>
     Public Sub ReadOrderData(ByVal connectionString As String)
         Dim queryString As String = _

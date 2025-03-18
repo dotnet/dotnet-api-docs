@@ -7,17 +7,14 @@
 */
 
 // <Snippet1>
-
 using System;
 using System.Net;
 using System.Net.Sockets;
 
 class IsLoopbackTest
 {
-
   private static void Main(string[] args)
   {
-
     if (args.Length == 0)
     {
       // No parameters entered. Display program usage.

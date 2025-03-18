@@ -1,5 +1,4 @@
 ﻿// <Snippet2>
-
 using System;
 using System.Collections;
 using System.Runtime.Remoting;
@@ -31,5 +30,4 @@ namespace TimerSample {
         }
     }
 }
-
 // </Snippet2>

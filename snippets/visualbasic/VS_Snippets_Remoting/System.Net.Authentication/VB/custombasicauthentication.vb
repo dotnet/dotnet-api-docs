@@ -22,7 +22,7 @@ Namespace Mssc.Services.Authentication
 
   Module TestingAuthentication
 
-    ' The ClientAuthentication class performs the following main tasks:
+    ' The TestAuthentication class performs the following main tasks:
     ' 1) Obtains the user's credentials.
     ' 2) Unregisters the standard Basic authentication.
     ' 3) Registers the custom Basic authentication.

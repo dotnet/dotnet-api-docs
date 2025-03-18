@@ -823,7 +823,7 @@ void DisplayIPv4NetworkInterfaces()
       NetworkInterface ^ adapter = safe_cast<NetworkInterface ^>(myEnum23->Current);
 
       // Only display informatin for interfaces that support IPv4.
-      if ( adapter->Supports( NetworkInterfaceComponent::IPv4 ) == false )
+      if ( !adapter->Supports( NetworkInterfaceComponent::IPv4 ) )
       {
          continue;
       }
@@ -836,11 +836,6 @@ void DisplayIPv4NetworkInterfaces()
 
       // Try to get the IPv4 interface properties.
       IPv4InterfaceProperties ^ p = adapterProperties->GetIPv4Properties();
-      if ( !p )
-      {
-         Console::WriteLine( "No IPv4 information is available for this interface." );
-         continue;
-      }
 
       // Display the IPv4 specific data.
       Console::WriteLine( "  Index ............................. : {0}", 
@@ -875,7 +870,7 @@ void DisplayIPv6NetworkInterfaces()
       NetworkInterface ^ adapter = safe_cast<NetworkInterface ^>(myEnum24->Current);
 
       // Only display informatin for interfaces that support IPv6.
-      if ( adapter->Supports( NetworkInterfaceComponent::IPv6 ) == false )
+      if ( !adapter->Supports( NetworkInterfaceComponent::IPv6 ) )
       {
          continue;
       }

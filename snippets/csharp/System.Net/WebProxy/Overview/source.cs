@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
 
-public class Sample {
+public class Sample
+{
 
-    private void sampleFunction() {
-// <Snippet1>
-WebProxy proxyObject = new WebProxy("http://proxyserver:80/",true);
-WebRequest req = WebRequest.Create("http://www.contoso.com");
-req.Proxy = proxyObject;
+    private void sampleFunction()
+    {
+        // <Snippet1>
+        WebProxy proxyObject = new WebProxy("http://proxyserver:80/", true);
 
-// </Snippet1>
-        }
+        // HttpClient lifecycle management best practices:
+        // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
+        HttpClient client = new HttpClient(new HttpClientHandler
+        {
+            Proxy = proxyObject
+        });
+        // </Snippet1>
+    }
 }

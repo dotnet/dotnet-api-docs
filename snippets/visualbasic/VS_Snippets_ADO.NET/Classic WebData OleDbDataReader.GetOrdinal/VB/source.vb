@@ -7,11 +7,6 @@ Imports System.IO
 
 Module Module1
 
-    Sub Main()
-        Dim x As String = "Provider=SQLOLEDB;Data Source=(local);Integrated Security=SSPI;Initial Catalog=Northwind"
-        ReadData(x)
-    End Sub
-
     ' <Snippet1>
     Public Sub ReadData(ByVal connectionString As String)
         Dim queryString As String = "SELECT DISTINCT CustomerID FROM Orders"

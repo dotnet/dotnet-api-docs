@@ -740,7 +740,7 @@ namespace eSQLExamplesCS
 
                 // If the field is flagged as DbNull, the shape of the value is undetermined.
                 // An attempt to get such a value may trigger an exception.
-                if (record.IsDBNull(fieldIndex) == false)
+                if (!record.IsDBNull(fieldIndex))
                 {
                     BuiltInTypeKind fieldTypeKind = record.DataRecordInfo.FieldMetadata[fieldIndex].
                         FieldType.TypeUsage.EdmType.BuiltInTypeKind;
@@ -805,7 +805,7 @@ namespace eSQLExamplesCS
 
                     // If the field is flagged as DbNull, the shape of the value is undetermined.
                     // An attempt to get such a value may trigger an exception.
-                    if (record.IsDBNull(fieldIndex) == false)
+                    if (!record.IsDBNull(fieldIndex))
                     {
                         BuiltInTypeKind fieldTypeKind = record.DataRecordInfo.FieldMetadata[fieldIndex].
                             FieldType.TypeUsage.EdmType.BuiltInTypeKind;

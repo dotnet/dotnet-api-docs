@@ -38,7 +38,7 @@ int main()
    Console::WriteLine( "The number of elements in the collection after adding two elements to the collection: {0}", myDiscoveryReferenceCollection->Count );
    
    // Call the Contains method.
-   if ( myDiscoveryReferenceCollection->Contains( myDiscoveryDocReference1 ) != true )
+   if ( !myDiscoveryReferenceCollection->Contains( myDiscoveryDocReference1 ) )
    {
       throw gcnew Exception( "Element not found in collection." );
    }

@@ -1,59 +1,48 @@
 ﻿'<SNIPPET1>
 Imports System.IO
 
-
-
 Module FileExample
 
     Sub Main()
 
-        Dim FileName As String = "c:\test.xml"
+        ' Create a temporary file.
+        Dim filePath As String = Path.GetTempFileName()
+        Console.WriteLine($"Created a temp file at '{filePath}'.")
+
+        ' Create a new FileInfo object.
+        Dim fInfo As New FileInfo(filePath)
 
         ' Get the read-only value for a file.
-        Dim isReadOnly As Boolean = IsFileReadOnly(FileName)
+        Dim isReadOnly As Boolean = fInfo.IsReadOnly
 
-        ' Display wether the file is read-only.
-        Console.WriteLine("The file read-only value for " & FileName & " is: " & isReadOnly)
-
-        Console.WriteLine("Changing the read-only value for " & FileName & " to true.")
+        ' Display whether the file is read-only.
+        Console.WriteLine($"The file read-only value for '{fInfo.Name}' is {isReadOnly}.")
 
         ' Set the file to read-only.
-        SetFileReadAccess(FileName, True)
+        Console.WriteLine($"Setting the read-only value for '{fInfo.Name}' to true.")
+        fInfo.IsReadOnly = True
 
         ' Get the read-only value for a file.
-        isReadOnly = IsFileReadOnly(FileName)
+        isReadOnly = fInfo.IsReadOnly
 
-        ' Display that the file is read-only.
-        Console.WriteLine("The file read-only value for " & FileName & " is: " & isReadOnly)
+        ' Display that the file is now read-only.
+        Console.WriteLine($"The file read-only value for '{fInfo.Name}' is {isReadOnly}.")
 
+        ' Make the file mutable again so it can be deleted.
+        fInfo.IsReadOnly = False
+
+        ' Delete the temporary file.
+        fInfo.Delete()
     End Sub
 
-
-    ' Sets the read-only value of a file.
-    Sub SetFileReadAccess(ByVal FileName As String, ByVal SetReadOnly As Boolean)
-        ' Create a new FileInfo object.
-        Dim fInfo As New FileInfo(FileName)
-
-        ' Set the IsReadOnly property.
-        fInfo.IsReadOnly = SetReadOnly
-
-    End Sub
-
-
-    ' Returns wether a file is read-only.
-    Function IsFileReadOnly(ByVal FileName As String) As Boolean
-        ' Create a new FileInfo object.
-        Dim fInfo As New FileInfo(FileName)
-
-        ' Return the IsReadOnly property value.
-        Return fInfo.IsReadOnly
-
-    End Function
 End Module
-'This code produces output similar to the following; 
-'results may vary based on the computer/file structure/etc.:
+
+' This code produces output similar to the following,
+' though results may vary based on the computer, file structure, etc.:
 '
-'The file read-only value for c:\test.xml is: True
-'Changing the read-only value for c:\test.xml to true.
-'The file read-only value for c:\test.xml is: True
-'</SNIPPET1>
+' Created a temp file at 'C:\Users\UserName\AppData\Local\Temp\tmpB438.tmp'.
+' The file read-only value for 'tmpB438.tmp' is False.
+' Setting the read-only value for 'tmpB438.tmp' to true.
+' The file read-only value for 'tmpB438.tmp' is True.
+'
+' </SNIPPET1>

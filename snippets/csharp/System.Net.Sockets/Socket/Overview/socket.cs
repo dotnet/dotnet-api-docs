@@ -3,97 +3,117 @@
   * This example creates a socket connection to the server specified by the user,
   * using port 80. Once the connection has been established it asks the server for
   * the content of its home page. If no server name is passed as argument to this
-  * program, it sends the request to the current machine.
+  * program, it sends the request to example.com.
   * */
- //<Snippet1>
 using System;
 using System.Text;
-using System.IO;
-using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Linq;
 
 public class GetSocket
 {
-    private static Socket ConnectSocket(string server, int port)
+    public static async Task Main(string[] args)
     {
-        Socket s = null;
-        IPHostEntry hostEntry = null;
+        Uri? uri = args.Any() ? new Uri(args[0]) : null;
 
-        // Get host related information.
-        hostEntry = Dns.GetHostEntry(server);
+        // Sync:
+        SendHttpRequest(uri);
 
-        // Loop through the AddressList to obtain the supported AddressFamily. This is to avoid
-        // an exception that occurs when the host IP Address is not compatible with the address family
-        // (typical in the IPv6 case).
-        foreach(IPAddress address in hostEntry.AddressList)
-        {
-            IPEndPoint ipe = new IPEndPoint(address, port);
-            Socket tempSocket =
-                new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-            tempSocket.Connect(ipe);
-
-            if(tempSocket.Connected)
-            {
-                s = tempSocket;
-                break;
-            }
-            else
-            {
-                continue;
-            }
-        }
-        return s;
+        // Async:
+        await SendHttpRequestAsync(uri);
     }
 
-    // This method requests the home page content for the specified server.
-    private static string SocketSendReceive(string server, int port)
+//<Snippet1>
+private static void SendHttpRequest(Uri? uri = null, int port = 80)
+{
+    uri ??= new Uri("http://example.com");
+
+    // Construct a minimalistic HTTP/1.1 request
+    byte[] requestBytes = Encoding.ASCII.GetBytes(@$"GET {uri.AbsoluteUri} HTTP/1.0
+Host: {uri.Host}
+Connection: Close
+
+");
+
+    // Create and connect a dual-stack socket
+    using Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+    socket.Connect(uri.Host, port);
+
+    // Send the request.
+    // For the tiny amount of data in this example, the first call to Send() will likely deliver the buffer completely,
+    // however this is not guaranteed to happen for larger real-life buffers.
+    // The best practice is to iterate until all the data is sent.
+    int bytesSent = 0;
+    while (bytesSent < requestBytes.Length)
     {
-        string request = "GET / HTTP/1.1\r\nHost: " + server +
-            "\r\nConnection: Close\r\n\r\n";
-        Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
-        Byte[] bytesReceived = new Byte[256];
-        string page = "";
-
-        // Create a socket connection with the specified server and port.
-        using(Socket s = ConnectSocket(server, port)) {
-
-            if (s == null)
-                return ("Connection failed");
-
-            // Send request to the server.
-            s.Send(bytesSent, bytesSent.Length, 0);
-
-            // Receive the server home page content.
-            int bytes = 0;
-            page = "Default HTML page on " + server + ":\r\n";
-
-            // The following will block until the page is transmitted.
-            do {
-                bytes = s.Receive(bytesReceived, bytesReceived.Length, 0);
-                page = page + Encoding.ASCII.GetString(bytesReceived, 0, bytes);
-            }
-            while (bytes > 0);
-        }
-
-        return page;
+        bytesSent += socket.Send(requestBytes, bytesSent, requestBytes.Length - bytesSent, SocketFlags.None);
     }
 
-    public static void Main(string[] args)
+    // Do minimalistic buffering assuming ASCII response
+    byte[] responseBytes = new byte[256];
+    char[] responseChars = new char[256];
+
+    while (true)
     {
-        string host;
-        int port = 80;
+        int bytesReceived = socket.Receive(responseBytes);
 
-        if (args.Length == 0)
-            // If no server name is passed as argument to this program,
-            // use the current host name as the default.
-            host = Dns.GetHostName();
-        else
-            host = args[0];
+        // Receiving 0 bytes means EOF has been reached
+        if (bytesReceived == 0) break;
 
-        string result = SocketSendReceive(host, port);
-        Console.WriteLine(result);
+        // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
+        int charCount = Encoding.ASCII.GetChars(responseBytes, 0, bytesReceived, responseChars, 0);
+
+        // Print the contents of the 'responseChars' buffer to Console.Out
+        Console.Out.Write(responseChars, 0, charCount);
     }
 }
-
 //</Snippet1>
+
+//<Snippet2>
+private static async Task SendHttpRequestAsync(Uri? uri = null, int port = 80, CancellationToken cancellationToken = default)
+{
+    uri ??= new Uri("http://example.com");
+
+    // Construct a minimalistic HTTP/1.1 request
+    byte[] requestBytes = Encoding.ASCII.GetBytes(@$"GET {uri.AbsoluteUri} HTTP/1.1
+Host: {uri.Host}
+Connection: Close
+
+");
+
+    // Create and connect a dual-stack socket
+    using Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+    await socket.ConnectAsync(uri.Host, port, cancellationToken);
+
+    // Send the request.
+    // For the tiny amount of data in this example, the first call to SendAsync() will likely deliver the buffer completely,
+    // however this is not guaranteed to happen for larger real-life buffers.
+    // The best practice is to iterate until all the data is sent.
+    int bytesSent = 0;
+    while (bytesSent < requestBytes.Length)
+    {
+        bytesSent += await socket.SendAsync(requestBytes.AsMemory(bytesSent), SocketFlags.None);
+    }
+
+    // Do minimalistic buffering assuming ASCII response
+    byte[] responseBytes = new byte[256];
+    char[] responseChars = new char[256];
+
+    while (true)
+    {
+        int bytesReceived = await socket.ReceiveAsync(responseBytes, SocketFlags.None, cancellationToken);
+
+        // Receiving 0 bytes means EOF has been reached
+        if (bytesReceived == 0) break;
+
+        // Convert byteCount bytes to ASCII characters using the 'responseChars' buffer as destination
+        int charCount = Encoding.ASCII.GetChars(responseBytes, 0, bytesReceived, responseChars, 0);
+
+        // Print the contents of the 'responseChars' buffer to Console.Out
+        await Console.Out.WriteAsync(responseChars.AsMemory(0, charCount), cancellationToken);
+    }
+}
+//</Snippet2>
+}

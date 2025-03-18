@@ -31,7 +31,7 @@ public class Example
    {
       string hexString = null;
       // Handle only non-control characters.
-      if (! Char.IsControl(value, 0)) {
+      if (!Char.IsControl(value, 0)) {
          foreach (var ch in value)
             hexString += $"0x{(ushort)ch:X} ";
       }   

@@ -64,7 +64,7 @@ namespace BindingSourceExamples
         //<snippet4>
         private void button1_Click(object sender, EventArgs e)
         {
-            if (binding1.SupportsSearching != true)
+            if (!binding1.SupportsSearching)
             {
                 MessageBox.Show("Cannot search the list.");
             }

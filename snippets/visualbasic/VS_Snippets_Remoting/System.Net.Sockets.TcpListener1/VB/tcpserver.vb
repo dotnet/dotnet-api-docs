@@ -20,7 +20,7 @@ Class newListener
       Console.WriteLine("started listening")
    End Sub
    ' </Snippet3>
-   ' <Snippet4>
+
    ' Thread signal.
    Public Shared clientConnected As New ManualResetEvent(False)
    
@@ -58,8 +58,7 @@ Class newListener
       ' Signal the calling thread to continue.
       clientConnected.Set()
    End Sub
-   ' </Snippet4>
-   ' <Snippet5>
+
    ' Thread signal.
    Public Shared tcpClientConnected As New ManualResetEvent(False)
    
@@ -98,8 +97,7 @@ Class newListener
       ' Signal the calling thread to continue.
       tcpClientConnected.Set()
    End Sub
-    
-   ' </Snippet5>
+
    <STAThread()>  _
    Shared Sub Main()
       Dim listener As New TcpListener(Dns.GetHostAddresses("")(0), 4242)

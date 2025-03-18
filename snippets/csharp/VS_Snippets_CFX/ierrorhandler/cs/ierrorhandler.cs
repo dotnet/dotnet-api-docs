@@ -103,7 +103,7 @@ namespace Microsoft.WCF.Documentation
               continue;
             }
           }
-          if (gfExists == false)
+          if (!gfExists)
           {
             throw new InvalidOperationException(
     "EnforceGreetingFaultBehavior requires a FaultContractAttribute(typeof(GreetingFault)) in an operation contract."

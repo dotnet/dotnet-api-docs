@@ -7,14 +7,6 @@ namespace Classic_WebData_OdbcConnectionCS
 {
 	class Program
 	{
-		static void Main()
-		{
-			string connectionString;
-			connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\Samples\\Northwind.mdb";
-
-			InsertRow(connectionString);
-		}
-
 		// <Snippet1>
 		static private void InsertRow(string connectionString)
 		{

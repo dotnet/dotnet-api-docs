@@ -12,13 +12,13 @@ public class Example
       string filePath = "file://c:/notes.txt";
       
       Console.WriteLine("Culture-sensitive test for equality:");
-      if (! TestForEquality(filePath, StringComparison.CurrentCultureIgnoreCase))
+      if (!TestForEquality(filePath, StringComparison.CurrentCultureIgnoreCase))
          Console.WriteLine("Access to {0} is allowed.", filePath);
       else
          Console.WriteLine("Access to {0} is not allowed.", filePath);
       
       Console.WriteLine("\nOrdinal test for equality:");
-      if (! TestForEquality(filePath, StringComparison.OrdinalIgnoreCase))
+      if (!TestForEquality(filePath, StringComparison.OrdinalIgnoreCase))
          Console.WriteLine("Access to {0} is allowed.", filePath);
       else
          Console.WriteLine("Access to {0} is not allowed.", filePath);

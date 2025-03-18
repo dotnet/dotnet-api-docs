@@ -22,7 +22,7 @@ private:
    {
       Int64 val;
       // Check the flag to prevent code re-entry. 
-      if ( flag == false )
+      if ( !flag )
       {
          // Set the flag to True to prevent re-entry of the code below.
          flag = true;

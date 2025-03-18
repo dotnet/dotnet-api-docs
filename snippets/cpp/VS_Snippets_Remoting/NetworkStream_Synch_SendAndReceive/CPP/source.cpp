@@ -14,8 +14,6 @@ using namespace System::Threading;
 
 void MySample( bool networkStreamOwnsSocket )
 {
-   //<Snippet1>
-   // This should be the classwide example.
    // Create a socket and connect with a remote host.
    IPHostEntry^ myIpHostEntry = Dns::GetHostEntry( "www.contoso.com" );
    IPEndPoint^ myIpEndPoint = gcnew IPEndPoint( myIpHostEntry->AddressList[ 0 ],1001 );
@@ -27,11 +25,7 @@ void MySample( bool networkStreamOwnsSocket )
    {
       mySocket->Connect( myIpEndPoint );
       
-      //<Snippet2>
-      // Examples for constructors that do not specify file permission.
-      // Create the NetworkStream for communicating with the remote host.
       NetworkStream^ myNetworkStream;
-
       if ( networkStreamOwnsSocket )
       {
          myNetworkStream = gcnew NetworkStream( mySocket,true );
@@ -40,7 +34,6 @@ void MySample( bool networkStreamOwnsSocket )
       {
          myNetworkStream = gcnew NetworkStream( mySocket );
       }
-      //</Snippet2>
 
       //<Snippet3>  
       // Examples for CanWrite, and CanWrite  
@@ -57,7 +50,6 @@ void MySample( bool networkStreamOwnsSocket )
       }
       //</Snippet3>
 
-      //<Snippet4>   
       // Examples for CanRead, Read, and DataAvailable.
       // Check to see if this NetworkStream is readable.
       if ( myNetworkStream->CanRead )
@@ -84,7 +76,6 @@ void MySample( bool networkStreamOwnsSocket )
       {
          Console::WriteLine( "Sorry.  You cannot read from this NetworkStream." );
       }
-      //</Snippet4>
 
       //<Snippet5>  
       // Example for closing the NetworkStream.
@@ -98,7 +89,6 @@ void MySample( bool networkStreamOwnsSocket )
       Console::WriteLine( "Exception Thrown: {0}", exception->ToString() );
    }
 }
-//</Snippet1>
 
 int main( int argc, char *argv[] )
 {
