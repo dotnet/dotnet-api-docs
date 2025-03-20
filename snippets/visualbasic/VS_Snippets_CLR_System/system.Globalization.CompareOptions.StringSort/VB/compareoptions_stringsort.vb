@@ -1,98 +1,58 @@
-﻿' The following code example shows how sorting with CompareOptions.StringSort differs from sorting without CompareOptions.StringSort.
-
-' <snippet1>
-Imports System.Collections
+'// <snippet2>
+Imports System
+Imports System.Collections.Generic
 Imports System.Globalization
 
-Public Class SamplesCompareOptions
+Public Class StringSort
+    Public Shared Sub Main()
+        Dim wordList As New List(Of String) From {
+            "cant", "bill's", "coop", "cannot", "billet", "can't", "con", "bills", "co-op"
+        }
 
-   Private Class MyStringComparer
-      Implements IComparer
+        Console.WriteLine("Before sorting:")
+        For Each word In wordList
+            Console.WriteLine(word)
+        Next
 
-      Private myComp As CompareInfo
-      Private myOptions As CompareOptions = CompareOptions.None
-      
-      ' Constructs a comparer using the specified CompareOptions.
-      Public Sub New(cmpi As CompareInfo, options As CompareOptions)
-         myComp = cmpi
-         Me.myOptions = options
-      End Sub
-      
-      ' Compares strings with the CompareOptions specified in the constructor.
-      Public Function Compare(a As [Object], b As [Object]) As Integer Implements IComparer.Compare
-         If a = b Then
-            Return 0
-         End If
-         If a Is Nothing Then
-            Return - 1
-         End If
-         If b Is Nothing Then
-            Return 1
-         End If 
+        Console.WriteLine(Environment.NewLine & "After sorting with CompareOptions.None:")
+        SortAndDisplay(wordList, CompareOptions.None)
 
-         Dim sa As [String] = a
-         Dim sb As [String] = b
-         If Not (sa Is Nothing) And Not (sb Is Nothing) Then
-            Return myComp.Compare(sa, sb, myOptions)
-         End If
-         Throw New ArgumentException("a and b should be strings.")
+        Console.WriteLine(Environment.NewLine & "After sorting with CompareOptions.StringSort:")
+        SortAndDisplay(wordList, CompareOptions.StringSort)
+    End Sub
 
-      End Function 'Compare 
+    ' Sort the list of words with the supplied CompareOptions.
+    Private Shared Sub SortAndDisplay(unsorted As List(Of String), options As CompareOptions)
+        ' Create a copy of the original list to sort.
+        Dim words As New List(Of String)(unsorted)
 
-   End Class
+        ' Define the CompareInfo to use to compare strings.
+        Dim comparer As CompareInfo = CultureInfo.InvariantCulture.CompareInfo
 
+        ' Sort the copy with the supplied CompareOptions then display.
+        words.Sort(Function(str1, str2) comparer.Compare(str1, str2, options))
 
-   Public Shared Sub Main()
-      
-      ' Creates and initializes an array of strings to sort.
-      Dim myArr() As [String] = {"cant", "bill's", "coop", "cannot", "billet", "can't", "con", "bills", "co-op"}
-      Console.WriteLine()
-      Console.WriteLine("Initially,")
-      Dim myStr As [String]
-      For Each myStr In  myArr
-         Console.WriteLine(myStr)
-      Next myStr 
-
-      ' Creates and initializes a Comparer to use.
-      'CultureInfo myCI = new CultureInfo( "en-US", false );
-      Dim myComp As New MyStringComparer(CompareInfo.GetCompareInfo("en-US"), CompareOptions.None)
-      
-      ' Sorts the array without StringSort.
-      Array.Sort(myArr, myComp)
-      Console.WriteLine()
-      Console.WriteLine("After sorting without CompareOptions.StringSort:")
-      For Each myStr In  myArr
-         Console.WriteLine(myStr)
-      Next myStr 
-
-      ' Sorts the array with StringSort.
-      myComp = New MyStringComparer(CompareInfo.GetCompareInfo("en-US"), CompareOptions.StringSort)
-      Array.Sort(myArr, myComp)
-      Console.WriteLine()
-      Console.WriteLine("After sorting with CompareOptions.StringSort:")
-      For Each myStr In  myArr
-         Console.WriteLine(myStr)
-      Next myStr 
-
-   End Sub
-
+        For Each word In words
+            Console.WriteLine(word)
+        Next
+    End Sub
 End Class
 
+' CompareOptions.None and CompareOptions.StringSort provide identical ordering by default
+' in .NET 5 And later, but in prior versions, the output will be the following:
+'
+'Before sorting
+'cant
+'bill's
+'coop
+'cannot
+'billet
+'can't
+'con
+'bills
+'co-op
 
-'This code produces the following output.
-'
-'Initially,
-'cant
-'bill's
-'coop
-'cannot
-'billet
-'can't
-'con
-'bills
-'co-op
-'
-'After sorting without CompareOptions.StringSort:
+'After sorting with CompareOptions.None
 'billet
 'bills
 'bill's
@@ -102,8 +62,8 @@ End Class
 'con
 'coop
 'co-op
-'
-'After sorting with CompareOptions.StringSort:
+
+'After sorting with CompareOptions.StringSort
 'bill's
 'billet
 'bills
@@ -114,4 +74,4 @@ End Class
 'con
 'coop
 
-' </snippet1>
+'// </snippet2>
