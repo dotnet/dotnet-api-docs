@@ -383,8 +383,10 @@
 ## Remarks  
  The associated <xref:System.Threading.CancellationToken> will be notified of the cancellation and will transition to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns true.  
   
- Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed.
-  
+ Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed, if they have not already been executed by a previous call to <xref:System.Threading.CancellationTokenSource.Cancel>. Subsequent calls to <xref:System.Threading.CancellationTokenSource.Cancel> will not execute the same callback again unless re-registered. (We recommend avoiding multiple calls to <xref:System.Threading.CancellationTokenSource.Cancel>, because the intent of such code is often unclear.)
+
+ Callbacks will be executed synchronously in LIFO order. 
+
  We recommend that cancelable operations and callbacks registered with <xref:System.Threading.CancellationToken> not throw exceptions.
  
  This overload of Cancel will aggregate any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.
@@ -458,7 +460,9 @@
 ## Remarks  
  The associated <xref:System.Threading.CancellationToken> will be notified of the cancellation and will transition to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns `true`.  
   
- Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed. Callbacks will be executed synchronously in LIFO order. 
+ Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed, if they have not already been executed by a previous call to <xref:System.Threading.CancellationTokenSource.Cancel>. Subsequent calls to <xref:System.Threading.CancellationTokenSource.Cancel> will not execute the same callback again unless re-registered. (We recommend avoiding multiple calls to <xref:System.Threading.CancellationTokenSource.Cancel>, because the intent of such code is often unclear.)
+
+ Callbacks will be executed synchronously in LIFO order.
   
  We recommend that cancelable operations and callbacks registered with <xref:System.Threading.CancellationToken> not throw exceptions. 
   
