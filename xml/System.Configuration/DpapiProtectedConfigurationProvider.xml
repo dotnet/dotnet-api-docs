@@ -17,13 +17,20 @@
     <AssemblyVersion>4.0.3.0</AssemblyVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="System.Configuration.ConfigurationManager" FromVersion="10.0.0.0" To="System.Configuration" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2-pp" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Configuration.ProtectedConfigurationProvider</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="dotnet-plat-ext-6.0;windowsdesktop-6.0">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0">
       <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("windows")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("windows")&gt;]</AttributeName>
     </Attribute>
@@ -31,63 +38,62 @@
   <Docs>
     <summary>Provides a <see cref="T:System.Configuration.ProtectedConfigurationProvider" /> object that uses the Windows data protection API (DPAPI) to encrypt and decrypt configuration data.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Configuration.DpapiProtectedConfigurationProvider> allows you to protect sensitive information stored in a configuration file from unauthorized access.  
-  
- You use the standard <xref:System.Configuration.DpapiProtectedConfigurationProvider> by declaring the provider and appropriate settings in the configuration file rather than creating an instance of this class. Refer to the next example.  
-  
- For more information about Protected Configuration, see [Encrypting Configuration Information Using Protected Configuration](https://docs.microsoft.com/previous-versions/aspnet/53tyfkaw(v=vs.100)).  
-  
- The <xref:System.Configuration.DpapiProtectedConfigurationProvider> uses the Windows built-in cryptographic services and can be configured for either machine-specific or user-account-specific protection. Machine-specific protection is useful for anonymous services but provides less security. User-account-specific protection can be used with services that run with a specific user identity.  
-  
-   
-  
-## Examples  
- The following example shows how to use the standard <xref:System.Configuration.DpapiProtectedConfigurationProvider> to protect or unprotect a configuration section.  
-  
-  
- The following configuration excerpts show the configuration section before and after the protection has been applied.  
-  
-```xml  
-<?xml version="1.0" encoding="utf-8" ?>  
-<configuration>  
-  <connectionStrings>  
-    <add name="NorthwindConnectionString"   
-      connectionString="Data Source=webnetue2;Initial Catalog=Northwind;User ID=aspnet_test;Password=test"  
-      providerName="System.Data.SqlClient" />  
-  </connectionStrings>  
-</configuration>  
-```  
-  
-```xml  
-<?xml version="1.0" encoding="utf-8"?>  
-<configuration>  
-  <connectionStrings>  
-    <EncryptedData>  
-      <CipherData>                <CipherValue>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcAMh0jIC1kigyFfd9AUZfQQAAAACAAAAAAADZgAAqAAAABAAAADQwbQ2DgIgIlqskE1RI9UpAAAAAASAAACgAAAAEAAAAAXlYBxi3jhM6wv4sxLhugsQAgAAgoReHZS2406dc/AyRDd6WuNr4ihHn6fbipd4tzHEmeuyS4o4fS4CmT3jMt/WjsP/kR7TF4ygwr2GG47podK79ECpVCZHAgctCauCYjE2Ls3iphKXy/pHic2o6aaClt/xPm+fb4OfODv6XjrJhJzGK2lqUPXkyJN1w2zwh6OVpDQF9N8vTyxL4eitp35/M5zYbW7e6VVAgYUOxlNxgCV5+jXpUKh/rPovopTD392u8KavqQFW1iu+gBPSPq/xeZNz+qYMKbUl+r4VTzBQg3fPlRxp1lNZmM2yRgUbkYPNaFb9ihS7GAg5/wZn8lLmThvq39eA0Vlp6hDE92iop885umELt0/NBKf5umQCqqz9EXXLbmmGc7qoLqTaYVuOmqx0LsvrJL0wSL1dSySCjmB/dNAtVUYgg02eWQNKyaLqnpMdCbTLLQ/oCKuNkL5OQ7t1yl5wQGjQhieIRzLtrMgpTSyaHbqDsRurp9Bc5mM078IAg1hXquQNKlJC/wiJ9kbHerFCbtuLGy/7nXVrFH91ud4U4ExCJEuhoTdmuql5kbqYd6Ye/bu2CftPni19nDkSJ8w4NoqMNKbK3Mi/Cd0o113HsVYlETMv1vlJWZWYP91PK9trixiY4E0G81c6IKITjHDrOJ9evdw2T1/TrvY6pzre3UXSJbFMDQVX6JoAxFk02SRZDKOZdRojeoX19lgrFAAAABzjlz3Qg2as3vn7MRQVxDfZucgE</CipherValue>  
-      </CipherData>  
-    </EncryptedData>  
-  </connectionStrings>  
-  <configProtectedData defaultProvider="RsaProtectedConfigurationProvider">  
-    <providers>  
-      <clear />  
-      <add keyContainerName="NetFrameworkConfigurationKey" cspProviderName=""  
-        useMachineContainer="true" useOAEP="false" description="Uses RsaCryptoServiceProvider to encrypt and decrypt"  
-        name="RsaProtectedConfigurationProvider" type="System.Configuration.RsaProtectedConfigurationProvider,System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />  
-      <add useMachineProtection="true" description="Uses CryptProtectData and CryptUnProtectData Windows APIs to encrypt and decrypt"  
-        keyEntropy="" name="DataProtectionConfigurationProvider" type="System.Configuration.DpapiProtectedConfigurationProvider,System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />  
-    </providers>  
-  </configProtectedData>  
-</configuration>  
-```  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Configuration.DpapiProtectedConfigurationProvider> allows you to protect sensitive information stored in a configuration file from unauthorized access.
+
+ You use the standard <xref:System.Configuration.DpapiProtectedConfigurationProvider> by declaring the provider and appropriate settings in the configuration file rather than creating an instance of this class. Refer to the next example.
+
+ For more information about Protected Configuration, see [Encrypting Configuration Information Using Protected Configuration](https://learn.microsoft.com/previous-versions/aspnet/53tyfkaw(v=vs.100)).
+
+ The <xref:System.Configuration.DpapiProtectedConfigurationProvider> uses the Windows built-in cryptographic services and can be configured for either machine-specific or user-account-specific protection. Machine-specific protection is useful for anonymous services but provides less security. User-account-specific protection can be used with services that run with a specific user identity.
+
+## Examples
+
+The following example shows how to use the standard <xref:System.Configuration.DpapiProtectedConfigurationProvider> to protect or unprotect a configuration section.
+
+The following configuration excerpts show the configuration section before and after the protection is applied.
+
+[!INCLUDE[ROPC warning](~/includes/ropc-warning.md)]
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <connectionStrings>
+    <add name="NorthwindConnectionString"
+      connectionString="Data Source=webnetue2;Initial Catalog=Northwind;User ID=aspnet_test;Password=test"
+      providerName="System.Data.SqlClient" />
+  </connectionStrings>
+</configuration>
+```
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <connectionStrings>
+    <EncryptedData>
+      <CipherData>                <CipherValue>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAcAMh0jIC1kigyFfd9AUZfQQAAAACAAAAAAADZgAAqAAAABAAAADQwbQ2DgIgIlqskE1RI9UpAAAAAASAAACgAAAAEAAAAAXlYBxi3jhM6wv4sxLhugsQAgAAgoReHZS2406dc/AyRDd6WuNr4ihHn6fbipd4tzHEmeuyS4o4fS4CmT3jMt/WjsP/kR7TF4ygwr2GG47podK79ECpVCZHAgctCauCYjE2Ls3iphKXy/pHic2o6aaClt/xPm+fb4OfODv6XjrJhJzGK2lqUPXkyJN1w2zwh6OVpDQF9N8vTyxL4eitp35/M5zYbW7e6VVAgYUOxlNxgCV5+jXpUKh/rPovopTD392u8KavqQFW1iu+gBPSPq/xeZNz+qYMKbUl+r4VTzBQg3fPlRxp1lNZmM2yRgUbkYPNaFb9ihS7GAg5/wZn8lLmThvq39eA0Vlp6hDE92iop885umELt0/NBKf5umQCqqz9EXXLbmmGc7qoLqTaYVuOmqx0LsvrJL0wSL1dSySCjmB/dNAtVUYgg02eWQNKyaLqnpMdCbTLLQ/oCKuNkL5OQ7t1yl5wQGjQhieIRzLtrMgpTSyaHbqDsRurp9Bc5mM078IAg1hXquQNKlJC/wiJ9kbHerFCbtuLGy/7nXVrFH91ud4U4ExCJEuhoTdmuql5kbqYd6Ye/bu2CftPni19nDkSJ8w4NoqMNKbK3Mi/Cd0o113HsVYlETMv1vlJWZWYP91PK9trixiY4E0G81c6IKITjHDrOJ9evdw2T1/TrvY6pzre3UXSJbFMDQVX6JoAxFk02SRZDKOZdRojeoX19lgrFAAAABzjlz3Qg2as3vn7MRQVxDfZucgE</CipherValue>
+      </CipherData>
+    </EncryptedData>
+  </connectionStrings>
+  <configProtectedData defaultProvider="RsaProtectedConfigurationProvider">
+    <providers>
+      <clear />
+      <add keyContainerName="NetFrameworkConfigurationKey" cspProviderName=""
+        useMachineContainer="true" useOAEP="false" description="Uses RsaCryptoServiceProvider to encrypt and decrypt"
+        name="RsaProtectedConfigurationProvider" type="System.Configuration.RsaProtectedConfigurationProvider,System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <add useMachineProtection="true" description="Uses CryptProtectData and CryptUnProtectData Windows APIs to encrypt and decrypt"
+        keyEntropy="" name="DataProtectionConfigurationProvider" type="System.Configuration.DpapiProtectedConfigurationProvider,System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    </providers>
+  </configProtectedData>
+</configuration>
+```
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Configuration.RsaProtectedConfigurationProvider" />
     <related type="Article" href="/dotnet/standard/security/cryptographic-services">Cryptographic Services</related>
-    <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/68ze1hb2(v=vs.100)">Specifying a Protected Configuration Provider</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -104,37 +110,35 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Configuration.DpapiProtectedConfigurationProvider" /> class using default settings.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Configuration.DpapiProtectedConfigurationProvider.%23ctor%2A> constructor is not intended to be used directly from your code. It is called by the ASP.NET configuration system.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Configuration.DpapiProtectedConfigurationProvider.%23ctor%2A> constructor is not intended to be used directly from your code. It is called by the ASP.NET configuration system.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="Decrypt">
-      <MemberSignature Language="C#" Value="public override System.Xml.XmlNode Decrypt (System.Xml.XmlNode encryptedNode);" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Xml.XmlNode Decrypt(class System.Xml.XmlNode encryptedNode) cil managed" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
+      <MemberSignature Language="C#" Value="public override System.Xml.XmlNode Decrypt (System.Xml.XmlNode encryptedNode);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Xml.XmlNode Decrypt(class System.Xml.XmlNode encryptedNode) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Configuration.DpapiProtectedConfigurationProvider.Decrypt(System.Xml.XmlNode)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function Decrypt (encryptedNode As XmlNode) As XmlNode" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
-      <MemberSignature Language="F#" Value="override this.Decrypt : System.Xml.XmlNode -&gt; System.Xml.XmlNode" Usage="dpapiProtectedConfigurationProvider.Decrypt encryptedNode" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Xml::XmlNode ^ Decrypt(System::Xml::XmlNode ^ encryptedNode);" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
-      <MemberSignature Language="C#" Value="public override System.Xml.XmlNode Decrypt (System.Xml.XmlNode encrypted_node);" FrameworkAlternate="xamarinmac-3.0" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Xml.XmlNode Decrypt(class System.Xml.XmlNode encrypted_node) cil managed" FrameworkAlternate="xamarinmac-3.0" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function Decrypt (encrypted_node As XmlNode) As XmlNode" FrameworkAlternate="xamarinmac-3.0" />
-      <MemberSignature Language="F#" Value="override this.Decrypt : System.Xml.XmlNode -&gt; System.Xml.XmlNode" Usage="dpapiProtectedConfigurationProvider.Decrypt encrypted_node" FrameworkAlternate="xamarinmac-3.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Xml::XmlNode ^ Decrypt(System::Xml::XmlNode ^ encrypted_node);" FrameworkAlternate="xamarinmac-3.0" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Decrypt (encryptedNode As XmlNode) As XmlNode" />
+      <MemberSignature Language="F#" Value="override this.Decrypt : System.Xml.XmlNode -&gt; System.Xml.XmlNode" Usage="dpapiProtectedConfigurationProvider.Decrypt encryptedNode" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Xml::XmlNode ^ Decrypt(System::Xml::XmlNode ^ encryptedNode);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Configuration</AssemblyName>
@@ -143,34 +147,35 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Xml.XmlNode</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="encryptedNode" Type="System.Xml.XmlNode" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0" />
-        <Parameter Name="encrypted_node" Type="System.Xml.XmlNode" Index="0" FrameworkAlternate="xamarinmac-3.0" />
+        <Parameter Name="encryptedNode" Type="System.Xml.XmlNode" />
       </Parameters>
       <Docs>
         <param name="encryptedNode">The <see cref="T:System.Xml.XmlNode" /> object to decrypt.</param>
-        <param name="encrypted_node">To be added.</param>
         <summary>Decrypts the passed <see cref="T:System.Xml.XmlNode" /> object.</summary>
         <returns>A decrypted <see cref="T:System.Xml.XmlNode" /> object.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.Configuration.ConfigurationErrorsException">
-          <paramref name="encryptedNode" /> does not have <see cref="P:System.Xml.XmlNode.Name" /> set to "EncryptedData" and <see cref="T:System.Xml.XmlNodeType" /> set to <see cref="F:System.Xml.XmlNodeType.Element" />.  
-  
+          <paramref name="encryptedNode" /> does not have <see cref="P:System.Xml.XmlNode.Name" /> set to "EncryptedData" and <see cref="T:System.Xml.XmlNodeType" /> set to <see cref="F:System.Xml.XmlNodeType.Element" />.
+
 -or-
-  
- <paramref name="encryptedNode" /> does not have a child node named "CipherData" with a child node named "CipherValue".  
-  
+
+ <paramref name="encryptedNode" /> does not have a child node named "CipherData" with a child node named "CipherValue".
+
 -or-
-  
+
  The child node named "CipherData" is an empty node.</exception>
       </Docs>
     </Member>
@@ -189,11 +194,14 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Xml.XmlNode</ReturnType>
@@ -223,11 +231,14 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -260,11 +271,14 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Configuration.ConfigurationManager</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -274,11 +288,11 @@
         <value>
           <see langword="true" /> if the <see cref="T:System.Configuration.DpapiProtectedConfigurationProvider" /> is using machine-specific protection; <see langword="false" /> if it is using user-account-specific protection.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Machine-specific protection is useful for anonymous services but provides less security. User-account-specific protection can be used with services that run with a specific user identity.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Machine-specific protection is useful for anonymous services but provides less security. User-account-specific protection can be used with services that run with a specific user identity.
+
  ]]></format>
         </remarks>
       </Docs>
