@@ -35,7 +35,7 @@ public class Example
       String fullName = "contoso.libraries.person";
       Assembly assem = typeof(Person).Assembly;
       Person p = (Person) assem.CreateInstance(fullName);
-      if (! (p == null)) {
+      if (!(p == null)) {
          p.Name = "John";
          Console.WriteLine("Instantiated a {0} object whose value is '{1}'",
                            p.GetType().Name, p);
@@ -45,7 +45,7 @@ public class Example
                            "with Assembly.CreateInstance(String)");
          // Try case-insensitive type name comparison.
          p = (Person) assem.CreateInstance(fullName, true);
-         if (! (p == null)) {
+         if (!(p == null)) {
             p.Name = "John";
             Console.WriteLine("Instantiated a {0} object whose value is '{1}'",
                               p.GetType().Name, p);

@@ -132,7 +132,7 @@ private:
 
       // Begin repainting the TreeView.
       myTreeView->EndUpdate();
-      if ( myTreeView->Nodes[ 0 ]->IsExpanded == false )
+      if ( !myTreeView->Nodes[ 0 ]->IsExpanded )
             myTreeView->Nodes[ 0 ]->Expand();
    }
 
@@ -196,7 +196,7 @@ private:
    {
 
       // If the check box is checked, expand all the tree nodes.
-      if ( myCheckBox->Checked == true )
+      if ( myCheckBox->Checked )
       {
          myTreeView->ExpandAll();
       }
@@ -239,7 +239,7 @@ private:
          myTreeView->SelectedNode = mySelectedNode;
          myTreeView->LabelEdit = true;
          mySelectedNode->BeginEdit();
-         if ( mySelectedNode->IsEditing == true )
+         if ( mySelectedNode->IsEditing )
                   MessageBox::Show( String::Concat( "The name of node being edited: ", mySelectedNode->Text ) );
          mySelectedNode->BeginEdit();
       }

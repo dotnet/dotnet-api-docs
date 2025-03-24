@@ -11,7 +11,7 @@ Public Class Form1
 
     Private Sub startAsyncButton_Click(ByVal sender As System.Object, _
     ByVal e As System.EventArgs) Handles startAsyncButton.Click
-        If backgroundWorker1.IsBusy <> True Then
+        If Not backgroundWorker1.IsBusy Then
             ' Start the asynchronous operation.
             backgroundWorker1.RunWorkerAsync()
         End If
@@ -19,7 +19,7 @@ Public Class Form1
 
     Private Sub cancelAsyncButton_Click(ByVal sender As System.Object, _
     ByVal e As System.EventArgs) Handles cancelAsyncButton.Click
-        If backgroundWorker1.WorkerSupportsCancellation = True Then
+        If backgroundWorker1.WorkerSupportsCancellation Then
             ' Cancel the asynchronous operation.
             backgroundWorker1.CancelAsync()
         End If
@@ -32,7 +32,7 @@ Public Class Form1
         Dim i As Integer
 
         For i = 1 To 10
-            If (worker.CancellationPending = True) Then
+            If (worker.CancellationPending) Then
                 e.Cancel = True
                 Exit For
             Else
@@ -52,7 +52,7 @@ Public Class Form1
     ' This event handler deals with the results of the background operation.
     Private Sub backgroundWorker1_RunWorkerCompleted(ByVal sender As System.Object, _
     ByVal e As RunWorkerCompletedEventArgs) Handles backgroundWorker1.RunWorkerCompleted
-        If e.Cancelled = True Then
+        If e.Cancelled Then
             resultLabel.Text = "Canceled!"
         ElseIf e.Error IsNot Nothing Then
             resultLabel.Text = "Error: " & e.Error.Message

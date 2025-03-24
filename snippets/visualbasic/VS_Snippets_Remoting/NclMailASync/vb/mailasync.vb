@@ -63,6 +63,7 @@ Namespace Examples.SmtpExamples.Async
             End If
             ' Clean up.
             message.Dispose()
+            client.Dispose()
             Console.WriteLine("Goodbye.")
         End Sub
     End Class

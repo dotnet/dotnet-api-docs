@@ -120,7 +120,7 @@ for (int ai = 0;
 // </Snippet3>
 
 				// Update if not locked.
-				if (! webPartsSection.IsReadOnly())
+				if (!webPartsSection.IsReadOnly())
 				{
 					configuration.Save();
 					Console.WriteLine("** Configuration updated.");

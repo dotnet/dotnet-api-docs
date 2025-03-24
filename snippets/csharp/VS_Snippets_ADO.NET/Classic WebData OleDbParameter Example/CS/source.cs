@@ -4,11 +4,6 @@ using System.Data.OleDb;
 
 class Class1
 {
-    static void Main()
-    {
-        //        string x = "Provider=SQLOLEDB;Data Source=(local);Integrated Security=SSPI;Initial Catalog=Northwind";
-    }
-
     // <Snippet1>
     public DataSet GetDataSetFromAdapter(
         DataSet dataSet, string connectionString, string queryString)

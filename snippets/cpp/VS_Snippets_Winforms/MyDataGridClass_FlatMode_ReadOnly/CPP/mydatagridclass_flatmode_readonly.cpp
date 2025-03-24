@@ -157,7 +157,7 @@ private:
    void myDataGrid_FlatModeChanged( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
       String^ strMessage = "false";
-      if ( myDataGrid->FlatMode == true )
+      if ( myDataGrid->FlatMode)
             strMessage = "true";
 
       MessageBox::Show( "Flat mode changed to " + strMessage, "Message", MessageBoxButtons::OK, MessageBoxIcon::Exclamation );
@@ -166,7 +166,7 @@ private:
    // Toggle the 'FlatMode'.
    void button1_Click( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
-      if ( myDataGrid->FlatMode == true )
+      if ( myDataGrid->FlatMode)
             myDataGrid->FlatMode = false;
       else
             myDataGrid->FlatMode = true;
@@ -185,7 +185,7 @@ private:
    void myDataGrid_ReadOnlyChanged( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
       String^ strMessage = "false";
-      if ( myDataGrid->ReadOnly == true )
+      if ( myDataGrid->ReadOnly)
             strMessage = "true";
 
       MessageBox::Show( "Read only changed to " + strMessage, "Message", MessageBoxButtons::OK, MessageBoxIcon::Exclamation );
@@ -194,7 +194,7 @@ private:
    // Toggle the 'ReadOnly' property.
    void button2_Click( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
-      if ( myDataGrid->ReadOnly == true )
+      if ( myDataGrid->ReadOnly)
             myDataGrid->ReadOnly = false;
       else
             myDataGrid->ReadOnly = true;

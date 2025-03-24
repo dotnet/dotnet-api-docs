@@ -26,11 +26,10 @@ public class rfc2898test
             string pwd1 = passwordargs[0];
             // Create a byte array to hold the random value.
             byte[] salt1 = new byte[8];
-            using (RNGCryptoServiceProvider rngCsp = new
-RNGCryptoServiceProvider())
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
             {
                 // Fill the array with a random value.
-                rngCsp.GetBytes(salt1);
+                rng.GetBytes(salt1);
             }
 
             //data1 can be a string or contents of a file.

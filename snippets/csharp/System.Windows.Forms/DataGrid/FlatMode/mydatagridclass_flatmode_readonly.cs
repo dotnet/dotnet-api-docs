@@ -153,7 +153,7 @@ namespace MyDataGridClass
       private void myDataGrid_FlatModeChanged(object sender, EventArgs e)
       {
          string strMessage = "false";
-         if(myDataGrid.FlatMode == true)
+         if(myDataGrid.FlatMode)
             strMessage = "true";
 
          MessageBox.Show("Flat mode changed to "+strMessage,
@@ -163,7 +163,7 @@ namespace MyDataGridClass
       // Toggle the 'FlatMode'.
       private void button1_Click(object sender, EventArgs e)
       {
-         if(myDataGrid.FlatMode == true)
+         if (myDataGrid.FlatMode)
             myDataGrid.FlatMode = false;
          else
             myDataGrid.FlatMode = true;
@@ -179,7 +179,7 @@ namespace MyDataGridClass
       private void myDataGrid_ReadOnlyChanged(object sender, EventArgs e)
       {   
          string strMessage = "false";
-         if(myDataGrid.ReadOnly == true)
+         if (myDataGrid.ReadOnly)
             strMessage = "true";
 
          MessageBox.Show("Read only changed to "+strMessage,
@@ -189,7 +189,7 @@ namespace MyDataGridClass
       // Toggle the 'ReadOnly' property.
       private void button2_Click(object sender, EventArgs e)
       {
-         if(myDataGrid.ReadOnly == true)
+         if (myDataGrid.ReadOnly)
             myDataGrid.ReadOnly = false;
          else
             myDataGrid.ReadOnly = true;

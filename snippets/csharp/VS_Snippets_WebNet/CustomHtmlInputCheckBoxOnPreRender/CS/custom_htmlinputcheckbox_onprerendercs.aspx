@@ -11,17 +11,17 @@
       {
         Div1.InnerHtml = "";
 
-        if(HtmlInputCheckBox1.Checked == true)
+        if (HtmlInputCheckBox1.Checked)
         {
           Div1.InnerHtml = "You like basketball. ";
         }
 
-        if(HtmlInputCheckBox2.Checked == true)
+        if (HtmlInputCheckBox2.Checked)
         {
           Div1.InnerHtml += "You like football. ";
         }
 
-        if(HtmlInputCheckBox3.Checked == true)
+        if (HtmlInputCheckBox3.Checked)
         {
           Div1.InnerHtml += "You like soccer. ";
         }

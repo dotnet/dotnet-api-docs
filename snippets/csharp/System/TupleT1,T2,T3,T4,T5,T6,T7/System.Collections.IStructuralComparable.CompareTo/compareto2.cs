@@ -13,7 +13,7 @@ public class PopulationComparer<T1, T2, T3, T4, T5, T6, T7> : IComparer
 
    public PopulationComparer(int component, bool descending)
    {
-      if (! descending) multiplier = 1;
+      if (!descending) multiplier = 1;
 
       if (component <= 0 || component > 7)
          throw new ArgumentException("The component argument is out of range.");

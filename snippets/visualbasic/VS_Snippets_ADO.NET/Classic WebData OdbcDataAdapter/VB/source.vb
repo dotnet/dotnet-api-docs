@@ -6,11 +6,6 @@ Imports System.Data.Odbc
 
 Module Module1
 
-    Sub Main()
-        'Dim connectionString As String = _
-        '"Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\Samples\Northwind.mdb"
-    End Sub
-
     ' <Snippet1>
     Public Function GetDataSetFromAdapter( _
         ByVal dataSet As DataSet, ByVal connectionString As String, _

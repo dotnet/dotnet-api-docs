@@ -89,7 +89,7 @@ namespace CustomControls
         /// <returns>The value of the property.</returns>
         public object GetPropertyValue(int propId)
         {
-            if (ListItemControl.IsAlive == false)
+            if (!ListItemControl.IsAlive)
             {
                 throw new ElementNotAvailableException();
             }
@@ -236,7 +236,7 @@ namespace CustomControls
         /// </summary>
         public void SetFocus()
         {
-            if (ListItemControl.IsAlive == false)
+            if (!ListItemControl.IsAlive)
             {
                 throw new ElementNotAvailableException();
             }

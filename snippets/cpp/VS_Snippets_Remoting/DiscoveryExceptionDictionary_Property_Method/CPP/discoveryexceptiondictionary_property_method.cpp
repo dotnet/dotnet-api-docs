@@ -48,7 +48,7 @@ int main()
       
       // <Snippet2>
       DiscoveryExceptionDictionary^ myExceptionDictionary = myDiscoveryClientProtocol2->Errors;
-      if ( myExceptionDictionary->Contains( myUrlKey ) == true )
+      if ( myExceptionDictionary->Contains( myUrlKey ))
       {
          Console::WriteLine( "'myExceptionDictionary' contains a discovery exception for the key '{0}'", myUrlKey );
       }
@@ -57,7 +57,7 @@ int main()
          Console::WriteLine( "'myExceptionDictionary' does not contain a discovery exception for the key '{0}'", myUrlKey );
       }
       // </Snippet2>
-      if ( myExceptionDictionary->Contains( myUrlKey ) == true )
+      if ( myExceptionDictionary->Contains( myUrlKey ) )
       {
          Console::WriteLine( "System generated exceptions." );
          

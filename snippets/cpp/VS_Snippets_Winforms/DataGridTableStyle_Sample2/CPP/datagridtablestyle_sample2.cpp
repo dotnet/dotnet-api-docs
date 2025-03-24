@@ -196,7 +196,7 @@ namespace SampleDataGridTableStyle
       {
          myDataGridTableStyle1 = gcnew DataGridTableStyle;
          mylabel->Text = String::Concat( "Sorting Status : ", myDataGridTableStyle1->AllowSorting );
-         if ( myDataGridTableStyle1->AllowSorting == true )
+         if ( myDataGridTableStyle1->AllowSorting)
          {
             btnApplyStyles->Text = "Remove Sorting";
          }
@@ -217,7 +217,7 @@ namespace SampleDataGridTableStyle
 
       void btnApplyStyles_Click( Object^ /*sender*/, EventArgs^ /*e*/ )
       {
-         if ( myDataGridTableStyle1->AllowSorting == true )
+         if ( myDataGridTableStyle1->AllowSorting)
          {
             // Remove sorting.
             myDataGridTableStyle1->AllowSorting = false;

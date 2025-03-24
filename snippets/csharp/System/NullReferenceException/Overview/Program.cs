@@ -1,0 +1,2 @@
+﻿//NullReturnExample.NoCheckExample();
+NullReturnExample.ExampleWithNullCheck();

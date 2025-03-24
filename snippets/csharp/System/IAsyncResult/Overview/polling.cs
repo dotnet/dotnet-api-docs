@@ -21,7 +21,7 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
                 out threadId, null, null);
 
             // Poll while simulating work.
-            while(result.IsCompleted == false) {
+            while(!result.IsCompleted) {
                 Thread.Sleep(250);
                 Console.Write(".");
             }

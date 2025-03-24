@@ -38,10 +38,15 @@ namespace FileSystemExample
         }
 
         // Adds an ACL entry on the specified file for the specified account.
-        public static void AddFileSecurity(string FileName, string Account, FileSystemRights Rights, AccessControlType ControlType)
+        public static void AddFileSecurity(
+            string FileName,
+            string Account,
+            FileSystemRights Rights,
+            AccessControlType ControlType
+            )
         {
             // Create a new FileInfo object.
-            FileInfo fInfo = new FileInfo(FileName);
+            FileInfo fInfo = new(FileName);
 
             // Get a FileSecurity object that represents the
             // current security settings.
@@ -57,10 +62,15 @@ namespace FileSystemExample
         }
 
         // Removes an ACL entry on the specified file for the specified account.
-        public static void RemoveFileSecurity(string FileName, string Account, FileSystemRights Rights, AccessControlType ControlType)
+        public static void RemoveFileSecurity(
+            string FileName,
+            string Account,
+            FileSystemRights Rights,
+            AccessControlType ControlType
+            )
         {
             // Create a new FileInfo object.
-            FileInfo fInfo = new FileInfo(FileName);
+            FileInfo fInfo = new(FileName);
 
             // Get a FileSecurity object that represents the
             // current security settings.

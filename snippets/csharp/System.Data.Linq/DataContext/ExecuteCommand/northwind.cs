@@ -505,7 +505,7 @@ public partial class CustomerCustomerDemo : INotifyPropertyChanging, INotifyProp
 		{
 			CustomerDemographic previousValue = this._CustomerDemographic.Entity;
 			if (((previousValue != value)
-						|| (this._CustomerDemographic.HasLoadedOrAssignedValue == false)))
+						|| (!this._CustomerDemographic.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -539,7 +539,7 @@ public partial class CustomerCustomerDemo : INotifyPropertyChanging, INotifyProp
 		{
 			Customer previousValue = this._Customer.Entity;
 			if (((previousValue != value)
-						|| (this._Customer.HasLoadedOrAssignedValue == false)))
+						|| (!this._Customer.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -1537,7 +1537,7 @@ public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Employee previousValue = this._ReportsToEmployee.Entity;
 			if (((previousValue != value)
-						|| (this._ReportsToEmployee.HasLoadedOrAssignedValue == false)))
+						|| (!this._ReportsToEmployee.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -1752,7 +1752,7 @@ public partial class EmployeeTerritory : INotifyPropertyChanging, INotifyPropert
 		{
 			Employee previousValue = this._Employee.Entity;
 			if (((previousValue != value)
-						|| (this._Employee.HasLoadedOrAssignedValue == false)))
+						|| (!this._Employee.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -1786,7 +1786,7 @@ public partial class EmployeeTerritory : INotifyPropertyChanging, INotifyPropert
 		{
 			Territory previousValue = this._Territory.Entity;
 			if (((previousValue != value)
-						|| (this._Territory.HasLoadedOrAssignedValue == false)))
+						|| (!this._Territory.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -1992,7 +1992,7 @@ public partial class OrderDetail : INotifyPropertyChanging, INotifyPropertyChang
 		{
 			Order previousValue = this._Order.Entity;
 			if (((previousValue != value)
-						|| (this._Order.HasLoadedOrAssignedValue == false)))
+						|| (!this._Order.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -2026,7 +2026,7 @@ public partial class OrderDetail : INotifyPropertyChanging, INotifyPropertyChang
 		{
 			Product previousValue = this._Product.Entity;
 			if (((previousValue != value)
-						|| (this._Product.HasLoadedOrAssignedValue == false)))
+						|| (!this._Product.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -2475,7 +2475,7 @@ public partial class Order : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Customer previousValue = this._Customer.Entity;
 			if (((previousValue != value)
-						|| (this._Customer.HasLoadedOrAssignedValue == false)))
+						|| (!this._Customer.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -2509,7 +2509,7 @@ public partial class Order : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Employee previousValue = this._Employee.Entity;
 			if (((previousValue != value)
-						|| (this._Employee.HasLoadedOrAssignedValue == false)))
+						|| (!this._Employee.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -2543,7 +2543,7 @@ public partial class Order : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Shipper previousValue = this._Shipper.Entity;
 			if (((previousValue != value)
-						|| (this._Shipper.HasLoadedOrAssignedValue == false)))
+						|| (!this._Shipper.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -2899,7 +2899,7 @@ public partial class Product : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Category previousValue = this._Category.Entity;
 			if (((previousValue != value)
-						|| (this._Category.HasLoadedOrAssignedValue == false)))
+						|| (!this._Category.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -2933,7 +2933,7 @@ public partial class Product : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Supplier previousValue = this._Supplier.Entity;
 			if (((previousValue != value)
-						|| (this._Supplier.HasLoadedOrAssignedValue == false)))
+						|| (!this._Supplier.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
@@ -3726,7 +3726,7 @@ public partial class Territory : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			Region previousValue = this._Region.Entity;
 			if (((previousValue != value)
-						|| (this._Region.HasLoadedOrAssignedValue == false)))
+						|| (!this._Region.HasLoadedOrAssignedValue )))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))

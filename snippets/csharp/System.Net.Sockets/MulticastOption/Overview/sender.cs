@@ -4,7 +4,6 @@
 // </Internal>
 
 // <Snippet1>
-
 using System;
 using System.Net.Sockets;
 using System.Net;
@@ -19,83 +18,82 @@ using System.Text;
 //
 namespace Mssc.TransportProtocols.Utilities
 {
-  class TestMulticastOption
-  {
-
-    static IPAddress mcastAddress;
-    static int mcastPort;
-    static Socket mcastSocket;
-
-    static void JoinMulticastGroup()
+    class TestMulticastOption2
     {
-      try
-      {
-        // Create a multicast socket.
-        mcastSocket = new Socket(AddressFamily.InterNetwork,
-                                 SocketType.Dgram,
-                                 ProtocolType.Udp);
-			
-        // Get the local IP address used by the listener and the sender to
-        // exchange multicast messages.
-        Console.Write("\nEnter local IPAddress for sending multicast packets: ");
-        IPAddress  localIPAddr = IPAddress.Parse(Console.ReadLine());
+        static IPAddress s_mcastAddress;
+        static int s_mcastPort;
+        static Socket s_mcastSocket;
 
-        // Create an IPEndPoint object.
-        IPEndPoint IPlocal = new IPEndPoint(localIPAddr, 0);
+        static void JoinMulticastGroup()
+        {
+            try
+            {
+                // Create a multicast socket.
+                s_mcastSocket = new Socket(AddressFamily.InterNetwork,
+                                         SocketType.Dgram,
+                                         ProtocolType.Udp);
 
-        // Bind this endpoint to the multicast socket.
-        mcastSocket.Bind(IPlocal);
+                // Get the local IP address used by the listener and the sender to
+                // exchange multicast messages.
+                Console.Write("\nEnter local IPAddress for sending multicast packets: ");
+                IPAddress localIPAddr = IPAddress.Parse(Console.ReadLine());
 
-        // Define a MulticastOption object specifying the multicast group
-        // address and the local IP address.
-        // The multicast group address is the same as the address used by the listener.
-        MulticastOption mcastOption;
-        mcastOption = new MulticastOption(mcastAddress, localIPAddr);
+                // Create an IPEndPoint object.
+                IPEndPoint IPlocal = new IPEndPoint(localIPAddr, 0);
 
-        mcastSocket.SetSocketOption(SocketOptionLevel.IP,
-                                    SocketOptionName.AddMembership,
-                                    mcastOption);
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine("\n" + e.ToString());
-      }
+                // Bind this endpoint to the multicast socket.
+                s_mcastSocket.Bind(IPlocal);
+
+                // Define a MulticastOption object specifying the multicast group
+                // address and the local IP address.
+                // The multicast group address is the same as the address used by the listener.
+                MulticastOption mcastOption;
+                mcastOption = new MulticastOption(s_mcastAddress, localIPAddr);
+
+                s_mcastSocket.SetSocketOption(SocketOptionLevel.IP,
+                                            SocketOptionName.AddMembership,
+                                            mcastOption);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\n" + e.ToString());
+            }
+        }
+
+        static void BroadcastMessage(string message)
+        {
+            IPEndPoint endPoint;
+
+            try
+            {
+                //Send multicast packets to the listener.
+                endPoint = new IPEndPoint(s_mcastAddress, s_mcastPort);
+                s_mcastSocket.SendTo(ASCIIEncoding.ASCII.GetBytes(message), endPoint);
+                Console.WriteLine("Multicast data sent.....");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\n" + e.ToString());
+            }
+
+            s_mcastSocket.Close();
+        }
+
+        static void Main(string[] args)
+        {
+            // Initialize the multicast address group and multicast port.
+            // Both address and port are selected from the allowed sets as
+            // defined in the related RFC documents. These are the same
+            // as the values used by the sender.
+            s_mcastAddress = IPAddress.Parse("224.168.100.2");
+            s_mcastPort = 11000;
+
+            // Join the listener multicast group.
+            JoinMulticastGroup();
+
+            // Broadcast the message to the listener.
+            BroadcastMessage("Hello multicast listener.");
+        }
     }
-
-    static void BroadcastMessage(string message)
-    {
-      IPEndPoint endPoint;
-
-      try
-      {
-        //Send multicast packets to the listener.
-        endPoint = new IPEndPoint(mcastAddress,mcastPort);
-        mcastSocket.SendTo(ASCIIEncoding.ASCII.GetBytes(message), endPoint);			
-        Console.WriteLine("Multicast data sent.....");
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine("\n" + e.ToString());
-      }
-
-      mcastSocket.Close();
-    }
-
-    static void Main(string[] args)
-    {
-      // Initialize the multicast address group and multicast port.
-      // Both address and port are selected from the allowed sets as
-      // defined in the related RFC documents. These are the same
-      // as the values used by the sender.
-      mcastAddress = IPAddress.Parse("224.168.100.2");
-      mcastPort = 11000;
-
-      // Join the listener multicast group.
-      JoinMulticastGroup();
-
-      // Broadcast the message to the listener.
-      BroadcastMessage("Hello multicast listener.");
-    }
-  }
 }
 // </Snippet1>

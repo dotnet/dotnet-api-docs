@@ -10,24 +10,26 @@
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <AssemblyVersion>3.1.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.1</AssemblyVersion>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.1</AssemblyVersion>
+    <AssemblyVersion>9.0.0.2</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0;dotnet-plat-ext-9.0">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0;dotnet-plat-ext-9.0">
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
-    </Attribute>
   </Attributes>
   <Docs>
-    <summary>Extension methods for setting up <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />.</summary>
+    <summary>
+            Extension methods for setting up <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />.
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -41,20 +43,36 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Hosting.Systemd</AssemblyName>
-        <AssemblyVersion>8.0.0.0</AssemblyVersion>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.DependencyInjection.IServiceCollection</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="services" Type="Microsoft.Extensions.DependencyInjection.IServiceCollection" RefType="this" Index="0" FrameworkAlternate="dotnet-plat-ext-8.0;dotnet-plat-ext-9.0" />
+        <Parameter Name="services" Type="Microsoft.Extensions.DependencyInjection.IServiceCollection" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="services">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="services">
+            The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> used to build the <see cref="T:Microsoft.Extensions.Hosting.IHost" />.
+            For example, <see cref="P:Microsoft.Extensions.Hosting.HostApplicationBuilder.Services" /> or the <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> passed to the
+            <see cref="M:Microsoft.Extensions.Hosting.IHostBuilder.ConfigureServices(System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,Microsoft.Extensions.DependencyInjection.IServiceCollection})" /> callback.
+            </param>
+        <summary>
+            Configures the lifetime of the <see cref="T:Microsoft.Extensions.Hosting.IHost" /> built from <paramref name="services" /> to
+            <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />, provides notification messages for application started
+            and stopping, and configures console logging to the systemd format.
+            </summary>
+        <returns>The <paramref name="services" /> instance for chaining.</returns>
+        <remarks>
+          <para>
+                This is context aware and will only activate if it detects the process is running
+                as a systemd Service.
+              </para>
+          <para>
+                The systemd service file must be configured with <c>Type=notify</c> to enable
+                notifications. See <see href="https://www.freedesktop.org/software/systemd/man/systemd.service.html" />.
+              </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="UseSystemd">
@@ -67,10 +85,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Hosting.Systemd</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
-        <AssemblyVersion>3.1.0.0</AssemblyVersion>
-        <AssemblyVersion>8.0.0.0</AssemblyVersion>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.Hosting.IHostBuilder</ReturnType>
@@ -79,16 +94,22 @@
         <Parameter Name="hostBuilder" Type="Microsoft.Extensions.Hosting.IHostBuilder" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to use.</param>
-        <summary>Sets the host lifetime to <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />,
+        <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+        <summary>
+            Configures the <see cref="T:Microsoft.Extensions.Hosting.IHost" /> lifetime to <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />,
             provides notification messages for application started and stopping,
-            and configures console logging to the systemd format.</summary>
+            and configures console logging to the systemd format.
+            </summary>
         <returns>The <paramref name="hostBuilder" /> instance for chaining.</returns>
         <remarks>
-          <para>This is context aware and will only activate if it detects the process is running
-                as a systemd Service.</para>
-          <para>The systemd service file must be configured with <c>Type=notify</c> to enable
-                notifications. See https://www.freedesktop.org/software/systemd/man/systemd.service.html.</para>
+          <para>
+                This is context aware and will only activate if it detects the process is running
+                as a systemd Service.
+              </para>
+          <para>
+                The systemd service file must be configured with <c>Type=notify</c> to enable
+                notifications. See https://www.freedesktop.org/software/systemd/man/systemd.service.html.
+              </para>
         </remarks>
       </Docs>
     </Member>

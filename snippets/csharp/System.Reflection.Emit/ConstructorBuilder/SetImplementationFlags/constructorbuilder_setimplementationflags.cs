@@ -50,7 +50,7 @@ internal class MyConstructorBuilder
          MethodImplAttributes myMethodAttributes = myConstructor.GetMethodImplementationFlags();
          Type myAttributeType = typeof(MethodImplAttributes);
          int myAttribValue = (int) myMethodAttributes;
-         if(! myAttributeType.IsEnum)
+         if (!myAttributeType.IsEnum)
          {
             Console.WriteLine("This is not an Enum");
          }

@@ -33,7 +33,7 @@ namespace ReRegisterForFinalizeExample
 
         ~MyFinalizeObject()
         {
-            if(hasFinalized == false)
+            if(!hasFinalized)
             {
                 Console.WriteLine("First finalization");
 

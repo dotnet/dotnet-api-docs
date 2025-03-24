@@ -1142,7 +1142,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 			this._setContainment();
 
 		//Trigger event + callbacks
-		if(this._trigger("start", event) === false) {
+		if(!this._trigger("start", event)) {
 			this._clear();
 			return false;
 		}
@@ -1168,7 +1168,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 		//Call plugins and callbacks and use the resulting position if something is returned
 		if (!noPropagation) {
 			var ui = this._uiHash();
-			if(this._trigger('drag', event, ui) === false) {
+			if(!this._trigger('drag', event, ui)) {
 				this._mouseUp({});
 				return false;
 			}
@@ -1199,15 +1199,15 @@ $.widget("ui.draggable", $.ui.mouse, {
 		if((!this.element[0] || !this.element[0].parentNode) && this.options.helper == "original")
 			return false;
 
-		if((this.options.revert == "invalid" && !dropped) || (this.options.revert == "valid" && dropped) || this.options.revert === true || ($.isFunction(this.options.revert) && this.options.revert.call(this.element, dropped))) {
+		if((this.options.revert == "invalid" && !dropped) || (this.options.revert == "valid" && dropped) || this.options.revert || ($.isFunction(this.options.revert) && this.options.revert.call(this.element, dropped))) {
 			var self = this;
 			$(this.helper).animate(this.originalPosition, parseInt(this.options.revertDuration, 10), function() {
-				if(self._trigger("stop", event) !== false) {
+				if(self._trigger("stop", event)) {
 					self._clear();
 				}
 			});
 		} else {
-			if(this._trigger("stop", event) !== false) {
+			if(this._trigger("stop", event)) {
 				this._clear();
 			}
 		}
@@ -1692,7 +1692,7 @@ $.ui.plugin.add("draggable", "scroll", {
 
 		}
 
-		if(scrolled !== false && $.ui.ddmanager && !o.dropBehaviour)
+		if(scrolled && $.ui.ddmanager && !o.dropBehaviour)
 			$.ui.ddmanager.prepareOffsets(i, event);
 
 	}
@@ -3459,7 +3459,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 			}
 
-			if(scrolled !== false && $.ui.ddmanager && !o.dropBehaviour)
+			if(scrolled && $.ui.ddmanager && !o.dropBehaviour)
 				$.ui.ddmanager.prepareOffsets(this, event);
 		}
 
@@ -4231,7 +4231,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 	},
 
 	_trigger: function() {
-		if ($.Widget.prototype._trigger.apply(this, arguments) === false) {
+		if (!$.Widget.prototype._trigger.apply(this, arguments)) {
 			this.cancel();
 		}
 	},
@@ -5168,7 +5168,7 @@ $.widget( "ui.autocomplete", {
 		}
 
 		clearTimeout( this.closing );
-		if ( this._trigger( "search", event ) === false ) {
+		if (!this._trigger( "search", event )) {
 			return;
 		}
 
@@ -6506,7 +6506,7 @@ $.widget("ui.dialog", {
 				}
 
 				// currently non-resizable, becoming resizable
-				if (!isResizable && value !== false) {
+				if (!isResizable && value) {
 					self._makeResizable(value);
 				}
 				break;
@@ -6814,7 +6814,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		this.range = $([]);
 
 		if ( o.range ) {
-			if ( o.range === true ) {
+			if ( o.range ) {
 				this.range = $( "<div></div>" );
 				if ( !o.values ) {
 					o.values = [ this._valueMin(), this._valueMin() ];
@@ -6913,7 +6913,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 							self._keySliding = true;
 							$( this ).addClass( "ui-state-active" );
 							allowed = self._start( event, index );
-							if ( allowed === false ) {
+							if (!allowed) {
 								return;
 							}
 						}
@@ -7036,13 +7036,13 @@ $.widget( "ui.slider", $.ui.mouse, {
 		// workaround for bug #3736 (if both handles of a range are at 0,
 		// the first is always used as the one with least distance,
 		// and moving it is obviously prevented by preventing negative ranges)
-		if( o.range === true && this.values(1) === o.min ) {
+		if( o.range  && this.values(1) === o.min ) {
 			index += 1;
 			closestHandle = $( this.handles[index] );
 		}
 
 		allowed = this._start( event, index );
-		if ( allowed === false ) {
+		if (!allowed) {
 			return false;
 		}
 		this._mouseSliding = true;
@@ -7154,7 +7154,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		if ( this.options.values && this.options.values.length ) {
 			otherVal = this.values( index ? 0 : 1 );
 
-			if ( ( this.options.values.length === 2 && this.options.range === true ) && 
+			if ( ( this.options.values.length === 2 && this.options.range ) && 
 					( ( index === 0 && newVal > otherVal) || ( index === 1 && newVal < otherVal ) )
 				) {
 				newVal = otherVal;
@@ -7170,7 +7170,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 					values: newValues
 				} );
 				otherVal = this.values( index ? 0 : 1 );
-				if ( allowed !== false ) {
+				if ( allowed ) {
 					this.values( index, newVal, true );
 				}
 			}
@@ -7181,7 +7181,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 					handle: this.handles[ index ],
 					value: newVal
 				} );
-				if ( allowed !== false ) {
+				if ( allowed ) {
 					this.value( newVal );
 				}
 			}
@@ -7384,7 +7384,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 				valPercent = ( self.values(i) - self._valueMin() ) / ( self._valueMax() - self._valueMin() ) * 100;
 				_set[ self.orientation === "horizontal" ? "left" : "bottom" ] = valPercent + "%";
 				$( this ).stop( 1, 1 )[ animate ? "animate" : "css" ]( _set, o.animate );
-				if ( self.options.range === true ) {
+				if ( self.options.range ) {
 					if ( self.orientation === "horizontal" ) {
 						if ( i === 0 ) {
 							self.range.stop( 1, 1 )[ animate ? "animate" : "css" ]( { left: valPercent + "%" }, o.animate );
@@ -7692,7 +7692,7 @@ $.widget( "ui.tabs", {
 		}
 
 		// reset cache if switching from cached to not cached
-		if ( o.cache === false ) {
+		if (!o.cache) {
 			this.anchors.removeData( "cache.tabs" );
 		}
 

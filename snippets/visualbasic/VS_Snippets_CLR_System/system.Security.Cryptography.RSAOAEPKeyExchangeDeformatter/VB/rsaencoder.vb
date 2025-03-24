@@ -116,9 +116,9 @@ Public Class Form1
         rsaFormatter.SetKey(key)
         '</Snippet5>
 
-        ' Create a random number using the RNGCryptoServiceProvider provider.
+        ' Create a random number using the RandomNumberGenerator.
         '<Snippet6>
-        Dim ring As New RNGCryptoServiceProvider
+        Dim ring As RandomNumberGenerator = RandomNumberGenerator.Create()
         rsaFormatter.Rng = ring
         '</Snippet6>
 

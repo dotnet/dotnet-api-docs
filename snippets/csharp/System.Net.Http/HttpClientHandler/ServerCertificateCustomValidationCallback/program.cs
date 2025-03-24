@@ -23,7 +23,7 @@ class HttpClientHandler_SecureExample
         // Call asynchronous network methods in a try/catch block to handle exceptions
         try
         {
-            HttpResponseMessage response = await client.GetAsync("https://docs.microsoft.com/");
+            HttpResponseMessage response = await client.GetAsync("https://learn.microsoft.com/");
 
             response.EnsureSuccessStatusCode();
 

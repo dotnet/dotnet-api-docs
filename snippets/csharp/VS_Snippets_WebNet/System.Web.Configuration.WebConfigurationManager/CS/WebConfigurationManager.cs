@@ -11,11 +11,11 @@ namespace Samples.Aspnet
     class UsingWebConfigurationManager
     {
 
-        // Methods to access a section at runtime. 
+        // Methods to access a section at runtime.
 
         // <Snippet2>
 
-        // Show how to use the GetSection(string). 
+        // Show how to use the GetSection(string).
         // to access the connectionStrings section.
         static void GetConnectionStringsSection()
         {
@@ -28,12 +28,12 @@ namespace Samples.Aspnet
             // Get the connectionStrings key,value pairs collection.
             ConnectionStringSettingsCollection connectionStrings =
                 connectionStringsSection.ConnectionStrings;
-           
+
             // Get the collection enumerator.
             IEnumerator connectionStringsEnum =
                 connectionStrings.GetEnumerator();
 
-            // Loop through the collection and 
+            // Loop through the collection and
             // display the connectionStrings key, value pairs.
             int i = 0;
             Console.WriteLine("[Display the connectionStrings]");
@@ -52,14 +52,14 @@ namespace Samples.Aspnet
 
         // <Snippet5>
 
-       // Show the use of GetSection(string, string). 
+       // Show the use of GetSection(string, string).
        // to access the connectionStrings section.
         static void GetSection2()
         {
 
             try
             {
-                // Get the connectionStrings section for the 
+                // Get the connectionStrings section for the
                 // specified Web app. This GetSection overload
                 // can olny be called from within a Web application.
                 ConnectionStringsSection connectionStringsSection =
@@ -74,7 +74,7 @@ namespace Samples.Aspnet
                 IEnumerator connectionStringsEnum =
                     connectionStrings.GetEnumerator();
 
-                // Loop through the collection and 
+                // Loop through the collection and
                 // display the connectionStrings key, value pairs.
                 int i = 0;
                 Console.WriteLine("[Display connectionStrings]");
@@ -99,7 +99,7 @@ namespace Samples.Aspnet
 
         // <Snippet6>
 
-       // Show the use of GetWebApplicationSection(string). 
+       // Show the use of GetWebApplicationSection(string).
        // to get the connectionStrings section.
         static void GetWebApplicationSection()
         {
@@ -117,7 +117,7 @@ namespace Samples.Aspnet
             IEnumerator connectionStringsEnum =
                 connectionStrings.GetEnumerator();
 
-            // Loop through the collection and 
+            // Loop through the collection and
             // display the connectionStrings key, value pairs.
             int i = 0;
             Console.WriteLine("[Display connectionStrings]");
@@ -150,7 +150,7 @@ namespace Samples.Aspnet
             IEnumerator connectionStringsEnum =
                 connectionStrings.GetEnumerator();
 
-            // Loop through the collection and 
+            // Loop through the collection and
             // display the connectionStrings key, value pairs.
             int i = 0;
             Console.WriteLine("[Display connectionStrings]");
@@ -170,7 +170,7 @@ namespace Samples.Aspnet
         // <Snippet8>
 
         // Show the use of the AppSettings property
-        // to get the application settings. 
+        // to get the application settings.
         static void GetAppSettings()
         {
 
@@ -183,7 +183,7 @@ namespace Samples.Aspnet
             IEnumerator appSettingsEnum =
                 appSettings.GetEnumerator();
 
-            // Loop through the collection and 
+            // Loop through the collection and
             // display the appSettings key, value pairs.
             int i = 0;
             Console.WriteLine("[Display appSettings]");
@@ -200,15 +200,15 @@ namespace Samples.Aspnet
 
         // </Snippet8>
 
-        // Methods to access configuration files 
+        // Methods to access configuration files
         // not at runtime. These methods are
         // used to edit configuration files.
 
         // <Snippet9>
 
         // Show how to use OpenMachineConfiguration().
-        // It gets the machine.config file on the current 
-        // machine and displays section information. 
+        // It gets the machine.config file on the current
+        // machine and displays section information.
         static void OpenMachineConfiguration1()
         {
             // Get the machine.config file on the current machine.
@@ -228,7 +228,7 @@ namespace Samples.Aspnet
             Console.WriteLine("[Total number of sections: {0}]", i);
 
             // Display machine.config path.
-            Console.WriteLine("[File path: {0}]", config.FilePath); 
+            Console.WriteLine("[File path: {0}]", config.FilePath);
         }
 
         // </Snippet9>
@@ -236,13 +236,13 @@ namespace Samples.Aspnet
         // <Snippet10>
 
         // Show how to use OpenMachineConfiguration(string).
-        // It gets the machine.config file applicabe to the
-        // specified resource and displays section 
-        // basic information. 
+        // It gets the machine.config file applicable to the
+        // specified resource and displays section
+        // basic information.
         static void OpenMachineConfiguration2()
         {
-            // Get the machine.config file applicabe to the
-            // specified reosurce.
+            // Get the machine.config file applicable to the
+            // specified resource.
             System.Configuration.Configuration config =
                 WebConfigurationManager.OpenMachineConfiguration("configTest");
 
@@ -268,14 +268,14 @@ namespace Samples.Aspnet
 
         // Show how to use OpenMachineConfiguration(string, string).
         // It gets the machine.config file on the specified server and
-        // applicabe to the specified reosurce and displays section 
-        // basic information. 
+        // applicable to the specified resource and displays section
+        // basic information.
         static void OpenMachineConfiguration3()
         {
-            // Get the machine.config file applicabe to the
-            // specified reosurce and on the specified server.
+            // Get the machine.config file applicable to the
+            // specified resource and on the specified server.
             System.Configuration.Configuration config =
-                WebConfigurationManager.OpenMachineConfiguration("configTest", 
+                WebConfigurationManager.OpenMachineConfiguration("configTest",
                 "myServer");
 
             // Loop to get the sections. Display basic information.
@@ -300,16 +300,16 @@ namespace Samples.Aspnet
 
         // Show how to use OpenMachineConfiguration(string, string).
         // It gets the machine.config file on the specified server,
-        // applicabe to the specified reosurce, for the specified user
-        // and displays section basic information. 
+        // applicable to the specified resource, for the specified user
+        // and displays section basic information.
         static void OpenMachineConfiguration4()
         {
             // Get the current user token.
             IntPtr userToken =
                   System.Security.Principal.WindowsIdentity.GetCurrent().Token;
 
-            // Get the machine.config file applicabe to the
-            // specified reosurce, on the specified server for the
+            // Get the machine.config file applicable to the
+            // specified resource, on the specified server for the
             // specified user.
             System.Configuration.Configuration config =
                 WebConfigurationManager.OpenMachineConfiguration("configTest",
@@ -337,8 +337,8 @@ namespace Samples.Aspnet
 
         // Show how to use OpenMachineConfiguration(string, string).
         // It gets the machine.config file on the specified server,
-        // applicabe to the specified reosurce, for the specified user
-        // and displays section basic information. 
+        // applicable to the specified resource, for the specified user
+        // and displays section basic information.
         static void OpenMachineConfiguration5()
         {
             // Set the user id and password.
@@ -347,8 +347,8 @@ namespace Samples.Aspnet
             // Substitute with actual password.
             string password = "userPassword";
 
-            // Get the machine.config file applicabe to the
-            // specified reosurce, on the specified server for the
+            // Get the machine.config file applicable to the
+            // specified resource, on the specified server for the
             // specified user.
             System.Configuration.Configuration config =
                 WebConfigurationManager.OpenMachineConfiguration("configTest",
@@ -375,15 +375,15 @@ namespace Samples.Aspnet
         // <Snippet14>
 
         // Show how to use OpenWebConfiguration(string).
-        // It gets he appSettings section of a Web application 
-        // runnig on the local server. 
+        // It gets he appSettings section of a Web application
+        // runnig on the local server.
         static void OpenWebConfiguration1()
         {
             // Get the configuration object for a Web application
-            // running on the local server. 
+            // running on the local server.
             System.Configuration.Configuration config =
-                WebConfigurationManager.OpenWebConfiguration("/configTest") 
-                as System.Configuration.Configuration; 
+                WebConfigurationManager.OpenWebConfiguration("/configTest")
+                as System.Configuration.Configuration;
 
             // Get the appSettings.
             KeyValueConfigurationCollection appSettings =
@@ -406,14 +406,14 @@ namespace Samples.Aspnet
         // <Snippet15>
 
         // Show how to use OpenWebConfiguration(string, string).
-        // It gets he appSettings section of a Web application 
-        // runnig on the local server. 
+        // It gets he appSettings section of a Web application
+        // runnig on the local server.
         static void OpenWebConfiguration2()
         {
             // Get the configuration object for a Web application
-            // running on the local server. 
+            // running on the local server.
             System.Configuration.Configuration config =
-                WebConfigurationManager.OpenWebConfiguration("/configTest", 
+                WebConfigurationManager.OpenWebConfiguration("/configTest",
                 "Default Web Site")
                 as System.Configuration.Configuration;
 
@@ -441,12 +441,12 @@ namespace Samples.Aspnet
         // <Snippet16>
 
         // Show how to use OpenWebConfiguration(string, string, string).
-        // It gets he appSettings section of a Web application 
-        // runnig on the local server. 
+        // It gets he appSettings section of a Web application
+        // runnig on the local server.
         static void OpenWebConfiguration3()
         {
             // Get the configuration object for a Web application
-            // running on the local server. 
+            // running on the local server.
             System.Configuration.Configuration config =
                 WebConfigurationManager.OpenWebConfiguration(
                 "/configTest", "Default Web Site", null)
@@ -462,7 +462,7 @@ namespace Samples.Aspnet
                 "[appSettings for app at: /configTest");
             Console.WriteLine(" site: Default Web Site");
             Console.WriteLine(" and locationSubPath: null]");
-            
+
             foreach (string key in appSettings.AllKeys)
             {
                 Console.WriteLine("Name: {0} Value: {1}",
@@ -476,22 +476,22 @@ namespace Samples.Aspnet
 
         // <Snippet17>
 
-        // Show how to use OpenWebConfiguration(string, string, 
+        // Show how to use OpenWebConfiguration(string, string,
         // string, string).
-        // It gets he appSettings section of a Web application 
-        // running on the specified server. 
+        // It gets he appSettings section of a Web application
+        // running on the specified server.
         // If the server is remote your application must have the
-        // required access rights to the configuration file. 
+        // required access rights to the configuration file.
         static void OpenWebConfiguration4()
         {
             // Get the configuration object for a Web application
             // running on the specified server.
-            // Null for the subPath signifies no subdir. 
+            // Null for the subPath signifies no subdir.
             System.Configuration.Configuration config =
                    WebConfigurationManager.OpenWebConfiguration(
                     "/configTest", "Default Web Site", null, "myServer")
                    as System.Configuration.Configuration;
-            
+
             // Get the appSettings.
             KeyValueConfigurationCollection appSettings =
                  config.AppSettings.Settings;
@@ -512,18 +512,18 @@ namespace Samples.Aspnet
 
         // <Snippet18>
 
-        // Show how to use OpenWebConfiguration(string, string, 
+        // Show how to use OpenWebConfiguration(string, string,
         // string, string, string, string).
-        // It gets he appSettings section of a Web application 
-        // running on a remote server. 
+        // It gets he appSettings section of a Web application
+        // running on a remote server.
         // If the server is remote your application must have the
-        // required access rights to the configuration file. 
+        // required access rights to the configuration file.
         static void OpenWebConfiguration5()
         {
             // Get the current user.
             string user =
                 System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
+
             // Assign the actual password.
             string password = "userPassword";
 
@@ -554,26 +554,26 @@ namespace Samples.Aspnet
 
         // <Snippet19>
 
-        // Show how to use OpenWebConfiguration(string, string, 
+        // Show how to use OpenWebConfiguration(string, string,
         // string, string, IntPtr).
-        // It gets he appSettings section of a Web application 
-        // running on a remote server. 
+        // It gets he appSettings section of a Web application
+        // running on a remote server.
         // If the serve is remote your application shall have the
-        // requires access rights to the configuration file. 
+        // requires access rights to the configuration file.
         static void OpenWebConfiguration6()
         {
 
-            IntPtr userToken = 
+            IntPtr userToken =
                 System.Security.Principal.WindowsIdentity.GetCurrent().Token;
-           
-            string user = 
+
+            string user =
                 System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
+
             // Get the configuration object for a Web application
             // running on a remote server.
             System.Configuration.Configuration config =
                 WebConfigurationManager.OpenWebConfiguration(
-                "/configTest", "Default Web Site", null, 
+                "/configTest", "Default Web Site", null,
                 "myServer", userToken) as System.Configuration.Configuration;
 
             // Get the appSettings.
@@ -597,7 +597,7 @@ namespace Samples.Aspnet
         // <Snippet20>
 
         // Utility to map virtual directories to physical ones.
-        // In the current physical directory maps 
+        // In the current physical directory maps
         // a physical sub-directory with its virtual directory.
         // A web.config file is created for the
         // default and the virtual directory at the appropriate level.
@@ -611,24 +611,24 @@ namespace Samples.Aspnet
 
             // Get he physical directory where this app runs.
             // We'll use it to map the virtual directories
-            // defined next. 
+            // defined next.
             string physDir = Environment.CurrentDirectory;
 
             // Create a VirtualDirectoryMapping object to use
             // as the root directory for the virtual directory
-            // named config. 
+            // named config.
             // Note: you must assure that you have a physical subdirectory
             // named config in the curremt physical directory where this
             // application runs.
-            VirtualDirectoryMapping vDirMap = 
+            VirtualDirectoryMapping vDirMap =
                 new VirtualDirectoryMapping(physDir + "\\config", true);
 
-            // Add vDirMap to the VirtualDirectories collection 
+            // Add vDirMap to the VirtualDirectories collection
             // assigning to it the virtual directory name.
             fileMap.VirtualDirectories.Add("/config", vDirMap);
 
             // Create a VirtualDirectoryMapping object to use
-            // as the default directory for all the virtual 
+            // as the default directory for all the virtual
             // directories.
             VirtualDirectoryMapping vDirMapBase =
                 new VirtualDirectoryMapping(physDir, true, "web.config");
@@ -636,15 +636,15 @@ namespace Samples.Aspnet
             // Add it to the virtual directory mapping collection.
             fileMap.VirtualDirectories.Add("/", vDirMapBase);
 
-# if DEBUG  
+# if DEBUG
             // Test at debug time.
             foreach (string key in fileMap.VirtualDirectories.AllKeys)
             {
                 Console.WriteLine("Virtual directory: {0} Physical path: {1}",
-                fileMap.VirtualDirectories[key].VirtualDirectory, 
+                fileMap.VirtualDirectories[key].VirtualDirectory,
                 fileMap.VirtualDirectories[key].PhysicalDirectory);
             }
-# endif 
+# endif
 
             // Return the mapping.
             return fileMap;
@@ -660,7 +660,7 @@ namespace Samples.Aspnet
         {
 
             // Create the configuration directories mapping.
-            WebConfigurationFileMap fileMap = 
+            WebConfigurationFileMap fileMap =
                 CreateFileMap();
 
             try
@@ -669,10 +669,10 @@ namespace Samples.Aspnet
                 // Get the Configuration object for the mapped
                 // virtual directory.
                 System.Configuration.Configuration config =
-                    WebConfigurationManager.OpenMappedWebConfiguration(fileMap, 
+                    WebConfigurationManager.OpenMappedWebConfiguration(fileMap,
                     "/config");
 
-                // Define a nique key for the creation of 
+                // Define a nique key for the creation of
                 // an appSettings element entry.
                 int appStgCnt = config.AppSettings.Settings.Count;
                 string asName = "AppSetting" + appStgCnt.ToString();
@@ -684,12 +684,12 @@ namespace Samples.Aspnet
 
                 // Save to the configuration file.
                 config.Save(ConfigurationSaveMode.Modified);
-              
+
                 // Display new appSettings.
                 Console.WriteLine("Count:  [{0}]", config.AppSettings.Settings.Count);
                 foreach (string key in config.AppSettings.Settings.AllKeys)
-                { 
-                    Console.WriteLine("[{0}] = [{1}]", key, 
+                {
+                    Console.WriteLine("[{0}] = [{1}]", key,
                         config.AppSettings.Settings[key].Value);
                 }
             }
@@ -719,11 +719,11 @@ namespace Samples.Aspnet
 
                 // Get the Configuration object for the mapped
                 // virtual directory.
-                System.Configuration.Configuration config = 
+                System.Configuration.Configuration config =
                     WebConfigurationManager.OpenMappedWebConfiguration(
                     fileMap, "/config", "config");
-                
-                // Define a nique key for the creation of 
+
+                // Define a nique key for the creation of
                 // an appSettings element entry.
                 int appStgCnt = config.AppSettings.Settings.Count;
                 string asName = "AppSetting" + appStgCnt.ToString();
@@ -737,7 +737,7 @@ namespace Samples.Aspnet
                 config.Save(ConfigurationSaveMode.Modified);
 
                 // Display new appSettings.
-                Console.WriteLine("Count:  [{0}]", 
+                Console.WriteLine("Count:  [{0}]",
                     config.AppSettings.Settings.Count);
                 foreach (string key in config.AppSettings.Settings.AllKeys)
                 {
@@ -775,7 +775,7 @@ namespace Samples.Aspnet
                     WebConfigurationManager.OpenMappedWebConfiguration(
                     fileMap, "/config", "config", "config");
 
-                // Define a nique key for the creation of 
+                // Define a unique key for the creation of
                 // an appSettings element entry.
                 int appStgCnt = config.AppSettings.Settings.Count;
                 string asName = "AppSetting" + appStgCnt.ToString();
@@ -789,7 +789,7 @@ namespace Samples.Aspnet
                 config.Save(ConfigurationSaveMode.Modified);
 
                 // Display new appSettings.
-                Console.WriteLine("Count:  [{0}]", 
+                Console.WriteLine("Count:  [{0}]",
                     config.AppSettings.Settings.Count);
                 foreach (string key in config.AppSettings.Settings.AllKeys)
                 {
@@ -825,7 +825,7 @@ namespace Samples.Aspnet
                 case "0":
                     GetConnectionStringsSection();
                     break;
-                
+
                 case "1":
                     GetSection2();
                     break;
@@ -861,19 +861,19 @@ namespace Samples.Aspnet
                 case "9":
                     OpenWebConfiguration2();
                     break;
-                
+
                 case "10":
                     OpenWebConfiguration3();
                     break;
-                
+
                 case "11":
                     OpenWebConfiguration4();
                     break;
-                
+
                 case "12":
                     OpenWebConfiguration5();
                     break;
-                
+
                 case "13":
                     OpenWebConfiguration6();
                     break;
@@ -893,7 +893,7 @@ namespace Samples.Aspnet
                 case "17":
                     GetAppSettings();
                     break;
-                
+
                 case "18":
                     GetConnectionStrings();
                     break;

@@ -34,7 +34,7 @@ public class Example
    {
       Assembly assem = typeof(Person).Assembly;
       Person p = (Person) assem.CreateInstance("Contoso.Libraries.Person");
-      if (! (p == null)) {
+      if (!(p == null)) {
          p.Name = "John";
          Console.WriteLine("Instantiated a {0} object whose value is '{1}'",
                            p.GetType().Name, p);

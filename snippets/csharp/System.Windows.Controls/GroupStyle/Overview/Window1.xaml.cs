@@ -21,7 +21,7 @@ namespace GroupingSample
 //<SnippetGetView>
             myView = (CollectionView)CollectionViewSource.GetDefaultView(myItemsControl.ItemsSource);
 //</SnippetGetView>
-            if (myView.CanGroup == true)
+            if (myView.CanGroup)
             {
                 PropertyGroupDescription groupDescription
                     = new PropertyGroupDescription("@Type");

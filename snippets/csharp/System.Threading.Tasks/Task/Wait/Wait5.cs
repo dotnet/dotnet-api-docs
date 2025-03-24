@@ -18,7 +18,7 @@ public class Example
                             Console.WriteLine("Mean:    {0:N2}", sum/n);
                             Console.WriteLine("N:       {0:N0}", n);   
                          } );
-     if (! t.Wait(150))
+     if (!t.Wait(150))
         Console.WriteLine("The timeout interval elapsed.");
    }
 }

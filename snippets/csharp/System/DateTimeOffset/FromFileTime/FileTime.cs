@@ -54,7 +54,7 @@ public class FileTimes
    {
       // Open file %windir%\write.exe
       string winDir = Environment.SystemDirectory;
-      if (! (winDir.EndsWith(Path.DirectorySeparatorChar.ToString())))
+      if (!(winDir.EndsWith(Path.DirectorySeparatorChar.ToString())))
          winDir += Path.DirectorySeparatorChar;
       winDir += "write.exe";
 

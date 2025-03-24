@@ -160,7 +160,7 @@ public class TimeZoneCreation
                }   
             }
          }
-         if (! found)
+         if (!found)
          {               
             // Define transition times to/from DST
             TimeZoneInfo.TransitionTime startTransition = TimeZoneInfo.TransitionTime.CreateFloatingDateRule(new DateTime(1, 1, 1, 2, 0, 0), 10, 1, DayOfWeek.Sunday); 

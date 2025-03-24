@@ -13,7 +13,7 @@ namespace MyClaimsAuthenticationManager
     {
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
-            if (incomingPrincipal != null && incomingPrincipal.Identity.IsAuthenticated == true)
+            if (incomingPrincipal != null && incomingPrincipal.Identity.IsAuthenticated)
             {
                 ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim(ClaimTypes.Role, "User"));
             }

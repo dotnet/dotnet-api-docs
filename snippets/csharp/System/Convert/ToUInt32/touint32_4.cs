@@ -21,7 +21,7 @@ public struct HexString : IConvertible
       set {
          if (value.Trim().Length > 8)
             throw new ArgumentException("The string representation of a 32-bit integer cannot have more than 8 characters.");
-         else if (! Regex.IsMatch(value, "([0-9,A-F]){1,8}", RegexOptions.IgnoreCase))
+         else if (!Regex.IsMatch(value, "([0-9,A-F]){1,8}", RegexOptions.IgnoreCase))
             throw new ArgumentException("The hexadecimal representation of a 32-bit integer contains invalid characters.");
          else
             hexString = value;

@@ -695,11 +695,7 @@ Public Class NetworkingExample
             Dim adapterProperties As IPInterfaceProperties = adapter.GetIPProperties()
             ' Try to get the IPv4 interface properties.
             Dim p As IPv4InterfaceProperties = adapterProperties.GetIPv4Properties()
-            
-            If p Is Nothing Then
-                Console.WriteLine("No IPv4 information is available for this interface.")
-                GoTo ContinueForEach1
-            End If
+
             ' Display the IPv4 specific data.
             Console.WriteLine("  Index ............................. : {0}", p.Index)
             Console.WriteLine("  MTU ............................... : {0}", p.Mtu)

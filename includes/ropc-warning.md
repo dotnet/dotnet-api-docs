@@ -1,0 +1,2 @@
+> [!WARNING]
+> Microsoft does not recommend providing your user name and password directly, because it's an insecure pattern. Where possible, use more secure authentication flows, such as [Managed Identities for Azure resources](/sql/connect/ado-net/sql/azure-active-directory-authentication#using-managed-identity-authentication), or [Windows authentication](/sql/relational-databases/security/choose-an-authentication-mode#connecting-through-windows-authentication) for SQL Server.

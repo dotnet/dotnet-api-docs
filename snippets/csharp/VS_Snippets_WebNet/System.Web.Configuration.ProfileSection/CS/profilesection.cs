@@ -218,7 +218,7 @@ profileSection.Enabled = false;
 // </Snippet9>
                 
                 // Update if not locked.
-                if (! profileSection.SectionInformation.IsLocked)
+                if (!profileSection.SectionInformation.IsLocked)
                 {
                     configuration.Save();
                     Console.WriteLine("** Configuration updated.");
