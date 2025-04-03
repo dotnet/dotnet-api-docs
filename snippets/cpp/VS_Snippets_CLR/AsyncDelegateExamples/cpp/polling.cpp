@@ -21,7 +21,7 @@ void main()
         threadId, nullptr, nullptr);
 
     // Poll while simulating work.
-    while(result->IsCompleted == false)
+    while(!result->IsCompleted)
     {
         Thread::Sleep(250);
         Console::Write(".");

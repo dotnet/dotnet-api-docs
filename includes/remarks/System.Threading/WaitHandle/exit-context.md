@@ -1,0 +1,7 @@
+## Exiting the context
+
+The `exitContext` parameter has no effect unless this method is called from inside a nondefault managed context. The managed context can be nondefault if your thread is inside a call to an instance of a class derived from <xref:System.ContextBoundObject>. Even if you're currently executing a method on a class that isn't derived from <xref:System.ContextBoundObject>, like <xref:System.String>, you can be in a nondefault context if a <xref:System.ContextBoundObject> is on your stack in the current application domain.
+
+When your code is executing in a nondefault context, specifying `true` for `exitContext` causes the thread to exit the nondefault managed context (that is, to transition to the default context) before executing this method. The thread returns to the original nondefault context after the call to this method completes.
+
+Exiting the context can be useful when the context-bound class has the <xref:System.Runtime.Remoting.Contexts.SynchronizationAttribute> attribute. In that case, all calls to members of the class are automatically synchronized, and the synchronization domain is the entire body of code for the class. If code in the call stack of a member calls this method and specifies `true` for `exitContext`, the thread exits the synchronization domain, which allows a thread that's blocked on a call to any member of the object to proceed. When this method returns, the thread that made the call must wait to reenter the synchronization domain.

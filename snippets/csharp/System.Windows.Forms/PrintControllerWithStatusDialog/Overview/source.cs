@@ -13,9 +13,9 @@ public class Form1: Form
  
 // <Snippet1>
  void myPrint() {
-    if (useMyPrintController==true) {
+    if (useMyPrintController) {
        myDocumentPrinter.PrintController = new myControllerImplementation();     
-       if (wantsStatusDialog==true) {
+       if (wantsStatusDialog) {
           myDocumentPrinter.PrintController =
             new PrintControllerWithStatusDialog(myDocumentPrinter.PrintController);
        }

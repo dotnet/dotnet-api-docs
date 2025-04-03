@@ -27,7 +27,7 @@ namespace NorthwindClient
 
         private void LoginWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (this.DialogResult == true &&
+            if (this.DialogResult &&
                     (this.userNameBox.Text == string.Empty || this.passwordBox.SecurePassword.Length == 0))
             {
                 e.Cancel = true;

@@ -10,7 +10,6 @@
 //
 //-----------------------------------------------------------------------------
 //<Snippet1>
-
 using System;
 
 namespace ClaimsAuthorizationLibrary

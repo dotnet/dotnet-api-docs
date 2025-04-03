@@ -13,7 +13,7 @@ type LogTableOverflowException(auxMessage, inner) as this =
     inherit Exception($"%s{overflowMessage} - %s{auxMessage}", inner)
 
     do
-        this.HelpLink <- "https://docs.microsoft.com"
+        this.HelpLink <- "https://learn.microsoft.com"
         this.Source <- "Exception_Class_Samples"
 
 type LogTable(numElements) =
@@ -65,7 +65,7 @@ with ex ->
 // The log table has overflowed. - Record "Log record number 5" was not logged.
 
 // HelpLink ---
-// https://docs.microsoft.com
+// https://learn.microsoft.com
 
 // Source ---
 // Exception_Class_Samples

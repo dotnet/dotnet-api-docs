@@ -6,14 +6,6 @@ namespace OleDbCommandPrepareCS
 {
     class Program
     {
-        static void Main()
-        {
-            string connectionString = "Provider=sqloledb;Data Source=(local);Initial Catalog=Northwind;"
-                + "Integrated Security=SSPI";
-            OleDbCommandPrepare(connectionString);
-            Console.ReadLine();
-        }
-
         // <Snippet1>
         private static void OleDbCommandPrepare(string connectionString)
         {

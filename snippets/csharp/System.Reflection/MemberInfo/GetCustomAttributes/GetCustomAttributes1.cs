@@ -38,7 +38,7 @@ public class Example
             Console.Write("ThreadStatic");
             hasAttribute = true;
          }
-         if (! hasAttribute)
+         if (!hasAttribute)
             Console.Write("No attributes");
 
          Console.WriteLine();

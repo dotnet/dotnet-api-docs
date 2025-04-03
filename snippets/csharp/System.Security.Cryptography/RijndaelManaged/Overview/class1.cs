@@ -70,8 +70,9 @@ namespace RijndaelManaged_Example
                             //Write all data to the stream.
                             swEncrypt.Write(plainText);
                         }
-                        encrypted = msEncrypt.ToArray();
                     }
+
+                    encrypted = msEncrypt.ToArray();
                 }
             }
 

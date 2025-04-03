@@ -23,7 +23,7 @@ namespace ResolveAddressSync
 
                 resolver.ResolveAddressCompleted += new EventHandler<ResolveAddressCompletedEventArgs>(resolver_ResolveAddressCompleted);
 
-                if (watcher.Position.Location.IsUnknown == false)
+                if (!watcher.Position.Location.IsUnknown)
                 {
                     resolver.ResolveAddressAsync(watcher.Position.Location);
                 }

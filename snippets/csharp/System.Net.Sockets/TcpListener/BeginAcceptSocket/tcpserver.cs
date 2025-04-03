@@ -27,7 +27,6 @@ namespace newTcpListener
         }
         // </Snippet3>
 
-        // <Snippet4>
         // Thread signal.
         public static ManualResetEvent clientConnected =
             new ManualResetEvent(false);
@@ -67,9 +66,7 @@ namespace newTcpListener
             // Signal the calling thread to continue.
             clientConnected.Set();
         }
-        // </Snippet4>
 
-        // <Snippet5>
         // Thread signal.
         public static ManualResetEvent tcpClientConnected =
             new ManualResetEvent(false);
@@ -112,7 +109,6 @@ namespace newTcpListener
             // Signal the calling thread to continue.
             tcpClientConnected.Set();
         }
-        // </Snippet5>
 
         [STAThread]
         static void Main()

@@ -231,7 +231,7 @@ public class Form1 : Form
 
                 // If the cell contains a value that has not been commited,
                 // use the modified value.
-                if (DataGridView1.IsCurrentCellDirty == true)
+                if (DataGridView1.IsCurrentCellDirty)
                 {
 
                     value = DataGridView1.SelectedCells[counter]

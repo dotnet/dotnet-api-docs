@@ -43,7 +43,7 @@ namespace DataGrid_CustomColumns {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         protected AdventureWorksLT2008DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
-            if ((this.IsBinarySerialized(info, context) == true)) {
+            if (this.IsBinarySerialized(info, context)) {
                 this.InitVars(false);
                 global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
@@ -189,7 +189,7 @@ namespace DataGrid_CustomColumns {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
             this.tableCustomer = ((CustomerDataTable)(base.Tables["Customer"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableCustomer != null)) {
                     this.tableCustomer.InitVars();
                 }
@@ -1357,7 +1357,7 @@ SELECT CustomerID, NameStyle, Title, FirstName COLLATE SQL_Latin1_General_CP1_CI
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet.CustomerDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);
@@ -2000,7 +2000,7 @@ SELECT CustomerID, NameStyle, Title, FirstName COLLATE SQL_Latin1_General_CP1_CI
             global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
             for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
                 global::System.Data.DataRow row = updatedRows[i];
-                if ((allAddedRows.Contains(row) == false)) {
+                if (!allAddedRows.Contains(row)) {
                     realUpdatedRows.Add(row);
                 }
             }
@@ -2016,11 +2016,11 @@ SELECT CustomerID, NameStyle, Title, FirstName COLLATE SQL_Latin1_General_CP1_CI
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
-            if ((dataSet.HasChanges() == false)) {
+            if (!dataSet.HasChanges()) {
                 return 0;
             }
             if (((this._customerTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._customerTableAdapter.Connection) == false))) {
+                        && (!this.MatchTableAdapterConnection(this._customerTableAdapter.Connection)))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -2202,15 +2202,15 @@ SELECT CustomerID, NameStyle, Title, FirstName COLLATE SQL_Latin1_General_CP1_CI
                 global::System.Data.DataRow newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 for (
                 ; ((newParent != null) 
-                            && ((object.ReferenceEquals(newParent, child) == false) 
-                            && (object.ReferenceEquals(newParent, parent) == false))); 
+                            && ((!object.ReferenceEquals(newParent, child) ) 
+                            && (!object.ReferenceEquals(newParent, parent) ))); 
                 ) {
                     newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 }
                 if ((newParent == null)) {
                     for (newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original); ((newParent != null) 
-                                && ((object.ReferenceEquals(newParent, child) == false) 
-                                && (object.ReferenceEquals(newParent, parent) == false))); 
+                                && ((!object.ReferenceEquals(newParent, child) ) 
+                                && (!object.ReferenceEquals(newParent, parent) ))); 
                     ) {
                         newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
                     }

@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-public class Worker : MarshalByRefObject
+public class CreateInstanceWorker : MarshalByRefObject
 {
     public void PrintDomain()
     {
@@ -11,20 +11,20 @@ public class Worker : MarshalByRefObject
     }
 }
 
-class Example
+class CreateInstanceAndUnwrapSourceSnippet
 {
     public static void Main()
     {
         // Create an ordinary instance in the current AppDomain
-        Worker localWorker = new Worker();
+        CreateInstanceWorker localWorker = new CreateInstanceWorker();
         localWorker.PrintDomain();
 
         // Create a new application domain, create an instance
         // of Worker in the application domain, and execute code
         // there.
         AppDomain ad = AppDomain.CreateDomain("New domain");
-        Worker remoteWorker = (Worker) ad.CreateInstanceAndUnwrap(
-            typeof(Worker).Assembly.FullName,
+        CreateInstanceWorker remoteWorker = (CreateInstanceWorker) ad.CreateInstanceAndUnwrap(
+            typeof(CreateInstanceWorker).Assembly.FullName,
             "Worker");
         remoteWorker.PrintDomain();
     }

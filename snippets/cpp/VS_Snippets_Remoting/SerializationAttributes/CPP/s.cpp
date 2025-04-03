@@ -57,7 +57,6 @@ int main()
    Stream^ stream = File::Open( "data.xml", FileMode::Create );
    SoapFormatter^ formatter = gcnew SoapFormatter;
 
-   //BinaryFormatter* formatter = new BinaryFormatter();
    formatter->Serialize( stream, obj );
    stream->Close();
 
@@ -68,7 +67,6 @@ int main()
    stream = File::Open( "data.xml", FileMode::Open );
    formatter = gcnew SoapFormatter;
 
-   //formatter = new BinaryFormatter();
    obj = dynamic_cast<TestSimpleObject^>(formatter->Deserialize( stream ));
    stream->Close();
    Console::WriteLine( "" );

@@ -5,7 +5,7 @@ public class Example
 {
    public static void Main()
    {
-      if (! Console.IsInputRedirected) {
+      if (!Console.IsInputRedirected) {
          Console.WriteLine("This example requires that input be redirected from a file.");
          return;
       }

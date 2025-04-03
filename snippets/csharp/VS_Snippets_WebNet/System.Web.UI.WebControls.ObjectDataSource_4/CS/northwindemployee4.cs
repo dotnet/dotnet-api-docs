@@ -58,12 +58,12 @@ using System.Web.UI.WebControls;
 
     public static void UpdateEmployeeInfo(NorthwindEmployee ne) {
       bool retval = ne.Save();
-      if (! retval) { throw new NorthwindDataException("UpdateEmployee failed."); }
+      if (!retval) { throw new NorthwindDataException("UpdateEmployee failed."); }
     }
 
     public static void DeleteEmployee(NorthwindEmployee ne) {
       bool retval = ne.Delete();
-      if (! retval) { throw new NorthwindDataException("DeleteEmployee failed."); }
+      if (!retval) { throw new NorthwindDataException("DeleteEmployee failed."); }
     }
 
     // And so on...
@@ -105,7 +105,7 @@ using System.Web.UI.WebControls;
           this.lastName         = sdr["LastName"].ToString();
           this.title            = sdr["Title"].ToString();
           this.titleOfCourtesy  = sdr["TitleOfCourtesy"].ToString();
-          if (! sdr.IsDBNull(4)) {
+          if (!sdr.IsDBNull(4)) {
             this.reportsTo        = sdr.GetInt32(4);
           }
         }

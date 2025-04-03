@@ -25,11 +25,17 @@
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -39,58 +45,64 @@
       <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
   </Interfaces>
+  <Attributes>
+    <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>Provides a way to group a series of design-time actions to improve performance and enable most types of changes to be undone.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Transactions can track actions that can be undone later. Changes made during a transaction can be reversed by canceling a transaction, which automatically attempts to reverse each change by setting each changed property to its pre-change value. Transactions can also improve performance during a series of operations by deferring updates to the display until the completion of the transaction.  
-  
- When a transaction is in progress, some components defer their processing until the transaction has completed by listening to the <xref:System.ComponentModel.Design.IDesignerHost.TransactionOpening> and <xref:System.ComponentModel.Design.IDesignerHost.TransactionClosed> events. The Properties window, for example, does not update its display after a transaction has opened until the transaction has closed.  
-  
- To use transactions for reversible or multiple operations, have your designer create a <xref:System.ComponentModel.Design.DesignerTransaction> for each operation or series of operations which should be reversible. Be careful not to perform actions outside the transactions that might prevent a sequence of undo events from completing successfully.  
-  
- You can obtain a new <xref:System.ComponentModel.Design.DesignerTransaction> by calling the <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> method of an <xref:System.ComponentModel.Design.IDesignerHost>. Be sure to obtain each <xref:System.ComponentModel.Design.DesignerTransaction> from the active <xref:System.ComponentModel.Design.IDesignerHost> in order to correctly integrate with the designer transaction processing mechanism, rather than creating a new <xref:System.ComponentModel.Design.DesignerTransaction> directly.  
-  
- To perform an action within a transaction, you must first create a transaction. Then you must call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method before each change or set of changes occurs, and the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method after each change or set of changes occur. Finally, complete and close the transaction by calling the <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> method.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Transactions can track actions that can be undone later. Changes made during a transaction can be reversed by canceling a transaction, which automatically attempts to reverse each change by setting each changed property to its pre-change value. Transactions can also improve performance during a series of operations by deferring updates to the display until the completion of the transaction.
+
+ When a transaction is in progress, some components defer their processing until the transaction has completed by listening to the <xref:System.ComponentModel.Design.IDesignerHost.TransactionOpening> and <xref:System.ComponentModel.Design.IDesignerHost.TransactionClosed> events. The Properties window, for example, does not update its display after a transaction has opened until the transaction has closed.
+
+ To use transactions for reversible or multiple operations, have your designer create a <xref:System.ComponentModel.Design.DesignerTransaction> for each operation or series of operations which should be reversible. Be careful not to perform actions outside the transactions that might prevent a sequence of undo events from completing successfully.
+
+ You can obtain a new <xref:System.ComponentModel.Design.DesignerTransaction> by calling the <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> method of an <xref:System.ComponentModel.Design.IDesignerHost>. Be sure to obtain each <xref:System.ComponentModel.Design.DesignerTransaction> from the active <xref:System.ComponentModel.Design.IDesignerHost> in order to correctly integrate with the designer transaction processing mechanism, rather than creating a new <xref:System.ComponentModel.Design.DesignerTransaction> directly.
+
+ To perform an action within a transaction, you must first create a transaction. Then you must call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method before each change or set of changes occurs, and the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method after each change or set of changes occur. Finally, complete and close the transaction by calling the <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> method.
+
 > [!NOTE]
->  When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.  
-  
- To perform a transaction, complete the following steps:  
-  
-1.  Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.  
-  
-2.  Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.  
-  
-3.  To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.  
-  
- In C#, you can use the `using` statement rather than a `try/finally` block, such as in the following example.  
-  
-```  
-using (host.CreateTransaction() {  
-// Insert your code here.  
-}  
-```  
-  
- To cancel and attempt to roll back a transaction before it has been committed, call the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method. When the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method is invoked, the actions tracked by the <xref:System.ComponentModel.Design.DesignerTransaction> are reversed to attempt to roll back the changes. To undo actions that occurred as part of earlier transactions, you must use the undo command provided by the development environment.  
-  
-   
-  
-## Examples  
- The following code example program demonstrates how to create a <xref:System.ComponentModel.Design.DesignerTransaction> from a designer. To run this sample, compile the source code into a class library. You must add a reference to the System.Design assembly. In a new project, add a reference to the compiled DLL and add the component in the library to the **Toolbox**.  
-  
- There is extensive support for this feature in Visual Studio.  
-  
- Also see [Walkthrough: Automatically Populating the Toolbox with Custom Components](/dotnet/desktop/winforms/controls/walkthrough-automatically-populating-the-toolbox-with-custom-components).  
-  
- The designer can optionally display notifications about designer transaction events. If you add an instance of the `DTComponent` to a form while in design mode, a message box appears asking whether you would like to receive designer transaction event notifications. You may toggle these notifications using the shortcut menu that appears when you right-click an instance of the `DTComponent`. Transactions are created when you change values using the Properties window. You can also have the designer perform a transaction by clicking **Perform Example Transaction** on the shortcut menu for the component.  
-  
+>  When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.
+
+ To perform a transaction, complete the following steps:
+
+1.  Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.
+
+2.  Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.
+
+3.  To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.
+
+ In C#, you can use the `using` statement rather than a `try/finally` block, such as in the following example.
+
+```
+using (host.CreateTransaction() {
+// Insert your code here.
+}
+```
+
+ To cancel and attempt to roll back a transaction before it has been committed, call the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method. When the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method is invoked, the actions tracked by the <xref:System.ComponentModel.Design.DesignerTransaction> are reversed to attempt to roll back the changes. To undo actions that occurred as part of earlier transactions, you must use the undo command provided by the development environment.
+
+
+
+## Examples
+ The following code example program demonstrates how to create a <xref:System.ComponentModel.Design.DesignerTransaction> from a designer. To run this sample, compile the source code into a class library. You must add a reference to the System.Design assembly. In a new project, add a reference to the compiled DLL and add the component in the library to the **Toolbox**.
+
+ There is extensive support for this feature in Visual Studio.
+
+ Also see [Walkthrough: Automatically Populating the Toolbox with Custom Components](/dotnet/desktop/winforms/controls/walkthrough-automatically-populating-the-toolbox-with-custom-components).
+
+ The designer can optionally display notifications about designer transaction events. If you add an instance of the `DTComponent` to a form while in design mode, a message box appears asking whether you would like to receive designer transaction event notifications. You may toggle these notifications using the shortcut menu that appears when you right-click an instance of the `DTComponent`. Transactions are created when you change values using the Properties window. You can also have the designer perform a transaction by clicking **Perform Example Transaction** on the shortcut menu for the component.
+
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Winforms/DesignerTransaction Sample/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.ComponentModel.Design/DesignerTransaction/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Winforms/DesignerTransaction Sample/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Winforms/DesignerTransaction Sample/VB/source.vb" id="Snippet1":::
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.ComponentModel.Design.IDesignerHost" />
@@ -109,11 +121,11 @@ using (host.CreateTransaction() {
       </Docs>
     </MemberGroup>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected DesignerTransaction ();" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="protected DesignerTransaction ();" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.DesignerTransaction.#ctor" />
-      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction();" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction();" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="C#" Value="public DesignerTransaction ();" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="VB.NET" Value="Public Sub New ()" FrameworkAlternate="netframework-1.1" />
@@ -139,6 +151,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -153,12 +168,12 @@ using (host.CreateTransaction() {
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected DesignerTransaction (string description);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string description) cil managed" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="protected DesignerTransaction (string description);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string description) cil managed" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.DesignerTransaction.#ctor(System.String)" />
-      <MemberSignature Language="VB.NET" Value="Protected Sub New (description As String)" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (description As String)" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="F#" Value="new System.ComponentModel.Design.DesignerTransaction : string -&gt; System.ComponentModel.Design.DesignerTransaction" Usage="new System.ComponentModel.Design.DesignerTransaction description" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction(System::String ^ description);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction(System::String ^ description);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="C#" Value="public DesignerTransaction (string description);" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string description) cil managed" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (description As String)" FrameworkAlternate="netframework-1.1" />
@@ -184,6 +199,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -198,11 +216,11 @@ using (host.CreateTransaction() {
         <param name="description">A description for this transaction.</param>
         <summary>Initializes a new instance of the <see cref="T:System.ComponentModel.Design.DesignerTransaction" /> class using the specified transaction description.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor initializes the transaction with the specified description.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor initializes the transaction with the specified description.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -235,6 +253,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -274,6 +295,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -289,11 +313,11 @@ using (host.CreateTransaction() {
         <value>
           <see langword="true" /> if the transaction was canceled; otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When a designer transaction is canceled, the transaction processing mechanism attempts to roll back the changes that have been made so far in the transaction. Whether this succeeds is dependent upon such factors as the type of each operation, whether other operations interfered with any of the involved code's state, and whether a sequence of expected operations failed to complete.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When a designer transaction is canceled, the transaction processing mechanism attempts to roll back the changes that have been made so far in the transaction. Whether this succeeds is dependent upon such factors as the type of each operation, whether other operations interfered with any of the involved code's state, and whether a sequence of expected operations failed to complete.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -326,6 +350,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -334,13 +361,13 @@ using (host.CreateTransaction() {
       <Docs>
         <summary>Commits this transaction.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When a designer transaction is committed, the transaction is considered complete and does not track further changes.  
-  
- Once a transaction has been committed, further calls to this method do nothing. Always call this method after creating a transaction to ensure that the transaction closes properly.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When a designer transaction is committed, the transaction is considered complete and does not track further changes.
+
+ Once a transaction has been committed, further calls to this method do nothing. Always call this method after creating a transaction to ensure that the transaction closes properly.
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.ComponentModel.Design.DesignerTransaction.OnCommit" />
@@ -374,6 +401,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -389,11 +419,11 @@ using (host.CreateTransaction() {
         <value>
           <see langword="true" /> if the transaction was committed; otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When a designer transaction is committed, the transaction is considered complete and does not track further changes.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When a designer transaction is committed, the transaction is considered complete and does not track further changes.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -426,6 +456,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -440,11 +473,11 @@ using (host.CreateTransaction() {
         <summary>Gets a description for the transaction.</summary>
         <value>A description for the transaction.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A transaction can have a description that is useful in identifying the nature of the operation or operations.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A transaction can have a description that is useful in identifying the nature of the operation or operations.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -477,6 +510,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -495,20 +531,20 @@ using (host.CreateTransaction() {
           <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         <summary>Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Design.DesignerTransaction" /> and optionally releases the managed resources.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks
  This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize> method, if it has been overridden. `Dispose()` invokes this method with the `disposing` parameter set to `true`. `Finalize` invokes this method with `disposing` set to `false`.
-  
- When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.ComponentModel.Design.DesignerTransaction> references. This method invokes the `Dispose()` method of each referenced object.  
-  
+
+ When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.ComponentModel.Design.DesignerTransaction> references. This method invokes the `Dispose()` method of each referenced object.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
           <para>
-            <see langword="Dispose" /> can be called multiple times by other objects. When overriding <see langword="Dispose(Boolean)" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement <see langword="Dispose(Boolean)" />, see [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).  
-  
- For more information about <see langword="Dispose" /> and <see cref="M:System.Object.Finalize" />, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).</para>
+            <see langword="Dispose" /> can be called multiple times by other objects. When overriding <see langword="Dispose(Boolean)" />, be careful not to reference objects that have been previously disposed of in an earlier call to <see langword="Dispose" />. For more information about how to implement <see langword="Dispose(Boolean)" />, see <see href="/dotnet/standard/garbage-collection/implementing-dispose">Implementing a Dispose Method</see>.
+
+ For more information about <see langword="Dispose" /> and <see cref="M:System.Object.Finalize" />, see <see href="/dotnet/standard/garbage-collection/unmanaged">Cleaning Up Unmanaged Resources</see> and <see href="https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)">Overriding the Finalize Method</see>.</para>
         </block>
         <related type="Article" href="/dotnet/standard/garbage-collection/implementing-dispose">Implementing a Dispose Method</related>
         <related type="Article" href="/dotnet/standard/garbage-collection/unmanaged">Cleaning Up Unmanaged Resources</related>
@@ -542,6 +578,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -550,15 +589,15 @@ using (host.CreateTransaction() {
       <Docs>
         <summary>Releases the resources associated with this object. This override commits this transaction if it was not already committed.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This method overrides <xref:System.Object.Finalize%2A?displayProperty=nameWithType> and cleans up resources by calling `Dispose(false)`. Override `Dispose(Boolean)` to customize the cleanup.  
-  
- Application code should not call this method; an object's `Finalize` method is automatically invoked during garbage collection, unless finalization by the garbage collector has been disabled by a call to the <xref:System.GC.SuppressFinalize%2A?displayProperty=nameWithType> method.  
-  
- For more information, see [Finalize Methods and Destructors](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/0s71x931(v%3dvs.100)), [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged), and [Overriding the Finalize Method](https://docs.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method overrides <xref:System.Object.Finalize%2A?displayProperty=nameWithType> and cleans up resources by calling `Dispose(false)`. Override `Dispose(Boolean)` to customize the cleanup.
+
+ Application code should not call this method; an object's `Finalize` method is automatically invoked during garbage collection, unless finalization by the garbage collector has been disabled by a call to the <xref:System.GC.SuppressFinalize%2A?displayProperty=nameWithType> method.
+
+ For more information, see [Finalize Methods and Destructors](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/0s71x931(v%3dvs.100)), [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged), and [Overriding the Finalize Method](https://learn.microsoft.com/previous-versions/dotnet/netframework-4.0/ddae83kx(v=vs.100)).
+
  ]]></format>
         </remarks>
       </Docs>
@@ -591,6 +630,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -599,11 +641,11 @@ using (host.CreateTransaction() {
       <Docs>
         <summary>Raises the <see langword="Cancel" /> event.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When a designer transaction is canceled, the transaction processing mechanism attempts to roll back the changes that have been made so far in the transaction. Whether this succeeds is dependent upon such factors as the type of each operation, whether other operations interfered with any of the involved code's state, and whether a sequence of expected operations failed to complete.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When a designer transaction is canceled, the transaction processing mechanism attempts to roll back the changes that have been made so far in the transaction. Whether this succeeds is dependent upon such factors as the type of each operation, whether other operations interfered with any of the involved code's state, and whether a sequence of expected operations failed to complete.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -640,6 +682,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -648,11 +693,11 @@ using (host.CreateTransaction() {
       <Docs>
         <summary>Performs the actual work of committing a transaction.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When a designer transaction is committed, the transaction is considered complete and does not track further changes.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When a designer transaction is committed, the transaction is considered complete and does not track further changes.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -692,6 +737,9 @@ using (host.CreateTransaction() {
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -700,11 +748,11 @@ using (host.CreateTransaction() {
       <Docs>
         <summary>Releases all resources used by the <see cref="T:System.ComponentModel.Design.DesignerTransaction" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When a transaction is disposed, it is committed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When a transaction is disposed, it is committed.
+
  ]]></format>
         </remarks>
       </Docs>

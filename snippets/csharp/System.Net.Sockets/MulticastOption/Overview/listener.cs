@@ -29,110 +29,105 @@ using System.Text;
 //
 namespace Mssc.TransportProtocols.Utilities
 {
-
-  public class TestMulticastOption
-  {
-
-    private static IPAddress mcastAddress;
-    private static int mcastPort;
-    private static Socket mcastSocket;
-    private static MulticastOption mcastOption;
-
-// <Snippet3>
-
-    private static void MulticastOptionProperties()
+    public class TestMulticastOption
     {
-      Console.WriteLine("Current multicast group is: " + mcastOption.Group);
-      Console.WriteLine("Current multicast local address is: " + mcastOption.LocalAddress);
-    }
+        private static IPAddress s_mcastAddress;
+        private static int s_mcastPort;
+        private static Socket s_mcastSocket;
+        private static MulticastOption s_mcastOption;
 
-// </Snippet3>
-
-    private static void StartMulticast()
-    {
-	
-      try
-      {
-        mcastSocket = new Socket(AddressFamily.InterNetwork,
-                                 SocketType.Dgram,
-                                 ProtocolType.Udp);
-		
-        Console.Write("Enter the local IP address: ");
-
-        IPAddress localIPAddr = IPAddress.Parse(Console.ReadLine());
-
-        //IPAddress localIP = IPAddress.Any;
-        EndPoint localEP = (EndPoint)new IPEndPoint(localIPAddr, mcastPort);
-
-        mcastSocket.Bind(localEP);
-
-// <Snippet2>
-
-        // Define a MulticastOption object specifying the multicast group
-        // address and the local IPAddress.
-        // The multicast group address is the same as the address used by the server.
-        mcastOption = new MulticastOption(mcastAddress, localIPAddr);
-
-        mcastSocket.SetSocketOption(SocketOptionLevel.IP,
-                                    SocketOptionName.AddMembership,
-                                    mcastOption);
-// </Snippet2>
-      }
-
-      catch (Exception e)
-      {
-        Console.WriteLine(e.ToString());
-      }
-    }
-
-    private static void ReceiveBroadcastMessages()
-    {
-      bool done = false;
-      byte[] bytes = new Byte[100];
-      IPEndPoint groupEP = new IPEndPoint(mcastAddress, mcastPort);
-      EndPoint remoteEP = (EndPoint) new IPEndPoint(IPAddress.Any,0);
-
-      try
-      {
-        while (!done)
+        // <Snippet3>
+        private static void MulticastOptionProperties()
         {
-          Console.WriteLine("Waiting for multicast packets.......");
-          Console.WriteLine("Enter ^C to terminate.");
+            Console.WriteLine("Current multicast group is: " + s_mcastOption.Group);
+            Console.WriteLine("Current multicast local address is: " + s_mcastOption.LocalAddress);
+        }
+        // </Snippet3>
 
-          mcastSocket.ReceiveFrom(bytes, ref remoteEP);
+        private static void StartMulticast()
+        {
+            try
+            {
+                s_mcastSocket = new Socket(AddressFamily.InterNetwork,
+                                         SocketType.Dgram,
+                                         ProtocolType.Udp);
 
-          Console.WriteLine("Received broadcast from {0} :\n {1}\n",
-            groupEP.ToString(),
-            Encoding.ASCII.GetString(bytes,0,bytes.Length));
+                Console.Write("Enter the local IP address: ");
+
+                IPAddress localIPAddr = IPAddress.Parse(Console.ReadLine());
+
+                //IPAddress localIP = IPAddress.Any;
+                EndPoint localEP = (EndPoint)new IPEndPoint(localIPAddr, s_mcastPort);
+
+                s_mcastSocket.Bind(localEP);
+
+                // <Snippet2>
+
+                // Define a MulticastOption object specifying the multicast group
+                // address and the local IPAddress.
+                // The multicast group address is the same as the address used by the server.
+                s_mcastOption = new MulticastOption(s_mcastAddress, localIPAddr);
+
+                s_mcastSocket.SetSocketOption(SocketOptionLevel.IP,
+                                            SocketOptionName.AddMembership,
+                                            s_mcastOption);
+                // </Snippet2>
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
-        mcastSocket.Close();
-      }
+        private static void ReceiveBroadcastMessages()
+        {
+            bool done = false;
+            byte[] bytes = new byte[100];
+            IPEndPoint groupEP = new(s_mcastAddress, s_mcastPort);
+            EndPoint remoteEP = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
 
-      catch (Exception e)
-      {
-        Console.WriteLine(e.ToString());
-      }
+            try
+            {
+                while (!done)
+                {
+                    Console.WriteLine("Waiting for multicast packets.......");
+                    Console.WriteLine("Enter ^C to terminate.");
+
+                    s_mcastSocket.ReceiveFrom(bytes, ref remoteEP);
+
+                    Console.WriteLine("Received broadcast from {0} :\n {1}\n",
+                      groupEP.ToString(),
+                      Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                }
+
+                s_mcastSocket.Close();
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        public static void Main(string[] args)
+        {
+            // Initialize the multicast address group and multicast port.
+            // Both address and port are selected from the allowed sets as
+            // defined in the related RFC documents. These are the same
+            // as the values used by the sender.
+            s_mcastAddress = IPAddress.Parse("224.168.100.2");
+            s_mcastPort = 11000;
+
+            // Start a multicast group.
+            StartMulticast();
+
+            // Display MulticastOption properties.
+            MulticastOptionProperties();
+
+            // Receive broadcast messages.
+            ReceiveBroadcastMessages();
+        }
     }
-
-    public static void Main(String[] args)
-    {
-      // Initialize the multicast address group and multicast port.
-      // Both address and port are selected from the allowed sets as
-      // defined in the related RFC documents. These are the same
-      // as the values used by the sender.
-      mcastAddress = IPAddress.Parse("224.168.100.2");
-      mcastPort = 11000;
-
-      // Start a multicast group.
-      StartMulticast();
-
-      // Display MulticastOption properties.
-      MulticastOptionProperties();
-
-      // Receive broadcast messages.
-      ReceiveBroadcastMessages();
-    }
-  }
 }
 // </Snippet1>

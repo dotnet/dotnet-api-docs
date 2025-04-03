@@ -18,12 +18,12 @@ array<Byte>^ CreateRandomSalt(int length)
         randomBytes = gcnew array <Byte>(1);
     }
 
-    // Create a new RNGCryptoServiceProvider.
-    RNGCryptoServiceProvider^ cryptoRNGProvider =
-        gcnew RNGCryptoServiceProvider();
+    // Create a new RandomNumberGenerator.
+    RandomNumberGenerator^ randomNumberGenerator =
+        RandomNumberGenerator::Create();
 
     // Fill the buffer with random bytes.
-    cryptoRNGProvider->GetBytes(randomBytes);
+    randomNumberGenerator->GetBytes(randomBytes);
 
     // return the bytes.
     return randomBytes;

@@ -27,8 +27,8 @@ int main()
       String^ pwd1 = passwordargs[ 1 ];
       
       array<Byte>^salt1 = gcnew array<Byte>(8);
-	  RNGCryptoServiceProvider ^ rngCsp = gcnew RNGCryptoServiceProvider();
-		 rngCsp->GetBytes(salt1);
+      RandomNumberGenerator^ rng = RandomNumberGenerator::Create();
+      rng->GetBytes(salt1);
       //data1 can be a string or contents of a file.
       String^ data1 = "Some test data";
 

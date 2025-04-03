@@ -54,7 +54,7 @@ public class Example
    private static string[] NormalizeStrings(NormalizationForm nf, params string[] words)
    {
       for (int ctr = 0; ctr < words.Length; ctr++)
-         if (! words[ctr].IsNormalized(nf))
+         if (!words[ctr].IsNormalized(nf))
             words[ctr] = words[ctr].Normalize(nf); 
       return words;   
    }

@@ -8,18 +8,12 @@ Module Module1
    Dim connectionTypeName As String = "SqlClient"
    Dim connectionString As String = "Data Source=(local);Initial Catalog=AdventureWorks2012;Integrated Security=SSPI"
 
-   ' Dim connectionTypeName As String = "Odbc"
-   ' Dim connectionString As String = "Driver={SQL Server Native Client 11.0};Server=(local);Database=AdventureWorks2012;Trusted_Connection=Yes"
-
-   ' Dim connectionTypeName As String = "OleDb"
-   ' Dim connectionString As String = "Provider=SQLNCLI11;Data Source=(local);Initial Catalog=AdventureWorks2012;Integrated Security=SSPI"
-
    Sub Main()
       Using connection As IDbConnection = DatabaseConnectionFactory.GetConnection(connectionTypeName, connectionString)
          Dim command As IDbCommand = connection.CreateCommand()
          command.Connection = connection
 
-         'these 2 queries are executed as a single batch and return 2 separate results
+         'These 2 queries are executed as a single batch and return 2 separate results.
          command.CommandText =
              "SELECT CountryRegionCode, Name FROM Person.CountryRegion;" +
              "SELECT CountryRegionCode, StateProvinceCode, Name, StateProvinceID FROM Person.StateProvince;"

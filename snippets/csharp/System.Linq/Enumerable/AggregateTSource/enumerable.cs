@@ -9,8 +9,7 @@ namespace SequenceExamples
         // This part is just for testing the examples
         static void Main(string[] args)
         {
-            CountEx1();
-            Count.CountEx2();
+            OfTypeEx1();
         }
 
         #region Aggregate
@@ -60,7 +59,7 @@ namespace SequenceExamples
                 fruits.Aggregate("banana",
                                 (longest, next) =>
                                     next.Length > longest.Length ? next : longest,
-                // Return the final result as an upper case string.
+                                // Return the final result as an upper case string.
                                 fruit => fruit.ToUpper());
 
             Console.WriteLine(
@@ -244,7 +243,7 @@ namespace SequenceExamples
 
                 // Determine whether any pets over age 1 are also unvaccinated.
                 bool unvaccinated =
-                    pets.Any(p => p.Age > 1 && p.Vaccinated == false);
+                    pets.Any(p => p.Age > 1 && !p.Vaccinated);
 
                 Console.WriteLine(
                     "There {0} unvaccinated animals over age one.",
@@ -539,7 +538,7 @@ namespace SequenceExamples
 
                 try
                 {
-                    int numberUnvaccinated = pets.Count(p => p.Vaccinated == false);
+                    int numberUnvaccinated = pets.Count(p => !p.Vaccinated);
                     Console.WriteLine("There are {0} unvaccinated animals.", numberUnvaccinated);
                 }
                 catch (OverflowException)
@@ -1702,12 +1701,15 @@ namespace SequenceExamples
         static void OfTypeEx1()
         {
             // <Snippet69>
-            System.Collections.ArrayList fruits = new System.Collections.ArrayList(4);
-            fruits.Add("Mango");
-            fruits.Add("Orange");
-            fruits.Add("Apple");
-            fruits.Add(3.0);
-            fruits.Add("Banana");
+            System.Collections.ArrayList fruits = new()
+            {
+                "Mango",
+                "Orange",
+                null,
+                "Apple",
+                3.0,
+                "Banana"
+            };
 
             // Apply OfType() to the ArrayList.
             IEnumerable<string> query1 = fruits.OfType<string>();
@@ -1721,7 +1723,8 @@ namespace SequenceExamples
             // The following query shows that the standard query operators such as
             // Where() can be applied to the ArrayList type after calling OfType().
             IEnumerable<string> query2 =
-                fruits.OfType<string>().Where(fruit => fruit.ToLower().Contains("n"));
+                fruits.OfType<string>().Where(fruit =>
+                fruit.Contains('n', StringComparison.CurrentCultureIgnoreCase));
 
             Console.WriteLine("\nThe following strings contain 'n':");
             foreach (string fruit in query2)
@@ -2074,12 +2077,12 @@ namespace SequenceExamples
             /*
              This code produces the following output:
 
-             {index=0, str=}
-             {index=1, str=b}
-             {index=2, str=ma}
-             {index=3, str=ora}
-             {index=4, str=pass}
-             {index=5, str=grape}
+             { index = 0, str =  }
+             { index = 1, str = b }
+             { index = 2, str = ma }
+             { index = 3, str = ora }
+             { index = 4, str = pass }
+             { index = 5, str = grape }
             */
             // </Snippet76>
         }
@@ -2508,11 +2511,8 @@ namespace SequenceExamples
             // <Snippet87>
             int[] grades = { 59, 82, 70, 56, 92, 98, 85 };
 
-            IEnumerable<int> lowerGrades =
-                grades.OrderByDescending(g => g).Skip(3);
-
-            Console.WriteLine("All grades except the top three are:");
-            foreach (int grade in lowerGrades)
+            Console.WriteLine("All grades except the first three:");
+            foreach (int grade in grades.Skip(3))
             {
                 Console.WriteLine(grade);
             }
@@ -2520,11 +2520,11 @@ namespace SequenceExamples
             /*
              This code produces the following output:
 
-             All grades except the top three are:
-             82
-             70
-             59
+            All grades except the first three:
              56
+             92
+             98
+             85
             */
             // </Snippet87>
         }

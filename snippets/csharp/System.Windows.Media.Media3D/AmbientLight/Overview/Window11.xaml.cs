@@ -18,10 +18,10 @@ namespace SDKSample
         private KeyMode currKeyMode = KeyMode.Camera;
         MyLights myLights = new MyLights();
         Model3D objModel = null;
-		Model3DGroup modelGroup = new Model3DGroup();
-		ModelVisual3D modelsVisual = new ModelVisual3D();
+        Model3DGroup modelGroup = new Model3DGroup();
+        ModelVisual3D modelsVisual = new ModelVisual3D();
 
-		public Window1()
+        public Window1()
         {
             InitializeComponent();
         }
@@ -34,7 +34,7 @@ namespace SDKSample
 
         private void OnListBoxChanged(object sender, EventArgs e)
         {
-            double[] fieldOfView = new double[7] {50.0, 50.0, 2.0, 75.0, 75.0, 75.0, 20.0 };
+            double[] fieldOfView = new double[7] { 50.0, 50.0, 2.0, 75.0, 75.0, 75.0, 20.0 };
 
             if (myViewport3D == null) return;
 
@@ -47,13 +47,13 @@ namespace SDKSample
         // Add or remove an ambient light from the 3D viewport.
         private void OnAmbientLightChange(object sender, EventArgs e)
         {
-            if (checkBoxAmbientLight.IsChecked == true)
+            if (checkBoxAmbientLight.IsChecked.Value)
             {
-				myLights.ShowAmbientLight(true, modelGroup);
+                myLights.ShowAmbientLight(true, modelGroup);
             }
             else
             {
-				myLights.ShowAmbientLight(false, modelGroup);
+                myLights.ShowAmbientLight(false, modelGroup);
             }
 
             myViewport3D.Focus();
@@ -62,13 +62,13 @@ namespace SDKSample
         // Add or remove a directional light from the 3D viewport.
         private void OnDirectionalLightOneChange(object sender, EventArgs e)
         {
-            if (checkBoxDirLightOne.IsChecked == true)
+            if (checkBoxDirLightOne.IsChecked.Value)
             {
-				myLights.ShowDirLight(0, true, modelGroup);
+                myLights.ShowDirLight(0, true, modelGroup);
             }
             else
             {
-				myLights.ShowDirLight(0, false, modelGroup);
+                myLights.ShowDirLight(0, false, modelGroup);
             }
 
             myViewport3D.Focus();
@@ -77,13 +77,13 @@ namespace SDKSample
         // Add or remove a directional light from the 3D viewport.
         private void OnDirectionalLightTwoChange(object sender, EventArgs e)
         {
-            if (checkBoxDirLightTwo.IsChecked == true)
+            if (checkBoxDirLightTwo.IsChecked.Value)
             {
-				myLights.ShowDirLight(1, true, modelGroup);
+                myLights.ShowDirLight(1, true, modelGroup);
             }
             else
             {
-				myLights.ShowDirLight(1, false, modelGroup);
+                myLights.ShowDirLight(1, false, modelGroup);
             }
 
             myViewport3D.Focus();
@@ -92,11 +92,11 @@ namespace SDKSample
         // Add or remove a point light from the 3D viewport.
         private void OnPointLight(object sender, EventArgs e)
         {
-            if (checkBoxPointLight.IsChecked == true)
+            if (checkBoxPointLight.IsChecked.Value)
             {
                 currKeyMode = KeyMode.PointLight;
                 rbPosition2.IsChecked = true;
-				myLights.ShowPointLight(1, true, modelGroup);
+                myLights.ShowPointLight(1, true, modelGroup);
                 xyzPointLight.Foreground = System.Windows.Media.Brushes.Black;
                 xyzPointLight.Content = "x: " + myLights.PointLightPosition.X + "  y: " + myLights.PointLightPosition.Y + "  z: " + myLights.PointLightPosition.Z;
             }
@@ -104,7 +104,7 @@ namespace SDKSample
             {
                 currKeyMode = KeyMode.Camera;
                 rbPosition1.IsChecked = true;
-				myLights.ShowPointLight(1, false, modelGroup);
+                myLights.ShowPointLight(1, false, modelGroup);
                 xyzPointLight.Foreground = System.Windows.Media.Brushes.LightGray;
             }
 
@@ -182,13 +182,13 @@ namespace SDKSample
         private void LoadMesh(double fieldOfView)
         {
             if ((myViewport3D != null) && (modelGroup.Children.Count > 0))
-			{
-				myViewport3D.Children.Remove(modelsVisual);
-				modelGroup.Children.Clear();
-			}
-            
+            {
+                myViewport3D.Children.Remove(modelsVisual);
+                modelGroup.Children.Clear();
+            }
+
             ((PerspectiveCamera)myViewport3D.Camera).FieldOfView = fieldOfView;
-            
+
             // Define the material for the model.
             SolidColorBrush brush = new SolidColorBrush(Colors.Cyan);
             DiffuseMaterial colorMaterial = new DiffuseMaterial(brush);
@@ -198,37 +198,37 @@ namespace SDKSample
             objModel = new GeometryModel3D(objMesh, colorMaterial);
 
             // Define the projection camera and add to the model.
-			SetProjectionCamera(myViewport3D, modelGroup);
+            SetProjectionCamera(myViewport3D, modelGroup);
 
-			modelGroup.Children.Add(objModel);
+            modelGroup.Children.Add(objModel);
 
-			// Add ambient light to the model group.
-			if (checkBoxAmbientLight.IsChecked == true)
-			{
-				myLights.ShowAmbientLight(true, modelGroup);
-			}
+            // Add ambient light to the model group.
+            if (checkBoxAmbientLight.IsChecked.Value)
+            {
+                myLights.ShowAmbientLight(true, modelGroup);
+            }
 
-			// Add directional lights to the model group.
-			if (checkBoxDirLightOne.IsChecked == true)
-			{
-				myLights.ShowDirLight(0, true, modelGroup);
-			}
-			if (checkBoxDirLightTwo.IsChecked == true)
-			{
-				myLights.ShowDirLight(1, true, modelGroup);
-			}
+            // Add directional lights to the model group.
+            if (checkBoxDirLightOne.IsChecked.Value)
+            {
+                myLights.ShowDirLight(0, true, modelGroup);
+            }
+            if (checkBoxDirLightTwo.IsChecked.Value)
+            {
+                myLights.ShowDirLight(1, true, modelGroup);
+            }
 
-			// Add the model group data to the viewport.
-			modelsVisual.Content = modelGroup;
-			myViewport3D.Children.Add(modelsVisual);
+            // Add the model group data to the viewport.
+            modelsVisual.Content = modelGroup;
+            myViewport3D.Children.Add(modelsVisual);
 
-			checkBoxPointLight.IsChecked = false;
+            checkBoxPointLight.IsChecked = false;
             xyzPointLight.Foreground = System.Windows.Media.Brushes.LightGray;
             currKeyMode = KeyMode.Camera;
             rbPosition1.IsChecked = true;
         }
 
-		public void SetProjectionCamera(Viewport3D myViewport3D, Model3DGroup modelGroup)
+        public void SetProjectionCamera(Viewport3D myViewport3D, Model3DGroup modelGroup)
         {
             const double CameraDistance = 80; // distance from camera to origin
             const double CameraLatitude = Math.PI / 2; // angle from +ve y axis to camera (i.e. latitude)
@@ -241,8 +241,8 @@ namespace SDKSample
             projCamera.Position = new Point3D(x, y, z);
             myViewport3D.Camera = projCamera;
 
-			TranslateTransform3D pan = new TranslateTransform3D(new Vector3D(0, 0, 0));
-			modelGroup.Transform = pan;
+            TranslateTransform3D pan = new TranslateTransform3D(new Vector3D(0, 0, 0));
+            modelGroup.Transform = pan;
         }
     }
 }
