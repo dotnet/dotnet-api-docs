@@ -13,7 +13,7 @@ namespace InterfaceSample;
 /// namespaces.
 /// </summary>
 //This code segment implements the ISite and IComponent interfaces.
-//The implementation of the IContainer interface can be seen in the documentation 
+//The implementation of the IContainer interface can be seen in the documentation
 //of IContainer.
 
 //Implement the ISite interface.
@@ -81,7 +81,8 @@ class BookComponent : IComponent
 
     public virtual ISite Site
     {
-        get => m_curISBNSite; set => m_curISBNSite = value;
+        get => m_curISBNSite;
+        set => m_curISBNSite = value;
     }
 
     public override bool Equals(object cmp)
@@ -93,8 +94,8 @@ class BookComponent : IComponent
     public override int GetHashCode() => base.GetHashCode();
 }
 //</snippet1>
-//<snippet2> 
-//This code segment implements the IContainer interface.  The code segment 
+//<snippet2>
+//This code segment implements the IContainer interface.  The code segment
 //containing the implementation of ISite and IComponent can be found in the documentation
 //for those interfaces.
 
@@ -123,7 +124,7 @@ class LibraryContainer : IContainer
         }
 
         book.Site = new ISBNSite(this, book) { Name = ISNDNNum };
-        _ = m_bookList.Add(book);
+        m_bookList.Add(book);
     }
 
     public virtual void Remove(IComponent book)

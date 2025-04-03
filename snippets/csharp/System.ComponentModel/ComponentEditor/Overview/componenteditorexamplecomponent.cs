@@ -6,30 +6,29 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-// This example demonstrates how to implement a component editor that hosts 
-// component pages and associate it with a component. This example also 
-// demonstrates how to implement a component page that provides a panel-based 
+// This example demonstrates how to implement a component editor that hosts
+// component pages and associate it with a component. This example also
+// demonstrates how to implement a component page that provides a panel-based
 // control system and Help keyword support.
-namespace Dick0019;
 
 // The ExampleComponentEditor displays two ExampleComponentEditorPage pages.
 public class ExampleComponentEditor : WindowsFormsComponentEditor
 {
     //<Snippet2>
-    // This method override returns an type array containing the type of 
+    // This method override returns an type array containing the type of
     // each component editor page to display.
     protected override Type[] GetComponentEditorPages() => [typeof(ExampleComponentEditorPage), typeof(ExampleComponentEditorPage)];
     //</Snippet2>
 
     //<Snippet3>
-    // This method override returns the index of the page to display when the 
+    // This method override returns the index of the page to display when the
     // component editor is first displayed.
     protected override int GetInitialComponentEditorPageIndex() => 1;
     //</Snippet3>
 }
 
 //<Snippet6>
-// This example component editor page type provides an example 
+// This example component editor page type provides an example
 // ComponentEditorPage implementation.
 class ExampleComponentEditorPage : ComponentEditorPage
 {
@@ -69,7 +68,7 @@ class ExampleComponentEditorPage : ComponentEditorPage
         Controls.Add(pg1);
     }
 
-    // This method indicates that the Help button should be enabled for this 
+    // This method indicates that the Help button should be enabled for this
     // component editor page.
     public override bool SupportsHelp() => true;
 
@@ -98,7 +97,7 @@ class ExampleComponentEditorPage : ComponentEditorPage
     // The LoadComponent method is raised when the ComponentEditorPage is displayed.
     protected override void LoadComponent() => pg1.SelectedObject = Component;
 
-    // The SaveComponent method is raised when the WindowsFormsComponentEditor is closing 
+    // The SaveComponent method is raised when the WindowsFormsComponentEditor is closing
     // or the current ComponentEditorPage is closing.
     protected override void SaveComponent()
     {
@@ -122,7 +121,7 @@ class ExampleComponentEditorPage : ComponentEditorPage
 //</Snippet6>
 
 //<Snippet5>
-// This example control is associated with the ExampleComponentEditor 
+// This example control is associated with the ExampleComponentEditor
 // through the following EditorAttribute.
 [Editor(typeof(ExampleComponentEditor), typeof(ComponentEditor))]
 public class ExampleUserControl : UserControl;

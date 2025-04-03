@@ -9,9 +9,13 @@ public class MyControl : Control
     // Creates a new, null license.
     License license;
 
-    public MyControl() =>
+    public MyControl()
+    {
         // Adds Validate to the control's constructor.
-        license = LicenseManager.Validate(typeof(MyControl), this);// Insert code to perform other instance creation tasks here.
+        license = LicenseManager.Validate(typeof(MyControl), this);
+
+        // Insert code to perform other instance creation tasks here.
+    }
 
     protected override void Dispose(bool disposing)
     {

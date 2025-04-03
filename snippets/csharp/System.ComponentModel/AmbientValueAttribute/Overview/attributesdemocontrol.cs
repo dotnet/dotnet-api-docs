@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using Globzn = System.Globalization;
+using System.Globalization;
 // </snippet2>
 
 // This sample demonstrates the use of various attributes for
-// authoring a control. 
+// authoring a control.
 namespace AttributesDemoControlLibrary;
 
 // This is the event handler delegate for the ThresholdExceeded event.
@@ -19,7 +19,7 @@ public delegate void ThresholdExceededEventHandler(ThresholdExceededEventArgs e)
 
 // <snippet3>
 // <snippet20>
-// This control demonstrates a simple logging capability. 
+// This control demonstrates a simple logging capability.
 [ComplexBindingProperties("DataSource", "DataMember")]
 [DefaultBindingProperty("TitleText")]
 [DefaultEvent("ThresholdExceeded")]
@@ -32,27 +32,27 @@ public class AttributesDemoControl : UserControl
 
     // The default fore color value for DataGridView cells that
     // contain values that exceed the threshold.
-    static readonly Color defaultAlertForeColorValue = Color.White;
+    static readonly Color s_defaultAlertForeColorValue = Color.White;
 
     // The default back color value for DataGridView cells that
     // contain values that exceed the threshold.
-    static readonly Color defaultAlertBackColorValue = Color.Red;
+    static readonly Color s_defaultAlertBackColorValue = Color.Red;
 
     // The ambient color value.
-    static readonly Color ambientColorValue = Color.Empty;
+    static readonly Color s_ambientColorValue = Color.Empty;
 
     // The fore color value for DataGridView cells that
     // contain values that exceed the threshold.
-    Color alertForeColorValue = defaultAlertForeColorValue;
+    Color _alertForeColorValue = s_defaultAlertForeColorValue;
 
     // The back color value for DataGridView cells that
     // contain values that exceed the threshold.
-    Color alertBackColorValue = defaultAlertBackColorValue;
+    Color _alertBackColorValue = s_defaultAlertBackColorValue;
 
     // Child controls that comprise this UserControl.
-    TableLayoutPanel tableLayoutPanel1;
-    DataGridView dataGridView1;
-    Label label1;
+    TableLayoutPanel _tableLayoutPanel1;
+    DataGridView _dataGridView1;
+    Label _label1;
 
     // Required for designer support.
     readonly IContainer _components;
@@ -68,14 +68,13 @@ public class AttributesDemoControl : UserControl
     [HelpKeyword("AttributesDemoControlLibrary.AttributesDemoControl.TitleText")]
     public string TitleText
     {
-        get => label1.Text;
-
-        set => label1.Text = value;
+        get => _label1.Text;
+        set => _label1.Text = value;
     }
     // </snippet21>
 
     // <snippet22>
-    // The inherited Text property is hidden at design time and 
+    // The inherited Text property is hidden at design time and
     // raises an exception at run time. This enforces a requirement
     // that client code uses the TitleText property instead.
     [Browsable(false)]
@@ -96,23 +95,24 @@ public class AttributesDemoControl : UserControl
     public Color AlertForeColor
     {
         get =>
-            alertForeColorValue == Color.Empty &&
+            _alertForeColorValue == Color.Empty &&
             Parent != null
                 ? Parent.ForeColor
-                : alertForeColorValue;
+                : _alertForeColorValue;
 
-        set => alertForeColorValue = value;
+        set => _alertForeColorValue = value;
     }
 
     // This method is used by designers to enable resetting the
     // property to its default value.
-    public void ResetAlertForeColor() => AlertForeColor = defaultAlertForeColorValue;
+    public void ResetAlertForeColor() =>
+        AlertForeColor = s_defaultAlertForeColorValue;
 
     // This method indicates to designers whether the property
     // value is different from the ambient value, in which case
     // the designer should persist the value.
     bool ShouldSerializeAlertForeColor() =>
-        alertForeColorValue != ambientColorValue;
+        _alertForeColorValue != s_ambientColorValue;
     // </snippet23>
 
     // <snippet24>
@@ -123,23 +123,24 @@ public class AttributesDemoControl : UserControl
     public Color AlertBackColor
     {
         get =>
-            alertBackColorValue == Color.Empty &&
+            _alertBackColorValue == Color.Empty &&
             Parent != null
               ? Parent.BackColor
-              : alertBackColorValue;
+              : _alertBackColorValue;
 
-        set => alertBackColorValue = value;
+        set => _alertBackColorValue = value;
     }
 
     // This method is used by designers to enable resetting the
     // property to its default value.
     public void ResetAlertBackColor() =>
-        AlertBackColor = defaultAlertBackColorValue;
+        AlertBackColor = s_defaultAlertBackColorValue;
 
     // This method indicates to designers whether the property
     // value is different from the ambient value, in which case
     // the designer should persist the value.
-    bool ShouldSerializeAlertBackColor() => alertBackColorValue != ambientColorValue;
+    bool ShouldSerializeAlertBackColor() =>
+        _alertBackColorValue != s_ambientColorValue;
     // </snippet24>
 
     // <snippet25>
@@ -149,9 +150,8 @@ public class AttributesDemoControl : UserControl
     [AttributeProvider(typeof(IListSource))]
     public object DataSource
     {
-        get => dataGridView1.DataSource;
-
-        set => dataGridView1.DataSource = value;
+        get => _dataGridView1.DataSource;
+        set => _dataGridView1.DataSource = value;
     }
     // </snippet25>
 
@@ -160,16 +160,15 @@ public class AttributesDemoControl : UserControl
     [Description("Indicates a sub-list of the data source to show in the control.")]
     public string DataMember
     {
-        get => dataGridView1.DataMember;
-
-        set => dataGridView1.DataMember = value;
+        get => _dataGridView1.DataMember;
+        set => _dataGridView1.DataMember = value;
     }
     // </snippet26>
 
     // <snippet27>
-    // This property would normally have its BrowsableAttribute 
-    // set to false, but this code demonstrates using 
-    // ReadOnlyAttribute, so BrowsableAttribute is true to show 
+    // This property would normally have its BrowsableAttribute
+    // set to false, but this code demonstrates using
+    // ReadOnlyAttribute, so BrowsableAttribute is true to show
     // it in any attached PropertyGrid control.
     [Browsable(true)]
     [Category("Behavior")]
@@ -180,12 +179,12 @@ public class AttributesDemoControl : UserControl
         get
         {
             int lastRowIndex =
-                dataGridView1.Rows.GetLastRow(
+                _dataGridView1.Rows.GetLastRow(
                 DataGridViewElementStates.Visible);
 
             if (lastRowIndex > -1)
             {
-                DataGridViewRow lastRow = dataGridView1.Rows[lastRowIndex];
+                DataGridViewRow lastRow = _dataGridView1.Rows[lastRowIndex];
                 DataGridViewCell lastCell = lastRow.Cells["EntryTime"];
                 return (DateTime)lastCell.Value;
             }
@@ -195,9 +194,7 @@ public class AttributesDemoControl : UserControl
             }
         }
 
-        set
-        {
-        }
+        set { }
     }
     // </snippet27>
 
@@ -208,9 +205,9 @@ public class AttributesDemoControl : UserControl
     // </snippet28>
 
     // <snippet29>
-    // This property exists only to demonstrate the 
-    // PasswordPropertyText attribute. When this control 
-    // is attached to a PropertyGrid control, the returned 
+    // This property exists only to demonstrate the
+    // PasswordPropertyText attribute. When this control
+    // is attached to a PropertyGrid control, the returned
     // string will be displayed with obscuring characters
     // such as asterisks. This property has no other effect.
     [Category("Security")]
@@ -220,8 +217,8 @@ public class AttributesDemoControl : UserControl
     // </snippet29>
 
     // <snippet30>
-    // This property exists only to demonstrate the 
-    // DisplayName attribute. When this control 
+    // This property exists only to demonstrate the
+    // DisplayName attribute. When this control
     // is attached to a PropertyGrid control, the
     // property will appear as "RenamedProperty"
     // instead of "MisnamedProperty".
@@ -236,21 +233,21 @@ public class AttributesDemoControl : UserControl
     #region Implementation
 
     // <snippet31>
-    // This is the event handler for the DataGridView control's 
-    // CellFormatting event. Handling this event allows the 
+    // This is the event handler for the DataGridView control's
+    // CellFormatting event. Handling this event allows the
     // AttributesDemoControl to examine the incoming log entries
     // from the data source as they arrive.
     //
     // If the cell for which this event is raised holds the
-    // log entry's timestamp, the cell value is formatted with 
-    // the full date/time pattern. 
-    // 
-    // Otherwise, the cell's value is assumed to hold the log 
-    // entry value. If the value exceeds the threshold value, 
+    // log entry's timestamp, the cell value is formatted with
+    // the full date/time pattern.
+    //
+    // Otherwise, the cell's value is assumed to hold the log
+    // entry value. If the value exceeds the threshold value,
     // the cell is painted with the colors specified by the
     // AlertForeColor and AlertBackColor properties, after which
-    // the ThresholdExceeded is raised. For this comparison to 
-    // succeed, the log entry's type must implement the IComparable 
+    // the ThresholdExceeded is raised. For this comparison to
+    // succeed, the log entry's type must implement the IComparable
     // interface.
     void dataGridView1_CellFormatting(
         object sender,
@@ -262,16 +259,16 @@ public class AttributesDemoControl : UserControl
             {
                 if (e.Value is DateTime)
                 {
-                    // Display the log entry time with the 
+                    // Display the log entry time with the
                     // full date/time pattern (long time).
                     e.CellStyle.Format = "F";
                 }
                 else
                 {
                     // Scroll to the most recent entry.
-                    DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                    DataGridViewRow row = _dataGridView1.Rows[e.RowIndex];
                     DataGridViewCell cell = row.Cells[e.ColumnIndex];
-                    dataGridView1.FirstDisplayedCell = cell;
+                    _dataGridView1.FirstDisplayedCell = cell;
 
                     if (Threshold != null)
                     {
@@ -281,22 +278,22 @@ public class AttributesDemoControl : UserControl
 
                         // Compare the log entry value to the threshold value.
                         // Use reflection to call the CompareTo method on the
-                        // template parameter's type. 
+                        // template parameter's type.
                         int compareVal = (int)paramType.InvokeMember(
                             "CompareTo",
                             BindingFlags.Default | BindingFlags.InvokeMethod,
                             null,
                             e.Value,
                             [Threshold],
-                            Globzn.CultureInfo.InvariantCulture);
+                            CultureInfo.InvariantCulture);
 
                         // If the log entry value exceeds the threshold value,
                         // set the cell's fore color and back color properties
                         // and raise the ThresholdExceeded event.
                         if (compareVal > 0)
                         {
-                            e.CellStyle.BackColor = alertBackColorValue;
-                            e.CellStyle.ForeColor = alertForeColorValue;
+                            e.CellStyle.BackColor = _alertBackColorValue;
+                            e.CellStyle.ForeColor = _alertForeColorValue;
 
                             ThresholdExceededEventArgs teea =
                                 new(
@@ -327,39 +324,39 @@ public class AttributesDemoControl : UserControl
     void InitializeComponent()
     {
         DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-        tableLayoutPanel1 = new TableLayoutPanel();
-        dataGridView1 = new DataGridView();
-        label1 = new Label();
-        tableLayoutPanel1.SuspendLayout();
-        ((ISupportInitialize)dataGridView1).BeginInit();
+        _tableLayoutPanel1 = new TableLayoutPanel();
+        _dataGridView1 = new DataGridView();
+        _label1 = new Label();
+        _tableLayoutPanel1.SuspendLayout();
+        ((ISupportInitialize)_dataGridView1).BeginInit();
         SuspendLayout();
-        // 
+        //
         // tableLayoutPanel1
-        // 
-        tableLayoutPanel1.AutoSize = true;
-        tableLayoutPanel1.ColumnCount = 1;
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
-        tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
-        tableLayoutPanel1.Controls.Add(label1, 0, 0);
-        tableLayoutPanel1.Dock = DockStyle.Fill;
-        tableLayoutPanel1.Location = new Point(10, 10);
-        tableLayoutPanel1.Name = "tableLayoutPanel1";
-        tableLayoutPanel1.Padding = new Padding(10);
-        tableLayoutPanel1.RowCount = 2;
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-        tableLayoutPanel1.Size = new Size(425, 424);
-        tableLayoutPanel1.TabIndex = 0;
-        // 
+        //
+        _tableLayoutPanel1.AutoSize = true;
+        _tableLayoutPanel1.ColumnCount = 1;
+        _tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
+        _tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
+        _tableLayoutPanel1.Controls.Add(_dataGridView1, 0, 1);
+        _tableLayoutPanel1.Controls.Add(_label1, 0, 0);
+        _tableLayoutPanel1.Dock = DockStyle.Fill;
+        _tableLayoutPanel1.Location = new Point(10, 10);
+        _tableLayoutPanel1.Name = "tableLayoutPanel1";
+        _tableLayoutPanel1.Padding = new Padding(10);
+        _tableLayoutPanel1.RowCount = 2;
+        _tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+        _tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+        _tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+        _tableLayoutPanel1.Size = new Size(425, 424);
+        _tableLayoutPanel1.TabIndex = 0;
+        //
         // dataGridView1
-        // 
-        dataGridView1.AllowUserToAddRows = false;
-        dataGridView1.AllowUserToDeleteRows = false;
-        dataGridView1.AllowUserToOrderColumns = true;
-        dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        //
+        _dataGridView1.AllowUserToAddRows = false;
+        _dataGridView1.AllowUserToDeleteRows = false;
+        _dataGridView1.AllowUserToOrderColumns = true;
+        _dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        _dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
         dataGridViewCellStyle1.BackColor = SystemColors.Control;
         dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -367,38 +364,38 @@ public class AttributesDemoControl : UserControl
         dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
         dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
         dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-        dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-        dataGridView1.ColumnHeadersHeight = 4;
-        dataGridView1.Dock = DockStyle.Fill;
-        dataGridView1.Location = new Point(13, 57);
-        dataGridView1.Name = "dataGridView1";
-        dataGridView1.ReadOnly = true;
-        dataGridView1.RowHeadersVisible = false;
-        dataGridView1.Size = new Size(399, 354);
-        dataGridView1.TabIndex = 1;
-        dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-        // 
+        _dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+        _dataGridView1.ColumnHeadersHeight = 4;
+        _dataGridView1.Dock = DockStyle.Fill;
+        _dataGridView1.Location = new Point(13, 57);
+        _dataGridView1.Name = "dataGridView1";
+        _dataGridView1.ReadOnly = true;
+        _dataGridView1.RowHeadersVisible = false;
+        _dataGridView1.Size = new Size(399, 354);
+        _dataGridView1.TabIndex = 1;
+        _dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+        //
         // label1
-        // 
-        label1.AutoSize = true;
-        label1.BackColor = SystemColors.Control;
-        label1.Dock = DockStyle.Fill;
-        label1.Location = new Point(13, 13);
-        label1.Name = "label1";
-        label1.Size = new Size(399, 38);
-        label1.TabIndex = 2;
-        label1.Text = "label1";
-        label1.TextAlign = ContentAlignment.MiddleCenter;
-        // 
+        //
+        _label1.AutoSize = true;
+        _label1.BackColor = SystemColors.Control;
+        _label1.Dock = DockStyle.Fill;
+        _label1.Location = new Point(13, 13);
+        _label1.Name = "label1";
+        _label1.Size = new Size(399, 38);
+        _label1.TabIndex = 2;
+        _label1.Text = "label1";
+        _label1.TextAlign = ContentAlignment.MiddleCenter;
+        //
         // AttributesDemoControl
-        // 
-        Controls.Add(tableLayoutPanel1);
+        //
+        Controls.Add(_tableLayoutPanel1);
         Name = "AttributesDemoControl";
         Padding = new Padding(10);
         Size = new Size(445, 444);
-        tableLayoutPanel1.ResumeLayout(false);
-        tableLayoutPanel1.PerformLayout();
-        ((ISupportInitialize)dataGridView1).EndInit();
+        _tableLayoutPanel1.ResumeLayout(false);
+        _tableLayoutPanel1.PerformLayout();
+        ((ISupportInitialize)_dataGridView1).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -426,7 +423,7 @@ public class ThresholdExceededEventArgs : EventArgs
 // </snippet4>
 
 // <snippet5>
-// This class encapsulates a log entry. It is a parameterized 
+// This class encapsulates a log entry. It is a parameterized
 // type (also known as a template class). The parameter type T
 // defines the type of data being logged. For threshold detection
 // to work, this type must implement the IComparable interface.
@@ -460,7 +457,7 @@ public class LogEntry<T> where T : IComparable
         // <snippet8>
         public override object ConvertFrom(
             ITypeDescriptorContext context,
-            Globzn.CultureInfo culture,
+            CultureInfo culture,
             object value)
         {
             if (value is string valstr)
@@ -488,7 +485,7 @@ public class LogEntry<T> where T : IComparable
         // <snippet9>
         public override object ConvertTo(
             ITypeDescriptorContext context,
-            Globzn.CultureInfo culture,
+            CultureInfo culture,
             object value,
             Type destinationType)
         {

@@ -6,7 +6,10 @@ public abstract class Coll1 : EventDescriptorCollection
     {
     }
 
-    protected void Method() =>
+    protected void Method()
+    {
         // <Snippet1>
-        InternalSort(["D", "B"]);// </Snippet1>
+        InternalSort(["D", "B"]);
+        // </Snippet1>
+    }
 }

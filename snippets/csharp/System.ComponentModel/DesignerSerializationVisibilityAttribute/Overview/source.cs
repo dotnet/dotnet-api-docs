@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace DesignerSerializationVisibilityTest;
 
-// The code for this user control declares a public property of type DimensionData with a DesignerSerializationVisibility 
+// The code for this user control declares a public property of type DimensionData with a DesignerSerializationVisibility
 // attribute set to DesignerSerializationVisibility.Content, indicating that the properties of the object should be serialized.
 
 // The public, not hidden properties of the object that are set at design time will be persisted in the initialization code
-// for the class object. Content persistence will not work for structs without a custom TypeConverter.		
+// for the class object. Content persistence will not work for structs without a custom TypeConverter.
 
 public class ContentSerializationExampleControl : UserControl
 {
@@ -43,12 +43,14 @@ public class DimensionData
 
     public Point Location
     {
-        get => owner.Location; set => owner.Location = value;
+        get => owner.Location;
+        set => owner.Location = value;
     }
 
     public Size FormSize
     {
-        get => owner.Size; set => owner.Size = value;
+        get => owner.Size;
+        set => owner.Size = value;
     }
 }
 // </Snippet1>

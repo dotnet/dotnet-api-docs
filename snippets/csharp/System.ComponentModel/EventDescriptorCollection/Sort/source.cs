@@ -7,7 +7,10 @@ public abstract class Coll1 : EventDescriptorCollection
     public Coll1() : base(null)
     {
     }
-    protected void Method() =>
+    protected void Method()
+    {
         // <Snippet1>
-        myNewColl = Sort(["D", "B"]);// </Snippet1>
+        myNewColl = Sort(["D", "B"]);
+        // </Snippet1>
+    }
 }

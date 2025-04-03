@@ -5,9 +5,13 @@ public class Form1 : Form
 {
     protected Button button1;
     protected TextBox textBox1;
-    void Method1() =>
+    void Method1()
+    {
         // <Snippet1>
-        _ = TypeDescriptor.GetProperties(button1);// </Snippet1>
+        PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(button1);
+        // </Snippet1>
+    }
+
     // <Snippet2>
     void MyPropertyCollection()
     {

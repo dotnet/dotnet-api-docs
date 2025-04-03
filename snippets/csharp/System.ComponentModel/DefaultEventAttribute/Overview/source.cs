@@ -12,7 +12,8 @@ public static class MyClass
 
         public event CollectionChangeEventHandler CollectionChanged
         {
-            add => onCollectionChanged += value; remove => onCollectionChanged -= value;
+            add => onCollectionChanged += value;
+            remove => onCollectionChanged -= value;
         }
         // Insert additional code.
     }
@@ -26,7 +27,7 @@ public static class MyClass
         // Gets the attributes for the collection.
         AttributeCollection attributes = TypeDescriptor.GetAttributes(myNewCollection);
 
-        /* Prints the name of the default event by retrieving the 
+        /* Prints the name of the default event by retrieving the
          * DefaultEventAttribute from the AttributeCollection. */
         DefaultEventAttribute myAttribute =
            (DefaultEventAttribute)attributes[typeof(DefaultEventAttribute)];

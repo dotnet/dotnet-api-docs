@@ -11,6 +11,7 @@ public class Sample
         // Insert code here.
     }
     // </Snippet1>
+
     public enum MyPropertyEnum { option1, option2, option3 };
     public class MyClassConverter;
 
@@ -35,9 +36,10 @@ public class Sample
         Console.WriteLine(TypeDescriptor.GetConverter(typeof(Color)).ConvertToString(c));
         // </Snippet3>
     }
-    public void Method2() =>
+    public Color Method2() =>
         // <Snippet4>
-        _ = (Color)TypeDescriptor.GetConverter(typeof(Color)).ConvertFromString("Red");// </Snippet4>
+        (Color)TypeDescriptor.GetConverter(typeof(Color)).ConvertFromString("Red");
+        // </Snippet4>
 
     public void Method3()
     {

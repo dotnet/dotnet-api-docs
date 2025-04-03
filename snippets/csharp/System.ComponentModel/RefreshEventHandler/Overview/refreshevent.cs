@@ -16,11 +16,11 @@ public class Form1 : Form
     /// </summary>
     readonly Container _components;
 
-    public Form1() =>
-        //
-        // Required for Windows Form Designer support
-        //
-        InitializeComponent();//// TODO: Add any constructor code after InitializeComponent call//
+    public Form1()
+    {
+        InitializeComponent();
+        // TODO: Add any constructor code after InitializeComponent call
+    }
 
     /// <summary>
     /// Clean up any resources being used.
@@ -72,13 +72,13 @@ public class Form1 : Form
     void Form1_Load(object sender, EventArgs e)
     {
         textBox1.Text = "changed";
-        TypeDescriptor.Refreshed += new
-RefreshEventHandler(OnRefresh);
+        TypeDescriptor.Refreshed += new RefreshEventHandler(OnRefresh);
         _ = TypeDescriptor.GetProperties(textBox1);
         TypeDescriptor.Refresh(textBox1);
     }
 
-    protected static void OnRefresh(RefreshEventArgs e) => Console.WriteLine(e.ComponentChanged.ToString());
+    protected static void OnRefresh(RefreshEventArgs e) =>
+        Console.WriteLine(e.ComponentChanged.ToString());
     //</snippet1>
 }
 

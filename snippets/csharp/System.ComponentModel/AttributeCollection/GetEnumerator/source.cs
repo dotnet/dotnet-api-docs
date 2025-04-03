@@ -13,7 +13,7 @@ public class Form1 : Form
         attributes = TypeDescriptor.GetAttributes(button1);
 
         // Creates an enumerator for the collection.
-        var ie = attributes.GetEnumerator();
+        System.Collections.IEnumerator ie = attributes.GetEnumerator();
 
         // Prints the type of each attribute in the collection.
         object myAttribute;
@@ -24,6 +24,5 @@ public class Form1 : Form
             textBox1.Text += '\n';
         }
     }
-
     // </Snippet1>
 }

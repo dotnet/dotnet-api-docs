@@ -32,19 +32,19 @@ public class Form1 : Form
         // Disable the button for the duration of the download.
         downloadButton.Enabled = false;
 
-        // Once you have started the background thread you 
-        // can exit the handler and the application will 
+        // Once you have started the background thread you
+        // can exit the handler and the application will
         // wait until the RunWorkerCompleted event is raised.
 
         // Or if you want to do something else in the main thread,
-        // such as update a progress bar, you can do so in a loop 
+        // such as update a progress bar, you can do so in a loop
         // while checking IsBusy to see if the background task is
         // still running.
 
         while (backgroundWorker1.IsBusy)
         {
             progressBar1.Increment(1);
-            // Keep UI messages moving, so the form remains 
+            // Keep UI messages moving, so the form remains
             // responsive during the asynchronous operation.
             Application.DoEvents();
         }
@@ -75,13 +75,16 @@ public class Form1 : Form
         // Set progress bar to 100% in case it's not already there.
         progressBar1.Value = 100;
 
-        _ = e.Error == null
-            ? MessageBox.Show(document.InnerXml, "Download Complete")
-            : MessageBox.Show(
+        if (e.Error == null)
+            MessageBox.Show(document.InnerXml, "Download Complete");
+        else
+        {
+            MessageBox.Show(
                 "Failed to download file",
                 "Download failed",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
 
         // Enable the download button and reset the progress bar.
         downloadButton.Enabled = true;
@@ -117,9 +120,9 @@ public class Form1 : Form
         downloadButton = new Button();
         progressBar1 = new ProgressBar();
         SuspendLayout();
-        // 
+        //
         // downloadButton
-        // 
+        //
         downloadButton.Location = new Point(12, 12);
         downloadButton.Name = "downloadButton";
         downloadButton.Size = new Size(100, 23);
@@ -127,16 +130,16 @@ public class Form1 : Form
         downloadButton.Text = "Download file";
         downloadButton.UseVisualStyleBackColor = true;
         downloadButton.Click += downloadButton_Click;
-        // 
+        //
         // progressBar1
-        // 
+        //
         progressBar1.Location = new Point(12, 50);
         progressBar1.Name = "progressBar1";
         progressBar1.Size = new Size(100, 26);
         progressBar1.TabIndex = 1;
-        // 
+        //
         // Form1
-        // 
+        //
         AutoScaleDimensions = new SizeF(6F, 13F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(133, 104);

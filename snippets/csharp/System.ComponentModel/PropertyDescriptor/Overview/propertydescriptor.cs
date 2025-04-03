@@ -21,7 +21,7 @@ public class Form1 : Form
         //
         // Required for Windows Form Designer support
         //
-        InitializeComponent();//// TODO: Add any constructor code after InitializeComponent call//
+        InitializeComponent();
 
     /// <summary>
     /// Clean up any resources being used.
@@ -45,9 +45,9 @@ public class Form1 : Form
         textBox1 = new TextBox();
         button1 = new Button();
         SuspendLayout();
-        // 
+        //
         // textBox1
-        // 
+        //
         textBox1.Location = new Point(120, 16);
         textBox1.Multiline = true;
         textBox1.Name = "textBox1";
@@ -55,16 +55,16 @@ public class Form1 : Form
         textBox1.Size = new Size(288, 272);
         textBox1.TabIndex = 0;
         textBox1.Text = "textBox1";
-        // 
+        //
         // button1
-        // 
+        //
         button1.Location = new Point(40, 112);
         button1.Name = "button1";
         button1.TabIndex = 1;
         button1.Text = "button1";
-        // 
+        //
         // Form1
-        // 
+        //
         ClientSize = new Size(448, 333);
         Controls.AddRange(
         [

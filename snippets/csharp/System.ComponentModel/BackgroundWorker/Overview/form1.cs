@@ -54,9 +54,13 @@ public partial class Form1 : Form
     }
 
     // This event handler updates the progress.
-    void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) => resultLabel.Text = e.ProgressPercentage.ToString() + "%";
+    void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) =>
+        resultLabel.Text = e.ProgressPercentage.ToString() + "%";
 
     // This event handler deals with the results of the background operation.
-    void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => resultLabel.Text = e.Cancelled ? "Canceled!" : e.Error != null ? "Error: " + e.Error.Message : "Done!";
+    void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) =>
+        resultLabel.Text = e.Cancelled ?
+        "Canceled!"
+        : e.Error != null ? "Error: " + e.Error.Message : "Done!";
 }
 // </snippet1>

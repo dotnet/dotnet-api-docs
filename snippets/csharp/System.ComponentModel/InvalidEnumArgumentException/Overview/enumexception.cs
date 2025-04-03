@@ -15,11 +15,10 @@ public class Form1 : Form
     /// </summary>
     readonly Container _components;
 
-    public Form1() =>
-        //
-        // Required for Windows Form Designer support
-        //
-        InitializeComponent();//// TODO: Add any constructor code after InitializeComponent call//
+    public Form1()
+    {
+        InitializeComponent();
+    }
 
     /// <summary>
     /// Clean up any resources being used.
@@ -63,7 +62,7 @@ public class Form1 : Form
         {
             // Attempts to pass an invalid enum value (MessageBoxButtons) to the Show method
             MessageBoxButtons myButton = (MessageBoxButtons)123;
-            _ = MessageBox.Show("This is a message", "This is the Caption", myButton);
+            MessageBox.Show("This is a message", "This is the Caption", myButton);
         }
         catch (InvalidEnumArgumentException invE)
         {
