@@ -1,4 +1,6 @@
-﻿open System
+﻿module compareoptions_values
+
+open System
 open System.Globalization
 
 let testStringEquality (str1: string) (str2: string) (description: string) (options: CompareOptions) =

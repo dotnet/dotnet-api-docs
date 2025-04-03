@@ -1,3 +1,5 @@
+module compareoptions_stringsort
+
 open System
 open System.Collections.Generic
 open System.Globalization
