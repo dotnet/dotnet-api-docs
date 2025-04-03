@@ -1,4 +1,3 @@
-'// <snippet2>
 Imports System
 Imports System.Collections.Generic
 Imports System.Globalization
@@ -39,7 +38,7 @@ Public Class StringSort
 End Class
 
 ' CompareOptions.None and CompareOptions.StringSort provide identical ordering by default
-' in .NET 5 And later, but in prior versions, the output will be the following:
+' in .NET 5 And later, but in prior versions, the output is the following:
 '
 'Before sorting
 'cant
@@ -73,5 +72,3 @@ End Class
 'co-op
 'con
 'coop
-
-'// </snippet2>

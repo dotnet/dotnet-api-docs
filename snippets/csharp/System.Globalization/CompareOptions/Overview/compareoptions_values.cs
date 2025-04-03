@@ -1,10 +1,9 @@
-﻿// <snippet1>
-using System;
+﻿using System;
 using System.Globalization;
 
 public class CompareOptionsExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Uppercase and lowercase characters are equivalent (according to the culture rules)
         // when IgnoreCase is used.
@@ -55,7 +54,7 @@ public class CompareOptionsExample
 }
 
 /*
-In .NET 5 and later, the output will be the following:
+In .NET 5 and later, the output is the following:
  
 Case sensitivity:
   When using CompareOptions.None, "ONE two" and "one TWO" are not equal.
@@ -89,12 +88,10 @@ Ligature characters:
   When using CompareOptions.None, "straße œuvre cæsar" and "strasse oeuvre caesar" are not equal.
   When using CompareOptions.IgnoreNonSpace, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
 
-
-Note: when using .NET versions prior to .NET 5, ligature characters compare as equal to their
+Note: When using .NET versions prior to .NET 5, ligature characters compare as equal to their
 non-ligature counterparts by default, so the last test will output as follows:
 
 Ligature characters:
   When using CompareOptions.None, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
   When using CompareOptions.IgnoreNonSpace, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
 */
-// </snippet1>

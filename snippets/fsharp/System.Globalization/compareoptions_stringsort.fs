@@ -1,4 +1,3 @@
-// <snippet2>
 open System
 open System.Collections.Generic
 open System.Globalization
@@ -14,17 +13,17 @@ let sortAndDisplay (unsorted: List<string>) (options: CompareOptions) =
 let main argv =
     let wordList = new List<string>(
         ["cant"; "bill's"; "coop"; "cannot"; "billet"; "can't"; "con"; "bills"; "co-op"])
-    
+
     printfn "Before sorting:"
     for word in wordList do
         printfn "%s" word
-    
+
     printfn "\nAfter sorting with CompareOptions.None:"
     sortAndDisplay wordList CompareOptions.None
-    
+
     printfn "\nAfter sorting with CompareOptions.StringSort:"
     sortAndDisplay wordList CompareOptions.StringSort
-    
+
     0 // return an integer exit code
 
 (*
@@ -64,4 +63,3 @@ co-op
 con
 coop
 *)
-// </snippet2>

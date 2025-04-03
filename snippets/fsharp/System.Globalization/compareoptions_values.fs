@@ -1,10 +1,9 @@
-﻿// <snippet1>
-open System
+﻿open System
 open System.Globalization
 
 let testStringEquality (str1: string) (str2: string) (description: string) (options: CompareOptions) =
     printfn "\n%s:" description
-    
+
     let compareAndPrint opts =
         let result = String.Compare(str1, str2, CultureInfo.InvariantCulture, opts)
         let equalityStatus = if result = 0 then "equal" else "not equal"
@@ -41,12 +40,12 @@ let main argv =
     // Ligature characters and their non-ligature forms compare equal with the IgnoreNonSpace option.
     // Note: prior to .NET 5, ligature characters were equal to their expanded forms by default.
     testStringEquality "straße œuvre cæsar" "strasse oeuvre caesar" "Ligature characters" CompareOptions.IgnoreNonSpace
-    
+
     0 // return an integer exit code
 
 (*
 In .NET 5 and later, the output will be the following:
- 
+
 Case sensitivity:
   When using CompareOptions.None, "ONE two" and "one TWO" are not equal.
   When using CompareOptions.IgnoreCase, "ONE two" and "one TWO" are equal.
@@ -87,4 +86,3 @@ Ligature characters:
   When using CompareOptions.None, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
   When using CompareOptions.IgnoreNonSpace, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
 *)
-// </snippet1>

@@ -1,4 +1,3 @@
-' <snippet1>
 Imports System
 Imports System.Globalization
 
@@ -49,9 +48,9 @@ Module CompareOptionsExample
     End Sub
 End Module
 
-' In .NET 5 and later, the output will be the following:
+' In .NET 5 and later, the output is the following:
 '
-'Case sensitivity : 
+'Case sensitivity :
 '  When using CompareOptions.None, "ONE two" and "one TWO" are not equal.
 '  When using CompareOptions.IgnoreCase, "ONE two" and "one TWO" are equal.
 '
@@ -75,20 +74,17 @@ End Module
 '  When using CompareOptions.None, "ありがとう" and "アリガトウ" are not equal.
 '  When using CompareOptions.IgnoreKanaType, "ありがとう" and "アリガトウ" are equal.
 '
-'Diacritical marks : 
+'Diacritical marks :
 '  When using CompareOptions.None, "café" and "cafe" are not equal.
 '  When using CompareOptions.IgnoreNonSpace, "café" and "cafe" are equal.
 '
-'Ligature characters : 
+'Ligature characters :
 '  When using CompareOptions.None, "straße œuvre cæsar" and "strasse oeuvre caesar" are not equal.
 '  When using CompareOptions.IgnoreNonSpace, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
-'
 '
 ' Note: when using .NET versions prior to .NET 5, ligature characters compare as equal to their
 ' non-ligature counterparts by default, so the last test will output as follows:
 '
-'Ligature characters : 
+'Ligature characters :
 '  When using CompareOptions.None, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
 '  When using CompareOptions.IgnoreNonSpace, "straße œuvre cæsar" and "strasse oeuvre caesar" are equal.
-
-' </snippet1>

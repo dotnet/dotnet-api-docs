@@ -1,11 +1,10 @@
-// <snippet2>
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 public class StringSort
 {
-    public static void Main()
+    public static void Run()
     {
         var wordList = new List<string>
         {
@@ -31,7 +30,7 @@ public class StringSort
         // Create a copy of the original list to sort.
         var words = new List<string>(unsorted);
         // Define the CompareInfo to use to compare strings.
-        var comparer = CultureInfo.InvariantCulture.CompareInfo;
+        CompareInfo comparer = CultureInfo.InvariantCulture.CompareInfo;
 
         // Sort the copy with the supplied CompareOptions then display.
         words.Sort((str1, str2) => comparer.Compare(str1, str2, options));
@@ -44,7 +43,7 @@ public class StringSort
 
 /*
 CompareOptions.None and CompareOptions.StringSort provide identical ordering by default
-in .NET 5 and later, but in prior versions, the output will be the following:
+in .NET 5 and later. But in prior versions, the output is the following:
 
 Before sorting:
 cant
@@ -79,4 +78,3 @@ co-op
 con
 coop
 */
-// </snippet2>
