@@ -4,9 +4,11 @@ using System.Windows.Forms;
 
 public class Form1 : Form
 {
+    // <Snippet1>
     [DefaultValue(false)]
     public bool MyProperty { get; set; }
     // </Snippet1>
+    
     protected void Method()
     {
         // <Snippet2>
@@ -14,7 +16,7 @@ public class Form1 : Form
         AttributeCollection attributes =
             TypeDescriptor.GetProperties(this)["MyProperty"].Attributes;
 
-        /* Prints the default value by retrieving the DefaultValueAttribute 
+        /* Prints the default value by retrieving the DefaultValueAttribute
          * from the AttributeCollection. */
         DefaultValueAttribute myAttribute =
             (DefaultValueAttribute)attributes[typeof(DefaultValueAttribute)];
