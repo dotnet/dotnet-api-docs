@@ -1,32 +1,18 @@
 ﻿// <snippet100>
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Diagnostics;
 
-namespace IListSourceCS
+namespace IListSourceCS;
+
+public class BusinessObjectBase : INotifyPropertyChanged
 {
-    public class BusinessObjectBase : INotifyPropertyChanged
-    {
-        #region INotifyPropertyChanged Members
+    #region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
-        }
+    protected virtual void OnPropertyChanged(string propertyName) => OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
 
-        private void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            if (null != PropertyChanged)
-            {
-                PropertyChanged(this, e);
-            }
-        }
+    void OnPropertyChanged(PropertyChangedEventArgs e) => PropertyChanged?.Invoke(this, e);
 
-        #endregion
-    }
+    #endregion
 }
 // </snippet100>

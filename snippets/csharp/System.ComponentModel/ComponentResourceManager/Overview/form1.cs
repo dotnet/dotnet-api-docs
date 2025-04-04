@@ -1,151 +1,146 @@
 ﻿//<Snippet1>
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
-namespace WindowsApplication10
-{
-    public class Form1 : Form
-    {
-        private ToolStripButton toolStripButton1;
-        private ToolStripButton toolStripButton2;
-        private ToolStripButton toolStripButton3;
-        private ContextMenuStrip contextMenuStrip1;
-        private IContainer components;
-        private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ContextMenuStrip contextMenuStrip2;
-        private ToolStripMenuItem rearrangeButtonsToolStripMenuItem;
-        private ToolStripMenuItem selectIconsToolStripMenuItem;
-        private ToolStrip toolStrip1;
-    
-        public Form1()
-        {
-            InitializeComponent();
-        }
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.Run(new Form1());
-        }
+namespace WindowsApplication10;
 
-        private void InitializeComponent()
-        {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.rearrangeButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
-            this.contextMenuStrip2.SuspendLayout();
-            this.SuspendLayout();
-            //
-            // <Snippet2> 
-            // Associate contextMenuStrip2 with toolStrip1.
-            // toolStrip1 property settings follow.
-            //
-            this.toolStrip1.ContextMenuStrip = this.contextMenuStrip2;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(292, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // </Snippet2>
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Text = "toolStripButton3";
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(131, 48);
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rearrangeButtonsToolStripMenuItem,
-            this.selectIconsToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.contextMenuStrip2.Size = new System.Drawing.Size(162, 48);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Text = "&Resize";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Text = "&Keep on Top";
-            // 
-            // rearrangeButtonsToolStripMenuItem
-            // 
-            this.rearrangeButtonsToolStripMenuItem.Name = "rearrangeButtonsToolStripMenuItem";
-            this.rearrangeButtonsToolStripMenuItem.Text = "R&earrange Buttons";
-            // 
-            // selectIconsToolStripMenuItem
-            // 
-            this.selectIconsToolStripMenuItem.Name = "selectIconsToolStripMenuItem";
-            this.selectIconsToolStripMenuItem.Text = "&Select Icons";
-            // 
-            // <Snippet3> 
-            // Associate contextMenuStrip1 with Form1.
-            // Form1 property settings follow.
-            //
-            this.ClientSize = new System.Drawing.Size(292, 266);
-            this.ContextMenuStrip = this.contextMenuStrip1;
-            this.Controls.Add(this.toolStrip1);
-            this.Name = "Form1";
-            this.toolStrip1.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.contextMenuStrip2.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-            // </Snippet3>
-        }
+public class Form1 : Form
+{
+    ToolStripButton toolStripButton1;
+    ToolStripButton toolStripButton2;
+    ToolStripButton toolStripButton3;
+    ContextMenuStrip contextMenuStrip1;
+    IContainer components;
+    ToolStripMenuItem toolStripMenuItem1;
+    ToolStripMenuItem toolStripMenuItem2;
+    ContextMenuStrip contextMenuStrip2;
+    ToolStripMenuItem rearrangeButtonsToolStripMenuItem;
+    ToolStripMenuItem selectIconsToolStripMenuItem;
+    ToolStrip toolStrip1;
+
+    public Form1() => InitializeComponent();
+    [STAThread]
+    static void Main()
+    {
+        Application.EnableVisualStyles();
+        Application.Run(new Form1());
+    }
+
+    void InitializeComponent()
+    {
+        components = new Container();
+        ComponentResourceManager resources = new(typeof(Form1));
+        toolStrip1 = new ToolStrip();
+        toolStripButton1 = new ToolStripButton();
+        toolStripButton2 = new ToolStripButton();
+        toolStripButton3 = new ToolStripButton();
+        contextMenuStrip1 = new ContextMenuStrip(components);
+        contextMenuStrip2 = new ContextMenuStrip(components);
+        toolStripMenuItem1 = new ToolStripMenuItem();
+        toolStripMenuItem2 = new ToolStripMenuItem();
+        rearrangeButtonsToolStripMenuItem = new ToolStripMenuItem();
+        selectIconsToolStripMenuItem = new ToolStripMenuItem();
+        toolStrip1.SuspendLayout();
+        contextMenuStrip1.SuspendLayout();
+        contextMenuStrip2.SuspendLayout();
+        SuspendLayout();
+        //
+        // <Snippet2> 
+        // Associate contextMenuStrip2 with toolStrip1.
+        // toolStrip1 property settings follow.
+        //
+        toolStrip1.ContextMenuStrip = contextMenuStrip2;
+        toolStrip1.Items.AddRange(
+        [
+            toolStripButton1,
+            toolStripButton2,
+            toolStripButton3
+        ]);
+        toolStrip1.Location = new Point(0, 0);
+        toolStrip1.Name = "toolStrip1";
+        toolStrip1.Size = new Size(292, 25);
+        toolStrip1.TabIndex = 0;
+        toolStrip1.Text = "toolStrip1";
+        // </Snippet2>
+        // 
+        // toolStripButton1
+        // 
+        toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+        toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
+        toolStripButton1.ImageTransparentColor = Color.Magenta;
+        toolStripButton1.Name = "toolStripButton1";
+        toolStripButton1.Text = "toolStripButton1";
+        // 
+        // toolStripButton2
+        // 
+        toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
+        toolStripButton2.Image = (Image)resources.GetObject("toolStripButton2.Image");
+        toolStripButton2.ImageTransparentColor = Color.Magenta;
+        toolStripButton2.Name = "toolStripButton2";
+        toolStripButton2.Text = "toolStripButton2";
+        // 
+        // toolStripButton3
+        // 
+        toolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image;
+        toolStripButton3.Image = (Image)resources.GetObject("toolStripButton3.Image");
+        toolStripButton3.ImageTransparentColor = Color.Magenta;
+        toolStripButton3.Name = "toolStripButton3";
+        toolStripButton3.Text = "toolStripButton3";
+        // 
+        // contextMenuStrip1
+        // 
+        contextMenuStrip1.Items.AddRange([
+        toolStripMenuItem1,
+        toolStripMenuItem2]);
+        contextMenuStrip1.Name = "contextMenuStrip1";
+        contextMenuStrip1.RightToLeft = RightToLeft.No;
+        contextMenuStrip1.Size = new Size(131, 48);
+        // 
+        // contextMenuStrip2
+        // 
+        contextMenuStrip2.Items.AddRange([
+        rearrangeButtonsToolStripMenuItem,
+        selectIconsToolStripMenuItem]);
+        contextMenuStrip2.Name = "contextMenuStrip2";
+        contextMenuStrip2.RightToLeft = RightToLeft.No;
+        contextMenuStrip2.Size = new Size(162, 48);
+        // 
+        // toolStripMenuItem1
+        // 
+        toolStripMenuItem1.Name = "toolStripMenuItem1";
+        toolStripMenuItem1.Text = "&Resize";
+        // 
+        // toolStripMenuItem2
+        // 
+        toolStripMenuItem2.Name = "toolStripMenuItem2";
+        toolStripMenuItem2.Text = "&Keep on Top";
+        // 
+        // rearrangeButtonsToolStripMenuItem
+        // 
+        rearrangeButtonsToolStripMenuItem.Name = "rearrangeButtonsToolStripMenuItem";
+        rearrangeButtonsToolStripMenuItem.Text = "R&earrange Buttons";
+        // 
+        // selectIconsToolStripMenuItem
+        // 
+        selectIconsToolStripMenuItem.Name = "selectIconsToolStripMenuItem";
+        selectIconsToolStripMenuItem.Text = "&Select Icons";
+        // 
+        // <Snippet3> 
+        // Associate contextMenuStrip1 with Form1.
+        // Form1 property settings follow.
+        //
+        ClientSize = new Size(292, 266);
+        ContextMenuStrip = contextMenuStrip1;
+        Controls.Add(toolStrip1);
+        Name = "Form1";
+        toolStrip1.ResumeLayout(false);
+        contextMenuStrip1.ResumeLayout(false);
+        contextMenuStrip2.ResumeLayout(false);
+        ResumeLayout(false);
+        PerformLayout();
+        // </Snippet3>
     }
 }
 //</Snippet1>
