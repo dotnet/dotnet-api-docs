@@ -8,20 +8,43 @@
   <AssemblyInfo>
     <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.3.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Extensions.AI.DelegatingChatClient</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+            A delegating chat client that invokes functions defined on <see cref="T:Microsoft.Extensions.AI.ChatOptions" />.
+            Include this in a chat pipeline to resolve function calls automatically.
+            </summary>
+    <remarks>
+      <para>
+            When this client receives a <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> in a chat response, it responds
+            by calling the corresponding <see cref="T:Microsoft.Extensions.AI.AIFunction" /> defined in <see cref="P:Microsoft.Extensions.AI.ChatOptions.Tools" />,
+            producing a <see cref="T:Microsoft.Extensions.AI.FunctionResultContent" /> that it sends back to the inner client. This loop
+            is repeated until there are no more function calls to make, or until another stop condition is met,
+            such as hitting <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.MaximumIterationsPerRequest" />.
+            </para>
+      <para>
+            The provided implementation of <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is thread-safe for concurrent use so long as the
+            <see cref="T:Microsoft.Extensions.AI.AIFunction" /> instances employed as part of the supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> are also safe.
+            The <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AllowConcurrentInvocation" /> property can be used to control whether multiple function invocation
+            requests as part of the same request are invocable concurrently, but even with that set to <see langword="false" />
+            (the default), multiple concurrent requests to this same instance and using the same tools could result in those
+            tools being used concurrently (one per request). For example, a function that accesses the HttpContext of a specific
+            ASP.NET web request should only be used as part of a single <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> at a time, and only with
+            <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AllowConcurrentInvocation" /> set to <see langword="false" />, in case the inner client decided to issue multiple
+            invocation requests to that same function.
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -33,13 +56,13 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="innerClient" Type="Microsoft.Extensions.AI.IChatClient" />
         <Parameter Name="logger" Type="Microsoft.Extensions.Logging.ILogger">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -47,32 +70,64 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="innerClient">To be added.</param>
-        <param name="logger">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="innerClient">The underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />, or the next instance in a chain of clients.</param>
+        <param name="logger">An <see cref="T:Microsoft.Extensions.Logging.ILogger" /> to use for logging information about function invocation.</param>
+        <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> class.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="AddResponseMessages">
-      <MemberSignature Language="C#" Value="protected virtual System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; AddResponseMessages (System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; chat, ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult&gt; results);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; AddResponseMessages(class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; chat, valuetype System.ReadOnlySpan`1&lt;class Microsoft.Extensions.AI.FunctionInvokingChatClient/FunctionInvocationResult&gt; results) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.AddResponseMessages(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},System.ReadOnlySpan{Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult})" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Function AddResponseMessages (chat As IList(Of ChatMessage), results As ReadOnlySpan(Of FunctionInvokingChatClient.FunctionInvocationResult)) As IList(Of ChatMessage)" />
-      <MemberSignature Language="F#" Value="abstract member AddResponseMessages : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult&gt; -&gt; System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;&#xA;override this.AddResponseMessages : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult&gt; -&gt; System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" Usage="functionInvokingChatClient.AddResponseMessages (chat, results)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ AddResponseMessages(System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ chat, ReadOnlySpan&lt;Microsoft::Extensions::AI::FunctionInvokingChatClient::FunctionInvocationResult ^&gt; results);" />
+    <Member MemberName="AllowConcurrentInvocation">
+      <MemberSignature Language="C#" Value="public bool AllowConcurrentInvocation { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool AllowConcurrentInvocation" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AllowConcurrentInvocation" />
+      <MemberSignature Language="VB.NET" Value="Public Property AllowConcurrentInvocation As Boolean" />
+      <MemberSignature Language="F#" Value="member this.AllowConcurrentInvocation : bool with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.AllowConcurrentInvocation" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool AllowConcurrentInvocation { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets a value indicating whether to allow concurrent invocation of functions.
+            </summary>
+        <value>
+          <see langword="true" /> if multiple function calls can execute in parallel.
+            <see langword="false" /> if function calls are processed serially.
+            The default value is <see langword="false" />.
+            </value>
+        <remarks>
+            An individual response from the inner client might contain multiple function call requests.
+            By default, such function calls are processed serially. Set <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AllowConcurrentInvocation" /> to
+            <see langword="true" /> to enable concurrent invocation such that multiple function calls can execute in parallel.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateResponseMessages">
+      <MemberSignature Language="C#" Value="protected virtual System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; CreateResponseMessages (ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult&gt; results);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; CreateResponseMessages(valuetype System.ReadOnlySpan`1&lt;class Microsoft.Extensions.AI.FunctionInvokingChatClient/FunctionInvocationResult&gt; results) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CreateResponseMessages(System.ReadOnlySpan{Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult})" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function CreateResponseMessages (results As ReadOnlySpan(Of FunctionInvokingChatClient.FunctionInvocationResult)) As IList(Of ChatMessage)" />
+      <MemberSignature Language="F#" Value="abstract member CreateResponseMessages : ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult&gt; -&gt; System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;&#xA;override this.CreateResponseMessages : ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationResult&gt; -&gt; System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" Usage="functionInvokingChatClient.CreateResponseMessages results" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ CreateResponseMessages(ReadOnlySpan&lt;Microsoft::Extensions::AI::FunctionInvokingChatClient::FunctionInvocationResult ^&gt; results);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="chat" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
         <Parameter Name="results" Type="System.ReadOnlySpan&lt;Microsoft.Extensions.AI.FunctionInvokingChatClient+FunctionInvocationResult&gt;">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
             </Attribute>
@@ -80,32 +135,62 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="chat">To be added.</param>
-        <param name="results">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="results">Information about the function call invocations and results.</param>
+        <summary>Creates one or more response messages for function invocation results.</summary>
+        <returns>A list of all chat messages created from <paramref name="results" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="CompleteAsync">
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatCompletion&gt; CompleteAsync (System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class Microsoft.Extensions.AI.ChatCompletion&gt; CompleteAsync(class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function CompleteAsync (chatMessages As IList(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ChatCompletion)" />
-      <MemberSignature Language="F#" Value="override this.CompleteAsync : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatCompletion&gt;" Usage="functionInvokingChatClient.CompleteAsync (chatMessages, options, cancellationToken)" />
+    <Member MemberName="CurrentContext">
+      <MemberSignature Language="C#" Value="public static Microsoft.Extensions.AI.FunctionInvocationContext? CurrentContext { get; protected set; }" />
+      <MemberSignature Language="ILAsm" Value=".property class Microsoft.Extensions.AI.FunctionInvocationContext CurrentContext" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.CurrentContext" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Property CurrentContext As FunctionInvocationContext" />
+      <MemberSignature Language="F#" Value="static member CurrentContext : Microsoft.Extensions.AI.FunctionInvocationContext with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.CurrentContext" />
+      <MemberSignature Language="C++ CLI" Value="public:  static property Microsoft::Extensions::AI::FunctionInvocationContext ^ CurrentContext {  public:&#xA;Microsoft::Extensions::AI::FunctionInvocationContext ^ get(); protected:&#xA; void set(Microsoft::Extensions::AI::FunctionInvocationContext ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>Microsoft.Extensions.AI.FunctionInvocationContext</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the <see cref="T:Microsoft.Extensions.AI.FunctionInvocationContext" /> for the current function invocation.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            This value flows across async calls.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetResponseAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt; GetResponseAsync (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class Microsoft.Extensions.AI.ChatResponse&gt; GetResponseAsync(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.GetResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetResponseAsync (messages As IEnumerable(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ChatResponse)" />
+      <MemberSignature Language="F#" Value="override this.GetResponseAsync : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;" Usage="functionInvokingChatClient.GetResponseAsync (messages, options, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatCompletion&gt;</ReturnType>
+        <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="chatMessages" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
         <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -114,39 +199,40 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="chatMessages">To be added.</param>
+        <param name="messages">To be added.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
-    <Member MemberName="CompleteStreamingAsync">
-      <MemberSignature Language="C#" Value="public override System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt; CompleteStreamingAsync (System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Collections.Generic.IAsyncEnumerable`1&lt;class Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt; CompleteStreamingAsync(class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.CompleteStreamingAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function CompleteStreamingAsync (chatMessages As IList(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As IAsyncEnumerable(Of StreamingChatCompletionUpdate)" />
-      <MemberSignature Language="F#" Value="override this.CompleteStreamingAsync : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;" Usage="functionInvokingChatClient.CompleteStreamingAsync (chatMessages, options, cancellationToken)" />
+    <Member MemberName="GetStreamingResponseAsync">
+      <MemberSignature Language="C#" Value="public override System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt; GetStreamingResponseAsync (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Collections.Generic.IAsyncEnumerable`1&lt;class Microsoft.Extensions.AI.ChatResponseUpdate&gt; GetStreamingResponseAsync(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.GetStreamingResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetStreamingResponseAsync (messages As IEnumerable(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As IAsyncEnumerable(Of ChatResponseUpdate)" />
+      <MemberSignature Language="F#" Value="override this.GetStreamingResponseAsync : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;" Usage="functionInvokingChatClient.GetStreamingResponseAsync (messages, options, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;CompleteStreamingAsync&gt;d__24))]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;CompleteStreamingAsync&gt;d__24))&gt;]</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;GetStreamingResponseAsync&gt;d__24))]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;GetStreamingResponseAsync&gt;d__24))&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;</ReturnType>
+        <ReturnType>System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="chatMessages" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
         <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -162,108 +248,96 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="chatMessages">To be added.</param>
+        <param name="messages">To be added.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
-    <Member MemberName="ConcurrentInvocation">
-      <MemberSignature Language="C#" Value="public bool ConcurrentInvocation { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool ConcurrentInvocation" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.ConcurrentInvocation" />
-      <MemberSignature Language="VB.NET" Value="Public Property ConcurrentInvocation As Boolean" />
-      <MemberSignature Language="F#" Value="member this.ConcurrentInvocation : bool with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.ConcurrentInvocation" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool ConcurrentInvocation { bool get(); void set(bool value); };" />
+    <Member MemberName="IncludeDetailedErrors">
+      <MemberSignature Language="C#" Value="public bool IncludeDetailedErrors { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IncludeDetailedErrors" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.IncludeDetailedErrors" />
+      <MemberSignature Language="VB.NET" Value="Public Property IncludeDetailedErrors As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IncludeDetailedErrors : bool with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.IncludeDetailedErrors" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IncludeDetailedErrors { bool get(); void set(bool value); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DetailedErrors">
-      <MemberSignature Language="C#" Value="public bool DetailedErrors { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool DetailedErrors" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.DetailedErrors" />
-      <MemberSignature Language="VB.NET" Value="Public Property DetailedErrors As Boolean" />
-      <MemberSignature Language="F#" Value="member this.DetailedErrors : bool with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.DetailedErrors" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool DetailedErrors { bool get(); void set(bool value); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+            Gets or sets a value indicating whether detailed exception information should be included
+            in the chat history when calling the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />.
+            </summary>
+        <value>
+          <see langword="true" /> if the full exception message is added to the chat history
+            when calling the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />.
+            <see langword="false" /> if a generic error message is included in the chat history.
+            The default value is <see langword="false" />.
+            </value>
+        <remarks>
+          <para>
+            Setting the value to <see langword="false" /> prevents the underlying language model from disclosing
+            raw exception details to the end user, since it doesn't receive that information. Even in this
+            case, the raw <see cref="T:System.Exception" /> object is available to application code by inspecting
+            the <see cref="P:Microsoft.Extensions.AI.FunctionResultContent.Exception" /> property.
+            </para>
+          <para>
+            Setting the value to <see langword="true" /> can help the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> bypass problems on
+            its own, for example by retrying the function call with different arguments. However it might
+            result in disclosing the raw exception information to external users, which can be a security
+            concern depending on the application scenario.
+            </para>
+          <para>
+            Changing the value of this property while the client is in use might result in inconsistencies
+            as to whether detailed errors are provided during an in-flight request.
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="InvokeFunctionAsync">
-      <MemberSignature Language="C#" Value="protected virtual System.Threading.Tasks.Task&lt;object?&gt; InvokeFunctionAsync (Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationContext context, System.Threading.CancellationToken cancellationToken);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;object&gt; InvokeFunctionAsync(class Microsoft.Extensions.AI.FunctionInvokingChatClient/FunctionInvocationContext context, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.InvokeFunctionAsync(Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationContext,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Function InvokeFunctionAsync (context As FunctionInvokingChatClient.FunctionInvocationContext, cancellationToken As CancellationToken) As Task(Of Object)" />
-      <MemberSignature Language="F#" Value="abstract member InvokeFunctionAsync : Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationContext * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;obj&gt;&#xA;override this.InvokeFunctionAsync : Microsoft.Extensions.AI.FunctionInvokingChatClient.FunctionInvocationContext * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;obj&gt;" Usage="functionInvokingChatClient.InvokeFunctionAsync (context, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Threading::Tasks::Task&lt;System::Object ^&gt; ^ InvokeFunctionAsync(Microsoft::Extensions::AI::FunctionInvokingChatClient::FunctionInvocationContext ^ context, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="C#" Value="protected virtual System.Threading.Tasks.Task&lt;object?&gt; InvokeFunctionAsync (Microsoft.Extensions.AI.FunctionInvocationContext context, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;object&gt; InvokeFunctionAsync(class Microsoft.Extensions.AI.FunctionInvocationContext context, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.FunctionInvokingChatClient.InvokeFunctionAsync(Microsoft.Extensions.AI.FunctionInvocationContext,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function InvokeFunctionAsync (context As FunctionInvocationContext, cancellationToken As CancellationToken) As Task(Of Object)" />
+      <MemberSignature Language="F#" Value="abstract member InvokeFunctionAsync : Microsoft.Extensions.AI.FunctionInvocationContext * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;obj&gt;&#xA;override this.InvokeFunctionAsync : Microsoft.Extensions.AI.FunctionInvocationContext * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;obj&gt;" Usage="functionInvokingChatClient.InvokeFunctionAsync (context, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::Threading::Tasks::Task&lt;System::Object ^&gt; ^ InvokeFunctionAsync(Microsoft::Extensions::AI::FunctionInvocationContext ^ context, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Object&gt;</ReturnType>
         <Attributes>
-          <Attribute FrameworkAlternate="net-8.0-pp">
+          <Attribute FrameworkAlternate="net-10.0-pp">
             <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })]</AttributeName>
             <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })&gt;]</AttributeName>
           </Attribute>
         </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="context" Type="Microsoft.Extensions.AI.FunctionInvokingChatClient+FunctionInvocationContext" />
+        <Parameter Name="context" Type="Microsoft.Extensions.AI.FunctionInvocationContext" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="context">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="context">
+            The function invocation context detailing the function to be invoked and its arguments along with additional request information.
+            </param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests. The default is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Invokes the function asynchronously.</summary>
+        <returns>The result of the function invocation, or <see langword="null" /> if the function invocation returned <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="KeepFunctionCallingMessages">
-      <MemberSignature Language="C#" Value="public bool KeepFunctionCallingMessages { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance bool KeepFunctionCallingMessages" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.KeepFunctionCallingMessages" />
-      <MemberSignature Language="VB.NET" Value="Public Property KeepFunctionCallingMessages As Boolean" />
-      <MemberSignature Language="F#" Value="member this.KeepFunctionCallingMessages : bool with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.KeepFunctionCallingMessages" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool KeepFunctionCallingMessages { bool get(); void set(bool value); };" />
-      <MemberType>Property</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="context" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="MaximumIterationsPerRequest">
@@ -276,15 +350,33 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Nullable&lt;System.Int32&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+            Gets or sets the maximum number of iterations per request.
+            </summary>
+        <value>
+            The maximum number of iterations per request.
+            The default value is <see langword="null" />.
+            </value>
+        <remarks>
+          <para>
+            Each request to this <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> might end up making
+            multiple requests to the inner client. Each time the inner client responds with
+            a function call request, this client might perform that invocation and send the results
+            back to the inner client in a new request. This property limits the number of times
+            such a roundtrip is performed. If null, there is no limit applied. If set, the value
+            must be at least one, as it includes the initial request.
+            </para>
+          <para>
+            Changing the value of this property while the client is in use might result in inconsistencies
+            as to how many iterations are allowed for an in-flight request.
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="RetryOnError">
@@ -297,15 +389,27 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.3.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+            Gets or sets a value indicating whether to handle exceptions that occur during function calls.
+            </summary>
+        <value>
+          <see langword="false" /> if the
+            underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> will be instructed to give a response without invoking
+            any further functions if a function call fails with an exception.
+            <see langword="true" /> if the underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is allowed
+            to continue attempting function calls until <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.MaximumIterationsPerRequest" /> is reached.
+            The default value is <see langword="false" />.
+            </value>
+        <remarks>
+            Changing the value of this property while the client is in use might result in inconsistencies
+            as to whether errors are retried during an in-flight request.
+            </remarks>
       </Docs>
     </Member>
   </Members>
