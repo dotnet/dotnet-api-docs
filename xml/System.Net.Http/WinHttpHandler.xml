@@ -55,6 +55,15 @@ This class is also available for use in Desktop apps by installing it as a NuGet
 
 Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included in the *System.Net.Http.dll* assembly as part of the .NET runtime. For more information, see [WinHttpHandler removed from .NET runtime](/dotnet/core/compatibility/3.1-5.0#winhttphandler-removed-from-net-runtime).
 
+### Trailing headers
+
+Starting with version 6.0.0, <xref:System.Net.Http.WinHttpHandler> supports trailing headers, also known as trailers ([RFC 7230 - 4.1.2. Chunked Trailer Part](https://tools.ietf.org/html/rfc7230#section-4.1.2)).
+
+- On .NET Standard 2.1 and .NET 8 or later, trailers are added to <xref:System.Net.Http.HttpResponseMessage.TrailingHeaders>.
+- On .NET Framework, trailers are added to a well-known property in <xref:System.Net.Http.HttpResponseMessage.Properties>. The name of the property is `__ResponseTrailers`, the type of the property value is <xref:System.Net.Http.Headers.HttpHeaders>.
+
+Trailer support is implemented via the `WINHTTP_QUERY_FLAG_TRAILERS` [Query Info Flag](/windows/win32/winhttp/query-info-flags) which has been introduced in Windows 11, version 21H2 (10.0; Build 22000). On Windows systems where `WINHTTP_QUERY_FLAG_TRAILERS` is unsupported, trailers are ignored.
+
  ]]></format>
     </remarks>
   </Docs>
