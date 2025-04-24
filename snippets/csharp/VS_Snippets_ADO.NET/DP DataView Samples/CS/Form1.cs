@@ -36,8 +36,7 @@ namespace DataViewSamples
             // Create a new adapter and give it a query to fetch sales order, contact,
             // address, and product information for sales in the year 2002. Point connection
             // information to the configuration setting "AdventureWorks".
-            string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks;"
-                + "Integrated Security=true;";
+            string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks;Integrated Security=true;";
 
             SqlDataAdapter da = new SqlDataAdapter(
                 "SELECT SalesOrderID, ContactID, OrderDate, OnlineOrderFlag, " +

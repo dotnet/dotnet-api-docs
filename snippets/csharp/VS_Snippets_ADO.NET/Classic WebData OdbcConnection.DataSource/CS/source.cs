@@ -13,7 +13,7 @@ public class Form1: Form
 // <Snippet1>
  public void CreateOdbcConnection()
  {
-     string connectionString = "Driver={SQL Native Client};Server=(local);Trusted_Connection=Yes;Database=AdventureWorks;";
+     string connectionString = "...";
 
      using (OdbcConnection connection = new OdbcConnection(connectionString))
      {

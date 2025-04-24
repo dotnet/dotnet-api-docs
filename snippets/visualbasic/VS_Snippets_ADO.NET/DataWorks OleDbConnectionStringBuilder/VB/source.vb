@@ -3,7 +3,7 @@ Option Strict
 
 Imports System.Data
 ' <Snippet1>
-Imports System.Data.OleDb    
+Imports System.Data.OleDb
 Imports System.Collections
 
 Module Module1
@@ -27,13 +27,10 @@ Module Module1
     ' default values.
     builder.Clear()
 
-    ' Pass the OleDbConnectionStringBuilder an existing 
+    ' Pass the OleDbConnectionStringBuilder an existing
     ' connection string, and you can retrieve and
     ' modify any of the elements.
-    builder.ConnectionString = _
-        "Provider=DB2OLEDB;Network Transport Library=TCPIP;" & _
-        "Network Address=192.168.0.12;Initial Catalog=DbAdventures;" & _
-        "Package Collection=SamplePackage;Default Schema=SampleSchema;"
+    builder.ConnectionString = "..."
 
     Console.WriteLine("Network Address = " & builder("Network Address").ToString())
     Console.WriteLine()
@@ -42,7 +39,7 @@ Module Module1
     builder("Package Collection") = "NewPackage"
     builder("Default Schema") = "NewSchema"
 
-    ' Call the Remove method to remove items from 
+    ' Call the Remove method to remove items from
     ' the collection of key/value pairs.
     builder.Remove("User ID")
 
@@ -52,8 +49,8 @@ Module Module1
     Console.WriteLine(builder.ConnectionString)
     Console.WriteLine()
 
-    ' The Item property is the default for the class, 
-    ' and setting the Item property adds the value, if 
+    ' The Item property is the default for the class,
+    ' and setting the Item property adds the value, if
     ' necessary.
     builder("User ID") = "SampleUser"
     builder("Password") = "SamplePassword"
