@@ -3088,9 +3088,9 @@ public void Info1(string arg1)
 ## Remarks
  `eventid` should be greater than 0 or less than 65535 or errors can occur in the operation. If errors do occur, you can get more information about the source of the error by checking the output stream of the debugger, if you have a debugger attached to the process firing events. You can also look for errors reported in the ETW event stream, if you have an ETW listener on the event source where the error occurs.
 
- When you implement a method that is identified as an ETW event in an <xref:System.Diagnostics.Tracing.EventSource>-derived class. You must call the base class <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A> method passing the <xref:System.Diagnostics.Tracing.EventAttribute.EventId%2A> and the same arguments as the implemented method similar to the following example.
+ When you implement a method that's identified as an ETW event in an <xref:System.Diagnostics.Tracing.EventSource>-derived class, you must call the base class <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A> method passing the <xref:System.Diagnostics.Tracing.EventAttribute.EventId%2A> and the same arguments as the implemented method similar to the following example.
 
-```
+```csharp
 [Event(2, Level = EventLevel.Informational)]
 public void Info1(Int64 arg1, string arg2)
 {
@@ -3697,13 +3697,11 @@ public void Info1(string arg1)
  The following example shows how to add a <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A> overload that accepts four arguments. An example would be if you have a logging event that logs a string and 3 integers.
 
 ```csharp
-
 [Event(1)]
 public void LogTime(string tag, int hour, int minute, int second)
 {
     WriteEvent(1, tag, hour, minute, second);
 }
-
 ```
 
  You could do this without calling <xref:System.Diagnostics.Tracing.EventSource.WriteEventCore%2A>, but it would be slower than it needs to be. That is because it uses arrays and reflection to figure out what to do. If you log these at a high rate (> 1000 / sec), it can be worth making a fast helper, as shown in the following example. The method shadows the existing <xref:System.Diagnostics.Tracing.EventSource.WriteEvent%2A>. Thus the original caller code (LogTime) does not actually change, but the C# compiler will use the more specialized version which will be faster.
@@ -3734,10 +3732,9 @@ class AnotherEventSource : EventSource {
         }
     }
 }
-
 ```
 
-  These are the expected sizes and data encodings for standard serializable types:
+These are the expected sizes and data encodings for standard serializable types:
 
 ```csharp
 // bool arg
