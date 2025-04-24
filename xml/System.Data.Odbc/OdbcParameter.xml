@@ -222,7 +222,7 @@ OleDbDataReader reader = command.ExecuteReader();
 ## Remarks
  Use caution when you are using this overload of the <xref:System.Data.Odbc.OdbcParameter> constructor to specify integer parameter values. Because this overload takes a `value` of type <xref:System.Object>, you must convert the integral value to an <xref:System.Object> type when the value is zero, as the following C# example demonstrates.
 
-```
+```csharp
 Parameter = new OdbcParameter("@pname", Convert.ToInt32(0));
 ```
 
@@ -789,12 +789,10 @@ public void CreateOdbcParameter()
 ## Remarks
  Instead of named parameters, the ODBC .NET Provider uses positional parameters that are marked with a question mark (?) in the syntax of the command text. Parameter objects in the <xref:System.Data.Odbc.OdbcParameterCollection> and the actual parameters accepted by the stored procedure or parameterized SQL statement correspond to each other based on the order in which the <xref:System.Data.Odbc.OdbcParameter> objects are inserted into the collection instead of by parameter name. Parameter names can be supplied, but will be ignored during parameter object binding.
 
-
-
 ## Examples
  The following example assumes that the data source has a table name **MyTable** and a stored procedure named MyProc that is defined as:
 
-```
+```tsql
 CREATE TABLE MyTable (col1 int, col2 smallmoney, col3 decimal)
 CREATE PROC MyProc (@p1 int, @p2 smallmoney, @p3 decimal) AS INSERT INTO MyTable VALUES (@p1, @p2, @p3)
 ```
@@ -1241,14 +1239,14 @@ public void CreateOdbcParameter()
 
  <xref:System.Data.Common.DbCommandBuilder> uses this property to determine whether the source column is nullable, and sets this property to `true` if it is nullable, and `false` if it is not. When <xref:System.Data.Common.DbCommandBuilder> is generating its Update statement, it examines the <xref:System.Data.Odbc.OdbcParameter.SourceColumnNullMapping%2A> for each parameter. If the property is `true`, <xref:System.Data.Common.DbCommandBuilder> generates a WHERE clauses like the following example. In this query expression, "FieldName" represents the name of the field:
 
-```
+```tsql
 ((@IsNull_FieldName = 1 AND FieldName IS NULL) OR
   (FieldName = @Original_FieldName))
 ```
 
  If <xref:System.Data.Odbc.OdbcParameter.SourceColumnNullMapping%2A> for the field is false, <xref:System.Data.Common.DbCommandBuilder> generates the following WHERE clause:
 
-```
+```tsql
 FieldName = @OriginalFieldName
 ```
 

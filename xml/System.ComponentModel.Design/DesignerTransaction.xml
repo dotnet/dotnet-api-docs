@@ -68,27 +68,25 @@
  To perform an action within a transaction, you must first create a transaction. Then you must call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method before each change or set of changes occurs, and the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method after each change or set of changes occur. Finally, complete and close the transaction by calling the <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> method.
 
 > [!NOTE]
->  When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.
+> When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.
 
  To perform a transaction, complete the following steps:
 
-1.  Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.
+1. Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.
 
-2.  Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.
+2. Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.
 
-3.  To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.
+3. To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.
 
  In C#, you can use the `using` statement rather than a `try/finally` block, such as in the following example.
 
-```
+```csharp
 using (host.CreateTransaction() {
 // Insert your code here.
 }
 ```
 
  To cancel and attempt to roll back a transaction before it has been committed, call the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method. When the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method is invoked, the actions tracked by the <xref:System.ComponentModel.Design.DesignerTransaction> are reversed to attempt to roll back the changes. To undo actions that occurred as part of earlier transactions, you must use the undo command provided by the development environment.
-
-
 
 ## Examples
  The following code example program demonstrates how to create a <xref:System.ComponentModel.Design.DesignerTransaction> from a designer. To run this sample, compile the source code into a class library. You must add a reference to the System.Design assembly. In a new project, add a reference to the compiled DLL and add the component in the library to the **Toolbox**.
