@@ -1,13 +1,9 @@
-﻿Imports System.Xml
-Imports System.Data
-Imports System.Data.SqlClient
-Imports System.Data.Common
+﻿Imports System.Data
 Imports System.Windows.Forms
+Imports Microsoft.Data.SqlClient
 
 Public Class Form1
     Inherits Form
-    Private DataSet1 As DataSet
-    Private dataGrid1 As DataGrid
 
     ' <Snippet1>
     ' handler for RowUpdating event
@@ -20,12 +16,7 @@ Public Class Form1
         PrintEventArgs(e)
     End Sub
 
-    'Entry point which delegates to C-style main Private Function
-    Public Overloads Shared Sub Main()
-        System.Environment.ExitCode = Main(System.Environment.GetCommandLineArgs())
-    End Sub
-
-    Overloads Public Shared Function Main(args() As String) As Integer
+    Public Overloads Shared Function Main(args() As String) As Integer
         Const connectionString As String = "..."
         Const queryString As String = "SELECT * FROM Products"
 
@@ -56,17 +47,17 @@ Public Class Form1
     End Function
 
 
-    Overloads Private Shared Sub PrintEventArgs(args As SqlRowUpdatingEventArgs)
+    Private Overloads Shared Sub PrintEventArgs(args As SqlRowUpdatingEventArgs)
         Console.WriteLine("OnRowUpdating")
-        Console.WriteLine("  event args: (" & " command=" & args.Command.CommandText & _
+        Console.WriteLine("  event args: (" & " command=" & args.Command.CommandText &
            " commandType=" & args.StatementType & " status=" & args.Status & ")")
     End Sub
 
 
-    Overloads Private Shared Sub PrintEventArgs(args As SqlRowUpdatedEventArgs)
+    Private Overloads Shared Sub PrintEventArgs(args As SqlRowUpdatedEventArgs)
         Console.WriteLine("OnRowUpdated")
-        Console.WriteLine("  event args: (" & " command=" & args.Command.CommandText & _
-           " commandType=" & args.StatementType & " recordsAffected=" & _
+        Console.WriteLine("  event args: (" & " command=" & args.Command.CommandText &
+           " commandType=" & args.StatementType & " recordsAffected=" &
            args.RecordsAffected & " status=" & args.Status & ")")
     End Sub
 End Class

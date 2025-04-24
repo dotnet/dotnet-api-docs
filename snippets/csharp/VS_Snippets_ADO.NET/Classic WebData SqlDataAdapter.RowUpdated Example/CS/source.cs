@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Xml;
 using System.Data;
-using System.Data.SqlClient;
-using System.Data.Common;
 using System.Windows.Forms;
+using Microsoft.Data.SqlClient;
 
-public class Form1: Form
+public class Form1 : Form
 {
-    private DataSet DataSet1;
-    private DataGrid dataGrid1;
-
     // <Snippet1>
     // handler for RowUpdating event
     private static void OnRowUpdating(object sender, SqlRowUpdatingEventArgs e)
@@ -29,11 +24,11 @@ public class Form1: Form
         const string queryString = "SELECT * FROM Products";
 
         // create DataAdapter
-        SqlDataAdapter adapter = new SqlDataAdapter(queryString, connectionString);
-        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+        SqlDataAdapter adapter = new(queryString, connectionString);
+        SqlCommandBuilder builder = new(adapter);
 
         // Create and fill DataSet (select only first 5 rows)
-        DataSet dataSet = new DataSet();
+        DataSet dataSet = new();
         adapter.Fill(dataSet, 0, 5, "Table");
 
         // Modify DataSet
@@ -41,23 +36,23 @@ public class Form1: Form
         table.Rows[0][1] = "new product";
 
         // add handlers
-        adapter.RowUpdating += new SqlRowUpdatingEventHandler( OnRowUpdating );
-        adapter.RowUpdated += new SqlRowUpdatedEventHandler( OnRowUpdated );
+        adapter.RowUpdating += new SqlRowUpdatingEventHandler(OnRowUpdating);
+        adapter.RowUpdated += new SqlRowUpdatedEventHandler(OnRowUpdated);
 
         // update, this operation fires two events
         // (RowUpdating/RowUpdated) per changed row
         adapter.Update(dataSet, "Table");
 
         // remove handlers
-        adapter.RowUpdating -= new SqlRowUpdatingEventHandler( OnRowUpdating );
-        adapter.RowUpdated -= new SqlRowUpdatedEventHandler( OnRowUpdated );
+        adapter.RowUpdating -= new SqlRowUpdatingEventHandler(OnRowUpdating);
+        adapter.RowUpdated -= new SqlRowUpdatedEventHandler(OnRowUpdated);
         return 0;
     }
 
     private static void PrintEventArgs(SqlRowUpdatingEventArgs args)
     {
         Console.WriteLine("OnRowUpdating");
-        Console.WriteLine("  event args: ("+
+        Console.WriteLine("  event args: (" +
             " command=" + args.Command +
             " commandType=" + args.StatementType +
             " status=" + args.Status + ")");
@@ -66,7 +61,7 @@ public class Form1: Form
     private static void PrintEventArgs(SqlRowUpdatedEventArgs args)
     {
         Console.WriteLine("OnRowUpdated");
-        Console.WriteLine( "  event args: ("+
+        Console.WriteLine("  event args: (" +
             " command=" + args.Command +
             " commandType=" + args.StatementType +
             " recordsAffected=" + args.RecordsAffected +
