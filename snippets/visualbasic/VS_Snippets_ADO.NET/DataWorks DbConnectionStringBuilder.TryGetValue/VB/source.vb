@@ -8,13 +8,9 @@ Module Module1
     ' <Snippet1>
     Sub Main()
         Dim builder As New DbConnectionStringBuilder
-        builder.ConnectionString = _
-            "Provider=sqloledb;Data Source=192.168.168.1,1433;" & _
-            "Network Library=DBMSSOCN;Initial Catalog=pubs;" & _
-            "Integrated Security=SSPI;"
+        builder.ConnectionString = "..."
 
-        ' Call TryGetValue method for multiple
-        ' key names.
+        ' Call TryGetValue method for multiple key names.
         DisplayValue(builder, "Provider")
         DisplayValue(builder, "DATA SOURCE")
         DisplayValue(builder, "InvalidKey")
@@ -30,8 +26,7 @@ Module Module1
         ' Although TryGetValue handles missing keys,
         ' it doesn't handle passing in a null (Nothing in Visual Basic)
         ' key. This example traps for that particular error, but
-        ' bubbles any other unknown exceptions back out to the
-        ' caller. 
+        ' bubbles any other unknown exceptions back out to the caller.
         Try
             If builder.TryGetValue(key, value) Then
                 Console.WriteLine("{0}={1}", key, value)
