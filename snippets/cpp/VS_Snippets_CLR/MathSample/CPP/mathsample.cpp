@@ -83,6 +83,6 @@ int main()
    double dxD = trpz->GetLeftBaseDegreeAngle();
    Console::WriteLine( "Trapezoid left base angle is: {0} Degrees", dxD.ToString() );
    double dyD = trpz->GetRightBaseDegreeAngle();
-   Console::WriteLine( "Trapezoid left base angle is: {0} Degrees", dyD.ToString() );
+   Console::WriteLine( "Trapezoid right base angle is: {0} Degrees", dyD.ToString() );
 }
 // </snippet1>
