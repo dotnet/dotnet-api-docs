@@ -60,7 +60,7 @@ Class MathTrapezoidSample
         Dim dxD As Double = trpz.GetLeftBaseDegreeAngle()
         Console.WriteLine("Trapezoid left base angle is: " + dxD.ToString() + " Degrees")
         Dim dyD As Double = trpz.GetRightBaseDegreeAngle()
-        Console.WriteLine("Trapezoid left base angle is: " + dyD.ToString() + " Degrees")
+        Console.WriteLine("Trapezoid right base angle is: " + dyD.ToString() + " Degrees")
     End Sub
 End Class
 ' </Snippet1>
