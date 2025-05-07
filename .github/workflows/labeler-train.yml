@@ -1,3 +1,8 @@
+# Workflow template imported and updated from:
+# https://github.com/dotnet/issue-labeler/wiki/Onboarding
+#
+# See labeler.md for more information
+#
 # Train the Issues and Pull Requests models for label prediction
 name: "Labeler: Training"
 
@@ -29,7 +34,7 @@ on:
         description: "Max number of items to download for training/testing the model (newest items are used). Defaults to the max number of pages times the page size."
         type: number
       page_size:
-        description: "Number of items per page in GitHub API requests. Defaults to 100 for issues, 25 for pull requests."
+        description: "Number of items per page in GitHub API requests. Defaults to 100 for issues. Always uses 1 for pull requests."
         type: number
       page_limit:
         description: "Maximum number of pages to download for training/testing the model. Defaults to 1000 for issues, 4000 for pull requests."
@@ -84,8 +89,8 @@ jobs:
           repository: ${{ env.REPOSITORY }}
           label_prefix: ${{ env.LABEL_PREFIX }}
           limit: ${{ env.LIMIT }}
-          page_size: ${{ env.PAGE_SIZE }}
-          page_limit: ${{ env.PAGE_LIMIT }}
+          page_size: 1 # This repository can only successfully download pulls one at a time due to GitHub's API performance
+          page_limit: 10000 # Download the newest 10,000 pull requests
           excluded_authors: ${{ env.EXCLUDED_AUTHORS }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -154,8 +159,8 @@ jobs:
           label_prefix: ${{ env.LABEL_PREFIX }}
           threshold: ${{ env.THRESHOLD }}
           limit: ${{ env.LIMIT }}
-          page_size: ${{ env.PAGE_SIZE }}
-          page_limit: ${{ env.PAGE_LIMIT }}
+          page_size: 1 # This repository can only successfully download pulls one at a time due to GitHub's API performance
+          page_limit: 10000 # Download the newest 10,000 pull requests
           excluded_authors: ${{ env.EXCLUDED_AUTHORS }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
