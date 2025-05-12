@@ -25,6 +25,7 @@
   <Docs>
     <summary>Represents the options for a chat request.</summary>
     <remarks>To be added.</remarks>
+    <related type="Article" href="https://learn.microsoft.com/dotnet/ai/microsoft-extensions-ai#provide-options">Provide options.</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -65,6 +66,40 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="AllowMultipleToolCalls">
+      <MemberSignature Language="C#" Value="public bool? AllowMultipleToolCalls { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;bool&gt; AllowMultipleToolCalls" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.ChatOptions.AllowMultipleToolCalls" />
+      <MemberSignature Language="VB.NET" Value="Public Property AllowMultipleToolCalls As Nullable(Of Boolean)" />
+      <MemberSignature Language="F#" Value="member this.AllowMultipleToolCalls : Nullable&lt;bool&gt; with get, set" Usage="Microsoft.Extensions.AI.ChatOptions.AllowMultipleToolCalls" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;bool&gt; AllowMultipleToolCalls { Nullable&lt;bool&gt; get(); void set(Nullable&lt;bool&gt; value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.Boolean&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets a flag to indicate whether a single response is allowed to include multiple tool calls.
+            If <see langword="false" />, the <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is asked to return a maximum of one tool call per request.
+            If <see langword="true" />, there is no limit.
+            If <see langword="null" />, the provider may select its own default.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+          <para>
+            When used with function calling middleware, this does not affect the ability to perform multiple function calls in sequence.
+            It only affects the number of function calls within a single iteration of the function calling loop.
+            </para>
+          <para>
+            The underlying provider is not guaranteed to support or honor this flag. For example it may choose to ignore it and return multiple tool calls regardless.
+            </para>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="ChatThreadId">
       <MemberSignature Language="C#" Value="public string? ChatThreadId { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string ChatThreadId" />
@@ -77,13 +112,23 @@
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.4.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.Obsolete("Use ConversationId instead.")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("Use ConversationId instead.")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets an optional identifier used to associate a request with an existing chat thread.</summary>
+        <summary>Gets or sets an optional identifier used to associate a request with an existing conversation.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>This property is obsolete. Use <see cref="P:Microsoft.Extensions.AI.ChatOptions.ConversationId" /> instead.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Clone">
@@ -110,6 +155,28 @@
             <see cref="P:Microsoft.Extensions.AI.ChatOptions.StopSequences" />, and <see cref="P:Microsoft.Extensions.AI.ChatOptions.AdditionalProperties" />, are shallow-cloned, meaning a new collection instance is created,
             but any references contained by the collections are shared with the original.
             </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConversationId">
+      <MemberSignature Language="C#" Value="public string? ConversationId { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string ConversationId" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.ChatOptions.ConversationId" />
+      <MemberSignature Language="VB.NET" Value="Public Property ConversationId As String" />
+      <MemberSignature Language="F#" Value="member this.ConversationId : string with get, set" Usage="Microsoft.Extensions.AI.ChatOptions.ConversationId" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ ConversationId { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets an optional identifier used to associate a request with an existing conversation.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+        <related type="Article" href="https://learn.microsoft.com/dotnet/ai/microsoft-extensions-ai#stateless-vs-stateful-clients">Stateless vs. stateful clients.</related>
       </Docs>
     </Member>
     <Member MemberName="FrequencyPenalty">
@@ -203,6 +270,52 @@
         <remarks>
             You can modify this value to reduce repetitiveness of generated tokens. Similar to <see cref="P:Microsoft.Extensions.AI.ChatOptions.FrequencyPenalty" />,
             except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RawRepresentationFactory">
+      <MemberSignature Language="C#" Value="public Func&lt;Microsoft.Extensions.AI.IChatClient,object?&gt;? RawRepresentationFactory { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Func`2&lt;class Microsoft.Extensions.AI.IChatClient, object&gt; RawRepresentationFactory" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.ChatOptions.RawRepresentationFactory" />
+      <MemberSignature Language="VB.NET" Value="Public Property RawRepresentationFactory As Func(Of IChatClient, Object)" />
+      <MemberSignature Language="F#" Value="member this.RawRepresentationFactory : Func&lt;Microsoft.Extensions.AI.IChatClient, obj&gt; with get, set" Usage="Microsoft.Extensions.AI.ChatOptions.RawRepresentationFactory" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Func&lt;Microsoft::Extensions::AI::IChatClient ^, System::Object ^&gt; ^ RawRepresentationFactory { Func&lt;Microsoft::Extensions::AI::IChatClient ^, System::Object ^&gt; ^ get(); void set(Func&lt;Microsoft::Extensions::AI::IChatClient ^, System::Object ^&gt; ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 2 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 2 })&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.Text.Json.Serialization.JsonIgnore]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Text.Json.Serialization.JsonIgnore&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Func&lt;Microsoft.Extensions.AI.IChatClient,System.Object&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets a callback responsible of creating the raw representation of the chat options from an underlying implementation.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            The underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" /> implementation may have its own representation of options.
+            When <see cref="M:Microsoft.Extensions.AI.IChatClient.GetResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" /> or <see cref="M:Microsoft.Extensions.AI.IChatClient.GetStreamingResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
+            is invoked with a <see cref="T:Microsoft.Extensions.AI.ChatOptions" />, that implementation may convert the provided options into
+            its own representation in order to use it while performing the operation. For situations where a consumer knows
+            which concrete <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is being used and how it represents options, a new instance of that
+            implementation-specific options type may be returned by this callback, for the <see cref="T:Microsoft.Extensions.AI.IChatClient" />
+            implementation to use instead of creating a new instance. Such implementations may mutate the supplied options
+            instance further based on other settings supplied on this <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> instance or from other inputs,
+            like the enumerable of <see cref="T:Microsoft.Extensions.AI.ChatMessage" />s, therefore, its **strongly recommended** to not return shared instances
+            and instead make the callback return a new instance per each call.
+            This is typically used to set an implementation-specific setting that isn't otherwise exposed from the strongly-typed
+            properties on <see cref="T:Microsoft.Extensions.AI.ChatOptions" />.
             </remarks>
       </Docs>
     </Member>
@@ -362,6 +475,7 @@
         <summary>Gets or sets the list of tools to include with a chat request.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <related type="Article" href="https://learn.microsoft.com/dotnet/ai/microsoft-extensions-ai#tool-calling">Tool calling.</related>
       </Docs>
     </Member>
     <Member MemberName="TopK">

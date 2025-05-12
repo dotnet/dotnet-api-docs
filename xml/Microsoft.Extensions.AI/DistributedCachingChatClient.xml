@@ -27,9 +27,19 @@
             A delegating chat client that caches the results of response calls, storing them as JSON in an <see cref="T:Microsoft.Extensions.Caching.Distributed.IDistributedCache" />.
             </summary>
     <remarks>
+      <para>
+            The <see cref="T:Microsoft.Extensions.AI.DistributedCachingChatClient" /> employs JSON serialization as part of storing cached data. It is not guaranteed that
+            the object models used by <see cref="T:Microsoft.Extensions.AI.ChatMessage" />, <see cref="T:Microsoft.Extensions.AI.ChatOptions" />, <see cref="T:Microsoft.Extensions.AI.ChatResponse" />, <see cref="T:Microsoft.Extensions.AI.ChatResponseUpdate" />,
+            or any of the other objects in the chat client pipeline will roundtrip through JSON serialization with full fidelity. For example,
+            <see cref="P:Microsoft.Extensions.AI.ChatMessage.RawRepresentation" /> will be ignored, and <see cref="T:System.Object" /> values in <see cref="P:Microsoft.Extensions.AI.ChatMessage.AdditionalProperties" />
+            will deserialize as <see cref="T:System.Text.Json.JsonElement" /> rather than as the original type. In general, code using <see cref="T:Microsoft.Extensions.AI.DistributedCachingChatClient" />
+            should only rely on accessing data that can be preserved well enough through JSON serialization and deserialization.
+            </para>
+      <para>
             The provided implementation of <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is thread-safe for concurrent use so long as the employed
             <see cref="T:Microsoft.Extensions.Caching.Distributed.IDistributedCache" /> is similarly thread-safe for concurrent use.
-            </remarks>
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
