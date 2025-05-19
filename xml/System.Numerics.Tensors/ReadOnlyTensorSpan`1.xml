@@ -78,11 +78,11 @@
       </Parameters>
       <Docs>
         <param name="array">The target array.</param>
-        <summary>
-            Creates a new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> over the provided <see cref="T:System.Array" />. The new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> will
-            have a rank of 1 and a length equal to the length of the provided <see cref="T:System.Array" />.
-            </summary>
-        <remarks>To be added.</remarks>
+        <summary>Creates a new tensor span over the entirety of the target array.</summary>
+        <remarks>
+          <para>Returns default when <paramref name="array" /> is null.</para>
+          <para>The created tensor span has a single dimension that is the same length as <paramref name="array" />.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -109,11 +109,8 @@
       </Parameters>
       <Docs>
         <param name="span">The target span.</param>
-        <summary>
-            Creates a new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> over the provided <see cref="T:System.ReadOnlySpan`1" />. The new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> will
-            have a rank of 1 and a length equal to the length of the provided <see cref="T:System.ReadOnlySpan`1" />.
-            </summary>
-        <remarks>To be added.</remarks>
+        <summary>Creates a new tensor span over the entirety of the target span.</summary>
+        <remarks>The created tensor span has a single dimension that is the same length as <paramref name="span" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -140,12 +137,55 @@
       </Parameters>
       <Docs>
         <param name="array">The target array.</param>
-        <summary>
-            Creates a new span over the entirety of the target array.
-            </summary>
-        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <summary>Creates a new tensor over the entirety of the target array.</summary>
+        <remarks>
+          <para>Returns default when <paramref name="array" /> is null.</para>
+          <para>The created tensor span has a single dimension that is the same length as <paramref name="array" />.</para>
+        </remarks>
         <exception cref="T:System.ArrayTypeMismatchException">
           <paramref name="array" /> is covariant and its type is not exactly T[].</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ReadOnlyTensorSpan (ReadOnlySpan&lt;T&gt; span, scoped ReadOnlySpan&lt;IntPtr&gt; lengths);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.ReadOnlySpan`1&lt;!T&gt; span, valuetype System.ReadOnlySpan`1&lt;native int&gt; lengths) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor(System.ReadOnlySpan{`0},System.ReadOnlySpan{System.IntPtr})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (span As ReadOnlySpan(Of T), lengths As ReadOnlySpan(Of IntPtr))" />
+      <MemberSignature Language="F#" Value="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; : ReadOnlySpan&lt;'T&gt; * ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; (span, lengths)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyTensorSpan(ReadOnlySpan&lt;T&gt; span, ReadOnlySpan&lt;IntPtr&gt; lengths);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Tensors</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="span" Type="System.ReadOnlySpan&lt;T&gt;">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="lengths" Type="System.ReadOnlySpan&lt;System.IntPtr&gt;">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="span">The target span.</param>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor span will have a single dimension that is the same length as <paramref name="span" />.</param>
+        <summary>Creates a new tensor span over the target span using the specified lengths.</summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+              Thrown when one of the following conditions is met:
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="span" />.Length
+            </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -177,15 +217,55 @@
         <Parameter Name="dataLength" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="data">An unmanaged data that points to memory.</param>
-        <param name="dataLength">The number of elements the unmanaged memory can hold.</param>
-        <summary>
-            Creates a new span over the target unmanaged buffer.
-            </summary>
-        <remarks>
-            This constructor is quite dangerous, because the length is not checked.
-            But if this creation is correct, then all subsequent uses are correct.
-            </remarks>
+        <param name="data">The pointer to the start of the target unmanaged buffer.</param>
+        <param name="dataLength">The number of elements the target unmanaged buffer contains.</param>
+        <summary>Creates a new tensor span over the target unmanaged buffer.</summary>
+        <remarks>Returns default when <paramref name="data" /> is null.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="data" /> is <c>null</c> and <paramref name="dataLength" /> is not zero</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ReadOnlyTensorSpan (T[]? array, scoped ReadOnlySpan&lt;IntPtr&gt; lengths);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array, valuetype System.ReadOnlySpan`1&lt;native int&gt; lengths) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor(`0[],System.ReadOnlySpan{System.IntPtr})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (array As T(), lengths As ReadOnlySpan(Of IntPtr))" />
+      <MemberSignature Language="F#" Value="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; : 'T[] * ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; (array, lengths)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyTensorSpan(cli::array &lt;T&gt; ^ array, ReadOnlySpan&lt;IntPtr&gt; lengths);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Tensors</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="array" Type="T[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="lengths" Type="System.ReadOnlySpan&lt;System.IntPtr&gt;">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="array">The target array.</param>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor will have a single dimension that is the same length as <paramref name="array" />.</param>
+        <summary>Creates a new tensor over the portion of the target array using the specified lengths.</summary>
+        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+              Thrown when one of the following conditions is met:
+              * <paramref name="array" /> is null and <paramref name="lengths" /> is not empty
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="array" />.Length
+            </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -228,40 +308,88 @@
       </Parameters>
       <Docs>
         <param name="span">The target span.</param>
-        <param name="lengths">The lengths of each dimension.</param>
-        <param name="strides">The strides for each dimension. The strides will be automatically calculated if not provided.</param>
-        <summary>
-            Creates a new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> over the provided <see cref="T:System.Span`1" /> using the specified lengths and strides.
-            </summary>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor span will have a single dimension that is the same length as <paramref name="span" />.</param>
+        <param name="strides">The strides of each dimension. If an empty span is provided, then strides will be automatically calculated from <paramref name="lengths" />.</param>
+        <summary>Creates a new tensor span over the target span using the specified lengths and strides.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+              Thrown when one of the following conditions is met:
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="span" />.Length
+              * <paramref name="strides" /> is not empty and has a length different from <paramref name="lengths" />
+              * <paramref name="strides" /> is not empty and contains an element that is negative
+              * <paramref name="strides" /> is not empty and contains an element that is zero in a non leading position
+            </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ReadOnlyTensorSpan (Array? array, scoped ReadOnlySpan&lt;System.Buffers.NIndex&gt; startIndex, scoped ReadOnlySpan&lt;IntPtr&gt; lengths, scoped ReadOnlySpan&lt;IntPtr&gt; strides);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Array array, valuetype System.ReadOnlySpan`1&lt;valuetype System.Buffers.NIndex&gt; startIndex, valuetype System.ReadOnlySpan`1&lt;native int&gt; lengths, valuetype System.ReadOnlySpan`1&lt;native int&gt; strides) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor(System.Array,System.ReadOnlySpan{System.Buffers.NIndex},System.ReadOnlySpan{System.IntPtr},System.ReadOnlySpan{System.IntPtr})" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (array As Array, startIndex As ReadOnlySpan(Of NIndex), lengths As ReadOnlySpan(Of IntPtr), strides As ReadOnlySpan(Of IntPtr))" />
-      <MemberSignature Language="F#" Value="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; : Array * ReadOnlySpan&lt;System.Buffers.NIndex&gt; * ReadOnlySpan&lt;nativeint&gt; * ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; (array, startIndex, lengths, strides)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyTensorSpan(Array ^ array, ReadOnlySpan&lt;System::Buffers::NIndex&gt; startIndex, ReadOnlySpan&lt;IntPtr&gt; lengths, ReadOnlySpan&lt;IntPtr&gt; strides);" />
+      <MemberSignature Language="C#" Value="public ReadOnlyTensorSpan (T* data, IntPtr dataLength, scoped ReadOnlySpan&lt;IntPtr&gt; lengths);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T* data, native int dataLength, valuetype System.ReadOnlySpan`1&lt;native int&gt; lengths) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor(`0*,System.IntPtr,System.ReadOnlySpan{System.IntPtr})" />
+      <MemberSignature Language="F#" Value="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; : nativeptr&lt;'T&gt; * nativeint * ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; (data, dataLength, lengths)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyTensorSpan(T* data, IntPtr dataLength, ReadOnlySpan&lt;IntPtr&gt; lengths);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Tensors</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="data" Type="T*">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="dataLength" Type="System.IntPtr" />
+        <Parameter Name="lengths" Type="System.ReadOnlySpan&lt;System.IntPtr&gt;">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="data">The pointer to the start of the target unmanaged buffer.</param>
+        <param name="dataLength">The number of elements the target unmanaged buffer contains.</param>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor span will have a single dimension that is the same length as <paramref name="dataLength" />.</param>
+        <summary>Creates a new tensor span over the target unmanaged buffer using the specified lengths.</summary>
+        <remarks>Returns default when <paramref name="data" /> is null.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+              Thrown when one of the following conditions is met:
+              * <paramref name="data" /> is <c>null</c> and <paramref name="dataLength" /> is not zero
+              * <paramref name="data" /> is null and <paramref name="lengths" />
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="dataLength" /></exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ReadOnlyTensorSpan (T[]? array, scoped ReadOnlySpan&lt;IntPtr&gt; lengths, scoped ReadOnlySpan&lt;IntPtr&gt; strides);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array, valuetype System.ReadOnlySpan`1&lt;native int&gt; lengths, valuetype System.ReadOnlySpan`1&lt;native int&gt; strides) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor(`0[],System.ReadOnlySpan{System.IntPtr},System.ReadOnlySpan{System.IntPtr})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (array As T(), lengths As ReadOnlySpan(Of IntPtr), strides As ReadOnlySpan(Of IntPtr))" />
+      <MemberSignature Language="F#" Value="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; : 'T[] * ReadOnlySpan&lt;nativeint&gt; * ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; (array, lengths, strides)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyTensorSpan(cli::array &lt;T&gt; ^ array, ReadOnlySpan&lt;IntPtr&gt; lengths, ReadOnlySpan&lt;IntPtr&gt; strides);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="array" Type="System.Array">
+        <Parameter Name="array" Type="T[]">
           <Attributes>
             <Attribute>
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
-        <Parameter Name="startIndex" Type="System.ReadOnlySpan&lt;System.Buffers.NIndex&gt;">
-          <Attributes>
-            <Attribute>
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
@@ -284,13 +412,19 @@
       </Parameters>
       <Docs>
         <param name="array">The target array.</param>
-        <param name="startIndex">The starting offset for each dimension.</param>
-        <param name="lengths">The lengths of each dimension.</param>
-        <param name="strides">The strides for each dimension. The strides will be automatically calculated if not provided.</param>
-        <summary>
-            Creates a new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> over the provided <see cref="T:System.Array" /> using the specified start offsets, lengths, and strides.
-            </summary>
-        <remarks>To be added.</remarks>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor will have a single dimension that is the same length as <paramref name="array" />.</param>
+        <param name="strides">The strides of each dimension. If an empty span is provided, then strides will be automatically calculated from <paramref name="lengths" />.</param>
+        <summary>Creates a new tensor over the portion of the target array beginning at the specified start index and using the specified lengths and strides.</summary>
+        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+              Thrown when one of the following conditions is met:
+              * <paramref name="array" /> is null and <paramref name="lengths" /> or <paramref name="strides" /> is not empty
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="array" />.Length
+              * <paramref name="strides" /> is not empty and has a length different from <paramref name="lengths" />
+              * <paramref name="strides" /> is not empty and contains an element that is negative
+              * <paramref name="strides" /> is not empty and contains an element that is zero in a non leading position
+            </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -341,13 +475,24 @@
       </Parameters>
       <Docs>
         <param name="array">The target array.</param>
-        <param name="start">The starting offset for each dimension.</param>
-        <param name="lengths">The lengths of each dimension.</param>
-        <param name="strides">The strides for each dimension. This strides will be automatically calculated if not provided.</param>
-        <summary>
-            Creates a new <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> over the provided <see cref="T:System.Array" /> using the specified start offsets, lengths, and strides.
-            </summary>
-        <remarks>To be added.</remarks>
+        <param name="start">The index at which to begin the tensor span.</param>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor span will have a single dimension that is the same length as <paramref name="array" />.</param>
+        <param name="strides">The strides of each dimension. If an empty span is provided, then strides will be automatically calculated from <paramref name="lengths" />.</param>
+        <summary>Creates a new tensor span over the portion of the target array beginning at the specified start index and using the specified lengths and strides.</summary>
+        <remarks>
+          <para>Returns default when <paramref name="array" /> is null.</para>
+          <para />
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+              Thrown when one of the following conditions is met:
+              * <paramref name="array" /> is null and <paramref name="lengths" /> or <paramref name="strides" /> is not empty
+              * <paramref name="start" /> is not in range of <paramref name="array" />
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="array" />.Length
+              * <paramref name="strides" /> is not empty and has a length different from <paramref name="lengths" />
+              * <paramref name="strides" /> is not empty and contains an element that is negative
+              * <paramref name="strides" /> is not empty and contains an element that is zero in a non leading position
+            </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -395,77 +540,24 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="data">An unmanaged data that points to memory.</param>
-        <param name="dataLength">The number of elements the unmanaged memory can hold.</param>
-        <param name="lengths">The lengths of the dimensions. If default is provided, it's assumed to have one dimension with a length equal to the length of the data.</param>
-        <param name="strides">The lengths of the strides. If nothing is provided, it figures out the default stride configuration.</param>
-        <summary>
-            Creates a new span over the target unmanaged buffer.
-            </summary>
-        <remarks>
-            This constructor is quite dangerous, because the length is not checked.
-            But if this creation is correct, then all subsequent uses are correct.
-            </remarks>
+        <param name="data">The pointer to the start of the target unmanaged buffer.</param>
+        <param name="dataLength">The number of elements the target unmanaged buffer contains.</param>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor span will have a single dimension that is the same length as <paramref name="dataLength" />.</param>
+        <param name="strides">The strides of each dimension. If an empty span is provided, then strides will be automatically calculated from <paramref name="lengths" />.</param>
+        <summary>Creates a new tensor span over the target unmanaged buffer using the specified lengths and strides.</summary>
+        <remarks>Returns default when <paramref name="data" /> is null.</remarks>
         <exception cref="T:System.ArgumentException">
           <typeparamref name="T" /> is a reference type or contains pointers and hence cannot be stored in unmanaged memory.
             </exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-            The specified length is negative.
-            </exception>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ReadOnlyTensorSpan (T[]? array, Index startIndex, scoped ReadOnlySpan&lt;IntPtr&gt; lengths, scoped ReadOnlySpan&lt;IntPtr&gt; strides);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(!T[] array, valuetype System.Index startIndex, valuetype System.ReadOnlySpan`1&lt;native int&gt; lengths, valuetype System.ReadOnlySpan`1&lt;native int&gt; strides) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor(`0[],System.Index,System.ReadOnlySpan{System.IntPtr},System.ReadOnlySpan{System.IntPtr})" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (array As T(), startIndex As Index, lengths As ReadOnlySpan(Of IntPtr), strides As ReadOnlySpan(Of IntPtr))" />
-      <MemberSignature Language="F#" Value="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; : 'T[] * Index * ReadOnlySpan&lt;nativeint&gt; * ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="new System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; (array, startIndex, lengths, strides)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; ReadOnlyTensorSpan(cli::array &lt;T&gt; ^ array, Index startIndex, ReadOnlySpan&lt;IntPtr&gt; lengths, ReadOnlySpan&lt;IntPtr&gt; strides);" />
-      <MemberType>Constructor</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.Numerics.Tensors</AssemblyName>
-        <AssemblyVersion>10.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="array" Type="T[]">
-          <Attributes>
-            <Attribute>
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
-        <Parameter Name="startIndex" Type="System.Index" />
-        <Parameter Name="lengths" Type="System.ReadOnlySpan&lt;System.IntPtr&gt;">
-          <Attributes>
-            <Attribute>
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
-        <Parameter Name="strides" Type="System.ReadOnlySpan&lt;System.IntPtr&gt;">
-          <Attributes>
-            <Attribute>
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
-      </Parameters>
-      <Docs>
-        <param name="array">The target array.</param>
-        <param name="startIndex">The index at which to begin the span.</param>
-        <param name="lengths">The lengths of the dimensions. If default is provided, it's assumed to have one dimension with a length equal to the length of the data.</param>
-        <param name="strides">The strides of each dimension. If default or span of length 0 is provided, then strides will be automatically calculated.</param>
-        <summary>
-            Creates a new span over the portion of the target array beginning
-            at 'start' index and ending at 'end' index (exclusive).
-            </summary>
-        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
-        <exception cref="T:System.ArrayTypeMismatchException">
-          <paramref name="array" /> is covariant and its type is not exactly T[].</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">The specified <paramref name="startIndex" /> or end index is not in the range (&lt;0 or &gt;FlattenedLength).
+              Thrown when one of the following conditions is met:
+              * <paramref name="data" /> is <c>null</c> and <paramref name="dataLength" /> is not zero
+              * <paramref name="data" /> is null and <paramref name="lengths" /> or <paramref name="strides" /> is not empty
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="dataLength" />
+              * <paramref name="strides" /> is not empty and has a length different from <paramref name="lengths" />
+              * <paramref name="strides" /> is not empty and contains an element that is negative
+              * <paramref name="strides" /> is not empty and contains an element that is zero in a non leading position
             </exception>
       </Docs>
     </Member>
@@ -510,28 +602,32 @@
       </Parameters>
       <Docs>
         <param name="array">The target array.</param>
-        <param name="start">The index at which to begin the span.</param>
-        <param name="lengths">The lengths of the dimensions. If default is provided, it's assumed to have one dimension with a length equal to the length of the data.</param>
-        <param name="strides">The strides of each dimension. If default or span of length 0 is provided, then strides will be automatically calculated.</param>
-        <summary>
-            Creates a new span over the portion of the target array beginning
-            at 'start' index and ending at 'end' index (exclusive).
-            </summary>
+        <param name="start">The index at which to begin the tensor.</param>
+        <param name="lengths">The lengths of the dimensions. If an empty span is provided, the created tensor will have a single dimension that is the same length as <paramref name="array" />.</param>
+        <param name="strides">The strides of each dimension. If an empty span is provided, then strides will be automatically calculated from <paramref name="lengths" />.</param>
+        <summary>Creates a new tensor over the portion of the target array beginning at the specified start index and using the specified lengths and strides.</summary>
         <remarks>Returns default when <paramref name="array" /> is null.</remarks>
         <exception cref="T:System.ArrayTypeMismatchException">
           <paramref name="array" /> is covariant and its type is not exactly T[].</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-            Thrown when the specified <paramref name="start" /> or end index is not in the range (&lt;0 or &gt;FlattenedLength).
+              Thrown when one of the following conditions is met:
+              * <paramref name="array" /> is null and <paramref name="lengths" /> or <paramref name="strides" /> is not empty
+              * <paramref name="start" /> is not in range of <paramref name="array" />
+              * <paramref name="lengths" /> is not empty and contains an element that is either zero or negative
+              * <paramref name="lengths" /> is not empty and has a flattened length greater than <paramref name="array" />.Length
+              * <paramref name="strides" /> is not empty and has a length different from <paramref name="lengths" />
+              * <paramref name="strides" /> is not empty and contains an element that is negative
+              * <paramref name="strides" /> is not empty and contains an element that is zero in a non leading position
             </exception>
       </Docs>
     </Member>
     <Member MemberName="CastUp&lt;TDerived&gt;">
-      <MemberSignature Language="C#" Value="public static System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; CastUp&lt;TDerived&gt; (System.Numerics.Tensors.ReadOnlyTensorSpan&lt;TDerived&gt; items) where TDerived : class, T;" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; CastUp&lt;class (!T) TDerived&gt;(valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!!TDerived&gt; items) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.CastUp``1(System.Numerics.Tensors.ReadOnlyTensorSpan{``0})" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function CastUp(Of TDerived As {Class, T}) (items As ReadOnlyTensorSpan(Of TDerived)) As ReadOnlyTensorSpan(Of T)" />
-      <MemberSignature Language="F#" Value="static member CastUp : System.Numerics.Tensors.ReadOnlyTensorSpan&lt;#'T&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;.CastUp items" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TDerived&gt;&#xA; where TDerived : class, T static System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; CastUp(System::Numerics::Tensors::ReadOnlyTensorSpan&lt;TDerived&gt; items);" />
+      <MemberSignature Language="C#" Value="public static System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; CastUp&lt;TDerived&gt; (in System.Numerics.Tensors.ReadOnlyTensorSpan&lt;TDerived&gt; items) where TDerived : class, T;" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; CastUp&lt;class (!T) TDerived&gt;([in]valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!!TDerived&gt;&amp; items) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.CastUp``1(System.Numerics.Tensors.ReadOnlyTensorSpan{``0}@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function CastUp(Of TDerived As {Class, T}) (ByRef items As ReadOnlyTensorSpan(Of TDerived)) As ReadOnlyTensorSpan(Of T)" />
+      <MemberSignature Language="F#" Value="static member CastUp : ReadOnlyTensorSpan -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;.CastUp items" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;generic &lt;typename TDerived&gt;&#xA; where TDerived : class, T static System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; CastUp(System::Numerics::Tensors::ReadOnlyTensorSpan&lt;TDerived&gt; % items);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
@@ -561,8 +657,12 @@
         </TypeParameter>
       </TypeParameters>
       <Parameters>
-        <Parameter Name="items" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;TDerived&gt;">
+        <Parameter Name="items" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;TDerived&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
@@ -571,22 +671,20 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <typeparam name="TDerived">The element type of the source read-only span, which must be derived from <typeparamref name="T" />.</typeparam>
-        <param name="items">The source read-only span. No copy is made.</param>
-        <summary>
-            Casts a read-only span of <typeparamref name="TDerived" /> to a read-only span of <typeparamref name="T" />.
-            </summary>
-        <returns>A read-only span with elements cast to the new type.</returns>
-        <remarks>This method uses a covariant cast, producing a read-only span that shares the same memory as the source. The relationships expressed in the type constraints ensure that the cast is a safe operation.</remarks>
+        <typeparam name="TDerived">The element type of the source tensor span, which must be derived from <typeparamref name="T" />.</typeparam>
+        <param name="items">The source tensor span. No copy is made.</param>
+        <summary>Casts a tensor span of <typeparamref name="TDerived" /> to a tensor span of <typeparamref name="T" />.</summary>
+        <returns>A tensor span with elements cast to the new type.</returns>
+        <remarks>This method uses a covariant cast, producing a tensor span that shares the same memory as the source. The relationships expressed in the type constraints ensure that the cast is a safe operation.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
-      <MemberSignature Language="C#" Value="public void CopyTo (scoped System.Numerics.Tensors.TensorSpan&lt;T&gt; destination);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CopyTo(valuetype System.Numerics.Tensors.TensorSpan`1&lt;!T&gt; destination) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.CopyTo(System.Numerics.Tensors.TensorSpan{`0})" />
-      <MemberSignature Language="VB.NET" Value="Public Sub CopyTo (destination As TensorSpan(Of T))" />
-      <MemberSignature Language="F#" Value="member this.CopyTo : System.Numerics.Tensors.TensorSpan&lt;'T&gt; -&gt; unit" Usage="readOnlyTensorSpan.CopyTo destination" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(System::Numerics::Tensors::TensorSpan&lt;T&gt; destination);" />
+      <MemberSignature Language="C#" Value="public void CopyTo (scoped in System.Numerics.Tensors.TensorSpan&lt;T&gt; destination);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CopyTo([in]valuetype System.Numerics.Tensors.TensorSpan`1&lt;!T&gt;&amp; destination) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.CopyTo(System.Numerics.Tensors.TensorSpan{`0}@)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub CopyTo (ByRef destination As TensorSpan(Of T))" />
+      <MemberSignature Language="F#" Value="member this.CopyTo : TensorSpan -&gt; unit" Usage="readOnlyTensorSpan.CopyTo destination" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(System::Numerics::Tensors::TensorSpan&lt;T&gt; % destination);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
@@ -596,8 +694,12 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="destination" Type="System.Numerics.Tensors.TensorSpan&lt;T&gt;">
+        <Parameter Name="destination" Type="System.Numerics.Tensors.TensorSpan&lt;T&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
@@ -610,16 +712,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="destination">The span to copy items into.</param>
-        <summary>
-            Copies the contents of this read-only span into destination span. If the source
-            and destinations overlap, this method behaves as if the original values are in
-            a temporary location before the destination is overwritten.
-            </summary>
+        <param name="destination">To be added.</param>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
-        <exception cref="T:System.ArgumentException">
-            The destination ReadOnlyTensorSpan is shorter than the source ReadOnlyTensorSpan.
-            </exception>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.CopyTo(System.Numerics.Tensors.TensorSpan{`1}@)" />
       </Docs>
     </Member>
     <Member MemberName="Empty">
@@ -649,6 +745,7 @@
             </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor`2.Empty" />
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -680,15 +777,11 @@
         <Parameter Name="obj" Type="System.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>
-            This method is not supported as spans cannot be boxed. To compare two spans, use operator ==.
-            </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-        <exception cref="T:System.NotSupportedException">
-            In all cases.
-            </exception>
+        <param name="obj">Not supported.</param>
+        <summary>Calls to this method are not supported.</summary>
+        <returns>Calls to this method are not supported.</returns>
+        <remarks>This method is not supported as tensor spans cannot be boxed. To compare two tensor spans, use operator ==.</remarks>
+        <exception cref="T:System.NotSupportedException">Calls to this method are not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="FlattenedLength">
@@ -712,6 +805,7 @@
             </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor.FlattenedLength" />
       </Docs>
     </Member>
     <Member MemberName="FlattenTo">
@@ -749,6 +843,7 @@
             Flattens the contents of this span into the provided <see cref="T:System.Span`1" />.
             </summary>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.FlattenTo(System.Span{`1})" />
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -768,7 +863,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Gets an enumerator for this span.</summary>
+        <summary>Gets an enumerator for the readonly tensor span.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -800,14 +895,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>
-            This method is not supported as spans cannot be boxed.
-            </summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-        <exception cref="T:System.NotSupportedException">
-            In all cases.
-            </exception>
+        <summary>Calls to this method are not supported.</summary>
+        <returns>Calls to this method are not supported.</returns>
+        <remarks>This method is not supported as tensor spans cannot be boxed.</remarks>
+        <exception cref="T:System.NotSupportedException">Calls to this method are not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetPinnableReference">
@@ -846,6 +937,7 @@
         <remarks>
             This method can be used for pinning and is required to support the use of span within a fixed statement.
             </remarks>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.GetPinnableReference" />
       </Docs>
     </Member>
     <Member MemberName="IsEmpty">
@@ -870,6 +962,7 @@
         <value>
           <see langword="true" /> if this span is empty; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor.IsEmpty" />
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -921,6 +1014,7 @@
         <exception cref="T:System.IndexOutOfRangeException">
             Any index is less than 0 or any index is greater than or equal to FlattenedLength.
             </exception>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor`2.Item(System.ReadOnlySpan{System.Buffers.NIndex})" />
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -968,6 +1062,7 @@
         <exception cref="T:System.IndexOutOfRangeException">
             Any index is less than 0 or any index is greater than or equal to FlattenedLength.
             </exception>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor`2.Item(System.ReadOnlySpan{System.Buffers.NRange})" />
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -1019,6 +1114,7 @@
         <exception cref="T:System.IndexOutOfRangeException">
             Any index is less than 0 or any index is greater than or equal to FlattenedLength.
             </exception>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor`2.Item(System.ReadOnlySpan{System.IntPtr})" />
       </Docs>
     </Member>
     <Member MemberName="Lengths">
@@ -1048,15 +1144,16 @@
             </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor.Lengths" />
       </Docs>
     </Member>
     <Member MemberName="op_Equality">
-      <MemberSignature Language="C#" Value="public static bool operator == (System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; left, System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; right);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality(valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; left, valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; right) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.op_Equality(System.Numerics.Tensors.ReadOnlyTensorSpan{`0},System.Numerics.Tensors.ReadOnlyTensorSpan{`0})" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Operator == (left As ReadOnlyTensorSpan(Of T), right As ReadOnlyTensorSpan(Of T)) As Boolean" />
-      <MemberSignature Language="F#" Value="static member ( = ) : System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; * System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; -&gt; bool" Usage="left = right" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; left, System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; right);" />
+      <MemberSignature Language="C#" Value="public static bool operator == (in System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; left, in System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; right);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Equality([in]valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt;&amp; left, [in]valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt;&amp; right) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.op_Equality(System.Numerics.Tensors.ReadOnlyTensorSpan{`0}@,System.Numerics.Tensors.ReadOnlyTensorSpan{`0}@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Operator == (ByRef left As ReadOnlyTensorSpan(Of T), ByRef right As ReadOnlyTensorSpan(Of T)) As Boolean" />
+      <MemberSignature Language="F#" Value="static member ( = ) : ReadOnlyTensorSpan * ReadOnlyTensorSpan -&gt; bool" Usage="left = right" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator ==(System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; % left, System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; % right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
@@ -1066,16 +1163,24 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="left" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;">
+        <Parameter Name="left" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="right" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;">
+        <Parameter Name="right" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
@@ -1084,15 +1189,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>
-            Compares the given spans and returns true if left and right point at the same memory and have the same length.
-            This operator does *not* check to see if the *contents* are equal.
-            </summary>
+        <param name="left">The first tensor span to compare.</param>
+        <param name="right">The second tensor span to compare.</param>
+        <summary>Returns a value that indicates whether two tensor spans are equal.</summary>
         <returns>
-          <see langword="true" /> if left and right point at the same memory and have the same length. This operator does *not* check if the *contents* are equal.</returns>
-        <remarks>To be added.</remarks>
+          <c>true</c> if the two tensor span are equal; otherwise, <c>false</c>.</returns>
+        <remarks>Two tensor span are equal if they have the same length and the corresponding elements of <paramref name="left" /> and <paramref name="right" /> point to the same memory. Note that the test for equality does not attempt to determine whether the contents are equal.</remarks>
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -1134,12 +1236,12 @@
       </Docs>
     </Member>
     <Member MemberName="op_Inequality">
-      <MemberSignature Language="C#" Value="public static bool operator != (System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; left, System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; right);" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality(valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; left, valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; right) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.op_Inequality(System.Numerics.Tensors.ReadOnlyTensorSpan{`0},System.Numerics.Tensors.ReadOnlyTensorSpan{`0})" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Operator != (left As ReadOnlyTensorSpan(Of T), right As ReadOnlyTensorSpan(Of T)) As Boolean" />
-      <MemberSignature Language="F#" Value="static member op_Inequality : System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; * System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt; -&gt; bool" Usage="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;.op_Inequality (left, right)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; left, System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; right);" />
+      <MemberSignature Language="C#" Value="public static bool operator != (in System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; left, in System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; right);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname bool op_Inequality([in]valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt;&amp; left, [in]valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt;&amp; right) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.op_Inequality(System.Numerics.Tensors.ReadOnlyTensorSpan{`0}@,System.Numerics.Tensors.ReadOnlyTensorSpan{`0}@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Operator != (ByRef left As ReadOnlyTensorSpan(Of T), ByRef right As ReadOnlyTensorSpan(Of T)) As Boolean" />
+      <MemberSignature Language="F#" Value="static member op_Inequality : ReadOnlyTensorSpan * ReadOnlyTensorSpan -&gt; bool" Usage="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;.op_Inequality (left, right)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool operator !=(System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; % left, System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; % right);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
@@ -1149,16 +1251,24 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="left" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;">
+        <Parameter Name="left" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="right" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;">
+        <Parameter Name="right" Type="System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
@@ -1167,15 +1277,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">To be added.</param>
-        <param name="right">To be added.</param>
-        <summary>
-            Compares the given spans and returns false if left and right point at the same memory and have the same length.
-            This opertor does *not* check to see if the *contents* are equal.
-            </summary>
+        <param name="left">The first tensor span to compare.</param>
+        <param name="right">The second tensor span to compare.</param>
+        <summary>Returns a value that indicates whether two tensor spans are not equal.</summary>
         <returns>
-          <see langword="false" /> if left and right point at the same memory and have the same length. This operator does *not* check if the *contents* are unequal.</returns>
-        <remarks>To be added.</remarks>
+          <c>true</c> if the two tensor span are not equal; otherwise, <c>false</c>.</returns>
+        <remarks>Two tensor span are not equal if they have the different lengths or if the corresponding elements of <paramref name="left" /> and <paramref name="right" /> do not point to the same memory. Note that the test for equality does not attempt to determine whether the contents are not equal.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Rank">
@@ -1199,15 +1306,16 @@
             </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor.Rank" />
       </Docs>
     </Member>
     <Member MemberName="Slice">
-      <MemberSignature Language="C#" Value="public System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; Slice (scoped ReadOnlySpan&lt;System.Buffers.NIndex&gt; indexes);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; Slice(valuetype System.ReadOnlySpan`1&lt;valuetype System.Buffers.NIndex&gt; indexes) cil managed" />
+      <MemberSignature Language="C#" Value="public System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; Slice (scoped ReadOnlySpan&lt;System.Buffers.NIndex&gt; startIndexes);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; Slice(valuetype System.ReadOnlySpan`1&lt;valuetype System.Buffers.NIndex&gt; startIndexes) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.Slice(System.ReadOnlySpan{System.Buffers.NIndex})" />
-      <MemberSignature Language="VB.NET" Value="Public Function Slice (indexes As ReadOnlySpan(Of NIndex)) As ReadOnlyTensorSpan(Of T)" />
-      <MemberSignature Language="F#" Value="member this.Slice : ReadOnlySpan&lt;System.Buffers.NIndex&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="readOnlyTensorSpan.Slice indexes" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; Slice(ReadOnlySpan&lt;System::Buffers::NIndex&gt; indexes);" />
+      <MemberSignature Language="VB.NET" Value="Public Function Slice (startIndexes As ReadOnlySpan(Of NIndex)) As ReadOnlyTensorSpan(Of T)" />
+      <MemberSignature Language="F#" Value="member this.Slice : ReadOnlySpan&lt;System.Buffers.NIndex&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="readOnlyTensorSpan.Slice startIndexes" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; Slice(ReadOnlySpan&lt;System::Buffers::NIndex&gt; startIndexes);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
@@ -1223,7 +1331,7 @@
         </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="indexes" Type="System.ReadOnlySpan&lt;System.Buffers.NIndex&gt;">
+        <Parameter Name="startIndexes" Type="System.ReadOnlySpan&lt;System.Buffers.NIndex&gt;">
           <Attributes>
             <Attribute FrameworkAlternate="net-10.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.ParamCollection]</AttributeName>
@@ -1237,7 +1345,7 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="indexes">The indexes for the slice.</param>
+        <param name="startIndexes">To be added.</param>
         <summary>
             Returns a reference to specified element of the TensorSpan.
             </summary>
@@ -1245,6 +1353,7 @@
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">Any index is less than 0 or greater than or equal to FlattenedLength.
             </exception>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.Slice(System.ReadOnlySpan{System.Buffers.NIndex})" />
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -1289,6 +1398,50 @@
             </summary>
         <returns>A <see cref="T:System.Numerics.Tensors.ReadOnlyTensorSpan`1" /> based on the provided <paramref name="ranges" />.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.Slice(System.ReadOnlySpan{System.Buffers.NRange})" />
+      </Docs>
+    </Member>
+    <Member MemberName="Slice">
+      <MemberSignature Language="C#" Value="public System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt; Slice (scoped ReadOnlySpan&lt;IntPtr&gt; startIndexes);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype System.Numerics.Tensors.ReadOnlyTensorSpan`1&lt;!T&gt; Slice(valuetype System.ReadOnlySpan`1&lt;native int&gt; startIndexes) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.Slice(System.ReadOnlySpan{System.IntPtr})" />
+      <MemberSignature Language="VB.NET" Value="Public Function Slice (startIndexes As ReadOnlySpan(Of IntPtr)) As ReadOnlyTensorSpan(Of T)" />
+      <MemberSignature Language="F#" Value="member this.Slice : ReadOnlySpan&lt;nativeint&gt; -&gt; System.Numerics.Tensors.ReadOnlyTensorSpan&lt;'T&gt;" Usage="readOnlyTensorSpan.Slice startIndexes" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Numerics::Tensors::ReadOnlyTensorSpan&lt;T&gt; Slice(ReadOnlySpan&lt;IntPtr&gt; startIndexes);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Tensors</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Numerics.Tensors.ReadOnlyTensorSpan&lt;T&gt;</ReturnType>
+        <Attributes>
+          <Attribute FrameworkAlternate="net-10.0-pp">
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="startIndexes" Type="System.ReadOnlySpan&lt;System.IntPtr&gt;">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ParamCollection]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ParamCollection&gt;]</AttributeName>
+            </Attribute>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="startIndexes">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.Slice(System.ReadOnlySpan{System.IntPtr})" />
       </Docs>
     </Member>
     <Member MemberName="Strides">
@@ -1318,6 +1471,7 @@
             </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="P:System.Numerics.Tensors.IReadOnlyTensor.Strides" />
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -1337,20 +1491,18 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>
-            Returns a <see cref="T:System.String" /> with the name of the type and the number of elements.
-            </summary>
-        <returns>To be added.</returns>
+        <summary>Returns the string representation of the tensor span.</summary>
+        <returns>The string representation of the tensor span.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="TryCopyTo">
-      <MemberSignature Language="C#" Value="public bool TryCopyTo (scoped System.Numerics.Tensors.TensorSpan&lt;T&gt; destination);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryCopyTo(valuetype System.Numerics.Tensors.TensorSpan`1&lt;!T&gt; destination) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.TryCopyTo(System.Numerics.Tensors.TensorSpan{`0})" />
-      <MemberSignature Language="VB.NET" Value="Public Function TryCopyTo (destination As TensorSpan(Of T)) As Boolean" />
-      <MemberSignature Language="F#" Value="member this.TryCopyTo : System.Numerics.Tensors.TensorSpan&lt;'T&gt; -&gt; bool" Usage="readOnlyTensorSpan.TryCopyTo destination" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryCopyTo(System::Numerics::Tensors::TensorSpan&lt;T&gt; destination);" />
+      <MemberSignature Language="C#" Value="public bool TryCopyTo (scoped in System.Numerics.Tensors.TensorSpan&lt;T&gt; destination);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool TryCopyTo([in]valuetype System.Numerics.Tensors.TensorSpan`1&lt;!T&gt;&amp; destination) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Numerics.Tensors.ReadOnlyTensorSpan`1.TryCopyTo(System.Numerics.Tensors.TensorSpan{`0}@)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryCopyTo (ByRef destination As TensorSpan(Of T)) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.TryCopyTo : TensorSpan -&gt; bool" Usage="readOnlyTensorSpan.TryCopyTo destination" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool TryCopyTo(System::Numerics::Tensors::TensorSpan&lt;T&gt; % destination);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Numerics.Tensors</AssemblyName>
@@ -1360,8 +1512,12 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="destination" Type="System.Numerics.Tensors.TensorSpan&lt;T&gt;">
+        <Parameter Name="destination" Type="System.Numerics.Tensors.TensorSpan&lt;T&gt;" RefType="ref">
           <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.IsReadOnly]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.IsReadOnly&gt;]</AttributeName>
+            </Attribute>
             <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 1 })&gt;]</AttributeName>
@@ -1374,16 +1530,11 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="destination">The span to copy items into.</param>
-        <summary>
-            Copies the contents of this read-only span into destination span.
-            </summary>
-        <returns>
-          <see langword="true" /> if the copy succeeded; <see langword="false" /> if the destination span is shorter than the source span and no data is written to the destination.</returns>
-        <remarks>
-            If the source and destinations overlap, this method behaves as if
-            the original values are in a temporary location before the destination is overwritten.
-            </remarks>
+        <param name="destination">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.TryCopyTo(System.Numerics.Tensors.TensorSpan{`1}@)" />
       </Docs>
     </Member>
     <Member MemberName="TryFlattenTo">
@@ -1422,6 +1573,7 @@
             </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Numerics.Tensors.IReadOnlyTensor`2.TryFlattenTo(System.Span{`1})" />
       </Docs>
     </Member>
   </Members>

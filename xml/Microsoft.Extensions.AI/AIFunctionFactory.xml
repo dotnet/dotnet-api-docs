@@ -12,6 +12,10 @@
     <AssemblyVersion>9.3.0.0</AssemblyVersion>
     <AssemblyVersion>9.4.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
+    <AssemblyVersion>9.4.0.0</AssemblyVersion>
+  </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
@@ -23,7 +27,7 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Provides factory methods for creating commonly used implementations of <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</summary>
+    <summary>Provides factory methods for creating commonly-used implementations of <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</summary>
     <remarks>To be added.</remarks>
     <related type="Article" href="https://learn.microsoft.com/dotnet/ai/quickstarts/use-function-calling">Invoke .NET functions using an AI model.</related>
   </Docs>
@@ -38,6 +42,10 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.4.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -61,16 +69,57 @@
         <returns>The created <see cref="T:Microsoft.Extensions.AI.AIFunction" /> for invoking <paramref name="method" />.</returns>
         <remarks>
           <para>
-            Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
-            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" />. Arguments that are not already of the expected type are
-            marshaled to the expected type via JSON and using <paramref name="options" />'s
-            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" />. If the argument is a <see cref="T:System.Text.Json.JsonElement" />,
-            <see cref="T:System.Text.Json.JsonDocument" />, or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized directly. If the argument is anything else unknown,
-            it is round-tripped through JSON, serializing the object as JSON and then deserializing it to the expected type.
+            By default, any parameters to <paramref name="method" /> are sourced from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary
+            of key/value pairs and are represented in the JSON schema for the function, as exposed in the returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunction.JsonSchema" />. There are a few exceptions to this:
+            <list type="bullet"><item><description><see cref="T:System.Threading.CancellationToken" /> parameters are automatically bound to the <see cref="T:System.Threading.CancellationToken" /> passed into
+                  the invocation via <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />'s <see cref="T:System.Threading.CancellationToken" /> parameter. The parameter is
+                  not included in the generated JSON schema. The behavior of <see cref="T:System.Threading.CancellationToken" /> parameters may not be overridden.
+                </description></item><item><description>
+                  By default, <see cref="T:System.IServiceProvider" /> parameters are bound from the <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> property
+                  and are not included in the JSON schema. If the parameter is optional, such that a default value is provided,
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> is allowed to be <see langword="null" />; otherwise, <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" />
+                  must be non-<see langword="null" />, or else the invocation will fail with an exception due to the required nature of the parameter.
+                  The handling of <see cref="T:System.IServiceProvider" /> parameters may be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" />.
+                </description></item><item><description>
+                  By default, <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters are bound directly to <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> instance
+                  passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> and are not included in the JSON schema. If the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />
+                  instance passed to <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> is <see langword="null" />, the <see cref="T:Microsoft.Extensions.AI.AIFunction" /> implementation
+                  manufactures an empty instance, such that parameters of type <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> may always be satisfied, whether
+                  optional or not. The handling of <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters may be overridden via
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" />.
+                </description></item></list>
+            All other parameter types are, by default, bound from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />
+            and are included in the generated JSON schema. This may be overridden by the <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" /> provided
+            via the <paramref name="options" /> parameter; for every parameter, the delegate is enabled to choose if the parameter should be included in the
+            generated schema and how its value should be bound, including handling of optionality (by default, required parameters that are not included in the
+            <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary will result in an exception being thrown). Loosely-typed additional context information may be passed
+            into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> via the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Context" /> dictionary; the default
+            binding ignores this collection, but a custom binding supplied via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" /> may choose to
+            source arguments from this data.
+            </para>
+          <para>
+            The default marshaling of parameters from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary permits values to be passed into the <paramref name="method" />'s
+            invocation directly if the object is already of a compatible type. Otherwise, if the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
+            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized into the parameter type, utilizing <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided,
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. If the argument is anything else, it is round-tripped through JSON, serializing the object as JSON
+            and then deserializing it to the expected type.
+            </para>
+          <para>
+            In general, the data supplied via an <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary is supplied from an AI service and should be considered
+            unvalidated and untrusted. To provide validated and trusted data to the invocation of <paramref name="method" />, consider having <paramref name="method" />
+            point to an instance method on an instance configured to hold the appropriate state. An <see cref="T:System.IServiceProvider" /> parameter may also be
+            used to resolve services from a dependency injection container.
+            </para>
+          <para>
+            By default, return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided, or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            Handling of return values may be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="method" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">A parameter to <paramref name="method" /> is not serializable.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -83,6 +132,10 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.4.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -121,16 +174,59 @@
         <returns>The created <see cref="T:Microsoft.Extensions.AI.AIFunction" /> for invoking <paramref name="method" />.</returns>
         <remarks>
           <para>
-            Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
-            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" />. Arguments that are not already of the expected type are
-            marshaled to the expected type via JSON and using <paramref name="options" />'s
-            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" />. If the argument is a <see cref="T:System.Text.Json.JsonElement" />,
-            <see cref="T:System.Text.Json.JsonDocument" />, or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized directly. If the argument is anything else unknown,
-            it is round-tripped through JSON, serializing the object as JSON and then deserializing it to the expected type.
+            By default, any parameters to <paramref name="method" /> are sourced from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary
+            of key/value pairs and are represented in the JSON schema for the function, as exposed in the returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunction.JsonSchema" />. There are a few exceptions to this:
+            <list type="bullet"><item><description><see cref="T:System.Threading.CancellationToken" /> parameters are automatically bound to the <see cref="T:System.Threading.CancellationToken" /> passed into
+                  the invocation via <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />'s <see cref="T:System.Threading.CancellationToken" /> parameter. The parameter is
+                  not included in the generated JSON schema. The behavior of <see cref="T:System.Threading.CancellationToken" /> parameters may not be overridden.
+                </description></item><item><description>
+                  By default, <see cref="T:System.IServiceProvider" /> parameters are bound from the <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> property
+                  and are not included in the JSON schema. If the parameter is optional, such that a default value is provided,
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> is allowed to be <see langword="null" />; otherwise, <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" />
+                  must be non-<see langword="null" />, or else the invocation will fail with an exception due to the required nature of the parameter.
+                  The handling of <see cref="T:System.IServiceProvider" /> parameters may be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" />.
+                </description></item><item><description>
+                  By default, <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters are bound directly to <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> instance
+                  passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> and are not included in the JSON schema. If the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />
+                  instance passed to <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> is <see langword="null" />, the <see cref="T:Microsoft.Extensions.AI.AIFunction" /> implementation
+                  manufactures an empty instance, such that parameters of type <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> may always be satisfied, whether
+                  optional or not. The handling of <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters may be overridden via
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" />.
+                </description></item></list>
+            All other parameter types are, by default, bound from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />
+            and are included in the generated JSON schema. This may be overridden by the <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" /> provided
+            via the <paramref name="options" /> parameter; for every parameter, the delegate is enabled to choose if the parameter should be included in the
+            generated schema and how its value should be bound, including handling of optionality (by default, required parameters that are not included in the
+            <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary will result in an exception being thrown). Loosely-typed additional context information may be passed
+            into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> via the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Context" /> dictionary; the default
+            binding ignores this collection, but a custom binding supplied via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" /> may choose to
+            source arguments from this data.
+            </para>
+          <para>
+            The default marshaling of parameters from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary permits values to be passed into the <paramref name="method" />'s
+            invocation directly if the object is already of a compatible type. Otherwise, if the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
+            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized into the parameter type, utilizing <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided,
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. If the argument is anything else, it is round-tripped through JSON, serializing the object as JSON
+            and then deserializing it to the expected type.
+            </para>
+          <para>
+            In general, the data supplied via an <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary is supplied from an AI service and should be considered
+            unvalidated and untrusted. To provide validated and trusted data to the invocation of <paramref name="method" />, consider having <paramref name="method" />
+            point to an instance method on an instance configured to hold the appropriate state. An <see cref="T:System.IServiceProvider" /> parameter may also be
+            used to resolve services from a dependency injection container.
+            </para>
+          <para>
+            By default, return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided, or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            Handling of return values may be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="method" /> is <see langword="null" />.</exception>
+          <paramref name="method" /> represents an instance method but <paramref name="target" /> is null.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="method" /> contains a parameter without a parameter name.</exception>
+        <exception cref="T:System.Text.Json.JsonException">A parameter to <paramref name="method" /> or its return type is not serializable.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -142,6 +238,10 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.4.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -170,10 +270,9 @@
         <param name="method">The instance method to be represented via the created <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
         <param name="targetType">
             The <see cref="T:System.Type" /> to construct an instance of on which to invoke <paramref name="method" /> when
-            the resulting <see cref="T:Microsoft.Extensions.AI.AIFunction" /> is invoked. If <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> is provided,
-            ActivatorUtilities.CreateInstance will be used to construct the instance using those services; otherwise,
-            <see cref="M:System.Activator.CreateInstance(System.Type)" /> is used, utilizing the type's public parameterless constructor.
-            If an instance can't be constructed, an exception is thrown during the function's invocation.
+            the resulting <see cref="T:Microsoft.Extensions.AI.AIFunction" /> is invoked. <see cref="M:System.Activator.CreateInstance(System.Type)" /> is used,
+            utilizing the type's public parameterless constructor. If an instance can't be constructed, an exception is
+            thrown during the function's invocation.
             </param>
         <param name="options">Metadata to use to override defaults inferred from <paramref name="method" />.</param>
         <summary>
@@ -191,9 +290,60 @@
             <see cref="T:System.Text.Json.JsonDocument" />, or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized directly. If the argument is anything else unknown,
             it is round-tripped through JSON, serializing the object as JSON and then deserializing it to the expected type.
             </para>
+          <para>
+            By default, any parameters to <paramref name="method" /> are sourced from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary
+            of key/value pairs and are represented in the JSON schema for the function, as exposed in the returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunction.JsonSchema" />. There are a few exceptions to this:
+            <list type="bullet"><item><description><see cref="T:System.Threading.CancellationToken" /> parameters are automatically bound to the <see cref="T:System.Threading.CancellationToken" /> passed into
+                  the invocation via <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />'s <see cref="T:System.Threading.CancellationToken" /> parameter. The parameter is
+                  not included in the generated JSON schema. The behavior of <see cref="T:System.Threading.CancellationToken" /> parameters may not be overridden.
+                </description></item><item><description>
+                  By default, <see cref="T:System.IServiceProvider" /> parameters are bound from the <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> property
+                  and are not included in the JSON schema. If the parameter is optional, such that a default value is provided,
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> is allowed to be <see langword="null" />; otherwise, <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" />
+                  must be non-<see langword="null" />, or else the invocation will fail with an exception due to the required nature of the parameter.
+                  The handling of <see cref="T:System.IServiceProvider" /> parameters may be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" />.
+                </description></item><item><description>
+                  By default, <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters are bound directly to <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> instance
+                  passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> and are not included in the JSON schema. If the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />
+                  instance passed to <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> is <see langword="null" />, the <see cref="T:Microsoft.Extensions.AI.AIFunction" /> implementation
+                  manufactures an empty instance, such that parameters of type <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> may always be satisfied, whether
+                  optional or not. The handling of <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters may be overridden via
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" />.
+                </description></item></list>
+            All other parameter types are, by default, bound from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />
+            and are included in the generated JSON schema. This may be overridden by the <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" /> provided
+            via the <paramref name="options" /> parameter; for every parameter, the delegate is enabled to choose if the parameter should be included in the
+            generated schema and how its value should be bound, including handling of optionality (by default, required parameters that are not included in the
+            <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary will result in an exception being thrown). Loosely-typed additional context information may be passed
+            into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> via the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Context" /> dictionary; the default
+            binding ignores this collection, but a custom binding supplied via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ConfigureParameterBinding" /> may choose to
+            source arguments from this data.
+            </para>
+          <para>
+            The default marshaling of parameters from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary permits values to be passed into the <paramref name="method" />'s
+            invocation directly if the object is already of a compatible type. Otherwise, if the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
+            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized into the parameter type, utilizing <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided,
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. If the argument is anything else, it is round-tripped through JSON, serializing the object as JSON
+            and then deserializing it to the expected type.
+            </para>
+          <para>
+            In general, the data supplied via an <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary is supplied from an AI service and should be considered
+            unvalidated and untrusted. To provide validated and trusted data to the invocation of <paramref name="method" />, the instance constructed
+            for each invocation may contain that data in it, such that it's then available to <paramref name="method" /> as instance data.
+            An <see cref="T:System.IServiceProvider" /> parameter may also be used to resolve services from a dependency injection container.
+            </para>
+          <para>
+            By default, return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided, or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            Handling of return values may be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
+            </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="method" /> is <see langword="null" />.</exception>
+          <paramref name="targetType" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="targetType" /> is not assignable to <paramref name="method" />'s declaring type.</exception>
+        <exception cref="T:System.Text.Json.JsonException">A parameter to <paramref name="method" /> or its return type is not serializable.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -205,6 +355,10 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.4.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -231,22 +385,61 @@
       </Parameters>
       <Docs>
         <param name="method">The method to be represented via the created <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
-        <param name="name">The name to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
-        <param name="description">The description to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
+        <param name="name">
+            The name to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, the name will be derived from
+            the name of <paramref name="method" />.
+            </param>
+        <param name="description">
+            The description to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, a description will be derived from
+            any <see cref="T:System.ComponentModel.DescriptionAttribute" /> on <paramref name="method" />, if available.
+            </param>
         <param name="serializerOptions">The <see cref="T:System.Text.Json.JsonSerializerOptions" /> used to marshal function parameters and any return value.</param>
         <summary>Creates an <see cref="T:Microsoft.Extensions.AI.AIFunction" /> instance for a method, specified via a delegate.</summary>
         <returns>The created <see cref="T:Microsoft.Extensions.AI.AIFunction" /> for invoking <paramref name="method" />.</returns>
         <remarks>
           <para>
-            Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="serializerOptions" />.
-            Arguments that are not already of the expected type are marshaled to the expected type via JSON and using
-            <paramref name="serializerOptions" />. If the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
-            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized directly. If the argument is anything else unknown, it is
-            round-tripped through JSON, serializing the object as JSON and then deserializing it to the expected type.
+            Any parameters to <paramref name="method" /> are sourced from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary
+            of key/value pairs and are represented in the JSON schema for the function, as exposed in the returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunction.JsonSchema" />. There are a few exceptions to this:
+            <list type="bullet"><item><description><see cref="T:System.Threading.CancellationToken" /> parameters are automatically bound to the <see cref="T:System.Threading.CancellationToken" /> passed into
+                  the invocation via <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />'s <see cref="T:System.Threading.CancellationToken" /> parameter. The parameter is
+                  not included in the generated JSON schema.
+                </description></item><item><description>
+                  By default, <see cref="T:System.IServiceProvider" /> parameters are bound from the <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> property
+                  and are not included in the JSON schema. If the parameter is optional, such that a default value is provided,
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> is allowed to be <see langword="null" />; otherwise, <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" />
+                  must be non-<see langword="null" />, or else the invocation will fail with an exception due to the required nature of the parameter.
+                </description></item><item><description>
+                  By default, <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters are bound directly to <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> instance
+                  passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> and are not included in the JSON schema. If the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />
+                  instance passed to <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> is <see langword="null" />, the <see cref="T:Microsoft.Extensions.AI.AIFunction" /> implementation
+                  manufactures an empty instance, such that parameters of type <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> may always be satisfied, whether
+                  optional or not.
+                </description></item></list>
+            All other parameter types are bound from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />
+            and are included in the generated JSON schema.
+            </para>
+          <para>
+            The marshaling of parameters from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary permits values to be passed into the <paramref name="method" />'s
+            invocation directly if the object is already of a compatible type. Otherwise, if the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
+            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized into the parameter type, utilizing <paramref name="serializerOptions" /> if provided, or else
+            <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. If the argument is anything else, it is round-tripped through JSON, serializing the object as JSON
+            and then deserializing it to the expected type.
+            </para>
+          <para>
+            In general, the data supplied via an <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary is supplied from an AI service and should be considered
+            unvalidated and untrusted. To provide validated and trusted data to the invocation of <paramref name="method" />, consider having <paramref name="method" />
+            point to an instance method on an instance configured to hold the appropriate state. An <see cref="T:System.IServiceProvider" /> parameter may also be
+            used to resolve services from a dependency injection container.
+            </para>
+          <para>
+            Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="serializerOptions" /> if provided,
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="method" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">A parameter to <paramref name="method" /> is not serializable.</exception>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -258,6 +451,10 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
         <AssemblyVersion>9.4.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
@@ -289,8 +486,14 @@
             The target object for the <paramref name="method" /> if it represents an instance method.
             This should be <see langword="null" /> if and only if <paramref name="method" /> is a static method.
             </param>
-        <param name="name">The name to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
-        <param name="description">The description to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
+        <param name="name">
+            The name to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, the name will be derived from
+            the name of <paramref name="method" />.
+            </param>
+        <param name="description">
+            The description to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, a description will be derived from
+            any <see cref="T:System.ComponentModel.DescriptionAttribute" /> on <paramref name="method" />, if available.
+            </param>
         <param name="serializerOptions">The <see cref="T:System.Text.Json.JsonSerializerOptions" /> used to marshal function parameters and return value.</param>
         <summary>
             Creates an <see cref="T:Microsoft.Extensions.AI.AIFunction" /> instance for a method, specified via an <see cref="T:System.Reflection.MethodInfo" /> instance
@@ -299,15 +502,50 @@
         <returns>The created <see cref="T:Microsoft.Extensions.AI.AIFunction" /> for invoking <paramref name="method" />.</returns>
         <remarks>
           <para>
-            Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="serializerOptions" />.
-            Arguments that are not already of the expected type are marshaled to the expected type via JSON and using
-            <paramref name="serializerOptions" />. If the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
-            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized directly. If the argument is anything else unknown, it is
-            round-tripped through JSON, serializing the object as JSON and then deserializing it to the expected type.
+            Any parameters to <paramref name="method" /> are sourced from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary
+            of key/value pairs and are represented in the JSON schema for the function, as exposed in the returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s
+            <see cref="P:Microsoft.Extensions.AI.AIFunction.JsonSchema" />. There are a few exceptions to this:
+            <list type="bullet"><item><description><see cref="T:System.Threading.CancellationToken" /> parameters are automatically bound to the <see cref="T:System.Threading.CancellationToken" /> passed into
+                  the invocation via <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />'s <see cref="T:System.Threading.CancellationToken" /> parameter. The parameter is
+                  not included in the generated JSON schema.
+                </description></item><item><description>
+                  By default, <see cref="T:System.IServiceProvider" /> parameters are bound from the <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> property
+                  and are not included in the JSON schema. If the parameter is optional, such that a default value is provided,
+                  <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" /> is allowed to be <see langword="null" />; otherwise, <see cref="P:Microsoft.Extensions.AI.AIFunctionArguments.Services" />
+                  must be non-<see langword="null" />, or else the invocation will fail with an exception due to the required nature of the parameter.
+                </description></item><item><description>
+                  By default, <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> parameters are bound directly to <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> instance
+                  passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> and are not included in the JSON schema. If the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />
+                  instance passed to <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" /> is <see langword="null" />, the <see cref="T:Microsoft.Extensions.AI.AIFunction" /> implementation
+                  manufactures an empty instance, such that parameters of type <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> may always be satisfied, whether
+                  optional or not.
+                </description></item></list>
+            All other parameter types are bound from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary passed into <see cref="M:Microsoft.Extensions.AI.AIFunction.InvokeAsync(Microsoft.Extensions.AI.AIFunctionArguments,System.Threading.CancellationToken)" />
+            and are included in the generated JSON schema.
+            </para>
+          <para>
+            The marshaling of parameters from the <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" /> dictionary permits values to be passed into the <paramref name="method" />'s
+            invocation directly if the object is already of a compatible type. Otherwise, if the argument is a <see cref="T:System.Text.Json.JsonElement" />, <see cref="T:System.Text.Json.JsonDocument" />,
+            or <see cref="T:System.Text.Json.Nodes.JsonNode" />, it is deserialized into the parameter type, utilizing <paramref name="serializerOptions" /> if provided, or else
+            <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. If the argument is anything else, it is round-tripped through JSON, serializing the object as JSON
+            and then deserializing it to the expected type.
+            </para>
+          <para>
+            In general, the data supplied via an <see cref="T:Microsoft.Extensions.AI.AIFunctionArguments" />'s dictionary is supplied from an AI service and should be considered
+            unvalidated and untrusted. To provide validated and trusted data to the invocation of <paramref name="method" />, consider having <paramref name="method" />
+            point to an instance method on an instance configured to hold the appropriate state. An <see cref="T:System.IServiceProvider" /> parameter may also be
+            used to resolve services from a dependency injection container.
+            </para>
+          <para>
+            Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="serializerOptions" /> if provided,
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="method" /> is <see langword="null" />.</exception>
+          <paramref name="method" /> represents an instance method but <paramref name="target" /> is null.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="method" /> contains a parameter without a parameter name.</exception>
+        <exception cref="T:System.Text.Json.JsonException">A parameter to <paramref name="method" /> or its return type is not serializable.</exception>
       </Docs>
     </Member>
   </Members>
