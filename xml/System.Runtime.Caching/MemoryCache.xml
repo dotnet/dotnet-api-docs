@@ -425,13 +425,14 @@ private void btnGet_Click(object sender, EventArgs e)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the current instance of the cache exceeds the limit on memory set by the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property, the cache implementation removes cache entries. Each cache instance in the application can use the amount of memory that is specified by the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property.
+> [!IMPORTANT]
+> In .NET Core and .NET 5.0 and later, the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property does not have any effect. The underlying implementation for enforcing this limit is not functional outside of .NET Framework.
 
- The settings for the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property can be specified in the application configuration file. Alternatively, they can be passed in the constructor when the <xref:System.Runtime.Caching.MemoryCache> class is initialized. For more information about how to configure this property, see [&lt;namedCaches&gt; Element (Cache Settings)](/dotnet/framework/configure-apps/file-schema/runtime/namedcaches-element-cache-settings). For more information about how to set this value when the <xref:System.Runtime.Caching.MemoryCache> class is being initialized, see the <xref:System.Runtime.Caching.MemoryCache.%23ctor%2A> method.
+In .NET Framework (4.x), if the current instance of the cache exceeds the limit on memory set by the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property, the cache implementation removes cache entries. Each cache instance in the application can use the amount of memory that is specified by the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property. In .NET Core and later, this property returns the value from configuration or constructor parameters but is not enforced.
 
- <xref:System.Runtime.Caching.MemoryCache> does not instantly enforce <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> each time a new item is added to a <xref:System.Runtime.Caching.MemoryCache> instance. The internal heuristics which evicts extra items from the <xref:System.Runtime.Caching.MemoryCache> does it gradually and takes into account information from the garbage collector (see [Garbage Collection](/dotnet/standard/garbage-collection/)) and other factors such as current cache size and overall system memory pressure. Therefore even though the <xref:System.Runtime.Caching.MemoryCache> tries to keep the cache size within the configured <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> it is possible to temporarily exceed the limit by adding cache items at a very high rate.
+The settings for the <xref:System.Runtime.Caching.MemoryCache.CacheMemoryLimit%2A> property can be specified in the application configuration file. Alternatively, they can be passed in the constructor or by a caller when the <xref:System.Runtime.Caching.MemoryCache> instance is initialized.
 
- ]]></format>
+  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/framework/configure-apps/file-schema/runtime/namedcaches-element-cache-settings">&lt;namedCaches&gt; Element (Cache Settings)</related>
       </Docs>
@@ -928,15 +929,15 @@ private void btnGet_Click(object sender, EventArgs e)
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the percentage of physical memory that the cache can use.</summary>
-        <value>The percentage of physical memory that the cache can use.</value>
+        <summary>Gets the percentage of total system physical memory usage at which the cache will begin evicting entries.</summary>
+        <value>The percentage of overall physical memory usage on the system that triggers cache eviction.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.Caching.MemoryCache.PhysicalMemoryLimit%2A> property returns the percentage of total physical computer memory that can be used by a single instance of the <xref:System.Runtime.Caching.MemoryCache> class. If the cache instance exceeds the specified limit, cache entries are removed.
+ The <xref:System.Runtime.Caching.MemoryCache.PhysicalMemoryLimit%2A> property specifies the percentage of total physical memory usage on the system (by all processes) at which the cache will begin to evict entries. This setting is not a limit on the memory that a single <xref:System.Runtime.Caching.MemoryCache> instance can use. Instead, when overall system physical memory usage exceeds this percentage, the cache will proactively remove entries to help reduce memory pressure and avoid exhausting system memory, even if the cache itself is not over its other size limits.
 
- The settings for the <xref:System.Runtime.Caching.MemoryCache.PhysicalMemoryLimit%2A> property can be specified in the application configuration file. Alternatively, they can be passed by a caller when the <xref:System.Runtime.Caching.MemoryCache> class is initialized. For more information about how to configure this property, see [&lt;namedCaches&gt; Element (Cache Settings)](/dotnet/framework/configure-apps/file-schema/runtime/namedcaches-element-cache-settings). For more information about how to configure the property when the <xref:System.Runtime.Caching.MemoryCache> class is being initialized, see the <xref:System.Runtime.Caching.MemoryCache.%23ctor%28System.String%2CSystem.Collections.Specialized.NameValueCollection%29?displayProperty=nameWithType> method.
+ The settings for the <xref:System.Runtime.Caching.MemoryCache.PhysicalMemoryLimit%2A> property can be specified in the application configuration file. Alternatively, they can be passed by a caller when the <xref:System.Runtime.Caching.MemoryCache> instance is initialized.
 
  ]]></format>
         </remarks>
