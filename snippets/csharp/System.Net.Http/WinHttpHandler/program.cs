@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-class HttpClientHandler_SecureExample
+class WinHttpHandler_SecureExample
 {
     static async Task Main()
     {
