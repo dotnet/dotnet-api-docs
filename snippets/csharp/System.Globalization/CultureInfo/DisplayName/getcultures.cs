@@ -43,7 +43,7 @@ fi      fi  fin FIN Finnish                                  Finnish
 zh      zh  zho CHS Chinese                                  Chinese
 zh-Hant zh  zho ZHH Chinese (Traditional)                    Chinese (Traditional)
 zh-CHS  zh  zho CHS Chinese (Simplified)                     Chinese (CHS)
-zh-CHT  zh  zho CHT Chinese (Traditional)                     Chinese (CHT)
+zh-CHT  zh  zho CHT Chinese (Traditional)                    Chinese (CHT)
 
 */
 // </snippet1>
