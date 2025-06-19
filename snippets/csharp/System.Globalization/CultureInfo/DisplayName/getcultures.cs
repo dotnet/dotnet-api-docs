@@ -41,7 +41,7 @@ en      en  eng ENU English                                  English
 es      es  spa ESP Spanish                                  Spanish
 fi      fi  fin FIN Finnish                                  Finnish
 zh      zh  zho CHS Chinese                                  Chinese
-zh-Hant zh  zho CHT Chinese (Traditional)                    Chinese (Traditional)
+zh-Hant zh  zho ZHH Chinese (Traditional)                    Chinese (Traditional)
 zh-CHS  zh  zho CHS Chinese (Simplified) Legacy              Chinese (Simplified) Legacy
 zh-CHT  zh  zho CHT Chinese (Traditional) Legacy             Chinese (Traditional) Legacy
 
