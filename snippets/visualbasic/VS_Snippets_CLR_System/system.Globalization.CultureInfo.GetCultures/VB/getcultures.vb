@@ -29,7 +29,6 @@ Module Module1
 'ar      ar  ara ARA Arabic                                   Arabic                                  
 'bg      bg  bul BGR Bulgarian                                Bulgarian                               
 'ca      ca  cat CAT Catalan                                  Catalan                                 
-'zh-Hans zh  zho CHS Chinese (Simplified)                     Chinese (Simplified)                    
 'cs      cs  ces CSY Czech                                    Czech                                   
 'da      da  dan DAN Danish                                   Danish                                  
 'de      de  deu DEU German                                   German                                  
@@ -38,6 +37,7 @@ Module Module1
 'es      es  spa ESP Spanish                                  Spanish                                 
 'fi      fi  fin FIN Finnish                                  Finnish                                 
 'zh      zh  zho CHS Chinese                                  Chinese                                 
+'zh-Hans zh  zho CHS Chinese (Simplified)                     Chinese (Simplified)                    
 'zh-Hant zh  zho ZHH Chinese (Traditional)                    Chinese (Traditional)                           
 
 End Module
