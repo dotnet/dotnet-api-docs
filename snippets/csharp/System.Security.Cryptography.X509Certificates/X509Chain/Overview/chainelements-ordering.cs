@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 
-class ChainElementsOrdering
+public class ChainElementsOrdering
 {
-    static void DemonstrateChainElementsOrdering()
+    public static void DemonstrateChainElementsOrdering()
     {
 //<SNIPPET6>
         using var chain = new X509Chain();
