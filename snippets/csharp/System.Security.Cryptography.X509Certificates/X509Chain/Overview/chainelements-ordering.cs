@@ -3,11 +3,11 @@ using System.Security.Cryptography.X509Certificates;
 
 public class ChainElementsOrdering
 {
-    public static void DemonstrateChainElementsOrdering()
+    public static void DemonstrateChainElementsOrdering(X509Certificate2 certificate)
     {
 //<SNIPPET6>
         using var chain = new X509Chain();
-        chain.Build(serverCertificate);
+        chain.Build(certificate);
 
         // chain.ChainElements[0] is the leaf (end-entity) certificate
         // chain.ChainElements[^1] is the root (trust anchor) certificate
