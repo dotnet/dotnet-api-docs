@@ -39,6 +39,8 @@ Module Module1
 'zh      zh  zho CHS Chinese                                  Chinese                                 
 'zh-Hans zh  zho CHS Chinese (Simplified)                     Chinese (Simplified)                    
 'zh-Hant zh  zho ZHH Chinese (Traditional)                    Chinese (Traditional)                           
+'
+'Note: zh-Hant returns ZHH when using ICU (default). When NLS mode is enabled, it returns CHT.
 
 End Module
 ' </snippet1>
