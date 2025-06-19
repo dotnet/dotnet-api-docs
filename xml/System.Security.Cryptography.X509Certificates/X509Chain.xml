@@ -464,9 +464,31 @@
 
  A chain element consists of an <xref:System.Security.Cryptography.X509Certificates.X509Certificate2> object, an <xref:System.Security.Cryptography.X509Certificates.X509ChainStatus> structure, and an extra information string.
 
+ The `ChainElements` collection is ordered from the end-entity (leaf) certificate at index 0, through any intermediate certificates, to the trust anchor (root certificate) at the final index. This ordering is consistent across all platforms:
 
+ - On Windows, this matches the `CERT_CHAIN_CONTEXT` structure where `rgpChain[0]` is the end certificate and `rgpChain[cChain–1]` is the final chain element (root).
+ - On Linux and macOS, this matches OpenSSL's `X509_STORE_CTX_get0_chain()` which returns a `STACK_OF(X509)` ordered from leaf to root.
 
 ## Examples
+ The following code example demonstrates the ordering of chain elements:
+
+ ```csharp
+ using var chain = new X509Chain();
+ chain.Build(serverCertificate);
+
+ // chain.ChainElements[0] is the leaf (end-entity) certificate
+ // chain.ChainElements[^1] is the root (trust anchor) certificate
+
+ Console.WriteLine("Certificate chain from leaf to root:");
+ for (int i = 0; i < chain.ChainElements.Count; i++)
+ {
+     var cert = chain.ChainElements[i].Certificate;
+     var role = i == 0 ? "Leaf" : 
+                i == chain.ChainElements.Count - 1 ? "Root" : "Intermediate";
+     Console.WriteLine($"[{i}] {role}: {cert.Subject}");
+ }
+ ```
+
  The following code example opens the current user's personal certificate store, allows you to select a certificate, then writes certificate and certificate chain information to the console. The output depends on the certificate you select.
 
  :::code language="csharp" source="~/snippets/csharp/System.Security.Cryptography.X509Certificates/X509Chain/Overview/x509chaintest.cs" id="Snippet4":::
