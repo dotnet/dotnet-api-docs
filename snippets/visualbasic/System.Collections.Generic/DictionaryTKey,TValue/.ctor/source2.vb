@@ -1,7 +1,7 @@
 ﻿'<Snippet1>
 Imports System.Collections.Generic
 
-Public Class Example
+Public Class DictionaryCapacityExample
     
     Public Shared Sub Main() 
 
