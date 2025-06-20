@@ -126,6 +126,41 @@ Public Class Example
 
 End Class
 
+' This code example produces the following output:
+'
+'An element with Key = "txt" already exists.
+'For key = "rtf", value = wordpad.exe.
+'For key = "rtf", value = winword.exe.
+'Key = "tif" is not found.
+'Key = "tif" is not found.
+'Value added for key = "ht": hypertrm.exe
+'
+'Key = txt, Value = notepad.exe
+'Key = bmp, Value = paint.exe
+'Key = dib, Value = paint.exe
+'Key = rtf, Value = winword.exe
+'Key = doc, Value = winword.exe
+'Key = ht, Value = hypertrm.exe
+'
+'Value = notepad.exe
+'Value = paint.exe
+'Value = paint.exe
+'Value = winword.exe
+'Value = winword.exe
+'Value = hypertrm.exe
+'
+'Key = txt
+'Key = bmp
+'Key = dib
+'Key = rtf
+'Key = doc
+'Key = ht
+'
+'Remove("doc")
+'Key "doc" is not found.
+
+'</Snippet1>
+
 ' Example for Snippet11 - separate from main example
 Public Class Snippet11Example
     Public Shared Sub Main()
@@ -149,4 +184,3 @@ Public Class Snippet11Example
         
     End Sub
 End Class
-'</Snippet1>
