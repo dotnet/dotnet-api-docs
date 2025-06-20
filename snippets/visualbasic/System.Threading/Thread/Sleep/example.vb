@@ -1,7 +1,7 @@
 ﻿'<Snippet1>
 Imports System.Threading
 
-Class Example
+Class ThreadSleepExample
 
     Shared Sub Main()
 
