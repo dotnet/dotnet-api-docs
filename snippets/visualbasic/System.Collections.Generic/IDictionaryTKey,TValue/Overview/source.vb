@@ -1,8 +1,135 @@
-﻿Imports System.Collections.Generic
+﻿'<Snippet1>
+Imports System.Collections.Generic
 
 Public Class Example
+    
+    Public Shared Sub Main() 
+
+        '<Snippet2>
+        ' Create a new dictionary of strings, with string keys,
+        ' and access it through the IDictionary generic interface.
+        '
+        Dim openWith As IDictionary(Of String, String) = _
+            New Dictionary(Of String, String)
+        
+        ' Add some elements to the dictionary. There are no 
+        ' duplicate keys, but some of the values are duplicates.
+        openWith.Add("txt", "notepad.exe")
+        openWith.Add("bmp", "paint.exe")
+        openWith.Add("dib", "paint.exe")
+        openWith.Add("rtf", "wordpad.exe")
+        
+        ' The Add method throws an exception if the new key is 
+        ' already in the dictionary.
+        Try
+            openWith.Add("txt", "winword.exe")
+        Catch 
+            Console.WriteLine("An element with Key = ""txt"" already exists.")
+        End Try
+        '</Snippet2>
+
+        '<Snippet3>
+        ' The Item property is the default property, so you 
+        ' can omit its name when accessing elements. 
+        Console.WriteLine("For key = ""rtf"", value = {0}.", _
+            openWith("rtf"))
+        
+        ' The default Item property can be used to change the value
+        ' associated with a key.
+        openWith("rtf") = "winword.exe"
+        Console.WriteLine("For key = ""rtf"", value = {0}.", _
+            openWith("rtf"))
+        
+        ' If a key does not exist, setting the default Item property
+        ' for that key adds a new key/value pair.
+        openWith("doc") = "winword.exe"
+        '</Snippet3>
+
+        '<Snippet4>
+        ' The default Item property throws a KeyNotFoundException
+        ' if the requested key is not in the dictionary.
+        Try
+            Console.WriteLine("For key = ""tif"", value = {0}.", _
+                openWith("tif"))
+        Catch 
+            Console.WriteLine("Key = ""tif"" is not found.")
+        End Try
+        '</Snippet4>
+
+        '<Snippet5>
+        ' When a program often has to try keys that turn out not to
+        ' be in the dictionary, TryGetValue can be a more efficient 
+        ' way to retrieve values.
+        Dim value As String = ""
+        If openWith.TryGetValue("tif", value) Then
+            Console.WriteLine("For key = ""tif"", value = {0}.", value)
+        Else
+            Console.WriteLine("Key = ""tif"" is not found.")
+        End If
+        '</Snippet5>
+
+        '<Snippet6>
+        ' ContainsKey can be used to test keys before inserting 
+        ' them.
+        If Not openWith.ContainsKey("ht") Then
+            openWith.Add("ht", "hypertrm.exe")
+            Console.WriteLine("Value added for key = ""ht"": {0}", _
+                openWith("ht"))
+        End If
+        '</Snippet6>
+
+        '<Snippet7>
+        ' When you use foreach to enumerate dictionary elements,
+        ' the elements are retrieved as KeyValuePair objects.
+        Console.WriteLine()
+        For Each kvp As KeyValuePair(Of String, String) In openWith
+            Console.WriteLine("Key = {0}, Value = {1}", _
+                kvp.Key, kvp.Value)
+        Next 
+        '</Snippet7>
+
+        '<Snippet8>
+        ' To get the values alone, use the Values property.
+        Dim ivals As ICollection(Of String) = openWith.Values
+        
+        ' The elements of the ICollection(Of String) are strongly typed
+        ' with the type that was specified for dictionary values.
+        Console.WriteLine()
+        For Each s As String In  ivals
+            Console.WriteLine("Value = {0}", s)
+        Next s
+        '</Snippet8>
+
+        '<Snippet9>
+        ' To get the keys alone, use the Keys property.
+        Dim ikeys As ICollection(Of String) = openWith.Keys
+        
+        ' The elements of the ICollection(Of String) are strongly typed
+        ' with the type that was specified for dictionary keys.
+        Console.WriteLine()
+        For Each s As String In  ikeys
+            Console.WriteLine("Key = {0}", s)
+        Next s
+        '</Snippet9>
+
+        '<Snippet10>
+        ' Use the Remove method to remove a key/value pair.
+        Console.WriteLine(vbLf + "Remove(""dib"")")
+        openWith.Remove("dib")
+        
+        If Not openWith.ContainsKey("dib") Then
+            Console.WriteLine("Key ""dib"" is not found.")
+        End If
+        '</Snippet10>
+
+    End Sub
+
+End Class
+
+' Example for Snippet11 - separate from main example
+Public Class Snippet11Example
     Public Shared Sub Main()
-        ' Create a new dictionary of strings, with string keys.
+        ' Create a new dictionary of strings, with integer keys.
         '
         Dim exDictionary As New Dictionary(Of Integer, String)
 
@@ -13,11 +140,13 @@ Public Class Example
         exDictionary.Add(2, "paint.exe")
         exDictionary.Add(3, "wordpad.exe")
         Dim myDictionary As IDictionary(Of Integer, String) = exDictionary
+        
         ' <Snippet11>
         For Each kvp As KeyValuePair(Of Integer, String) In myDictionary
             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value)
         Next kvp
         ' </Snippet11>
+        
     End Sub
 End Class
-
+'</Snippet1>
