@@ -20,21 +20,21 @@ Module Module1
         'This code produces the following output.  This output has been cropped for brevity.
         '
         'CULTURE ISO ISO WIN DISPLAYNAME                              ENGLISHNAME
-        'ar      ar  ara ARA Arabic                                   Arabic                                  
-        'bg      bg  bul BGR Bulgarian                                Bulgarian                               
-        'ca      ca  cat CAT Catalan                                  Catalan                                 
-        'zh-Hans zh  zho CHS Chinese (Simplified)                     Chinese (Simplified)                    
-        'cs      cs  ces CSY Czech                                    Czech                                   
-        'da      da  dan DAN Danish                                   Danish                                  
-        'de      de  deu DEU German                                   German                                  
-        'el      el  ell ELL Greek                                    Greek                                   
-        'en      en  eng ENU English                                  English                                 
-        'es      es  spa ESP Spanish                                  Spanish                                 
-        'fi      fi  fin FIN Finnish                                  Finnish                                 
-        'zh      zh  zho CHS Chinese                                  Chinese                                 
-        'zh-Hant zh  zho CHT Chinese (Traditional)                    Chinese (Traditional)                   
-        'zh-CHS  zh  zho CHS Chinese (Simplified) Legacy              Chinese (Simplified) Legacy             
-        'zh-CHT  zh  zho CHT Chinese (Traditional) Legacy             Chinese (Traditional) Legacy            
+        'ar      ar  ara ARA Arabic                                   Arabic
+        'bg      bg  bul BGR Bulgarian                                Bulgarian
+        'ca      ca  cat CAT Catalan                                  Catalan
+        'cs      cs  ces CSY Czech                                    Czech
+        'da      da  dan DAN Danish                                   Danish
+        'de      de  deu DEU German                                   German
+        'el      el  ell ELL Greek                                    Greek
+        'en      en  eng ENU English                                  English
+        'es      es  spa ESP Spanish                                  Spanish
+        'fi      fi  fin FIN Finnish                                  Finnish
+        'zh      zh  zho CHS Chinese                                  Chinese
+        'zh-Hans zh  zho CHS Chinese (Simplified)                     Chinese (Simplified)
+        'zh-Hant zh  zho ZHH Chinese (Traditional)                    Chinese (Traditional)
+        '
+        'Note: zh-Hant returns ZHH when using ICU (default). When NLS mode is enabled, it returns CHT.
 
         ' </snippet1>
     End Sub
