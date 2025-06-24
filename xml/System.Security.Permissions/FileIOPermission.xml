@@ -53,51 +53,36 @@
   <Docs>
     <summary>Controls the ability to access files and folders. This class cannot be inherited.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
+      <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
 [!INCLUDE[cas-deprecated](~/includes/cas-deprecated.md)]
 
- This permission distinguishes between the following four types of file IO access provided by <xref:System.Security.Permissions.FileIOPermissionAccess>:  
-  
--   `Read`: Read access to the contents of the file or access to information about the file, such as its length or last modification time.  
-  
--   `Write`: Write access to the contents of the file or access to change information about the file, such as its name. Also allows for deletion and overwriting.  
-  
--   `Append`: Ability to write to the end of a file only. No ability to read.  
-  
--   `PathDiscovery`: Access to the information in the path itself. This helps protect sensitive information in the path, such as user names, as well as information about the directory structure that is revealed in the path. This value does not grant access to files or folders represented by the path.  
-  
+ This permission distinguishes between the following four types of file IO access provided by <xref:System.Security.Permissions.FileIOPermissionAccess>:
+
+-   `Read`: Read access to the contents of the file or access to information about the file, such as its length or last modification time.
+
+-   `Write`: Write access to the contents of the file or access to change information about the file, such as its name. Also allows for deletion and overwriting.
+
+-   `Append`: Ability to write to the end of a file only. No ability to read.
+
+-   `PathDiscovery`: Access to the information in the path itself. This helps protect sensitive information in the path, such as user names, as well as information about the directory structure that is revealed in the path. This value does not grant access to files or folders represented by the path.
+
 > [!NOTE]
->  Giving <xref:System.Security.Permissions.FileIOPermissionAccess.Write> access to an assembly is similar to granting it full trust. If an application should not write to the file system, it should not have <xref:System.Security.Permissions.FileIOPermissionAccess.Write> access.  
-  
- All these permissions are independent, meaning that rights to one do not imply rights to another. For example, `Write` permission does not imply permission to `Read` or `Append`. If more than one permission is desired, they can be combined using a bitwise OR as shown in the code example that follows. File permission is defined in terms of canonical absolute paths; calls should always be made with canonical file paths.  
-  
- <xref:System.Security.Permissions.FileIOPermission> describes protected operations on files and folders. The <xref:System.IO.File> class helps provide secure access to files and folders. The security access check is performed when the handle to the file is created. By doing the check at creation time, the performance impact of the security check is minimized. Opening a file happens once, while reading and writing can happen multiple times. Once the file is opened, no further checks are done. If the object is passed to an untrusted caller, it can be misused. For example, file handles should not be stored in public global statics where code with less permission can access them.  
-  
- <xref:System.Security.Permissions.FileIOPermissionAccess> specifies actions that can be performed on the file or folder. In addition, these actions can be combined using a bitwise OR to form complex instances.  
-  
- Access to a folder implies access to all the files it contains, as well as access to all the files and folders in its subfolders. For example, `Read` access to C:\folder1\ implies `Read` access to C:\folder1\file1.txt, C:\folder1\folder2\\, C:\folder1\folder2\file2.txt, and so on.  
-  
+>  Giving <xref:System.Security.Permissions.FileIOPermissionAccess.Write> access to an assembly is similar to granting it full trust. If an application should not write to the file system, it should not have <xref:System.Security.Permissions.FileIOPermissionAccess.Write> access.
+
+ All these permissions are independent, meaning that rights to one do not imply rights to another. For example, `Write` permission does not imply permission to `Read` or `Append`. If more than one permission is desired, they can be combined using a bitwise OR as shown in the code example that follows. File permission is defined in terms of canonical absolute paths; calls should always be made with canonical file paths.
+
+ <xref:System.Security.Permissions.FileIOPermission> describes protected operations on files and folders. The <xref:System.IO.File> class helps provide secure access to files and folders. The security access check is performed when the handle to the file is created. By doing the check at creation time, the performance impact of the security check is minimized. Opening a file happens once, while reading and writing can happen multiple times. Once the file is opened, no further checks are done. If the object is passed to an untrusted caller, it can be misused. For example, file handles should not be stored in public global statics where code with less permission can access them.
+
+ <xref:System.Security.Permissions.FileIOPermissionAccess> specifies actions that can be performed on the file or folder. In addition, these actions can be combined using a bitwise OR to form complex instances.
+
+ Access to a folder implies access to all the files it contains, as well as access to all the files and folders in its subfolders. For example, `Read` access to C:\folder1\ implies `Read` access to C:\folder1\file1.txt, C:\folder1\folder2\\, C:\folder1\folder2\file2.txt, and so on.
+
 > [!NOTE]
->  In versions of the .NET Framework before the .NET Framework 4, you could use the <xref:System.Security.CodeAccessPermission.Deny%2A?displayProperty=nameWithType> method to prevent inadvertent access to system resources by trusted code. <xref:System.Security.CodeAccessPermission.Deny%2A> is now obsolete, and access to resources is now determined solely by the granted permission set for an assembly. To limit access to files, you must run partially trusted code in a sandbox and assign it permissions only to resources that the code is allowed to access. For information about running an application in a sandbox, see [How to: Run Partially Trusted Code in a Sandbox](/dotnet/framework/misc/how-to-run-partially-trusted-code-in-a-sandbox).  
-  
-   
-  
-## Examples  
- The following examples illustrate code that uses <xref:System.Security.Permissions.FileIOPermission>. After the following two lines of code, the object `f` represents permission to read all files on the client computer's local disks. The code example then demands the permission to determine whether the application has permission to read the files.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet1":::  
-  
- After the following two lines of code, the object `f2` represents permissions to read C:\test_r and read and write to C:\example\out.txt. `Read` and `Write` represent the file/folder permissions as previously described. After creating the permission, the code demands the permission to determine whether the application has the right to read and write to the file.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet2":::  
-  
+>  In versions of the .NET Framework before the .NET Framework 4, you could use the <xref:System.Security.CodeAccessPermission.Deny%2A?displayProperty=nameWithType> method to prevent inadvertent access to system resources by trusted code. <xref:System.Security.CodeAccessPermission.Deny%2A> is now obsolete, and access to resources is now determined solely by the granted permission set for an assembly. To limit access to files, you must run partially trusted code in a sandbox and assign it permissions only to resources that the code is allowed to access. For information about running an application in a sandbox, see [How to: Run Partially Trusted Code in a Sandbox](/dotnet/framework/misc/how-to-run-partially-trusted-code-in-a-sandbox).
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Security.Permissions.FileIOPermissionAccess" />
@@ -147,20 +132,11 @@
         <param name="state">One of the <see cref="T:System.Security.Permissions.PermissionState" /> enumeration values.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Security.Permissions.FileIOPermission" /> class with fully restricted or unrestricted permission as specified.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Creates either fully restricted (`None`) or `Unrestricted` access to files and directories.  
-  
-   
-  
-## Examples  
- The following code example creates a new instance of the <xref:System.Security.Permissions.FileIOPermission> class with fully restricted read access.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet1":::  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Creates either fully restricted (`None`) or `Unrestricted` access to files and directories.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="state" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.PermissionState" />.</exception>
@@ -207,30 +183,21 @@
         <param name="path">The absolute path of the file or directory.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Security.Permissions.FileIOPermission" /> class with the specified access to the designated file or directory.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor allows only one of the <xref:System.Security.Permissions.FileIOPermissionAccess> values to be specified for the specified file or directory. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.  
-  
-   
-  
-## Examples  
- The following code example shows the use of the <xref:System.Security.Permissions.FileIOPermission.%23ctor%28System.Security.Permissions.FileIOPermissionAccess%2CSystem.String%29?displayProperty=nameWithType> constructor to create a new instance of the <xref:System.Security.Permissions.FileIOPermission> class, which provides complete access to the C:\test_r file.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet2":::  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor allows only one of the <xref:System.Security.Permissions.FileIOPermissionAccess> values to be specified for the specified file or directory. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
- The <paramref name="path" /> parameter is not a valid string.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
+ The <paramref name="path" /> parameter is not a valid string.
+
+ -or-
+
  The <paramref name="path" /> parameter does not specify the absolute path to the file or directory.</exception>
       </Docs>
     </Member>
@@ -275,17 +242,17 @@
         <param name="pathList">An array containing the absolute paths of the files and directories.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Security.Permissions.FileIOPermission" /> class with the specified access to the designated files and directories.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor allows only one <xref:System.Security.Permissions.FileIOPermissionAccess> value to be specified for the specified files and directories. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor allows only one <xref:System.Security.Permissions.FileIOPermissionAccess> value to be specified for the specified files and directories. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
  An entry in the <paramref name="pathList" /> array is not a valid string.</exception>
       </Docs>
     </Member>
@@ -338,26 +305,26 @@
         <param name="path">The absolute path of the file or directory.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Security.Permissions.FileIOPermission" /> class with the specified access to the designated file or directory and the specified access rights to file control information.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor allows only one <xref:System.Security.Permissions.FileIOPermissionAccess> value to be specified for the specified file or directories. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.  
-  
- The `control` parameter specifies whether the access control list (ACL) for the file or directory specified by `path` can be changed, viewed, or cannot be accessed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor allows only one <xref:System.Security.Permissions.FileIOPermissionAccess> value to be specified for the specified file or directories. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.
+
+ The `control` parameter specifies whether the access control list (ACL) for the file or directory specified by `path` can be changed, viewed, or cannot be accessed.
+
 > [!IMPORTANT]
->  An access control list (ACL) describes individuals or groups who have, or do not have, rights to specific actions on the given file and its properties.  The ability to change or view an ACL is an important permission and should be granted with caution.  
-  
+>  An access control list (ACL) describes individuals or groups who have, or do not have, rights to specific actions on the given file and its properties.  The ability to change or view an ACL is an important permission and should be granted with caution.
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
- The <paramref name="path" /> parameter is not a valid string.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
+ The <paramref name="path" /> parameter is not a valid string.
+
+ -or-
+
  The <paramref name="path" /> parameter does not specify the absolute path to the file or directory.</exception>
       </Docs>
     </Member>
@@ -410,22 +377,22 @@
         <param name="pathList">An array containing the absolute paths of the files and directories.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Security.Permissions.FileIOPermission" /> class with the specified access to the designated files and directories and the specified access rights to file control information.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This constructor allows only one <xref:System.Security.Permissions.FileIOPermissionAccess> value to be specified for the specified files and directories. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.  
-  
- The `control` parameter specifies whether the access control list (ACL) for the file or directory specified by `path` can be changed, viewed, or cannot be accessed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This constructor allows only one <xref:System.Security.Permissions.FileIOPermissionAccess> value to be specified for the specified files and directories. Use the <xref:System.Security.Permissions.FileIOPermission.AddPathList%2A> method to define complex permissions.
+
+ The `control` parameter specifies whether the access control list (ACL) for the file or directory specified by `path` can be changed, viewed, or cannot be accessed.
+
 > [!IMPORTANT]
->  An access control list (ACL) describes individuals or groups who have, or do not have, rights to specific actions on the given file and its properties.  The ability to change or view an ACL is an important permission and should be granted with caution.  
-  
+>  An access control list (ACL) describes individuals or groups who have, or do not have, rights to specific actions on the given file and its properties.  The ability to change or view an ACL is an important permission and should be granted with caution.
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
  An entry in the <paramref name="pathList" /> array is not a valid string.</exception>
       </Docs>
     </Member>
@@ -483,30 +450,21 @@
         <param name="path">The absolute path of a file or directory.</param>
         <summary>Adds access for the specified file or directory to the existing state of the permission.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this method to modify file and directory access by adding to the state of the current permission.  
-  
-   
-  
-## Examples  
- The following code example shows the use of the <xref:System.Security.Permissions.FileIOPermission.AddPathList%28System.Security.Permissions.FileIOPermissionAccess%2CSystem.String%29?displayProperty=nameWithType> method.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet2":::  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this method to modify file and directory access by adding to the state of the current permission.
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
- The <paramref name="path" /> parameter is not a valid string.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
+ The <paramref name="path" /> parameter is not a valid string.
+
+ -or-
+
  The <paramref name="path" /> parameter did not specify the absolute path to the file or directory.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="path" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.NotSupportedException">The <paramref name="path" /> parameter has an invalid format.</exception>
@@ -556,17 +514,17 @@
         <param name="pathList">An array containing the absolute paths of the files and directories.</param>
         <summary>Adds access for the specified files and directories to the existing state of the permission.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this method to modify file and directory access by adding to the state of the current permission.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this method to modify file and directory access by adding to the state of the current permission.
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
  An entry in the <paramref name="pathList" /> array is not valid.</exception>
         <exception cref="T:System.NotSupportedException">An entry in the <paramref name="pathList" /> array has an invalid format.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="pathList" /> parameter is <see langword="null" />.</exception>
@@ -605,22 +563,13 @@
         <summary>Gets or sets the permitted access to all files.</summary>
         <value>The set of file I/O flags for all files.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This property gets or sets the permitted access to all files on the local computer and network drives.  
-  
- An individual <xref:System.Security.Permissions.FileIOPermissionAccess> value can be checked for using a bitwise AND operation.  
-  
-   
-  
-## Examples  
- The following code example shows the use of the <xref:System.Security.Permissions.FileIOPermission.AllFiles%2A> property.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet3":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet3":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet3":::  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This property gets or sets the permitted access to all files on the local computer and network drives.
+
+ An individual <xref:System.Security.Permissions.FileIOPermissionAccess> value can be checked for using a bitwise AND operation.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -658,22 +607,13 @@
         <summary>Gets or sets the permitted access to all local files.</summary>
         <value>The set of file I/O flags for all local files.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Local files are files contained on the local computer. Any files not accessed through a network drive are local files.  
-  
- An individual <xref:System.Security.Permissions.FileIOPermissionAccess> value can be checked for using a bitwise AND operation.  
-  
-   
-  
-## Examples  
- The following code example shows the use of the <xref:System.Security.Permissions.FileIOPermission.AllLocalFiles%2A> property.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic FileIOPermission Example/CPP/source.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_Classic/classic FileIOPermission Example/VB/source.vb" id="Snippet1":::  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Local files are files contained on the local computer. Any files not accessed through a network drive are local files.
+
+ An individual <xref:System.Security.Permissions.FileIOPermissionAccess> value can be checked for using a bitwise AND operation.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -712,11 +652,11 @@
         <summary>Creates and returns an identical copy of the current permission.</summary>
         <returns>A copy of the current permission.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A copy of the permission represents the same access to resources as the original permission.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A copy of the permission represents the same access to resources as the original permission.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -771,11 +711,11 @@
         <returns>
           <see langword="true" /> if the specified <see cref="T:System.Security.Permissions.FileIOPermission" /> is equal to the current <see cref="T:System.Security.Permissions.FileIOPermission" /> object; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For more information, see <xref:System.Object.Equals%2A>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For more information, see <xref:System.Object.Equals%2A>.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -823,10 +763,10 @@
         <summary>Reconstructs a permission with a specified state from an XML encoding.</summary>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="esd" /> parameter is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">The <paramref name="esd" /> parameter is not a valid permission element.  
-  
- -or-  
-  
+        <exception cref="T:System.ArgumentException">The <paramref name="esd" /> parameter is not a valid permission element.
+
+ -or-
+
  The <paramref name="esd" /> parameter's version number is not compatible.</exception>
       </Docs>
     </Member>
@@ -869,11 +809,11 @@
         <summary>Gets a hash code for the <see cref="T:System.Security.Permissions.FileIOPermission" /> object that is suitable for use in hashing algorithms and data structures such as a hash table.</summary>
         <returns>A hash code for the current <see cref="T:System.Security.Permissions.FileIOPermission" /> object.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The hash code for two instances of the same permission might be different, hence a hash code should not be used to compare two <xref:System.Security.Permissions.FileIOPermission> objects.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The hash code for two instances of the same permission might be different, hence a hash code should not be used to compare two <xref:System.Security.Permissions.FileIOPermission> objects.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -921,30 +861,21 @@
         <summary>Gets all files and directories with the specified <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.</summary>
         <returns>An array containing the paths of the files and directories to which access specified by the <paramref name="access" /> parameter is granted.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this method to get the state of the current permission. To get the state of both `Read` and `Write` access, two calls to this method are required.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this method to get the state of the current permission. To get the state of both `Read` and `Write` access, two calls to this method are required.
+
 > [!NOTE]
->  The `access` parameter is limited to the values of <xref:System.Security.Permissions.FileIOPermissionAccess>, which represent single types of file access. Those values are <xref:System.Security.Permissions.FileIOPermissionAccess.Read>, <xref:System.Security.Permissions.FileIOPermissionAccess.Write>, <xref:System.Security.Permissions.FileIOPermissionAccess.Append>, and <xref:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery>. The values acceptable to `access` do not include <xref:System.Security.Permissions.FileIOPermissionAccess.NoAccess> and <xref:System.Security.Permissions.FileIOPermissionAccess.AllAccess>, which do not represent single types of file access.  
-  
-   
-  
-## Examples  
- The following code example shows the use of the <xref:System.Security.Permissions.FileIOPermission.GetPathList%2A> method. This example is part of a larger example provided for the <xref:System.Security.Permissions.FileIOPermission> class.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/CPP/fileiopermission.cpp" id="Snippet7":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/GetPathList/fileiopermission.cs" id="Snippet7":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/VB/fileiopermission.vb" id="Snippet7":::  
-  
+>  The `access` parameter is limited to the values of <xref:System.Security.Permissions.FileIOPermissionAccess>, which represent single types of file access. Those values are <xref:System.Security.Permissions.FileIOPermissionAccess.Read>, <xref:System.Security.Permissions.FileIOPermissionAccess.Write>, <xref:System.Security.Permissions.FileIOPermissionAccess.Append>, and <xref:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery>. The values acceptable to `access` do not include <xref:System.Security.Permissions.FileIOPermissionAccess.NoAccess> and <xref:System.Security.Permissions.FileIOPermissionAccess.AllAccess>, which do not represent single types of file access.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="access" /> is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
+          <paramref name="access" /> is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
  <paramref name="access" /> is <see cref="F:System.Security.Permissions.FileIOPermissionAccess.AllAccess" />, which represents more than one type of file access, or <see cref="F:System.Security.Permissions.FileIOPermissionAccess.NoAccess" />, which does not represent any type of file access.</exception>
       </Docs>
     </Member>
@@ -985,11 +916,11 @@
         <summary>Creates and returns a permission that is the intersection of the current permission and the specified permission.</summary>
         <returns>A new permission that represents the intersection of the current permission and the specified permission. This new permission is <see langword="null" /> if the intersection is empty.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The intersection of two permissions is a permission that describes the set of operations they both describe in common. Only a demand that passes both original permissions will pass the intersection.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The intersection of two permissions is a permission that describes the set of operations they both describe in common. Only a demand that passes both original permissions will pass the intersection.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="target" /> parameter is not <see langword="null" /> and is not of the same type as the current permission.</exception>
@@ -1033,11 +964,11 @@
         <returns>
           <see langword="true" /> if the current permission is a subset of the specified permission; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The current permission is a subset of the specified permission if the current permission specifies a set of operations that is contained by the specified permission. For example, a permission that represents read access to C:\example.txt is a subset of a permission that represents read access to C:\\. If this method returns `true`, the current permission represents no more access to the protected resource than does the specified permission.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The current permission is a subset of the specified permission if the current permission specifies a set of operations that is contained by the specified permission. For example, a permission that represents read access to C:\example.txt is a subset of a permission that represents read access to C:\\. If this method returns `true`, the current permission represents no more access to the protected resource than does the specified permission.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="target" /> parameter is not <see langword="null" /> and is not of the same type as the current permission.</exception>
@@ -1081,11 +1012,11 @@
         <returns>
           <see langword="true" /> if the current permission is unrestricted; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- An unrestricted permission represents access to all resources protected by the permission.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ An unrestricted permission represents access to all resources protected by the permission.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1137,41 +1068,15 @@
         <param name="access">A bitwise combination of the <see cref="T:System.Security.Permissions.FileIOPermissionAccess" /> values.</param>
         <param name="path">The absolute path of the file or directory.</param>
         <summary>Sets the specified access to the specified file or directory, replacing the existing state of the permission.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The previous state of the current permission for the specified access type is overwritten. The following code sets the access for C:\temp to <xref:System.Security.Permissions.FileIOPermissionAccess.Read>.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/CPP/remarks.cpp" id="Snippet12":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/GetPathList/remarks.cs" id="Snippet12":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/VB/remarks.vb" id="Snippet12":::  
-  
- This access will not be overwritten by the following code because the access types are not the same.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/CPP/remarks.cpp" id="Snippet13":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/GetPathList/remarks.cs" id="Snippet13":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/VB/remarks.vb" id="Snippet13":::  
-  
-   
-  
-## Examples  
- The following code example shows the use of the <xref:System.Security.Permissions.FileIOPermission.SetPathList%28System.Security.Permissions.FileIOPermissionAccess%2CSystem.String%29?displayProperty=nameWithType> method.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/CPP/fileiopermission.cpp" id="Snippet7":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/GetPathList/fileiopermission.cs" id="Snippet7":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/VB/fileiopermission.vb" id="Snippet7":::  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
- The <paramref name="path" /> parameter is not a valid string.  
-  
- -or-  
-  
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
+ The <paramref name="path" /> parameter is not a valid string.
+
+ -or-
+
  The <paramref name="path" /> parameter did not specify the absolute path to the file or directory.</exception>
       </Docs>
     </Member>
@@ -1212,24 +1117,11 @@
         <param name="access">A bitwise combination of the <see cref="T:System.Security.Permissions.FileIOPermissionAccess" /> values.</param>
         <param name="pathList">An array containing the absolute paths of the files and directories.</param>
         <summary>Sets the specified access to the specified files and directories, replacing the current state for the specified access with the new set of paths.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The previous state of the current permission for the specified access type is overwritten. The following code sets the access for C:\temp to <xref:System.Security.Permissions.FileIOPermissionAccess.Read>.  
-  
- This access will not be overwritten by the following code because the access types are not the same.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/CPP/remarks.cpp" id="Snippet15":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/FileIOPermission/GetPathList/remarks.cs" id="Snippet15":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Security.Permissions.FileIOPermission/VB/remarks.vb" id="Snippet15":::  
-  
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.  
-  
- -or-  
-  
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The <paramref name="access" /> parameter is not a valid value of <see cref="T:System.Security.Permissions.FileIOPermissionAccess" />.
+
+ -or-
+
  An entry in the <paramref name="pathList" /> parameter is not a valid string.</exception>
       </Docs>
     </Member>
@@ -1306,11 +1198,11 @@
         <summary>Creates a permission that is the union of the current permission and the specified permission.</summary>
         <returns>A new permission that represents the union of the current permission and the specified permission.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The result of a call to <xref:System.Security.Permissions.FileIOPermission.Union%2A> is a permission that represents all the operations represented by both the current permission and the specified permission. Any demand that passes either permission passes their union.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The result of a call to <xref:System.Security.Permissions.FileIOPermission.Union%2A> is a permission that represents all the operations represented by both the current permission and the specified permission. Any demand that passes either permission passes their union.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="other" /> parameter is not <see langword="null" /> and is not of the same type as the current permission.</exception>
