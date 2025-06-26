@@ -72,7 +72,7 @@ Module Program
         '    C:\Pictures\Saved Pictures\2019\Jan\
         '
         ' The example displays the following output if run on a Unix-based system:
-        '    C:\Pictures\/Saved Pictures\/2019\/Jan\/
+        '    C:\Pictures\/Saved Pictures\/2019\/Jan\
         ' </Snippet4>
     End Sub
 End Module
