@@ -60,12 +60,13 @@ namespace NCLWebClientAsync
             client.UploadFileCompleted += new UploadFileCompletedEventHandler(UploadFileCallback2);
 
             // Specify a progress notification handler.
-            client.UploadProgressChanged += new UploadProgressChangedEventHandler(UploadProgressCallback);
+            client.UploadProgressChanged += new UploadProgressChangedEventHandler(UploadProgressCallback2);
             client.UploadFileAsync(uri, "POST", fileName);
             Console.WriteLine("File upload started.");
         }
         //</Snippet4>
 
+        //<Snippet44>
         //<Snippet5>
         private static void UploadFileCallback2(Object sender, UploadFileCompletedEventArgs e)
         {
@@ -73,6 +74,17 @@ namespace NCLWebClientAsync
             Console.WriteLine(reply);
         }
         //</Snippet5>
+        
+        private static void UploadProgressCallback2(object sender, UploadProgressChangedEventArgs e)
+        {
+            // Displays the operation identifier, and the transfer progress.
+            Console.WriteLine("{0}    uploaded {1} of {2} bytes. {3} % complete...",
+                (string)e.UserState,
+                e.BytesSent,
+                e.TotalBytesToSend,
+                e.ProgressPercentage);
+        }        
+        //</Snippet44>
 
         //<Snippet6>
         // Sample call: UploadFileInBackground("http://www.contoso.com/fileUpload.aspx", "data.txt")
