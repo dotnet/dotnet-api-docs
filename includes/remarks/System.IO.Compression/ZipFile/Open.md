@@ -7,19 +7,16 @@ When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.
 When you open a zip archive file for reading and `entryNameEncoding` is set to `null`, entry names and comments are decoded according to the following rules:
 
 - When the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the current system default code page is used to decode the entry name and comment.
-
 - When the language encoding flag is set, UTF-8 is used to decode the entry name and comment.
 
 When you open a zip archive file for reading and `entryNameEncoding` is set to a value other than `null`, entry names and comments are decoded according to the following rules:
 
 - When the language encoding flag is not set, the specified `entryNameEncoding` is used to decode the entry name and comment.
-
 - When the language encoding flag is set, UTF-8 is used to decode the entry name and comment.
 
 When you write to archive files and `entryNameEncoding` is set to `null`, entry names and comments are encoded according to the following rules:
 
 - For entry names or comments that contain characters outside the ASCII range, the language encoding flag is set, and entry names and comments are encoded by using UTF-8.
-
 - For entry names or comments that contain only ASCII characters, the language encoding flag is not set, and entry names and comments are encoded by using the current system default code page.
 
 When you write to archive files and `entryNameEncoding` is set to a value other than `null`, the specified `entryNameEncoding` is used to encode the entry names and comments into bytes. The language encoding flag (in the general-purpose bit flag of the local file header) is set only when the specified encoding is a UTF-8 encoding.
