@@ -2864,12 +2864,15 @@ Calling `DisposeAsync` allows the resources used by the <xref:System.IO.FileStre
       </Parameters>
       <Docs>
         <param name="cancellationToken">The token to monitor for cancellation requests.</param>
-        <summary>Asynchronously clears all buffers for this stream, causes any buffered data to be written to the underlying device, and monitors cancellation requests.</summary>
+        <summary>Asynchronously clears all buffers for this stream, causes any buffered data to be written to the file, and monitors cancellation requests.</summary>
         <returns>A task that represents the asynchronous flush operation.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+This method flushes the .NET stream buffers to the file, but does not flush intermediate file buffers in the operating system. To ensure that all buffered data is written to the underlying storage device, use the <xref:System.IO.FileStream.Flush(System.Boolean)> method with the `flushToDisk` parameter set to `true`.
+
  If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled> value for the <xref:System.Threading.Tasks.Task.Status%2A> property. If the handle to the file is disposed, the returned task contains the <xref:System.ObjectDisposedException> exception in the <xref:System.Threading.Tasks.Task.Exception%2A> property.
 
  This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.FileStream.Flush>.
