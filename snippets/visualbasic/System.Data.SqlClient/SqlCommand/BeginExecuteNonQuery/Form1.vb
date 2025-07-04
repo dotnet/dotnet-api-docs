@@ -1,9 +1,8 @@
 ﻿Option Explicit On
 Option Strict On
-
-Imports System.Data
 ' <Snippet1>
 Imports System.Data.SqlClient
+Imports System.Windows.Forms
 
 Public Class Form1
     ' Add this code to the form's class:
@@ -30,7 +29,7 @@ Public Class Form1
         ' If you have not included "Asynchronous Processing=true" in the
         ' connection string, the command is not able
         ' to execute asynchronously.
-        Return "Data Source=(local);Integrated Security=true;" & _
+        Return "Data Source=(local);Integrated Security=true;" &
           "Initial Catalog=AdventureWorks; Asynchronous Processing=true"
     End Function
 
@@ -43,21 +42,21 @@ Public Class Form1
         DisplayStatus("Ready")
     End Sub
 
-    Private Sub Form1_FormClosing(ByVal sender As Object, _
-        ByVal e As System.Windows.Forms.FormClosingEventArgs) _
+    Private Sub Form1_FormClosing(ByVal sender As Object,
+        ByVal e As FormClosingEventArgs) _
         Handles Me.FormClosing
         If isExecuting Then
-            MessageBox.Show(Me, "Cannot close the form until " & _
+            MessageBox.Show(Me, "Cannot close the form until " &
                 "the pending asynchronous command has completed. Please wait...")
             e.Cancel = True
         End If
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, _
+    Private Sub Button1_Click(ByVal sender As System.Object,
         ByVal e As System.EventArgs) Handles Button1.Click
         If isExecuting Then
-            MessageBox.Show(Me, _
-               "Already executing. Please wait until the current query " & _
+            MessageBox.Show(Me,
+               "Already executing. Please wait until the current query " &
                 "has completed.")
         Else
             Dim command As SqlCommand
@@ -69,11 +68,11 @@ Public Class Form1
                 ' a few seconds before working with the data.
                 ' This command does not do much, but that's the point--
                 ' it does not change your data, in the long run.
-                Dim commandText As String = _
-                    "WAITFOR DELAY '0:0:05';" & _
-                    "UPDATE Production.Product SET ReorderPoint = ReorderPoint + 1 " & _
-                    "WHERE ReorderPoint Is Not Null;" & _
-                    "UPDATE Production.Product SET ReorderPoint = ReorderPoint - 1 " & _
+                Dim commandText As String =
+                    "WAITFOR DELAY '0:0:05';" &
+                    "UPDATE Production.Product SET ReorderPoint = ReorderPoint + 1 " &
+                    "WHERE ReorderPoint Is Not Null;" &
+                    "UPDATE Production.Product SET ReorderPoint = ReorderPoint - 1 " &
                     "WHERE ReorderPoint Is Not Null"
 
                 command = New SqlCommand(commandText, connection)
@@ -139,7 +138,7 @@ Public Class Form1
 
             ' You can create the delegate instance as you 
             ' invoke it, like this:
-            Me.Invoke(New DisplayInfoDelegate(AddressOf DisplayStatus), _
+            Me.Invoke(New DisplayInfoDelegate(AddressOf DisplayStatus),
                 String.Format("Ready(last error: {0}", ex.Message))
         Finally
             isExecuting = False

@@ -4,6 +4,7 @@ Option Strict On
 Imports System.Data
 ' <Snippet1>
 Imports System.Data.SqlClient
+Imports System.Windows.Forms
 Imports System.Xml
 
 Public Class Form1

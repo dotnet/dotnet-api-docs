@@ -1,7 +1,5 @@
 ﻿Option Explicit On
 Option Strict On
-
-Imports System.Data
 ' <Snippet1>
 Imports System.Data.SqlClient
 
@@ -12,11 +10,11 @@ Module Module1
         ' BeginExecuteNonQuery functionality.
         ' The WAITFOR statement simply adds enough time to prove the 
         ' asynchronous nature of the command.
-        Dim commandText As String = _
-         "UPDATE Production.Product SET ReorderPoint = ReorderPoint + 1 " & _
-         "WHERE ReorderPoint Is Not Null;" & _
-         "WAITFOR DELAY '0:0:3';" & _
-         "UPDATE Production.Product SET ReorderPoint = ReorderPoint - 1 " & _
+        Dim commandText As String =
+         "UPDATE Production.Product SET ReorderPoint = ReorderPoint + 1 " &
+         "WHERE ReorderPoint Is Not Null;" &
+         "WAITFOR DELAY '0:0:3';" &
+         "UPDATE Production.Product SET ReorderPoint = ReorderPoint - 1 " &
          "WHERE ReorderPoint Is Not Null"
 
         RunCommandAsynchronously(commandText, GetConnectionString())
@@ -25,7 +23,7 @@ Module Module1
         Console.ReadLine()
     End Sub
 
-    Private Sub RunCommandAsynchronously( _
+    Private Sub RunCommandAsynchronously(
      ByVal commandText As String, ByVal connectionString As String)
 
         ' Given command text and connection string, asynchronously execute
@@ -46,7 +44,7 @@ Module Module1
                     Threading.Thread.Sleep(100)
                     count += 1
                 End While
-                Console.WriteLine("Command complete. Affected {0} rows.", _
+                Console.WriteLine("Command complete. Affected {0} rows.",
                     command.EndExecuteNonQuery(result))
             Catch ex As SqlException
                 Console.WriteLine("Error ({0}): {1}", ex.Number, ex.Message)
@@ -67,7 +65,7 @@ Module Module1
         ' If you have not included "Asynchronous Processing=true" in the
         ' connection string, the command is not able
         ' to execute asynchronously.
-        Return "Data Source=(local);Integrated Security=SSPI;" & _
+        Return "Data Source=(local);Integrated Security=SSPI;" &
           "Initial Catalog=AdventureWorks; Asynchronous Processing=true"
     End Function
 End Module
