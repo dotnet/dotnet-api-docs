@@ -23,10 +23,10 @@ class Program
 
     static void ProcessRequest(object? requestId)
     {
-        // Assign the request ID to the thread-static field
+        // Assign the request ID to the thread-static field.
         _requestId = requestId as string;
 
-        // Simulate request processing across multiple method calls
+        // Simulate request processing across multiple method calls.
         PerformDatabaseOperation();
         PerformLogging();
     }
