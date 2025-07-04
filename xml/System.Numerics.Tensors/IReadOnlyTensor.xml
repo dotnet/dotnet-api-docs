@@ -66,6 +66,54 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="HasAnyDenseDimensions">
+      <MemberSignature Language="C#" Value="public bool HasAnyDenseDimensions { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasAnyDenseDimensions" />
+      <MemberSignature Language="DocId" Value="P:System.Numerics.Tensors.IReadOnlyTensor.HasAnyDenseDimensions" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property HasAnyDenseDimensions As Boolean" />
+      <MemberSignature Language="F#" Value="member this.HasAnyDenseDimensions : bool" Usage="System.Numerics.Tensors.IReadOnlyTensor.HasAnyDenseDimensions" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool HasAnyDenseDimensions { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Tensors</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Determines if the current tensor has any dimension where <c>GetDimensionSpan(int)</c> will iterate through tensors that would have <see cref="P:System.Numerics.Tensors.IReadOnlyTensor.IsDense" /> be <c>true</c>.</summary>
+        <value>To be added.</value>
+        <remarks>
+          <para>This does not include the last dimension, <c>GetDimensionSpan(Rank - 1)</c>, as it always iterates 1 element at a time and would mean this property always returns true.</para>
+          <para>An example of a tensor which is not dense but which would have a dense dimension is a 2x2 Tensor where <c>FlattenedLength: 4; Lengths: [2, 2]; Strides: [4, 1]</c>. In such a scenario, the overall tensor is not dense because the backing storage has a length of at least 6 and so has 2 used elements, 2 unused elements, followed by the last 2 used elements. However, the two slices representing <c>[0..1, ..]</c> and <c>[1..2, ..]</c> would themselves be dense; thus <c>GetDimension(0).GetSlice(n)</c> will iterate dense tensors: <c>FlattenedLength: 2, Length: [2], Strides: [1]</c>.</para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsDense">
+      <MemberSignature Language="C#" Value="public bool IsDense { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsDense" />
+      <MemberSignature Language="DocId" Value="P:System.Numerics.Tensors.IReadOnlyTensor.IsDense" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsDense As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsDense : bool" Usage="System.Numerics.Tensors.IReadOnlyTensor.IsDense" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsDense { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Numerics.Tensors</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Determines if the current tensor is dense.</summary>
+        <value>To be added.</value>
+        <remarks>
+          <para>A dense tensor is one where the elements are ordered sequentially in memory and where no gaps exist between the elements.</para>
+          <para>For a 2x2 Tensor, this would mean it has <c>FlattenedLength: 4; Lengths: [2, 2]; Strides: [2, 1]</c>. The elements would be sequentially accessed via indexes: <c>[0, 0]; [0, 1]; [1, 0]; [1, 1]</c></para>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="IsEmpty">
       <MemberSignature Language="C#" Value="public bool IsEmpty { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool IsEmpty" />
@@ -195,9 +243,9 @@
         <value>The element that exists at <paramref name="indexes" />.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-              Thrown when one of the following conditions is met:
-              * <paramref name="indexes" /> does not contain <see cref="P:System.Numerics.Tensors.IReadOnlyTensor.Rank" /> elements
-              * <paramref name="indexes" /> contains an element that is negative or greater than or equal to the corresponding dimension length
+              One of the following conditions is met:
+              * <paramref name="indexes" /> does not contain <see cref="P:System.Numerics.Tensors.IReadOnlyTensor.Rank" /> elements.
+              * <paramref name="indexes" /> contains an element that is negative or greater than or equal to the corresponding dimension length.
             </exception>
       </Docs>
     </Member>
