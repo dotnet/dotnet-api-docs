@@ -27,23 +27,23 @@
 
  The WSFAM provides:
 
--   The ability for an ASP.NET application to outsource authentication to a security token service (STS) by using the WS-Federation protocol. Identity can be federated across one or more identity realms and involve multiple STSs.
+- The ability for an ASP.NET application to outsource authentication to a security token service (STS) by using the WS-Federation protocol. Identity can be federated across one or more identity realms and involve multiple STSs.
 
--   Claims-based identity for ASP.NET applications. During authentication, the WSFAM builds a principal from the claims in the security token sent by the STS and sets this claims principal as the thread principal. You can then use this principal to make further authorization, presentation, and logic decisions about the user it represents in your code.
+- Claims-based identity for ASP.NET applications. During authentication, the WSFAM builds a principal from the claims in the security token sent by the STS and sets this claims principal as the thread principal. You can then use this principal to make further authorization, presentation, and logic decisions about the user it represents in your code.
 
  The WSFAM exposes several properties that provide default message parameters to use on WS-Federation sign-in and sign-out requests. These properties are typically initialized from the [&lt;wsFederation&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/wsfederation) element in a configuration file. The most important of these properties are:
 
--   The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.Issuer%2A> property, which specifies the address of the security token service (STS) to which to send WS-Federation sign-in and sign-out requests.
+- The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.Issuer%2A> property, which specifies the address of the security token service (STS) to which to send WS-Federation sign-in and sign-out requests.
 
--   The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.Realm%2A> property, which specifies the wtrealm parameter to use in WS-Federation sign-in requests. The wtrealm parameter identifies the security realm of the relying party (RP) application to the STS.
+- The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.Realm%2A> property, which specifies the wtrealm parameter to use in WS-Federation sign-in requests. The wtrealm parameter identifies the security realm of the relying party (RP) application to the STS.
 
  Sign-in message parameters can also be changed on a per-request basis by providing an event-handler delegate for the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.RedirectingToIdentityProvider> event.
 
  Two properties control the behavior of the module. Both of these properties are also typically initialized from the `<wsFederation>` element in configuration.
 
--   The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.PassiveRedirectEnabled%2A> property specifies whether the module should perform passive redirects to the STS for authentication.
+- The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.PassiveRedirectEnabled%2A> property specifies whether the module should perform passive redirects to the STS for authentication.
 
--   The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.PersistentCookiesOnPassiveRedirects%2A> property specifies whether sessions should be persistent. If this property is set true, the SAM is used to write a session cookie to the client. On subsequent requests from the client, the SAM provides authentication by using the token persisted in the session cookie.
+- The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.PersistentCookiesOnPassiveRedirects%2A> property specifies whether sessions should be persistent. If this property is set true, the SAM is used to write a session cookie to the client. On subsequent requests from the client, the SAM provides authentication by using the token persisted in the session cookie.
 
  The WSFAM raises several events during sign-in and sign-out, which allow ASP.NET developers to change the default behavior of the module and control the details of how authentication and claims processing take place.
 
@@ -284,9 +284,9 @@
 
  The default implementation performs the following:
 
--   If the incoming request is a form POST, it calls the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.IsSignInResponse%2A> method to determine whether the form POST contains a sign-in response.
+- If the incoming request is a form POST, it calls the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.IsSignInResponse%2A> method to determine whether the form POST contains a sign-in response.
 
--   If the incoming request is not a form POST, and the request contains a WS-Federation sign-out clean-up request (the wa parameter is "wsignoutcleanup1.0"), sign-out clean-up is performed. In this case, the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.SignOut%28System.Boolean%29?displayProperty=nameWithType> method is invoked (with the parameter set to `true` to indicate a sign-out clean-up) to sign out of the session. This also causes the sign-out events to be raised.
+- If the incoming request is not a form POST, and the request contains a WS-Federation sign-out clean-up request (the wa parameter is "wsignoutcleanup1.0"), sign-out clean-up is performed. In this case, the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.SignOut%28System.Boolean%29?displayProperty=nameWithType> method is invoked (with the parameter set to `true` to indicate a sign-out clean-up) to sign out of the session. This also causes the sign-out events to be raised.
 
      Next, if the sign-out clean-up request contains a wreply parameter, the client is redirected to the URL returned by the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.GetSignOutRedirectUrl%2A> method; otherwise, an image of a green check mark is returned to the STS. The receipt of this image can be used by the STS as a confirmation that the sign-out clean-up request was received and successfully processed by the RP.
 
@@ -329,19 +329,19 @@
 ## Remarks
  Creates a WS-Federation sign-in request that is represented by a <xref:System.IdentityModel.Services.SignInRequestMessage> object. The properties of the new <xref:System.IdentityModel.Services.SignInRequestMessage> object are set as follows:
 
--   The <xref:System.IdentityModel.Services.WSFederationMessage.Context%2A> property (the wctx parameter) is set to a value created by using the method parameters.
+- The <xref:System.IdentityModel.Services.WSFederationMessage.Context%2A> property (the wctx parameter) is set to a value created by using the method parameters.
 
--   The <xref:System.IdentityModel.Services.SignInRequestMessage.CurrentTime%2A> property (the wct parameter) is set to the current time.
+- The <xref:System.IdentityModel.Services.SignInRequestMessage.CurrentTime%2A> property (the wct parameter) is set to the current time.
 
--   All other properties are set by using the equivalent properties of the current instance.
+- All other properties are set by using the equivalent properties of the current instance.
 
  The parameters passed to the method are used to create the wctx message parameter. This is a string with the following format: `ru=returnUrl&cx=SignInContext&rm=rememberMeSet&id=uniqueId`.
 
--   The `ru` value is set to the value of the `returnUrl` parameter passed in to the method and it specifies the URL that the module should direct the browser to following successful authentication. This is the only value stored in the wctx string that is used by the WSFAM. The module calls the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.GetReturnUrlFromResponse%2A> method to extract this value from the wctx parameter when processing a WS-Federation sign-in response. It should not be confused with the wreply message parameter, which is specified by the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.Reply%2A> property and which provides the address at the RP to which the security token service (STS) should direct its response.
+- The `ru` value is set to the value of the `returnUrl` parameter passed in to the method and it specifies the URL that the module should direct the browser to following successful authentication. This is the only value stored in the wctx string that is used by the WSFAM. The module calls the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.GetReturnUrlFromResponse%2A> method to extract this value from the wctx parameter when processing a WS-Federation sign-in response. It should not be confused with the wreply message parameter, which is specified by the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.Reply%2A> property and which provides the address at the RP to which the security token service (STS) should direct its response.
 
--   The `cx` parameter is set to the value of the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.SignInContext%2A> property. This property is exposed to enable you to set any application-defined context that should be stored in the wctx string; however, WSFAM does not expose a method to extract this value in the response. If the value is needed by your application, you must provide the code to parse the wctx string and read this value when processing the response. You might accomplish this by overriding the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.GetReturnUrlFromResponse%2A> method.
+- The `cx` parameter is set to the value of the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.SignInContext%2A> property. This property is exposed to enable you to set any application-defined context that should be stored in the wctx string; however, WSFAM does not expose a method to extract this value in the response. If the value is needed by your application, you must provide the code to parse the wctx string and read this value when processing the response. You might accomplish this by overriding the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.GetReturnUrlFromResponse%2A> method.
 
--   Neither the `rm` value, which is set to the value of the `rememberMeSet` parameter, nor the `id` parameter, which is set to the value of the `uniqueId` parameter are used by WSFAM. These can be set to any value.
+- Neither the `rm` value, which is set to the value of the `rememberMeSet` parameter, nor the `id` parameter, which is set to the value of the `uniqueId` parameter are used by WSFAM. These can be set to any value.
 
  The <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.CreateSignInRequest%2A> method is called from the <xref:System.IdentityModel.Services.WSFederationAuthenticationModule.RedirectToIdentityProvider%2A> method.
 
