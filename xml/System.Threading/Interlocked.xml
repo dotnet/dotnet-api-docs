@@ -68,11 +68,9 @@
 
  The <xref:System.Threading.Interlocked.Increment%2A> and <xref:System.Threading.Interlocked.Decrement%2A> methods increment or decrement a variable and store the resulting value in a single operation. On most computers, incrementing a variable is not an atomic operation, requiring the following steps:
 
-1.  Load a value from an instance variable into a register.
-
-2.  Increment or decrement the value.
-
-3.  Store the value in the instance variable.
+1. Load a value from an instance variable into a register.
+2. Increment or decrement the value.
+3. Store the value in the instance variable.
 
  If you do not use <xref:System.Threading.Interlocked.Increment%2A> and <xref:System.Threading.Interlocked.Decrement%2A>, a thread can be preempted after executing the first two steps. Another thread can then execute all three steps. When the first thread resumes execution, it overwrites the value in the instance variable, and the effect of the increment or decrement performed by the second thread is lost.
 
@@ -81,7 +79,6 @@
  The <xref:System.Threading.Interlocked.Exchange%2A> method atomically exchanges the values of the specified variables. The <xref:System.Threading.Interlocked.CompareExchange%2A> method combines two operations: comparing two values and storing a third value in one of the variables, based on the outcome of the comparison. The compare and exchange operations are performed as an atomic operation.
 
  Ensure that any write or read access to a shared variable is atomic. Otherwise, the data might be corrupted or the loaded value might be incorrect.
-
 
 ## Examples
  The following code example shows a thread-safe resource locking mechanism.
@@ -611,8 +608,6 @@
 ## Remarks
  If `comparand` and the value in `location1` are equal, then `value` is stored in `location1`. Otherwise, no operation is performed. The compare and exchange operations are performed as an atomic operation. The return value of <xref:System.Threading.Interlocked.CompareExchange%2A> is the original value in `location1`, whether or not the exchange takes place.
 
-
-
 ## Examples
  The following code example demonstrates a thread-safe method that accumulates a running total of <xref:System.Double> values. Two threads add a series of <xref:System.Double> values using the thread-safe method and ordinary addition, and when the threads complete the totals are compared. On a dual-processor computer, there is a significant difference in the totals.
 
@@ -729,13 +724,11 @@
 ## Remarks
  If `comparand` and the value in `location1` are equal, then `value` is stored in `location1`. Otherwise, no operation is performed. The compare and exchange operations are performed as an atomic operation. The return value of <xref:System.Threading.Interlocked.CompareExchange%2A> is the original value in `location1`, whether or not the exchange takes place.
 
-
-
 ## Examples
  The following code example demonstrates a thread-safe method that accumulates a running total. The initial value of the running total is saved, and then the <xref:System.Threading.Interlocked.CompareExchange%2A> method is used to exchange the newly computed total with the old total. If the return value is not equal to the saved value of the running total, then another thread has updated the total in the meantime. In that case, the attempt to update the running total must be repeated.
 
 > [!NOTE]
->  The <xref:System.Threading.Interlocked.Add%2A> method, introduced in version 2.0 of the .NET Framework, provides a more convenient way to accumulate thread-safe running totals for integers.
+> The <xref:System.Threading.Interlocked.Add%2A> method provides a more convenient way to accumulate thread-safe running totals for integers.
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Interlocked/CompareExchange/source2.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Interlocked CompareExchange0/VB/source.vb" id="Snippet1":::
@@ -877,7 +870,7 @@
  If `comparand` and the value in `location1` are equal, then `value` is stored in `location1`. Otherwise, no operation is performed. The compare and exchange operations are performed as an atomic operation. The return value of this method is the original value in `location1`, whether or not the exchange takes place.
 
 > [!NOTE]
->  <xref:System.IntPtr> is a platform-specific type.
+> <xref:System.IntPtr> is a platform-specific type.
 
  ]]></format>
         </remarks>
@@ -951,12 +944,12 @@
 ## Remarks
 
 > [!IMPORTANT]
-> Beginning with .NET Framework 2.0, the <xref:System.Threading.Interlocked.CompareExchange%60%601%28%60%600%40%2C%60%600%2C%60%600%29> method overload provides a type-safe alternative for reference types. We recommend that you call it instead of this overload.
+> The <xref:System.Threading.Interlocked.CompareExchange%60%601%28%60%600%40%2C%60%600%2C%60%600%29> method overload provides a type-safe alternative. We recommend that you call it instead of this overload.
 
 If `comparand` and the object in `location1` are equal by reference, then `value` is stored in `location1`. Otherwise, no operation is performed. The compare and exchange operations are performed as an atomic operation. The return value of <xref:System.Threading.Interlocked.CompareExchange%2A> is the original value in `location1`, whether or not the exchange takes place.
 
 > [!NOTE]
->  The objects are compared for reference equality rather than value equality. As a result, two boxed instances of the same value type (for example, the integer 3) always appear to be unequal and no operation is performed. Do not use this overload with value types.
+> The objects are compared for reference equality rather than value equality. As a result, two boxed instances of the same value type (for example, the integer 3) always appear to be unequal and no operation is performed. Do not use this overload with value types.
 
  ]]></format>
         </remarks>
@@ -1354,13 +1347,10 @@ If `comparand` and the object in `location1` are equal by reference, then `value
 
 If `comparand` and the value in `location1` are equal by reference, then `value` is stored in `location1`. Otherwise, no operation is performed. The comparison and the exchange are performed as an atomic operation. The return value of this method is the original value in `location1`, whether or not the exchange takes place.
 
-> [!NOTE]
-> This method overload is preferable to the <xref:System.Threading.Interlocked.CompareExchange%28System.Object%40%2CSystem.Object%2CSystem.Object%29> method overload, because the latter requires the destination object to be accessed late-bound.
-
  ]]></format>
         </remarks>
         <exception cref="T:System.NullReferenceException">The address of <paramref name="location1" /> is a null pointer.</exception>
-        <exception cref="T:System.NotSupportedException">An unsupported <typeparamref name="T" /> is specified.</exception>
+        <exception cref="T:System.NotSupportedException">An unsupported <typeparamref name="T" /> is specified. On .NET 8 and earlier versions, <typeparamref name="T" /> must be a reference type. On .NET 9 and later versions, <typeparamref name="T" /> must be a reference, primitive, or enum type.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Decrement">
@@ -2007,7 +1997,7 @@ If `comparand` and the value in `location1` are equal by reference, then `value`
 ## Remarks
 
 > [!IMPORTANT]
-> Beginning with .NET Framework 2.0, the <xref:System.Threading.Interlocked.Exchange%60%601%28%60%600%40%2C%60%600%29> method overload provides a type-safe alternative for reference types. We recommend that you call it instead of this overload.
+> The <xref:System.Threading.Interlocked.Exchange%60%601%28%60%600%40%2C%60%600%29> method overload provides a type-safe alternative. We recommend that you call it instead of this overload.
 
  ]]></format>
         </remarks>
@@ -2375,13 +2365,9 @@ If `comparand` and the value in `location1` are equal by reference, then `value`
         <param name="value">The value to which the <paramref name="location1" /> parameter is set.</param>
         <summary>Sets a variable of the specified type <typeparamref name="T" /> to a specified value and returns the original value, as an atomic operation.</summary>
         <returns>The original value of <paramref name="location1" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-This method overload is preferable to the <xref:System.Threading.Interlocked.Exchange%28System.Object%40%2CSystem.Object%29> method overload, because the latter requires late-bound access to the destination object.
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.NullReferenceException">The address of <paramref name="location1" /> is a <see langword="null" /> pointer.</exception>
-        <exception cref="T:System.NotSupportedException">An unsupported <typeparamref name="T" /> is specified.</exception>
+        <exception cref="T:System.NotSupportedException">An unsupported <typeparamref name="T" /> is specified. On .NET 8 and earlier versions, <typeparamref name="T" /> must be a reference type. On .NET 9 and later versions, <typeparamref name="T" /> must be a reference, primitive, or enum type.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="Increment">
