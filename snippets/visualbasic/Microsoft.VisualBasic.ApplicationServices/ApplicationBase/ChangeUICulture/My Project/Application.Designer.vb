@@ -28,9 +28,9 @@ Namespace My
             Me.SaveMySettingsOnExit = true
             Me.ShutDownStyle = Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterMainFormCloses
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerStepThrough()>  _
-        Protected Overrides Sub OnCreateMainForm()
+
+        <Global.System.Diagnostics.DebuggerStepThrough()>
+        Protected Sub OnCreateMainForm()
             Me.MainForm = Global.VbVbalrMyResources2.Form1
         End Sub
     End Class
