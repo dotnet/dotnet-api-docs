@@ -25,7 +25,7 @@ Module Example
         Dim propInfo As PropertyInfo = t.GetProperty("Caption")
 
         ' Get all the accessors.
-        Dim methInfos() As MethodInfo = propInfo.GetAccessors(True)
+        Dim methInfos() As MethodInfo = propInfo.GetAccessors()
         Console.WriteLine("There are {0} accessors.",
                           methInfos.Length)
         For ctr As Integer = 0 To methInfos.Length - 1
