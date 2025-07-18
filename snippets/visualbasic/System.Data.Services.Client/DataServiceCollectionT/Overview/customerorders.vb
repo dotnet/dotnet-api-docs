@@ -1,14 +1,7 @@
-﻿Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
-Imports System.Linq
-Imports System.Text
-Imports System.Windows.Forms
-
-'<snippetCustomersOrdersUsing>
+﻿'<snippetCustomersOrdersUsing>
 Imports System.Data.Services.Client
-Imports NorthwindClient.Northwind
+Imports System.Windows.Forms
+Imports northwindclientvb.Northwind
 
 '</snippetCustomersOrdersUsing>
 
@@ -31,9 +24,9 @@ Partial Public Class CustomerOrders
         context = New NorthwindEntities(New Uri(svcUri))
         Try
             ' Create a LINQ query that returns customers with related orders.
-            Dim customerQuery = From cust In context.Customers.Expand("Orders") _
-                                    Where cust.Country = customerCountry _
-                                    Select cust
+            Dim customerQuery = From cust In context.Customers.Expand("Orders")
+                                Where cust.Country = customerCountry
+                                Select cust
 
             '<snippetCustomersOrdersDataBindingSpecific>
             ' Create a new collection for binding based on the LINQ query.

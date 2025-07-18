@@ -10,11 +10,15 @@ Imports System.Web.Services
 ' <snippet13>
 Imports System.Reflection
 <Assembly: AssemblyTitleAttribute("Production assembly 4"),
-Module: CLSCompliant(True)> 
+Module: CLSCompliant(True)>
 ' </snippet13>
 
 Class Class2b1703ed443749b3bc0b568094324f47
     ' Application of Attributes
+
+    Public Shared Sub Main()
+
+    End Sub
 
     Class tmp1
         ' <snippet14>
@@ -59,17 +63,7 @@ Class Class2b1703ed443749b3bc0b568094324f47
         Public Sub New(Optional ByVal Update As Boolean = True, Optional ByVal Keep As Boolean = True)
         End Sub
         Public Property Update() As Boolean
-            Get
-            End Get
-            Set(ByVal Value As Boolean)
-            End Set
-        End Property
         Public Property Keep() As Boolean
-            Get
-            End Get
-            Set(ByVal Value As Boolean)
-            End Set
-        End Property
     End Class
 
 End Class

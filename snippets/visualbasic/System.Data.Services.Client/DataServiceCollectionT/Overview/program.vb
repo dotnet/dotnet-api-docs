@@ -1,12 +1,8 @@
 ﻿Option Explicit On
 Option Strict On
-Imports System.Reflection
-Imports System.Windows.Forms
-Imports System.IO
-Imports NorthwindClient
 
 Module Program
-    Sub Main()
+    Sub Main1()
         'Dim newSync As New CustomerOrdersCustom()
         'newSync.Title = newSync.GetType().ToString()
         'newSync.ShowDialog()

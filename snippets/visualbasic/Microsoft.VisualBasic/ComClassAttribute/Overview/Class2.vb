@@ -6,14 +6,6 @@ Imports System.Attribute
 ' Global Attributes in Visual Basic
 
 
-' <snippet11>
-'Set version number for assembly.
-<Assembly: Reflection.AssemblyVersionAttribute("4.3.2.1")> 
-'Set culture as German.
-<Assembly: Reflection.AssemblyCultureAttribute("de")> 
-' </snippet11>
-
-
 ' <snippet12>
 <Assembly: Reflection.AssemblyKeyFile("myKey.snk")> 
 <Assembly: Reflection.AssemblyDelaySign(True)> 
@@ -70,6 +62,7 @@ Class Class0bedc36e7a024b22ac006570e17bef6e
     Obsolete("This method should not be used.")>
     Public Shadows Function Update(ByVal x As Integer) As Integer
         ' The function code goes here.
+        Return x + 1
     End Function
     ' </snippet7>
 
@@ -267,17 +260,7 @@ Class Classd404ed869d404982bd874863a4c9fdf6
         Public Sub New(Optional ByVal Update As Boolean = True, Optional ByVal Keep As Boolean = True)
         End Sub
         Public Property Label() As Boolean
-            Get
-            End Get
-            Set(ByVal Value As Boolean)
-            End Set
-        End Property
         Public Property Value() As Boolean
-            Get
-            End Get
-            Set(ByVal Value As Boolean)
-            End Set
-        End Property
     End Class
 
 End Class

@@ -2,15 +2,10 @@
 Option Explicit On
 Option Strict On
 Option Infer On
-
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
 Imports System.Data.Services.Client
 
 '<snippetUsingForAttributes>
-Imports System.Data.Services.Common
-Imports NorthwindClient.Northwind
+Imports northwindclientvb.Northwind
 
 '</snippetUsingForAttributes>
 
@@ -34,7 +29,7 @@ Public Class SourceVb
                 Console.WriteLine("Customer Name: {0}", customer.CompanyName)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetAllCustomers>
@@ -46,15 +41,15 @@ Public Class SourceVb
 
         Try
             ' Define a LINQ query that returns all customers.
-            Dim allCustomers = From cust In context.Customers _
-                                   Select cust
+            Dim allCustomers = From cust In context.Customers
+                               Select cust
 
             ' Enumerate over the query obtained from the context.
             For Each customer As Customer In allCustomers
                 Console.WriteLine("Customer Name: {0}", customer.CompanyName)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetAllCustomersLinq>
@@ -70,7 +65,7 @@ Public Class SourceVb
                 Console.WriteLine("Customer Name: {0}", customer.CompanyName)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetAllCustomersFromContext>
@@ -81,7 +76,7 @@ Public Class SourceVb
         Dim context = New DataServiceContext(svcUri)
 
         ' Define a new query for Customers.
-        Dim query As DataServiceQuery(Of Customer) = _
+        Dim query As DataServiceQuery(Of Customer) =
         context.CreateQuery(Of Customer)("Customers")
 
         Try
@@ -90,7 +85,7 @@ Public Class SourceVb
                 Console.WriteLine("Customer Name: {0}", customer.CompanyName)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetAllCustomersQuery>
@@ -110,7 +105,7 @@ Public Class SourceVb
             Next
 
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetAllCustomersExplicit>
@@ -125,7 +120,7 @@ Public Class SourceVb
 
         ' Define the query to execute asynchronously that returns 
         ' all customers with their respective orders.
-        Dim query As DataServiceQuery(Of Customer) = _
+        Dim query As DataServiceQuery(Of Customer) =
         context.Customers.Expand("Orders")
 
         Try
@@ -133,21 +128,21 @@ Public Class SourceVb
             ' and the original query object to maintain state in the callback.
             query.BeginExecute(callback, query)
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
     End Sub
     ' Handle the query callback.
     Private Shared Sub OnCustomersQueryComplete(ByVal result As IAsyncResult)
         ' Get the original query from the result.
-        Dim query As DataServiceQuery(Of Customer) = _
+        Dim query As DataServiceQuery(Of Customer) =
             CType(result.AsyncState, DataServiceQuery(Of Customer))
 
         ' Complete the query execution.
         For Each customer As Customer In query.EndExecute(result)
             Console.WriteLine("Customer Name: {0}", customer.CompanyName)
             For Each order As Order In customer.Orders
-                Console.WriteLine("Order #: {0} - Freight $: {1}", _
+                Console.WriteLine("Order #: {0} - Freight $: {1}",
                         order.OrderID, order.Freight)
             Next
         Next
@@ -167,11 +162,11 @@ Public Class SourceVb
                 '</snippetLoadRelatedOrderCustomerSpecific>
 
                 ' Write out customer and order information.
-                Console.WriteLine("Customer: {0} - Order ID: {1}", _
+                Console.WriteLine("Customer: {0} - Order ID: {1}",
                         order.Customer.CompanyName, order.OrderID)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetLoadRelatedOrderCustomer>
@@ -192,12 +187,12 @@ Public Class SourceVb
                 '</snippetLoadRelatedOrderDetailsSpecific>
 
                 For Each item As Order_Detail In order.Order_Details
-                    Console.WriteLine(vbTab & "Product: {0} - Quantity: {1}", _
+                    Console.WriteLine(vbTab & "Product: {0} - Quantity: {1}",
                             item.ProductID, item.Quantity)
                 Next
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetLoadRelatedOrderDetails>
@@ -209,7 +204,7 @@ Public Class SourceVb
 
         '<snippetExpandOrderDetailsSpecific>
         ' Define a query for orders that also returns items and customers.
-        Dim query As DataServiceQuery(Of Order) = _
+        Dim query As DataServiceQuery(Of Order) =
         context.Orders.Expand("Order_Details,Customer")
         '</snippetExpandOrderDetailsSpecific>
 
@@ -220,12 +215,12 @@ Public Class SourceVb
                 Console.WriteLine("Order ID: {0}", order.OrderID)
 
                 For Each item As Order_Detail In order.Order_Details
-                    Console.WriteLine(vbTab & "Product: {0} - Quantity: {1}", _
+                    Console.WriteLine(vbTab & "Product: {0} - Quantity: {1}",
                             item.ProductID, item.Quantity)
                 Next
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetExpandOrderDetails>
@@ -246,11 +241,11 @@ Public Class SourceVb
         Try
             ' Enumerate over the results of the query.
             For Each order As Order In selectedOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                         order.OrderID, order.ShippedDate, order.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetAddQueryOptions>
@@ -263,20 +258,20 @@ Public Class SourceVb
         ' Define a query for orders with a Freight value greater than 30
         ' and that is ordered by the ship date, descending.
         '<snippetAddQueryOptionsLinqSpecific>
-        Dim selectedOrders = From o In context.Orders _
-                Where (o.Freight > 30) _
-                Order By o.ShippedDate Descending _
-                Select o
+        Dim selectedOrders = From o In context.Orders
+                             Where (o.Freight > 30)
+                             Order By o.ShippedDate Descending
+                             Select o
         '</snippetAddQueryOptionsLinqSpecific>
 
         Try
             ' Enumerate over the results of the query.
             For Each order As Order In selectedOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                         order.OrderID, order.ShippedDate, order.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetAddQueryOptionsLinq>
@@ -298,11 +293,11 @@ Public Class SourceVb
             ' Enumerate over the results of the query.
             For Each order As Order In selectedOrders
 
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                         order.OrderID, order.ShippedDate, order.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetAddQueryOptionsLinqExpression>
@@ -315,18 +310,18 @@ Public Class SourceVb
         '<snippetOrderWithFilterSpecific>
         ' Define a query for orders with a Freight value greater than 30
         ' that also orders the result by the Freight value, descending.
-        Dim selectedOrders As DataServiceQuery(Of Order) = _
+        Dim selectedOrders As DataServiceQuery(Of Order) =
         context.Orders.AddQueryOption("$orderby", "Freight gt 30 desc")
         '</snippetOrderWithFilterSpecific>
 
         Try
             ' Enumerate over the results of the query.
             For Each order As Order In selectedOrders
-                Console.WriteLine("Order ID: {0} - Freight: {1}", _
+                Console.WriteLine("Order ID: {0} - Freight: {1}",
                         order.OrderID, order.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetOrderWithFilter>
@@ -340,9 +335,9 @@ Public Class SourceVb
 
         ' Create the separate query URI's, one that returns 
         ' a single customer and another that returns all Products.
-        Dim customerUri = New Uri(svcUri.AbsoluteUri & _
+        Dim customerUri = New Uri(svcUri.AbsoluteUri &
             "/Customers('" & customerId & "')/?$expand=Orders")
-        Dim productsUri = New Uri(svcUri.AbsoluteUri & _
+        Dim productsUri = New Uri(svcUri.AbsoluteUri &
                "/Products")
 
         ' Create the query requests.
@@ -350,7 +345,7 @@ Public Class SourceVb
         Dim productsQuery = New DataServiceRequest(Of Product)(productsUri)
 
         ' Add the query requests to a batch request array.
-        Dim batchRequests = _
+        Dim batchRequests =
             New DataServiceRequest() {customerQuery, productsQuery}
 
         Dim batchResponse As DataServiceResponse
@@ -375,7 +370,7 @@ Public Class SourceVb
                         For Each customer As Customer In response
                             Console.WriteLine("Customer: {0}", customer.CompanyName)
                             For Each order As Order In customer.Orders
-                                Console.WriteLine("Order ID: {0} - Freight: {1}", _
+                                Console.WriteLine("Order ID: {0} - Freight: {1}",
                                         order.OrderID, order.Freight)
                             Next
                         Next
@@ -411,8 +406,8 @@ Public Class SourceVb
         Dim context = New NorthwindEntities(svcUri)
 
         ' Define an existing customer to attach, including the key.
-        Dim customer As Customer = _
-            customer.CreateCustomer("ALFKI", "Alfreds Futterkiste")
+        Dim customer As Customer =
+            Customer.CreateCustomer("ALFKI", "Alfreds Futterkiste")
 
         ' Set current property values.
         customer.Address = "Obere Str. 57"
@@ -436,7 +431,7 @@ Public Class SourceVb
             context.SaveChanges()
             '</snippetAttachObjectSpecific>  
         Catch ex As DataServiceClientException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
         End Try
         '</snippetAttachObject>
@@ -448,7 +443,7 @@ Public Class SourceVb
 
         '<snippetCreateNewProduct>
         ' Create the new product.
-        Dim newProduct = _
+        Dim newProduct =
             Product.CreateProduct(0, "White Tea - loose", False)
         '</snippetCreateNewProduct>
 
@@ -468,7 +463,7 @@ Public Class SourceVb
 
             Console.WriteLine("New product added with ID {0}.", newProduct.ProductID)
         Catch ex As DataServiceRequestException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
             '</snippetAddProduct>
         Finally
@@ -485,8 +480,8 @@ Public Class SourceVb
         Dim context = New NorthwindEntities(svcUri)
 
         ' Get a customer to modify using the supplied ID.
-        Dim customerToChange = (From customer In context.Customers _
-                                Where customer.CustomerID = customerId _
+        Dim customerToChange = (From customer In context.Customers
+                                Where customer.CustomerID = customerId
                                 Select customer).Single()
 
         ' Change some property values.
@@ -503,7 +498,7 @@ Public Class SourceVb
             ' Send the update to the data service.
             context.SaveChanges()
         Catch ex As DataServiceRequestException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
         End Try
         '</snippetModifyCustomer>
@@ -525,8 +520,8 @@ Public Class SourceVb
 
         Try
             ' Get the product to delete, by product ID.
-            Dim deletedProduct = (From product In context.Products _
-                                  Where product.ProductID = productID _
+            Dim deletedProduct = (From product In context.Products
+                                  Where product.ProductID = productID
                                   Select product).Single()
 
 
@@ -542,7 +537,7 @@ Public Class SourceVb
             ' which can happen when there are entities with existing 
             ' relationships to the product being deleted.
         Catch ex As DataServiceRequestException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
         End Try
         '</snippetDeleteProduct>
@@ -559,20 +554,20 @@ Public Class SourceVb
 
         Try
             ' Get the specific product.
-            Dim selectedProduct = (From product In context.Products _
-                                                   Where product.ProductID = productId _
-                                                   Select product).Single()
+            Dim selectedProduct = (From product In context.Products
+                                   Where product.ProductID = productId
+                                   Select product).Single()
 
             ' Get the specific customer.
-            Dim cust = (From customer In context.Customers.Expand("Orders") _
-                        Where customer.CustomerID = customerId _
+            Dim cust = (From customer In context.Customers.Expand("Orders")
+                        Where customer.CustomerID = customerId
                         Select customer).Single()
 
             ' Get the first order. 
             Dim order = cust.Orders.FirstOrDefault()
 
             ' Create a new order detail for the specific product.
-            newItem = Order_Detail.CreateOrder_Detail( _
+            newItem = Order_Detail.CreateOrder_Detail(
             order.OrderID, selectedProduct.ProductID, 10, 5, 0)
 
             ' Add the new order detail to the context.
@@ -600,19 +595,19 @@ Public Class SourceVb
                     Dim addedProduct = TryCast(descriptor.Entity, Product)
 
                     If Not addedProduct Is Nothing Then
-                        Console.WriteLine("New product added with ID {0}.", _
+                        Console.WriteLine("New product added with ID {0}.",
                             addedProduct.ProductID)
                     End If
                 End If
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
 
             ' Handle any errors that may occur during insert, such as 
             ' a constraint violation.
         Catch ex As DataServiceRequestException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
             '</snippetAddOrderDetailToOrder>
             'remove the added product.
@@ -633,20 +628,20 @@ Public Class SourceVb
 
         Try
             ' Get the specific product.
-            Dim selectedProduct = (From product In context.Products _
-                                   Where product.ProductID = productId _
+            Dim selectedProduct = (From product In context.Products
+                                   Where product.ProductID = productId
                                    Select product).Single()
 
             ' Get the specific customer.
-            Dim cust = (From customer In context.Customers.Expand("Orders") _
-                        Where customer.CustomerID = customerId _
+            Dim cust = (From customer In context.Customers.Expand("Orders")
+                        Where customer.CustomerID = customerId
                         Select customer).Single()
 
             ' Get the first order. 
             Dim order = cust.Orders.FirstOrDefault()
 
             ' Create a new order detail for the specific product.
-            newItem = Order_Detail.CreateOrder_Detail( _
+            newItem = Order_Detail.CreateOrder_Detail(
                     order.OrderID, selectedProduct.ProductID, 10, 5, 0)
 
             '<snippetAddOrderDetailToOrderSpecific>
@@ -675,20 +670,20 @@ Public Class SourceVb
                         Dim addedItem = TryCast(descriptor.Entity, Order_Detail)
 
                         If Not addedItem Is Nothing Then
-                            Console.WriteLine("New {0} item added to order {1}.", _
+                            Console.WriteLine("New {0} item added to order {1}.",
                                 addedItem.Product.ProductName, addedItem.OrderID.ToString())
                         End If
                     End If
                 End If
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
 
             ' Handle any errors that may occur during insert, such as 
             ' a constraint violation.
         Catch ex As DataServiceRequestException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred when saving changes.", ex)
             '</snippetAddOrderDetailToOrderAuto>
             'remove the added product.
@@ -714,7 +709,7 @@ Public Class SourceVb
             ' Retrieve the total count from the response.
             Console.WriteLine("There are {0} customers in total.", totalCount)
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetCountAllCustomersValueOnly>
@@ -726,14 +721,14 @@ Public Class SourceVb
 
         '<snippetCountAllCustomersSpecific>  
         ' Define a new query for Customers that includes the total count.
-        Dim query As DataServiceQuery(Of Customer) = _
+        Dim query As DataServiceQuery(Of Customer) =
         context.Customers.IncludeTotalCount()
         '</snippetCountAllCustomersSpecific>
 
         Try
             '<snippetGetResponseSpecific> 
             ' Execute the query for all customers and get the response object.
-            Dim response As QueryOperationResponse(Of Customer) = _
+            Dim response As QueryOperationResponse(Of Customer) =
                 CType(query.Execute(), QueryOperationResponse(Of Customer))
             '</snippetGetResponseSpecific> 
 
@@ -745,7 +740,7 @@ Public Class SourceVb
                 Console.WriteLine(vbTab & "Customer Name: {0}", customer.CompanyName)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetCountAllCustomers>
@@ -759,7 +754,7 @@ Public Class SourceVb
 
         Try
             ' Execute the query for all customers and get the response object.
-            Dim response As QueryOperationResponse(Of Customer) = _
+            Dim response As QueryOperationResponse(Of Customer) =
                 CType(context.Customers.Execute(), QueryOperationResponse(Of Customer))
 
             '<snippetLoadNextLink>
@@ -772,7 +767,7 @@ Public Class SourceVb
                 ' If nextLink is not null, then there is a new page to load.
                 If token IsNot Nothing Then
                     ' Load the new page from the next link URI.
-                    response = CType(context.Execute(Of Customer)(token),  _
+                    response = CType(context.Execute(Of Customer)(token),
                     QueryOperationResponse(Of Customer))
                 End If
 
@@ -786,7 +781,7 @@ Public Class SourceVb
             Loop While token IsNot Nothing
             '</snippetLoadNextLink>
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetCustomersPaged>
@@ -802,7 +797,7 @@ Public Class SourceVb
         Try
             ' Execute the query for all customers and related orders,
             ' and get the response object.
-            Dim response = _
+            Dim response =
             CType(context.Customers.AddQueryOption("$expand", "Orders") _
                     .Execute(), QueryOperationResponse(Of Customer))
 
@@ -815,7 +810,7 @@ Public Class SourceVb
                 ' If nextLink is not null, then there is a new page to load.
                 If nextLink IsNot Nothing Then
                     ' Load the new page from the next link URI.
-                    response = CType(context.Execute(Of Customer)(nextLink),  _
+                    response = CType(context.Execute(Of Customer)(nextLink),
                             QueryOperationResponse(Of Customer))
                 End If
 
@@ -825,18 +820,18 @@ Public Class SourceVb
                     Console.WriteLine(vbTab & "Orders Page {0}:", innerPageCount + 1)
 
                     ' Get the next link for the collection of related Orders.
-                    Dim nextOrdersLink As DataServiceQueryContinuation(Of Order) = _
+                    Dim nextOrdersLink As DataServiceQueryContinuation(Of Order) =
                     response.GetContinuation(c.Orders)
 
                     '<snippetLoadNextOrdersLink>
                     While nextOrdersLink IsNot Nothing
                         For Each o As Order In c.Orders
                             ' Print out the orders.
-                            Console.WriteLine(vbTab & vbTab & "OrderID: {0} - Freight: ${1}", _
+                            Console.WriteLine(vbTab & vbTab & "OrderID: {0} - Freight: ${1}",
                                     o.OrderID, o.Freight)
                         Next
                         ' Load the next page of Orders.
-                        Dim ordersResponse = _
+                        Dim ordersResponse =
                         context.LoadProperty(c, "Orders", nextOrdersLink)
                         nextOrdersLink = ordersResponse.GetContinuation()
                     End While
@@ -846,7 +841,7 @@ Public Class SourceVb
                 nextLink = response.GetContinuation()
             Loop While nextLink IsNot Nothing
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetGetCustomersPagedNested>
@@ -860,15 +855,15 @@ Public Class SourceVb
         ' Define an anonymous LINQ query that projects the Customers type into 
         ' a CustomerAddress type that contains only address properties.
         '<snippetProjectWithInitializer> 
-        Dim query = From c In context.Customers _
-                        Where c.Country = "Germany" _
-                        Select New CustomerAddress With { _
-                            .CustomerID = c.CustomerID, _
-                            .Address = c.Address, _
-                            .City = c.City, _
-                            .Region = c.Region, _
-                            .PostalCode = c.PostalCode, _
-                            .Country = c.Country}
+        Dim query = From c In context.Customers
+                    Where c.Country = "Germany"
+                    Select New CustomerAddress With {
+                        .CustomerID = c.CustomerID,
+                        .Address = c.Address,
+                        .City = c.City,
+                        .Region = c.Region,
+                        .PostalCode = c.PostalCode,
+                        .Country = c.Country}
         '</snippetProjectWithInitializer>
         '</snippetSelectCustomerAddressSpecific>
 
@@ -882,15 +877,15 @@ Public Class SourceVb
                 ' Write out the current values.
                 Console.WriteLine("Customer ID: {0} " & vbCrLf & "Street: {1} " _
                         & vbCrLf & "City: {2} " & vbCrLf & "State: {3} " & vbCrLf & "Zip Code: {4}" _
-                        & vbCrLf & "Country: {5}", _
-                        item.CustomerID, item.Address, item.City, item.Region, _
+                        & vbCrLf & "Country: {5}",
+                        item.CustomerID, item.Address, item.City, item.Region,
                         item.PostalCode, item.Country)
             Next
 
             ' Save changes to the data service.
             context.SaveChanges()
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetSelectCustomerAddress>
@@ -902,15 +897,15 @@ Public Class SourceVb
 
         ' Define an anonymous LINQ query that projects the Customers type into 
         ' a CustomerAddress type that contains only address properties.
-        Dim query = From c In context.Customers _
-                        Where c.Country = "Germany" _
-                        Select New CustomerAddressNonEntity With _
-                        {.CompanyName = c.CompanyName, _
-                            .Address = c.Address, _
-                            .City = c.City, _
-                            .Region = c.Region, _
-                            .PostalCode = c.PostalCode, _
-                            .Country = c.Country}
+        Dim query = From c In context.Customers
+                    Where c.Country = "Germany"
+                    Select New CustomerAddressNonEntity With
+                    {.CompanyName = c.CompanyName,
+                        .Address = c.Address,
+                        .City = c.City,
+                        .Region = c.Region,
+                        .PostalCode = c.PostalCode,
+                        .Country = c.Country}
 
         Try
             ' Enumerate over the query result, which is executed implicitly.
@@ -918,13 +913,13 @@ Public Class SourceVb
                 item.Address += "Street"
 
                 Console.WriteLine("Company name: {0} " & Environment.NewLine & "Street: {1} " _
-                    & "" & Environment.NewLine & "City: {2} " & Environment.NewLine & "State: {3} " & Environment.NewLine & _
-                    "Zip Code: {4} " & Environment.NewLine & "Country: {5}", _
-                    item.CompanyName, item.Address, item.City, item.Region, _
+                    & "" & Environment.NewLine & "City: {2} " & Environment.NewLine & "State: {3} " & Environment.NewLine &
+                    "Zip Code: {4} " & Environment.NewLine & "Country: {5}",
+                    item.CompanyName, item.Address, item.City, item.Region,
                     item.PostalCode, item.Country)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "An error occurred during query execution.", ex)
         End Try
         '</snippetSelectCustomerAddressNonEntity>
@@ -936,15 +931,15 @@ Public Class SourceVb
         ' Define an anonymous LINQ query that projects the Customers type into 
         ' a CustomerAddress type that contains only address properties.
         '<snippetProjectWithConstructor> 
-        Dim query = From c In context.Customers _
-                        Where c.Country = "Germany" _
-                        Select New CustomerAddress( _
-                        c.CustomerID, _
-                        c.Address, _
-                        c.City, _
-                        c.Region, _
-                        c.PostalCode, _
-                        c.Country)
+        Dim query = From c In context.Customers
+                    Where c.Country = "Germany"
+                    Select New CustomerAddress(
+                    c.CustomerID,
+                    c.Address,
+                    c.City,
+                    c.Region,
+                    c.PostalCode,
+                    c.Country)
         '</snippetProjectWithConstructor>
 
         Try
@@ -953,12 +948,12 @@ Public Class SourceVb
                 ' Write out the current values.
                 Console.WriteLine("Customer ID: {0} " & vbCrLf & "Street: {1} " _
                     & vbCrLf & "City: {2} " & vbCrLf & "State: {3} " & vbCrLf & "Zip Code: {4}" _
-                    & vbCrLf & "Country: {5}", _
-                    item.CustomerID, item.Address, item.City, item.Region, _
+                    & vbCrLf & "Country: {5}",
+                    item.CustomerID, item.Address, item.City, item.Region,
                     item.PostalCode, item.Country)
             Next
         Catch ex As NotSupportedException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "This is an expected error.", ex)
         End Try
     End Sub
@@ -970,16 +965,16 @@ Public Class SourceVb
         ' a CustomerAddress type and tries to create a new Address string by
         ' concatenating other properties.
         '<snippetProjectWithTransform> 
-        Dim query = From c In context.Customers _
-                        Where c.Country = "Germany" _
-                        Select New CustomerAddress With _
-                        {.CustomerID = c.CustomerID, _
-                            .Address = "Full address: " & c.Address & ", " & _
-                            c.City & "," & c.Region & " " & c.PostalCode, _
-                            .City = c.City, _
-                            .Region = c.Region, _
-                            .PostalCode = c.PostalCode, _
-                            .Country = c.Country}
+        Dim query = From c In context.Customers
+                    Where c.Country = "Germany"
+                    Select New CustomerAddress With
+                    {.CustomerID = c.CustomerID,
+                        .Address = "Full address: " & c.Address & ", " &
+                        c.City & "," & c.Region & " " & c.PostalCode,
+                        .City = c.City,
+                        .Region = c.Region,
+                        .PostalCode = c.PostalCode,
+                        .Country = c.Country}
         '</snippetProjectWithTransform>
 
         Try
@@ -988,12 +983,12 @@ Public Class SourceVb
                 ' Write out the current values.
                 Console.WriteLine("Customer ID: {0} " & vbCrLf & "Street: {1} " _
                     & vbCrLf & "City: {2} " & vbCrLf & "State: {3} " & vbCrLf & "Zip Code: {4}" _
-                    & vbCrLf & "Country: {5}", _
-                    item.CustomerID, item.Address, item.City, item.Region, _
+                    & vbCrLf & "Country: {5}",
+                    item.CustomerID, item.Address, item.City, item.Region,
                     item.PostalCode, item.Country)
             Next
         Catch ex As NotSupportedException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "This is an expected error.", ex)
         End Try
     End Sub
@@ -1004,15 +999,15 @@ Public Class SourceVb
         ' Define an anonymous LINQ query that projects the Customers type into 
         ' a CustomerAddress type that contains only address properties.
         '<snippetProjectWithConvertion> 
-        Dim query = From c In context.Customers _
-                        Where c.Country = "Germany" _
-                        Select New CustomerAddress With _
-                        {.CustomerID = c.CustomerID, _
-                            .Address = c.Address, _
-                            .City = c.City, _
-                            .Region = c.Region, _
-                            .PostalCode = c.PostalCode, _
-                            .Country = c.Country}
+        Dim query = From c In context.Customers
+                    Where c.Country = "Germany"
+                    Select New CustomerAddress With
+                    {.CustomerID = c.CustomerID,
+                        .Address = c.Address,
+                        .City = c.City,
+                        .Region = c.Region,
+                        .PostalCode = c.PostalCode,
+                        .Country = c.Country}
         '</snippetProjectWithConvertion>
 
         Try
@@ -1021,12 +1016,12 @@ Public Class SourceVb
                 ' Write out the current values.
                 Console.WriteLine("Customer ID: {0} " & vbCrLf & "Street: {1} " _
                     & vbCrLf & "City: {2} " & vbCrLf & "State: {3} " & vbCrLf & "Zip Code: {4}" _
-                    & vbCrLf & "Country: {5}", _
-                    item.CustomerID, item.Address, item.City, item.Region, _
+                    & vbCrLf & "Country: {5}",
+                    item.CustomerID, item.Address, item.City, item.Region,
                     item.PostalCode.Split(New [Char]() {"-"c})(0), item.Country)
             Next
         Catch ex As NotSupportedException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                     "This is an expected error.", ex)
         End Try
     End Sub
@@ -1038,9 +1033,9 @@ Public Class SourceVb
         ' Define a query for orders that have shipped.
         '<snippetLinqQueryPrecedenceSpecific>
         Dim ordersQuery = (From o In context.Orders
-                                 Where o.ShippedDate < DateTime.Today
-                                 Order By o.OrderDate Descending, o.CustomerID
-                                 Select o).Skip(10).Take(10)
+                           Where o.ShippedDate < DateTime.Today
+                           Order By o.OrderDate Descending, o.CustomerID
+                           Select o).Skip(10).Take(10)
         '</snippetLinqQueryPrecedenceSpecific>
 
         Try
@@ -1050,11 +1045,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each o As Order In ordersQuery
-                Console.WriteLine("CustomerID:{0}" & Environment.NewLine & "{1}, {2}", _
+                Console.WriteLine("CustomerID:{0}" & Environment.NewLine & "{1}, {2}",
                     o.ShipName, o.ShipCity, o.ShipCountry)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqQueryPrecedence>
@@ -1068,14 +1063,14 @@ Public Class SourceVb
         Dim projectedQuery = context.Customers _
                 .Where(Function(c) c.Country = "Germany") _
                 .OrderBy(Function(c) c.CompanyName) _
-                .Select(Function(c) New CustomerAddress With _
+                .Select(Function(c) New CustomerAddress With
                 {
-                    .CustomerID = c.CustomerID, _
-                    .Address = c.Address, _
-                    .City = c.City, _
-                    .Region = c.Region, _
-                    .PostalCode = c.PostalCode, _
-                    .Country = c.Country _
+                    .CustomerID = c.CustomerID,
+                    .Address = c.Address,
+                    .City = c.City,
+                    .Region = c.Region,
+                    .PostalCode = c.PostalCode,
+                    .Country = c.Country
                 }).Skip(10).Take(10)
         '</snippetLinqMethodPrecedenceSpecific>
 
@@ -1086,11 +1081,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each address As CustomerAddress In projectedQuery
-                Console.WriteLine("Address:" & Environment.NewLine & "{0}" & Environment.NewLine & "{1}, {2}", _
+                Console.WriteLine("Address:" & Environment.NewLine & "{0}" & Environment.NewLine & "{1}, {2}",
                     address.Address, address.City, address.Region)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqMethodPrecedence>
@@ -1104,8 +1099,8 @@ Public Class SourceVb
         ' Define a query for orders with a Freight value greater than 30.
         '<snippetLinqWhereClauseSpecific>
         Dim filteredOrders = From o In context.Orders
-                                Where o.Freight.Value > 30
-                                Select o
+                             Where o.Freight.Value > 30
+                             Select o
         '</snippetLinqWhereClauseSpecific>
 
         Try
@@ -1114,11 +1109,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each o As Order In filteredOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     o.OrderID, o.ShippedDate, o.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqWhereClause>
@@ -1139,11 +1134,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each o As Order In filteredOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     o.OrderID, o.ShippedDate, o.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqWhereMethod>
@@ -1165,11 +1160,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each order As Order In filteredOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     order.OrderID, order.ShippedDate.Value, order.Freight.Value)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetExplicitQueryWhereMethod>
@@ -1182,9 +1177,9 @@ Public Class SourceVb
         ' Define a query for orders with a Freight value greater than 30.
         '<snippetLinqOrderByClauseSpecific>
         Dim sortedCustomers = From c In context.Customers
-                                     Order By c.CompanyName Ascending,
-                                     c.PostalCode Descending
-                                     Select c
+                              Order By c.CompanyName Ascending,
+                              c.PostalCode Descending
+                              Select c
         '</snippetLinqOrderByClauseSpecific>
 
         Try
@@ -1194,11 +1189,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each cust As Customer In sortedCustomers
-                Console.WriteLine("Customer name: {0} - Zip code: {1}", _
+                Console.WriteLine("Customer name: {0} - Zip code: {1}",
                     cust.CompanyName, cust.PostalCode)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqOrderByClause>
@@ -1221,11 +1216,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each cust As Customer In sortedCustomers
-                Console.WriteLine("Customer name: {0} - Zip code: {1}", _
+                Console.WriteLine("Customer name: {0} - Zip code: {1}",
                     cust.CompanyName, cust.PostalCode)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqOrderByMethod>
@@ -1247,11 +1242,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each cust As Customer In sortedCustomers
-                Console.WriteLine("Customer name: {0} - Zip code: {1}", _
+                Console.WriteLine("Customer name: {0} - Zip code: {1}",
                     cust.CompanyName, cust.PostalCode)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetExplicitQueryOrderByMethod>
@@ -1277,11 +1272,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each order As Order In pagedOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     order.OrderID, order.ShippedDate, order.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqSkipTakeMethod>
@@ -1307,11 +1302,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each o As Order In pagedOrders
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     o.OrderID, o.ShippedDate, o.Freight)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetExplicitQuerySkipTakeMethod>
@@ -1342,11 +1337,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each address As CustomerAddress In projectedQuery
-                Console.WriteLine("Address:" & Environment.NewLine & "{0}" & Environment.NewLine & "{1}, {2}", _
+                Console.WriteLine("Address:" & Environment.NewLine & "{0}" & Environment.NewLine & "{1}, {2}",
                     address.Address, address.City, address.Region)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqSelectClause>
@@ -1377,11 +1372,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each address As CustomerAddress In projectedQuery
-                Console.WriteLine("Address:" & Environment.NewLine & "{0}" & Environment.NewLine & "{1}, {2}", _
+                Console.WriteLine("Address:" & Environment.NewLine & "{0}" & Environment.NewLine & "{1}, {2}",
                     address.Address, address.City, address.Region)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqSelectMethod>
@@ -1395,8 +1390,8 @@ Public Class SourceVb
         ' for the customer "ALKFI".
         '<snippetLinqQueryExpandSpecific>
         Dim ordersQuery = From o In context.Orders.Expand("Order_Details")
-                             Where o.CustomerID = "ALFKI"
-                             Select o
+                          Where o.CustomerID = "ALFKI"
+                          Select o
         '</snippetLinqQueryExpandSpecific>
 
         Try
@@ -1406,16 +1401,16 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each o As Order In ordersQuery
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     o.OrderID, o.ShippedDate, o.Freight)
 
                 For Each item As Order_Detail In o.Order_Details
-                    Console.WriteLine(vbTab & "Product: {0} (Price: {1}) - Quantity: {2}", _
+                    Console.WriteLine(vbTab & "Product: {0} (Price: {1}) - Quantity: {2}",
                     item.ProductID, item.UnitPrice, item.Quantity)
                 Next
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqQueryExpand>
@@ -1439,16 +1434,16 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each o As Order In ordersQuery
-                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}", _
+                Console.WriteLine("Order ID: {0} - Ship Date: {1} - Freight: {2}",
                     o.OrderID, o.ShippedDate, o.Freight)
 
                 For Each item As Order_Detail In o.Order_Details
-                    Console.WriteLine(vbTab & "Product: {0} (Price: {1}) - Quantity: {2}", _
+                    Console.WriteLine(vbTab & "Product: {0} (Price: {1}) - Quantity: {2}",
                     item.ProductID, item.UnitPrice, item.Quantity)
                 Next
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqQueryExpandMethod>
@@ -1466,10 +1461,10 @@ Public Class SourceVb
         ' Define a query that returns products based on a 
         ' calculation that is determined on the client.
         Dim productsQuery = From p In context.Products
-                          Where p.UnitPrice >
-                          (basePrice - (basePrice * discount)) AndAlso
-                          p.ProductName.Contains("bike")
-                          Select p
+                            Where p.UnitPrice >
+                            (basePrice - (basePrice * discount)) AndAlso
+                            p.ProductName.Contains("bike")
+                            Select p
         '</snippetLinqQueryClientEvalSpecific>
 
         Try
@@ -1479,11 +1474,11 @@ Public Class SourceVb
 
             ' Enumerate over the results of the query.
             For Each prod As Product In productsQuery
-                Console.WriteLine("Product ID: {0} ({1}) - Unit price: {2}", _
+                Console.WriteLine("Product ID: {0} ({1}) - Unit price: {2}",
                     prod.ProductID, prod.ProductName, prod.UnitPrice)
             Next
         Catch ex As DataServiceQueryException
-            Throw New ApplicationException( _
+            Throw New ApplicationException(
                 "An error occurred during query execution.", ex)
         End Try
         '</snippetLinqQueryClientEval>
@@ -1500,17 +1495,17 @@ Public Class SourceVb
         AddHandler context.SendingRequest, AddressOf OnSendingRequest
 
         ' Define a query for orders with a Freight value greater than 30.
-        Dim query = From cust In context.Customers _
-            Where cust.Country = "Germany" _
-            Select cust
+        Dim query = From cust In context.Customers
+                    Where cust.Country = "Germany"
+                    Select cust
 
         Try
             ' Enumerate to execute the query.
             For Each cust As Customer In query
                 Console.WriteLine("Name: {0}" & Environment.NewLine & "Address:" & Environment.NewLine & "{1}" _
-                                  & Environment.NewLine & "{2}, {3}", _
+                                  & Environment.NewLine & "{2}, {3}",
                     cust.CompanyName, cust.Address, cust.City, cust.Region)
-            Next        
+            Next
         Catch ex As DataServiceQueryException
             Throw New ApplicationException( _
                 "An error occurred during query execution.", ex)

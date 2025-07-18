@@ -1,47 +1,38 @@
 ﻿'<snippetWpfDataBindingCustom>
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Windows
-Imports System.Windows.Controls
-Imports System.Windows.Data
-Imports System.Windows.Documents
-Imports System.Windows.Input
-Imports System.Windows.Media
-Imports System.Windows.Media.Imaging
-Imports System.Windows.Navigation
-Imports System.Windows.Shapes
-Imports System.Data.Services.Client
-Imports NorthwindClient.NorthwindModel
 Imports System.Collections.Specialized
+Imports System.Data.Services.Client
+Imports System.Linq
+Imports System.Windows
+Imports northwindclientvb.Northwind
+Imports northwindclientvb.NorthwindModel
 
 Partial Public Class CustomerOrdersCustom
     Inherits Window
-    Private context As NorthwindEntities
-    Private trackedCustomers As DataServiceCollection(Of Customers)
-    Private Const customerCountry As String = "Germany"
-    Private Const svcUri As String = "http://localhost:12345/Northwind.svc/"
+    Private _context As Northwind.NorthwindEntities
+    Private _trackedCustomers As DataServiceCollection(Of Customer)
+    Private Const CustomerCountry As String = "Germany"
+    Private Const SvcUri As String = "http://localhost:12345/Northwind.svc/"
     Private Sub Window_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
         Try
             ' Initialize the context for the data service.
-            context = New NorthwindEntities(New Uri(svcUri))
+            context = New Northwind.NorthwindEntities(New Uri(SvcUri))
 
             '<snippetMasterDetailBinding>
             ' Create a LINQ query that returns customers with related orders.
-            Dim customerQuery = From cust In context.Customers.Expand("Orders") _
-                                    Where cust.Country = customerCountry _
-                                    Select cust
+            Dim customerQuery = From cust In context.Customers.Expand("Orders")
+                                Where cust.Country = CustomerCountry
+                                Select cust
 
             ' Create a new collection for binding based on the LINQ query.
-            trackedCustomers = New DataServiceCollection(Of Customers)(customerQuery, _
-                    TrackingMode.AutoChangeTracking, "Customers", _
+            _trackedCustomers = New DataServiceCollection(Of Customer)(customerQuery,
+                    TrackingMode.AutoChangeTracking, "Customers",
                     AddressOf OnMyPropertyChanged, AddressOf OnMyCollectionChanged)
 
-                ' Bind the root StackPanel element to the collection
-                ' related object binding paths are defined in the XAML.
-                Me.LayoutRoot.DataContext = trackedCustomers
-                Me.LayoutRoot.UpdateLayout()
-                '</snippetMasterDetailBinding>
+            ' Bind the root StackPanel element to the collection
+            ' related object binding paths are defined in the XAML.
+            Me.LayoutRoot.DataContext = _trackedCustomers
+            Me.LayoutRoot.UpdateLayout()
+            '</snippetMasterDetailBinding>
         Catch ex As DataServiceQueryException
             MessageBox.Show("The query could not be completed:\n" + ex.ToString())
         Catch ex As InvalidOperationException
@@ -86,18 +77,18 @@ Partial Public Class CustomerOrdersCustom
     End Function
     '</snippetCustomersOrdersDeleteRelated>
     ' Method that is called when the PropertyChanged event is handled.
-    Private Function OnMyPropertyChanged( _
+    Private Function OnMyPropertyChanged(
     ByVal entityChangedInfo As EntityChangedParams) As Boolean
         ' Validate a changed order to ensure that changes are not made 
         ' after the order ships.
-        If entityChangedInfo.Entity.GetType() Is GetType(Orders) AndAlso _
+        If entityChangedInfo.Entity.GetType() Is GetType(Orders) AndAlso
             (CType(entityChangedInfo.Entity, Orders).ShippedDate < DateTime.Today) Then
-            Throw New ApplicationException(String.Format( _
-                "The order {0} cannot be changed because it shipped on {1}.", _
-                CType(entityChangedInfo.Entity, Orders).OrderID, _
+            Throw New ApplicationException(String.Format(
+                "The order {0} cannot be changed because it shipped on {1}.",
+                CType(entityChangedInfo.Entity, Orders).OrderID,
                 CType(entityChangedInfo.Entity, Orders).ShippedDate))
-            Return True
         End If
+        Return True
     End Function
     Private Sub deleteButton_Click(ByVal sender As Object, ByVal e As RoutedEventArgs)
         ' Get the Orders binding collection.

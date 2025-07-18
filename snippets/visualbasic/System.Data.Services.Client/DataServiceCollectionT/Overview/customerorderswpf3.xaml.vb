@@ -1,18 +1,8 @@
 ﻿'<snippetBindPagedData>
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
+Imports System.Data.Services.Client
 Imports System.Windows
 Imports System.Windows.Controls
-Imports System.Windows.Data
-Imports System.Windows.Documents
-Imports System.Windows.Input
-Imports System.Windows.Media
-Imports System.Windows.Media.Imaging
-Imports System.Windows.Navigation
-Imports System.Windows.Shapes
-Imports System.Data.Services.Client
-Imports NorthwindClient.Northwind
+Imports northwindclientvb.Northwind
 
 Partial Public Class CustomerOrdersWpf3
     Inherits Window
@@ -28,15 +18,15 @@ Partial Public Class CustomerOrdersWpf3
             context = New NorthwindEntities(New Uri(svcUri))
 
             ' Create a LINQ query that returns customers with related orders.
-            Dim customerQuery = From cust In context.Customers _
-                                    Where cust.Country = customerCountry _
-                                    Select cust
+            Dim customerQuery = From cust In context.Customers
+                                Where cust.Country = customerCountry
+                                Select cust
 
-                '<snippetBindPagedDataSpecific>
-                ' Create a new collection for binding based on the LINQ query.
+            '<snippetBindPagedDataSpecific>
+            ' Create a new collection for binding based on the LINQ query.
             trackedCustomers = New DataServiceCollection(Of Customer)(customerQuery)
 
-                ' Load all pages of the response at once.
+            ' Load all pages of the response at once.
             While trackedCustomers.Continuation IsNot Nothing
                 trackedCustomers.Load( _
                         context.Execute(Of Customer)(trackedCustomers.Continuation.NextLinkUri))

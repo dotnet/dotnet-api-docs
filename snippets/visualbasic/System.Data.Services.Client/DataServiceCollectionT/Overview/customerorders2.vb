@@ -1,13 +1,6 @@
-﻿Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
-Imports System.Linq
-Imports System.Text
+﻿Imports System.Data.Services.Client
 Imports System.Windows.Forms
-
-Imports System.Data.Services.Client
-Imports NorthwindClient.Northwind
+Imports northwindclientvb.Northwind
 
 Partial Public Class CustomerOrders2
     Inherits Form

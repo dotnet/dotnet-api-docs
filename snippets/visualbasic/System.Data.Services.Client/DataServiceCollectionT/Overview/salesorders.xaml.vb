@@ -49,10 +49,9 @@
 'Imports System.Collections.Generic
 
 '<snippetWpfDataBindingCode>
-Imports System.Linq
-Imports System.Windows
 Imports System.Data.Services.Client
-Imports NorthwindClient.Northwind
+Imports System.Windows
+Imports northwindclientvb.Northwind
 
 '/ <summary>
 '/ Interaction logic for SalesOrders.xaml
@@ -70,19 +69,19 @@ Partial Public Class SalesOrders
 
             ' Define a query that returns Orders and 
             ' Order_Details for a specific customer.
-            Dim ordersQuery = From o In context.Orders.Expand("Order_Details") _
-                                   Where o.Customer.CustomerID = customerId _
-                                   Select o
+            Dim ordersQuery = From o In context.Orders.Expand("Order_Details")
+                              Where o.Customer.CustomerID = customerId
+                              Select o
 
             ' Create an DataServiceCollection<T> based on 
             ' execution of the query for Orders.
-            Dim customerOrders As DataServiceCollection(Of Order) = _
+            Dim customerOrders As DataServiceCollection(Of Order) =
                 New DataServiceCollection(Of Order)(ordersQuery)
 
-                '<snippetWpfDataBindingCodeShort>
+            '<snippetWpfDataBindingCodeShort>
             ' Make the DataServiceCollection<T> the binding source for the Grid.
-                Me.orderItemsGrid.DataContext = customerOrders
-                '</snippetWpfDataBindingCodeShort>
+            Me.orderItemsGrid.DataContext = customerOrders
+            '</snippetWpfDataBindingCodeShort>
         Catch ex As DataServiceQueryException
             MessageBox.Show(ex.ToString())
         End Try
