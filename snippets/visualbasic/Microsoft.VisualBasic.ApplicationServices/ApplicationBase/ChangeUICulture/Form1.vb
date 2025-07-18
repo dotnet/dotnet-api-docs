@@ -3,6 +3,10 @@ Option Strict On
 
 Public Class Form1
 
+    Public Shared Sub Main()
+
+    End Sub
+
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         '        SetFormTitle()
         '       SetFormIcon()
@@ -80,7 +84,7 @@ Public Class Form1
 
     '<snippet4>
     Sub PlayFormGreeting()
-        My.Computer.Audio.Play(My.Resources.Form1Greeting, 
+        My.Computer.Audio.Play(My.Resources.Form1Greeting,
             AudioPlayMode.Background)
     End Sub
     '</snippet4>
