@@ -21,256 +21,256 @@ Imports System.Linq.Expressions
 Imports System.Reflection
 
 
-<System.Data.Linq.Mapping.DatabaseAttribute(Name:="northwnd")>  _
+<System.Data.Linq.Mapping.DatabaseAttribute(Name:="northwnd")>
 Partial Public Class Northwnd
-	Inherits System.Data.Linq.DataContext
-	
-	Private Shared mappingSource As System.Data.Linq.Mapping.MappingSource = New AttributeMappingSource
-	
-  #Region "Extensibility Method Definitions"
-  Partial Private Sub OnCreated()
-  End Sub
-  Partial Private Sub InsertCategory(instance As Category)
+    Inherits System.Data.Linq.DataContext
+
+    Private Shared mappingSource As System.Data.Linq.Mapping.MappingSource = New AttributeMappingSource
+
+#Region "Extensibility Method Definitions"
+    Partial Private Sub OnCreated()
     End Sub
-  Partial Private Sub UpdateCategory(instance As Category)
+    Partial Private Sub InsertCategory(instance As Category)
     End Sub
-  Partial Private Sub DeleteCategory(instance As Category)
+    Partial Private Sub UpdateCategory(instance As Category)
     End Sub
-  Partial Private Sub InsertCustomerCustomerDemo(instance As CustomerCustomerDemo)
+    Partial Private Sub DeleteCategory(instance As Category)
     End Sub
-  Partial Private Sub UpdateCustomerCustomerDemo(instance As CustomerCustomerDemo)
+    Partial Private Sub InsertCustomerCustomerDemo(instance As CustomerCustomerDemo)
     End Sub
-  Partial Private Sub DeleteCustomerCustomerDemo(instance As CustomerCustomerDemo)
+    Partial Private Sub UpdateCustomerCustomerDemo(instance As CustomerCustomerDemo)
     End Sub
-  Partial Private Sub InsertCustomerDemographic(instance As CustomerDemographic)
+    Partial Private Sub DeleteCustomerCustomerDemo(instance As CustomerCustomerDemo)
     End Sub
-  Partial Private Sub UpdateCustomerDemographic(instance As CustomerDemographic)
+    Partial Private Sub InsertCustomerDemographic(instance As CustomerDemographic)
     End Sub
-  Partial Private Sub DeleteCustomerDemographic(instance As CustomerDemographic)
+    Partial Private Sub UpdateCustomerDemographic(instance As CustomerDemographic)
     End Sub
-  Partial Private Sub InsertCustomer(instance As Customer)
+    Partial Private Sub DeleteCustomerDemographic(instance As CustomerDemographic)
     End Sub
-  Partial Private Sub UpdateCustomer(instance As Customer)
+    Partial Private Sub InsertCustomer(instance As Customer)
     End Sub
-  Partial Private Sub DeleteCustomer(instance As Customer)
+    Partial Private Sub UpdateCustomer(instance As Customer)
     End Sub
-  Partial Private Sub InsertEmployee(instance As Employee)
+    Partial Private Sub DeleteCustomer(instance As Customer)
     End Sub
-  Partial Private Sub UpdateEmployee(instance As Employee)
+    Partial Private Sub InsertEmployee(instance As Employee)
     End Sub
-  Partial Private Sub DeleteEmployee(instance As Employee)
+    Partial Private Sub UpdateEmployee(instance As Employee)
     End Sub
-  Partial Private Sub InsertEmployeeTerritory(instance As EmployeeTerritory)
+    Partial Private Sub DeleteEmployee(instance As Employee)
     End Sub
-  Partial Private Sub UpdateEmployeeTerritory(instance As EmployeeTerritory)
+    Partial Private Sub InsertEmployeeTerritory(instance As EmployeeTerritory)
     End Sub
-  Partial Private Sub DeleteEmployeeTerritory(instance As EmployeeTerritory)
+    Partial Private Sub UpdateEmployeeTerritory(instance As EmployeeTerritory)
     End Sub
-  Partial Private Sub InsertOrderDetail(instance As OrderDetail)
+    Partial Private Sub DeleteEmployeeTerritory(instance As EmployeeTerritory)
     End Sub
-  Partial Private Sub UpdateOrderDetail(instance As OrderDetail)
+    Partial Private Sub InsertOrderDetail(instance As OrderDetail)
     End Sub
-  Partial Private Sub DeleteOrderDetail(instance As OrderDetail)
+    Partial Private Sub UpdateOrderDetail(instance As OrderDetail)
     End Sub
-  Partial Private Sub InsertOrder(instance As [Order])
+    Partial Private Sub DeleteOrderDetail(instance As OrderDetail)
     End Sub
-  Partial Private Sub UpdateOrder(instance As [Order])
+    Partial Private Sub InsertOrder(instance As [Order])
     End Sub
-  Partial Private Sub DeleteOrder(instance As [Order])
+    Partial Private Sub UpdateOrder(instance As [Order])
     End Sub
-  Partial Private Sub InsertProduct(instance As Product)
+    Partial Private Sub DeleteOrder(instance As [Order])
     End Sub
-  Partial Private Sub UpdateProduct(instance As Product)
+    Partial Private Sub InsertProduct(instance As Product)
     End Sub
-  Partial Private Sub DeleteProduct(instance As Product)
+    Partial Private Sub UpdateProduct(instance As Product)
     End Sub
-  Partial Private Sub InsertRegion(instance As Region)
+    Partial Private Sub DeleteProduct(instance As Product)
     End Sub
-  Partial Private Sub UpdateRegion(instance As Region)
+    Partial Private Sub InsertRegion(instance As Region)
     End Sub
-  Partial Private Sub DeleteRegion(instance As Region)
+    Partial Private Sub UpdateRegion(instance As Region)
     End Sub
-  Partial Private Sub InsertShipper(instance As Shipper)
+    Partial Private Sub DeleteRegion(instance As Region)
     End Sub
-  Partial Private Sub UpdateShipper(instance As Shipper)
+    Partial Private Sub InsertShipper(instance As Shipper)
     End Sub
-  Partial Private Sub DeleteShipper(instance As Shipper)
+    Partial Private Sub UpdateShipper(instance As Shipper)
     End Sub
-  Partial Private Sub InsertSupplier(instance As Supplier)
+    Partial Private Sub DeleteShipper(instance As Shipper)
     End Sub
-  Partial Private Sub UpdateSupplier(instance As Supplier)
+    Partial Private Sub InsertSupplier(instance As Supplier)
     End Sub
-  Partial Private Sub DeleteSupplier(instance As Supplier)
+    Partial Private Sub UpdateSupplier(instance As Supplier)
     End Sub
-  Partial Private Sub InsertTerritory(instance As Territory)
+    Partial Private Sub DeleteSupplier(instance As Supplier)
     End Sub
-  Partial Private Sub UpdateTerritory(instance As Territory)
+    Partial Private Sub InsertTerritory(instance As Territory)
     End Sub
-  Partial Private Sub DeleteTerritory(instance As Territory)
+    Partial Private Sub UpdateTerritory(instance As Territory)
     End Sub
-  #End Region
-	
-	Shared Sub New()
-	End Sub
-	
-	Public Sub New(ByVal connection As String)
-		MyBase.New(connection, mappingSource)
-		OnCreated
-	End Sub
-	
-	Public Sub New(ByVal connection As System.Data.IDbConnection)
-		MyBase.New(connection, mappingSource)
-		OnCreated
-	End Sub
-	
-	Public Sub New(ByVal connection As String, ByVal mappingSource As System.Data.Linq.Mapping.MappingSource)
-		MyBase.New(connection, mappingSource)
-		OnCreated
-	End Sub
-	
-	Public Sub New(ByVal connection As System.Data.IDbConnection, ByVal mappingSource As System.Data.Linq.Mapping.MappingSource)
-		MyBase.New(connection, mappingSource)
-		OnCreated
-	End Sub
-	
-	Public ReadOnly Property Categories() As System.Data.Linq.Table(Of Category)
-		Get
-			Return Me.GetTable(Of Category)
-		End Get
-	End Property
-	
-	Public ReadOnly Property CustomerCustomerDemos() As System.Data.Linq.Table(Of CustomerCustomerDemo)
-		Get
-			Return Me.GetTable(Of CustomerCustomerDemo)
-		End Get
-	End Property
-	
-	Public ReadOnly Property CustomerDemographics() As System.Data.Linq.Table(Of CustomerDemographic)
-		Get
-			Return Me.GetTable(Of CustomerDemographic)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Customers() As System.Data.Linq.Table(Of Customer)
-		Get
-			Return Me.GetTable(Of Customer)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Employees() As System.Data.Linq.Table(Of Employee)
-		Get
-			Return Me.GetTable(Of Employee)
-		End Get
-	End Property
-	
-	Public ReadOnly Property EmployeeTerritories() As System.Data.Linq.Table(Of EmployeeTerritory)
-		Get
-			Return Me.GetTable(Of EmployeeTerritory)
-		End Get
-	End Property
-	
-	Public ReadOnly Property OrderDetails() As System.Data.Linq.Table(Of OrderDetail)
-		Get
-			Return Me.GetTable(Of OrderDetail)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Orders() As System.Data.Linq.Table(Of [Order])
-		Get
-			Return Me.GetTable(Of [Order])
-		End Get
-	End Property
-	
-	Public ReadOnly Property Products() As System.Data.Linq.Table(Of Product)
-		Get
-			Return Me.GetTable(Of Product)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Regions() As System.Data.Linq.Table(Of Region)
-		Get
-			Return Me.GetTable(Of Region)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Shippers() As System.Data.Linq.Table(Of Shipper)
-		Get
-			Return Me.GetTable(Of Shipper)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Suppliers() As System.Data.Linq.Table(Of Supplier)
-		Get
-			Return Me.GetTable(Of Supplier)
-		End Get
-	End Property
-	
-	Public ReadOnly Property Territories() As System.Data.Linq.Table(Of Territory)
-		Get
-			Return Me.GetTable(Of Territory)
-		End Get
-	End Property
-	
-	<FunctionAttribute(Name:="dbo.CustOrderHist")>  _
-	Public Function CustOrderHist(<Parameter(Name:="CustomerID", DbType:="NChar(5)")> ByVal customerID As String) As ISingleResult(Of CustOrderHistResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), customerID)
-		Return CType(result.ReturnValue,ISingleResult(Of CustOrderHistResult))
-	End Function
-	
-	<FunctionAttribute(Name:="dbo.CustOrdersDetail")>  _
-	Public Function CustOrdersDetail(<Parameter(Name:="OrderID", DbType:="Int")> ByVal orderID As System.Nullable(Of Integer)) As ISingleResult(Of CustOrdersDetailResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), orderID)
-		Return CType(result.ReturnValue,ISingleResult(Of CustOrdersDetailResult))
-	End Function
-	
-	<FunctionAttribute(Name:="dbo.CustOrdersOrders")>  _
-	Public Function CustOrdersOrders(<Parameter(Name:="CustomerID", DbType:="NChar(5)")> ByVal customerID As String) As ISingleResult(Of CustOrdersOrdersResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), customerID)
-		Return CType(result.ReturnValue,ISingleResult(Of CustOrdersOrdersResult))
-	End Function
-	
-	<FunctionAttribute(Name:="dbo.Employee Sales by Country")>  _
-	Public Function EmployeeSalesByCountry(<Parameter(Name:="Beginning_Date", DbType:="DateTime")> ByVal beginning_Date As System.Nullable(Of Date), <Parameter(Name:="Ending_Date", DbType:="DateTime")> ByVal ending_Date As System.Nullable(Of Date)) As ISingleResult(Of EmployeeSalesByCountryResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), beginning_Date, ending_Date)
-		Return CType(result.ReturnValue,ISingleResult(Of EmployeeSalesByCountryResult))
-	End Function
-	
-	<FunctionAttribute(Name:="dbo.Sales by Year")>  _
-	Public Function SalesByYear(<Parameter(Name:="Beginning_Date", DbType:="DateTime")> ByVal beginning_Date As System.Nullable(Of Date), <Parameter(Name:="Ending_Date", DbType:="DateTime")> ByVal ending_Date As System.Nullable(Of Date)) As ISingleResult(Of SalesByYearResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), beginning_Date, ending_Date)
-		Return CType(result.ReturnValue,ISingleResult(Of SalesByYearResult))
-	End Function
-	
-	<FunctionAttribute(Name:="dbo.SalesByCategory")>  _
-	Public Function SalesByCategory(<Parameter(Name:="CategoryName", DbType:="NVarChar(15)")> ByVal categoryName As String, <Parameter(Name:="OrdYear", DbType:="NVarChar(4)")> ByVal ordYear As String) As ISingleResult(Of SalesByCategoryResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo), categoryName, ordYear)
-		Return CType(result.ReturnValue,ISingleResult(Of SalesByCategoryResult))
-	End Function
-	
-	<FunctionAttribute(Name:="dbo.Ten Most Expensive Products")>  _
-	Public Function TenMostExpensiveProducts() As ISingleResult(Of TenMostExpensiveProductsResult)
-		Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod,MethodInfo))
-		Return CType(result.ReturnValue,ISingleResult(Of TenMostExpensiveProductsResult))
-	End Function
+    Partial Private Sub DeleteTerritory(instance As Territory)
+    End Sub
+#End Region
+
+    Shared Sub New()
+    End Sub
+
+    Public Sub New(ByVal connection As String)
+        MyBase.New(connection, mappingSource)
+        OnCreated()
+    End Sub
+
+    Public Sub New(ByVal connection As System.Data.IDbConnection)
+        MyBase.New(connection, mappingSource)
+        OnCreated()
+    End Sub
+
+    Public Sub New(ByVal connection As String, ByVal mappingSource As System.Data.Linq.Mapping.MappingSource)
+        MyBase.New(connection, mappingSource)
+        OnCreated()
+    End Sub
+
+    Public Sub New(ByVal connection As System.Data.IDbConnection, ByVal mappingSource As System.Data.Linq.Mapping.MappingSource)
+        MyBase.New(connection, mappingSource)
+        OnCreated()
+    End Sub
+
+    Public ReadOnly Property Categories() As System.Data.Linq.Table(Of Category)
+        Get
+            Return Me.GetTable(Of Category)
+        End Get
+    End Property
+
+    Public ReadOnly Property CustomerCustomerDemos() As System.Data.Linq.Table(Of CustomerCustomerDemo)
+        Get
+            Return Me.GetTable(Of CustomerCustomerDemo)
+        End Get
+    End Property
+
+    Public ReadOnly Property CustomerDemographics() As System.Data.Linq.Table(Of CustomerDemographic)
+        Get
+            Return Me.GetTable(Of CustomerDemographic)
+        End Get
+    End Property
+
+    Public ReadOnly Property Customers() As System.Data.Linq.Table(Of Customer)
+        Get
+            Return Me.GetTable(Of Customer)
+        End Get
+    End Property
+
+    Public ReadOnly Property Employees() As System.Data.Linq.Table(Of Employee)
+        Get
+            Return Me.GetTable(Of Employee)
+        End Get
+    End Property
+
+    Public ReadOnly Property EmployeeTerritories() As System.Data.Linq.Table(Of EmployeeTerritory)
+        Get
+            Return Me.GetTable(Of EmployeeTerritory)
+        End Get
+    End Property
+
+    Public ReadOnly Property OrderDetails() As System.Data.Linq.Table(Of OrderDetail)
+        Get
+            Return Me.GetTable(Of OrderDetail)
+        End Get
+    End Property
+
+    Public ReadOnly Property Orders() As System.Data.Linq.Table(Of [Order])
+        Get
+            Return Me.GetTable(Of [Order])
+        End Get
+    End Property
+
+    Public ReadOnly Property Products() As System.Data.Linq.Table(Of Product)
+        Get
+            Return Me.GetTable(Of Product)
+        End Get
+    End Property
+
+    Public ReadOnly Property Regions() As System.Data.Linq.Table(Of Region)
+        Get
+            Return Me.GetTable(Of Region)
+        End Get
+    End Property
+
+    Public ReadOnly Property Shippers() As System.Data.Linq.Table(Of Shipper)
+        Get
+            Return Me.GetTable(Of Shipper)
+        End Get
+    End Property
+
+    Public ReadOnly Property Suppliers() As System.Data.Linq.Table(Of Supplier)
+        Get
+            Return Me.GetTable(Of Supplier)
+        End Get
+    End Property
+
+    Public ReadOnly Property Territories() As System.Data.Linq.Table(Of Territory)
+        Get
+            Return Me.GetTable(Of Territory)
+        End Get
+    End Property
+
+    <FunctionAttribute(Name:="dbo.CustOrderHist")>
+    Public Function CustOrderHist(<Parameter(Name:="CustomerID", DbType:="NChar(5)")> ByVal customerID As String) As ISingleResult(Of CustOrderHistResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo), customerID)
+        Return CType(result.ReturnValue, ISingleResult(Of CustOrderHistResult))
+    End Function
+
+    <FunctionAttribute(Name:="dbo.CustOrdersDetail")>
+    Public Function CustOrdersDetail(<Parameter(Name:="OrderID", DbType:="Int")> ByVal orderID As System.Nullable(Of Integer)) As ISingleResult(Of CustOrdersDetailResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo), orderID)
+        Return CType(result.ReturnValue, ISingleResult(Of CustOrdersDetailResult))
+    End Function
+
+    <FunctionAttribute(Name:="dbo.CustOrdersOrders")>
+    Public Function CustOrdersOrders(<Parameter(Name:="CustomerID", DbType:="NChar(5)")> ByVal customerID As String) As ISingleResult(Of CustOrdersOrdersResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo), customerID)
+        Return CType(result.ReturnValue, ISingleResult(Of CustOrdersOrdersResult))
+    End Function
+
+    <FunctionAttribute(Name:="dbo.Employee Sales by Country")>
+    Public Function EmployeeSalesByCountry(<Parameter(Name:="Beginning_Date", DbType:="DateTime")> ByVal beginning_Date As System.Nullable(Of Date), <Parameter(Name:="Ending_Date", DbType:="DateTime")> ByVal ending_Date As System.Nullable(Of Date)) As ISingleResult(Of EmployeeSalesByCountryResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo), beginning_Date, ending_Date)
+        Return CType(result.ReturnValue, ISingleResult(Of EmployeeSalesByCountryResult))
+    End Function
+
+    <FunctionAttribute(Name:="dbo.Sales by Year")>
+    Public Function SalesByYear(<Parameter(Name:="Beginning_Date", DbType:="DateTime")> ByVal beginning_Date As System.Nullable(Of Date), <Parameter(Name:="Ending_Date", DbType:="DateTime")> ByVal ending_Date As System.Nullable(Of Date)) As ISingleResult(Of SalesByYearResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo), beginning_Date, ending_Date)
+        Return CType(result.ReturnValue, ISingleResult(Of SalesByYearResult))
+    End Function
+
+    <FunctionAttribute(Name:="dbo.SalesByCategory")>
+    Public Function SalesByCategory(<Parameter(Name:="CategoryName", DbType:="NVarChar(15)")> ByVal categoryName As String, <Parameter(Name:="OrdYear", DbType:="NVarChar(4)")> ByVal ordYear As String) As ISingleResult(Of SalesByCategoryResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo), categoryName, ordYear)
+        Return CType(result.ReturnValue, ISingleResult(Of SalesByCategoryResult))
+    End Function
+
+    <FunctionAttribute(Name:="dbo.Ten Most Expensive Products")>
+    Public Function TenMostExpensiveProducts() As ISingleResult(Of TenMostExpensiveProductsResult)
+        Dim result As IExecuteResult = Me.ExecuteMethodCall(Me, CType(MethodInfo.GetCurrentMethod, MethodInfo))
+        Return CType(result.ReturnValue, ISingleResult(Of TenMostExpensiveProductsResult))
+    End Function
 End Class
 
-<Table(Name:="dbo.Categories")>  _
+<Table(Name:="dbo.Categories")>
 Partial Public Class Category
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _CategoryID As Integer
-	
-	Private _CategoryName As String
-	
-	Private _Description As String
-	
-	Private _Picture As System.Data.Linq.Binary
-	
-	Private _Products As EntitySet(Of Product)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _CategoryID As Integer
+
+    Private _CategoryName As String
+
+    Private _Description As String
+
+    Private _Picture As System.Data.Linq.Binary
+
+    Private _Products As EntitySet(Of Product)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -293,137 +293,137 @@ Partial Public Class Category
     End Sub
     Partial Private Sub OnPictureChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._Products = New EntitySet(Of Product)(AddressOf Me.attach_Products, AddressOf Me.detach_Products)
-	End Sub
-	
-	<Column(Storage:="_CategoryID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property CategoryID() As Integer
-		Get
-			Return Me._CategoryID
-		End Get
-		Set
-			If ((Me._CategoryID = value)  _
-						= false) Then
-				Me.OnCategoryIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CategoryID = value
-				Me.SendPropertyChanged("CategoryID")
-				Me.OnCategoryIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CategoryName", DbType:="NVarChar(15) NOT NULL", CanBeNull:=false)>  _
-	Public Property CategoryName() As String
-		Get
-			Return Me._CategoryName
-		End Get
-		Set
-			If (String.Equals(Me._CategoryName, value) = false) Then
-				Me.OnCategoryNameChanging(value)
-				Me.SendPropertyChanging
-				Me._CategoryName = value
-				Me.SendPropertyChanged("CategoryName")
-				Me.OnCategoryNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Description", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>  _
-	Public Property Description() As String
-		Get
-			Return Me._Description
-		End Get
-		Set
-			If (String.Equals(Me._Description, value) = false) Then
-				Me.OnDescriptionChanging(value)
-				Me.SendPropertyChanging
-				Me._Description = value
-				Me.SendPropertyChanged("Description")
-				Me.OnDescriptionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Picture", DbType:="Image", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
-	Public Property Picture() As System.Data.Linq.Binary
-		Get
-			Return Me._Picture
-		End Get
-		Set
-			If (Me._Picture.Equals(value) = false) Then
-				Me.OnPictureChanging(value)
-				Me.SendPropertyChanging
-				Me._Picture = value
-				Me.SendPropertyChanged("Picture")
-				Me.OnPictureChanged
-			End If
-		End Set
-	End Property
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._Products = New EntitySet(Of Product)(AddressOf Me.attach_Products, AddressOf Me.detach_Products)
+    End Sub
+
+    <Column(Storage:="_CategoryID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=True, IsDbGenerated:=True)>
+    Public Property CategoryID() As Integer
+        Get
+            Return Me._CategoryID
+        End Get
+        Set
+            If ((Me._CategoryID = Value) _
+                        = False) Then
+                Me.OnCategoryIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CategoryID = Value
+                Me.SendPropertyChanged("CategoryID")
+                Me.OnCategoryIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CategoryName", DbType:="NVarChar(15) NOT NULL", CanBeNull:=False)>
+    Public Property CategoryName() As String
+        Get
+            Return Me._CategoryName
+        End Get
+        Set
+            If (String.Equals(Me._CategoryName, Value) = False) Then
+                Me.OnCategoryNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CategoryName = Value
+                Me.SendPropertyChanged("CategoryName")
+                Me.OnCategoryNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Description", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>
+    Public Property Description() As String
+        Get
+            Return Me._Description
+        End Get
+        Set
+            If (String.Equals(Me._Description, Value) = False) Then
+                Me.OnDescriptionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Description = Value
+                Me.SendPropertyChanged("Description")
+                Me.OnDescriptionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Picture", DbType:="Image", CanBeNull:=True, UpdateCheck:=UpdateCheck.Never)>
+    Public Property Picture() As System.Data.Linq.Binary
+        Get
+            Return Me._Picture
+        End Get
+        Set
+            If (Me._Picture.Equals(Value) = False) Then
+                Me.OnPictureChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Picture = Value
+                Me.SendPropertyChanged("Picture")
+                Me.OnPictureChanged()
+            End If
+        End Set
+    End Property
 
     ' <Snippet2>
-	<Association(Name:="FK_Products_Categories", Storage:="_Products", OtherKey:="CategoryID", DeleteRule:="NO ACTION")>  _
-	Public Property Products() As EntitySet(Of Product)
-		Get
-			Return Me._Products
-		End Get
-		Set
-			Me._Products.Assign(value)
-		End Set
+    <Association(Name:="FK_Products_Categories", Storage:="_Products", OtherKey:="CategoryID", DeleteRule:="NO ACTION")>
+    Public Property Products() As EntitySet(Of Product)
+        Get
+            Return Me._Products
+        End Get
+        Set
+            Me._Products.Assign(Value)
+        End Set
     End Property
     ' </Snippet2>
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Products(ByVal entity As Product)
-		Me.SendPropertyChanging
-		entity.Category = Me
-		Me.SendPropertyChanged("Products")
-	End Sub
-	
-	Private Sub detach_Products(ByVal entity As Product)
-		Me.SendPropertyChanging
-		entity.Category = Nothing
-		Me.SendPropertyChanged("Products")
-	End Sub
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_Products(ByVal entity As Product)
+        Me.SendPropertyChanging()
+        entity.Category = Me
+        Me.SendPropertyChanged("Products")
+    End Sub
+
+    Private Sub detach_Products(ByVal entity As Product)
+        Me.SendPropertyChanging()
+        entity.Category = Nothing
+        Me.SendPropertyChanged("Products")
+    End Sub
 End Class
 
-<Table(Name:="dbo.CustomerCustomerDemo")>  _
+<Table(Name:="dbo.CustomerCustomerDemo")>
 Partial Public Class CustomerCustomerDemo
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _CustomerID As String
-	
-	Private _CustomerTypeID As String
-	
-	Private _CustomerDemographic As EntityRef(Of CustomerDemographic)
-	
-	Private _Customer As EntityRef(Of Customer)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _CustomerID As String
+
+    Private _CustomerTypeID As String
+
+    Private _CustomerDemographic As EntityRef(Of CustomerDemographic)
+
+    Private _Customer As EntityRef(Of Customer)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -438,55 +438,55 @@ Partial Public Class CustomerCustomerDemo
     End Sub
     Partial Private Sub OnCustomerTypeIDChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._CustomerDemographic = CType(Nothing, EntityRef(Of CustomerDemographic))
-		Me._Customer = CType(Nothing, EntityRef(Of Customer))
-	End Sub
-	
-	<Column(Storage:="_CustomerID", DbType:="NChar(5) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true)>  _
-	Public Property CustomerID() As String
-		Get
-			Return Me._CustomerID
-		End Get
-		Set
-			If (String.Equals(Me._CustomerID, value) = false) Then
-				If Me._Customer.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnCustomerIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CustomerID = value
-				Me.SendPropertyChanged("CustomerID")
-				Me.OnCustomerIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CustomerTypeID", DbType:="NChar(10) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true)>  _
-	Public Property CustomerTypeID() As String
-		Get
-			Return Me._CustomerTypeID
-		End Get
-		Set
-			If (String.Equals(Me._CustomerTypeID, value) = false) Then
-				If Me._CustomerDemographic.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnCustomerTypeIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CustomerTypeID = value
-				Me.SendPropertyChanged("CustomerTypeID")
-				Me.OnCustomerTypeIDChanged
-			End If
-		End Set
-	End Property
-	
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._CustomerDemographic = CType(Nothing, EntityRef(Of CustomerDemographic))
+        Me._Customer = CType(Nothing, EntityRef(Of Customer))
+    End Sub
+
+    <Column(Storage:="_CustomerID", DbType:="NChar(5) NOT NULL", CanBeNull:=False, IsPrimaryKey:=True)>
+    Public Property CustomerID() As String
+        Get
+            Return Me._CustomerID
+        End Get
+        Set
+            If (String.Equals(Me._CustomerID, Value) = False) Then
+                If Me._Customer.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnCustomerIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CustomerID = Value
+                Me.SendPropertyChanged("CustomerID")
+                Me.OnCustomerIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CustomerTypeID", DbType:="NChar(10) NOT NULL", CanBeNull:=False, IsPrimaryKey:=True)>
+    Public Property CustomerTypeID() As String
+        Get
+            Return Me._CustomerTypeID
+        End Get
+        Set
+            If (String.Equals(Me._CustomerTypeID, Value) = False) Then
+                If Me._CustomerDemographic.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnCustomerTypeIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CustomerTypeID = Value
+                Me.SendPropertyChanged("CustomerTypeID")
+                Me.OnCustomerTypeIDChanged()
+            End If
+        End Set
+    End Property
+
     ' <Snippet3>
-    <Association(Name:="FK_CustomerCustomerDemo", Storage:="_CustomerDemographic", ThisKey:="CustomerTypeID", IsForeignKey:=True)> _
+    <Association(Name:="FK_CustomerCustomerDemo", Storage:="_CustomerDemographic", ThisKey:="CustomerTypeID", IsForeignKey:=True)>
     Public Property CustomerDemographic() As CustomerDemographic
         Get
             Return Me._CustomerDemographic.Entity
@@ -515,68 +515,69 @@ Partial Public Class CustomerCustomerDemo
         End Set
     End Property
     ' </Snippet3>
-	
-	<Association(Name:="FK_CustomerCustomerDemo_Customers", Storage:="_Customer", ThisKey:="CustomerID", IsForeignKey:=true)>  _
-	Public Property Customer() As Customer
-		Get
-			Return Me._Customer.Entity
-		End Get
-		Set
-			Dim previousValue As Customer = Me._Customer.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Customer.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Customer.Entity = Nothing
-					previousValue.CustomerCustomerDemos.Remove(Me)
-				End If
-				Me._Customer.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.CustomerCustomerDemos.Add(Me)
-					Me._CustomerID = value.CustomerID
-				Else
-					Me._CustomerID = CType(Nothing, String)
-				End If
-				Me.SendPropertyChanged("Customer")
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
+
+    <Association(Name:="FK_CustomerCustomerDemo_Customers", Storage:="_Customer", ThisKey:="CustomerID", IsForeignKey:=True)>
+    Public Property Customer() As Customer
+        Get
+            Return Me._Customer.Entity
+        End Get
+        Set
+            Dim previousValue As Customer = Me._Customer.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Customer.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Customer.Entity = Nothing
+                    previousValue.CustomerCustomerDemos.Remove(Me)
+                End If
+                Me._Customer.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.CustomerCustomerDemos.Add(Me)
+                    Me._CustomerID = Value.CustomerID
+                Else
+                    Me._CustomerID = CType(Nothing, String)
+                End If
+                Me.SendPropertyChanged("Customer")
+            End If
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
 End Class
 
-<Table(Name:="dbo.CustomerDemographics")>  _
+<Table(Name:="dbo.CustomerDemographics")>
 Partial Public Class CustomerDemographic
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _CustomerTypeID As String
-	
-	Private _CustomerDesc As String
-	
-	Private _CustomerCustomerDemos As EntitySet(Of CustomerCustomerDemo)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _CustomerTypeID As String
+
+    Private _CustomerDesc As String
+
+    Private _CustomerCustomerDemos As EntitySet(Of CustomerCustomerDemo)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -591,120 +592,120 @@ Partial Public Class CustomerDemographic
     End Sub
     Partial Private Sub OnCustomerDescChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._CustomerCustomerDemos = New EntitySet(Of CustomerCustomerDemo)(AddressOf Me.attach_CustomerCustomerDemos, AddressOf Me.detach_CustomerCustomerDemos)
-	End Sub
-	
-	<Column(Storage:="_CustomerTypeID", DbType:="NChar(10) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true)>  _
-	Public Property CustomerTypeID() As String
-		Get
-			Return Me._CustomerTypeID
-		End Get
-		Set
-			If (String.Equals(Me._CustomerTypeID, value) = false) Then
-				Me.OnCustomerTypeIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CustomerTypeID = value
-				Me.SendPropertyChanged("CustomerTypeID")
-				Me.OnCustomerTypeIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CustomerDesc", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>  _
-	Public Property CustomerDesc() As String
-		Get
-			Return Me._CustomerDesc
-		End Get
-		Set
-			If (String.Equals(Me._CustomerDesc, value) = false) Then
-				Me.OnCustomerDescChanging(value)
-				Me.SendPropertyChanging
-				Me._CustomerDesc = value
-				Me.SendPropertyChanged("CustomerDesc")
-				Me.OnCustomerDescChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_CustomerCustomerDemo", Storage:="_CustomerCustomerDemos", OtherKey:="CustomerTypeID", DeleteRule:="NO ACTION")>  _
-	Public Property CustomerCustomerDemos() As EntitySet(Of CustomerCustomerDemo)
-		Get
-			Return Me._CustomerCustomerDemos
-		End Get
-		Set
-			Me._CustomerCustomerDemos.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
-		Me.SendPropertyChanging
-		entity.CustomerDemographic = Me
-		Me.SendPropertyChanged("CustomerCustomerDemos")
-	End Sub
-	
-	Private Sub detach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
-		Me.SendPropertyChanging
-		entity.CustomerDemographic = Nothing
-		Me.SendPropertyChanged("CustomerCustomerDemos")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._CustomerCustomerDemos = New EntitySet(Of CustomerCustomerDemo)(AddressOf Me.attach_CustomerCustomerDemos, AddressOf Me.detach_CustomerCustomerDemos)
+    End Sub
+
+    <Column(Storage:="_CustomerTypeID", DbType:="NChar(10) NOT NULL", CanBeNull:=False, IsPrimaryKey:=True)>
+    Public Property CustomerTypeID() As String
+        Get
+            Return Me._CustomerTypeID
+        End Get
+        Set
+            If (String.Equals(Me._CustomerTypeID, Value) = False) Then
+                Me.OnCustomerTypeIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CustomerTypeID = Value
+                Me.SendPropertyChanged("CustomerTypeID")
+                Me.OnCustomerTypeIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CustomerDesc", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>
+    Public Property CustomerDesc() As String
+        Get
+            Return Me._CustomerDesc
+        End Get
+        Set
+            If (String.Equals(Me._CustomerDesc, Value) = False) Then
+                Me.OnCustomerDescChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CustomerDesc = Value
+                Me.SendPropertyChanged("CustomerDesc")
+                Me.OnCustomerDescChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_CustomerCustomerDemo", Storage:="_CustomerCustomerDemos", OtherKey:="CustomerTypeID", DeleteRule:="NO ACTION")>
+    Public Property CustomerCustomerDemos() As EntitySet(Of CustomerCustomerDemo)
+        Get
+            Return Me._CustomerCustomerDemos
+        End Get
+        Set
+            Me._CustomerCustomerDemos.Assign(Value)
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
+        Me.SendPropertyChanging()
+        entity.CustomerDemographic = Me
+        Me.SendPropertyChanged("CustomerCustomerDemos")
+    End Sub
+
+    Private Sub detach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
+        Me.SendPropertyChanging()
+        entity.CustomerDemographic = Nothing
+        Me.SendPropertyChanged("CustomerCustomerDemos")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Customers")>  _
+<Table(Name:="dbo.Customers")>
 Partial Public Class Customer
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _CustomerID As String
-	
-	Private _CompanyName As String
-	
-	Private _ContactName As String
-	
-	Private _ContactTitle As String
-	
-	Private _Address As String
-	
-	Private _City As String
-	
-	Private _Region As String
-	
-	Private _PostalCode As String
-	
-	Private _Country As String
-	
-	Private _Phone As String
-	
-	Private _Fax As String
-	
-	Private _CustomerCustomerDemos As EntitySet(Of CustomerCustomerDemo)
-	
-	Private _Orders As EntitySet(Of [Order])
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _CustomerID As String
+
+    Private _CompanyName As String
+
+    Private _ContactName As String
+
+    Private _ContactTitle As String
+
+    Private _Address As String
+
+    Private _City As String
+
+    Private _Region As String
+
+    Private _PostalCode As String
+
+    Private _Country As String
+
+    Private _Phone As String
+
+    Private _Fax As String
+
+    Private _CustomerCustomerDemos As EntitySet(Of CustomerCustomerDemo)
+
+    Private _Orders As EntitySet(Of [Order])
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -755,305 +756,305 @@ Partial Public Class Customer
     End Sub
     Partial Private Sub OnFaxChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._CustomerCustomerDemos = New EntitySet(Of CustomerCustomerDemo)(AddressOf Me.attach_CustomerCustomerDemos, AddressOf Me.detach_CustomerCustomerDemos)
-		Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
-	End Sub
-	
-	<Column(Storage:="_CustomerID", DbType:="NChar(5) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true)>  _
-	Public Property CustomerID() As String
-		Get
-			Return Me._CustomerID
-		End Get
-		Set
-			If (String.Equals(Me._CustomerID, value) = false) Then
-				Me.OnCustomerIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CustomerID = value
-				Me.SendPropertyChanged("CustomerID")
-				Me.OnCustomerIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CompanyName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=false)>  _
-	Public Property CompanyName() As String
-		Get
-			Return Me._CompanyName
-		End Get
-		Set
-			If (String.Equals(Me._CompanyName, value) = false) Then
-				Me.OnCompanyNameChanging(value)
-				Me.SendPropertyChanging
-				Me._CompanyName = value
-				Me.SendPropertyChanged("CompanyName")
-				Me.OnCompanyNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ContactName", DbType:="NVarChar(30)")>  _
-	Public Property ContactName() As String
-		Get
-			Return Me._ContactName
-		End Get
-		Set
-			If (String.Equals(Me._ContactName, value) = false) Then
-				Me.OnContactNameChanging(value)
-				Me.SendPropertyChanging
-				Me._ContactName = value
-				Me.SendPropertyChanged("ContactName")
-				Me.OnContactNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ContactTitle", DbType:="NVarChar(30)")>  _
-	Public Property ContactTitle() As String
-		Get
-			Return Me._ContactTitle
-		End Get
-		Set
-			If (String.Equals(Me._ContactTitle, value) = false) Then
-				Me.OnContactTitleChanging(value)
-				Me.SendPropertyChanging
-				Me._ContactTitle = value
-				Me.SendPropertyChanged("ContactTitle")
-				Me.OnContactTitleChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Address", DbType:="NVarChar(60)")>  _
-	Public Property Address() As String
-		Get
-			Return Me._Address
-		End Get
-		Set
-			If (String.Equals(Me._Address, value) = false) Then
-				Me.OnAddressChanging(value)
-				Me.SendPropertyChanging
-				Me._Address = value
-				Me.SendPropertyChanged("Address")
-				Me.OnAddressChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_City", DbType:="NVarChar(15)")>  _
-	Public Property City() As String
-		Get
-			Return Me._City
-		End Get
-		Set
-			If (String.Equals(Me._City, value) = false) Then
-				Me.OnCityChanging(value)
-				Me.SendPropertyChanging
-				Me._City = value
-				Me.SendPropertyChanged("City")
-				Me.OnCityChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Region", DbType:="NVarChar(15)")>  _
-	Public Property Region() As String
-		Get
-			Return Me._Region
-		End Get
-		Set
-			If (String.Equals(Me._Region, value) = false) Then
-				Me.OnRegionChanging(value)
-				Me.SendPropertyChanging
-				Me._Region = value
-				Me.SendPropertyChanged("Region")
-				Me.OnRegionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_PostalCode", DbType:="NVarChar(10)")>  _
-	Public Property PostalCode() As String
-		Get
-			Return Me._PostalCode
-		End Get
-		Set
-			If (String.Equals(Me._PostalCode, value) = false) Then
-				Me.OnPostalCodeChanging(value)
-				Me.SendPropertyChanging
-				Me._PostalCode = value
-				Me.SendPropertyChanged("PostalCode")
-				Me.OnPostalCodeChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Country", DbType:="NVarChar(15)")>  _
-	Public Property Country() As String
-		Get
-			Return Me._Country
-		End Get
-		Set
-			If (String.Equals(Me._Country, value) = false) Then
-				Me.OnCountryChanging(value)
-				Me.SendPropertyChanging
-				Me._Country = value
-				Me.SendPropertyChanged("Country")
-				Me.OnCountryChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Phone", DbType:="NVarChar(24)")>  _
-	Public Property Phone() As String
-		Get
-			Return Me._Phone
-		End Get
-		Set
-			If (String.Equals(Me._Phone, value) = false) Then
-				Me.OnPhoneChanging(value)
-				Me.SendPropertyChanging
-				Me._Phone = value
-				Me.SendPropertyChanged("Phone")
-				Me.OnPhoneChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Fax", DbType:="NVarChar(24)")>  _
-	Public Property Fax() As String
-		Get
-			Return Me._Fax
-		End Get
-		Set
-			If (String.Equals(Me._Fax, value) = false) Then
-				Me.OnFaxChanging(value)
-				Me.SendPropertyChanging
-				Me._Fax = value
-				Me.SendPropertyChanged("Fax")
-				Me.OnFaxChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_CustomerCustomerDemo_Customers", Storage:="_CustomerCustomerDemos", OtherKey:="CustomerID", DeleteRule:="NO ACTION")>  _
-	Public Property CustomerCustomerDemos() As EntitySet(Of CustomerCustomerDemo)
-		Get
-			Return Me._CustomerCustomerDemos
-		End Get
-		Set
-			Me._CustomerCustomerDemos.Assign(value)
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Orders_Customers", Storage:="_Orders", OtherKey:="CustomerID", DeleteRule:="NO ACTION")>  _
-	Public Property Orders() As EntitySet(Of [Order])
-		Get
-			Return Me._Orders
-		End Get
-		Set
-			Me._Orders.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
-		Me.SendPropertyChanging
-		entity.Customer = Me
-		Me.SendPropertyChanged("CustomerCustomerDemos")
-	End Sub
-	
-	Private Sub detach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
-		Me.SendPropertyChanging
-		entity.Customer = Nothing
-		Me.SendPropertyChanged("CustomerCustomerDemos")
-	End Sub
-	
-	Private Sub attach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.Customer = Me
-		Me.SendPropertyChanged("Orders")
-	End Sub
-	
-	Private Sub detach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.Customer = Nothing
-		Me.SendPropertyChanged("Orders")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._CustomerCustomerDemos = New EntitySet(Of CustomerCustomerDemo)(AddressOf Me.attach_CustomerCustomerDemos, AddressOf Me.detach_CustomerCustomerDemos)
+        Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
+    End Sub
+
+    <Column(Storage:="_CustomerID", DbType:="NChar(5) NOT NULL", CanBeNull:=False, IsPrimaryKey:=True)>
+    Public Property CustomerID() As String
+        Get
+            Return Me._CustomerID
+        End Get
+        Set
+            If (String.Equals(Me._CustomerID, Value) = False) Then
+                Me.OnCustomerIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CustomerID = Value
+                Me.SendPropertyChanged("CustomerID")
+                Me.OnCustomerIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CompanyName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=False)>
+    Public Property CompanyName() As String
+        Get
+            Return Me._CompanyName
+        End Get
+        Set
+            If (String.Equals(Me._CompanyName, Value) = False) Then
+                Me.OnCompanyNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CompanyName = Value
+                Me.SendPropertyChanged("CompanyName")
+                Me.OnCompanyNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ContactName", DbType:="NVarChar(30)")>
+    Public Property ContactName() As String
+        Get
+            Return Me._ContactName
+        End Get
+        Set
+            If (String.Equals(Me._ContactName, Value) = False) Then
+                Me.OnContactNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ContactName = Value
+                Me.SendPropertyChanged("ContactName")
+                Me.OnContactNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ContactTitle", DbType:="NVarChar(30)")>
+    Public Property ContactTitle() As String
+        Get
+            Return Me._ContactTitle
+        End Get
+        Set
+            If (String.Equals(Me._ContactTitle, Value) = False) Then
+                Me.OnContactTitleChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ContactTitle = Value
+                Me.SendPropertyChanged("ContactTitle")
+                Me.OnContactTitleChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Address", DbType:="NVarChar(60)")>
+    Public Property Address() As String
+        Get
+            Return Me._Address
+        End Get
+        Set
+            If (String.Equals(Me._Address, Value) = False) Then
+                Me.OnAddressChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Address = Value
+                Me.SendPropertyChanged("Address")
+                Me.OnAddressChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_City", DbType:="NVarChar(15)")>
+    Public Property City() As String
+        Get
+            Return Me._City
+        End Get
+        Set
+            If (String.Equals(Me._City, Value) = False) Then
+                Me.OnCityChanging(Value)
+                Me.SendPropertyChanging()
+                Me._City = Value
+                Me.SendPropertyChanged("City")
+                Me.OnCityChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Region", DbType:="NVarChar(15)")>
+    Public Property Region() As String
+        Get
+            Return Me._Region
+        End Get
+        Set
+            If (String.Equals(Me._Region, Value) = False) Then
+                Me.OnRegionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Region = Value
+                Me.SendPropertyChanged("Region")
+                Me.OnRegionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_PostalCode", DbType:="NVarChar(10)")>
+    Public Property PostalCode() As String
+        Get
+            Return Me._PostalCode
+        End Get
+        Set
+            If (String.Equals(Me._PostalCode, Value) = False) Then
+                Me.OnPostalCodeChanging(Value)
+                Me.SendPropertyChanging()
+                Me._PostalCode = Value
+                Me.SendPropertyChanged("PostalCode")
+                Me.OnPostalCodeChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Country", DbType:="NVarChar(15)")>
+    Public Property Country() As String
+        Get
+            Return Me._Country
+        End Get
+        Set
+            If (String.Equals(Me._Country, Value) = False) Then
+                Me.OnCountryChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Country = Value
+                Me.SendPropertyChanged("Country")
+                Me.OnCountryChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Phone", DbType:="NVarChar(24)")>
+    Public Property Phone() As String
+        Get
+            Return Me._Phone
+        End Get
+        Set
+            If (String.Equals(Me._Phone, Value) = False) Then
+                Me.OnPhoneChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Phone = Value
+                Me.SendPropertyChanged("Phone")
+                Me.OnPhoneChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Fax", DbType:="NVarChar(24)")>
+    Public Property Fax() As String
+        Get
+            Return Me._Fax
+        End Get
+        Set
+            If (String.Equals(Me._Fax, Value) = False) Then
+                Me.OnFaxChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Fax = Value
+                Me.SendPropertyChanged("Fax")
+                Me.OnFaxChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_CustomerCustomerDemo_Customers", Storage:="_CustomerCustomerDemos", OtherKey:="CustomerID", DeleteRule:="NO ACTION")>
+    Public Property CustomerCustomerDemos() As EntitySet(Of CustomerCustomerDemo)
+        Get
+            Return Me._CustomerCustomerDemos
+        End Get
+        Set
+            Me._CustomerCustomerDemos.Assign(Value)
+        End Set
+    End Property
+
+    <Association(Name:="FK_Orders_Customers", Storage:="_Orders", OtherKey:="CustomerID", DeleteRule:="NO ACTION")>
+    Public Property Orders() As EntitySet(Of [Order])
+        Get
+            Return Me._Orders
+        End Get
+        Set
+            Me._Orders.Assign(Value)
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
+        Me.SendPropertyChanging()
+        entity.Customer = Me
+        Me.SendPropertyChanged("CustomerCustomerDemos")
+    End Sub
+
+    Private Sub detach_CustomerCustomerDemos(ByVal entity As CustomerCustomerDemo)
+        Me.SendPropertyChanging()
+        entity.Customer = Nothing
+        Me.SendPropertyChanged("CustomerCustomerDemos")
+    End Sub
+
+    Private Sub attach_Orders(ByVal entity As [Order])
+        Me.SendPropertyChanging()
+        entity.Customer = Me
+        Me.SendPropertyChanged("Orders")
+    End Sub
+
+    Private Sub detach_Orders(ByVal entity As [Order])
+        Me.SendPropertyChanging()
+        entity.Customer = Nothing
+        Me.SendPropertyChanged("Orders")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Employees")>  _
+<Table(Name:="dbo.Employees")>
 Partial Public Class Employee
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _EmployeeID As Integer
-	
-	Private _LastName As String
-	
-	Private _FirstName As String
-	
-	Private _Title As String
-	
-	Private _TitleOfCourtesy As String
-	
-	Private _BirthDate As System.Nullable(Of Date)
-	
-	Private _HireDate As System.Nullable(Of Date)
-	
-	Private _Address As String
-	
-	Private _City As String
-	
-	Private _Region As String
-	
-	Private _PostalCode As String
-	
-	Private _Country As String
-	
-	Private _HomePhone As String
-	
-	Private _Extension As String
-	
-	Private _Photo As System.Data.Linq.Binary
-	
-	Private _Notes As String
-	
-	Private _ReportsTo As System.Nullable(Of Integer)
-	
-	Private _PhotoPath As String
-	
-	Private _ReportsToEmployee As EntityRef(Of Employee)
-	
-	Private _Employees As EntitySet(Of Employee)
-	
-	Private _EmployeeTerritories As EntitySet(Of EmployeeTerritory)
-	
-	Private _Orders As EntitySet(Of [Order])
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _EmployeeID As Integer
+
+    Private _LastName As String
+
+    Private _FirstName As String
+
+    Private _Title As String
+
+    Private _TitleOfCourtesy As String
+
+    Private _BirthDate As System.Nullable(Of Date)
+
+    Private _HireDate As System.Nullable(Of Date)
+
+    Private _Address As String
+
+    Private _City As String
+
+    Private _Region As String
+
+    Private _PostalCode As String
+
+    Private _Country As String
+
+    Private _HomePhone As String
+
+    Private _Extension As String
+
+    Private _Photo As System.Data.Linq.Binary
+
+    Private _Notes As String
+
+    Private _ReportsTo As System.Nullable(Of Integer)
+
+    Private _PhotoPath As String
+
+    Private _ReportsToEmployee As EntityRef(Of Employee)
+
+    Private _Employees As EntitySet(Of Employee)
+
+    Private _EmployeeTerritories As EntitySet(Of EmployeeTerritory)
+
+    Private _Orders As EntitySet(Of [Order])
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -1132,438 +1133,439 @@ Partial Public Class Employee
     End Sub
     Partial Private Sub OnPhotoPathChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._ReportsToEmployee = CType(Nothing, EntityRef(Of Employee))
-		Me._Employees = New EntitySet(Of Employee)(AddressOf Me.attach_Employees, AddressOf Me.detach_Employees)
-		Me._EmployeeTerritories = New EntitySet(Of EmployeeTerritory)(AddressOf Me.attach_EmployeeTerritories, AddressOf Me.detach_EmployeeTerritories)
-		Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
-	End Sub
-	
-	<Column(Storage:="_EmployeeID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property EmployeeID() As Integer
-		Get
-			Return Me._EmployeeID
-		End Get
-		Set
-			If ((Me._EmployeeID = value)  _
-						= false) Then
-				Me.OnEmployeeIDChanging(value)
-				Me.SendPropertyChanging
-				Me._EmployeeID = value
-				Me.SendPropertyChanged("EmployeeID")
-				Me.OnEmployeeIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_LastName", DbType:="NVarChar(20) NOT NULL", CanBeNull:=false)>  _
-	Public Property LastName() As String
-		Get
-			Return Me._LastName
-		End Get
-		Set
-			If (String.Equals(Me._LastName, value) = false) Then
-				Me.OnLastNameChanging(value)
-				Me.SendPropertyChanging
-				Me._LastName = value
-				Me.SendPropertyChanged("LastName")
-				Me.OnLastNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_FirstName", DbType:="NVarChar(10) NOT NULL", CanBeNull:=false)>  _
-	Public Property FirstName() As String
-		Get
-			Return Me._FirstName
-		End Get
-		Set
-			If (String.Equals(Me._FirstName, value) = false) Then
-				Me.OnFirstNameChanging(value)
-				Me.SendPropertyChanging
-				Me._FirstName = value
-				Me.SendPropertyChanged("FirstName")
-				Me.OnFirstNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Title", DbType:="NVarChar(30)")>  _
-	Public Property Title() As String
-		Get
-			Return Me._Title
-		End Get
-		Set
-			If (String.Equals(Me._Title, value) = false) Then
-				Me.OnTitleChanging(value)
-				Me.SendPropertyChanging
-				Me._Title = value
-				Me.SendPropertyChanged("Title")
-				Me.OnTitleChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_TitleOfCourtesy", DbType:="NVarChar(25)")>  _
-	Public Property TitleOfCourtesy() As String
-		Get
-			Return Me._TitleOfCourtesy
-		End Get
-		Set
-			If (String.Equals(Me._TitleOfCourtesy, value) = false) Then
-				Me.OnTitleOfCourtesyChanging(value)
-				Me.SendPropertyChanging
-				Me._TitleOfCourtesy = value
-				Me.SendPropertyChanged("TitleOfCourtesy")
-				Me.OnTitleOfCourtesyChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_BirthDate", DbType:="DateTime")>  _
-	Public Property BirthDate() As System.Nullable(Of Date)
-		Get
-			Return Me._BirthDate
-		End Get
-		Set
-			If (Me._BirthDate.Equals(value) = false) Then
-				Me.OnBirthDateChanging(value)
-				Me.SendPropertyChanging
-				Me._BirthDate = value
-				Me.SendPropertyChanged("BirthDate")
-				Me.OnBirthDateChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_HireDate", DbType:="DateTime")>  _
-	Public Property HireDate() As System.Nullable(Of Date)
-		Get
-			Return Me._HireDate
-		End Get
-		Set
-			If (Me._HireDate.Equals(value) = false) Then
-				Me.OnHireDateChanging(value)
-				Me.SendPropertyChanging
-				Me._HireDate = value
-				Me.SendPropertyChanged("HireDate")
-				Me.OnHireDateChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Address", DbType:="NVarChar(60)")>  _
-	Public Property Address() As String
-		Get
-			Return Me._Address
-		End Get
-		Set
-			If (String.Equals(Me._Address, value) = false) Then
-				Me.OnAddressChanging(value)
-				Me.SendPropertyChanging
-				Me._Address = value
-				Me.SendPropertyChanged("Address")
-				Me.OnAddressChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_City", DbType:="NVarChar(15)")>  _
-	Public Property City() As String
-		Get
-			Return Me._City
-		End Get
-		Set
-			If (String.Equals(Me._City, value) = false) Then
-				Me.OnCityChanging(value)
-				Me.SendPropertyChanging
-				Me._City = value
-				Me.SendPropertyChanged("City")
-				Me.OnCityChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Region", DbType:="NVarChar(15)")>  _
-	Public Property Region() As String
-		Get
-			Return Me._Region
-		End Get
-		Set
-			If (String.Equals(Me._Region, value) = false) Then
-				Me.OnRegionChanging(value)
-				Me.SendPropertyChanging
-				Me._Region = value
-				Me.SendPropertyChanged("Region")
-				Me.OnRegionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_PostalCode", DbType:="NVarChar(10)")>  _
-	Public Property PostalCode() As String
-		Get
-			Return Me._PostalCode
-		End Get
-		Set
-			If (String.Equals(Me._PostalCode, value) = false) Then
-				Me.OnPostalCodeChanging(value)
-				Me.SendPropertyChanging
-				Me._PostalCode = value
-				Me.SendPropertyChanged("PostalCode")
-				Me.OnPostalCodeChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Country", DbType:="NVarChar(15)")>  _
-	Public Property Country() As String
-		Get
-			Return Me._Country
-		End Get
-		Set
-			If (String.Equals(Me._Country, value) = false) Then
-				Me.OnCountryChanging(value)
-				Me.SendPropertyChanging
-				Me._Country = value
-				Me.SendPropertyChanged("Country")
-				Me.OnCountryChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_HomePhone", DbType:="NVarChar(24)")>  _
-	Public Property HomePhone() As String
-		Get
-			Return Me._HomePhone
-		End Get
-		Set
-			If (String.Equals(Me._HomePhone, value) = false) Then
-				Me.OnHomePhoneChanging(value)
-				Me.SendPropertyChanging
-				Me._HomePhone = value
-				Me.SendPropertyChanged("HomePhone")
-				Me.OnHomePhoneChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Extension", DbType:="NVarChar(4)")>  _
-	Public Property Extension() As String
-		Get
-			Return Me._Extension
-		End Get
-		Set
-			If (String.Equals(Me._Extension, value) = false) Then
-				Me.OnExtensionChanging(value)
-				Me.SendPropertyChanging
-				Me._Extension = value
-				Me.SendPropertyChanged("Extension")
-				Me.OnExtensionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Photo", DbType:="Image", CanBeNull:=true, UpdateCheck:=UpdateCheck.Never)>  _
-	Public Property Photo() As System.Data.Linq.Binary
-		Get
-			Return Me._Photo
-		End Get
-		Set
-			If (Me._Photo.Equals(value) = false) Then
-				Me.OnPhotoChanging(value)
-				Me.SendPropertyChanging
-				Me._Photo = value
-				Me.SendPropertyChanged("Photo")
-				Me.OnPhotoChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Notes", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>  _
-	Public Property Notes() As String
-		Get
-			Return Me._Notes
-		End Get
-		Set
-			If (String.Equals(Me._Notes, value) = false) Then
-				Me.OnNotesChanging(value)
-				Me.SendPropertyChanging
-				Me._Notes = value
-				Me.SendPropertyChanged("Notes")
-				Me.OnNotesChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ReportsTo", DbType:="Int")>  _
-	Public Property ReportsTo() As System.Nullable(Of Integer)
-		Get
-			Return Me._ReportsTo
-		End Get
-		Set
-			If (Me._ReportsTo.Equals(value) = false) Then
-				If Me._ReportsToEmployee.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnReportsToChanging(value)
-				Me.SendPropertyChanging
-				Me._ReportsTo = value
-				Me.SendPropertyChanged("ReportsTo")
-				Me.OnReportsToChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_PhotoPath", DbType:="NVarChar(255)")>  _
-	Public Property PhotoPath() As String
-		Get
-			Return Me._PhotoPath
-		End Get
-		Set
-			If (String.Equals(Me._PhotoPath, value) = false) Then
-				Me.OnPhotoPathChanging(value)
-				Me.SendPropertyChanging
-				Me._PhotoPath = value
-				Me.SendPropertyChanged("PhotoPath")
-				Me.OnPhotoPathChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Employees_Employees", Storage:="_ReportsToEmployee", ThisKey:="ReportsTo", IsForeignKey:=true)>  _
-	Public Property ReportsToEmployee() As Employee
-		Get
-			Return Me._ReportsToEmployee.Entity
-		End Get
-		Set
-			Dim previousValue As Employee = Me._ReportsToEmployee.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._ReportsToEmployee.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._ReportsToEmployee.Entity = Nothing
-					previousValue.Employees.Remove(Me)
-				End If
-				Me._ReportsToEmployee.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Employees.Add(Me)
-					Me._ReportsTo = value.EmployeeID
-				Else
-					Me._ReportsTo = CType(Nothing, Nullable(Of Integer))
-				End If
-				Me.SendPropertyChanged("ReportsToEmployee")
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Employees_Employees", Storage:="_Employees", OtherKey:="ReportsTo", DeleteRule:="NO ACTION")>  _
-	Public Property Employees() As EntitySet(Of Employee)
-		Get
-			Return Me._Employees
-		End Get
-		Set
-			Me._Employees.Assign(value)
-		End Set
-	End Property
-	
-	<Association(Name:="FK_EmployeeTerritories_Employees", Storage:="_EmployeeTerritories", OtherKey:="EmployeeID", DeleteRule:="NO ACTION")>  _
-	Public Property EmployeeTerritories() As EntitySet(Of EmployeeTerritory)
-		Get
-			Return Me._EmployeeTerritories
-		End Get
-		Set
-			Me._EmployeeTerritories.Assign(value)
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Orders_Employees", Storage:="_Orders", OtherKey:="EmployeeID", DeleteRule:="NO ACTION")>  _
-	Public Property Orders() As EntitySet(Of [Order])
-		Get
-			Return Me._Orders
-		End Get
-		Set
-			Me._Orders.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Employees(ByVal entity As Employee)
-		Me.SendPropertyChanging
-		entity.ReportsToEmployee = Me
-		Me.SendPropertyChanged("Employees")
-	End Sub
-	
-	Private Sub detach_Employees(ByVal entity As Employee)
-		Me.SendPropertyChanging
-		entity.ReportsToEmployee = Nothing
-		Me.SendPropertyChanged("Employees")
-	End Sub
-	
-	Private Sub attach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
-		Me.SendPropertyChanging
-		entity.Employee = Me
-		Me.SendPropertyChanged("EmployeeTerritories")
-	End Sub
-	
-	Private Sub detach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
-		Me.SendPropertyChanging
-		entity.Employee = Nothing
-		Me.SendPropertyChanged("EmployeeTerritories")
-	End Sub
-	
-	Private Sub attach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.Employee = Me
-		Me.SendPropertyChanged("Orders")
-	End Sub
-	
-	Private Sub detach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.Employee = Nothing
-		Me.SendPropertyChanged("Orders")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._ReportsToEmployee = CType(Nothing, EntityRef(Of Employee))
+        Me._Employees = New EntitySet(Of Employee)(AddressOf Me.attach_Employees, AddressOf Me.detach_Employees)
+        Me._EmployeeTerritories = New EntitySet(Of EmployeeTerritory)(AddressOf Me.attach_EmployeeTerritories, AddressOf Me.detach_EmployeeTerritories)
+        Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
+    End Sub
+
+    <Column(Storage:="_EmployeeID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=True, IsDbGenerated:=True)>
+    Public Property EmployeeID() As Integer
+        Get
+            Return Me._EmployeeID
+        End Get
+        Set
+            If ((Me._EmployeeID = Value) _
+                        = False) Then
+                Me.OnEmployeeIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._EmployeeID = Value
+                Me.SendPropertyChanged("EmployeeID")
+                Me.OnEmployeeIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_LastName", DbType:="NVarChar(20) NOT NULL", CanBeNull:=False)>
+    Public Property LastName() As String
+        Get
+            Return Me._LastName
+        End Get
+        Set
+            If (String.Equals(Me._LastName, Value) = False) Then
+                Me.OnLastNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._LastName = Value
+                Me.SendPropertyChanged("LastName")
+                Me.OnLastNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_FirstName", DbType:="NVarChar(10) NOT NULL", CanBeNull:=False)>
+    Public Property FirstName() As String
+        Get
+            Return Me._FirstName
+        End Get
+        Set
+            If (String.Equals(Me._FirstName, Value) = False) Then
+                Me.OnFirstNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._FirstName = Value
+                Me.SendPropertyChanged("FirstName")
+                Me.OnFirstNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Title", DbType:="NVarChar(30)")>
+    Public Property Title() As String
+        Get
+            Return Me._Title
+        End Get
+        Set
+            If (String.Equals(Me._Title, Value) = False) Then
+                Me.OnTitleChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Title = Value
+                Me.SendPropertyChanged("Title")
+                Me.OnTitleChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_TitleOfCourtesy", DbType:="NVarChar(25)")>
+    Public Property TitleOfCourtesy() As String
+        Get
+            Return Me._TitleOfCourtesy
+        End Get
+        Set
+            If (String.Equals(Me._TitleOfCourtesy, Value) = False) Then
+                Me.OnTitleOfCourtesyChanging(Value)
+                Me.SendPropertyChanging()
+                Me._TitleOfCourtesy = Value
+                Me.SendPropertyChanged("TitleOfCourtesy")
+                Me.OnTitleOfCourtesyChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_BirthDate", DbType:="DateTime")>
+    Public Property BirthDate() As System.Nullable(Of Date)
+        Get
+            Return Me._BirthDate
+        End Get
+        Set
+            If (Me._BirthDate.Equals(Value) = False) Then
+                Me.OnBirthDateChanging(Value)
+                Me.SendPropertyChanging()
+                Me._BirthDate = Value
+                Me.SendPropertyChanged("BirthDate")
+                Me.OnBirthDateChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_HireDate", DbType:="DateTime")>
+    Public Property HireDate() As System.Nullable(Of Date)
+        Get
+            Return Me._HireDate
+        End Get
+        Set
+            If (Me._HireDate.Equals(Value) = False) Then
+                Me.OnHireDateChanging(Value)
+                Me.SendPropertyChanging()
+                Me._HireDate = Value
+                Me.SendPropertyChanged("HireDate")
+                Me.OnHireDateChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Address", DbType:="NVarChar(60)")>
+    Public Property Address() As String
+        Get
+            Return Me._Address
+        End Get
+        Set
+            If (String.Equals(Me._Address, Value) = False) Then
+                Me.OnAddressChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Address = Value
+                Me.SendPropertyChanged("Address")
+                Me.OnAddressChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_City", DbType:="NVarChar(15)")>
+    Public Property City() As String
+        Get
+            Return Me._City
+        End Get
+        Set
+            If (String.Equals(Me._City, Value) = False) Then
+                Me.OnCityChanging(Value)
+                Me.SendPropertyChanging()
+                Me._City = Value
+                Me.SendPropertyChanged("City")
+                Me.OnCityChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Region", DbType:="NVarChar(15)")>
+    Public Property Region() As String
+        Get
+            Return Me._Region
+        End Get
+        Set
+            If (String.Equals(Me._Region, Value) = False) Then
+                Me.OnRegionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Region = Value
+                Me.SendPropertyChanged("Region")
+                Me.OnRegionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_PostalCode", DbType:="NVarChar(10)")>
+    Public Property PostalCode() As String
+        Get
+            Return Me._PostalCode
+        End Get
+        Set
+            If (String.Equals(Me._PostalCode, Value) = False) Then
+                Me.OnPostalCodeChanging(Value)
+                Me.SendPropertyChanging()
+                Me._PostalCode = Value
+                Me.SendPropertyChanged("PostalCode")
+                Me.OnPostalCodeChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Country", DbType:="NVarChar(15)")>
+    Public Property Country() As String
+        Get
+            Return Me._Country
+        End Get
+        Set
+            If (String.Equals(Me._Country, Value) = False) Then
+                Me.OnCountryChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Country = Value
+                Me.SendPropertyChanged("Country")
+                Me.OnCountryChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_HomePhone", DbType:="NVarChar(24)")>
+    Public Property HomePhone() As String
+        Get
+            Return Me._HomePhone
+        End Get
+        Set
+            If (String.Equals(Me._HomePhone, Value) = False) Then
+                Me.OnHomePhoneChanging(Value)
+                Me.SendPropertyChanging()
+                Me._HomePhone = Value
+                Me.SendPropertyChanged("HomePhone")
+                Me.OnHomePhoneChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Extension", DbType:="NVarChar(4)")>
+    Public Property Extension() As String
+        Get
+            Return Me._Extension
+        End Get
+        Set
+            If (String.Equals(Me._Extension, Value) = False) Then
+                Me.OnExtensionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Extension = Value
+                Me.SendPropertyChanged("Extension")
+                Me.OnExtensionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Photo", DbType:="Image", CanBeNull:=True, UpdateCheck:=UpdateCheck.Never)>
+    Public Property Photo() As System.Data.Linq.Binary
+        Get
+            Return Me._Photo
+        End Get
+        Set
+            If (Me._Photo.Equals(Value) = False) Then
+                Me.OnPhotoChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Photo = Value
+                Me.SendPropertyChanged("Photo")
+                Me.OnPhotoChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Notes", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>
+    Public Property Notes() As String
+        Get
+            Return Me._Notes
+        End Get
+        Set
+            If (String.Equals(Me._Notes, Value) = False) Then
+                Me.OnNotesChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Notes = Value
+                Me.SendPropertyChanged("Notes")
+                Me.OnNotesChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ReportsTo", DbType:="Int")>
+    Public Property ReportsTo() As System.Nullable(Of Integer)
+        Get
+            Return Me._ReportsTo
+        End Get
+        Set
+            If (Me._ReportsTo.Equals(Value) = False) Then
+                If Me._ReportsToEmployee.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnReportsToChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ReportsTo = Value
+                Me.SendPropertyChanged("ReportsTo")
+                Me.OnReportsToChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_PhotoPath", DbType:="NVarChar(255)")>
+    Public Property PhotoPath() As String
+        Get
+            Return Me._PhotoPath
+        End Get
+        Set
+            If (String.Equals(Me._PhotoPath, Value) = False) Then
+                Me.OnPhotoPathChanging(Value)
+                Me.SendPropertyChanging()
+                Me._PhotoPath = Value
+                Me.SendPropertyChanged("PhotoPath")
+                Me.OnPhotoPathChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Employees_Employees", Storage:="_ReportsToEmployee", ThisKey:="ReportsTo", IsForeignKey:=True)>
+    Public Property ReportsToEmployee() As Employee
+        Get
+            Return Me._ReportsToEmployee.Entity
+        End Get
+        Set
+            Dim previousValue As Employee = Me._ReportsToEmployee.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._ReportsToEmployee.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._ReportsToEmployee.Entity = Nothing
+                    previousValue.Employees.Remove(Me)
+                End If
+                Me._ReportsToEmployee.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.Employees.Add(Me)
+                    Me._ReportsTo = Value.EmployeeID
+                Else
+                    Me._ReportsTo = CType(Nothing, Nullable(Of Integer))
+                End If
+                Me.SendPropertyChanged("ReportsToEmployee")
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Employees_Employees", Storage:="_Employees", OtherKey:="ReportsTo", DeleteRule:="NO ACTION")>
+    Public Property Employees() As EntitySet(Of Employee)
+        Get
+            Return Me._Employees
+        End Get
+        Set
+            Me._Employees.Assign(Value)
+        End Set
+    End Property
+
+    <Association(Name:="FK_EmployeeTerritories_Employees", Storage:="_EmployeeTerritories", OtherKey:="EmployeeID", DeleteRule:="NO ACTION")>
+    Public Property EmployeeTerritories() As EntitySet(Of EmployeeTerritory)
+        Get
+            Return Me._EmployeeTerritories
+        End Get
+        Set
+            Me._EmployeeTerritories.Assign(Value)
+        End Set
+    End Property
+
+    <Association(Name:="FK_Orders_Employees", Storage:="_Orders", OtherKey:="EmployeeID", DeleteRule:="NO ACTION")>
+    Public Property Orders() As EntitySet(Of [Order])
+        Get
+            Return Me._Orders
+        End Get
+        Set
+            Me._Orders.Assign(Value)
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_Employees(ByVal entity As Employee)
+        Me.SendPropertyChanging()
+        entity.ReportsToEmployee = Me
+        Me.SendPropertyChanged("Employees")
+    End Sub
+
+    Private Sub detach_Employees(ByVal entity As Employee)
+        Me.SendPropertyChanging()
+        entity.ReportsToEmployee = Nothing
+        Me.SendPropertyChanged("Employees")
+    End Sub
+
+    Private Sub attach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
+        Me.SendPropertyChanging()
+        entity.Employee = Me
+        Me.SendPropertyChanged("EmployeeTerritories")
+    End Sub
+
+    Private Sub detach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
+        Me.SendPropertyChanging()
+        entity.Employee = Nothing
+        Me.SendPropertyChanged("EmployeeTerritories")
+    End Sub
+
+    Private Sub attach_Orders(ByVal entity As [Order])
+        Me.SendPropertyChanging()
+        entity.Employee = Me
+        Me.SendPropertyChanged("Orders")
+    End Sub
+
+    Private Sub detach_Orders(ByVal entity As [Order])
+        Me.SendPropertyChanging()
+        entity.Employee = Nothing
+        Me.SendPropertyChanged("Orders")
+    End Sub
 End Class
 
-<Table(Name:="dbo.EmployeeTerritories")>  _
+<Table(Name:="dbo.EmployeeTerritories")>
 Partial Public Class EmployeeTerritory
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _EmployeeID As Integer
-	
-	Private _TerritoryID As String
-	
-	Private _Employee As EntityRef(Of Employee)
-	
-	Private _Territory As EntityRef(Of Territory)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _EmployeeID As Integer
+
+    Private _TerritoryID As String
+
+    Private _Employee As EntityRef(Of Employee)
+
+    Private _Territory As EntityRef(Of Territory)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -1578,152 +1580,154 @@ Partial Public Class EmployeeTerritory
     End Sub
     Partial Private Sub OnTerritoryIDChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._Employee = CType(Nothing, EntityRef(Of Employee))
-		Me._Territory = CType(Nothing, EntityRef(Of Territory))
-	End Sub
-	
-	<Column(Storage:="_EmployeeID", DbType:="Int NOT NULL", IsPrimaryKey:=true)>  _
-	Public Property EmployeeID() As Integer
-		Get
-			Return Me._EmployeeID
-		End Get
-		Set
-			If ((Me._EmployeeID = value)  _
-						= false) Then
-				If Me._Employee.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnEmployeeIDChanging(value)
-				Me.SendPropertyChanging
-				Me._EmployeeID = value
-				Me.SendPropertyChanged("EmployeeID")
-				Me.OnEmployeeIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_TerritoryID", DbType:="NVarChar(20) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true)>  _
-	Public Property TerritoryID() As String
-		Get
-			Return Me._TerritoryID
-		End Get
-		Set
-			If (String.Equals(Me._TerritoryID, value) = false) Then
-				If Me._Territory.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnTerritoryIDChanging(value)
-				Me.SendPropertyChanging
-				Me._TerritoryID = value
-				Me.SendPropertyChanged("TerritoryID")
-				Me.OnTerritoryIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_EmployeeTerritories_Employees", Storage:="_Employee", ThisKey:="EmployeeID", IsForeignKey:=true)>  _
-	Public Property Employee() As Employee
-		Get
-			Return Me._Employee.Entity
-		End Get
-		Set
-			Dim previousValue As Employee = Me._Employee.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Employee.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Employee.Entity = Nothing
-					previousValue.EmployeeTerritories.Remove(Me)
-				End If
-				Me._Employee.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.EmployeeTerritories.Add(Me)
-					Me._EmployeeID = value.EmployeeID
-				Else
-					Me._EmployeeID = CType(Nothing, Integer)
-				End If
-				Me.SendPropertyChanged("Employee")
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_EmployeeTerritories_Territories", Storage:="_Territory", ThisKey:="TerritoryID", IsForeignKey:=true)>  _
-	Public Property Territory() As Territory
-		Get
-			Return Me._Territory.Entity
-		End Get
-		Set
-			Dim previousValue As Territory = Me._Territory.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Territory.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Territory.Entity = Nothing
-					previousValue.EmployeeTerritories.Remove(Me)
-				End If
-				Me._Territory.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.EmployeeTerritories.Add(Me)
-					Me._TerritoryID = value.TerritoryID
-				Else
-					Me._TerritoryID = CType(Nothing, String)
-				End If
-				Me.SendPropertyChanged("Territory")
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._Employee = CType(Nothing, EntityRef(Of Employee))
+        Me._Territory = CType(Nothing, EntityRef(Of Territory))
+    End Sub
+
+    <Column(Storage:="_EmployeeID", DbType:="Int NOT NULL", IsPrimaryKey:=True)>
+    Public Property EmployeeID() As Integer
+        Get
+            Return Me._EmployeeID
+        End Get
+        Set
+            If ((Me._EmployeeID = Value) _
+                        = False) Then
+                If Me._Employee.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnEmployeeIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._EmployeeID = Value
+                Me.SendPropertyChanged("EmployeeID")
+                Me.OnEmployeeIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_TerritoryID", DbType:="NVarChar(20) NOT NULL", CanBeNull:=False, IsPrimaryKey:=True)>
+    Public Property TerritoryID() As String
+        Get
+            Return Me._TerritoryID
+        End Get
+        Set
+            If (String.Equals(Me._TerritoryID, Value) = False) Then
+                If Me._Territory.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnTerritoryIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._TerritoryID = Value
+                Me.SendPropertyChanged("TerritoryID")
+                Me.OnTerritoryIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_EmployeeTerritories_Employees", Storage:="_Employee", ThisKey:="EmployeeID", IsForeignKey:=True)>
+    Public Property Employee() As Employee
+        Get
+            Return Me._Employee.Entity
+        End Get
+        Set
+            Dim previousValue As Employee = Me._Employee.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Employee.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Employee.Entity = Nothing
+                    previousValue.EmployeeTerritories.Remove(Me)
+                End If
+                Me._Employee.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.EmployeeTerritories.Add(Me)
+                    Me._EmployeeID = Value.EmployeeID
+                Else
+                    Me._EmployeeID = CType(Nothing, Integer)
+                End If
+                Me.SendPropertyChanged("Employee")
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_EmployeeTerritories_Territories", Storage:="_Territory", ThisKey:="TerritoryID", IsForeignKey:=True)>
+    Public Property Territory() As Territory
+        Get
+            Return Me._Territory.Entity
+        End Get
+        Set
+            Dim previousValue As Territory = Me._Territory.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Territory.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Territory.Entity = Nothing
+                    previousValue.EmployeeTerritories.Remove(Me)
+                End If
+                Me._Territory.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.EmployeeTerritories.Add(Me)
+                    Me._TerritoryID = Value.TerritoryID
+                Else
+                    Me._TerritoryID = CType(Nothing, String)
+                End If
+                Me.SendPropertyChanged("Territory")
+            End If
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
 End Class
 
-<Table(Name:="dbo.Order Details")>  _
+<Table(Name:="dbo.Order Details")>
 Partial Public Class OrderDetail
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _OrderID As Integer
-	
-	Private _ProductID As Integer
-	
-	Private _UnitPrice As Decimal
-	
-	Private _Quantity As Short
-	
-	Private _Discount As Single
-	
-	Private _Order As EntityRef(Of [Order])
-	
-	Private _Product As EntityRef(Of Product)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _OrderID As Integer
+
+    Private _ProductID As Integer
+
+    Private _UnitPrice As Decimal
+
+    Private _Quantity As Short
+
+    Private _Discount As Single
+
+    Private _Order As EntityRef(Of [Order])
+
+    Private _Product As EntityRef(Of Product)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -1750,226 +1754,228 @@ Partial Public Class OrderDetail
     End Sub
     Partial Private Sub OnDiscountChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._Order = CType(Nothing, EntityRef(Of [Order]))
-		Me._Product = CType(Nothing, EntityRef(Of Product))
-	End Sub
-	
-	<Column(Storage:="_OrderID", DbType:="Int NOT NULL", IsPrimaryKey:=true)>  _
-	Public Property OrderID() As Integer
-		Get
-			Return Me._OrderID
-		End Get
-		Set
-			If ((Me._OrderID = value)  _
-						= false) Then
-				If Me._Order.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnOrderIDChanging(value)
-				Me.SendPropertyChanging
-				Me._OrderID = value
-				Me.SendPropertyChanged("OrderID")
-				Me.OnOrderIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ProductID", DbType:="Int NOT NULL", IsPrimaryKey:=true)>  _
-	Public Property ProductID() As Integer
-		Get
-			Return Me._ProductID
-		End Get
-		Set
-			If ((Me._ProductID = value)  _
-						= false) Then
-				If Me._Product.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnProductIDChanging(value)
-				Me.SendPropertyChanging
-				Me._ProductID = value
-				Me.SendPropertyChanged("ProductID")
-				Me.OnProductIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_UnitPrice", DbType:="Money NOT NULL")>  _
-	Public Property UnitPrice() As Decimal
-		Get
-			Return Me._UnitPrice
-		End Get
-		Set
-			If ((Me._UnitPrice = value)  _
-						= false) Then
-				Me.OnUnitPriceChanging(value)
-				Me.SendPropertyChanging
-				Me._UnitPrice = value
-				Me.SendPropertyChanged("UnitPrice")
-				Me.OnUnitPriceChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Quantity", DbType:="SmallInt NOT NULL")>  _
-	Public Property Quantity() As Short
-		Get
-			Return Me._Quantity
-		End Get
-		Set
-			If ((Me._Quantity = value)  _
-						= false) Then
-				Me.OnQuantityChanging(value)
-				Me.SendPropertyChanging
-				Me._Quantity = value
-				Me.SendPropertyChanged("Quantity")
-				Me.OnQuantityChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Discount", DbType:="Real NOT NULL")>  _
-	Public Property Discount() As Single
-		Get
-			Return Me._Discount
-		End Get
-		Set
-			If ((Me._Discount = value)  _
-						= false) Then
-				Me.OnDiscountChanging(value)
-				Me.SendPropertyChanging
-				Me._Discount = value
-				Me.SendPropertyChanged("Discount")
-				Me.OnDiscountChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Order_Details_Orders", Storage:="_Order", ThisKey:="OrderID", IsForeignKey:=true)>  _
-	Public Property [Order]() As [Order]
-		Get
-			Return Me._Order.Entity
-		End Get
-		Set
-			Dim previousValue As [Order] = Me._Order.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Order.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Order.Entity = Nothing
-					previousValue.OrderDetails.Remove(Me)
-				End If
-				Me._Order.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.OrderDetails.Add(Me)
-					Me._OrderID = value.OrderID
-				Else
-					Me._OrderID = CType(Nothing, Integer)
-				End If
-				Me.SendPropertyChanged("[Order]")
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Order_Details_Products", Storage:="_Product", ThisKey:="ProductID", IsForeignKey:=true)>  _
-	Public Property Product() As Product
-		Get
-			Return Me._Product.Entity
-		End Get
-		Set
-			Dim previousValue As Product = Me._Product.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Product.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Product.Entity = Nothing
-					previousValue.OrderDetails.Remove(Me)
-				End If
-				Me._Product.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.OrderDetails.Add(Me)
-					Me._ProductID = value.ProductID
-				Else
-					Me._ProductID = CType(Nothing, Integer)
-				End If
-				Me.SendPropertyChanged("Product")
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._Order = CType(Nothing, EntityRef(Of [Order]))
+        Me._Product = CType(Nothing, EntityRef(Of Product))
+    End Sub
+
+    <Column(Storage:="_OrderID", DbType:="Int NOT NULL", IsPrimaryKey:=True)>
+    Public Property OrderID() As Integer
+        Get
+            Return Me._OrderID
+        End Get
+        Set
+            If ((Me._OrderID = Value) _
+                        = False) Then
+                If Me._Order.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnOrderIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._OrderID = Value
+                Me.SendPropertyChanged("OrderID")
+                Me.OnOrderIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ProductID", DbType:="Int NOT NULL", IsPrimaryKey:=True)>
+    Public Property ProductID() As Integer
+        Get
+            Return Me._ProductID
+        End Get
+        Set
+            If ((Me._ProductID = Value) _
+                        = False) Then
+                If Me._Product.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnProductIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ProductID = Value
+                Me.SendPropertyChanged("ProductID")
+                Me.OnProductIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_UnitPrice", DbType:="Money NOT NULL")>
+    Public Property UnitPrice() As Decimal
+        Get
+            Return Me._UnitPrice
+        End Get
+        Set
+            If ((Me._UnitPrice = Value) _
+                        = False) Then
+                Me.OnUnitPriceChanging(Value)
+                Me.SendPropertyChanging()
+                Me._UnitPrice = Value
+                Me.SendPropertyChanged("UnitPrice")
+                Me.OnUnitPriceChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Quantity", DbType:="SmallInt NOT NULL")>
+    Public Property Quantity() As Short
+        Get
+            Return Me._Quantity
+        End Get
+        Set
+            If ((Me._Quantity = Value) _
+                        = False) Then
+                Me.OnQuantityChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Quantity = Value
+                Me.SendPropertyChanged("Quantity")
+                Me.OnQuantityChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Discount", DbType:="Real NOT NULL")>
+    Public Property Discount() As Single
+        Get
+            Return Me._Discount
+        End Get
+        Set
+            If ((Me._Discount = Value) _
+                        = False) Then
+                Me.OnDiscountChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Discount = Value
+                Me.SendPropertyChanged("Discount")
+                Me.OnDiscountChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Order_Details_Orders", Storage:="_Order", ThisKey:="OrderID", IsForeignKey:=True)>
+    Public Property [Order]() As [Order]
+        Get
+            Return Me._Order.Entity
+        End Get
+        Set
+            Dim previousValue As [Order] = Me._Order.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Order.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Order.Entity = Nothing
+                    previousValue.OrderDetails.Remove(Me)
+                End If
+                Me._Order.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.OrderDetails.Add(Me)
+                    Me._OrderID = Value.OrderID
+                Else
+                    Me._OrderID = CType(Nothing, Integer)
+                End If
+                Me.SendPropertyChanged("[Order]")
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Order_Details_Products", Storage:="_Product", ThisKey:="ProductID", IsForeignKey:=True)>
+    Public Property Product() As Product
+        Get
+            Return Me._Product.Entity
+        End Get
+        Set
+            Dim previousValue As Product = Me._Product.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Product.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Product.Entity = Nothing
+                    previousValue.OrderDetails.Remove(Me)
+                End If
+                Me._Product.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.OrderDetails.Add(Me)
+                    Me._ProductID = Value.ProductID
+                Else
+                    Me._ProductID = CType(Nothing, Integer)
+                End If
+                Me.SendPropertyChanged("Product")
+            End If
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
 End Class
 
-<Table(Name:="dbo.Orders")>  _
+<Table(Name:="dbo.Orders")>
 Partial Public Class [Order]
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _OrderID As Integer
-	
-	Private _CustomerID As String
-	
-	Private _EmployeeID As System.Nullable(Of Integer)
-	
-	Private _OrderDate As System.Nullable(Of Date)
-	
-	Private _RequiredDate As System.Nullable(Of Date)
-	
-	Private _ShippedDate As System.Nullable(Of Date)
-	
-	Private _ShipVia As System.Nullable(Of Integer)
-	
-	Private _Freight As System.Nullable(Of Decimal)
-	
-	Private _ShipName As String
-	
-	Private _ShipAddress As String
-	
-	Private _ShipCity As String
-	
-	Private _ShipRegion As String
-	
-	Private _ShipPostalCode As String
-	
-	Private _ShipCountry As String
-	
-	Private _OrderDetails As EntitySet(Of OrderDetail)
-	
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _OrderID As Integer
+
+    Private _CustomerID As String
+
+    Private _EmployeeID As System.Nullable(Of Integer)
+
+    Private _OrderDate As System.Nullable(Of Date)
+
+    Private _RequiredDate As System.Nullable(Of Date)
+
+    Private _ShippedDate As System.Nullable(Of Date)
+
+    Private _ShipVia As System.Nullable(Of Integer)
+
+    Private _Freight As System.Nullable(Of Decimal)
+
+    Private _ShipName As String
+
+    Private _ShipAddress As String
+
+    Private _ShipCity As String
+
+    Private _ShipRegion As String
+
+    Private _ShipPostalCode As String
+
+    Private _ShipCountry As String
+
+    Private _OrderDetails As EntitySet(Of OrderDetail)
+
     ' Private _Customer As EntityRef(Of Customer)***
-	
-	Private _Employee As EntityRef(Of Employee)
-	
-	Private _Shipper As EntityRef(Of Shipper)
-	
-    #Region "Extensibility Method Definitions"
+
+    Private _Employee As EntityRef(Of Employee)
+
+    Private _Shipper As EntityRef(Of Shipper)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -2032,264 +2038,264 @@ Partial Public Class [Order]
     End Sub
     Partial Private Sub OnShipCountryChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._OrderDetails = New EntitySet(Of OrderDetail)(AddressOf Me.attach_OrderDetails, AddressOf Me.detach_OrderDetails)
-		Me._Customer = CType(Nothing, EntityRef(Of Customer))
-		Me._Employee = CType(Nothing, EntityRef(Of Employee))
-		Me._Shipper = CType(Nothing, EntityRef(Of Shipper))
-	End Sub
-	
-	<Column(Storage:="_OrderID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property OrderID() As Integer
-		Get
-			Return Me._OrderID
-		End Get
-		Set
-			If ((Me._OrderID = value)  _
-						= false) Then
-				Me.OnOrderIDChanging(value)
-				Me.SendPropertyChanging
-				Me._OrderID = value
-				Me.SendPropertyChanged("OrderID")
-				Me.OnOrderIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CustomerID", DbType:="NChar(5)")>  _
-	Public Property CustomerID() As String
-		Get
-			Return Me._CustomerID
-		End Get
-		Set
-			If (String.Equals(Me._CustomerID, value) = false) Then
-				If Me._Customer.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnCustomerIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CustomerID = value
-				Me.SendPropertyChanged("CustomerID")
-				Me.OnCustomerIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_EmployeeID", DbType:="Int")>  _
-	Public Property EmployeeID() As System.Nullable(Of Integer)
-		Get
-			Return Me._EmployeeID
-		End Get
-		Set
-			If (Me._EmployeeID.Equals(value) = false) Then
-				If Me._Employee.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnEmployeeIDChanging(value)
-				Me.SendPropertyChanging
-				Me._EmployeeID = value
-				Me.SendPropertyChanged("EmployeeID")
-				Me.OnEmployeeIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_OrderDate", DbType:="DateTime")>  _
-	Public Property OrderDate() As System.Nullable(Of Date)
-		Get
-			Return Me._OrderDate
-		End Get
-		Set
-			If (Me._OrderDate.Equals(value) = false) Then
-				Me.OnOrderDateChanging(value)
-				Me.SendPropertyChanging
-				Me._OrderDate = value
-				Me.SendPropertyChanged("OrderDate")
-				Me.OnOrderDateChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_RequiredDate", DbType:="DateTime")>  _
-	Public Property RequiredDate() As System.Nullable(Of Date)
-		Get
-			Return Me._RequiredDate
-		End Get
-		Set
-			If (Me._RequiredDate.Equals(value) = false) Then
-				Me.OnRequiredDateChanging(value)
-				Me.SendPropertyChanging
-				Me._RequiredDate = value
-				Me.SendPropertyChanged("RequiredDate")
-				Me.OnRequiredDateChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShippedDate", DbType:="DateTime")>  _
-	Public Property ShippedDate() As System.Nullable(Of Date)
-		Get
-			Return Me._ShippedDate
-		End Get
-		Set
-			If (Me._ShippedDate.Equals(value) = false) Then
-				Me.OnShippedDateChanging(value)
-				Me.SendPropertyChanging
-				Me._ShippedDate = value
-				Me.SendPropertyChanged("ShippedDate")
-				Me.OnShippedDateChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipVia", DbType:="Int")>  _
-	Public Property ShipVia() As System.Nullable(Of Integer)
-		Get
-			Return Me._ShipVia
-		End Get
-		Set
-			If (Me._ShipVia.Equals(value) = false) Then
-				If Me._Shipper.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnShipViaChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipVia = value
-				Me.SendPropertyChanged("ShipVia")
-				Me.OnShipViaChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Freight", DbType:="Money")>  _
-	Public Property Freight() As System.Nullable(Of Decimal)
-		Get
-			Return Me._Freight
-		End Get
-		Set
-			If (Me._Freight.Equals(value) = false) Then
-				Me.OnFreightChanging(value)
-				Me.SendPropertyChanging
-				Me._Freight = value
-				Me.SendPropertyChanged("Freight")
-				Me.OnFreightChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipName", DbType:="NVarChar(40)")>  _
-	Public Property ShipName() As String
-		Get
-			Return Me._ShipName
-		End Get
-		Set
-			If (String.Equals(Me._ShipName, value) = false) Then
-				Me.OnShipNameChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipName = value
-				Me.SendPropertyChanged("ShipName")
-				Me.OnShipNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipAddress", DbType:="NVarChar(60)")>  _
-	Public Property ShipAddress() As String
-		Get
-			Return Me._ShipAddress
-		End Get
-		Set
-			If (String.Equals(Me._ShipAddress, value) = false) Then
-				Me.OnShipAddressChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipAddress = value
-				Me.SendPropertyChanged("ShipAddress")
-				Me.OnShipAddressChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipCity", DbType:="NVarChar(15)")>  _
-	Public Property ShipCity() As String
-		Get
-			Return Me._ShipCity
-		End Get
-		Set
-			If (String.Equals(Me._ShipCity, value) = false) Then
-				Me.OnShipCityChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipCity = value
-				Me.SendPropertyChanged("ShipCity")
-				Me.OnShipCityChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipRegion", DbType:="NVarChar(15)")>  _
-	Public Property ShipRegion() As String
-		Get
-			Return Me._ShipRegion
-		End Get
-		Set
-			If (String.Equals(Me._ShipRegion, value) = false) Then
-				Me.OnShipRegionChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipRegion = value
-				Me.SendPropertyChanged("ShipRegion")
-				Me.OnShipRegionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipPostalCode", DbType:="NVarChar(10)")>  _
-	Public Property ShipPostalCode() As String
-		Get
-			Return Me._ShipPostalCode
-		End Get
-		Set
-			If (String.Equals(Me._ShipPostalCode, value) = false) Then
-				Me.OnShipPostalCodeChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipPostalCode = value
-				Me.SendPropertyChanged("ShipPostalCode")
-				Me.OnShipPostalCodeChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShipCountry", DbType:="NVarChar(15)")>  _
-	Public Property ShipCountry() As String
-		Get
-			Return Me._ShipCountry
-		End Get
-		Set
-			If (String.Equals(Me._ShipCountry, value) = false) Then
-				Me.OnShipCountryChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipCountry = value
-				Me.SendPropertyChanged("ShipCountry")
-				Me.OnShipCountryChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Order_Details_Orders", Storage:="_OrderDetails", OtherKey:="OrderID", DeleteRule:="NO ACTION")>  _
-	Public Property OrderDetails() As EntitySet(Of OrderDetail)
-		Get
-			Return Me._OrderDetails
-		End Get
-		Set
-			Me._OrderDetails.Assign(value)
-		End Set
-	End Property
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._OrderDetails = New EntitySet(Of OrderDetail)(AddressOf Me.attach_OrderDetails, AddressOf Me.detach_OrderDetails)
+        Me._Customer = CType(Nothing, EntityRef(Of Customer))
+        Me._Employee = CType(Nothing, EntityRef(Of Employee))
+        Me._Shipper = CType(Nothing, EntityRef(Of Shipper))
+    End Sub
+
+    <Column(Storage:="_OrderID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=True, IsDbGenerated:=True)>
+    Public Property OrderID() As Integer
+        Get
+            Return Me._OrderID
+        End Get
+        Set
+            If ((Me._OrderID = Value) _
+                        = False) Then
+                Me.OnOrderIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._OrderID = Value
+                Me.SendPropertyChanged("OrderID")
+                Me.OnOrderIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CustomerID", DbType:="NChar(5)")>
+    Public Property CustomerID() As String
+        Get
+            Return Me._CustomerID
+        End Get
+        Set
+            If (String.Equals(Me._CustomerID, Value) = False) Then
+                If Me._Customer.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnCustomerIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CustomerID = Value
+                Me.SendPropertyChanged("CustomerID")
+                Me.OnCustomerIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_EmployeeID", DbType:="Int")>
+    Public Property EmployeeID() As System.Nullable(Of Integer)
+        Get
+            Return Me._EmployeeID
+        End Get
+        Set
+            If (Me._EmployeeID.Equals(Value) = False) Then
+                If Me._Employee.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnEmployeeIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._EmployeeID = Value
+                Me.SendPropertyChanged("EmployeeID")
+                Me.OnEmployeeIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_OrderDate", DbType:="DateTime")>
+    Public Property OrderDate() As System.Nullable(Of Date)
+        Get
+            Return Me._OrderDate
+        End Get
+        Set
+            If (Me._OrderDate.Equals(Value) = False) Then
+                Me.OnOrderDateChanging(Value)
+                Me.SendPropertyChanging()
+                Me._OrderDate = Value
+                Me.SendPropertyChanged("OrderDate")
+                Me.OnOrderDateChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_RequiredDate", DbType:="DateTime")>
+    Public Property RequiredDate() As System.Nullable(Of Date)
+        Get
+            Return Me._RequiredDate
+        End Get
+        Set
+            If (Me._RequiredDate.Equals(Value) = False) Then
+                Me.OnRequiredDateChanging(Value)
+                Me.SendPropertyChanging()
+                Me._RequiredDate = Value
+                Me.SendPropertyChanged("RequiredDate")
+                Me.OnRequiredDateChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShippedDate", DbType:="DateTime")>
+    Public Property ShippedDate() As System.Nullable(Of Date)
+        Get
+            Return Me._ShippedDate
+        End Get
+        Set
+            If (Me._ShippedDate.Equals(Value) = False) Then
+                Me.OnShippedDateChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShippedDate = Value
+                Me.SendPropertyChanged("ShippedDate")
+                Me.OnShippedDateChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipVia", DbType:="Int")>
+    Public Property ShipVia() As System.Nullable(Of Integer)
+        Get
+            Return Me._ShipVia
+        End Get
+        Set
+            If (Me._ShipVia.Equals(Value) = False) Then
+                If Me._Shipper.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnShipViaChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipVia = Value
+                Me.SendPropertyChanged("ShipVia")
+                Me.OnShipViaChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Freight", DbType:="Money")>
+    Public Property Freight() As System.Nullable(Of Decimal)
+        Get
+            Return Me._Freight
+        End Get
+        Set
+            If (Me._Freight.Equals(Value) = False) Then
+                Me.OnFreightChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Freight = Value
+                Me.SendPropertyChanged("Freight")
+                Me.OnFreightChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipName", DbType:="NVarChar(40)")>
+    Public Property ShipName() As String
+        Get
+            Return Me._ShipName
+        End Get
+        Set
+            If (String.Equals(Me._ShipName, Value) = False) Then
+                Me.OnShipNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipName = Value
+                Me.SendPropertyChanged("ShipName")
+                Me.OnShipNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipAddress", DbType:="NVarChar(60)")>
+    Public Property ShipAddress() As String
+        Get
+            Return Me._ShipAddress
+        End Get
+        Set
+            If (String.Equals(Me._ShipAddress, Value) = False) Then
+                Me.OnShipAddressChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipAddress = Value
+                Me.SendPropertyChanged("ShipAddress")
+                Me.OnShipAddressChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipCity", DbType:="NVarChar(15)")>
+    Public Property ShipCity() As String
+        Get
+            Return Me._ShipCity
+        End Get
+        Set
+            If (String.Equals(Me._ShipCity, Value) = False) Then
+                Me.OnShipCityChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipCity = Value
+                Me.SendPropertyChanged("ShipCity")
+                Me.OnShipCityChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipRegion", DbType:="NVarChar(15)")>
+    Public Property ShipRegion() As String
+        Get
+            Return Me._ShipRegion
+        End Get
+        Set
+            If (String.Equals(Me._ShipRegion, Value) = False) Then
+                Me.OnShipRegionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipRegion = Value
+                Me.SendPropertyChanged("ShipRegion")
+                Me.OnShipRegionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipPostalCode", DbType:="NVarChar(10)")>
+    Public Property ShipPostalCode() As String
+        Get
+            Return Me._ShipPostalCode
+        End Get
+        Set
+            If (String.Equals(Me._ShipPostalCode, Value) = False) Then
+                Me.OnShipPostalCodeChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipPostalCode = Value
+                Me.SendPropertyChanged("ShipPostalCode")
+                Me.OnShipPostalCodeChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShipCountry", DbType:="NVarChar(15)")>
+    Public Property ShipCountry() As String
+        Get
+            Return Me._ShipCountry
+        End Get
+        Set
+            If (String.Equals(Me._ShipCountry, Value) = False) Then
+                Me.OnShipCountryChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipCountry = Value
+                Me.SendPropertyChanged("ShipCountry")
+                Me.OnShipCountryChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Order_Details_Orders", Storage:="_OrderDetails", OtherKey:="OrderID", DeleteRule:="NO ACTION")>
+    Public Property OrderDetails() As EntitySet(Of OrderDetail)
+        Get
+            Return Me._OrderDetails
+        End Get
+        Set
+            Me._OrderDetails.Assign(Value)
+        End Set
+    End Property
 
     ' <Snippet1>
     Private _Customer As EntityRef(Of Customer)
-    <Association(Name:="FK_Orders_Customers", Storage:="_Customer", ThisKey:="CustomerID", IsForeignKey:=True)> _
+    <Association(Name:="FK_Orders_Customers", Storage:="_Customer", ThisKey:="CustomerID", IsForeignKey:=True)>
     Public Property Customer() As Customer
         Get
             Return Me._Customer.Entity
@@ -2318,129 +2324,131 @@ Partial Public Class [Order]
         End Set
     End Property
     ' </Snippet1>
-	
-	<Association(Name:="FK_Orders_Employees", Storage:="_Employee", ThisKey:="EmployeeID", IsForeignKey:=true)>  _
-	Public Property Employee() As Employee
-		Get
-			Return Me._Employee.Entity
-		End Get
-		Set
-			Dim previousValue As Employee = Me._Employee.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Employee.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Employee.Entity = Nothing
-					previousValue.Orders.Remove(Me)
-				End If
-				Me._Employee.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Orders.Add(Me)
-					Me._EmployeeID = value.EmployeeID
-				Else
-					Me._EmployeeID = CType(Nothing, Nullable(Of Integer))
-				End If
-				Me.SendPropertyChanged("Employee")
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Orders_Shippers", Storage:="_Shipper", ThisKey:="ShipVia", IsForeignKey:=true)>  _
-	Public Property Shipper() As Shipper
-		Get
-			Return Me._Shipper.Entity
-		End Get
-		Set
-			Dim previousValue As Shipper = Me._Shipper.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Shipper.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Shipper.Entity = Nothing
-					previousValue.Orders.Remove(Me)
-				End If
-				Me._Shipper.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Orders.Add(Me)
-					Me._ShipVia = value.ShipperID
-				Else
-					Me._ShipVia = CType(Nothing, Nullable(Of Integer))
-				End If
-				Me.SendPropertyChanged("Shipper")
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_OrderDetails(ByVal entity As OrderDetail)
-		Me.SendPropertyChanging
-		entity.[Order] = Me
-		Me.SendPropertyChanged("OrderDetails")
-	End Sub
-	
-	Private Sub detach_OrderDetails(ByVal entity As OrderDetail)
-		Me.SendPropertyChanging
-		entity.[Order] = Nothing
-		Me.SendPropertyChanged("OrderDetails")
-	End Sub
+
+    <Association(Name:="FK_Orders_Employees", Storage:="_Employee", ThisKey:="EmployeeID", IsForeignKey:=True)>
+    Public Property Employee() As Employee
+        Get
+            Return Me._Employee.Entity
+        End Get
+        Set
+            Dim previousValue As Employee = Me._Employee.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Employee.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Employee.Entity = Nothing
+                    previousValue.Orders.Remove(Me)
+                End If
+                Me._Employee.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.Orders.Add(Me)
+                    Me._EmployeeID = Value.EmployeeID
+                Else
+                    Me._EmployeeID = CType(Nothing, Nullable(Of Integer))
+                End If
+                Me.SendPropertyChanged("Employee")
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Orders_Shippers", Storage:="_Shipper", ThisKey:="ShipVia", IsForeignKey:=True)>
+    Public Property Shipper() As Shipper
+        Get
+            Return Me._Shipper.Entity
+        End Get
+        Set
+            Dim previousValue As Shipper = Me._Shipper.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Shipper.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Shipper.Entity = Nothing
+                    previousValue.Orders.Remove(Me)
+                End If
+                Me._Shipper.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.Orders.Add(Me)
+                    Me._ShipVia = Value.ShipperID
+                Else
+                    Me._ShipVia = CType(Nothing, Nullable(Of Integer))
+                End If
+                Me.SendPropertyChanged("Shipper")
+            End If
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_OrderDetails(ByVal entity As OrderDetail)
+        Me.SendPropertyChanging()
+        entity.[Order] = Me
+        Me.SendPropertyChanged("OrderDetails")
+    End Sub
+
+    Private Sub detach_OrderDetails(ByVal entity As OrderDetail)
+        Me.SendPropertyChanging()
+        entity.[Order] = Nothing
+        Me.SendPropertyChanged("OrderDetails")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Products")>  _
+<Table(Name:="dbo.Products")>
 Partial Public Class Product
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _ProductID As Integer
-	
-	Private _ProductName As String
-	
-	Private _SupplierID As System.Nullable(Of Integer)
-	
-	Private _CategoryID As System.Nullable(Of Integer)
-	
-	Private _QuantityPerUnit As String
-	
-	Private _UnitPrice As System.Nullable(Of Decimal)
-	
-	Private _UnitsInStock As System.Nullable(Of Short)
-	
-	Private _UnitsOnOrder As System.Nullable(Of Short)
-	
-	Private _ReorderLevel As System.Nullable(Of Short)
-	
-	Private _Discontinued As Boolean
-	
-	Private _OrderDetails As EntitySet(Of OrderDetail)
-	
-	Private _Category As EntityRef(Of Category)
-	
-	Private _Supplier As EntityRef(Of Supplier)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _ProductID As Integer
+
+    Private _ProductName As String
+
+    Private _SupplierID As System.Nullable(Of Integer)
+
+    Private _CategoryID As System.Nullable(Of Integer)
+
+    Private _QuantityPerUnit As String
+
+    Private _UnitPrice As System.Nullable(Of Decimal)
+
+    Private _UnitsInStock As System.Nullable(Of Short)
+
+    Private _UnitsOnOrder As System.Nullable(Of Short)
+
+    Private _ReorderLevel As System.Nullable(Of Short)
+
+    Private _Discontinued As Boolean
+
+    Private _OrderDetails As EntitySet(Of OrderDetail)
+
+    Private _Category As EntityRef(Of Category)
+
+    Private _Supplier As EntityRef(Of Supplier)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -2487,296 +2495,298 @@ Partial Public Class Product
     End Sub
     Partial Private Sub OnDiscontinuedChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._OrderDetails = New EntitySet(Of OrderDetail)(AddressOf Me.attach_OrderDetails, AddressOf Me.detach_OrderDetails)
-		Me._Category = CType(Nothing, EntityRef(Of Category))
-		Me._Supplier = CType(Nothing, EntityRef(Of Supplier))
-	End Sub
-	
-	<Column(Storage:="_ProductID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property ProductID() As Integer
-		Get
-			Return Me._ProductID
-		End Get
-		Set
-			If ((Me._ProductID = value)  _
-						= false) Then
-				Me.OnProductIDChanging(value)
-				Me.SendPropertyChanging
-				Me._ProductID = value
-				Me.SendPropertyChanged("ProductID")
-				Me.OnProductIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ProductName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=false)>  _
-	Public Property ProductName() As String
-		Get
-			Return Me._ProductName
-		End Get
-		Set
-			If (String.Equals(Me._ProductName, value) = false) Then
-				Me.OnProductNameChanging(value)
-				Me.SendPropertyChanging
-				Me._ProductName = value
-				Me.SendPropertyChanged("ProductName")
-				Me.OnProductNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_SupplierID", DbType:="Int")>  _
-	Public Property SupplierID() As System.Nullable(Of Integer)
-		Get
-			Return Me._SupplierID
-		End Get
-		Set
-			If (Me._SupplierID.Equals(value) = false) Then
-				If Me._Supplier.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnSupplierIDChanging(value)
-				Me.SendPropertyChanging
-				Me._SupplierID = value
-				Me.SendPropertyChanged("SupplierID")
-				Me.OnSupplierIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CategoryID", DbType:="Int")>  _
-	Public Property CategoryID() As System.Nullable(Of Integer)
-		Get
-			Return Me._CategoryID
-		End Get
-		Set
-			If (Me._CategoryID.Equals(value) = false) Then
-				If Me._Category.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnCategoryIDChanging(value)
-				Me.SendPropertyChanging
-				Me._CategoryID = value
-				Me.SendPropertyChanged("CategoryID")
-				Me.OnCategoryIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_QuantityPerUnit", DbType:="NVarChar(20)")>  _
-	Public Property QuantityPerUnit() As String
-		Get
-			Return Me._QuantityPerUnit
-		End Get
-		Set
-			If (String.Equals(Me._QuantityPerUnit, value) = false) Then
-				Me.OnQuantityPerUnitChanging(value)
-				Me.SendPropertyChanging
-				Me._QuantityPerUnit = value
-				Me.SendPropertyChanged("QuantityPerUnit")
-				Me.OnQuantityPerUnitChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_UnitPrice", DbType:="Money")>  _
-	Public Property UnitPrice() As System.Nullable(Of Decimal)
-		Get
-			Return Me._UnitPrice
-		End Get
-		Set
-			If (Me._UnitPrice.Equals(value) = false) Then
-				Me.OnUnitPriceChanging(value)
-				Me.SendPropertyChanging
-				Me._UnitPrice = value
-				Me.SendPropertyChanged("UnitPrice")
-				Me.OnUnitPriceChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_UnitsInStock", DbType:="SmallInt")>  _
-	Public Property UnitsInStock() As System.Nullable(Of Short)
-		Get
-			Return Me._UnitsInStock
-		End Get
-		Set
-			If (Me._UnitsInStock.Equals(value) = false) Then
-				Me.OnUnitsInStockChanging(value)
-				Me.SendPropertyChanging
-				Me._UnitsInStock = value
-				Me.SendPropertyChanged("UnitsInStock")
-				Me.OnUnitsInStockChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_UnitsOnOrder", DbType:="SmallInt")>  _
-	Public Property UnitsOnOrder() As System.Nullable(Of Short)
-		Get
-			Return Me._UnitsOnOrder
-		End Get
-		Set
-			If (Me._UnitsOnOrder.Equals(value) = false) Then
-				Me.OnUnitsOnOrderChanging(value)
-				Me.SendPropertyChanging
-				Me._UnitsOnOrder = value
-				Me.SendPropertyChanged("UnitsOnOrder")
-				Me.OnUnitsOnOrderChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ReorderLevel", DbType:="SmallInt")>  _
-	Public Property ReorderLevel() As System.Nullable(Of Short)
-		Get
-			Return Me._ReorderLevel
-		End Get
-		Set
-			If (Me._ReorderLevel.Equals(value) = false) Then
-				Me.OnReorderLevelChanging(value)
-				Me.SendPropertyChanging
-				Me._ReorderLevel = value
-				Me.SendPropertyChanged("ReorderLevel")
-				Me.OnReorderLevelChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Discontinued", DbType:="Bit NOT NULL")>  _
-	Public Property Discontinued() As Boolean
-		Get
-			Return Me._Discontinued
-		End Get
-		Set
-			If ((Me._Discontinued = value)  _
-						= false) Then
-				Me.OnDiscontinuedChanging(value)
-				Me.SendPropertyChanging
-				Me._Discontinued = value
-				Me.SendPropertyChanged("Discontinued")
-				Me.OnDiscontinuedChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Order_Details_Products", Storage:="_OrderDetails", OtherKey:="ProductID", DeleteRule:="NO ACTION")>  _
-	Public Property OrderDetails() As EntitySet(Of OrderDetail)
-		Get
-			Return Me._OrderDetails
-		End Get
-		Set
-			Me._OrderDetails.Assign(value)
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Products_Categories", Storage:="_Category", ThisKey:="CategoryID", IsForeignKey:=true)>  _
-	Public Property Category() As Category
-		Get
-			Return Me._Category.Entity
-		End Get
-		Set
-			Dim previousValue As Category = Me._Category.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Category.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Category.Entity = Nothing
-					previousValue.Products.Remove(Me)
-				End If
-				Me._Category.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Products.Add(Me)
-					Me._CategoryID = value.CategoryID
-				Else
-					Me._CategoryID = CType(Nothing, Nullable(Of Integer))
-				End If
-				Me.SendPropertyChanged("Category")
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Products_Suppliers", Storage:="_Supplier", ThisKey:="SupplierID", IsForeignKey:=true)>  _
-	Public Property Supplier() As Supplier
-		Get
-			Return Me._Supplier.Entity
-		End Get
-		Set
-			Dim previousValue As Supplier = Me._Supplier.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Supplier.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Supplier.Entity = Nothing
-					previousValue.Products.Remove(Me)
-				End If
-				Me._Supplier.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Products.Add(Me)
-					Me._SupplierID = value.SupplierID
-				Else
-					Me._SupplierID = CType(Nothing, Nullable(Of Integer))
-				End If
-				Me.SendPropertyChanged("Supplier")
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_OrderDetails(ByVal entity As OrderDetail)
-		Me.SendPropertyChanging
-		entity.Product = Me
-		Me.SendPropertyChanged("OrderDetails")
-	End Sub
-	
-	Private Sub detach_OrderDetails(ByVal entity As OrderDetail)
-		Me.SendPropertyChanging
-		entity.Product = Nothing
-		Me.SendPropertyChanged("OrderDetails")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._OrderDetails = New EntitySet(Of OrderDetail)(AddressOf Me.attach_OrderDetails, AddressOf Me.detach_OrderDetails)
+        Me._Category = CType(Nothing, EntityRef(Of Category))
+        Me._Supplier = CType(Nothing, EntityRef(Of Supplier))
+    End Sub
+
+    <Column(Storage:="_ProductID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=True, IsDbGenerated:=True)>
+    Public Property ProductID() As Integer
+        Get
+            Return Me._ProductID
+        End Get
+        Set
+            If ((Me._ProductID = Value) _
+                        = False) Then
+                Me.OnProductIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ProductID = Value
+                Me.SendPropertyChanged("ProductID")
+                Me.OnProductIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ProductName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=False)>
+    Public Property ProductName() As String
+        Get
+            Return Me._ProductName
+        End Get
+        Set
+            If (String.Equals(Me._ProductName, Value) = False) Then
+                Me.OnProductNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ProductName = Value
+                Me.SendPropertyChanged("ProductName")
+                Me.OnProductNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_SupplierID", DbType:="Int")>
+    Public Property SupplierID() As System.Nullable(Of Integer)
+        Get
+            Return Me._SupplierID
+        End Get
+        Set
+            If (Me._SupplierID.Equals(Value) = False) Then
+                If Me._Supplier.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnSupplierIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._SupplierID = Value
+                Me.SendPropertyChanged("SupplierID")
+                Me.OnSupplierIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CategoryID", DbType:="Int")>
+    Public Property CategoryID() As System.Nullable(Of Integer)
+        Get
+            Return Me._CategoryID
+        End Get
+        Set
+            If (Me._CategoryID.Equals(Value) = False) Then
+                If Me._Category.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnCategoryIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CategoryID = Value
+                Me.SendPropertyChanged("CategoryID")
+                Me.OnCategoryIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_QuantityPerUnit", DbType:="NVarChar(20)")>
+    Public Property QuantityPerUnit() As String
+        Get
+            Return Me._QuantityPerUnit
+        End Get
+        Set
+            If (String.Equals(Me._QuantityPerUnit, Value) = False) Then
+                Me.OnQuantityPerUnitChanging(Value)
+                Me.SendPropertyChanging()
+                Me._QuantityPerUnit = Value
+                Me.SendPropertyChanged("QuantityPerUnit")
+                Me.OnQuantityPerUnitChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_UnitPrice", DbType:="Money")>
+    Public Property UnitPrice() As System.Nullable(Of Decimal)
+        Get
+            Return Me._UnitPrice
+        End Get
+        Set
+            If (Me._UnitPrice.Equals(Value) = False) Then
+                Me.OnUnitPriceChanging(Value)
+                Me.SendPropertyChanging()
+                Me._UnitPrice = Value
+                Me.SendPropertyChanged("UnitPrice")
+                Me.OnUnitPriceChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_UnitsInStock", DbType:="SmallInt")>
+    Public Property UnitsInStock() As System.Nullable(Of Short)
+        Get
+            Return Me._UnitsInStock
+        End Get
+        Set
+            If (Me._UnitsInStock.Equals(Value) = False) Then
+                Me.OnUnitsInStockChanging(Value)
+                Me.SendPropertyChanging()
+                Me._UnitsInStock = Value
+                Me.SendPropertyChanged("UnitsInStock")
+                Me.OnUnitsInStockChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_UnitsOnOrder", DbType:="SmallInt")>
+    Public Property UnitsOnOrder() As System.Nullable(Of Short)
+        Get
+            Return Me._UnitsOnOrder
+        End Get
+        Set
+            If (Me._UnitsOnOrder.Equals(Value) = False) Then
+                Me.OnUnitsOnOrderChanging(Value)
+                Me.SendPropertyChanging()
+                Me._UnitsOnOrder = Value
+                Me.SendPropertyChanged("UnitsOnOrder")
+                Me.OnUnitsOnOrderChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ReorderLevel", DbType:="SmallInt")>
+    Public Property ReorderLevel() As System.Nullable(Of Short)
+        Get
+            Return Me._ReorderLevel
+        End Get
+        Set
+            If (Me._ReorderLevel.Equals(Value) = False) Then
+                Me.OnReorderLevelChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ReorderLevel = Value
+                Me.SendPropertyChanged("ReorderLevel")
+                Me.OnReorderLevelChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Discontinued", DbType:="Bit NOT NULL")>
+    Public Property Discontinued() As Boolean
+        Get
+            Return Me._Discontinued
+        End Get
+        Set
+            If ((Me._Discontinued = Value) _
+                        = False) Then
+                Me.OnDiscontinuedChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Discontinued = Value
+                Me.SendPropertyChanged("Discontinued")
+                Me.OnDiscontinuedChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Order_Details_Products", Storage:="_OrderDetails", OtherKey:="ProductID", DeleteRule:="NO ACTION")>
+    Public Property OrderDetails() As EntitySet(Of OrderDetail)
+        Get
+            Return Me._OrderDetails
+        End Get
+        Set
+            Me._OrderDetails.Assign(Value)
+        End Set
+    End Property
+
+    <Association(Name:="FK_Products_Categories", Storage:="_Category", ThisKey:="CategoryID", IsForeignKey:=True)>
+    Public Property Category() As Category
+        Get
+            Return Me._Category.Entity
+        End Get
+        Set
+            Dim previousValue As Category = Me._Category.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Category.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Category.Entity = Nothing
+                    previousValue.Products.Remove(Me)
+                End If
+                Me._Category.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.Products.Add(Me)
+                    Me._CategoryID = Value.CategoryID
+                Else
+                    Me._CategoryID = CType(Nothing, Nullable(Of Integer))
+                End If
+                Me.SendPropertyChanged("Category")
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Products_Suppliers", Storage:="_Supplier", ThisKey:="SupplierID", IsForeignKey:=True)>
+    Public Property Supplier() As Supplier
+        Get
+            Return Me._Supplier.Entity
+        End Get
+        Set
+            Dim previousValue As Supplier = Me._Supplier.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Supplier.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Supplier.Entity = Nothing
+                    previousValue.Products.Remove(Me)
+                End If
+                Me._Supplier.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.Products.Add(Me)
+                    Me._SupplierID = Value.SupplierID
+                Else
+                    Me._SupplierID = CType(Nothing, Nullable(Of Integer))
+                End If
+                Me.SendPropertyChanged("Supplier")
+            End If
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_OrderDetails(ByVal entity As OrderDetail)
+        Me.SendPropertyChanging()
+        entity.Product = Me
+        Me.SendPropertyChanged("OrderDetails")
+    End Sub
+
+    Private Sub detach_OrderDetails(ByVal entity As OrderDetail)
+        Me.SendPropertyChanging()
+        entity.Product = Nothing
+        Me.SendPropertyChanged("OrderDetails")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Region")>  _
+<Table(Name:="dbo.Region")>
 Partial Public Class Region
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _RegionID As Integer
-	
-	Private _RegionDescription As String
-	
-	Private _Territories As EntitySet(Of Territory)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _RegionID As Integer
+
+    Private _RegionDescription As String
+
+    Private _Territories As EntitySet(Of Territory)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -2791,103 +2801,103 @@ Partial Public Class Region
     End Sub
     Partial Private Sub OnRegionDescriptionChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._Territories = New EntitySet(Of Territory)(AddressOf Me.attach_Territories, AddressOf Me.detach_Territories)
-	End Sub
-	
-	<Column(Storage:="_RegionID", DbType:="Int NOT NULL", IsPrimaryKey:=true)>  _
-	Public Property RegionID() As Integer
-		Get
-			Return Me._RegionID
-		End Get
-		Set
-			If ((Me._RegionID = value)  _
-						= false) Then
-				Me.OnRegionIDChanging(value)
-				Me.SendPropertyChanging
-				Me._RegionID = value
-				Me.SendPropertyChanged("RegionID")
-				Me.OnRegionIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_RegionDescription", DbType:="NChar(50) NOT NULL", CanBeNull:=false)>  _
-	Public Property RegionDescription() As String
-		Get
-			Return Me._RegionDescription
-		End Get
-		Set
-			If (String.Equals(Me._RegionDescription, value) = false) Then
-				Me.OnRegionDescriptionChanging(value)
-				Me.SendPropertyChanging
-				Me._RegionDescription = value
-				Me.SendPropertyChanged("RegionDescription")
-				Me.OnRegionDescriptionChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Territories_Region", Storage:="_Territories", OtherKey:="RegionID", DeleteRule:="NO ACTION")>  _
-	Public Property Territories() As EntitySet(Of Territory)
-		Get
-			Return Me._Territories
-		End Get
-		Set
-			Me._Territories.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Territories(ByVal entity As Territory)
-		Me.SendPropertyChanging
-		entity.Region = Me
-		Me.SendPropertyChanged("Territories")
-	End Sub
-	
-	Private Sub detach_Territories(ByVal entity As Territory)
-		Me.SendPropertyChanging
-		entity.Region = Nothing
-		Me.SendPropertyChanged("Territories")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._Territories = New EntitySet(Of Territory)(AddressOf Me.attach_Territories, AddressOf Me.detach_Territories)
+    End Sub
+
+    <Column(Storage:="_RegionID", DbType:="Int NOT NULL", IsPrimaryKey:=True)>
+    Public Property RegionID() As Integer
+        Get
+            Return Me._RegionID
+        End Get
+        Set
+            If ((Me._RegionID = Value) _
+                        = False) Then
+                Me.OnRegionIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._RegionID = Value
+                Me.SendPropertyChanged("RegionID")
+                Me.OnRegionIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_RegionDescription", DbType:="NChar(50) NOT NULL", CanBeNull:=False)>
+    Public Property RegionDescription() As String
+        Get
+            Return Me._RegionDescription
+        End Get
+        Set
+            If (String.Equals(Me._RegionDescription, Value) = False) Then
+                Me.OnRegionDescriptionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._RegionDescription = Value
+                Me.SendPropertyChanged("RegionDescription")
+                Me.OnRegionDescriptionChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Territories_Region", Storage:="_Territories", OtherKey:="RegionID", DeleteRule:="NO ACTION")>
+    Public Property Territories() As EntitySet(Of Territory)
+        Get
+            Return Me._Territories
+        End Get
+        Set
+            Me._Territories.Assign(Value)
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_Territories(ByVal entity As Territory)
+        Me.SendPropertyChanging()
+        entity.Region = Me
+        Me.SendPropertyChanged("Territories")
+    End Sub
+
+    Private Sub detach_Territories(ByVal entity As Territory)
+        Me.SendPropertyChanging()
+        entity.Region = Nothing
+        Me.SendPropertyChanged("Territories")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Shippers")>  _
+<Table(Name:="dbo.Shippers")>
 Partial Public Class Shipper
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _ShipperID As Integer
-	
-	Private _CompanyName As String
-	
-	Private _Phone As String
-	
-	Private _Orders As EntitySet(Of [Order])
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _ShipperID As Integer
+
+    Private _CompanyName As String
+
+    Private _Phone As String
+
+    Private _Orders As EntitySet(Of [Order])
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -2906,137 +2916,137 @@ Partial Public Class Shipper
     End Sub
     Partial Private Sub OnPhoneChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
-	End Sub
-	
-	<Column(Storage:="_ShipperID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property ShipperID() As Integer
-		Get
-			Return Me._ShipperID
-		End Get
-		Set
-			If ((Me._ShipperID = value)  _
-						= false) Then
-				Me.OnShipperIDChanging(value)
-				Me.SendPropertyChanging
-				Me._ShipperID = value
-				Me.SendPropertyChanged("ShipperID")
-				Me.OnShipperIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CompanyName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=false)>  _
-	Public Property CompanyName() As String
-		Get
-			Return Me._CompanyName
-		End Get
-		Set
-			If (String.Equals(Me._CompanyName, value) = false) Then
-				Me.OnCompanyNameChanging(value)
-				Me.SendPropertyChanging
-				Me._CompanyName = value
-				Me.SendPropertyChanged("CompanyName")
-				Me.OnCompanyNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Phone", DbType:="NVarChar(24)")>  _
-	Public Property Phone() As String
-		Get
-			Return Me._Phone
-		End Get
-		Set
-			If (String.Equals(Me._Phone, value) = false) Then
-				Me.OnPhoneChanging(value)
-				Me.SendPropertyChanging
-				Me._Phone = value
-				Me.SendPropertyChanged("Phone")
-				Me.OnPhoneChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Orders_Shippers", Storage:="_Orders", OtherKey:="ShipVia", DeleteRule:="NO ACTION")>  _
-	Public Property Orders() As EntitySet(Of [Order])
-		Get
-			Return Me._Orders
-		End Get
-		Set
-			Me._Orders.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.Shipper = Me
-		Me.SendPropertyChanged("Orders")
-	End Sub
-	
-	Private Sub detach_Orders(ByVal entity As [Order])
-		Me.SendPropertyChanging
-		entity.Shipper = Nothing
-		Me.SendPropertyChanged("Orders")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._Orders = New EntitySet(Of [Order])(AddressOf Me.attach_Orders, AddressOf Me.detach_Orders)
+    End Sub
+
+    <Column(Storage:="_ShipperID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=True, IsDbGenerated:=True)>
+    Public Property ShipperID() As Integer
+        Get
+            Return Me._ShipperID
+        End Get
+        Set
+            If ((Me._ShipperID = Value) _
+                        = False) Then
+                Me.OnShipperIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ShipperID = Value
+                Me.SendPropertyChanged("ShipperID")
+                Me.OnShipperIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CompanyName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=False)>
+    Public Property CompanyName() As String
+        Get
+            Return Me._CompanyName
+        End Get
+        Set
+            If (String.Equals(Me._CompanyName, Value) = False) Then
+                Me.OnCompanyNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CompanyName = Value
+                Me.SendPropertyChanged("CompanyName")
+                Me.OnCompanyNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Phone", DbType:="NVarChar(24)")>
+    Public Property Phone() As String
+        Get
+            Return Me._Phone
+        End Get
+        Set
+            If (String.Equals(Me._Phone, Value) = False) Then
+                Me.OnPhoneChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Phone = Value
+                Me.SendPropertyChanged("Phone")
+                Me.OnPhoneChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Orders_Shippers", Storage:="_Orders", OtherKey:="ShipVia", DeleteRule:="NO ACTION")>
+    Public Property Orders() As EntitySet(Of [Order])
+        Get
+            Return Me._Orders
+        End Get
+        Set
+            Me._Orders.Assign(Value)
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_Orders(ByVal entity As [Order])
+        Me.SendPropertyChanging()
+        entity.Shipper = Me
+        Me.SendPropertyChanged("Orders")
+    End Sub
+
+    Private Sub detach_Orders(ByVal entity As [Order])
+        Me.SendPropertyChanging()
+        entity.Shipper = Nothing
+        Me.SendPropertyChanged("Orders")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Suppliers")>  _
+<Table(Name:="dbo.Suppliers")>
 Partial Public Class Supplier
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _SupplierID As Integer
-	
-	Private _CompanyName As String
-	
-	Private _ContactName As String
-	
-	Private _ContactTitle As String
-	
-	Private _Address As String
-	
-	Private _City As String
-	
-	Private _Region As String
-	
-	Private _PostalCode As String
-	
-	Private _Country As String
-	
-	Private _Phone As String
-	
-	Private _Fax As String
-	
-	Private _HomePage As String
-	
-	Private _Products As EntitySet(Of Product)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _SupplierID As Integer
+
+    Private _CompanyName As String
+
+    Private _ContactName As String
+
+    Private _ContactTitle As String
+
+    Private _Address As String
+
+    Private _City As String
+
+    Private _Region As String
+
+    Private _PostalCode As String
+
+    Private _Country As String
+
+    Private _Phone As String
+
+    Private _Fax As String
+
+    Private _HomePage As String
+
+    Private _Products As EntitySet(Of Product)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -3091,265 +3101,265 @@ Partial Public Class Supplier
     End Sub
     Partial Private Sub OnHomePageChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._Products = New EntitySet(Of Product)(AddressOf Me.attach_Products, AddressOf Me.detach_Products)
-	End Sub
-	
-	<Column(Storage:="_SupplierID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property SupplierID() As Integer
-		Get
-			Return Me._SupplierID
-		End Get
-		Set
-			If ((Me._SupplierID = value)  _
-						= false) Then
-				Me.OnSupplierIDChanging(value)
-				Me.SendPropertyChanging
-				Me._SupplierID = value
-				Me.SendPropertyChanged("SupplierID")
-				Me.OnSupplierIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_CompanyName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=false)>  _
-	Public Property CompanyName() As String
-		Get
-			Return Me._CompanyName
-		End Get
-		Set
-			If (String.Equals(Me._CompanyName, value) = false) Then
-				Me.OnCompanyNameChanging(value)
-				Me.SendPropertyChanging
-				Me._CompanyName = value
-				Me.SendPropertyChanged("CompanyName")
-				Me.OnCompanyNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ContactName", DbType:="NVarChar(30)")>  _
-	Public Property ContactName() As String
-		Get
-			Return Me._ContactName
-		End Get
-		Set
-			If (String.Equals(Me._ContactName, value) = false) Then
-				Me.OnContactNameChanging(value)
-				Me.SendPropertyChanging
-				Me._ContactName = value
-				Me.SendPropertyChanged("ContactName")
-				Me.OnContactNameChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ContactTitle", DbType:="NVarChar(30)")>  _
-	Public Property ContactTitle() As String
-		Get
-			Return Me._ContactTitle
-		End Get
-		Set
-			If (String.Equals(Me._ContactTitle, value) = false) Then
-				Me.OnContactTitleChanging(value)
-				Me.SendPropertyChanging
-				Me._ContactTitle = value
-				Me.SendPropertyChanged("ContactTitle")
-				Me.OnContactTitleChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Address", DbType:="NVarChar(60)")>  _
-	Public Property Address() As String
-		Get
-			Return Me._Address
-		End Get
-		Set
-			If (String.Equals(Me._Address, value) = false) Then
-				Me.OnAddressChanging(value)
-				Me.SendPropertyChanging
-				Me._Address = value
-				Me.SendPropertyChanged("Address")
-				Me.OnAddressChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_City", DbType:="NVarChar(15)")>  _
-	Public Property City() As String
-		Get
-			Return Me._City
-		End Get
-		Set
-			If (String.Equals(Me._City, value) = false) Then
-				Me.OnCityChanging(value)
-				Me.SendPropertyChanging
-				Me._City = value
-				Me.SendPropertyChanged("City")
-				Me.OnCityChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Region", DbType:="NVarChar(15)")>  _
-	Public Property Region() As String
-		Get
-			Return Me._Region
-		End Get
-		Set
-			If (String.Equals(Me._Region, value) = false) Then
-				Me.OnRegionChanging(value)
-				Me.SendPropertyChanging
-				Me._Region = value
-				Me.SendPropertyChanged("Region")
-				Me.OnRegionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_PostalCode", DbType:="NVarChar(10)")>  _
-	Public Property PostalCode() As String
-		Get
-			Return Me._PostalCode
-		End Get
-		Set
-			If (String.Equals(Me._PostalCode, value) = false) Then
-				Me.OnPostalCodeChanging(value)
-				Me.SendPropertyChanging
-				Me._PostalCode = value
-				Me.SendPropertyChanged("PostalCode")
-				Me.OnPostalCodeChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Country", DbType:="NVarChar(15)")>  _
-	Public Property Country() As String
-		Get
-			Return Me._Country
-		End Get
-		Set
-			If (String.Equals(Me._Country, value) = false) Then
-				Me.OnCountryChanging(value)
-				Me.SendPropertyChanging
-				Me._Country = value
-				Me.SendPropertyChanged("Country")
-				Me.OnCountryChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Phone", DbType:="NVarChar(24)")>  _
-	Public Property Phone() As String
-		Get
-			Return Me._Phone
-		End Get
-		Set
-			If (String.Equals(Me._Phone, value) = false) Then
-				Me.OnPhoneChanging(value)
-				Me.SendPropertyChanging
-				Me._Phone = value
-				Me.SendPropertyChanged("Phone")
-				Me.OnPhoneChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Fax", DbType:="NVarChar(24)")>  _
-	Public Property Fax() As String
-		Get
-			Return Me._Fax
-		End Get
-		Set
-			If (String.Equals(Me._Fax, value) = false) Then
-				Me.OnFaxChanging(value)
-				Me.SendPropertyChanging
-				Me._Fax = value
-				Me.SendPropertyChanged("Fax")
-				Me.OnFaxChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_HomePage", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>  _
-	Public Property HomePage() As String
-		Get
-			Return Me._HomePage
-		End Get
-		Set
-			If (String.Equals(Me._HomePage, value) = false) Then
-				Me.OnHomePageChanging(value)
-				Me.SendPropertyChanging
-				Me._HomePage = value
-				Me.SendPropertyChanged("HomePage")
-				Me.OnHomePageChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Products_Suppliers", Storage:="_Products", OtherKey:="SupplierID", DeleteRule:="NO ACTION")>  _
-	Public Property Products() As EntitySet(Of Product)
-		Get
-			Return Me._Products
-		End Get
-		Set
-			Me._Products.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Products(ByVal entity As Product)
-		Me.SendPropertyChanging
-		entity.Supplier = Me
-		Me.SendPropertyChanged("Products")
-	End Sub
-	
-	Private Sub detach_Products(ByVal entity As Product)
-		Me.SendPropertyChanging
-		entity.Supplier = Nothing
-		Me.SendPropertyChanged("Products")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._Products = New EntitySet(Of Product)(AddressOf Me.attach_Products, AddressOf Me.detach_Products)
+    End Sub
+
+    <Column(Storage:="_SupplierID", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=True, IsDbGenerated:=True)>
+    Public Property SupplierID() As Integer
+        Get
+            Return Me._SupplierID
+        End Get
+        Set
+            If ((Me._SupplierID = Value) _
+                        = False) Then
+                Me.OnSupplierIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._SupplierID = Value
+                Me.SendPropertyChanged("SupplierID")
+                Me.OnSupplierIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_CompanyName", DbType:="NVarChar(40) NOT NULL", CanBeNull:=False)>
+    Public Property CompanyName() As String
+        Get
+            Return Me._CompanyName
+        End Get
+        Set
+            If (String.Equals(Me._CompanyName, Value) = False) Then
+                Me.OnCompanyNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._CompanyName = Value
+                Me.SendPropertyChanged("CompanyName")
+                Me.OnCompanyNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ContactName", DbType:="NVarChar(30)")>
+    Public Property ContactName() As String
+        Get
+            Return Me._ContactName
+        End Get
+        Set
+            If (String.Equals(Me._ContactName, Value) = False) Then
+                Me.OnContactNameChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ContactName = Value
+                Me.SendPropertyChanged("ContactName")
+                Me.OnContactNameChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ContactTitle", DbType:="NVarChar(30)")>
+    Public Property ContactTitle() As String
+        Get
+            Return Me._ContactTitle
+        End Get
+        Set
+            If (String.Equals(Me._ContactTitle, Value) = False) Then
+                Me.OnContactTitleChanging(Value)
+                Me.SendPropertyChanging()
+                Me._ContactTitle = Value
+                Me.SendPropertyChanged("ContactTitle")
+                Me.OnContactTitleChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Address", DbType:="NVarChar(60)")>
+    Public Property Address() As String
+        Get
+            Return Me._Address
+        End Get
+        Set
+            If (String.Equals(Me._Address, Value) = False) Then
+                Me.OnAddressChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Address = Value
+                Me.SendPropertyChanged("Address")
+                Me.OnAddressChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_City", DbType:="NVarChar(15)")>
+    Public Property City() As String
+        Get
+            Return Me._City
+        End Get
+        Set
+            If (String.Equals(Me._City, Value) = False) Then
+                Me.OnCityChanging(Value)
+                Me.SendPropertyChanging()
+                Me._City = Value
+                Me.SendPropertyChanged("City")
+                Me.OnCityChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Region", DbType:="NVarChar(15)")>
+    Public Property Region() As String
+        Get
+            Return Me._Region
+        End Get
+        Set
+            If (String.Equals(Me._Region, Value) = False) Then
+                Me.OnRegionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Region = Value
+                Me.SendPropertyChanged("Region")
+                Me.OnRegionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_PostalCode", DbType:="NVarChar(10)")>
+    Public Property PostalCode() As String
+        Get
+            Return Me._PostalCode
+        End Get
+        Set
+            If (String.Equals(Me._PostalCode, Value) = False) Then
+                Me.OnPostalCodeChanging(Value)
+                Me.SendPropertyChanging()
+                Me._PostalCode = Value
+                Me.SendPropertyChanged("PostalCode")
+                Me.OnPostalCodeChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Country", DbType:="NVarChar(15)")>
+    Public Property Country() As String
+        Get
+            Return Me._Country
+        End Get
+        Set
+            If (String.Equals(Me._Country, Value) = False) Then
+                Me.OnCountryChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Country = Value
+                Me.SendPropertyChanged("Country")
+                Me.OnCountryChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Phone", DbType:="NVarChar(24)")>
+    Public Property Phone() As String
+        Get
+            Return Me._Phone
+        End Get
+        Set
+            If (String.Equals(Me._Phone, Value) = False) Then
+                Me.OnPhoneChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Phone = Value
+                Me.SendPropertyChanged("Phone")
+                Me.OnPhoneChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Fax", DbType:="NVarChar(24)")>
+    Public Property Fax() As String
+        Get
+            Return Me._Fax
+        End Get
+        Set
+            If (String.Equals(Me._Fax, Value) = False) Then
+                Me.OnFaxChanging(Value)
+                Me.SendPropertyChanging()
+                Me._Fax = Value
+                Me.SendPropertyChanged("Fax")
+                Me.OnFaxChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_HomePage", DbType:="NText", UpdateCheck:=UpdateCheck.Never)>
+    Public Property HomePage() As String
+        Get
+            Return Me._HomePage
+        End Get
+        Set
+            If (String.Equals(Me._HomePage, Value) = False) Then
+                Me.OnHomePageChanging(Value)
+                Me.SendPropertyChanging()
+                Me._HomePage = Value
+                Me.SendPropertyChanged("HomePage")
+                Me.OnHomePageChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_Products_Suppliers", Storage:="_Products", OtherKey:="SupplierID", DeleteRule:="NO ACTION")>
+    Public Property Products() As EntitySet(Of Product)
+        Get
+            Return Me._Products
+        End Get
+        Set
+            Me._Products.Assign(Value)
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_Products(ByVal entity As Product)
+        Me.SendPropertyChanging()
+        entity.Supplier = Me
+        Me.SendPropertyChanged("Products")
+    End Sub
+
+    Private Sub detach_Products(ByVal entity As Product)
+        Me.SendPropertyChanging()
+        entity.Supplier = Nothing
+        Me.SendPropertyChanged("Products")
+    End Sub
 End Class
 
-<Table(Name:="dbo.Territories")>  _
+<Table(Name:="dbo.Territories")>
 Partial Public Class Territory
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _TerritoryID As String
-	
-	Private _TerritoryDescription As String
-	
-	Private _RegionID As Integer
-	
-	Private _EmployeeTerritories As EntitySet(Of EmployeeTerritory)
-	
-	Private _Region As EntityRef(Of Region)
-	
-    #Region "Extensibility Method Definitions"
+    Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+
+    Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+
+    Private _TerritoryID As String
+
+    Private _TerritoryDescription As String
+
+    Private _RegionID As Integer
+
+    Private _EmployeeTerritories As EntitySet(Of EmployeeTerritory)
+
+    Private _Region As EntityRef(Of Region)
+
+#Region "Extensibility Method Definitions"
     Partial Private Sub OnLoaded()
     End Sub
     Partial Private Sub OnValidate()
@@ -3368,532 +3378,533 @@ Partial Public Class Territory
     End Sub
     Partial Private Sub OnRegionIDChanged()
     End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		OnCreated
-		Me._EmployeeTerritories = New EntitySet(Of EmployeeTerritory)(AddressOf Me.attach_EmployeeTerritories, AddressOf Me.detach_EmployeeTerritories)
-		Me._Region = CType(Nothing, EntityRef(Of Region))
-	End Sub
-	
-	<Column(Storage:="_TerritoryID", DbType:="NVarChar(20) NOT NULL", CanBeNull:=false, IsPrimaryKey:=true)>  _
-	Public Property TerritoryID() As String
-		Get
-			Return Me._TerritoryID
-		End Get
-		Set
-			If (String.Equals(Me._TerritoryID, value) = false) Then
-				Me.OnTerritoryIDChanging(value)
-				Me.SendPropertyChanging
-				Me._TerritoryID = value
-				Me.SendPropertyChanged("TerritoryID")
-				Me.OnTerritoryIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_TerritoryDescription", DbType:="NChar(50) NOT NULL", CanBeNull:=false)>  _
-	Public Property TerritoryDescription() As String
-		Get
-			Return Me._TerritoryDescription
-		End Get
-		Set
-			If (String.Equals(Me._TerritoryDescription, value) = false) Then
-				Me.OnTerritoryDescriptionChanging(value)
-				Me.SendPropertyChanging
-				Me._TerritoryDescription = value
-				Me.SendPropertyChanged("TerritoryDescription")
-				Me.OnTerritoryDescriptionChanged
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_RegionID", DbType:="Int NOT NULL")>  _
-	Public Property RegionID() As Integer
-		Get
-			Return Me._RegionID
-		End Get
-		Set
-			If ((Me._RegionID = value)  _
-						= false) Then
-				If Me._Region.HasLoadedOrAssignedValue Then
-					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
-				End If
-				Me.OnRegionIDChanging(value)
-				Me.SendPropertyChanging
-				Me._RegionID = value
-				Me.SendPropertyChanged("RegionID")
-				Me.OnRegionIDChanged
-			End If
-		End Set
-	End Property
-	
-	<Association(Name:="FK_EmployeeTerritories_Territories", Storage:="_EmployeeTerritories", OtherKey:="TerritoryID", DeleteRule:="NO ACTION")>  _
-	Public Property EmployeeTerritories() As EntitySet(Of EmployeeTerritory)
-		Get
-			Return Me._EmployeeTerritories
-		End Get
-		Set
-			Me._EmployeeTerritories.Assign(value)
-		End Set
-	End Property
-	
-	<Association(Name:="FK_Territories_Region", Storage:="_Region", ThisKey:="RegionID", IsForeignKey:=true)>  _
-	Public Property Region() As Region
-		Get
-			Return Me._Region.Entity
-		End Get
-		Set
-			Dim previousValue As Region = Me._Region.Entity
-			If (((previousValue Is value)  _
-						= false)  _
-						OrElse (Me._Region.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Region.Entity = Nothing
-					previousValue.Territories.Remove(Me)
-				End If
-				Me._Region.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Territories.Add(Me)
-					Me._RegionID = value.RegionID
-				Else
-					Me._RegionID = CType(Nothing, Integer)
-				End If
-				Me.SendPropertyChanged("Region")
-			End If
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
-		Me.SendPropertyChanging
-		entity.Territory = Me
-		Me.SendPropertyChanged("EmployeeTerritories")
-	End Sub
-	
-	Private Sub detach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
-		Me.SendPropertyChanging
-		entity.Territory = Nothing
-		Me.SendPropertyChanged("EmployeeTerritories")
-	End Sub
+#End Region
+
+    Public Sub New()
+        MyBase.New
+        OnCreated()
+        Me._EmployeeTerritories = New EntitySet(Of EmployeeTerritory)(AddressOf Me.attach_EmployeeTerritories, AddressOf Me.detach_EmployeeTerritories)
+        Me._Region = CType(Nothing, EntityRef(Of Region))
+    End Sub
+
+    <Column(Storage:="_TerritoryID", DbType:="NVarChar(20) NOT NULL", CanBeNull:=False, IsPrimaryKey:=True)>
+    Public Property TerritoryID() As String
+        Get
+            Return Me._TerritoryID
+        End Get
+        Set
+            If (String.Equals(Me._TerritoryID, Value) = False) Then
+                Me.OnTerritoryIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._TerritoryID = Value
+                Me.SendPropertyChanged("TerritoryID")
+                Me.OnTerritoryIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_TerritoryDescription", DbType:="NChar(50) NOT NULL", CanBeNull:=False)>
+    Public Property TerritoryDescription() As String
+        Get
+            Return Me._TerritoryDescription
+        End Get
+        Set
+            If (String.Equals(Me._TerritoryDescription, Value) = False) Then
+                Me.OnTerritoryDescriptionChanging(Value)
+                Me.SendPropertyChanging()
+                Me._TerritoryDescription = Value
+                Me.SendPropertyChanged("TerritoryDescription")
+                Me.OnTerritoryDescriptionChanged()
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_RegionID", DbType:="Int NOT NULL")>
+    Public Property RegionID() As Integer
+        Get
+            Return Me._RegionID
+        End Get
+        Set
+            If ((Me._RegionID = Value) _
+                        = False) Then
+                If Me._Region.HasLoadedOrAssignedValue Then
+                    Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException
+                End If
+                Me.OnRegionIDChanging(Value)
+                Me.SendPropertyChanging()
+                Me._RegionID = Value
+                Me.SendPropertyChanged("RegionID")
+                Me.OnRegionIDChanged()
+            End If
+        End Set
+    End Property
+
+    <Association(Name:="FK_EmployeeTerritories_Territories", Storage:="_EmployeeTerritories", OtherKey:="TerritoryID", DeleteRule:="NO ACTION")>
+    Public Property EmployeeTerritories() As EntitySet(Of EmployeeTerritory)
+        Get
+            Return Me._EmployeeTerritories
+        End Get
+        Set
+            Me._EmployeeTerritories.Assign(Value)
+        End Set
+    End Property
+
+    <Association(Name:="FK_Territories_Region", Storage:="_Region", ThisKey:="RegionID", IsForeignKey:=True)>
+    Public Property Region() As Region
+        Get
+            Return Me._Region.Entity
+        End Get
+        Set
+            Dim previousValue As Region = Me._Region.Entity
+            If (((previousValue Is Value) _
+                        = False) _
+                        OrElse (Me._Region.HasLoadedOrAssignedValue = False)) Then
+                Me.SendPropertyChanging()
+
+                If ((previousValue Is Nothing) _
+                            = False) Then
+                    Me._Region.Entity = Nothing
+                    previousValue.Territories.Remove(Me)
+                End If
+                Me._Region.Entity = Value
+                If ((Value Is Nothing) _
+                            = False) Then
+                    Value.Territories.Add(Me)
+                    Me._RegionID = Value.RegionID
+                Else
+                    Me._RegionID = CType(Nothing, Integer)
+                End If
+                Me.SendPropertyChanged("Region")
+            End If
+        End Set
+    End Property
+
+    Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+
+    Protected Overridable Sub SendPropertyChanging()
+        If ((Me.PropertyChangingEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+        End If
+    End Sub
+
+    Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+        If ((Me.PropertyChangedEvent Is Nothing) _
+                    = False) Then
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End If
+    End Sub
+
+    Private Sub attach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
+        Me.SendPropertyChanging()
+        entity.Territory = Me
+        Me.SendPropertyChanged("EmployeeTerritories")
+    End Sub
+
+    Private Sub detach_EmployeeTerritories(ByVal entity As EmployeeTerritory)
+        Me.SendPropertyChanging()
+        entity.Territory = Nothing
+        Me.SendPropertyChanged("EmployeeTerritories")
+    End Sub
 End Class
 
 Partial Public Class CustOrderHistResult
-	
-	Private _ProductName As String
-	
-	Private _Total As System.Nullable(Of Integer)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_ProductName", DbType:="NVarChar(40)")>  _
-	Public Property ProductName() As String
-		Get
-			Return Me._ProductName
-		End Get
-		Set
-			If (String.Equals(Me._ProductName, value) = false) Then
-				Me._ProductName = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Total", DbType:="Int")>  _
-	Public Property Total() As System.Nullable(Of Integer)
-		Get
-			Return Me._Total
-		End Get
-		Set
-			If (Me._Total.Equals(value) = false) Then
-				Me._Total = value
-			End If
-		End Set
-	End Property
+
+    Private _ProductName As String
+
+    Private _Total As System.Nullable(Of Integer)
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_ProductName", DbType:="NVarChar(40)")>
+    Public Property ProductName() As String
+        Get
+            Return Me._ProductName
+        End Get
+        Set
+            If (String.Equals(Me._ProductName, Value) = False) Then
+                Me._ProductName = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Total", DbType:="Int")>
+    Public Property Total() As System.Nullable(Of Integer)
+        Get
+            Return Me._Total
+        End Get
+        Set
+            If (Me._Total.Equals(Value) = False) Then
+                Me._Total = Value
+            End If
+        End Set
+    End Property
 End Class
 
 Partial Public Class CustOrdersDetailResult
-	
-	Private _ProductName As String
-	
-	Private _UnitPrice As System.Nullable(Of Decimal)
-	
-	Private _Quantity As System.Nullable(Of Short)
-	
-	Private _Discount As System.Nullable(Of Integer)
-	
-	Private _ExtendedPrice As System.Nullable(Of Decimal)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_ProductName", DbType:="NVarChar(40)")>  _
-	Public Property ProductName() As String
-		Get
-			Return Me._ProductName
-		End Get
-		Set
-			If (String.Equals(Me._ProductName, value) = false) Then
-				Me._ProductName = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_UnitPrice", DbType:="Money")>  _
-	Public Property UnitPrice() As System.Nullable(Of Decimal)
-		Get
-			Return Me._UnitPrice
-		End Get
-		Set
-			If (Me._UnitPrice.Equals(value) = false) Then
-				Me._UnitPrice = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Quantity", DbType:="SmallInt")>  _
-	Public Property Quantity() As System.Nullable(Of Short)
-		Get
-			Return Me._Quantity
-		End Get
-		Set
-			If (Me._Quantity.Equals(value) = false) Then
-				Me._Quantity = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Discount", DbType:="Int")>  _
-	Public Property Discount() As System.Nullable(Of Integer)
-		Get
-			Return Me._Discount
-		End Get
-		Set
-			If (Me._Discount.Equals(value) = false) Then
-				Me._Discount = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ExtendedPrice", DbType:="Money")>  _
-	Public Property ExtendedPrice() As System.Nullable(Of Decimal)
-		Get
-			Return Me._ExtendedPrice
-		End Get
-		Set
-			If (Me._ExtendedPrice.Equals(value) = false) Then
-				Me._ExtendedPrice = value
-			End If
-		End Set
-	End Property
+
+    Private _ProductName As String
+
+    Private _UnitPrice As System.Nullable(Of Decimal)
+
+    Private _Quantity As System.Nullable(Of Short)
+
+    Private _Discount As System.Nullable(Of Integer)
+
+    Private _ExtendedPrice As System.Nullable(Of Decimal)
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_ProductName", DbType:="NVarChar(40)")>
+    Public Property ProductName() As String
+        Get
+            Return Me._ProductName
+        End Get
+        Set
+            If (String.Equals(Me._ProductName, Value) = False) Then
+                Me._ProductName = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_UnitPrice", DbType:="Money")>
+    Public Property UnitPrice() As System.Nullable(Of Decimal)
+        Get
+            Return Me._UnitPrice
+        End Get
+        Set
+            If (Me._UnitPrice.Equals(Value) = False) Then
+                Me._UnitPrice = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Quantity", DbType:="SmallInt")>
+    Public Property Quantity() As System.Nullable(Of Short)
+        Get
+            Return Me._Quantity
+        End Get
+        Set
+            If (Me._Quantity.Equals(Value) = False) Then
+                Me._Quantity = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Discount", DbType:="Int")>
+    Public Property Discount() As System.Nullable(Of Integer)
+        Get
+            Return Me._Discount
+        End Get
+        Set
+            If (Me._Discount.Equals(Value) = False) Then
+                Me._Discount = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ExtendedPrice", DbType:="Money")>
+    Public Property ExtendedPrice() As System.Nullable(Of Decimal)
+        Get
+            Return Me._ExtendedPrice
+        End Get
+        Set
+            If (Me._ExtendedPrice.Equals(Value) = False) Then
+                Me._ExtendedPrice = Value
+            End If
+        End Set
+    End Property
 End Class
 
 Partial Public Class CustOrdersOrdersResult
-	
-	Private _OrderID As System.Nullable(Of Integer)
-	
-	Private _OrderDate As System.Nullable(Of Date)
-	
-	Private _RequiredDate As System.Nullable(Of Date)
-	
-	Private _ShippedDate As System.Nullable(Of Date)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_OrderID", DbType:="Int")>  _
-	Public Property OrderID() As System.Nullable(Of Integer)
-		Get
-			Return Me._OrderID
-		End Get
-		Set
-			If (Me._OrderID.Equals(value) = false) Then
-				Me._OrderID = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_OrderDate", DbType:="DateTime")>  _
-	Public Property OrderDate() As System.Nullable(Of Date)
-		Get
-			Return Me._OrderDate
-		End Get
-		Set
-			If (Me._OrderDate.Equals(value) = false) Then
-				Me._OrderDate = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_RequiredDate", DbType:="DateTime")>  _
-	Public Property RequiredDate() As System.Nullable(Of Date)
-		Get
-			Return Me._RequiredDate
-		End Get
-		Set
-			If (Me._RequiredDate.Equals(value) = false) Then
-				Me._RequiredDate = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShippedDate", DbType:="DateTime")>  _
-	Public Property ShippedDate() As System.Nullable(Of Date)
-		Get
-			Return Me._ShippedDate
-		End Get
-		Set
-			If (Me._ShippedDate.Equals(value) = false) Then
-				Me._ShippedDate = value
-			End If
-		End Set
-	End Property
+
+    Private _OrderID As System.Nullable(Of Integer)
+
+    Private _OrderDate As System.Nullable(Of Date)
+
+    Private _RequiredDate As System.Nullable(Of Date)
+
+    Private _ShippedDate As System.Nullable(Of Date)
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_OrderID", DbType:="Int")>
+    Public Property OrderID() As System.Nullable(Of Integer)
+        Get
+            Return Me._OrderID
+        End Get
+        Set
+            If (Me._OrderID.Equals(Value) = False) Then
+                Me._OrderID = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_OrderDate", DbType:="DateTime")>
+    Public Property OrderDate() As System.Nullable(Of Date)
+        Get
+            Return Me._OrderDate
+        End Get
+        Set
+            If (Me._OrderDate.Equals(Value) = False) Then
+                Me._OrderDate = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_RequiredDate", DbType:="DateTime")>
+    Public Property RequiredDate() As System.Nullable(Of Date)
+        Get
+            Return Me._RequiredDate
+        End Get
+        Set
+            If (Me._RequiredDate.Equals(Value) = False) Then
+                Me._RequiredDate = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShippedDate", DbType:="DateTime")>
+    Public Property ShippedDate() As System.Nullable(Of Date)
+        Get
+            Return Me._ShippedDate
+        End Get
+        Set
+            If (Me._ShippedDate.Equals(Value) = False) Then
+                Me._ShippedDate = Value
+            End If
+        End Set
+    End Property
 End Class
 
 Partial Public Class EmployeeSalesByCountryResult
-	
-	Private _Country As String
-	
-	Private _LastName As String
-	
-	Private _FirstName As String
-	
-	Private _ShippedDate As System.Nullable(Of Date)
-	
-	Private _OrderID As System.Nullable(Of Integer)
-	
-	Private _SaleAmount As System.Nullable(Of Decimal)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_Country", DbType:="NVarChar(15)")>  _
-	Public Property Country() As String
-		Get
-			Return Me._Country
-		End Get
-		Set
-			If (String.Equals(Me._Country, value) = false) Then
-				Me._Country = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_LastName", DbType:="NVarChar(20)")>  _
-	Public Property LastName() As String
-		Get
-			Return Me._LastName
-		End Get
-		Set
-			If (String.Equals(Me._LastName, value) = false) Then
-				Me._LastName = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_FirstName", DbType:="NVarChar(10)")>  _
-	Public Property FirstName() As String
-		Get
-			Return Me._FirstName
-		End Get
-		Set
-			If (String.Equals(Me._FirstName, value) = false) Then
-				Me._FirstName = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_ShippedDate", DbType:="DateTime")>  _
-	Public Property ShippedDate() As System.Nullable(Of Date)
-		Get
-			Return Me._ShippedDate
-		End Get
-		Set
-			If (Me._ShippedDate.Equals(value) = false) Then
-				Me._ShippedDate = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_OrderID", DbType:="Int")>  _
-	Public Property OrderID() As System.Nullable(Of Integer)
-		Get
-			Return Me._OrderID
-		End Get
-		Set
-			If (Me._OrderID.Equals(value) = false) Then
-				Me._OrderID = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_SaleAmount", DbType:="Money")>  _
-	Public Property SaleAmount() As System.Nullable(Of Decimal)
-		Get
-			Return Me._SaleAmount
-		End Get
-		Set
-			If (Me._SaleAmount.Equals(value) = false) Then
-				Me._SaleAmount = value
-			End If
-		End Set
-	End Property
+
+    Private _Country As String
+
+    Private _LastName As String
+
+    Private _FirstName As String
+
+    Private _ShippedDate As System.Nullable(Of Date)
+
+    Private _OrderID As System.Nullable(Of Integer)
+
+    Private _SaleAmount As System.Nullable(Of Decimal)
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_Country", DbType:="NVarChar(15)")>
+    Public Property Country() As String
+        Get
+            Return Me._Country
+        End Get
+        Set
+            If (String.Equals(Me._Country, Value) = False) Then
+                Me._Country = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_LastName", DbType:="NVarChar(20)")>
+    Public Property LastName() As String
+        Get
+            Return Me._LastName
+        End Get
+        Set
+            If (String.Equals(Me._LastName, Value) = False) Then
+                Me._LastName = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_FirstName", DbType:="NVarChar(10)")>
+    Public Property FirstName() As String
+        Get
+            Return Me._FirstName
+        End Get
+        Set
+            If (String.Equals(Me._FirstName, Value) = False) Then
+                Me._FirstName = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_ShippedDate", DbType:="DateTime")>
+    Public Property ShippedDate() As System.Nullable(Of Date)
+        Get
+            Return Me._ShippedDate
+        End Get
+        Set
+            If (Me._ShippedDate.Equals(Value) = False) Then
+                Me._ShippedDate = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_OrderID", DbType:="Int")>
+    Public Property OrderID() As System.Nullable(Of Integer)
+        Get
+            Return Me._OrderID
+        End Get
+        Set
+            If (Me._OrderID.Equals(Value) = False) Then
+                Me._OrderID = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_SaleAmount", DbType:="Money")>
+    Public Property SaleAmount() As System.Nullable(Of Decimal)
+        Get
+            Return Me._SaleAmount
+        End Get
+        Set
+            If (Me._SaleAmount.Equals(Value) = False) Then
+                Me._SaleAmount = Value
+            End If
+        End Set
+    End Property
 End Class
 
 Partial Public Class SalesByYearResult
-	
-	Private _ShippedDate As System.Nullable(Of Date)
-	
-	Private _OrderID As System.Nullable(Of Integer)
-	
-	Private _Subtotal As System.Nullable(Of Decimal)
-	
-	Private _Year As String
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_ShippedDate", DbType:="DateTime")>  _
-	Public Property ShippedDate() As System.Nullable(Of Date)
-		Get
-			Return Me._ShippedDate
-		End Get
-		Set
-			If (Me._ShippedDate.Equals(value) = false) Then
-				Me._ShippedDate = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_OrderID", DbType:="Int")>  _
-	Public Property OrderID() As System.Nullable(Of Integer)
-		Get
-			Return Me._OrderID
-		End Get
-		Set
-			If (Me._OrderID.Equals(value) = false) Then
-				Me._OrderID = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Subtotal", DbType:="Money")>  _
-	Public Property Subtotal() As System.Nullable(Of Decimal)
-		Get
-			Return Me._Subtotal
-		End Get
-		Set
-			If (Me._Subtotal.Equals(value) = false) Then
-				Me._Subtotal = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_Year", DbType:="NVarChar(30)")>  _
-	Public Property Year() As String
-		Get
-			Return Me._Year
-		End Get
-		Set
-			If (String.Equals(Me._Year, value) = false) Then
-				Me._Year = value
-			End If
-		End Set
-	End Property
+
+    Private _ShippedDate As System.Nullable(Of Date)
+
+    Private _OrderID As System.Nullable(Of Integer)
+
+    Private _Subtotal As System.Nullable(Of Decimal)
+
+    Private _Year As String
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_ShippedDate", DbType:="DateTime")>
+    Public Property ShippedDate() As System.Nullable(Of Date)
+        Get
+            Return Me._ShippedDate
+        End Get
+        Set
+            If (Me._ShippedDate.Equals(Value) = False) Then
+                Me._ShippedDate = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_OrderID", DbType:="Int")>
+    Public Property OrderID() As System.Nullable(Of Integer)
+        Get
+            Return Me._OrderID
+        End Get
+        Set
+            If (Me._OrderID.Equals(Value) = False) Then
+                Me._OrderID = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Subtotal", DbType:="Money")>
+    Public Property Subtotal() As System.Nullable(Of Decimal)
+        Get
+            Return Me._Subtotal
+        End Get
+        Set
+            If (Me._Subtotal.Equals(Value) = False) Then
+                Me._Subtotal = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_Year", DbType:="NVarChar(30)")>
+    Public Property Year() As String
+        Get
+            Return Me._Year
+        End Get
+        Set
+            If (String.Equals(Me._Year, Value) = False) Then
+                Me._Year = Value
+            End If
+        End Set
+    End Property
 End Class
 
 Partial Public Class SalesByCategoryResult
-	
-	Private _ProductName As String
-	
-	Private _TotalPurchase As System.Nullable(Of Decimal)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_ProductName", DbType:="NVarChar(40)")>  _
-	Public Property ProductName() As String
-		Get
-			Return Me._ProductName
-		End Get
-		Set
-			If (String.Equals(Me._ProductName, value) = false) Then
-				Me._ProductName = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_TotalPurchase", DbType:="Decimal(38,2)")>  _
-	Public Property TotalPurchase() As System.Nullable(Of Decimal)
-		Get
-			Return Me._TotalPurchase
-		End Get
-		Set
-			If (Me._TotalPurchase.Equals(value) = false) Then
-				Me._TotalPurchase = value
-			End If
-		End Set
-	End Property
+
+    Private _ProductName As String
+
+    Private _TotalPurchase As System.Nullable(Of Decimal)
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_ProductName", DbType:="NVarChar(40)")>
+    Public Property ProductName() As String
+        Get
+            Return Me._ProductName
+        End Get
+        Set
+            If (String.Equals(Me._ProductName, Value) = False) Then
+                Me._ProductName = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_TotalPurchase", DbType:="Decimal(38,2)")>
+    Public Property TotalPurchase() As System.Nullable(Of Decimal)
+        Get
+            Return Me._TotalPurchase
+        End Get
+        Set
+            If (Me._TotalPurchase.Equals(Value) = False) Then
+                Me._TotalPurchase = Value
+            End If
+        End Set
+    End Property
 End Class
 
 Partial Public Class TenMostExpensiveProductsResult
-	
-	Private _TenMostExpensiveProducts As String
-	
-	Private _UnitPrice As System.Nullable(Of Decimal)
-	
-	Public Sub New()
-		MyBase.New
-	End Sub
-	
-	<Column(Storage:="_TenMostExpensiveProducts", DbType:="NVarChar(40)")>  _
-	Public Property TenMostExpensiveProducts() As String
-		Get
-			Return Me._TenMostExpensiveProducts
-		End Get
-		Set
-			If (String.Equals(Me._TenMostExpensiveProducts, value) = false) Then
-				Me._TenMostExpensiveProducts = value
-			End If
-		End Set
-	End Property
-	
-	<Column(Storage:="_UnitPrice", DbType:="Money")>  _
-	Public Property UnitPrice() As System.Nullable(Of Decimal)
-		Get
-			Return Me._UnitPrice
-		End Get
-		Set
-			If (Me._UnitPrice.Equals(value) = false) Then
-				Me._UnitPrice = value
-			End If
-		End Set
-	End Property
+
+    Private _TenMostExpensiveProducts As String
+
+    Private _UnitPrice As System.Nullable(Of Decimal)
+
+    Public Sub New()
+        MyBase.New
+    End Sub
+
+    <Column(Storage:="_TenMostExpensiveProducts", DbType:="NVarChar(40)")>
+    Public Property TenMostExpensiveProducts() As String
+        Get
+            Return Me._TenMostExpensiveProducts
+        End Get
+        Set
+            If (String.Equals(Me._TenMostExpensiveProducts, Value) = False) Then
+                Me._TenMostExpensiveProducts = Value
+            End If
+        End Set
+    End Property
+
+    <Column(Storage:="_UnitPrice", DbType:="Money")>
+    Public Property UnitPrice() As System.Nullable(Of Decimal)
+        Get
+            Return Me._UnitPrice
+        End Get
+        Set
+            If (Me._UnitPrice.Equals(Value) = False) Then
+                Me._UnitPrice = Value
+            End If
+        End Set
+    End Property
 End Class

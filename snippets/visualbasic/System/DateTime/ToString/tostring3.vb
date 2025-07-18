@@ -4,7 +4,7 @@ Option Strict On
 ' <Snippet4>
 Imports System.Globalization
 
-Module Example
+Module DateToStringExample3
     Public Sub Main4()
         ' Create an array of all supported standard date and time format specifiers.
         Dim formats() As String = {"d", "D", "f", "F", "g", "G", "m", "o", "r",

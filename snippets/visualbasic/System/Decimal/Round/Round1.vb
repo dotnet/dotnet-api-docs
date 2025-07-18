@@ -3,12 +3,13 @@ Option Strict On
 
 ' <Snippet1>
 Module Example
-   Public Sub Main()
-      For value As Decimal = 100d To 102d Step .1d
-         Console.WriteLine("{0} --> {1}", value, Decimal.Round(value))
-      Next
-   End Sub
+    Public Sub Run()
+        For value As Decimal = 100D To 102D Step 0.1D
+            Console.WriteLine("{0} --> {1}", value, Decimal.Round(value))
+        Next
+    End Sub
 End Module
+
 ' The example displays the following output:
 '     100 --> 100
 '     100.1 --> 100

@@ -1,77 +1,83 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
+Imports System.Drawing
+Imports System.Windows.Forms
 
 Public Class Form1
 
-   Private connectionString As String = "Data Source=RONPET59\SQLEXPRESS;Initial Catalog=SurveyDB;Integrated Security=True"
+    Public Shared Sub Main()
 
-   Private Function CompareForMissing(ByVal value As Object) As Boolean
-      ' <Snippet1>
-      Return DBNull.Value.Equals(value)
-      ' </Snippet1> 
-   End Function
+    End Sub
 
-   ' <Snippet2>
-   Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-      ' Define ADO.NET objects.
-      Dim conn As New SqlConnection(connectionString)
-      Dim cmd As New SqlCommand
-      Dim dr As SqlDataReader
+    Private connectionString As String = "Data Source=RONPET59\SQLEXPRESS;Initial Catalog=SurveyDB;Integrated Security=True"
 
-      ' Open connection, and retrieve dataset.
-      conn.Open()
+    Private Function CompareForMissing(ByVal value As Object) As Boolean
+        ' <Snippet1>
+        Return DBNull.Value.Equals(value)
+        ' </Snippet1> 
+    End Function
 
-      ' Define Command object.
-      cmd.CommandText = "Select * From Responses"
-      cmd.CommandType = CommandType.Text
-      cmd.Connection = conn
+    ' <Snippet2>
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        ' Define ADO.NET objects.
+        Dim conn As New SqlConnection(connectionString)
+        Dim cmd As New SqlCommand
+        Dim dr As SqlDataReader
 
-      ' Retrieve data reader.
-      dr = cmd.ExecuteReader()
+        ' Open connection, and retrieve dataset.
+        conn.Open()
 
-      Dim fieldCount As Integer = dr.FieldCount
-      Dim fieldValues(fieldCount - 1) As Object
-      Dim headers(fieldCount - 1) As String
+        ' Define Command object.
+        cmd.CommandText = "Select * From Responses"
+        cmd.CommandType = CommandType.Text
+        cmd.Connection = conn
 
-      ' Get names of fields.
-      For ctr As Integer = 0 To fieldCount - 1
-         headers(ctr) = dr.GetName(ctr)
-      Next
+        ' Retrieve data reader.
+        dr = cmd.ExecuteReader()
 
-      ' Set up data grid.
-      grid.ColumnCount = fieldCount
+        Dim fieldCount As Integer = dr.FieldCount
+        Dim fieldValues(fieldCount - 1) As Object
+        Dim headers(fieldCount - 1) As String
 
-      With grid.ColumnHeadersDefaultCellStyle
-         .BackColor = Color.Navy
-         .ForeColor = Color.White
-         .Font = New Font(grid.Font, FontStyle.Bold)
-      End With
+        ' Get names of fields.
+        For ctr As Integer = 0 To fieldCount - 1
+            headers(ctr) = dr.GetName(ctr)
+        Next
 
-      With grid
-         .AutoSizeRowsMode = _
-             DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders
-         .ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
-         .CellBorderStyle = DataGridViewCellBorderStyle.Single
-         .GridColor = Color.Black
-         .RowHeadersVisible = True
+        ' Set up data grid.
+        grid.ColumnCount = fieldCount
 
-         For columnNumber As Integer = 0 To headers.Length - 1
-            .Columns(columnNumber).Name = headers(columnNumber)
-         Next
-      End With
+        With grid.ColumnHeadersDefaultCellStyle
+            .BackColor = Color.Navy
+            .ForeColor = Color.White
+            .Font = New Font(grid.Font, FontStyle.Bold)
+        End With
 
-      ' Get data, replace missing values with "NA", and display it.
-      Do While dr.Read()
-         dr.GetValues(fieldValues)
+        With grid
+            .AutoSizeRowsMode =
+                DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders
+            .ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
+            .CellBorderStyle = DataGridViewCellBorderStyle.Single
+            .GridColor = Color.Black
+            .RowHeadersVisible = True
 
-         For fieldCounter As Integer = 0 To fieldCount - 1
-            If Convert.IsDBNull(fieldValues(fieldCounter)) Then
-               fieldValues(fieldCounter) = "NA"
-            End If
-         Next
-         grid.Rows.Add(fieldValues)
-      Loop
-      dr.Close()
-   End Sub
-   ' </Snippet2>
+            For columnNumber As Integer = 0 To headers.Length - 1
+                .Columns(columnNumber).Name = headers(columnNumber)
+            Next
+        End With
+
+        ' Get data, replace missing values with "NA", and display it.
+        Do While dr.Read()
+            dr.GetValues(fieldValues)
+
+            For fieldCounter As Integer = 0 To fieldCount - 1
+                If Convert.IsDBNull(fieldValues(fieldCounter)) Then
+                    fieldValues(fieldCounter) = "NA"
+                End If
+            Next
+            grid.Rows.Add(fieldValues)
+        Loop
+        dr.Close()
+    End Sub
+    ' </Snippet2>
 End Class

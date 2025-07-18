@@ -4,7 +4,7 @@ Option Strict On
 ' <Snippet3>
 Imports System.Globalization
 
-Module Example4
+Module DateToStringExample4
     Public Sub Main4()
         Dim cultures() As CultureInfo = {CultureInfo.InvariantCulture,
                                        New CultureInfo("en-us"),

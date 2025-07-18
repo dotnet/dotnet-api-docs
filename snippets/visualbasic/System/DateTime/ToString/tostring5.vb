@@ -2,7 +2,7 @@
 Imports System.Globalization
 Imports System.Threading
 
-Public Module Example5
+Public Module DateToStringExample5
     Public Sub Main5()
         Dim formats() As String = {"G", "MM/yyyy", "MM\/dd\/yyyy HH:mm",
                                   "yyyyMMdd"}
