@@ -1,19 +1,26 @@
-﻿Public Class Form1
+﻿Imports System.Drawing
+Imports System.Windows.Forms
+
+Public Class Form1
     Dim flowPanel As FlowLayoutPanel
     Dim urlLabel As Label
     Dim urlTextBox As TextBox
     Dim WithEvents urlButton As Button
 
+    Public Shared Sub Main()
+
+    End Sub
+
     '<SNIPPET1>
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.AutoSize = True
-        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.Text = "URL Opener"
+        AutoSize = True
+        AutoSizeMode = AutoSizeMode.GrowAndShrink
+        Text = "URL Opener"
 
         flowPanel = New FlowLayoutPanel()
         flowPanel.AutoSize = True
-        flowPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.Controls.Add(flowPanel)
+        flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        Controls.Add(flowPanel)
 
         urlLabel = New Label()
         urlLabel.Name = "urlLabel"

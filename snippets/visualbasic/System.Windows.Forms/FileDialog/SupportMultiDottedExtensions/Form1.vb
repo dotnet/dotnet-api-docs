@@ -3,6 +3,9 @@ Imports System.IO
 Imports System.Text
 
 Public Class Form1
+    Public Shared Sub Main()
+    End Sub
+    
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         Me.SaveFileDialog1.SupportMultiDottedExtensions = True
         Me.SaveFileDialog1.Filter = "Data text files|*.data.txt"

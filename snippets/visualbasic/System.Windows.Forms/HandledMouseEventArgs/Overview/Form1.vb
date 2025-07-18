@@ -1,4 +1,7 @@
 ﻿Public Class Form1
+    Public Shared Sub Main()
+    End Sub
+
     Sub New()
 
         ' This call is required by the Windows Form Designer.

@@ -1,4 +1,11 @@
-﻿Public Class Form1
+﻿Imports System.Windows.Forms
+
+Public Class Form1
+
+    Public Shared Sub Main()
+
+    End Sub
+
     '<SNIPPET1>
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         Dim MyDialog As New ColorDialog()
@@ -10,7 +17,7 @@
         MyDialog.Color = TextBox1.ForeColor
 
         ' Update the text box color if the user clicks OK 
-        If (MyDialog.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+        If (MyDialog.ShowDialog() = DialogResult.OK) Then
             TextBox1.ForeColor = MyDialog.Color
         End If
     End Sub

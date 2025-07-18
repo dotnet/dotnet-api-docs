@@ -1,4 +1,6 @@
 ﻿Public Class Form1
+    Public Shared Sub Main()
+    End Sub
 
     Dim WithEvents Doc As HtmlDocument
 

@@ -1,6 +1,8 @@
 ﻿Imports System.Net
 
 Public Class Form1
+    Public Shared Sub Main()
+    End Sub
 
     Private Sub PrintDOMButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintDOMButton.Click
         PrintDomBegin()
@@ -147,7 +149,7 @@ Public Class Form1
         Elem.InnerHtml = HtmlMenu
 
         ' Retrieve the menu cues and hook up an event handler for expanding and collapsing display of the
-        ' child elements.  
+        ' child elements.
         For Each MenuCueElem As HtmlElement In Elem.GetElementsByTagName("SPAN")
             If MenuCueElem.Id.EndsWith("cue") Then
                 AddHandler MenuCueElem.Click, New HtmlElementEventHandler(AddressOf Me.Element_Click)
@@ -156,7 +158,7 @@ Public Class Form1
     End Sub
 
     Private Sub Element_Click(ByVal sender As Object, ByVal e As HtmlElementEventArgs)
-        ' !TODO: Need SetStyle() implemented per DCR. 
+        ' !TODO: Need SetStyle() implemented per DCR.
     End Sub
     '</SNIPPET5>
 
@@ -249,7 +251,7 @@ Public Class Form1
     Private Sub AddTopPageMessage(ByVal Message As String)
         If (WebBrowser1.Document IsNot Nothing) Then
             With WebBrowser1.Document
-                ' Do not insert the warning again if it already exists. 
+                ' Do not insert the warning again if it already exists.
                 Dim ReturnedElems As HtmlElementCollection = .All.GetElementsByName("ADatumWarningDiv")
                 If (Not (ReturnedElems Is Nothing) And (ReturnedElems.Count > 0)) Then
                     Exit Sub

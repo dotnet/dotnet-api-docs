@@ -1,8 +1,14 @@
 ﻿'<SNIPPET1>
 Imports System.Configuration
 Imports System.ComponentModel
+Imports System.Windows.Forms
+Imports System.Drawing
 
 Public Class Form1
+
+    Public Shared Sub Main()
+
+    End Sub
 
     Private WithEvents frmSettings1 As New FormSettings
 
@@ -16,21 +22,21 @@ Public Class Form1
 
         '<SNIPPET12>
         'Data bind settings properties with straightforward associations.
-        Dim bndBackColor As New Binding("BackColor", frmSettings1, "FormBackColor", _
+        Dim bndBackColor As New Binding("BackColor", frmSettings1, "FormBackColor",
                 True, DataSourceUpdateMode.OnPropertyChanged)
-        Me.DataBindings.Add(bndBackColor)
-        Dim bndLocation As New Binding("Location", frmSettings1, "FormLocation", _
+        DataBindings.Add(bndBackColor)
+        Dim bndLocation As New Binding("Location", frmSettings1, "FormLocation",
                 True, DataSourceUpdateMode.OnPropertyChanged)
-        Me.DataBindings.Add(bndLocation)
+        DataBindings.Add(bndLocation)
 
         ' Assign Size property, since databinding to Size doesn't work well.
-        Me.Size = frmSettings1.FormSize
+        Size = frmSettings1.FormSize
 
         'For more complex associations, manually assign associations.
         Dim savedText As String = frmSettings1.FormText
         'Since there is no default value for FormText.
         If (savedText IsNot Nothing) Then
-            Me.Text = savedText
+            Text = savedText
         End If
         '</SNIPPET12>
     End Sub
@@ -40,10 +46,10 @@ Public Class Form1
     Private Sub Form1_FormClosing_1(ByVal sender As Object, ByVal e As _
             FormClosingEventArgs) Handles MyBase.FormClosing
         'Synchronize manual associations first.
-        frmSettings1.FormText = Me.Text + "."c
+        frmSettings1.FormText = Text + "."c
 
         ' Save size settings manually.
-        frmSettings1.FormSize = Me.Size
+        frmSettings1.FormSize = Size
 
         frmSettings1.Save()
     End Sub
@@ -52,9 +58,9 @@ Public Class Form1
     '<SNIPPET4>
     Private Sub btnBackColor_Click(ByVal sender As Object, ByVal e As EventArgs) _
             Handles btnBackColor.Click
-        If System.Windows.Forms.DialogResult.OK = colorDialog1.ShowDialog() Then
+        If DialogResult.OK = colorDialog1.ShowDialog() Then
             Dim c As Color = colorDialog1.Color
-            Me.BackColor = c
+            BackColor = c
         End If
     End Sub
     '</SNIPPET4>
@@ -63,7 +69,7 @@ Public Class Form1
     Private Sub btnReset_Click(ByVal sender As Object, ByVal e As EventArgs) _
             Handles btnReset.Click
         frmSettings1.Reset()
-        Me.BackColor = SystemColors.Control
+        BackColor = SystemColors.Control
     End Sub
     '</SNIPPET5>
 
@@ -85,10 +91,10 @@ Public Class Form1
     Private Sub frmSettings1_SettingsSaving(ByVal sender As Object, ByVal e As _
             CancelEventArgs) Handles frmSettings1.SettingsSaving
         'Should check for settings changes first.
-        Dim dr As DialogResult = MessageBox.Show( _
-            "Save current values for application settings?", "Save Settings", _
+        Dim dr As DialogResult = MessageBox.Show(
+            "Save current values for application settings?", "Save Settings",
             MessageBoxButtons.YesNo)
-        If (System.Windows.Forms.DialogResult.No = dr) Then
+        If (DialogResult.No = dr) Then
             e.Cancel = True
         End If
     End Sub
@@ -100,7 +106,7 @@ End Class
 NotInheritable Class FormSettings
     Inherits ApplicationSettingsBase
 
-    <UserScopedSettingAttribute()> _
+    <UserScopedSettingAttribute()>
     Public Property FormText() As String
         Get
             Return CStr(Me("FormText"))
@@ -111,7 +117,7 @@ NotInheritable Class FormSettings
     End Property
 
     '<SNIPPET10>
-    <UserScopedSettingAttribute(), DefaultSettingValueAttribute("0, 0")> _
+    <UserScopedSettingAttribute(), DefaultSettingValueAttribute("0, 0")>
     Public Property FormLocation() As Point
         Get
             Return CType(Me("FormLocation"), Point)
@@ -122,7 +128,7 @@ NotInheritable Class FormSettings
     End Property
     '</SNIPPET10>
 
-    <UserScopedSettingAttribute(), DefaultSettingValueAttribute("225, 200")> _
+    <UserScopedSettingAttribute(), DefaultSettingValueAttribute("225, 200")>
     Public Property FormSize() As Size
         Get
             Return CType(Me("FormSize"), Size)
@@ -132,7 +138,7 @@ NotInheritable Class FormSettings
         End Set
     End Property
 
-    <UserScopedSettingAttribute(), DefaultSettingValueAttribute("LightGray")> _
+    <UserScopedSettingAttribute(), DefaultSettingValueAttribute("LightGray")>
     Public Property FormBackColor() As Color
         Get
             Return CType(Me("FormBackColor"), Color)

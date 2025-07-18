@@ -1,5 +1,7 @@
 ﻿'<Snippet1>
 Public Class Form1
+    Public Shared Sub Main()
+    End Sub
 
     Private Sub ButtonClickWork(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles Button1.Click

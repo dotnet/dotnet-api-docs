@@ -1,25 +1,22 @@
 ﻿' <snippet1>
 ' <snippet2>
-Imports System.Collections
 Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Threading
 Imports System.Windows.Forms
 ' </snippet2>
 
 Public Class FibonacciForm
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
     ' <snippet14>
     Private numberToCompute As Integer = 0
     Private highestPercentageReached As Integer = 0
     ' </snippet14>
 
-    Private numericUpDown1 As System.Windows.Forms.NumericUpDown
-    Private WithEvents startAsyncButton As System.Windows.Forms.Button
-    Private WithEvents cancelAsyncButton As System.Windows.Forms.Button
-    Private progressBar1 As System.Windows.Forms.ProgressBar
-    Private resultLabel As System.Windows.Forms.Label
+    Private numericUpDown1 As NumericUpDown
+    Private WithEvents startAsyncButton As Button
+    Private WithEvents cancelAsyncButton As Button
+    Private progressBar1 As ProgressBar
+    Private resultLabel As Label
     Private WithEvents backgroundWorker1 As System.ComponentModel.BackgroundWorker
 
 
@@ -28,7 +25,7 @@ Public Class FibonacciForm
     End Sub
 
     ' <snippet13>
-    Private Sub startAsyncButton_Click(ByVal sender As System.Object, _
+    Private Sub startAsyncButton_Click(ByVal sender As System.Object,
     ByVal e As System.EventArgs) _
     Handles startAsyncButton.Click
 
@@ -37,15 +34,15 @@ Public Class FibonacciForm
 
         ' Disable the UpDown control until 
         ' the asynchronous operation is done.
-        Me.numericUpDown1.Enabled = False
+        numericUpDown1.Enabled = False
 
         ' Disable the Start button until 
         ' the asynchronous operation is done.
-        Me.startAsyncButton.Enabled = False
+        startAsyncButton.Enabled = False
 
         ' Enable the Cancel button while 
         ' the asynchronous operation runs.
-        Me.cancelAsyncButton.Enabled = True
+        cancelAsyncButton.Enabled = True
 
         ' Get the value from the UpDown control.
         numberToCompute = CInt(numericUpDown1.Value)
@@ -58,33 +55,33 @@ Public Class FibonacciForm
         ' Start the asynchronous operation.
         backgroundWorker1.RunWorkerAsync(numberToCompute)
         ' </snippet3>
-    End Sub 
+    End Sub
     ' </snippet13>
 
     ' <snippet4>
-    Private Sub cancelAsyncButton_Click( _
-    ByVal sender As System.Object, _
+    Private Sub cancelAsyncButton_Click(
+    ByVal sender As System.Object,
     ByVal e As System.EventArgs) _
     Handles cancelAsyncButton.Click
-        
+
         ' Cancel the asynchronous operation.
-        Me.backgroundWorker1.CancelAsync()
+        backgroundWorker1.CancelAsync()
 
         ' Disable the Cancel button.
         cancelAsyncButton.Enabled = False
-        
+
     End Sub
     ' </snippet4>
 
     ' <snippet5>
     ' This event handler is where the actual work is done.
-    Private Sub backgroundWorker1_DoWork( _
-    ByVal sender As Object, _
+    Private Sub backgroundWorker1_DoWork(
+    ByVal sender As Object,
     ByVal e As DoWorkEventArgs) _
     Handles backgroundWorker1.DoWork
 
         ' Get the BackgroundWorker object that raised this event.
-        Dim worker As BackgroundWorker = _
+        Dim worker As BackgroundWorker =
             CType(sender, BackgroundWorker)
 
         ' Assign the result of the computation
@@ -98,7 +95,7 @@ Public Class FibonacciForm
     ' <snippet6>
     ' This event handler deals with the results of the
     ' background operation.
-    Private Sub backgroundWorker1_RunWorkerCompleted( _
+    Private Sub backgroundWorker1_RunWorkerCompleted(
     ByVal sender As Object, ByVal e As RunWorkerCompletedEventArgs) _
     Handles backgroundWorker1.RunWorkerCompleted
 
@@ -119,7 +116,7 @@ Public Class FibonacciForm
         End If
 
         ' Enable the UpDown control.
-        Me.numericUpDown1.Enabled = True
+        numericUpDown1.Enabled = True
 
         ' Enable the Start button.
         startAsyncButton.Enabled = True
@@ -131,11 +128,11 @@ Public Class FibonacciForm
 
     ' <snippet7>
     ' This event handler updates the progress bar.
-    Private Sub backgroundWorker1_ProgressChanged( _
+    Private Sub backgroundWorker1_ProgressChanged(
     ByVal sender As Object, ByVal e As ProgressChangedEventArgs) _
     Handles backgroundWorker1.ProgressChanged
 
-        Me.progressBar1.Value = e.ProgressPercentage
+        progressBar1.Value = e.ProgressPercentage
 
     End Sub
     ' </snippet7>
@@ -144,15 +141,15 @@ Public Class FibonacciForm
     ' This is the method that does the actual work. For this
     ' example, it computes a Fibonacci number and
     ' reports progress as it does its work.
-    Function ComputeFibonacci( _
-        ByVal n As Integer, _
-        ByVal worker As BackgroundWorker, _
+    Function ComputeFibonacci(
+        ByVal n As Integer,
+        ByVal worker As BackgroundWorker,
         ByVal e As DoWorkEventArgs) As Long
 
         ' The parameter n must be >= 0 and <= 91.
         ' Fib(n), with n > 91, overflows a long.
         If n < 0 OrElse n > 91 Then
-            Throw New ArgumentException( _
+            Throw New ArgumentException(
                 "value must be >= 0 and <= 91", "n")
         End If
 
@@ -171,18 +168,18 @@ Public Class FibonacciForm
         ' <snippet11>
         If worker.CancellationPending Then
             e.Cancel = True
-        ' </snippet11>
+            ' </snippet11>
         Else
             If n < 2 Then
                 result = 1
             Else
-                result = ComputeFibonacci(n - 1, worker, e) + _
+                result = ComputeFibonacci(n - 1, worker, e) +
                          ComputeFibonacci(n - 2, worker, e)
             End If
 
             ' <snippet12>
             ' Report progress as a percentage of the total task.
-            Dim percentComplete As Integer = _
+            Dim percentComplete As Integer =
                 CSng(n) / CSng(numberToCompute) * 100
             If percentComplete > highestPercentageReached Then
                 highestPercentageReached = percentComplete
@@ -200,76 +197,76 @@ Public Class FibonacciForm
 
 
     Private Sub InitializeComponent()
-        Me.numericUpDown1 = New System.Windows.Forms.NumericUpDown
-        Me.startAsyncButton = New System.Windows.Forms.Button
-        Me.cancelAsyncButton = New System.Windows.Forms.Button
-        Me.resultLabel = New System.Windows.Forms.Label
-        Me.progressBar1 = New System.Windows.Forms.ProgressBar
-        Me.backgroundWorker1 = New System.ComponentModel.BackgroundWorker
-        CType(Me.numericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        numericUpDown1 = New NumericUpDown
+        startAsyncButton = New Button
+        cancelAsyncButton = New Button
+        resultLabel = New Label
+        progressBar1 = New ProgressBar
+        backgroundWorker1 = New System.ComponentModel.BackgroundWorker
+        CType(numericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
+        SuspendLayout()
         '
         'numericUpDown1
         '
-        Me.numericUpDown1.Location = New System.Drawing.Point(16, 16)
-        Me.numericUpDown1.Maximum = New Decimal(New Integer() {91, 0, 0, 0})
-        Me.numericUpDown1.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.numericUpDown1.Name = "numericUpDown1"
-        Me.numericUpDown1.Size = New System.Drawing.Size(80, 20)
-        Me.numericUpDown1.TabIndex = 0
-        Me.numericUpDown1.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        numericUpDown1.Location = New System.Drawing.Point(16, 16)
+        numericUpDown1.Maximum = New Decimal(New Integer() {91, 0, 0, 0})
+        numericUpDown1.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        numericUpDown1.Name = "numericUpDown1"
+        numericUpDown1.Size = New System.Drawing.Size(80, 20)
+        numericUpDown1.TabIndex = 0
+        numericUpDown1.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'startAsyncButton
         '
-        Me.startAsyncButton.Location = New System.Drawing.Point(16, 72)
-        Me.startAsyncButton.Name = "startAsyncButton"
-        Me.startAsyncButton.Size = New System.Drawing.Size(120, 23)
-        Me.startAsyncButton.TabIndex = 1
-        Me.startAsyncButton.Text = "Start Async"
+        startAsyncButton.Location = New System.Drawing.Point(16, 72)
+        startAsyncButton.Name = "startAsyncButton"
+        startAsyncButton.Size = New System.Drawing.Size(120, 23)
+        startAsyncButton.TabIndex = 1
+        startAsyncButton.Text = "Start Async"
         '
         'cancelAsyncButton
         '
-        Me.cancelAsyncButton.Enabled = False
-        Me.cancelAsyncButton.Location = New System.Drawing.Point(153, 72)
-        Me.cancelAsyncButton.Name = "cancelAsyncButton"
-        Me.cancelAsyncButton.Size = New System.Drawing.Size(119, 23)
-        Me.cancelAsyncButton.TabIndex = 2
-        Me.cancelAsyncButton.Text = "Cancel Async"
+        cancelAsyncButton.Enabled = False
+        cancelAsyncButton.Location = New System.Drawing.Point(153, 72)
+        cancelAsyncButton.Name = "cancelAsyncButton"
+        cancelAsyncButton.Size = New System.Drawing.Size(119, 23)
+        cancelAsyncButton.TabIndex = 2
+        cancelAsyncButton.Text = "Cancel Async"
         '
         'resultLabel
         '
-        Me.resultLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.resultLabel.Location = New System.Drawing.Point(112, 16)
-        Me.resultLabel.Name = "resultLabel"
-        Me.resultLabel.Size = New System.Drawing.Size(160, 23)
-        Me.resultLabel.TabIndex = 3
-        Me.resultLabel.Text = "(no result)"
-        Me.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        resultLabel.BorderStyle = BorderStyle.Fixed3D
+        resultLabel.Location = New System.Drawing.Point(112, 16)
+        resultLabel.Name = "resultLabel"
+        resultLabel.Size = New System.Drawing.Size(160, 23)
+        resultLabel.TabIndex = 3
+        resultLabel.Text = "(no result)"
+        resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'progressBar1
         '
-        Me.progressBar1.Location = New System.Drawing.Point(18, 48)
-        Me.progressBar1.Name = "progressBar1"
-        Me.progressBar1.Size = New System.Drawing.Size(256, 8)
-        Me.progressBar1.TabIndex = 4
+        progressBar1.Location = New System.Drawing.Point(18, 48)
+        progressBar1.Name = "progressBar1"
+        progressBar1.Size = New System.Drawing.Size(256, 8)
+        progressBar1.TabIndex = 4
         '
         'backgroundWorker1
         '
-        Me.backgroundWorker1.WorkerReportsProgress = True
-        Me.backgroundWorker1.WorkerSupportsCancellation = True
+        backgroundWorker1.WorkerReportsProgress = True
+        backgroundWorker1.WorkerSupportsCancellation = True
         '
         'FibonacciForm
         '
-        Me.ClientSize = New System.Drawing.Size(292, 118)
-        Me.Controls.Add(Me.progressBar1)
-        Me.Controls.Add(Me.resultLabel)
-        Me.Controls.Add(Me.cancelAsyncButton)
-        Me.Controls.Add(Me.startAsyncButton)
-        Me.Controls.Add(Me.numericUpDown1)
-        Me.Name = "FibonacciForm"
-        Me.Text = "Fibonacci Calculator"
-        CType(Me.numericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
+        ClientSize = New System.Drawing.Size(292, 118)
+        Controls.Add(progressBar1)
+        Controls.Add(resultLabel)
+        Controls.Add(cancelAsyncButton)
+        Controls.Add(startAsyncButton)
+        Controls.Add(numericUpDown1)
+        Name = "FibonacciForm"
+        Text = "Fibonacci Calculator"
+        CType(numericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
+        ResumeLayout(False)
 
     End Sub
 

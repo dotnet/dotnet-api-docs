@@ -3,6 +3,9 @@ Imports System.Data
 Imports System.Data.SqlClient
 
 Public Class Form1
+    Public Shared Sub Main()
+    End Sub
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim mtb As MaskedTextBox = New MaskedTextBox()
     End Sub
@@ -73,7 +76,7 @@ Public Class Form1
     ' <SNIPPET6>
     Private Sub DisplayMetaDescription()
         If (WebBrowser1.Document IsNot Nothing) Then
-            Dim Elems As HtmlElementCollection 
+            Dim Elems As HtmlElementCollection
             Dim WebOC as WebBrowser = WebBrowser1
 
 	    Elems = WebOC.Document.GetElementsByTagName("META")
@@ -155,7 +158,7 @@ Public Class Form1
 
                 Dim TableRow As HtmlElement
 
-                ' Create the table header. 
+                ' Create the table header.
                 Dim TableHeader As HtmlElement = .CreateElement("THEAD")
                 TableElem.AppendChild(TableHeader)
                 TableRow = .CreateElement("TR")

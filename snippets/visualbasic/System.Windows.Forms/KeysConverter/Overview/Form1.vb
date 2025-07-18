@@ -1,5 +1,7 @@
 ﻿'<Snippet1>
 Public Class Form1
+    Public Shared Sub Main()
+    End Sub
 
     Private Sub KeyDownWork(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) _
         Handles TextBox1.KeyDown

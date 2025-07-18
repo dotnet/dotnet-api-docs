@@ -1,4 +1,6 @@
 ﻿Public Class Form1
+    Public Shared Sub Main()
+    End Sub
 
     Private Sub GetLinksFromFramesButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GetLinksFromFramesButton.Click
         Me.GetLinksFromFrames()
@@ -173,11 +175,11 @@
                 OrderWindow = .Window.OpenNew(New Uri("file://C:\\orderForm.htm"), "")
 
                 ' !TODO: Perform this in the load event handler!
-                ' Get order form. 
+                ' Get order form.
                 Dim ElemCollection As System.Windows.Forms.HtmlElementCollection = .All.GetElementsByName("NewOrderForm")
                 If (ElemCollection.Count = 1) Then
                     FormElement = ElemCollection(0)
-                    ' TODO: Resolve this. 
+                    ' TODO: Resolve this.
                     'FormElement.AttachEventHandler("onsubmit", New HtmlElementEventHandler(AddressOf Form_Submit))
                 End If
             End With
@@ -188,7 +190,7 @@
     Private Sub Form_Submit(ByVal sender As Object, ByVal e As HtmlElementEventArgs)
         Dim DoOrder As Boolean = OrderWindow.Confirm("Once you transmit this order, you cannot cancel it. Submit?")
         If (Not DoOrder) Then
-            ' Cancel the submit. 
+            ' Cancel the submit.
             e.ReturnValue = False
             OrderWindow.Alert("Submit cancelled.")
         End If
