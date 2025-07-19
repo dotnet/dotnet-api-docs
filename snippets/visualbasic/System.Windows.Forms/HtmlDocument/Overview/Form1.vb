@@ -1,6 +1,7 @@
 ﻿Imports System.Xml
 Imports System.Data
 Imports System.Data.SqlClient
+Imports System.Windows.Forms
 
 Public Class Form1
     Public Shared Sub Main()

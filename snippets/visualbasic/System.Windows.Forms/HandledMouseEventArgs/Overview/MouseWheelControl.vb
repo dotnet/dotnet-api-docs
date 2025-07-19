@@ -1,4 +1,6 @@
 ﻿'<SNIPPET1>
+Imports System.Windows.Forms
+
 Public Class MouseWheelControl
     Sub New()
         ' Add initialization code for the control here. 

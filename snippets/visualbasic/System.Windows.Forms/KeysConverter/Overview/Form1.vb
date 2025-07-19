@@ -1,4 +1,6 @@
-﻿'<Snippet1>
+﻿Imports System.Windows.Forms
+
+'<Snippet1>
 Public Class Form1
     Public Shared Sub Main()
     End Sub

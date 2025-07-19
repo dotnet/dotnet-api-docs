@@ -1,4 +1,6 @@
-﻿Public Class Form1
+﻿Imports System.Windows.Forms
+
+Public Class Form1
     Public Shared Sub Main()
     End Sub
 

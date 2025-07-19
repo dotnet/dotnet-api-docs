@@ -1,4 +1,6 @@
-﻿Public Class Form1
+﻿Imports System.Drawing
+
+Public Class Form1
 
     Public Shared Sub Main()
     End Sub
