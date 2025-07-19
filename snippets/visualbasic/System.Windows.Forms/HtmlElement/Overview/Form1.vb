@@ -108,16 +108,16 @@ Public Class Form1
     '<SNIPPET4>
     Private Sub CreateHyperlinkFromSelection()
         If (WebBrowser1.Document IsNot Nothing) Then
-            Dim IDoc As mshtml.IHTMLDocument2 = WebBrowser1.Document.DomDocument
+            Dim IDoc = WebBrowser1.Document.DomDocument
 
             If (Not (IDoc Is Nothing)) Then
-                Dim ISelect As mshtml.IHTMLSelectionObject = IDoc.selection
+                Dim ISelect = IDoc.selection
                 If (ISelect Is Nothing) Then
                     MsgBox("Please select some text before using this command.")
                     Exit Sub
                 End If
 
-                Dim TxtRange As mshtml.IHTMLTxtRange = ISelect.createRange()
+                Dim TxtRange = ISelect.createRange()
 
                 ' Create the link.
                 If (TxtRange.queryCommandEnabled("CreateLink")) Then

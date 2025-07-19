@@ -54,7 +54,7 @@ Public Class Form1
                 "dialogLeft: 300px; edge: Sunken; center: Yes; help: Yes; resizable: No; status: No;"
 
             ' Show the dialog.
-            Dim RawWindow As mshtml.IHTMLWindow2 = Frame.DomWindow
+            Dim RawWindow = Frame.DomWindow
             RawWindow.showModalDialog("http://www.adatum.com/dialogWindow.htm", Nothing, CObj(DialogArguments))
         End If
     End Sub
@@ -261,7 +261,7 @@ Public Class Form1
 
 
     '<SNIPPET14>
-    Dim WithEvents Doc As Windows.Forms.HtmlDocument
+    Dim WithEvents Doc As HtmlDocument
 
     Private Sub EnableClickScroll()
         If (WebBrowser1.Document IsNot Nothing) Then

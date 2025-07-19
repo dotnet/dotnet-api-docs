@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Drawing
+Imports System.Windows.Forms
 
 Public Class Form1
     Public Shared Sub Main()
@@ -6,11 +7,11 @@ Public Class Form1
 
     '<SNIPPET1>
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        TextBox1.ContextMenu = New ContextMenu()
+        TextBox1.ContextMenuStrip = New ContextMenuStrip()
     End Sub
 
     Private Sub TextBox1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TextBox1.MouseDown
-        If (e.Button = Windows.Forms.MouseButtons.Right) Then
+        If (e.Button = MouseButtons.Right) Then
             TextBox1.Select(0, TextBox1.Text.Length)
         End If
     End Sub

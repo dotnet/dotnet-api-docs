@@ -1,7 +1,6 @@
-﻿Imports System.Xml
-Imports System.Data
-Imports System.Data.SqlClient
+﻿Imports System.Data
 Imports System.Windows.Forms
+Imports Microsoft.Data.SqlClient
 
 Public Class Form1
     Public Shared Sub Main()
@@ -12,9 +11,9 @@ Public Class Form1
     End Sub
 
     Private Sub GetDocument()
-	' <SNIPPET17>
-	Dim Doc as HtmlDocument = WebBrowser1.Document
-	' </SNIPPET17>
+        ' <SNIPPET17>
+        Dim Doc As HtmlDocument = WebBrowser1.Document
+        ' </SNIPPET17>
     End Sub
 
     '<SNIPPET1>
@@ -36,7 +35,7 @@ Public Class Form1
     '<SNIPPET3>
     Private Function GetLastModifiedDate() As String
         If (Not (WebBrowser1.Document Is Nothing)) Then
-            Dim CurrentDocument As MSHTML.IHTMLDocument2 = WebBrowser1.Document.DomDocument
+            Dim CurrentDocument As Object = WebBrowser1.Document.DomDocument
             GetLastModifiedDate = CurrentDocument.lastModified
         Else
             GetLastModifiedDate = Nothing
@@ -78,9 +77,9 @@ Public Class Form1
     Private Sub DisplayMetaDescription()
         If (WebBrowser1.Document IsNot Nothing) Then
             Dim Elems As HtmlElementCollection
-            Dim WebOC as WebBrowser = WebBrowser1
+            Dim WebOC As WebBrowser = WebBrowser1
 
-	    Elems = WebOC.Document.GetElementsByTagName("META")
+            Elems = WebOC.Document.GetElementsByTagName("META")
 
             For Each elem As HtmlElement In Elems
                 Dim NameStr As String = elem.GetAttribute("name")
@@ -238,17 +237,17 @@ Public Class Form1
     End Sub
     '</SNIPPET14>
 
-'    '<SNIPPET16>
- '   Public Sub SnipSelected()
-  '      If (webBrowser1.Document IsNot Nothing) Then
-   '         Dim o As Object = Nothing
+    '    '<SNIPPET16>
+    '   Public Sub SnipSelected()
+    '      If (webBrowser1.Document IsNot Nothing) Then
+    '         Dim o As Object = Nothing
     '        webBrowser1.Document.ExecCommand("Copy", False, o)
-     '       Dim selected As String = CType(o, String)
-      '      If (selected IsNot Nothing) AndAlso selected.Length > 0 Then
-       '         MessageBox.Show("Selected text: " & selected)
-        '    End If
-        'End If
-   ' End Sub
+    '       Dim selected As String = CType(o, String)
+    '      If (selected IsNot Nothing) AndAlso selected.Length > 0 Then
+    '         MessageBox.Show("Selected text: " & selected)
+    '    End If
+    'End If
+    ' End Sub
     '</SNIPPET16>
 
     Private Sub TestHTMLThrowButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TestHTMLThrowButton.Click
