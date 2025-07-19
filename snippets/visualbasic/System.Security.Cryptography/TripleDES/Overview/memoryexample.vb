@@ -3,7 +3,7 @@ Imports System.Security.Cryptography
 Imports System.Text
 Imports System.IO
 
-Module TripleDESSample
+Module MemorySample
 
     Sub Main()
         Try

@@ -1,7 +1,7 @@
 ﻿'<snippet1>
 Imports System.Security
 
-Class Example
+Class ExampleClass
    Public Shared Sub Main()
       Dim cki As ConsoleKeyInfo
       Dim m As String = vbCrLf & "Enter your password (up to 15 letters, numbers, and underscores)" &
@@ -21,10 +21,10 @@ Class Example
       left = Console.CursorLeft
 
       ' Read user input from the console. Store up to 15 letter, digit, or underscore
-      ' characters in a SecureString object, or delete a character if the user enters 
-      ' a backspace. Display an asterisk (*) on the console to represent each character 
+      ' characters in a SecureString object, or delete a character if the user enters
+      ' a backspace. Display an asterisk (*) on the console to represent each character
       ' that is stored.
-      
+
       Do
          cki = Console.ReadKey(True)
          If cki.Key = ConsoleKey.Escape Then Exit Do
