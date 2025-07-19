@@ -167,30 +167,30 @@ Namespace ListAdaptersHost
             _description = description
         End Sub
 
-        Public Overrides Function ID() As String
-            Return _id
-        End Function
+        'Public Overrides Function ID() As String
+        '    Return _id
+        'End Function
 
-        Public Overrides Function Title() As String
-            Return _title
-        End Function
+        'Public Overrides Function Title() As String
+        '    Return _title
+        'End Function
 
-        Public Overrides Function Author() As String
-            Return _author
-        End Function
+        'Public Overrides Function Author() As String
+        '    Return _author
+        'End Function
 
-        Public Overrides Function Genre() As String
-            Return _genre
-        End Function
-        Public Overrides Function Price() As String
-            Return _price
-        End Function
-        Public Overrides Function Publish_Date() As String
-            Return _publish_date
-        End Function
-        Public Overrides Function Description() As String
-            Return _description
-        End Function
+        'Public Overrides Function Genre() As String
+        '    Return _genre
+        'End Function
+        'Public Overrides Function Price() As String
+        '    Return _price
+        'End Function
+        'Public Overrides Function Publish_Date() As String
+        '    Return _publish_date
+        'End Function
+        'Public Overrides Function Description() As String
+        '    Return _description
+        'End Function
     End Class
 End Namespace
 ' </Snippet1>
