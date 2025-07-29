@@ -16,6 +16,7 @@ Module Example
       Next
    End Sub
 End Module
+
 ' The example displays the following output:
 '   Public types in assembly sysglobl, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:
 '      System.Globalization.CultureAndRegionInfoBuilder
