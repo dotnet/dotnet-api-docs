@@ -3,15 +3,15 @@
 
 The methods for manipulating zip archives and their files are spread across three classes: <xref:System.IO.Compression.ZipFile>, <xref:System.IO.Compression.ZipArchive>, and <xref:System.IO.Compression.ZipArchiveEntry>.
 
-|To...|Use...|
-|---------|----------|
-|Create a zip archive from a directory|<xref:System.IO.Compression.ZipFile.CreateFromDirectory%2A?displayProperty=nameWithType>|
-|Extract the contents of a zip archive to a directory|<xref:System.IO.Compression.ZipFile.ExtractToDirectory%2A?displayProperty=nameWithType>|
-|Add new files to an existing zip archive|<xref:System.IO.Compression.ZipArchive.CreateEntry%2A?displayProperty=nameWithType>|
-|Retrieve a file in a zip archive|<xref:System.IO.Compression.ZipArchive.GetEntry%2A?displayProperty=nameWithType>|
-|Retrieve all of the files in a zip archive|<xref:System.IO.Compression.ZipArchive.Entries%2A?displayProperty=nameWithType>|
-|To open a stream to an individual file contained in a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Open%2A?displayProperty=nameWithType>|
-|Delete a file from a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Delete%2A?displayProperty=nameWithType>|
+| To...                                 | Use... |
+|---------------------------------------|--------|
+| Create a zip archive from a directory | <xref:System.IO.Compression.ZipFile.CreateFromDirectory%2A?displayProperty=nameWithType> |
+| Extract the contents of a zip archive to a directory | <xref:System.IO.Compression.ZipFile.ExtractToDirectory%2A?displayProperty=nameWithType> |
+| Add new files to an existing zip archive | <xref:System.IO.Compression.ZipArchive.CreateEntry%2A?displayProperty=nameWithType> |
+| Retrieve a file in a zip archive      | <xref:System.IO.Compression.ZipArchive.GetEntry%2A?displayProperty=nameWithType> |
+| Retrieve all of the files in a zip archive | <xref:System.IO.Compression.ZipArchive.Entries%2A?displayProperty=nameWithType> |
+| Open a stream to an individual file contained in a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Open%2A?displayProperty=nameWithType> |
+| Delete a file from a zip archive      | <xref:System.IO.Compression.ZipArchiveEntry.Delete%2A?displayProperty=nameWithType> |
 
 ## Examples
 
