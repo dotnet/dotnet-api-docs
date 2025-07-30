@@ -2,8 +2,8 @@
 Option Strict On
 
 ' <Snippet1>
-Module Example
-   Public Sub Main()
+Module Example1
+   Public Sub Run()
       Dim chars() As Char = { "a"c, "e"c, "i"c, "o"c, "u"c, "y"c,
                               "A"c, "E"c, "I"c, "O"c, "U"c, "Y"c }
       Dim s As String = "The long and winding road..."
