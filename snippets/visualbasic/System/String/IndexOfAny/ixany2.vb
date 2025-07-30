@@ -1,7 +1,7 @@
 ﻿'<snippet1>
 ' Sample for String.IndexOfAny(Char[], Int32)
-Class Sample
-   Public Shared Sub Main()
+Class Example2
+   Public Shared Sub Run()
       Dim br1 As String = "0----+----1----+----2----+----3----+----4----+----5----+----6----+-"
       Dim br2 As String = "0123456789012345678901234567890123456789012345678901234567890123456"
       Dim str As String = "Now is the time for all good men to come to the aid of their party."
@@ -9,7 +9,7 @@ Class Sample
       Dim at As Integer
       Dim target As String = "is"
       Dim anyOf As Char() = target.ToCharArray()
-      
+
       start = str.Length / 2
       Console.WriteLine()
       Console.WriteLine("Search for a character occurrence from position {0} to {1}.", _
