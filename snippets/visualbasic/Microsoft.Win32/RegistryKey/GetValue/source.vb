@@ -43,7 +43,7 @@ Public Class RegGetDef
         Dim Def As String = rk.GetValue("notavalue", "The default to return")
         Console.WriteLine()
         Console.WriteLine(def)
-        
+
         rk.Close()
     End Sub
 End Class

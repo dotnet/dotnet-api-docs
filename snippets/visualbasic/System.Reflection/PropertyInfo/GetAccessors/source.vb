@@ -51,7 +51,7 @@ Module Example
         Console.WriteLine("----------")
         Console.WriteLine("The Caption property: {0}", test.Caption)
     End Sub
-    
+
     Private Function GetVisibility(m As MethodInfo) As String
        Dim visibility As String = ""
        If m.IsPublic Then
