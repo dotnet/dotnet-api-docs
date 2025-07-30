@@ -11,6 +11,7 @@ Class Sample
       Console.WriteLine("String.Join(sep, val, 1, 2) = '{0}'", result)
    End Sub
 End Class
+
 'This example displays the following output:
 '       sep = ', '
 '       val() = {'apple' 'orange' 'grape' 'pear'}

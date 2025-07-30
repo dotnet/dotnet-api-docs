@@ -1,7 +1,7 @@
 ﻿' Visual Basic .NET Document
 Option Strict On
 
-' <Snippet2>
+' <Snippet1>
 Imports System.Collections.Generic
 
 Module Example
@@ -32,7 +32,8 @@ Module Example
       Return primes
    End Function
 End Module
+
 ' The example displays the following output:
 '    Primes less than 100:
 '       2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97
-' </Snippet2>
+' </Snippet1>
