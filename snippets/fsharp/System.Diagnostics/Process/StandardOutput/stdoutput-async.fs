@@ -21,8 +21,8 @@ printfn $"The last 50 characters in the output stream are:\n'{output.Substring(o
 printfn $"\nError stream: {eOut}"
 // The example displays the following output:
 //      The last 50 characters in the output stream are:
-//      ' 49,800.20%
-//      Line 500 of 500 written: 49,900.20%
+//      'ritten: 99,80%
+//      Line 500 of 500 written: 100,00%
 //      '
 //
 //      Error stream: Successfully wrote 500 lines.
