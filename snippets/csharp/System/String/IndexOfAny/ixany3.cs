@@ -21,8 +21,10 @@ class Example3
         Console.WriteLine();
         Console.WriteLine("The first character occurrence from " +
             $"position {start} for {count} characters:");
-        Console.WriteLine($"{Environment.NewLine}{br1}{Environment.NewLine}{br2}" +
-            $"{Environment.NewLine}{str}{Environment.NewLine}");
+        Console.WriteLine($"""
+            {Environment.NewLine}{br1}{Environment.NewLine}{br2}
+            {Environment.NewLine}{str}{Environment.NewLine}
+            """);
         Console.Write($"A character in '{target}' occurs at position: ");
 
         int at = str.IndexOfAny(anyOf, start, count);
