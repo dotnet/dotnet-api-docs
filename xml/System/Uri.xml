@@ -236,11 +236,11 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The port number specified in <paramref name="uriString" /> is not valid or cannot be parsed.
+ The port number specified in <paramref name="uriString" /> is not valid or can't be parsed.
 
  -or-
 
- The length of <paramref name="uriString" /> exceeds 65519 characters.
+ The length of <paramref name="uriString" /> exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -248,11 +248,11 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- There is an invalid character sequence in <paramref name="uriString" />.
+ There's an invalid character sequence in <paramref name="uriString" />.
 
  -or-
 
- The MS-DOS path specified in <paramref name="uriString" /> must start with c:\\\\.</exception>
+ The MS-DOS path specified in <paramref name="uriString" /> doesn't start with c:\\\\.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -302,8 +302,8 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
         <Parameter Name="streamingContext" Type="System.Runtime.Serialization.StreamingContext" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8-pp;netframework-4.8.1-pp;net-10.0;netframework-4.6.2-pp" />
       </Parameters>
       <Docs>
-        <param name="serializationInfo">An instance of the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> class containing the information required to serialize the new <see cref="T:System.Uri" /> instance.</param>
-        <param name="streamingContext">An instance of the <see cref="T:System.Runtime.Serialization.StreamingContext" /> class containing the source of the serialized stream associated with the new <see cref="T:System.Uri" /> instance.</param>
+        <param name="serializationInfo">The information required to serialize the new <see cref="T:System.Uri" /> instance.</param>
+        <param name="streamingContext">The source of the serialized stream associated with the new <see cref="T:System.Uri" /> instance.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Uri" /> class from the specified instances of the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> and <see cref="T:System.Runtime.Serialization.StreamingContext" /> classes.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -326,31 +326,19 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The password specified in the URI is not valid.
+ The password, host name, file name, or user name specified in the URI is not valid.
 
  -or-
 
- The host name specified in URI is not valid.
+ The host or authority name specified in the URI is terminated by backslashes.
 
  -or-
 
- The file name specified in the URI is not valid.
+ The port number specified in the URI is not valid or can't be parsed.
 
  -or-
 
- The user name specified in the URI is not valid.
-
- -or-
-
- The host or authority name specified in the URI cannot be terminated by backslashes.
-
- -or-
-
- The port number specified in the URI is not valid or cannot be parsed.
-
- -or-
-
- The length of URI exceeds 65519 characters.
+ The length of URI exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -362,7 +350,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The MS-DOS path specified in the URI must start with c:\\\\.</exception>
+ The MS-DOS path specified in the URI doesn't start with c:\\\\.</exception>
         <related type="Article" href="/dotnet/standard/serialization/xml-and-soap-serialization">XML and SOAP Serialization</related>
       </Docs>
     </Member>
@@ -432,20 +420,22 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- This constructor creates a <xref:System.Uri> instance from a URI string. It parses the URI and puts it in canonical format.
 
- The `dontEscape` parameter controls whether reserved characters are translated into escape sequences. This parameter should be set to `true` only if you are certain that all reserved characters in the URI have been escaped. Setting the value to `true` for a URI that has not been completely escaped can cause unexpected behavior. It is strongly recommended that you always set this parameter to `false`.
+This constructor creates a <xref:System.Uri> instance from a URI string. It parses the URI and puts it in canonical format.
 
- If `dontEscape` is set to `false`, the constructor escapes any reserved characters by checking that all occurrences of percent (%) are followed by a valid escape sequence. If the character sequence following a percent is not valid, the percent is replaced by %25.
+The `dontEscape` parameter controls whether reserved characters are translated into escape sequences. This parameter should be set to `true` only if you are certain that all reserved characters in the URI have been escaped. Setting the value to `true` for a URI that has not been completely escaped can cause unexpected behavior. It is strongly recommended that you always set this parameter to `false`.
 
- This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
+If `dontEscape` is set to `false`, the constructor escapes any reserved characters by checking that all occurrences of percent (%) are followed by a valid escape sequence. If the character sequence following a percent is not valid, the percent is replaced by %25.
+
+This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
 
 ## Examples
- The following example creates a <xref:System.Uri> instance for the URI `http://www.contoso.com/Hello%20World.htm`. Because the contained URI is completely escaped and is in canonical form, the `dontEscape` parameter can be set to `true`.
 
- :::code language="csharp" source="~/snippets/csharp/System/Uri/.ctor/source1.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/Uri/.ctor/source1.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/Uri/.ctor/source1.vb" id="Snippet1":::
+The following example creates a <xref:System.Uri> instance for the URI `http://www.contoso.com/Hello%20World.htm`. Because the contained URI is completely escaped and is in canonical form, the `dontEscape` parameter can be set to `true`.
+
+:::code language="csharp" source="~/snippets/csharp/System/Uri/.ctor/source1.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Uri/.ctor/source1.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Uri/.ctor/source1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -464,31 +454,19 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The password specified in <paramref name="uriString" /> is not valid.
+ The password, host name, file name, or user name specified in <paramref name="uriString" /> is not valid.
 
  -or-
 
- The host name specified in <paramref name="uriString" /> is not valid.
+ The host or authority name specified in <paramref name="uriString" /> is terminated by backslashes.
 
  -or-
 
- The file name specified in <paramref name="uriString" /> is not valid.
+ The port number specified in <paramref name="uriString" /> is not valid or can't be parsed.
 
  -or-
 
- The user name specified in <paramref name="uriString" /> is not valid.
-
- -or-
-
- The host or authority name specified in <paramref name="uriString" /> cannot be terminated by backslashes.
-
- -or-
-
- The port number specified in <paramref name="uriString" /> is not valid or cannot be parsed.
-
- -or-
-
- The length of <paramref name="uriString" /> exceeds 65519 characters.
+ The length of <paramref name="uriString" /> exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -500,7 +478,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The MS-DOS path specified in <paramref name="uriString" /> must start with c:\\\\.</exception>
+ The MS-DOS path specified in <paramref name="uriString" /> doesn't start with c:\\\\.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -597,14 +575,17 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
         <Parameter Name="uriKind" Type="System.UriKind" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.5;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       </Parameters>
       <Docs>
-        <param name="uriString">A string that identifies the resource to be represented by the <see cref="T:System.Uri" /> instance. Note that an IPv6 address in string form must be enclosed within brackets. For example, "http://[2607:f8b0:400d:c06::69]".</param>
+        <param name="uriString">A string that identifies the resource to be represented by the <see cref="T:System.Uri" /> instance.</param>
         <param name="uriKind">Specifies whether the URI string is a relative URI, absolute URI, or is indeterminate.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Uri" /> class with the specified URI. This constructor allows you to specify if the URI string is a relative URI, absolute URI, or is indeterminate.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Relative and absolute URIs have different restrictions on their format. For example, a relative URI does not require a scheme or an authority. The value you specify in `uriKind` must match the type of URI passed in `uriString`. However, if <xref:System.UriKind.RelativeOrAbsolute> is specified, the URI string can be relative or absolute.
+
+Relative and absolute URIs have different restrictions on their format. For example, a relative URI does not require a scheme or an authority. The value you specify in `uriKind` must match the type of URI passed in `uriString`. However, if <xref:System.UriKind.RelativeOrAbsolute> is specified, the URI string can be relative or absolute.
+
+For `uriString`, an IPv6 address in string form must be enclosed within brackets, for example, "http://[2607:f8b0:400d:c06::69]".
 
  ]]></format>
         </remarks>
@@ -634,23 +615,11 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The password specified in <paramref name="uriString" /> is not valid.
+ The password, host name, file name, or user name specified in <paramref name="uriString" /> is not valid.
 
  -or-
 
- The host name specified in <paramref name="uriString" /> is not valid.
-
- -or-
-
- The file name specified in <paramref name="uriString" /> is not valid.
-
- -or-
-
- The user name specified in <paramref name="uriString" /> is not valid.
-
- -or-
-
- The host or authority name specified in <paramref name="uriString" /> cannot be terminated by backslashes.
+ The host or authority name specified in <paramref name="uriString" /> is terminated by backslashes.
 
  -or-
 
@@ -658,7 +627,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The length of <paramref name="uriString" /> exceeds 65519 characters.
+ The length of <paramref name="uriString" /> exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -670,7 +639,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The MS-DOS path specified in <paramref name="uriString" /> must start with c:\\\\.</exception>
+ The MS-DOS path specified in <paramref name="uriString" /> doesn't start with c:\\\\.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -729,6 +698,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
  This constructor creates a <xref:System.Uri> instance by combining the `baseUri` and the `relativeUri`. If `relativeUri` is an absolute URI (containing a scheme, host name, and optionally a port number), the <xref:System.Uri> instance is created using only `relativeUri`.
 
  If the `baseUri` has relative parts (like `/api`), then the relative part must be terminated with a slash, (like `/api/`), if the relative part of `baseUri` is to be preserved in the constructed <xref:System.Uri>.
@@ -738,6 +708,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
  This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
 
 ## Examples
+
  The following example creates a new instance of the <xref:System.Uri> class by combining the relative URIs `http://www.contoso.com` and `catalog/shownew.htm` to form the absolute URI `http://www.contoso.com/catalog/shownew.htm`.
 
  :::code language="csharp" source="~/snippets/csharp/System/Uri/.ctor/source2.cs" interactive="try-dotnet-method" id="Snippet1":::
@@ -764,23 +735,11 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The password specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
+ The password, host name, file name, or user name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
 
  -or-
 
- The host name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The file name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The user name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The host or authority name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> cannot be terminated by backslashes.
+ The host or authority name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is terminated by backslashes.
 
  -or-
 
@@ -788,7 +747,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The length of the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> exceeds 65519 characters.
+ The length of the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -800,7 +759,7 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
 
  -or-
 
- The MS-DOS path specified in <paramref name="baseUri" /> must start with c:\\\\.</exception>
+ The MS-DOS path specified in <paramref name="baseUri" /> doesn't start with c:\\\\.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -850,15 +809,17 @@ The following example creates a <xref:System.Uri> instance with the URI `http://
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
  This constructor creates a new <xref:System.Uri> instance by combining an absolute <xref:System.Uri> instance, `baseUri`, with a relative <xref:System.Uri> instance, `relativeUri`. If `relativeUri` is an absolute <xref:System.Uri> instance (containing a scheme, host name, and optionally a port number), the <xref:System.Uri> instance is created using only `relativeUri`.
 
  If the `baseUri` has relative parts (like `/api`), then the relative part must be terminated with a slash, (like `/api/`), if the relative part of `baseUri` is to be preserved in the constructed <xref:System.Uri>.
 
- Additionally, if the `relativeUri` begins with a slash, then it will replace any relative part of the `baseUri`
+ Additionally, if the `relativeUri` begins with a slash, then it will replace any relative part of the `baseUri`.
 
  This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
 
 ## Examples
+
  This example creates an absolute <xref:System.Uri> instance, `absoluteUri`, and a relative <xref:System.Uri> instance, `relativeUri`. A new <xref:System.Uri> instance, `combinedUri`, is then created from these two instances.
 
  :::code language="csharp" source="~/snippets/csharp/System/Uri/.ctor/nclurienhancements.cs" interactive="try-dotnet-method" id="Snippet2":::
@@ -887,23 +848,11 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
  -or-
 
- The password specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
+ The password, host name, file name, or user name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
 
  -or-
 
- The host name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The file name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The user name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The host or authority name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> cannot be terminated by backslashes.
+ The host or authority name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is terminated by backslashes.
 
  -or-
 
@@ -911,7 +860,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
  -or-
 
- The length of the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> exceeds 65519 characters.
+ The length of the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -923,7 +872,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
  -or-
 
- The MS-DOS path specified in <paramref name="baseUri" /> must start with c:\\\\.</exception>
+ The MS-DOS path specified in <paramref name="baseUri" /> doesn't start with c:\\\\.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -995,6 +944,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
  This constructor creates a <xref:System.Uri> instance by combining `baseUri` and `relativeUri`. If the URI passed in `relativeUri` is an absolute URI (containing a scheme, host name, and optionally a port number), the <xref:System.Uri> instance is created using only `relativeUri`.
 
  The `dontEscape` parameter controls whether reserved characters are translated into escape sequences. This parameter should be set to `true` only if you are certain that all reserved characters in the URI have been escaped. Setting the value to `true` for a URI that has not been completely escaped can cause unexpected behavior. It is strongly recommended that you always set this parameter to `false`. If `dontEscape` is set to `false`, the constructor escapes any reserved characters by checking that all occurrences of percent (%) are followed by a valid escape sequence. If the character sequence following a percent is not valid, the percent is replaced by %25.
@@ -1002,6 +952,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
  This constructor does not ensure that the <xref:System.Uri> refers to an accessible resource.
 
 ## Examples
+
  The following example creates a new instance of the <xref:System.Uri> class by combining the relative URIs `http://www.contoso.com` and `Hello%20World.htm` to form an absolute URI.
 
  :::code language="csharp" source="~/snippets/csharp/System/Uri/.ctor/source3.cs" id="Snippet1":::
@@ -1026,23 +977,11 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
  -or-
 
- The password specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
+ The password, host name, file name, or user name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
 
  -or-
 
- The host name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The file name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The user name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is not valid.
-
- -or-
-
- The host or authority name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> cannot be terminated by backslashes.
+ The host or authority name specified in the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> is terminated by backslashes.
 
  -or-
 
@@ -1050,7 +989,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
  -or-
 
- The length of the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> exceeds 65519 characters.
+ The length of the URI formed by combining <paramref name="baseUri" /> and <paramref name="relativeUri" /> exceeds 65519 characters (.NET 9 and earlier versions only).
 
  -or-
 
@@ -1062,7 +1001,7 @@ The URI formed by combining <paramref name="baseUri" /> and <paramref name="rela
 
  -or-
 
- The MS-DOS path specified in <paramref name="baseUri" /> must start with c:\\\\.</exception>
+ The MS-DOS path specified in <paramref name="baseUri" /> doesn't start with c:\\\\.</exception>
         <block subset="none" type="usage">
           <para>Because of security concerns, your application should not call this constructor with URI strings from untrusted sources and with <paramref name="dontEscape" /> set to <see langword="true" />. Alternately, you can check a URI string for validity by calling the <see cref="M:System.Uri.IsWellFormedOriginalString" /> method prior to calling this constructor.</para>
         </block>
