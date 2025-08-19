@@ -75,6 +75,15 @@
 
  After an <xref:System.Text.EncodingProvider> object is registered, the encodings that it supports are available by calling the overloads of <xref:System.Text.Encoding.GetEncoding%2A?displayProperty=nameWithType>; you should not call the <xref:System.Text.EncodingProvider.GetEncoding%2A?displayProperty=nameWithType> overloads.
 
+## Impact on Default Encoding Behavior
+
+Registering <xref:System.Text.CodePagesEncodingProvider> also affects the behavior of <xref:System.Text.Encoding.GetEncoding(System.Int32)> when called with a `codepage` argument of `0`:
+
+- **On Windows**: Returns the encoding that matches the system's active code page, which is the same behavior as in .NET Framework.
+- **On non-Windows platforms**: Still returns UTF-8, maintaining cross-platform consistency.
+
+Without any encoding provider registered, <xref:System.Text.Encoding.GetEncoding(System.Int32)> with `codepage` 0 returns UTF-8 on all platforms in .NET Core and later versions.
+
  ]]></format>
     </remarks>
   </Docs>
@@ -154,7 +163,22 @@ The .NET Framework supports a large number of character encodings and code pages
         <param name="codepage">The code page identifier of the preferred encoding that the encoding provider might support.</param>
         <summary>Returns the encoding associated with the specified code page identifier.</summary>
         <returns>The encoding associated with the specified code page identifier, or <see langword="null" /> if the provider does not support the requested codepage encoding.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method provides access to code page encodings that are available in .NET Framework but not natively supported in .NET Core and later versions.
+
+When `codepage` is `0`, this method has special behavior that affects the default encoding returned by <xref:System.Text.Encoding.GetEncoding(System.Int32)>:
+
+- **On Windows**: Returns the encoding that matches the system's active code page, providing the same behavior as .NET Framework.
+- **On non-Windows platforms**: Returns `null`, allowing <xref:System.Text.Encoding.GetEncoding(System.Int32)> to fall back to its default UTF-8 behavior.
+
+For all other supported code page identifiers, this method returns the corresponding encoding if it's available from the code pages encoding provider, or `null` if the code page is not supported.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEncoding">
