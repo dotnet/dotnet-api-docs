@@ -985,7 +985,23 @@ The returned <xref:System.IO.Stream>'s <xref:System.IO.Stream.CanRead> and <xref
       <Docs>
         <summary>Gets the default encoding for this .NET implementation.</summary>
         <value>The default encoding for this .NET implementation.</value>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-text-encoding-default">Supplemental API remarks for Encoding.Default</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The behavior of the <xref:System.Text.Encoding.Default%2A> property varies between different .NET implementations:
+
+- **In .NET Framework**: Returns the encoding that corresponds to the system's active code page. This is the same encoding returned by <xref:System.Text.Encoding.GetEncoding(System.Int32)> when called with a `codepage` argument of `0`.
+
+- **In .NET Core and later versions**: Always returns a <xref:System.Text.UTF8Encoding> object. This behavior was changed to encourage the use of Unicode encodings for better cross-platform compatibility and data integrity.
+
+For the most consistent results across different platforms and .NET implementations, consider using a specific Unicode encoding such as UTF-8 directly instead of relying on the default encoding. You can obtain UTF-8 encoding by calling <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> or <xref:System.Text.Encoding.GetEncoding(System.String)?displayProperty=nameWithType> with "utf-8".
+
+For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-text-encoding-default">Supplemental API remarks for Encoding.Default</see>.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="EncoderFallback">
@@ -3531,13 +3547,19 @@ The returned <xref:System.IO.Stream>'s <xref:System.IO.Stream.CanRead> and <xref
 
  In addition to the encodings that are natively available on .NET Core or that are intrinsically supported on a specific platform version of .NET Framework, the <xref:System.Text.Encoding.GetEncoding%2A> method returns any additional encodings that are made available by registering an <xref:System.Text.EncodingProvider> object. If the same encoding has been registered by multiple <xref:System.Text.EncodingProvider> objects, this method returns the last one registered.
 
-You can also supply a value of 0 for the `codepage` argument. Its precise behavior depends on whether any encodings have been made available by registering an <xref:System.Text.EncodingProvider> object:
+You can also supply a value of 0 for the `codepage` argument. The behavior varies between .NET Framework and .NET Core and later versions:
 
-- If one or more encoding providers have been registered, it returns the encoding of the last registered provider that has chosen to return a encoding when the <xref:System.Text.Encoding.GetEncoding%2A> method is passed a `codepage` argument of 0.
+**In .NET Framework**: Always returns the encoding that corresponds to the system's active code page in Windows. This is the same encoding returned by the <xref:System.Text.Encoding.Default?displayProperty=nameWithType> property.
 
-- On .NET Framework, if no encoding provider has been registered, if the <xref:System.Text.CodePagesEncodingProvider> is the registered encoding provider, or if no registered encoding provider handles a `codepage` value of 0, it returns the operating system's active code page. To determine the active code page on Windows systems, call the Windows [GetACP](/windows/win32/api/winnls/nf-winnls-getacp) function from .NET Framework.
+**In .NET Core and later versions**: The behavior depends on the encoding configuration of the application:
 
-- On .NET Core, if no encoding provider has been registered or if no registered encoding provider handles a `codepage` value of 0, it returns the <xref:System.Text.UTF8Encoding>.
+- **No encoding provider registered**: Returns a <xref:System.Text.UTF8Encoding>, same as <xref:System.Text.Encoding.Default?displayProperty=nameWithType>.
+
+- **<xref:System.Text.CodePagesEncodingProvider> registered**: 
+  - On **Windows**, returns the encoding that matches the system's active code page (same as .NET Framework behavior).
+  - On **non-Windows platforms**, always returns a <xref:System.Text.UTF8Encoding>.
+
+- **A different provider registered**: The behavior is determined by that provider. Consult its documentation for details. If multiple providers are registered, the method returns the encoding from the last registered provider that handles a `codepage` argument of 0.
 
 > [!NOTE]
 > - Some unsupported code pages cause an <xref:System.ArgumentException> to be thrown, whereas others cause a <xref:System.NotSupportedException>. Therefore, your code must catch all exceptions indicated in the Exceptions section.
@@ -3731,13 +3753,19 @@ In .NET Framework, the <xref:System.Text.Encoding.GetEncoding%2A> method relies 
 
  In addition to the encodings that are natively available on .NET Core or that are intrinsically supported on a specific platform version of .NET Framework, the <xref:System.Text.Encoding.GetEncoding%2A> method returns any additional encodings that are made available by registering an <xref:System.Text.EncodingProvider> object. If the same encoding has been registered by multiple <xref:System.Text.EncodingProvider> objects, this method returns the last one registered.
 
-You can also supply a value of 0 for the `codepage` argument. Its precise behavior depends on whether any encodings have been made available by registering an <xref:System.Text.EncodingProvider> object:
+You can also supply a value of 0 for the `codepage` argument. The behavior varies between .NET Framework and .NET Core and later versions:
 
-- If one or more encoding providers have been registered, it returns the encoding of the last registered provider that has chosen to return a encoding when the <xref:System.Text.Encoding.GetEncoding%2A> method is passed a `codepage` argument of 0.
+**In .NET Framework**: Always returns the encoding that corresponds to the system's active code page in Windows. This is the same encoding returned by the <xref:System.Text.Encoding.Default?displayProperty=nameWithType> property.
 
-- On .NET Framework, if no encoding provider has been registered, if the <xref:System.Text.CodePagesEncodingProvider> is the registered encoding provider, or if no registered encoding provider handles a `codepage` value of 0, it returns the active code page.
+**In .NET Core and later versions**: The behavior depends on the encoding configuration of the application:
 
-- On .NET Core, if no encoding provider has been registered or if no registered encoding provider handles a `codepage` value of 0, it returns the <xref:System.Text.UTF8Encoding> encoding.
+- **No encoding provider registered**: Returns a <xref:System.Text.UTF8Encoding>, same as <xref:System.Text.Encoding.Default?displayProperty=nameWithType>.
+
+- **<xref:System.Text.CodePagesEncodingProvider> registered**: 
+  - On **Windows**, returns the encoding that matches the system's active code page (same as .NET Framework behavior).
+  - On **non-Windows platforms**, always returns a <xref:System.Text.UTF8Encoding>.
+
+- **A different provider registered**: The behavior is determined by that provider. Consult its documentation for details. If multiple providers are registered, the method returns the encoding from the last registered provider that handles a `codepage` argument of 0.
 
 > [!NOTE]
 > The ANSI code pages can be different on different computers and can change on a single computer, leading to data corruption. For this reason, if the active code page is an ANSI code page, encoding and decoding data using the default code page returned by `Encoding.GetEncoding(0)` is not recommended. For the most consistent results, you should use Unicode, such as UTF-8 (code page 65001) or UTF-16, instead of a specific code page.
@@ -5296,11 +5324,15 @@ The goal is to save this file, then open and decode it as a binary stream.
 ## Remarks
  The <xref:System.Text.Encoding.RegisterProvider%2A> method allows you to register a class derived from <xref:System.Text.EncodingProvider> that makes character encodings available on a platform that does not otherwise support them. Once the encoding provider is registered, the encodings that it supports can be retrieved by calling any <xref:System.Text.Encoding.GetEncoding%2A?displayProperty=nameWithType> overload. If there are multiple encoding providers, the <xref:System.Text.Encoding.GetEncoding%2A?displayProperty=nameWithType> method attempts to retrieve a specified encoding from each provider starting with the one most recently registered.
 
-Registering an encoding provider by using the <xref:System.Text.Encoding.RegisterProvider%2A> method also modifies the behavior of the [Encoding.GetEncoding(Int32)](<xref:System.Text.Encoding.GetEncoding(System.Int32)>) and [EncodingProvider.GetEncoding(Int32, EncoderFallback, DecoderFallback)](xref:System.Text.Encoding.GetEncoding(System.Int32,System.Text.EncoderFallback,System.Text.DecoderFallback)) methods when passed an argument of `0`:
+Registering an encoding provider by using the <xref:System.Text.Encoding.RegisterProvider%2A> method also affects the behavior of <xref:System.Text.Encoding.GetEncoding(System.Int32)> when passed an argument of `0`. This is particularly important in .NET Core and later versions where the default behavior for <xref:System.Text.Encoding.GetEncoding(System.Int32)> with `codepage` 0 is to return UTF-8:
 
-- If the registered provider is the <xref:System.Text.CodePagesEncodingProvider>, the method returns the encoding that matches the system active code page when running on the Windows operating system.
+- **If the registered provider is <xref:System.Text.CodePagesEncodingProvider>**: 
+  - On **Windows**, <xref:System.Text.Encoding.GetEncoding(System.Int32)> with `codepage` 0 returns the encoding that matches the system's active code page (same as .NET Framework behavior).
+  - On **non-Windows platforms**, it still returns UTF-8.
 
-- A custom encoding provider can choose which encoding to return when either of these <xref:System.Text.Encoding.GetEncoding%2A> method overloads is passed an argument of `0`. The provider can also choose to not return an encoding by having the <xref:System.Text.EncodingProvider.GetEncoding%2A?displayProperty=nameWithType> method return `null`.
+- **If a custom encoding provider is registered**: The provider can choose which encoding to return when <xref:System.Text.Encoding.GetEncoding(System.Int32)> is passed an argument of `0`. The provider can also choose to not handle this case by returning `null` from its <xref:System.Text.EncodingProvider.GetEncoding%2A?displayProperty=nameWithType> method, in which case the default UTF-8 behavior is used.
+
+If multiple providers are registered, <xref:System.Text.Encoding.GetEncoding(System.Int32)> attempts to retrieve the encoding from the most recently registered provider first.
 
 Starting with .NET Framework 4.6, .NET Framework includes one encoding provider, <xref:System.Text.CodePagesEncodingProvider>, that makes the encodings available that are present in the full .NET Framework but are not available in the Universal Windows Platform. By default, the Universal Windows Platform only supports the Unicode encodings, ASCII, and code page 28591.
 
