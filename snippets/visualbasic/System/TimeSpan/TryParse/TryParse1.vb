@@ -1,35 +1,32 @@
-﻿' Example of the TimeSpan.Parse( String ) and TimeSpan.ToString( ) 
-' methods.
-
-' <Snippet1>
+﻿' <Snippet1>
 Module TryParse
-    Sub ParseTimeSpan( intervalStr As String )
+    Sub ParseTimeSpan(intervalStr As String)
         ' Write the first part of the output line.
-        Console.Write( "{0,20}   ", intervalStr )
+        Console.Write("{0,20}   ", intervalStr)
 
         ' Parse the parameter, and then convert it back to a string.
-         Dim intervalVal As TimeSpan 
-         If TimeSpan.TryParse( intervalStr, intervalVal ) Then
-            Dim intervalToStr As String = intervalVal.ToString( )
-   
+        Dim intervalVal As TimeSpan
+        If TimeSpan.TryParse(intervalStr, intervalVal) Then
+            Dim intervalToStr As String = intervalVal.ToString()
+
             ' Pad the end of the TimeSpan string with spaces if it 
             ' does not contain milliseconds.
-            Dim pIndex As Integer = intervalToStr.IndexOf( ":"c )
-            pIndex = intervalToStr.IndexOf( "."c, pIndex )
-            If pIndex < 0 Then   intervalToStr &= "        "
-   
-            Console.WriteLine( "{0,21}", intervalToStr )
-         ' Handle failure of TryParse method.
-         Else
+            Dim pIndex As Integer = intervalToStr.IndexOf(":"c)
+            pIndex = intervalToStr.IndexOf("."c, pIndex)
+            If pIndex < 0 Then intervalToStr &= "        "
+
+            Console.WriteLine("{0,21}", intervalToStr)
+            ' Handle failure of TryParse method.
+        Else
             Console.WriteLine("Parse operation failed.")
         End If
-    End Sub 
+    End Sub
 
-    Public Sub Main( )
-        Console.WriteLine( "{0,20}   {1,21}", _
-            "String to Parse", "TimeSpan" )    
-        Console.WriteLine( "{0,20}   {1,21}", _
-            "---------------", "---------------------" )    
+    Public Sub Run()
+        Console.WriteLine("{0,20}   {1,21}",
+            "String to Parse", "TimeSpan")
+        Console.WriteLine("{0,20}   {1,21}",
+            "---------------", "---------------------")
 
         ParseTimeSpan("0")
         ParseTimeSpan("14")
@@ -40,12 +37,12 @@ Module TryParse
         ParseTimeSpan("0023:0059:0059.0099")
         ParseTimeSpan("23:0:0")
         ParseTimeSpan("24:0:0")
-        ParseTimespan("0:59:0")
+        ParseTimeSpan("0:59:0")
         ParseTimeSpan("0:60:0")
-        ParseTimespan("0:0:59")
+        ParseTimeSpan("0:0:59")
         ParseTimeSpan("0:0:60")
         ParseTimeSpan("10:")
-        ParsetimeSpan("10:0")
+        ParseTimeSpan("10:0")
         ParseTimeSpan(":10")
         ParseTimeSpan("0:10")
         ParseTimeSpan("10:20:")
@@ -55,8 +52,9 @@ Module TryParse
         ParseTimeSpan("10.")
         ParseTimeSpan("10.12")
         ParseTimeSpan("10.12:00")
-    End Sub 
-End Module 
+    End Sub
+End Module
+
 ' This example generates the following output:
 '            String to Parse                TimeSpan
 '            ---------------   ---------------------
