@@ -6,16 +6,16 @@ Class MyClass1
 
     Public Property MyProperty() As Integer
         Get
-            Return myProperty1
+            Return MyProperty1
         End Get
         Set(ByVal Value As Integer)
-            myProperty1 = Value
+            MyProperty1 = Value
         End Set
     End Property
 End Class
 
 Public Class MyTypeClass
-    Public Shared Sub Main(ByVal args() As String)
+    Public Shared Sub Run(ByVal args() As String)
         Try
             ' Get Type Object corresponding to MyClass.
             Dim myType As Type = GetType(MyClass1)

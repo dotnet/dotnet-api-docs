@@ -1,6 +1,6 @@
 ﻿' <Snippet1>
 Imports System.Reflection
-Class MyClass1
+Class MyTypesClass
     Private myMessage As [String] = "Hello World."
     Public Property MyProperty1() As String
         Get
@@ -13,13 +13,13 @@ Class MyClass1
 End Class
 
 Class TestClass
-    Shared Sub Main()
+    Shared Sub Run()
         Try
-            Dim myType As Type = GetType(MyClass1)
+            Dim myType As Type = GetType(MyTypesClass)
             ' Get the PropertyInfo object representing MyProperty1. 
             Dim myStringProperties1 As PropertyInfo = myType.GetProperty("MyProperty1", GetType(String))
-            Console.WriteLine("The name of the first property of MyClass1 is {0}.", myStringProperties1.Name)
-            Console.WriteLine("The type of the first property of MyClass1 is {0}.", myStringProperties1.PropertyType.ToString())
+            Console.WriteLine("The name of the first property of MyTypesClass is {0}.", myStringProperties1.Name)
+            Console.WriteLine("The type of the first property of MyTypesClass is {0}.", myStringProperties1.PropertyType.ToString())
         Catch e As ArgumentNullException
             Console.WriteLine("ArgumentNullException :" + e.Message.ToString())
         Catch e As AmbiguousMatchException
@@ -28,10 +28,10 @@ Class TestClass
             Console.WriteLine("Source : {0}", e.Source.ToString())
             Console.WriteLine("Message : {0}", e.Message.ToString())
         End Try
-	'Output:
-	'The name of the first property of MyClass1 is MyProperty1.
-	'The type of the first property of MyClass1 is System.String.
 
+        'Output:
+        'The name of the first property of MyTypesClass is MyProperty1.
+        'The type of the first property of MyTypesClass is System.String.
     End Sub
 End Class
 ' </Snippet1>	
