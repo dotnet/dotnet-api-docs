@@ -4,7 +4,7 @@ Imports System.Reflection
 Module Module1
     Public Class MyClass1
         Private myProperty1 As Integer
-        ' Declare MyProperty.
+
         Public Property MyProperty() As Integer
             Get
                 Return myProperty1
@@ -13,7 +13,8 @@ Module Module1
                 myProperty1 = Value
             End Set
         End Property
-        Public Shared Sub Main()
+
+        Public Shared Sub Run()
             Try
                 ' Get a Type object corresponding to MyClass.
                 Dim myType As Type = GetType(MyClass1)

@@ -14,8 +14,8 @@ Public Class MyPropertyClass
     End Property
 End Class
 
-Public Class MyTypeClass
-    Public Shared Sub Main()
+Public Class MyTypeClass21
+    Public Shared Sub Run()
         Try
             Dim myType As Type = GetType(MyPropertyClass)
             Dim myTypeArray(1) As Type
@@ -25,9 +25,9 @@ Public Class MyTypeClass
             myTypeArray.SetValue(GetType(Integer), 1)
             ' Search for the indexed property whose parameters match the
             ' specified argument types and modifiers.
-            Dim myPropertyInfo As PropertyInfo = myType.GetProperty("Item", _
+            Dim myPropertyInfo As PropertyInfo = myType.GetProperty("Item",
                   GetType(Integer), myTypeArray, Nothing)
-            Console.WriteLine(myType.FullName + "." + myPropertyInfo.Name + _
+            Console.WriteLine(myType.FullName + "." + myPropertyInfo.Name +
                   " has a property  type of " + myPropertyInfo.PropertyType.ToString())
         Catch ex As Exception
             Console.WriteLine("An exception occurred " + ex.Message.ToString())
