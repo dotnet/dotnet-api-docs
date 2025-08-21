@@ -162,7 +162,7 @@ Class Class131e78f92efd4581b45c74fe89d347c9
         ' AppActivate can also use the return value of the Shell function.
         ' Shell runs a new instance of Notepad.
         notepadID = Shell("C:\WINNT\NOTEPAD.EXE", AppWinStyle.NormalFocus)
-        ' Activate the new instance of Notepad.  
+        ' Activate the new instance of Notepad.
         AppActivate(notepadID)
         ' </snippet11>
     End Sub
@@ -646,32 +646,7 @@ Class Class85d3f18269924f2bbaf17eb25e63b5fa
 End Class
 
 Class Class9045d32008404af991a27cbcb5d8e971
-    ' 9045d320-0840-4af9-91a2-7cbcb5d8e971
     ' FilePut Function
-
-    ' <snippet42>
-    Structure Person
-        Public ID As Integer
-        Public Name As String
-    End Structure
-
-    Sub WriteData()
-        Dim PatientRecord As Person
-        Dim recordNumber As Integer
-        '    Open file for random access.
-        FileOpen(1, "C:\TESTFILE.txt", OpenMode.Binary)
-        ' Loop 5 times.
-        For recordNumber = 1 To 5
-            ' Define ID.
-            PatientRecord.ID = recordNumber
-            ' Create a string.
-            PatientRecord.Name = "Name " & recordNumber
-            ' Write record to file.
-            FilePut(1, PatientRecord)
-        Next recordNumber
-        FileClose(1)
-    End Sub
-    ' </snippet42>
 
     Public Sub Method43()
         ' <snippet43>
@@ -738,7 +713,7 @@ Class Class9ed3ccc23d9746eba40ee12179d14e1d
     Public Sub Method48()
         Dim MyRecord As System.ValueType
         MyRecord = Nothing
-        ' <snippet48>  
+        ' <snippet48>
         FileOpen(1, "TESTFILE", OpenMode.Random)
         Do While Not EOF(1)
             WriteLine(1, Seek(1))   ' Write record number.
@@ -990,7 +965,7 @@ Class Classd06c20ec71d445b5b34e9d68cdc6f593
         aBool = False
         aDate = DateTime.Parse("February 12, 1969")
 
-        ' Dates and Booleans are translated using locale settings of 
+        ' Dates and Booleans are translated using locale settings of
         ' your system.
         WriteLine(1, aBool & " is a Boolean value.")
         WriteLine(1, aDate & " is a date.")

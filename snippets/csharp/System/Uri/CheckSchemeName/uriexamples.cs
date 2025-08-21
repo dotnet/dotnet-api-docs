@@ -23,9 +23,6 @@ namespace Example
             // snippets 4, 5, and 6
             GetParts();
 
-            // snippet 3
-            SampleMakeRelative();
-
             // snippets 9 - 17
             SampleCheckSchemeName();
 
@@ -124,21 +121,6 @@ namespace Example
             else
                  Console.WriteLine("The character is not hexadecimal encoded");
         //</snippet2>
-        }
-
-        // MakeRelative
-        private static void SampleMakeRelative()
-        {
-        //<snippet3>
-            // Create a base Uri.
-            Uri address1 = new Uri("http://www.contoso.com/");
-
-            // Create a new Uri from a string.
-            Uri address2 = new Uri("http://www.contoso.com/index.htm?date=today");
-
-            // Determine the relative Uri.
-            Console.WriteLine("The difference is {0}", address1.MakeRelativeUri(address2));
-        //</snippet3>
         }
 
         //CheckSchemeName
