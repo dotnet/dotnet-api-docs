@@ -162,7 +162,7 @@ Class Class131e78f92efd4581b45c74fe89d347c9
         ' AppActivate can also use the return value of the Shell function.
         ' Shell runs a new instance of Notepad.
         notepadID = Shell("C:\WINNT\NOTEPAD.EXE", AppWinStyle.NormalFocus)
-        ' Activate the new instance of Notepad.
+        ' Activate the new instance of Notepad.  
         AppActivate(notepadID)
         ' </snippet11>
     End Sub
@@ -673,6 +673,19 @@ Class Class9045d32008404af991a27cbcb5d8e971
     End Sub
     ' </snippet42>
 
+    Public Sub Method43()
+        ' <snippet43>
+        Dim MyArray(4, 9) As Integer
+        ' </snippet43>
+    End Sub
+
+    Public Sub Method44()
+        ' <snippet44>
+        Dim hellow As String = "Hello World"
+        FilePut(1, hellow)
+        ' </snippet44>
+    End Sub
+
 End Class
 
 Class Class921c78db83274a058ea0008091637cb1
@@ -725,7 +738,7 @@ Class Class9ed3ccc23d9746eba40ee12179d14e1d
     Public Sub Method48()
         Dim MyRecord As System.ValueType
         MyRecord = Nothing
-        ' <snippet48>
+        ' <snippet48>  
         FileOpen(1, "TESTFILE", OpenMode.Random)
         Do While Not EOF(1)
             WriteLine(1, Seek(1))   ' Write record number.
@@ -977,7 +990,7 @@ Class Classd06c20ec71d445b5b34e9d68cdc6f593
         aBool = False
         aDate = DateTime.Parse("February 12, 1969")
 
-        ' Dates and Booleans are translated using locale settings of
+        ' Dates and Booleans are translated using locale settings of 
         ' your system.
         WriteLine(1, aBool & " is a Boolean value.")
         WriteLine(1, aDate & " is a date.")
