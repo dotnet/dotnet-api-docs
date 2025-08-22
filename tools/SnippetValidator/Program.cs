@@ -28,10 +28,22 @@ public class Program
             var testFiles = new[]
             {
                 "System.Media/SoundPlayer.xml",
-                "System.CodeDom/CodeMethodReferenceExpression.xml"
+                "System/String.xml"
             };
             
             issues = validator.ValidateSpecificFiles(testFiles);
+        }
+        else if (args.Length > 0 && args[0] == "--sample")
+        {
+            // Test on a small sample for demonstration
+            var sampleFiles = new[]
+            {
+                "System.Media/SoundPlayer.xml",
+                "System.CodeDom/CodeMethodReferenceExpression.xml",
+                "System.Media/SystemSound.xml"
+            };
+            
+            issues = validator.ValidateSpecificFiles(sampleFiles);
         }
         else
         {
@@ -95,12 +107,19 @@ public class SnippetValidator
         
         var xmlFiles = Directory.GetFiles(XmlDirectory, "*.xml", SearchOption.AllDirectories);
         
+        var processedCount = 0;
         foreach (var xmlFile in xmlFiles)
         {
             try
             {
                 var fileIssues = ValidateXmlFile(xmlFile);
                 issues.AddRange(fileIssues);
+                
+                processedCount++;
+                if (processedCount % 100 == 0)
+                {
+                    Console.WriteLine($"Processed {processedCount}/{xmlFiles.Length} files, found {issues.Count} issues so far...");
+                }
             }
             catch (Exception ex)
             {
@@ -108,6 +127,7 @@ public class SnippetValidator
             }
         }
 
+        Console.WriteLine($"Completed processing {processedCount} files.");
         return issues;
     }
 
@@ -165,15 +185,6 @@ public class SnippetValidator
 
                 // Look for introduction text in preceding lines
                 var introduction = FindIntroductionText(lines, i);
-                
-                // Debug output for first few cases
-                if (issues.Count < 3)
-                {
-                    Console.WriteLine($"Debug: Found snippet reference at line {i + 1}:");
-                    Console.WriteLine($"  Path: {snippetRef.SourcePath}");
-                    Console.WriteLine($"  ID: {snippetRef.SnippetId}");
-                    Console.WriteLine($"  Introduction: {introduction.Substring(0, Math.Min(100, introduction.Length))}...");
-                }
                 
                 // Validate the snippet
                 var issue = ValidateSnippetContent(xmlFilePath, snippetRef, introduction);
