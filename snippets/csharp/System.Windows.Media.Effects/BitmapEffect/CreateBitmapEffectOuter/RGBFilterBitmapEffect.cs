@@ -33,29 +33,9 @@ namespace RGBFilter
             out COMSafeHandle ppEffect);
     }
 
-	//<SnippetBitmapEffectClass>
+    //<SnippetBitmapEffectClass>
     public class RGBFilterBitmapEffect : BitmapEffect
     {
-		//<SnippetCreateUnmanagedEffect>
-        unsafe protected override SafeHandle CreateUnmanagedEffect()
-        {
-            const uint CLSCTX_INPROC_SERVER = 1;
-            Guid IID_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
-            Guid guidEffectCLSID = new Guid("84CF07CC-34C4-460f-B435-3184F5F2FF2A");
-            SafeHandle wrapper = BitmapEffect.CreateBitmapEffectOuter();
-
-            COMSafeHandle unmanagedEffect;
-            uint hresult = Ole32Methods.CoCreateInstance(
-								ref guidEffectCLSID,
-								wrapper.DangerousGetHandle(),
-								CLSCTX_INPROC_SERVER,
-								ref IID_IUnknown,
-								out unmanagedEffect);
-            InitializeBitmapEffect(wrapper, unmanagedEffect);
-            if (0 == hresult) return wrapper;
-            throw new Exception("Cannot instantiate effect. HRESULT = " + hresult.ToString());
-        }
-		//</SnippetCreateUnmanagedEffect>
 
         #region Public Methods
 
@@ -184,7 +164,7 @@ namespace RGBFilter
         private static void OnPropertyInvalidated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (((double)e.NewValue) > 1.0 || ((double)e.NewValue) < -1.0)
-                throw new ArgumentOutOfRangeException("Red","Property value must be between -1 and 1.");
+                throw new ArgumentOutOfRangeException("Red", "Property value must be between -1 and 1.");
             else
                 ((RGBFilterBitmapEffect)d).OnChanged();
         }
@@ -195,5 +175,5 @@ namespace RGBFilter
         internal const double defaultBlue = 0x0;
         #endregion Internal Fields
     }
-	//</SnippetBitmapEffectClass>
+    //</SnippetBitmapEffectClass>
 }

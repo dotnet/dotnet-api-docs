@@ -31,72 +31,9 @@ class Members
         Console.ReadLine();
     }
 
-    // Construct a PolicyStatement with an Unrestricted permission set.
-    private static PolicyStatement firstConstructorTest() 
-    {
-        // Construct the permission set.
-        //<Snippet2>
-        PermissionSet permissions 
-            = new PermissionSet(PermissionState.Unrestricted);
-        permissions.AddPermission(
-            new SecurityPermission(SecurityPermissionFlag.Execution));
-        permissions.AddPermission(
-            new ZoneIdentityPermission(SecurityZone.MyComputer));
-
-        // Create a policy statement based on the newly created permission
-        // set.
-        PolicyStatement policyStatement = new PolicyStatement(permissions);
-        //</Snippet2>
-
-        return policyStatement;
-    }
-
-    // Construct a PolicyStatement with an Unrestricted permission set and
-    // the LevelFinal attribute.
-    private static PolicyStatement secondConstructorTest()
-    {
-        // Construct the permission set.
-        //<Snippet3>
-        PermissionSet permissions =
-            new PermissionSet(PermissionState.Unrestricted);
-        permissions.AddPermission(
-            new SecurityPermission(SecurityPermissionFlag.Execution));
-        permissions.AddPermission(
-            new ZoneIdentityPermission(SecurityZone.MyComputer));
-
-        PolicyStatementAttribute levelFinalAttribute = 
-            PolicyStatementAttribute.LevelFinal;
-        
-        // Create a new policy statement with the specified permission set.
-        // The LevelFinal attribute is set to prevent the evaluation of lower
-        // policy levels in a resolve operation.
-        PolicyStatement policyStatement =
-            new PolicyStatement(permissions, levelFinalAttribute);
-        //</Snippet3>
-
-        return policyStatement;
-    }
-
-    // Add a named permission set to the specified PolicyStatement.
-    private static void AddPermissions(ref PolicyStatement policyStatement)
-    {
-        // Construct a NamedPermissionSet with basic permissions.
-        //<Snippet5>
-        NamedPermissionSet allPerms = new NamedPermissionSet("allPerms");
-        allPerms.AddPermission(
-            new SecurityPermission(SecurityPermissionFlag.Execution));
-        allPerms.AddPermission(
-            new ZoneIdentityPermission(SecurityZone.MyComputer));
-        allPerms.AddPermission(
-            new SiteIdentityPermission("www.contoso.com"));
-
-        policyStatement.PermissionSet = allPerms;
-        //</Snippet5>
-    }
-
     // If a class attribute is not found in the specified PolicyStatement,
     // add a child XML element with an added class attribute.
-    private static void addXmlMember(ref PolicyStatement policyStatement) 
+    private static void addXmlMember(ref PolicyStatement policyStatement)
     {
         //<Snippet6>
         SecurityElement xmlElement = policyStatement.ToXml();
@@ -104,7 +41,7 @@ class Members
         if (xmlElement.Attribute("class") == null)
         {
             //<Snippet7>
-            SecurityElement newElement = 
+            SecurityElement newElement =
                 new SecurityElement("PolicyStatement");
             newElement.AddAttribute("class", policyStatement.ToString());
             newElement.AddAttribute("version","1.1");
@@ -155,8 +92,8 @@ class Members
             //</Snippet10>
         {
             return policyStatementCopy;
-        } 
-        else 
+        }
+        else
         {
             return policyStatement;
         }
@@ -203,7 +140,7 @@ class Members
 //                  version="1.1">
 //    <PermissionSet/>
 // </PolicyStatement>
-// 
+//
 // *** System.Security.Policy.PolicyStatement summary ***
 // PolicyStatement has been created with hash code(20) containing the
 // following attributes: Exclusive LevelFinal

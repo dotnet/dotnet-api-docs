@@ -16,7 +16,7 @@ public:
       // Create two new policy statements.
       PolicyStatement^ policyStatement = firstConstructorTest();
       PolicyStatement^ policyStatement2 = secondConstructorTest();
-      
+
       // Add attributes to the first policy statement.
       //<Snippet4>
       policyStatement->Attributes = PolicyStatementAttribute::All;
@@ -33,70 +33,6 @@ public:
    }
 
 private:
-   // Construct a PolicyStatement with an Unrestricted permission set.
-   static PolicyStatement^ firstConstructorTest()
-   {
-      // Construct the permission set.
-      //<Snippet2>
-      PermissionSet^ permissions = gcnew PermissionSet(
-         PermissionState::Unrestricted );
-      permissions->AddPermission( gcnew SecurityPermission(
-         SecurityPermissionFlag::Execution ) );
-      permissions->AddPermission( gcnew ZoneIdentityPermission(
-         SecurityZone::MyComputer ) );
-      
-      // Create a policy statement based on the newly created permission
-      // set.
-      PolicyStatement^ policyStatement = gcnew PolicyStatement(
-         permissions );
-      //</Snippet2>
-
-      return policyStatement;
-   }
-
-   // Construct a PolicyStatement with an Unrestricted permission set and
-   // the LevelFinal attribute.
-   static PolicyStatement^ secondConstructorTest()
-   {
-      // Construct the permission set.
-      //<Snippet3>
-      PermissionSet^ permissions = gcnew PermissionSet(
-         PermissionState::Unrestricted );
-      permissions->AddPermission( gcnew SecurityPermission(
-         SecurityPermissionFlag::Execution ) );
-      permissions->AddPermission( gcnew ZoneIdentityPermission(
-         SecurityZone::MyComputer ) );
-
-      PolicyStatementAttribute levelFinalAttribute =
-         PolicyStatementAttribute::LevelFinal;
-      
-      // Create a new policy statement with the specified permission set.
-      // The LevelFinal attribute is set to prevent the evaluation of lower
-      // policy levels in a resolve operation.
-      PolicyStatement^ policyStatement = gcnew PolicyStatement(
-         permissions,levelFinalAttribute );
-      //</Snippet3>
-
-      return policyStatement;
-   }
-
-   // Add a named permission set to the specified PolicyStatement.
-   static void AddPermissions( interior_ptr<PolicyStatement^>policyStatement )
-   {
-      // Construct a NamedPermissionSet with basic permissions.
-      //<Snippet5>
-      NamedPermissionSet^ allPerms = gcnew NamedPermissionSet(
-         L"allPerms" );
-      allPerms->AddPermission( gcnew SecurityPermission(
-         SecurityPermissionFlag::Execution ) );
-      allPerms->AddPermission( gcnew ZoneIdentityPermission(
-         SecurityZone::MyComputer ) );
-      allPerms->AddPermission( gcnew SiteIdentityPermission(
-         L"www.contoso.com" ) );
-
-      ( *policyStatement)->PermissionSet = allPerms;
-      //</Snippet5>
-   }
 
    // If a class attribute is not found in the specified PolicyStatement,
    // add a child XML element with an added class attribute.
@@ -183,7 +119,7 @@ private:
       //</Snippet12>
 
       String^ attributeString = L"";
-      
+
       // Retrieve the string representation of the PolicyStatement
       // attributes.
       //<Snippet13>

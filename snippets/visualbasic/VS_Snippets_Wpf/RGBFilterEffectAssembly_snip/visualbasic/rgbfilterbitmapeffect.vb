@@ -22,32 +22,13 @@ Namespace RGBFilter
 	'
 	Public Class Ole32Methods
 		<DllImport("ole32.dll")>
-		Friend Shared Function CoCreateInstance(ByRef clsid As Guid, ByVal inner As IntPtr, ByVal context As UInteger, ByRef uuid As Guid, <System.Runtime.InteropServices.Out()> ByRef ppEffect As COMSafeHandle) As UInteger ' HRESULT 
+		Friend Shared Function CoCreateInstance(ByRef clsid As Guid, ByVal inner As IntPtr, ByVal context As UInteger, ByRef uuid As Guid, <System.Runtime.InteropServices.Out()> ByRef ppEffect As COMSafeHandle) As UInteger ' HRESULT
 		End Function
 	End Class
 
 	'<SnippetBitmapEffectClass>
 	Public Class RGBFilterBitmapEffect
 		Inherits BitmapEffect
-
-        '<SnippetCreateUnmanagedEffect>
-		<SecurityPermissionAttribute(SecurityAction.Demand, Flags := SecurityPermissionFlag.UnmanagedCode)>
-		Protected Overrides Function CreateUnmanagedEffect() As SafeHandle
-			Const CLSCTX_INPROC_SERVER As UInteger = 1
-			Dim IID_IUnknown As New Guid("00000000-0000-0000-C000-000000000046")
-			Dim guidEffectCLSID As New Guid("84CF07CC-34C4-460f-B435-3184F5F2FF2A")
-			Dim wrapper As SafeHandle = BitmapEffect.CreateBitmapEffectOuter()
-
-			Dim unmanagedEffect As COMSafeHandle
-			Dim hresult As UInteger = Ole32Methods.CoCreateInstance(guidEffectCLSID, wrapper.DangerousGetHandle(), CLSCTX_INPROC_SERVER, IID_IUnknown, unmanagedEffect)
-			InitializeBitmapEffect(wrapper, unmanagedEffect)
-			If 0 = hresult Then
-				Return wrapper
-			End If
-			Throw New Exception("Cannot instantiate effect. HRESULT = " & hresult.ToString())
-		End Function
-		'</SnippetCreateUnmanagedEffect>
-
 
 		#Region "Public Methods"
 

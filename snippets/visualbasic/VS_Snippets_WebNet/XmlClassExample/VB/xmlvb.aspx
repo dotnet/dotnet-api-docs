@@ -1,17 +1,16 @@
 <!-- <Snippet5> -->
 <!--
-To see this code snippet used in a complete example, see the 
+To see this code snippet used in a complete example, see the
 XML Class page.
 -->
 <!-- </Snippet5> -->
 
-<!-- <Snippet1> -->
 <!-- <Snippet2> -->
-<!-- 
-The following example demonstrates how to create XmlDocument and 
-XslTransform objects from the sample XML and XSL Transform files. 
-The objects are then used by the Xml control to display the XML 
-document. Make sure the sample XML file is called People.xml and 
+<!--
+The following example demonstrates how to create XmlDocument and
+XslTransform objects from the sample XML and XSL Transform files.
+The objects are then used by the Xml control to display the XML
+document. Make sure the sample XML file is called People.xml and
 the sample XSL Transform file is called Peopletable.xsl.
 -->
 
@@ -49,7 +48,7 @@ the sample XSL Transform file is called Peopletable.xsl.
 </html>
 <!-- </Snippet2> -->
 
-<!-- 
+<!--
 For this example to work, paste the following code into a file
 named peopletable.xsl. Store the file in the same directory as
 your .aspx file.
@@ -115,8 +114,8 @@ your .aspx file.
 -->
 
 <!--
-For this example to work, paste the following code into a file 
-named people.xml. Store the file in the same directory as 
+For this example to work, paste the following code into a file
+named people.xml. Store the file in the same directory as
 your .aspx file.
 
 <?xml version="1.0" encoding="utf-8" ?>
@@ -191,4 +190,3 @@ your .aspx file.
 </People>
 
 -->
-<!-- </Snippet1> -->

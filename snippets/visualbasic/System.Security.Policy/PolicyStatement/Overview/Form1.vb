@@ -37,65 +37,6 @@ Public Class Form1
 
         tbxOutput.Cursor = Cursors.Default
     End Sub
-    ' Construct a PolicyStatement with an Unrestricted permission set.
-    Private Function firstConstructorTest() As PolicyStatement
-        ' Construct policy statement based on newly created permission set.
-        ' Assemble permission set.
-        '<Snippet2>
-        Dim permissions As New PermissionSet(PermissionState.Unrestricted)
-
-        permissions.AddPermission( _
-            New SecurityPermission(SecurityPermissionFlag.Execution))
-        permissions.AddPermission( _
-            New ZoneIdentityPermission(SecurityZone.MyComputer))
-
-        ' Instantiate a new policy statement with specified permission set.
-        Dim policyStatement As New PolicyStatement(permissions)
-        '</Snippet2>
-
-        Return PolicyStatement
-    End Function
-
-    ' Construct a PolicyStatement with an Unrestricted permission set with
-    ' the LevelFinal attribute.
-    Private Function secondConstructorTest() As PolicyStatement
-        ' Construct policy statement based on newly created permission set.
-        ' Assemble permission set.
-        '<Snippet3>
-        Dim permissions As New PermissionSet(PermissionState.Unrestricted)
-        permissions.AddPermission( _
-            New SecurityPermission(SecurityPermissionFlag.Execution))
-        permissions.AddPermission( _
-            New ZoneIdentityPermission(SecurityZone.MyComputer))
-
-        Dim levelFinalAttribute As PolicyStatementAttribute
-        levelFinalAttribute = PolicyStatementAttribute.LevelFinal
-
-        ' Instantiate a new policy statement with specified permission set
-        ' and the LevelFinal attibute set allowing lower policy levels to be
-        ' avoided in a resolve.
-        Dim policyStatement As _
-            New PolicyStatement(permissions, levelFinalAttribute)
-        '</Snippet3>
-
-        Return policyStatement
-    End Function
-
-    ' Add named permission set to specified PolicyStatement.
-    Private Sub AddPermissions(ByRef policyStatement As PolicyStatement)
-        ' Set up a NamedPermissionSet with all permissions.
-        '<Snippet5>
-        Dim allPerms As New NamedPermissionSet("allPerms")
-        allPerms.AddPermission( _
-            New SecurityPermission(SecurityPermissionFlag.Execution))
-        allPerms.AddPermission( _
-            New ZoneIdentityPermission(SecurityZone.MyComputer))
-        allPerms.AddPermission( _
-            New SiteIdentityPermission("www.contoso.com"))
-
-        policyStatement.PermissionSet = allPerms
-        '</Snippet5>
-    End Sub
 
     ' If the class attribute is not found in specified PolicyStatement,
     ' add a child XML element with an added class attribute.
@@ -224,7 +165,7 @@ Public Class Form1
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
@@ -329,10 +270,10 @@ End Class
 '                  version="1.1">
 '    <PermissionSet/>
 ' </PolicyStatement>
-' 
+'
 ' *** System.Security.Policy.PolicyStatement summary ***
 ' PolicyStatement has been created with hash code(20) containing the following
 ' attributes: Exclusive LevelFinal
-' 
+'
 ' This sample completed successfully; press Exit to continue
 '</Snippet1>
