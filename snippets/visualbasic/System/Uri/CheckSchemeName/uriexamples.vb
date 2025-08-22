@@ -1,50 +1,57 @@
-﻿Imports System.Net
+﻿
+Imports System.Net
 Imports System.Text
 Imports System.Threading
 Imports System.Runtime.Serialization
 
-Public Class Test
 
-    Public Shared Sub Main()
+
+Public Class Test
+    
+    
+    Public Shared Sub Main() 
         ' Snippets 1 and 2
         HexConversions()
-
+        
         ' snippet 7
         SampleToString()
-
+        
         ' snippet 8
         SampleEquals()
-
+        
         ' snippets 4, 5, and 6
         GetParts()
-
+        
+        ' snippet 3
+        SampleMakeRelative()
+        
         ' snippets 9 - 17
         SampleCheckSchemeName()
-
-        ' snippets 18
+        
+        ' snippets 18 
         SampleUserInfo()
-
+    
     End Sub
-
-
-    Private Shared Sub SampleToString()
+    
+    
+    Private Shared Sub SampleToString() 
         '<snippet7>
         ' Create a new Uri from a string address.
         Dim uriAddress As New Uri("HTTP://www.Contoso.com:80/thick%20and%20thin.htm")
-
+        
         ' Write the new Uri to the console and note the difference in the two values.
-        ' ToString() gives the canonical version.  OriginalString gives the orginal
+        ' ToString() gives the canonical version.  OriginalString gives the orginal 
         ' string that was passed to the constructor.
         ' The following outputs "http://www.contoso.com/thick and thin.htm".
         Console.WriteLine(uriAddress.ToString())
-
+        
         ' The following outputs "HTTP://www.Contoso.com:80/thick%20and%20thin.htm".
         Console.WriteLine(uriAddress.OriginalString)
-
+    
     End Sub
      '</snippet7>
-
-    Private Shared Sub SampleEquals()
+    
+    Private Shared Sub SampleEquals() 
         '<snippet8>
         ' Create some Uris.
         Dim address1 As New Uri("http://www.contoso.com/index.htm#search")
@@ -57,15 +64,15 @@ Public Class Test
         ' Will output "The two addresses are equal"
      '</snippet8>
     End Sub
-
-
-    Private Shared Sub GetParts()
+    
+    
+    Private Shared Sub GetParts() 
         '<snippet4>
         ' Create Uri
         Dim uriAddress As New Uri("http://www.contoso.com/index.htm#search")
         Console.WriteLine(uriAddress.Fragment)
-        Console.WriteLine("Uri {0} the default port ", If(uriAddress.IsDefaultPort, "uses", "does not use"))
-
+        Console.WriteLine("Uri {0} the default port ", If(uriAddress.IsDefaultPort, "uses", "does not use")) 
+        
         Console.WriteLine("The path of this Uri is {0}", uriAddress.GetLeftPart(UriPartial.Path))
         Console.WriteLine("Hash code {0}", uriAddress.GetHashCode())
         ' The example displays output similar to the following:
@@ -90,16 +97,16 @@ Public Class Test
         '    Uri is not a local host
         '    Uri is a file
         ' </snippet6>
-    End Sub
-
-    Private Shared Sub HexConversions()
+    End Sub 
+    
+    Private Shared Sub HexConversions() 
         '<snippet1>
         Dim testChar As Char = "e"c
         If Uri.IsHexDigit(testChar) = True Then
             Console.WriteLine("'{0}' is the hexadecimal representation of {1}", testChar, Uri.FromHex(testChar))
         Else
             Console.WriteLine("'{0}' is not a hexadecimal character", testChar)
-        End If
+        End If 
         Dim returnString As String = Uri.HexEscape(testChar)
         Console.WriteLine("The hexadecimal value of '{0}' is {1}", testChar, returnString)
         '</snippet1>
@@ -113,67 +120,84 @@ Public Class Test
         End If
      '</snippet2>
     End Sub
-
+    
+    
+    
+    ' MakeRelative
+    Private Shared Sub SampleMakeRelative() 
+        '<snippet3>
+        ' Create a base Uri.
+        Dim address1 As New Uri("http://www.contoso.com/")
+        
+        ' Create a new Uri from a string.
+        Dim address2 As New Uri("http://www.contoso.com/index.htm?date=today")
+        
+        ' Determine the relative Uri.  
+        Console.WriteLine("The difference is {0}", address1.MakeRelativeUri(address2))
+    
+    End Sub
+     '</snippet3>
+    
     'CheckSchemeName
-    Private Shared Sub SampleCheckSchemeName()
+    Private Shared Sub SampleCheckSchemeName() 
         '<snippet9>
         Dim address1 As New Uri("http://www.contoso.com/index.htm#search")
         Console.WriteLine("address 1 {0} a valid scheme name", IIf(Uri.CheckSchemeName(address1.Scheme), " has", " does not have")) 'TODO: For performance reasons this should be changed to nested IF statements
-
+        
         If address1.Scheme = Uri.UriSchemeHttp Then
             Console.WriteLine("Uri is HTTP type")
-        End If
+        End If 
         Console.WriteLine(address1.HostNameType)
         '</snippet9>
-
+        
         '<snippet10>
         Dim address2 As New Uri("file://server/filename.ext")
         If address2.Scheme = Uri.UriSchemeFile Then
             Console.WriteLine("Uri is a file")
-        End If
+        End If 
         '</snippet10>
         Console.WriteLine(address2.HostNameType)
-
+        
         '<snippet11>
         Dim address3 As New Uri("mailto:user@contoso.com?subject=uri")
         If address3.Scheme = Uri.UriSchemeMailto Then
             Console.WriteLine("Uri is an email address")
-        End If
-        '</snippet11>
-        '<snippet12>
+        End If 
+        '</snippet11>        
+        '<snippet12>    
         Dim address4 As New Uri("news:123456@contoso.com")
         If address4.Scheme = Uri.UriSchemeNews Then
             Console.WriteLine("Uri is an Internet news group")
-        End If
+        End If 
         '</snippet12>
         '<snippet13>
         Dim address5 As New Uri("nntp://news.contoso.com/123456@contoso.com")
         If address5.Scheme = Uri.UriSchemeNntp Then
             Console.WriteLine("Uri is nntp protocol")
-        End If
+        End If 
         '</snippet13>
         '<snippet14>
         Dim address6 As New Uri("gopher://example.contoso.com/")
         If address6.Scheme = Uri.UriSchemeGopher Then
             Console.WriteLine("Uri is Gopher protocol")
-        End If
+        End If 
         '</snippet14>
         '<snippet15>
         Dim address7 As New Uri("ftp://contoso/files/testfile.txt")
         If address7.Scheme = Uri.UriSchemeFtp Then
             Console.WriteLine("Uri is Ftp protocol")
-        End If
+        End If 
         '</snippet15>
         '<snippet16>
         Dim address8 As New Uri("https://example.contoso.com")
         If address8.Scheme = Uri.UriSchemeHttps Then
             Console.WriteLine("Uri is Https protocol.")
-        End If
+        End If 
         '</snippet16>
         '<snippet17>
         Dim address As String = "www.contoso.com"
         Dim uriString As String = String.Format("{0}{1}{2}", Uri.UriSchemeHttp, Uri.SchemeDelimiter, address)
-
+        
         Dim result As Uri = New Uri(uriString)
 
         If result.IsWellFormedOriginalString() = True Then
@@ -183,14 +207,14 @@ Public Class Test
         End If
         '</snippet17>
     End Sub
-
-
-    Private Shared Sub SampleUserInfo()
+    
+    
+    Private Shared Sub SampleUserInfo() 
         '<snippet18>
         Dim uriAddress As New Uri("http://user:password@www.contoso.com/index.htm ")
         Console.WriteLine(uriAddress.UserInfo)
         Console.WriteLine("Fully Escaped {0}", IIf(uriAddress.UserEscaped, "yes", "no")) 'TODO: For performance reasons this should be changed to nested IF statements
         '</snippet18>
     End Sub
-
+        
 End Class

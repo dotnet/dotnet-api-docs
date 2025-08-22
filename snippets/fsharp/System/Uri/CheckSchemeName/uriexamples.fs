@@ -82,6 +82,19 @@ let hexConversions () =
         printfn "The character is not hexadecimal encoded"
     //</snippet2>
 
+// MakeRelative
+let sampleMakeRelative () =
+    //<snippet3>
+    // Create a base Uri.
+    let address1 = Uri "http://www.contoso.com/"
+
+    // Create a new Uri from a string.
+    let address2 = Uri "http://www.contoso.com/index.htm?date=today"
+
+    // Determine the relative Uri.
+    printfn $"The difference is {address1.MakeRelativeUri address2}"
+    //</snippet3>
+
 //CheckSchemeName
 let sampleCheckSchemeName () =
     //<snippet9>
@@ -182,6 +195,9 @@ sampleEquals ()
 
 // snippets 4, 5, and 6
 getParts ()
+
+// snippet 3
+sampleMakeRelative ()
 
 // snippets 9 - 17
 sampleCheckSchemeName ()

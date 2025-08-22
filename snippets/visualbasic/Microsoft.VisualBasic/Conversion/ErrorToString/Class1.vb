@@ -646,20 +646,32 @@ Class Class85d3f18269924f2bbaf17eb25e63b5fa
 End Class
 
 Class Class9045d32008404af991a27cbcb5d8e971
+    ' 9045d320-0840-4af9-91a2-7cbcb5d8e971
     ' FilePut Function
 
-    Public Sub Method43()
-        ' <snippet43>
-        Dim MyArray(4, 9) As Integer
-        ' </snippet43>
-    End Sub
+    ' <snippet42>
+    Structure Person
+        Public ID As Integer
+        Public Name As String
+    End Structure
 
-    Public Sub Method44()
-        ' <snippet44>
-        Dim hellow As String = "Hello World"
-        FilePut(1, hellow)
-        ' </snippet44>
+    Sub WriteData()
+        Dim PatientRecord As Person
+        Dim recordNumber As Integer
+        '    Open file for random access.
+        FileOpen(1, "C:\TESTFILE.txt", OpenMode.Binary)
+        ' Loop 5 times.
+        For recordNumber = 1 To 5
+            ' Define ID.
+            PatientRecord.ID = recordNumber
+            ' Create a string.
+            PatientRecord.Name = "Name " & recordNumber
+            ' Write record to file.
+            FilePut(1, PatientRecord)
+        Next recordNumber
+        FileClose(1)
     End Sub
+    ' </snippet42>
 
 End Class
 
