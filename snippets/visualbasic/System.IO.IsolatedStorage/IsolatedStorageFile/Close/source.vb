@@ -1,4 +1,4 @@
-﻿'<snippet1>  
+﻿'<snippet1>
 'This sample demonstrates methods of classes found in the System.IO IsolatedStorage namespace.
 Imports System.IO
 Imports System.IO.IsolatedStorage
@@ -94,47 +94,7 @@ Namespace ISOCS
             End Get
         End Property
 
-        '<snippet4>   
-        Private Function GetPrefsForUser() As Boolean
-            Try
-                '<Snippet15>
-                ' Retrieve an IsolatedStorageFile for the current Domain and Assembly.
-                Dim isoFile As IsolatedStorageFile = _
-                    IsolatedStorageFile.GetStore(IsolatedStorageScope.User _
-                    Or IsolatedStorageScope.Assembly _
-                    Or IsolatedStorageScope.Domain, Nothing, Nothing)
-
-                Dim isoStream As New IsolatedStorageFileStream("substituteUsername", System.IO.FileMode.Open, _
-                    System.IO.FileAccess.Read, System.IO.FileShare.Read)
-                '</Snippet15>
-                ' farThe code executes to this point only if a file corresponding to the username exists.
-                ' Though you can perform operations on the stream, you cannot get a handle to the file.
-                Try
-
-                    Dim aFileHandle As SafeFileHandle = isoStream.SafeFileHandle
-                    Console.WriteLine(("A pointer to a file handle has been obtained. " & aFileHandle.ToString() & " " & aFileHandle.GetHashCode()))
-
-                Catch ex As Exception
-                    ' Handle the exception.
-                    Console.WriteLine("Expected exception")
-                    Console.WriteLine(ex.ToString())
-                End Try
-
-                Dim reader As New StreamReader(isoStream)
-                ' Read the data.
-                Me.NewsUrl = reader.ReadLine()
-                Me.SportsUrl = reader.ReadLine()
-                reader.Close()
-                isoFile.Close()
-                Return False
-            Catch ex As System.IO.FileNotFoundException
-                ' Expected exception if a file cannot be found. This indicates that we have a new user.
-                Return True
-            End Try
-        End Function 'GetPrefsForUser
-
-        '</snippet4>
-        '<snippet3> 
+        '<snippet3>
         Public Function GetIsoStoreInfo() As Boolean
             Try
                 'Get a User store with type evidence for the current Domain and the Assembly.
@@ -175,7 +135,7 @@ Namespace ISOCS
         '<snippet2>
         Public Function SetPrefsForUser() As Double
             Try
-                '<snippet10>    
+                '<snippet10>
                 Dim isoFile As IsolatedStorageFile
                 isoFile = IsolatedStorageFile.GetUserStoreForDomain()
 
@@ -205,9 +165,9 @@ Namespace ISOCS
 
 
         '</snippet2>
-        '<snippet6>  
+        '<snippet6>
         Public Sub DeleteFiles()
-            '<snippet9>  
+            '<snippet9>
             Try
                 Dim isoFile As IsolatedStorageFile = IsolatedStorageFile.GetStore(IsolatedStorageScope.User Or _
                     IsolatedStorageScope.Assembly Or IsolatedStorageScope.Domain, _
@@ -233,9 +193,9 @@ Namespace ISOCS
         End Sub
 
         '</snippet6>
-        '<snippet8>  
-        ' This method deletes directories in the specified Isolated Storage, after first 
-        ' deleting the files they contain. In this example, the Archive directory is deleted. 
+        '<snippet8>
+        ' This method deletes directories in the specified Isolated Storage, after first
+        ' deleting the files they contain. In this example, the Archive directory is deleted.
         ' There should be no other directories in this Isolated Storage.
         Public Sub DeleteDirectories()
             Try
@@ -267,7 +227,7 @@ Namespace ISOCS
         End Sub
 
         '</snippet8>
-        '<snippet7>  
+        '<snippet7>
         Public Function SetNewPrefsForUser() As Double
             Try
                 Dim inputChar As Byte
@@ -275,7 +235,7 @@ Namespace ISOCS
                     IsolatedStorageScope.Assembly Or IsolatedStorageScope.Domain, _
                     GetType(System.Security.Policy.Url), GetType(System.Security.Policy.Url))
 
-                ' If this is not a new user, archive the old preferences and 
+                ' If this is not a new user, archive the old preferences and
                 ' overwrite them using the new preferences.
                 If Not Me.myNewPrefs Then
                     If isoFile.GetDirectoryNames("Archive").Length = 0 Then
@@ -320,7 +280,7 @@ Namespace ISOCS
                             '</Snippet14>
                         End If
 
-                        ' After you have read and written to the streams, close them.	
+                        ' After you have read and written to the streams, close them.
                         target.Close()
                         source.Close()
                     End If
@@ -332,7 +292,6 @@ Namespace ISOCS
                 '</Snippet12>
                 isoStream.SetLength(0) 'Position to overwrite the old data.
                 '</snippet7>
-                '<snippet5>  
                 Dim writer As New StreamWriter(isoStream)
                 ' Update the data based on the new inputs.
                 writer.WriteLine(Me.NewsUrl)
@@ -342,7 +301,6 @@ Namespace ISOCS
                 Dim d As Double = Convert.ToDouble(isoFile.CurrentSize) / Convert.ToDouble(isoFile.MaximumSize)
                 Console.WriteLine(("CurrentSize = " & isoFile.CurrentSize.ToString()))
                 Console.WriteLine(("MaximumSize = " & isoFile.MaximumSize.ToString()))
-                '</snippet5>
                 ' StreamWriter.Close implicitly closes isoStream.
                 writer.Close()
                 isoFile.Close()

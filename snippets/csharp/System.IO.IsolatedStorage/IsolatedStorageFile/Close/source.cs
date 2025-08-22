@@ -85,62 +85,6 @@ public class LoginPrefs
         get { return myNewPrefs; }
     }
 
-    //<snippet4>
-    private bool GetPrefsForUser()
-    {
-        try
-        {
-            //<Snippet15>
-
-            // Retrieve an IsolatedStorageFile for the current Domain and Assembly.
-            IsolatedStorageFile isoFile =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User |
-                IsolatedStorageScope.Assembly |
-                IsolatedStorageScope.Domain,
-                null,
-                null);
-
-            IsolatedStorageFileStream isoStream =
-                new IsolatedStorageFileStream("substituteUsername",
-                System.IO.FileMode.Open,
-                System.IO.FileAccess.Read,
-                 System.IO.FileShare.Read);
-            //</Snippet15>
-
-            // The code executes to this point only if a file corresponding to the username exists.
-            // Though you can perform operations on the stream, you cannot get a handle to the file.
-
-            try
-            {
-
-                SafeFileHandle aFileHandle = isoStream.SafeFileHandle;
-                Console.WriteLine("A pointer to a file handle has been obtained. "
-                    + aFileHandle.ToString() + " "
-                    + aFileHandle.GetHashCode());
-            }
-
-            catch (Exception e)
-            {
-                // Handle the exception.
-                Console.WriteLine("Expected exception");
-                Console.WriteLine(e);
-            }
-
-            StreamReader reader = new StreamReader(isoStream);
-            // Read the data.
-            this.NewsUrl = reader.ReadLine();
-            this.SportsUrl = reader.ReadLine();
-            reader.Close();
-            isoFile.Close();
-            return false;
-        }
-        catch (System.IO.FileNotFoundException)
-        {
-            // Expected exception if a file cannot be found. This indicates that we have a new user.
-            return true;
-        }
-    }
-    //</snippet4>
     //<snippet3>
     public bool GetIsoStoreInfo()
     {
@@ -266,7 +210,7 @@ public class LoginPrefs
                 IsolatedStorageScope.Domain,
                 typeof(System.Security.Policy.Url),
                 typeof(System.Security.Policy.Url));
-            //<Snippet16>			
+            //<Snippet16>
             String[] dirNames = isoFile.GetDirectoryNames("*");
             String[] fileNames = isoFile.GetFileNames("Archive\\*");
 
@@ -297,7 +241,7 @@ public class LoginPrefs
         {
             Console.WriteLine(e.ToString());
         }
-        //</Snippet16>		
+        //</Snippet16>
     }
     //</snippet8>
     //<snippet7>
@@ -386,7 +330,6 @@ public class LoginPrefs
             //</Snippet12>
             isoStream.Position = 0;  // Position to overwrite the old data.
             //</snippet7>
-            //<snippet5>
             StreamWriter writer = new StreamWriter(isoStream);
             // Update the data based on the new inputs.
             writer.WriteLine(this.NewsUrl);
@@ -396,7 +339,6 @@ public class LoginPrefs
             double d = isoFile.CurrentSize / isoFile.MaximumSize;
             Console.WriteLine("CurrentSize = " + isoFile.CurrentSize.ToString());
             Console.WriteLine("MaximumSize = " + isoFile.MaximumSize.ToString());
-            //</snippet5>
             // StreamWriter.Close implicitly closes isoStream.
             writer.Close();
             isoFile.Close();
