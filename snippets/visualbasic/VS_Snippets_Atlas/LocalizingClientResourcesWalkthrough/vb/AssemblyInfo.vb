@@ -31,4 +31,6 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")>
 
 <Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: System.Web.UI.WebResource("LocalizingScriptResources.CheckAnswer.js", "application/x-javascript")>
+<Assembly: System.Web.UI.ScriptResource("LocalizingScriptResources.CheckAnswer.js", "LocalizingScriptResources.VerificationResources", "Answer")> 
