@@ -704,28 +704,7 @@ Application domains, which are represented by <xref:System.AppDomain> objects, h
       <Parameters />
       <Docs>
         <summary>Resets the path that specifies the location of private assemblies to the empty string ("").</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The private path is a path relative to the base directory that the common language runtime searches to locate private assemblies.
-
- For more information, see <xref:System.AppDomainSetup.PrivateBinPath%2A?displayProperty=nameWithType>.
-
-
-
-## Examples
- The following code example demonstrates how to use the <xref:System.AppDomain.ClearPrivatePath%2A> method to remove all entries from the list of private paths to search when assemblies are loaded.
-
- This method is now obsolete, and should not be used for new development.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ADClearPrivatePath/CPP/adclearprivatepath.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/ClearPrivatePath/adclearprivatepath.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/ClearPrivatePath/adclearprivatepath.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/ClearPrivatePath/adclearprivatepath.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.AppDomainUnloadedException">The operation is attempted on an unloaded application domain.</exception>
         <altmember cref="F:System.String.Empty" />
       </Docs>
@@ -2256,29 +2235,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="securityAttributes">Information used to authorize creation of <paramref name="typeName" />.</param>
         <summary>Creates a new instance of the specified type. Parameters specify the name of the type, and how it is found and created.</summary>
         <returns>An instance of the object specified by <paramref name="typeName" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This is a convenience method that combines <xref:System.AppDomain.CreateInstance%2A> and <xref:System.Runtime.Remoting.ObjectHandle.Unwrap%2A?displayProperty=nameWithType>.
-
- See <xref:System.Reflection.AssemblyName> for the format of `assemblyName`. See the <xref:System.Type.FullName%2A?displayProperty=nameWithType> property for the format of `typeName`.
-
-> [!NOTE]
->  If you make an early-bound call to a method `M` of an object of type `T1` that was returned by <xref:System.AppDomain.CreateInstanceAndUnwrap%2A>, and that method makes an early-bound call to a method of an object of type `T2` in an assembly `C` other than the current assembly or the assembly containing `T1`, assembly `C` is loaded into the current application domain. This loading occurs even if the early-bound call to `T1.M()` was made in the body of a <xref:System.Reflection.Emit.DynamicMethod>, or in other dynamically generated code. If the current domain is the default domain, assembly `C` cannot be unloaded until the process ends. If the current domain later attempts to load assembly `C`, the load might fail.
-
-
-
-## Examples
- The following sample demonstrates the use of the `ignoreCase` parameter.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_CreateInstance_IgnoreCase/CPP/ignorecase.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/CreateInstanceAndUnwrap/ignorecase.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/CreateInstanceAndUnwrap/ignorecase.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/CreateInstanceAndUnwrap/ignorecase.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="assemblyName" /> or <paramref name="typeName" /> is <see langword="null" />.</exception>
         <exception cref="T:System.MissingMethodException">No matching constructor was found.</exception>
@@ -3465,35 +3422,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="evidence">The evidence supplied for the dynamic assembly. The evidence is used unaltered as the final set of evidence used for policy resolution.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, and evidence.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Only fully trusted callers can supply their `evidence` when defining a dynamic <xref:System.Reflection.Assembly>. The runtime will map the <xref:System.Security.Policy.Evidence> through the security policy to determine the granted permissions. Partially trusted callers must supply a null `evidence`. If `evidence` is `null`, the runtime copies the permission sets, that is, the current grant and deny sets, from the caller's <xref:System.Reflection.Assembly> to the dynamic <xref:System.Reflection.Assembly> being defined and marks policy as resolved.
-
- If the dynamic <xref:System.Reflection.Assembly> is saved to disk, subsequent loads will get grants based on policies associated with the location where the <xref:System.Reflection.Assembly> was saved.
-
- This method should only be used to define a dynamic assembly in the current application domain. For more information, see the <xref:System.AppDomain.Load%28System.Reflection.AssemblyName%29> method overload.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you use an overload of the <xref:System.AppDomain.DefineDynamicAssembly%2A> method that specifies evidence and permissions, supply the evidence you want the dynamic assembly to have, and include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and the <xref:System.AppDomain.AssemblyResolve> event.
-
- First, the code example tries to create an instance of `MyDynamicType` by calling the <xref:System.AppDomain.CreateInstance%2A> method with an invalid assembly name, and catches the resulting exception.
-
- The code example then adds an event handler for the <xref:System.AppDomain.AssemblyResolve> event, and again tries to create an instance of`MyDynamicType`. During the call to <xref:System.AppDomain.CreateInstance%2A>, the <xref:System.AppDomain.AssemblyResolve> event is raised for the invalid assembly. The event handler creates a dynamic assembly that contains a type named `MyDynamicType`, gives the type a parameterless constructor, and returns the new dynamic assembly. The call to <xref:System.AppDomain.CreateInstance%2A> then finishes successfully, and the constructor for `MyDynamicType` displays a message at the console.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -3699,33 +3628,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="evidence">The evidence supplied for the dynamic assembly. The evidence is used unaltered as the final set of evidence used for policy resolution.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, storage directory, and evidence.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Only fully trusted callers can supply their `evidence` when defining a dynamic <xref:System.Reflection.Assembly>. The runtime will map the <xref:System.Security.Policy.Evidence> through the security policy to determine the granted permissions. Partially trusted callers must supply a null `evidence`. If `evidence` is `null`, the runtime copies the permission sets, that is, the current grant and deny sets, from the caller's <xref:System.Reflection.Assembly> to the dynamic <xref:System.Reflection.Assembly> being defined and marks policy as resolved.
-
- If the dynamic <xref:System.Reflection.Assembly> is saved to disk, subsequent loads will get grants based on policies associated with the location where the <xref:System.Reflection.Assembly> was saved.
-
- This method should only be used to define a dynamic assembly in the current application domain. For more information, see the <xref:System.AppDomain.Load%28System.Reflection.AssemblyName%29> method overload.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you use an overload of the <xref:System.AppDomain.DefineDynamicAssembly%2A> method that specifies evidence and permissions, supply the evidence you want the dynamic assembly to have, and include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and <xref:System.AppDomain.AssemblyResolve> event.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -3790,31 +3693,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="refusedPermissions">The refused permissions request.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, and permission requests.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The permission requests specified for `requiredPermissions`, `optionalPermissions`, and `refusedPermissions` are not used unless the dynamic assembly has been saved and reloaded into memory. To specify permission requests for a transient assembly that is never saved to disk, use an overload of the <xref:System.AppDomain.DefineDynamicAssembly%2A> method that specifies evidence as well as requested permissions, and supply an <xref:System.Security.Policy.Evidence> object.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you use an overload of the <xref:System.AppDomain.DefineDynamicAssembly%2A> method that specifies evidence and permissions, supply the evidence you want the dynamic assembly to have, and include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
- This method should only be used to define a dynamic assembly in the current application domain. For more information, see the <xref:System.AppDomain.Load%28System.Reflection.AssemblyName%29> method overload .
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and <xref:System.AppDomain.AssemblyResolve> event.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -3948,35 +3827,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="refusedPermissions">The refused permissions request.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, evidence, and permission requests.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The permission requests specified for `requiredPermissions`, `optionalPermissions`, and `refusedPermissions` are used only if `evidence` is also supplied, or if the dynamic assembly is saved and reloaded into memory.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
- Only fully trusted callers can supply their `evidence` when defining a dynamic <xref:System.Reflection.Assembly>. The runtime will map the <xref:System.Security.Policy.Evidence> through the security policy to determine the granted permissions. Partially trusted callers must supply a null `evidence`. If `evidence` is `null`, the runtime copies the permission sets, that is, the current grant and deny sets, from the caller's <xref:System.Reflection.Assembly> to the dynamic <xref:System.Reflection.Assembly> being defined and marks policy as resolved.
-
- If the dynamic <xref:System.Reflection.Assembly> is saved to disk, subsequent loads will get grants based on policies associated with the location where the <xref:System.Reflection.Assembly> was saved.
-
- This method should only be used to define a dynamic assembly in the current application domain. For more information, see the <xref:System.AppDomain.Load%28System.Reflection.AssemblyName%29> method overload.
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and <xref:System.AppDomain.AssemblyResolve> event.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -4043,31 +3894,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="refusedPermissions">The refused permissions request.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, storage directory, and permission requests.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The permission requests specified for `requiredPermissions`, `optionalPermissions`, and `refusedPermissions` are not used unless the dynamic assembly has been saved and reloaded into memory. To specify permission requests for a transient assembly that is never saved to disk, use an overload of the <xref:System.AppDomain.DefineDynamicAssembly%2A> method that specifies evidence as well as requested permissions, and supply an <xref:System.Security.Policy.Evidence> object.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you use an overload of the <xref:System.AppDomain.DefineDynamicAssembly%2A> method that specifies evidence and permissions, supply the evidence you want the dynamic assembly to have, and include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
- This method should only be used to define a dynamic assembly in the current application domain. For more information, see the <xref:System.AppDomain.Load%28System.Reflection.AssemblyName%29> method overload.
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and <xref:System.AppDomain.AssemblyResolve> event.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -4136,35 +3963,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="refusedPermissions">The refused permissions request.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, storage directory, evidence, and permission requests.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The permission requests specified for `requiredPermissions`, `optionalPermissions`, and `refusedPermissions` are used only if `evidence` is also supplied, or if the dynamic assembly is saved and reloaded into memory.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
- Only fully trusted callers can supply their `evidence` when defining a dynamic <xref:System.Reflection.Assembly>. The runtime will map the <xref:System.Security.Policy.Evidence> through the security policy to determine the granted permissions. Partially trusted callers must supply a null `evidence`. If `evidence` is `null`, the runtime copies the permission sets, that is, the current grant and deny sets, from the caller's <xref:System.Reflection.Assembly> to the dynamic <xref:System.Reflection.Assembly> being defined and marks policy as resolved.
-
- If the dynamic <xref:System.Reflection.Assembly> is saved to disk, subsequent loads will get grants based on policies associated with the location where the <xref:System.Reflection.Assembly> was saved.
-
- This method should only be used to define a dynamic assembly in the current application domain. For more information, see the <xref:System.AppDomain.Load%28System.Reflection.AssemblyName%29> method overload.
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and <xref:System.AppDomain.AssemblyResolve> event.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -4236,35 +4035,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
           <see langword="true" /> to synchronize the creation of modules, types, and members in the dynamic assembly; otherwise, <see langword="false" />.</param>
         <summary>Defines a dynamic assembly using the specified name, access mode, storage directory, evidence, permission requests, and synchronization option.</summary>
         <returns>A dynamic assembly with the specified name and features.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The permission requests specified for `requiredPermissions`, `optionalPermissions`, and `refusedPermissions` are used only if `evidence` is also supplied, or if the dynamic assembly is saved and reloaded into memory.
-
-> [!NOTE]
->  During the development of code that emits dynamic assemblies, it is recommended that you include <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification?displayProperty=nameWithType> in `refusedPermissions`. Including <xref:System.Security.Permissions.SecurityPermissionFlag.SkipVerification> in the `refusedPermissions` parameter ensures that the MSIL is verified. A limitation of this technique is that it also causes <xref:System.Security.SecurityException> to be thrown when used with code that demands full trust.
-
- Only fully trusted callers can supply their evidence when defining a dynamic <xref:System.Reflection.Assembly>. The runtime will map the <xref:System.Security.Policy.Evidence> through the security policy to determine the granted permissions. Partially trusted callers must supply `null` for the `evidence` parameter. If `evidence` is `null`, the runtime copies the permission sets, that is, the current grant and deny sets, from the caller's <xref:System.Reflection.Assembly> to the dynamic <xref:System.Reflection.Assembly> being defined and marks policy as resolved.
-
- If the dynamic <xref:System.Reflection.Assembly> is saved to disk, subsequent loads will get grants based on policies associated with the location where the <xref:System.Reflection.Assembly> was saved.
-
- If `isSynchronized` is `true`, the following methods of the resulting <xref:System.Reflection.Emit.AssemblyBuilder> will be synchronized: <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicModule%2A>, <xref:System.Reflection.Emit.AssemblyBuilder.DefineResource%2A>, <xref:System.Reflection.Emit.AssemblyBuilder.AddResourceFile%2A>, <xref:System.Reflection.Emit.AssemblyBuilder.GetDynamicModule%2A>, <xref:System.Reflection.Emit.AssemblyBuilder.SetEntryPoint%2A>, and <xref:System.Reflection.Emit.AssemblyBuilder.Save%2A>. If two of these methods are called on different threads, one will block until the other completes.
-
-
-
-## Examples
- The following sample demonstrates the <xref:System.AppDomain.DefineDynamicAssembly%2A> method and <xref:System.AppDomain.AssemblyResolve> event.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_DefineDynamicAssembly/CPP/definedynamicassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DefineDynamicAssembly/definedynamicassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The <see langword="Name" /> property of <paramref name="name" /> is <see langword="null" />.
@@ -4846,28 +4617,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="assemblySecurity">Evidence for loading the assembly.</param>
         <summary>Executes the assembly contained in the specified file, using the specified evidence.</summary>
         <returns>The value returned by the entry point of the assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The assembly begins executing at the entry point specified in the .NET Framework header.
-
- The <xref:System.AppDomain.ExecuteAssembly%2A> method does not create a new process or application domain, and it does not execute the entry point method on a new thread.
-
- This method loads assemblies using the <xref:System.Reflection.Assembly.LoadFile%2A> method. You can also execute assemblies using the <xref:System.AppDomain.ExecuteAssemblyByName%2A> method, which loads assemblies using the <xref:System.Reflection.Assembly.Load%2A> method.
-
-
-
-## Examples
- The following sample demonstrates using one of the overloads of <xref:System.AppDomain.ExecuteAssembly%2A> on two different domains.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_ExecuteAssembly/CPP/executeassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/ExecuteAssembly/executeassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/ExecuteAssembly/executeassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/ExecuteAssembly/executeassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
@@ -5027,28 +4777,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="args">The arguments to the entry point of the assembly.</param>
         <summary>Executes the assembly contained in the specified file, using the specified evidence and arguments.</summary>
         <returns>The value returned by the entry point of the assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The assembly begins executing at the entry point specified in the .NET Framework header.
-
- This method does not create a new process or application domain, and it does not execute the entry point method on a new thread.
-
- This method loads assemblies using the <xref:System.Reflection.Assembly.LoadFile%2A> method. You can also execute assemblies using the <xref:System.AppDomain.ExecuteAssemblyByName%2A> method, which loads assemblies using the <xref:System.Reflection.Assembly.Load%2A> method.
-
-
-
-## Examples
- The following sample demonstrates using one of the overloads of <xref:System.AppDomain.ExecuteAssembly%2A> on two different domains.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_ExecuteAssembly/CPP/executeassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/ExecuteAssembly/executeassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/ExecuteAssembly/executeassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/ExecuteAssembly/executeassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
@@ -5134,31 +4863,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="hashAlgorithm">Represents the hash algorithm used by the assembly manifest.</param>
         <summary>Executes the assembly contained in the specified file, using the specified arguments, hash value, and hash algorithm.</summary>
         <returns>The value that is returned by the entry point of the assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-[!INCLUDE[cas-deprecated](~/includes/cas-deprecated.md)]
-
- The assembly begins executing at the entry point specified in the .NET Framework header.
-
- This method does not create a new process or application domain, and it does not execute the entry point method on a new thread.
-
- This method loads assemblies using the <xref:System.Reflection.Assembly.LoadFile%2A> method. You can also execute assemblies using the <xref:System.AppDomain.ExecuteAssemblyByName%2A> method, which loads assemblies using the <xref:System.Reflection.Assembly.Load%2A> method.
-
-
-
-## Examples
- The following sample demonstrates using one of the overloads of <xref:System.AppDomain.ExecuteAssembly%2A> on two different domains.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_ExecuteAssembly/CPP/executeassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/ExecuteAssembly/executeassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/ExecuteAssembly/executeassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/ExecuteAssembly/executeassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
@@ -5222,28 +4927,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
         <param name="hashAlgorithm">Represents the hash algorithm used by the assembly manifest.</param>
         <summary>Executes the assembly contained in the specified file, using the specified evidence, arguments, hash value, and hash algorithm.</summary>
         <returns>The value returned by the entry point of the assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The assembly begins executing at the entry point specified in the .NET Framework header.
-
- This method does not create a new process or application domain, and it does not execute the entry point method on a new thread.
-
- This method loads assemblies using the <xref:System.Reflection.Assembly.LoadFile%2A> method. You can also execute assemblies using the <xref:System.AppDomain.ExecuteAssemblyByName%2A> method, which loads assemblies using the <xref:System.Reflection.Assembly.Load%2A> method.
-
-
-
-## Examples
- The following sample demonstrates using one of the overloads of <xref:System.AppDomain.ExecuteAssembly%2A> on two different domains.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_ExecuteAssembly/CPP/executeassembly.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/ExecuteAssembly/executeassembly.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/ExecuteAssembly/executeassembly.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/ExecuteAssembly/executeassembly.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
@@ -7189,16 +6873,6 @@ The friendly name of the default application domain is the file name of the proc
 
  Beginning with the .NET Framework 4, the trust level of an assembly that is loaded by using this method is the same as the trust level of the application domain.
 
-## Examples
- The following sample demonstrates the use of loading a raw assembly.
-
- For this code example to run, you must provide the fully qualified assembly name. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_LoadRaw/CPP/loadraw.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/Load/loadraw.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/Load/loadraw.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/Load/loadraw.vb" id="Snippet1":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -7981,16 +7655,6 @@ The friendly name of the default application domain is the file name of the proc
 ## Remarks
  Call this method before an assembly is loaded into the <xref:System.AppDomain> in order for the security policy to have effect.
 
-
-
-## Examples
- The following example demonstrates how to use the <xref:System.AppDomain.SetAppDomainPolicy%2A> method to set the security policy level of an application domain.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ADSetAppDomainPolicy/CPP/adsetappdomainpolicy.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/SetAppDomainPolicy/adsetappdomainpolicy.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/SetAppDomainPolicy/adsetappdomainpolicy.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/SetAppDomainPolicy/adsetappdomainpolicy.vb" id="Snippet1":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -8313,16 +7977,6 @@ The friendly name of the default application domain is the file name of the proc
 ## Remarks
  This method sets the <xref:System.AppDomainSetup.DynamicBase%2A> property of the internal <xref:System.AppDomainSetup> associated with this instance.
 
-
-
-## Examples
- This method is now obsolete, and should not be used for new development. The following example shows how to use the non-obsolete alternative, the <xref:System.AppDomainSetup.DynamicBase%2A?displayProperty=nameWithType> property. For an explanation of this example, see the <xref:System.AppDomainSetup.DynamicBase%2A?displayProperty=nameWithType> property or the <xref:System.AppDomain.DynamicDirectory%2A> property.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ADDynamicBase/CPP/addynamicbase.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/DynamicDirectory/addynamicbase.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/DynamicDirectory/addynamicbase.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/DynamicDirectory/addynamicbase.vb" id="Snippet1":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.AppDomainUnloadedException">The operation is attempted on an unloaded application domain.</exception>
@@ -8471,16 +8125,6 @@ The friendly name of the default application domain is the file name of the proc
 ## Remarks
  For more information on shadow copying, see [Shadow Copying Assemblies](/dotnet/framework/app-domains/shadow-copy-assemblies).
 
-
-
-## Examples
- This method is now obsolete, and should not be used for new development.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/adproperties/CPP/adproperties.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/SetShadowCopyFiles/adproperties.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/SetShadowCopyFiles/adproperties.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/SetShadowCopyFiles/adproperties.vb" id="Snippet1":::
-
  ]]></format>
         </remarks>
         <exception cref="T:System.AppDomainUnloadedException">The operation is attempted on an unloaded application domain.</exception>
@@ -8567,16 +8211,6 @@ The friendly name of the default application domain is the file name of the proc
  This method sets the <xref:System.AppDomainSetup.ShadowCopyDirectories%2A> property of the internal <xref:System.AppDomainSetup> associated with this instance.
 
  For more information on shadow copying, see [Shadow Copying Assemblies](/dotnet/framework/app-domains/shadow-copy-assemblies).
-
-
-
-## Examples
- This method is now obsolete, and should not be used for new development.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ADShadowCopy/CPP/adshadowcopy.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/SetShadowCopyPath/adshadowcopy.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/SetShadowCopyPath/adshadowcopy.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/SetShadowCopyPath/adshadowcopy.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -9263,7 +8897,7 @@ The following example demonstrates the <xref:System.AppDomain.UnhandledException
 
 ## Remarks
 
-In .NET Framework version 2.0 and later, there is a thread dedicated to unloading application domains. This improves reliability, especially when .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload%2A>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time, a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload%2A>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, in .NET Framework version 2.0 and later, `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.
+There's a thread dedicated to unloading application domains. This improves reliability, especially when .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload%2A>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time, a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload%2A>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.
 
 > [!NOTE]
 >  In some cases, calling <xref:System.AppDomain.Unload%2A> causes an immediate <xref:System.CannotUnloadAppDomainException>, for example if it is called in a finalizer.
