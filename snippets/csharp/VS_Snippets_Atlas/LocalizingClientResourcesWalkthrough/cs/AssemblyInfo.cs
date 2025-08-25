@@ -33,5 +33,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+// <Snippet3>
 [assembly: System.Web.UI.WebResource("LocalizingScriptResources.CheckAnswer.js", "application/x-javascript")]
 [assembly: System.Web.UI.ScriptResource("LocalizingScriptResources.CheckAnswer.js", "LocalizingScriptResources.VerificationResources", "Answer")]
+// </Snippet3>
