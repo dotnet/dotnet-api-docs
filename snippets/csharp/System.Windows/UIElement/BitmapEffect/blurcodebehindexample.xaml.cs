@@ -30,13 +30,13 @@ namespace SDKSample
             // to the Button.
             BlurBitmapEffect myBlurEffect = new BlurBitmapEffect();
 
-            // Set the Radius property of the blur. This determines how 
+            // Set the Radius property of the blur. This determines how
             // blurry the effect will be. The larger the radius, the more
-            // blurring. 
+            // blurring.
             myBlurEffect.Radius = 10;
 
-            // Set the KernelType property of the blur. A KernalType of "Box"
-            // creates less blur than the Gaussian kernal type.
+            // Set the KernelType property of the blur. A KernelType of "Box"
+            // creates less blur than the Gaussian kernel type.
             myBlurEffect.KernelType = KernelType.Box;
 
             // Apply the bitmap effect to the Button.

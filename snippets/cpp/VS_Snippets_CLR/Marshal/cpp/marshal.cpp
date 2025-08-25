@@ -14,7 +14,7 @@ extern bool CloseHandle(IntPtr h);
 
 int main()
 {
-    //<snippet2> 
+    //<snippet2>
     // Demonstrate the use of public static fields of the Marshal
     // class.
     Console::WriteLine(
@@ -23,18 +23,8 @@ int main()
         Marshal::SystemMaxDBCSCharSize);
     //</snippet2>
 
-    //<snippet3> 
-    // Demonstrate the use of the SizeOf method of the Marshal
-    // class.
-    Console::WriteLine("Number of bytes needed by a Point object: {0}",
-        Marshal::SizeOf(Point::typeid));
-    Point point;
-    Console::WriteLine("Number of bytes needed by a Point object: {0}",
-        Marshal::SizeOf(point));
-    //</snippet3>
-
     //<snippet4>
-    // Demonstrate how to call GlobalAlloc and 
+    // Demonstrate how to call GlobalAlloc and
     // GlobalFree using the Marshal class.
     IntPtr hglobal = Marshal::AllocHGlobal(100);
     Marshal::FreeHGlobal(hglobal);
@@ -53,15 +43,13 @@ int main()
 
 // This is a platform invoke prototype. SetLastError is true,
 // which allows the GetLastWin32Error method of the Marshal class
-// to work correctly.    
+// to work correctly.
 [DllImport("Kernel32", ExactSpelling = true, SetLastError = true)]
 extern bool CloseHandle(IntPtr h);
 //</snippet5>
 
 // This code produces the following output.
-// 
+//
 // SystemDefaultCharSize=2, SystemMaxDBCSCharSize=1
-// Number of bytes needed by a Point object: 8
-// Number of bytes needed by a Point object: 8
 // CloseHandle call failed with an error code of: 6
 //</snippet1>
