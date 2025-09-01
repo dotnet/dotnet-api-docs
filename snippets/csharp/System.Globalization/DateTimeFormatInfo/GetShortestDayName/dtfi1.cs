@@ -103,16 +103,16 @@ class Sample
         ""
 
         ShortestDayNames...
-        "S"
-        "M"
-        "T"
-        "W"
-        "T"
-        "F"
-        "S"
+        "Su"
+        "Mo"
+        "Tu"
+        "We"
+        "Th"
+        "Fr"
+        "Sa"
 
         GetShortestDayName(DayOfWeek.Sunday)...
-        "S"
+        "Su"
 
         Initial DateTime format patterns for the 'd' format specifier...
         "M/d/yyyy"
