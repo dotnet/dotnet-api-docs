@@ -33,6 +33,7 @@ Public Class Sample
         '   <price>19.95</price>
         ' </book>
         ' 
+        
         ' </Snippet1>
     End Sub    
 End Class
