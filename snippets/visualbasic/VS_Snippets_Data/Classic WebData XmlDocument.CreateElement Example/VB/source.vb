@@ -33,6 +33,6 @@ End Class
 ' <book genre="novel" ISBN="1-861001-57-5">
 '   <title>Pride And Prejudice</title>
 '   <price>19.95</price>
-' </book>
+' \</book>
 
 ' </Snippet1>
