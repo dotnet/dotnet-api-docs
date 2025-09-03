@@ -24,15 +24,6 @@ Public Class Sample
         Console.WriteLine("Display the modified XML...")
         doc.Save(Console.Out)
         
-        ' The example displays the following output:
-        '
-        ' Display the modified XML...
-        ' \<?xml version="1.0" encoding="utf-8"?>
-        ' \<book genre="novel" ISBN="1-861001-57-5">
-        '   \<title>Pride And Prejudice\</title>
-        '   \<price>19.95\</price>
-        ' \</book>
-        
         ' </Snippet1>
     End Sub    
 End Class
