@@ -14,6 +14,7 @@
     <AssemblyVersion>9.5.0.0</AssemblyVersion>
     <AssemblyVersion>9.6.0.0</AssemblyVersion>
     <AssemblyVersion>9.7.0.0</AssemblyVersion>
+    <AssemblyVersion>9.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Extensions.AI.DelegatingChatClient</BaseTypeName>
@@ -32,14 +33,33 @@
             </summary>
     <remarks>
       <para>
-            When this client receives a <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> in a chat response, it responds
-            by calling the corresponding <see cref="T:Microsoft.Extensions.AI.AIFunction" /> defined in <see cref="P:Microsoft.Extensions.AI.ChatOptions.Tools" />,
-            producing a <see cref="T:Microsoft.Extensions.AI.FunctionResultContent" /> that it sends back to the inner client. This loop
-            is repeated until there are no more function calls to make, or until another stop condition is met,
-            such as hitting <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.MaximumIterationsPerRequest" />.
+            When this client receives a <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> in a chat response from its inner
+            <see cref="T:Microsoft.Extensions.AI.IChatClient" />, it responds by invoking the corresponding <see cref="T:Microsoft.Extensions.AI.AIFunction" /> defined
+            in <see cref="P:Microsoft.Extensions.AI.ChatOptions.Tools" /> (or in <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AdditionalTools" />), producing a <see cref="T:Microsoft.Extensions.AI.FunctionResultContent" />
+            that it sends back to the inner client. This loop is repeated until there are no more function calls to make, or until
+            another stop condition is met, such as hitting <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.MaximumIterationsPerRequest" />.
             </para>
       <para>
-            The provided implementation of <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is thread-safe for concurrent use so long as the
+            If a requested function is an <see cref="T:Microsoft.Extensions.AI.AIFunctionDeclaration" /> but not an <see cref="T:Microsoft.Extensions.AI.AIFunction" />, the
+            <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> will not attempt to invoke it, and instead allow that <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" />
+            to pass back out to the caller. It is then that caller's responsibility to create the appropriate <see cref="T:Microsoft.Extensions.AI.FunctionResultContent" />
+            for that call and send it back as part of a subsequent request.
+            </para>
+      <para>
+            Further, if a requested function is an <see cref="T:Microsoft.Extensions.AI.ApprovalRequiredAIFunction" />, the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> will not
+            attempt to invoke it directly. Instead, it will replace that <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> with a <see cref="T:Microsoft.Extensions.AI.FunctionApprovalRequestContent" />
+            that wraps the <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> and indicates that the function requires approval before it can be invoked. The caller is then
+            responsible for responding to that approval request by sending a corresponding <see cref="T:Microsoft.Extensions.AI.FunctionApprovalResponseContent" /> in a subsequent
+            request. The <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> will then process that approval response and invoke the function as appropriate.
+            </para>
+      <para>
+            Due to the nature of interactions with an underlying <see cref="T:Microsoft.Extensions.AI.IChatClient" />, if any <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> is received
+            for a function that requires approval, all received <see cref="T:Microsoft.Extensions.AI.FunctionCallContent" /> in that same response will also require approval,
+            even if they were not <see cref="T:Microsoft.Extensions.AI.ApprovalRequiredAIFunction" /> instances. If this is a concern, consider requesting that multiple tool call
+            requests not be made in a single response, by setting <see cref="P:Microsoft.Extensions.AI.ChatOptions.AllowMultipleToolCalls" /> to <see langword="false" />.
+            </para>
+      <para>
+            A <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> instance is thread-safe for concurrent use so long as the
             <see cref="T:Microsoft.Extensions.AI.AIFunction" /> instances employed as part of the supplied <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> are also safe.
             The <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AllowConcurrentInvocation" /> property can be used to control whether multiple function invocation
             requests as part of the same request are invocable concurrently, but even with that set to <see langword="false" />
@@ -61,7 +81,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="innerClient" Type="Microsoft.Extensions.AI.IChatClient">
@@ -85,6 +105,39 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="AdditionalTools">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AITool&gt;? AdditionalTools { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.AITool&gt; AdditionalTools" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AdditionalTools" />
+      <MemberSignature Language="VB.NET" Value="Public Property AdditionalTools As IList(Of AITool)" />
+      <MemberSignature Language="F#" Value="member this.AdditionalTools : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AITool&gt; with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.AdditionalTools" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::AITool ^&gt; ^ AdditionalTools { System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::AITool ^&gt; ^ get(); void set(System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::AITool ^&gt; ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.AITool&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets a collection of additional tools the client is able to invoke.</summary>
+        <value>To be added.</value>
+        <remarks>
+            These will not impact the requests sent by the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" />, which will pass through the
+            <see cref="P:Microsoft.Extensions.AI.ChatOptions.Tools" /> unmodified. However, if the inner client requests the invocation of a tool
+            that was not in <see cref="P:Microsoft.Extensions.AI.ChatOptions.Tools" />, this <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AdditionalTools" /> collection will also be consulted
+            to look for a corresponding tool to invoke. This is useful when the service may have been pre-configured to be aware
+            of certain tools that aren't also sent on each individual request.
+            </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="AllowConcurrentInvocation">
       <MemberSignature Language="C#" Value="public bool AllowConcurrentInvocation { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool AllowConcurrentInvocation" />
@@ -95,7 +148,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -126,7 +179,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;</ReturnType>
@@ -158,7 +211,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
@@ -189,7 +242,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
@@ -216,7 +269,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
@@ -247,7 +300,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;</ReturnType>
@@ -283,12 +336,12 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;GetStreamingResponseAsync&gt;d__31))]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;GetStreamingResponseAsync&gt;d__31))&gt;]</AttributeName>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;GetStreamingResponseAsync&gt;d__39))]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.FunctionInvokingChatClient+&lt;GetStreamingResponseAsync&gt;d__39))&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -333,7 +386,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -379,7 +432,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.ValueTask&lt;System.Object&gt;</ReturnType>
@@ -414,7 +467,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -460,7 +513,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.7.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -484,6 +537,47 @@
           <para>
             Changing the value of this property while the client is in use might result in inconsistencies
             as to how many iterations are allowed for an in-flight request.
+            </para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TerminateOnUnknownCalls">
+      <MemberSignature Language="C#" Value="public bool TerminateOnUnknownCalls { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool TerminateOnUnknownCalls" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.TerminateOnUnknownCalls" />
+      <MemberSignature Language="VB.NET" Value="Public Property TerminateOnUnknownCalls As Boolean" />
+      <MemberSignature Language="F#" Value="member this.TerminateOnUnknownCalls : bool with get, set" Usage="Microsoft.Extensions.AI.FunctionInvokingChatClient.TerminateOnUnknownCalls" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool TerminateOnUnknownCalls { bool get(); void set(bool value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets a value indicating whether a request to call an unknown function should terminate the function calling loop.</summary>
+        <value>To be added.</value>
+        <remarks>
+          <para>
+            When <see langword="false" />, call requests to any tools that aren't available to the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" />
+            will result in a response message automatically being created and returned to the inner client stating that the tool couldn't be
+            found; this can help in cases where a model hallucinates a function, but it's problematic if the model has been made aware
+            of the existence of tools outside of the normal mechanisms, and requests one of those. <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AdditionalTools" /> can be used
+            to help with that, but if instead the consumer wants to know about all function call requests that the client can't handle,
+            <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.TerminateOnUnknownCalls" /> can be set to <see langword="true" />, and upon receiving a request to call a function
+            that the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> doesn't know about, it will terminate the function calling loop and return
+            the response, leaving the handling of the function call requests to the consumer of the client.
+            </para>
+          <para>
+            Note that <see cref="T:Microsoft.Extensions.AI.AITool" />s that the <see cref="T:Microsoft.Extensions.AI.FunctionInvokingChatClient" /> is aware of (e.g. because they're in
+            <see cref="P:Microsoft.Extensions.AI.ChatOptions.Tools" /> or <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.AdditionalTools" />) but that aren't <see cref="T:Microsoft.Extensions.AI.AIFunction" /> are not considered
+            unknown, just not invocable. Any requests to a non-invocable tool will also result in the function calling loop terminating,
+            regardless of <see cref="P:Microsoft.Extensions.AI.FunctionInvokingChatClient.TerminateOnUnknownCalls" />.
+            </para>
+          <para>
+            This defaults to <see langword="false" />.
             </para>
         </remarks>
       </Docs>
