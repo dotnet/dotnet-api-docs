@@ -14,8 +14,17 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents a set of options for named synchronization objects that are wait handles and can be shared between processes, such as <see cref="T:System.Threading.Mutex" />, <see cref="T:System.Threading.Semaphore" />, and <see cref="T:System.Threading.EventWaitHandle" />.</summary>
+    <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks
+ This structure is used with constructors and methods that create or open named synchronization objects that are wait handles and can be shared between processes, such as <xref:System.Threading.Mutex>, <xref:System.Threading.Semaphore>, and <xref:System.Threading.EventWaitHandle>.
+
+ As an alternative to the methods that accept a <xref:System.Threading.NamedWaitHandleOptions> parameter to set the scope, methods that only take a `name` parameter can prefix the parameter with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
+
+ ]]></format>
+        </remarks>
   </Docs>
   <Members>
     <Member MemberName="CurrentSessionOnly">
@@ -34,9 +43,25 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a value that indicates whether the named synchronization object should be limited in access to the current session.</summary>
+        <value>
+          <see langword="true" /> if the named synchronization object should be limited in access to the current session; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default value of this property is `true`.
+
+ Each session has namespaces for the object's name that are used when the option is `true`. These session-scoped namespaces are distinct from session-scoped namespaces for other sessions, and also distinct from namespaces used when the option is `false`.
+
+ If the option is `true` when creating a named synchronization object, the object is limited in scope to the current session, and can't be opened by processes running in different sessions.
+
+ If the option is `false` when creating a named synchronization object, the object is not limited in access to a session.
+
+ On Windows, a session is a Terminal Services session. On Unix-like operating systems, a session is typically a shell session, where each shell gets its own session in which processes started from the shell run.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="CurrentUserOnly">
@@ -55,9 +80,23 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a value that indicates whether the named synchronization object should be limited in access to the current user.</summary>
+        <value>
+          <see langword="true" /> if the named synchronization object should be limited in access to the current user; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
+ The default value of this property is `true`.
+
+ If the option is `true` when creating a named synchronization object, the object is limited in access to the calling user. If the option is `true` when opening an existing named synchronization object, the object's access controls are verified for the calling user.
+
+ If the option is `false` when creating a named synchronization object, the object is not limited in access to a user.
+
+ On Unix-like operating systems, each user has namespaces for the object's name that are used when the option is `true`. These user-scoped namespaces are distinct from user-scoped namespaces for other users, and also distinct from namespaces used when the option is `false`.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
