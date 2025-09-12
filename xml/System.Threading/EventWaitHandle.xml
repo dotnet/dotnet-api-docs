@@ -76,7 +76,7 @@ The <xref:System.Threading.EventWaitHandle> class allows threads to communicate 
  For more information, see the [Thread interaction, or signaling](/dotnet/standard/threading/overview-of-synchronization-primitives#thread-interaction-or-signaling) section of the [Overview of synchronization primitives](/dotnet/standard/threading/overview-of-synchronization-primitives) article.
 
 > [!CAUTION]
-> By default, a named event is not restricted to the user that created it. Other users may be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can use a constructor overload or <xref:System.Threading.EventWaitHandleAcl> and pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
+> By default, a named event is not restricted to the user that created it. Other users might be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can use a constructor overload or <xref:System.Threading.EventWaitHandleAcl> and pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
 
 ## Examples
  The following code example uses the <xref:System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle)> method overload to allow the main thread to signal a blocked thread and then wait until the thread finishes a task.
@@ -159,7 +159,7 @@ The <xref:System.Threading.EventWaitHandle> class allows threads to communicate 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled, and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
+ If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
 
 ## Examples
  The following code example uses the <xref:System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle)> method overload to allow the main thread to signal a blocked thread and then wait until the thread finishes a task.
@@ -224,36 +224,36 @@ The <xref:System.Threading.EventWaitHandle> class allows threads to communicate 
         <param name="initialState">
           <see langword="true" /> to set the initial state to signaled if the named event is created as a result of this call; <see langword="false" /> to set it to nonsignaled.</param>
         <param name="mode">One of the <see cref="T:System.Threading.EventResetMode" /> values that determines whether the event resets automatically or manually.</param>
-        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.EventWaitHandle" /> class, specifying whether the wait handle is initially signaled if created as a result of this call, whether it resets automatically or manually, and the name of a system synchronization event.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
+The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
  If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored.
 
 > [!CAUTION]
-> By default, a named event is not restricted to the user that created it. Other users may be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can use a constructor overload or <xref:System.Threading.EventWaitHandleAcl> and pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
+> By default, a named event is not restricted to the user that created it. Other users might be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can use a constructor overload or <xref:System.Threading.EventWaitHandleAcl> and pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
 
 > [!IMPORTANT]
 >  When using this constructor for named system events, specify `false` for `initialState`. This constructor provides no way to determine whether a named system event was created, so you cannot make any assumptions about the state of the named event. To determine whether a named event was created, use the <xref:System.Threading.EventWaitHandle.%23ctor(System.Boolean,System.Threading.EventResetMode,System.String,System.Boolean%40)> constructor or the <xref:System.Threading.EventWaitHandle.%23ctor(System.Boolean,System.Threading.EventResetMode,System.String,System.Boolean%40,System.Security.AccessControl.EventWaitHandleSecurity)> constructor.
 
- If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled, and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
+ If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
 
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.EventWaitHandleRights.FullControl" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
@@ -315,34 +315,34 @@ There was some other error. The `HResult` property may provide more information.
         <param name="initialState">
           <see langword="true" /> to set the initial state to signaled if the named event is created as a result of this call; <see langword="false" /> to set it to nonsignaled.</param>
         <param name="mode">One of the <see cref="T:System.Threading.EventResetMode" /> values that determines whether the event resets automatically or manually.</param>
-        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <param name="createdNew">When this method returns, contains <see langword="true" /> if a local event was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system event was created; <see langword="false" /> if the specified named system event already existed. This parameter is passed uninitialized.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.EventWaitHandle" /> class, specifying whether the wait handle is initially signaled if created as a result of this call, whether it resets automatically or manually, the name of a system synchronization event, and a Boolean variable whose value after the call indicates whether the named system event was created.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
+The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
  If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored. After calling this constructor, use the value in the variable specified for the `ref` parameter (`ByRef` parameter in Visual Basic)`createdNew` to determine whether the named system event already existed or was created.
 
- If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled, and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
+ If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
 
 > [!CAUTION]
-> By default, a named event is not restricted to the user that created it. Other users may be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can use a constructor overload or <xref:System.Threading.EventWaitHandleAcl> and pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
+> By default, a named event is not restricted to the user that created it. Other users might be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can use a constructor overload or <xref:System.Threading.EventWaitHandleAcl> and pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
 
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.EventWaitHandleRights.FullControl" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
@@ -383,38 +383,37 @@ There was some other error. The `HResult` property may provide more information.
           <see langword="true" /> to set the initial state to signaled if the named event is created as a result of this call; <see langword="false" /> to set it to nonsignaled.</param>
         <param name="mode">One of the <see cref="T:System.Threading.EventResetMode" /> values that determines whether the event resets automatically or manually.</param>
         <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
-        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options may affect the namespace for the name, and access to the underlying handle object.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.Threading.EventWaitHandle" /> class, specifying whether the wait handle is initially signaled if created as a result of this call, whether it resets automatically or manually, the name of a system synchronization event and options to set user-scope and session-scope access.</summary>
+        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying handle object.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.EventWaitHandle" /> class, specifying whether the wait handle is initially signaled if created as a result of this call, whether it resets automatically or manually, the name of a system synchronization event, and options to set user-scope and session-scope access.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened unless `options` specifies access limited to the current user and the synchronization object is not compatible with it, in which case a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
+If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
 
- If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored.
+If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored.
 
 > [!IMPORTANT]
->  When using this constructor for named system events, specify `false` for `initialState`. This constructor provides no way to determine whether a named system event was created, so you cannot make any assumptions about the state of the named event. To determine whether a named event was created, use the <xref:System.Threading.EventWaitHandle.%23ctor(System.Boolean,System.Threading.EventResetMode,System.String,System.Boolean%40)> constructor or the <xref:System.Threading.EventWaitHandle.%23ctor(System.Boolean,System.Threading.EventResetMode,System.String,System.Boolean%40,System.Security.AccessControl.EventWaitHandleSecurity)> constructor.
+> When using this constructor for named system events, specify `false` for `initialState`. This constructor provides no way to determine whether a named system event was created, so you can't make any assumptions about the state of the named event. To determine whether a named event was created, use the <xref:System.Threading.EventWaitHandle.%23ctor(System.Boolean,System.Threading.EventResetMode,System.String,System.Boolean%40)> constructor or the <xref:System.Threading.EventWaitHandle.%23ctor(System.Boolean,System.Threading.EventResetMode,System.String,System.Boolean%40,System.Security.AccessControl.EventWaitHandleSecurity)> constructor.
 
- If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled, and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
+If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset and subsequent threads will block.
 
- On Windows, `options` can be provided to allow to specify whether the named system event is accesible to the current user only, or to all users. It also allows to specify whether the named system event is accessible to processes in the current session only, or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
+On Windows, `options` can be provided to specify whether the named system event is accessible to the current user only, or to all users. It also allows you to specify whether the named system event is accessible to processes in the current session only, or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
 
 > [!CAUTION]
-> On Unix-based operating systems, the `options` parameter has no effect as named system events are not supported.
+> On Unix-based operating systems, the `options` parameter has no effect as named system events aren't supported.
 
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.EventWaitHandleRights.FullControl" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.        
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.
 -or-
 
 An object with the specified <paramref name="name" /> exists, but the specified <paramref name="options" /> are not compatible with the existing object's options.</exception>
@@ -459,7 +458,7 @@ An object with the specified <paramref name="name" /> exists, but the specified 
         <param name="initialState">
           <see langword="true" /> to set the initial state to signaled if the named event is created as a result of this call; <see langword="false" /> to set it to nonsignaled.</param>
         <param name="mode">One of the <see cref="T:System.Threading.EventResetMode" /> values that determines whether the event resets automatically or manually.</param>
-        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <param name="createdNew">When this method returns, contains <see langword="true" /> if a local event was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system event was created; <see langword="false" /> if the specified named system event already existed. This parameter is passed uninitialized.</param>
         <param name="eventSecurity">An <see cref="T:System.Security.AccessControl.EventWaitHandleSecurity" /> object that represents the access control security to be applied to the named system event.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.EventWaitHandle" /> class, specifying whether the wait handle is initially signaled if created as a result of this call, whether it resets automatically or manually, the name of a system synchronization event, a Boolean variable whose value after the call indicates whether the named system event was created, and the access control security to be applied to the named event if it is created.</summary>
@@ -476,16 +475,16 @@ An object with the specified <paramref name="name" /> exists, but the specified 
 > [!NOTE]
 > The caller has full control over the newly created <xref:System.Threading.EventWaitHandle> object even if `eventSecurity` denies or fails to grant some access rights to the current user. However, if the current user attempts to get another <xref:System.Threading.EventWaitHandle> object to represent the same named event, using either a constructor or the <xref:System.Threading.EventWaitHandle.OpenExisting%2A> method, Windows access control security is applied.
 
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
+ The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
  If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored. After calling this constructor, use the value in the variable specified for the `ref` parameter (`ByRef` parameter in Visual Basic) `createdNew` to determine whether the named system event already existed or was created.
 
- If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled, and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
+ If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
 
 > [!CAUTION]
-> By default, a named event is not restricted to the user that created it. Other users may be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
+> By default, a named event is not restricted to the user that created it. Other users might be able to open and use the event, including interfering with the event by setting or resetting it inappropriately. To restrict access to specific users, you can pass in an <xref:System.Security.AccessControl.EventWaitHandleSecurity> when creating the named event. Avoid using named events without access restrictions on systems that might have untrusted users running code.
 
 ## Examples
  The following code example demonstrates the cross-process behavior of a named system event with access control security. The example uses the <xref:System.Threading.EventWaitHandle.OpenExisting(System.String)> method overload to test for the existence of a named event.
@@ -502,13 +501,13 @@ An object with the specified <paramref name="name" /> exists, but the specified 
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.EventWaitHandleRights.FullControl" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
@@ -550,20 +549,19 @@ There was some other error. The `HResult` property may provide more information.
           <see langword="true" /> to set the initial state to signaled if the named event is created as a result of this call; <see langword="false" /> to set it to nonsignaled.</param>
         <param name="mode">One of the <see cref="T:System.Threading.EventResetMode" /> values that determines whether the event resets automatically or manually.</param>
         <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
-        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options may affect the namespace for the name, and access to the underlying handle object.</param>
-        <param name="createdNew">When this method returns, contains <see langword="true" /> if a local event was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system event was created; <see langword="false" /> if the specified named system event already existed. This parameter is passed uninitialized.</param>
+        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying handle object.</param>
+        <param name="createdNew">When this method returns, contains <see langword="true" /> if a local event was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system event was created; contains <see langword="false" /> if the specified named system event already existed. This parameter is passed uninitialized.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.EventWaitHandle" /> class, specifying whether the wait handle is initially signaled if created as a result of this call, whether it resets automatically or manually, the name of a system synchronization event, options to set user-scope and session-scope access, and a Boolean variable whose value after the call indicates whether the named system event was created.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened unless `options` specifies access limited to the current user and the synchronization object is not compatible with it, in which case a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
+If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is opened. However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
 
- If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored. After calling this constructor, use the value in the variable specified for the `ref` parameter (`ByRef` parameter in Visual Basic)`createdNew` to determine whether the named system event already existed or was created.
+If a system event with the name specified for the `name` parameter already exists, the `initialState` parameter is ignored. After calling this constructor, use the value in the variable specified for the `ref` parameter (`ByRef` parameter in Visual Basic) `createdNew` to determine whether the named system event already existed or was created.
 
- If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled, and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
+If the initial state of the event is nonsignaled, threads that wait on the event will block. If the initial state is signaled, and the <xref:System.Threading.EventResetMode.ManualReset> flag is specified for `mode`, threads that wait on the event will not block. If the initial state is signaled and `mode` is <xref:System.Threading.EventResetMode.AutoReset>, the first thread that waits on the event will be released immediately, after which the event will reset, and subsequent threads will block.
 
- On Windows, `options` can be provided to allow to specify whether the named system event is accesible to the current user only, or to all users. It also allows to specify whether the named system event is accessible to processes in the current session only, or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
+On Windows, `options` can be provided to specify whether the named system event is accessible to the current user only or to all users. It also allows you to specify whether the named system event is accessible to processes in the current session only or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
 
 > [!CAUTION]
 > On Unix-based operating systems, the `options` parameter has no effect as named system events are not supported.
@@ -571,13 +569,13 @@ There was some other error. The `HResult` property may provide more information.
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.EventWaitHandleRights.FullControl" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.
 
@@ -714,14 +712,14 @@ An object with the specified <paramref name="name" /> exists, but the specified 
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <summary>Opens the specified named synchronization event, if it already exists.</summary>
         <returns>An object that represents the named system event.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
+ The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown.
 
@@ -735,7 +733,7 @@ An object with the specified <paramref name="name" /> exists, but the specified 
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be opened. It may not exist, or a synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be opened. It might not exist, or a synchronization object of a different type might have the same name. In some cases, this exception might be thrown for invalid names.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="name" /> is an empty string.
 
@@ -745,13 +743,13 @@ An object with the specified <paramref name="name" /> exists, but the specified 
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the security access required to use it.</exception>
         <related type="Article" href="/dotnet/standard/threading/overview-of-synchronization-primitives">Overview of synchronization primitives</related>
       </Docs>
@@ -789,7 +787,7 @@ There was some other error. The `HResult` property may provide more information.
         <Parameter Name="rights" Type="System.Security.AccessControl.EventWaitHandleRights" Index="1" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <param name="rights">A bitwise combination of the enumeration values that represent the desired security access.</param>
         <summary>Opens the specified named synchronization event, if it already exists, with the desired security access.</summary>
         <returns>An object that represents the named system event.</returns>
@@ -797,7 +795,7 @@ There was some other error. The `HResult` property may provide more information.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
+The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown.
 
@@ -829,15 +827,15 @@ There was some other error. The `HResult` property may provide more information.
 .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be opened. It may not exist, or a synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be opened. It might not exist, or a synchronization object of a different type might have the same name. In some cases, this exception might be thrown for invalid names.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the desired security access.</exception>
         <related type="Article" href="/dotnet/standard/threading/overview-of-synchronization-primitives">Overview of synchronization primitives</related>
       </Docs>
@@ -875,23 +873,22 @@ There was some other error. The `HResult` property may provide more information.
       </Parameters>
       <Docs>
         <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive.</param>
-        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options may affect the namespace for the name, and access to the underlying handle object.</param>
+        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying handle object.</param>
         <summary>Opens the specified named synchronization event, if it already exists. If the options are set to the current user only, the object's access controls are verified for the calling user.</summary>
         <returns>An object that represents the named system event.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened unless `options` specifies access limited to the current user and the synchronization object is not compatible with it, in which case a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well.
+If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well.
 
- The <xref:System.Threading.EventWaitHandle.OpenExisting%2A> method tries to open the specified named system event. To create the system event when it does not already exist, use one of the <xref:System.Threading.EventWaitHandle.%23ctor%2A> constructors that has a `name` parameter.
+The <xref:System.Threading.EventWaitHandle.OpenExisting%2A> method tries to open the specified named system event. To create the system event when it does not already exist, use one of the <xref:System.Threading.EventWaitHandle.%23ctor%2A> constructors that has a `name` parameter.
 
- Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.EventWaitHandle> object, even though the objects that are returned represent the same named system event.
+Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.EventWaitHandle> object, even though the objects that are returned represent the same named system event.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be opened. It may not exist, or a synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.
-        
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be opened. It might not exist, or a synchronization object of a different type might have the same name. In some cases, this exception might be thrown for invalid names.
+
 -or-
 
 An object with the specified <paramref name="name" /> exists, but the specified <paramref name="options" /> are not compatible with the existing object's options.</exception>
@@ -900,13 +897,13 @@ An object with the specified <paramref name="name" /> exists, but the specified 
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the security access required to use it.</exception>
         <related type="Article" href="/dotnet/standard/threading/overview-of-synchronization-primitives">Overview of synchronization primitives</related>
       </Docs>
@@ -1175,16 +1172,16 @@ There was some other error. The `HResult` property may provide more information.
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.EventWaitHandle" /> object that represents the named synchronization event if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named synchronization event, if it already exists, and returns a value that indicates whether the operation succeeded.</summary>
         <returns>
-          <see langword="true" /> if the named synchronization event was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> may be returned for invalid names.</returns>
+          <see langword="true" /> if the named synchronization event was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> might be returned for invalid names.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
+The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned.
 
@@ -1207,12 +1204,12 @@ There was some other error. The `HResult` property may provide more information.
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method might return <see langword="false" /> instead.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the desired security access.</exception>
       </Docs>
     </Member>
@@ -1249,17 +1246,17 @@ There was some other error. The `HResult` property may provide more information.
         <Parameter Name="result" Type="System.Threading.EventWaitHandle" RefType="out" Index="2" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
-        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
+        <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and can only be used to specify a namespace. For more information on namespaces, see the remarks section. There might be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <param name="rights">A bitwise combination of the enumeration values that represent the desired security access.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.EventWaitHandle" /> object that represents the named synchronization event if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named synchronization event, if it already exists, with the desired security access, and returns a value that indicates whether the operation succeeded.</summary>
         <returns>
-          <see langword="true" /> if the named synchronization event was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> may be returned for invalid names.</returns>
+          <see langword="true" /> if the named synchronization event was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> might be returned for invalid names.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
+The `name` can be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object can be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object can be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects might be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned.
 
@@ -1282,12 +1279,12 @@ There was some other error. The `HResult` property may provide more information.
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method might return <see langword="false" /> instead.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the desired security access.</exception>
       </Docs>
     </Member>
@@ -1336,23 +1333,21 @@ There was some other error. The `HResult` property may provide more information.
       </Parameters>
       <Docs>
         <param name="name">The name of the synchronization object to be opened and shared with other processes. The name is case-sensitive.</param>
-        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options may affect the namespace for the name, and access to the underlying handle object.</param>
+        <param name="options">The scope options for the named handle. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying handle object.</param>
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.EventWaitHandle" /> object that represents the named synchronization event if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named synchronization event, if it already exists, and returns a value that indicates whether the operation succeeded. If the options are set to the current user only, the object's access controls are verified for the calling user.</summary>
         <returns>
-          <see langword="true" /> if the named synchronization event was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> may be returned for invalid names.</returns>
+          <see langword="true" /> if the named synchronization event was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> might be returned for invalid names.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
+If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it,  `false` is returned. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned as well.
 
- If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened unless `options` specifies access limited to the current user and the synchronization object is not compatible with it, in which case `false` is returned. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned as well.
+To create the system event when it does not already exist, use one of the <xref:System.Threading.EventWaitHandle.%23ctor%2A> constructors that has a `name` parameter.
 
- To create the system event when it does not already exist, use one of the <xref:System.Threading.EventWaitHandle.%23ctor%2A> constructors that has a `name` parameter.
+If you are uncertain whether a named synchronization event exists, use this method overload instead of the <xref:System.Threading.EventWaitHandle.OpenExisting(System.String)> method overload, which throws an exception if the synchronization event does not exist.
 
- If you are uncertain whether a named synchronization event exists, use this method overload instead of the <xref:System.Threading.EventWaitHandle.OpenExisting(System.String)> method overload, which throws an exception if the synchronization event does not exist.
-
- Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.EventWaitHandle> object, even though the objects that are returned represent the same named system event.
+Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.EventWaitHandle> object, even though the objects that are returned represent the same named system event.
 
  ]]></format>
         </remarks>
@@ -1361,12 +1356,12 @@ There was some other error. The `HResult` property may provide more information.
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method might return <see langword="false" /> instead.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named event exists, but the user does not have the desired security access.</exception>
       </Docs>
     </Member>
