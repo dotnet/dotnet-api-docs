@@ -10,6 +10,11 @@
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
     <AssemblyVersion>9.1.0.0</AssemblyVersion>
     <AssemblyVersion>9.3.0.0</AssemblyVersion>
+    <AssemblyVersion>9.4.0.0</AssemblyVersion>
+    <AssemblyVersion>9.5.0.0</AssemblyVersion>
+    <AssemblyVersion>9.6.0.0</AssemblyVersion>
+    <AssemblyVersion>9.7.0.0</AssemblyVersion>
+    <AssemblyVersion>9.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Extensions.AI.DelegatingChatClient</BaseTypeName>
@@ -38,7 +43,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="innerClient" Type="Microsoft.Extensions.AI.IChatClient" />
@@ -59,7 +64,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -90,23 +95,74 @@
         </remarks>
       </Docs>
     </Member>
-    <Member MemberName="GetCacheKey">
-      <MemberSignature Language="C#" Value="protected abstract string GetCacheKey (scoped ReadOnlySpan&lt;object?&gt; values);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance string GetCacheKey(valuetype System.ReadOnlySpan`1&lt;object&gt; values) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.GetCacheKey(System.ReadOnlySpan{System.Object})" />
-      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function GetCacheKey (values As ReadOnlySpan(Of Object)) As String" />
-      <MemberSignature Language="F#" Value="abstract member GetCacheKey : ReadOnlySpan&lt;obj&gt; -&gt; string" Usage="cachingChatClient.GetCacheKey values" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::String ^ GetCacheKey(ReadOnlySpan&lt;System::Object ^&gt; values);" />
+    <Member MemberName="EnableCaching">
+      <MemberSignature Language="C#" Value="protected virtual bool EnableCaching (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance bool EnableCaching(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.EnableCaching(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function EnableCaching (messages As IEnumerable(Of ChatMessage), options As ChatOptions) As Boolean" />
+      <MemberSignature Language="F#" Value="abstract member EnableCaching : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions -&gt; bool&#xA;override this.EnableCaching : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions -&gt; bool" Usage="cachingChatClient.EnableCaching (messages, options)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual bool EnableCaching(System::Collections::Generic::IEnumerable&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ messages, Microsoft::Extensions::AI::ChatOptions ^ options);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="messages">The sequence of chat messages included in the request.</param>
+        <param name="options">The chat options included in the request.</param>
+        <summary>Determines whether caching should be used with the specified request.</summary>
+        <returns>
+          <see langword="true" /> if caching should be used for the request, such that the <see cref="T:Microsoft.Extensions.AI.CachingChatClient" />
+            will try to satisfy the request from the cache, or if it can't, will try to cache the fetched response.
+            <see langword="false" /> if caching should not be used for the request, such that the request will
+            be passed through to the inner <see cref="T:Microsoft.Extensions.AI.IChatClient" /> without attempting to read from or write to the cache.
+            </returns>
+        <remarks>
+            The default implementation returns <see langword="true" /> as long as the <paramref name="options" />
+            does not have a <see cref="P:Microsoft.Extensions.AI.ChatOptions.ConversationId" /> set.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCacheKey">
+      <MemberSignature Language="C#" Value="protected abstract string GetCacheKey (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options, scoped ReadOnlySpan&lt;object?&gt; additionalValues);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance string GetCacheKey(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.ReadOnlySpan`1&lt;object&gt; additionalValues) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.GetCacheKey(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.ReadOnlySpan{System.Object})" />
+      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function GetCacheKey (messages As IEnumerable(Of ChatMessage), options As ChatOptions, additionalValues As ReadOnlySpan(Of Object)) As String" />
+      <MemberSignature Language="F#" Value="abstract member GetCacheKey : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * ReadOnlySpan&lt;obj&gt; -&gt; string" Usage="cachingChatClient.GetCacheKey (messages, options, additionalValues)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::String ^ GetCacheKey(System::Collections::Generic::IEnumerable&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ messages, Microsoft::Extensions::AI::ChatOptions ^ options, ReadOnlySpan&lt;System::Object ^&gt; additionalValues);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="values" Type="System.ReadOnlySpan&lt;System.Object&gt;">
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="additionalValues" Type="System.ReadOnlySpan&lt;System.Object&gt;">
           <Attributes>
             <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })]</AttributeName>
@@ -124,28 +180,30 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="values">The values to inform the key.</param>
+        <param name="messages">The messages to inform the key.</param>
+        <param name="options">The <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> to inform the key.</param>
+        <param name="additionalValues">Any other values to inform the key.</param>
         <summary>Computes a cache key for the specified values.</summary>
         <returns>The computed key.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetResponseAsync">
-      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt; GetResponseAsync (System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class Microsoft.Extensions.AI.ChatResponse&gt; GetResponseAsync(class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.GetResponseAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetResponseAsync (chatMessages As IList(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ChatResponse)" />
-      <MemberSignature Language="F#" Value="override this.GetResponseAsync : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;" Usage="cachingChatClient.GetResponseAsync (chatMessages, options, cancellationToken)" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt; GetResponseAsync (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class Microsoft.Extensions.AI.ChatResponse&gt; GetResponseAsync(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.GetResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetResponseAsync (messages As IEnumerable(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ChatResponse)" />
+      <MemberSignature Language="F#" Value="override this.GetResponseAsync : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;" Usage="cachingChatClient.GetResponseAsync (messages, options, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="chatMessages" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
         <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
           <Attributes>
             <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
@@ -157,7 +215,7 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="chatMessages">To be added.</param>
+        <param name="messages">To be added.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
@@ -167,27 +225,21 @@
       </Docs>
     </Member>
     <Member MemberName="GetStreamingResponseAsync">
-      <MemberSignature Language="C#" Value="public override System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt; GetStreamingResponseAsync (System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Collections.Generic.IAsyncEnumerable`1&lt;class Microsoft.Extensions.AI.ChatResponseUpdate&gt; GetStreamingResponseAsync(class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.GetStreamingResponseAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetStreamingResponseAsync (chatMessages As IList(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As IAsyncEnumerable(Of ChatResponseUpdate)" />
-      <MemberSignature Language="F#" Value="override this.GetStreamingResponseAsync : System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;" Usage="cachingChatClient.GetStreamingResponseAsync (chatMessages, options, cancellationToken)" />
+      <MemberSignature Language="C#" Value="public override System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt; GetStreamingResponseAsync (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options = default, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Collections.Generic.IAsyncEnumerable`1&lt;class Microsoft.Extensions.AI.ChatResponseUpdate&gt; GetStreamingResponseAsync(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.CachingChatClient.GetStreamingResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetStreamingResponseAsync (messages As IEnumerable(Of ChatMessage), Optional options As ChatOptions = Nothing, Optional cancellationToken As CancellationToken = Nothing) As IAsyncEnumerable(Of ChatResponseUpdate)" />
+      <MemberSignature Language="F#" Value="override this.GetStreamingResponseAsync : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * System.Threading.CancellationToken -&gt; System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;" Usage="cachingChatClient.GetStreamingResponseAsync (messages, options, cancellationToken)" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute>
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.CachingChatClient+&lt;GetStreamingResponseAsync&gt;d__8))]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.AsyncIteratorStateMachine(typeof(Microsoft.Extensions.AI.CachingChatClient+&lt;GetStreamingResponseAsync&gt;d__8))&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IAsyncEnumerable&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="chatMessages" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
         <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
           <Attributes>
             <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
@@ -196,17 +248,10 @@
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken">
-          <Attributes>
-            <Attribute>
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.EnumeratorCancellation]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.EnumeratorCancellation&gt;]</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
-        <param name="chatMessages">To be added.</param>
+        <param name="messages">To be added.</param>
         <param name="options">To be added.</param>
         <param name="cancellationToken">To be added.</param>
         <summary>To be added.</summary>
@@ -225,7 +270,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;</ReturnType>
@@ -245,10 +290,12 @@
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests.</param>
         <summary>
             Returns a previously cached <see cref="T:Microsoft.Extensions.AI.ChatResponse" />, if available.
-            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetResponseAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
+            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
             </summary>
         <returns>The previously cached data, if available, otherwise <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReadCacheStreamingAsync">
@@ -261,7 +308,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;&gt;</ReturnType>
@@ -281,10 +328,12 @@
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests.</param>
         <summary>
             Returns a previously cached list of <see cref="T:Microsoft.Extensions.AI.ChatResponseUpdate" /> values, if available.
-            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetStreamingResponseAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
+            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetStreamingResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
             </summary>
         <returns>The previously cached data, if available, otherwise <see langword="null" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCacheAsync">
@@ -297,7 +346,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -313,10 +362,12 @@
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests.</param>
         <summary>
             Stores a <see cref="T:Microsoft.Extensions.AI.ChatResponse" /> in the underlying cache.
-            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetResponseAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
+            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
             </summary>
         <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the completion of the operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="WriteCacheStreamingAsync">
@@ -329,7 +380,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
@@ -345,10 +396,12 @@
         <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to monitor for cancellation requests.</param>
         <summary>
             Stores a list of <see cref="T:Microsoft.Extensions.AI.ChatResponseUpdate" /> values in the underlying cache.
-            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetStreamingResponseAsync(System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
+            This is used when there is a call to <see cref="M:Microsoft.Extensions.AI.IChatClient.GetStreamingResponseAsync(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.Threading.CancellationToken)" />.
             </summary>
         <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing the completion of the operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="value" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
   </Members>

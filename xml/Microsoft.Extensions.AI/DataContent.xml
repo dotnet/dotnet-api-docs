@@ -10,6 +10,11 @@
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
     <AssemblyVersion>9.1.0.0</AssemblyVersion>
     <AssemblyVersion>9.3.0.0</AssemblyVersion>
+    <AssemblyVersion>9.4.0.0</AssemblyVersion>
+    <AssemblyVersion>9.5.0.0</AssemblyVersion>
+    <AssemblyVersion>9.6.0.0</AssemblyVersion>
+    <AssemblyVersion>9.7.0.0</AssemblyVersion>
+    <AssemblyVersion>9.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Extensions.AI.AIContent</BaseTypeName>
@@ -27,12 +32,11 @@
   </Attributes>
   <Docs>
     <summary>
-            Represents data content, such as an image or audio.
+            Represents binary content with an associated media type (also known as MIME type).
             </summary>
     <remarks>
       <para>
-            The represented content may either be the actual bytes stored in this instance, or it may
-            be a URI that references the location of the content.
+            The content represents in-memory data. For references to data at a remote URI, use <see cref="T:Microsoft.Extensions.AI.UriContent" /> instead.
             </para>
       <para>
         <see cref="P:Microsoft.Extensions.AI.DataContent.Uri" /> always returns a valid URI string, even if the instance was constructed from
@@ -42,23 +46,24 @@
   </Docs>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public DataContent (ReadOnlyMemory&lt;byte&gt; data, string? mediaType = default);" />
+      <MemberSignature Language="C#" Value="public DataContent (ReadOnlyMemory&lt;byte&gt; data, string mediaType);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; data, string mediaType) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DataContent.#ctor(System.ReadOnlyMemory{System.Byte},System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (data As ReadOnlyMemory(Of Byte), Optional mediaType As String = Nothing)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (data As ReadOnlyMemory(Of Byte), mediaType As String)" />
       <MemberSignature Language="F#" Value="new Microsoft.Extensions.AI.DataContent : ReadOnlyMemory&lt;byte&gt; * string -&gt; Microsoft.Extensions.AI.DataContent" Usage="new Microsoft.Extensions.AI.DataContent (data, mediaType)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DataContent(ReadOnlyMemory&lt;System::Byte&gt; data, System::String ^ mediaType);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="data" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" />
         <Parameter Name="mediaType" Type="System.String">
           <Attributes>
             <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
-              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
-              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
@@ -70,6 +75,10 @@
             Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.DataContent" /> class.
             </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="mediaType" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="mediaType" /> is empty or composed entirely of whitespace.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -81,7 +90,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute>
@@ -108,12 +117,16 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="uri">The URI of the content. This can be a data URI.</param>
+        <param name="uri">The data URI containing the content.</param>
         <param name="mediaType">The media type (also known as MIME type) represented by the content.</param>
         <summary>
             Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.DataContent" /> class.
             </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="uri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="mediaType" /> is an invalid media type.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -125,7 +138,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="uri" Type="System.Uri" />
@@ -139,25 +152,32 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="uri">The URI of the content. This can be a data URI.</param>
-        <param name="mediaType">The media type (also known as MIME type) represented by the content.</param>
+        <param name="uri">The data URI containing the content.</param>
+        <param name="mediaType">
+            The media type (also known as MIME type) represented by the content. If not provided,
+            it must be provided as part of the <paramref name="uri" />.
+            </param>
         <summary>
             Initializes a new instance of the <see cref="T:Microsoft.Extensions.AI.DataContent" /> class.
             </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="uri" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="mediaType" /> is an invalid media type.</exception>
       </Docs>
     </Member>
-    <Member MemberName="Data">
-      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;byte&gt;? Data { get; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt;&gt; Data" />
-      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.DataContent.Data" />
-      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Data As Nullable(Of ReadOnlyMemory(Of Byte))" />
-      <MemberSignature Language="F#" Value="member this.Data : Nullable&lt;ReadOnlyMemory&lt;byte&gt;&gt;" Usage="Microsoft.Extensions.AI.DataContent.Data" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;ReadOnlyMemory&lt;System::Byte&gt;&gt; Data { Nullable&lt;ReadOnlyMemory&lt;System::Byte&gt;&gt; get(); };" />
+    <Member MemberName="Base64Data">
+      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;char&gt; Base64Data { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.ReadOnlyMemory`1&lt;char&gt; Base64Data" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.DataContent.Base64Data" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Base64Data As ReadOnlyMemory(Of Char)" />
+      <MemberSignature Language="F#" Value="member this.Base64Data : ReadOnlyMemory&lt;char&gt;" Usage="Microsoft.Extensions.AI.DataContent.Base64Data" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property ReadOnlyMemory&lt;char&gt; Base64Data { ReadOnlyMemory&lt;char&gt; get(); };" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
@@ -170,7 +190,38 @@
         </Attribute>
       </Attributes>
       <ReturnValue>
-        <ReturnType>System.Nullable&lt;System.ReadOnlyMemory&lt;System.Byte&gt;&gt;</ReturnType>
+        <ReturnType>System.ReadOnlyMemory&lt;System.Char&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the data represented by this instance as a Base64 character sequence.</summary>
+        <value>The base64 representation of the data.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Data">
+      <MemberSignature Language="C#" Value="public ReadOnlyMemory&lt;byte&gt; Data { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; Data" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.DataContent.Data" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Data As ReadOnlyMemory(Of Byte)" />
+      <MemberSignature Language="F#" Value="member this.Data : ReadOnlyMemory&lt;byte&gt;" Usage="Microsoft.Extensions.AI.DataContent.Data" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property ReadOnlyMemory&lt;System::Byte&gt; Data { ReadOnlyMemory&lt;System::Byte&gt; get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.Text.Json.Serialization.JsonIgnore]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Text.Json.Serialization.JsonIgnore&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.ReadOnlyMemory&lt;System.Byte&gt;</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the data represented by this instance.</summary>
@@ -184,8 +235,41 @@
             </remarks>
       </Docs>
     </Member>
+    <Member MemberName="HasTopLevelMediaType">
+      <MemberSignature Language="C#" Value="public bool HasTopLevelMediaType (string topLevelType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool HasTopLevelMediaType(string topLevelType) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DataContent.HasTopLevelMediaType(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Function HasTopLevelMediaType (topLevelType As String) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.HasTopLevelMediaType : string -&gt; bool" Usage="dataContent.HasTopLevelMediaType topLevelType" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool HasTopLevelMediaType(System::String ^ topLevelType);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="topLevelType" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="topLevelType">The type to compare against <see cref="P:Microsoft.Extensions.AI.DataContent.MediaType" />.</param>
+        <summary>
+            Determines whether the <see cref="P:Microsoft.Extensions.AI.DataContent.MediaType" />'s top-level type matches the specified <paramref name="topLevelType" />.
+            </summary>
+        <returns>
+          <see langword="true" /> if the type portion of <see cref="P:Microsoft.Extensions.AI.DataContent.MediaType" /> matches the specified value; otherwise, false.</returns>
+        <remarks>
+            A media type is primarily composed of two parts, a "type" and a "subtype", separated by a slash ("/").
+            The type portion is also referred to as the "top-level type"; for example,
+            "image/png" has a top-level type of "image". <see cref="M:Microsoft.Extensions.AI.DataContent.HasTopLevelMediaType(System.String)" /> compares
+            the specified <paramref name="topLevelType" /> against the type portion of <see cref="P:Microsoft.Extensions.AI.DataContent.MediaType" />.
+            </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="MediaType">
-      <MemberSignature Language="C#" Value="public string? MediaType { get; }" />
+      <MemberSignature Language="C#" Value="public string MediaType { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance string MediaType" />
       <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.DataContent.MediaType" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property MediaType As String" />
@@ -194,16 +278,12 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
-        </Attribute>
         <Attribute>
-          <AttributeName Language="C#">[System.Text.Json.Serialization.JsonPropertyOrder(1)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Text.Json.Serialization.JsonPropertyOrder(1)&gt;]</AttributeName>
+          <AttributeName Language="C#">[System.Text.Json.Serialization.JsonIgnore]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Text.Json.Serialization.JsonIgnore&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -216,36 +296,37 @@
             If the media type was explicitly specified, this property returns that value.
             If the media type was not explicitly specified, but a data URI was supplied and that data URI contained a non-default
             media type, that media type is returned.
-            Otherwise, this property returns null.
             </remarks>
       </Docs>
     </Member>
-    <Member MemberName="MediaTypeStartsWith">
-      <MemberSignature Language="C#" Value="public bool MediaTypeStartsWith (string prefix);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool MediaTypeStartsWith(string prefix) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DataContent.MediaTypeStartsWith(System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Function MediaTypeStartsWith (prefix As String) As Boolean" />
-      <MemberSignature Language="F#" Value="member this.MediaTypeStartsWith : string -&gt; bool" Usage="dataContent.MediaTypeStartsWith prefix" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool MediaTypeStartsWith(System::String ^ prefix);" />
-      <MemberType>Method</MemberType>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string? Name { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.DataContent.Name" />
+      <MemberSignature Language="VB.NET" Value="Public Property Name As String" />
+      <MemberSignature Language="F#" Value="member this.Name : string with get, set" Usage="Microsoft.Extensions.AI.DataContent.Name" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::String ^ Name { System::String ^ get(); void set(System::String ^ value); };" />
+      <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
-      <Parameters>
-        <Parameter Name="prefix" Type="System.String" />
-      </Parameters>
       <Docs>
-        <param name="prefix">The media type prefix.</param>
-        <summary>
-            Determines whether the <see cref="P:Microsoft.Extensions.AI.DataContent.MediaType" /> has the specified prefix.
-            </summary>
-        <returns>
-          <see langword="true" /> if the <see cref="P:Microsoft.Extensions.AI.DataContent.MediaType" /> has the specified prefix, otherwise <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets an optional name associated with the data.</summary>
+        <value>To be added.</value>
+        <remarks>
+            A service might use this name as part of citations or to help infer the type of data
+            being represented based on a file extension.
+            </remarks>
       </Docs>
     </Member>
     <Member MemberName="Uri">
@@ -258,9 +339,13 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.3.0.0</AssemblyVersion>
+        <AssemblyVersion>9.9.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.ComponentModel.Description("A data URI representing the content.")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.Description("A data URI representing the content.")&gt;]</AttributeName>
+        </Attribute>
         <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Uri")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Uri")&gt;]</AttributeName>
@@ -270,12 +355,11 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the URI for this <see cref="T:Microsoft.Extensions.AI.DataContent" />.</summary>
+        <summary>Gets the data URI for this <see cref="T:Microsoft.Extensions.AI.DataContent" />.</summary>
         <value>To be added.</value>
         <remarks>
-            The returned URI is always a valid URI string, even if the instance was constructed from a <see cref="T:System.ReadOnlyMemory`1" />
-            or from a <see cref="T:System.Uri" />. In the case of a <see cref="T:System.ReadOnlyMemory`1" />, this property returns a data URI containing
-            that data.
+            The returned URI is always a valid data URI string, even if the instance was constructed from a <see cref="T:System.ReadOnlyMemory`1" />
+            or from a <see cref="T:System.Uri" />.
             </remarks>
       </Docs>
     </Member>

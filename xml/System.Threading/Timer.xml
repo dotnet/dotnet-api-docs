@@ -94,13 +94,10 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Use a <xref:System.Threading.TimerCallback> delegate to specify the method you want the <xref:System.Threading.Timer> to execute. The signature of the <xref:System.Threading.TimerCallback> delegate is:
+
+Use a <xref:System.Threading.TimerCallback> delegate to specify the method you want the <xref:System.Threading.Timer> to execute. The signature of the <xref:System.Threading.TimerCallback> delegate is:
 
 ```csharp
-void TimerCallback(Object state)
-```
-
-```cpp
 void TimerCallback(Object state)
 ```
 
@@ -108,7 +105,7 @@ void TimerCallback(Object state)
 Sub TimerCallback(state As Object)
 ```
 
- The timer delegate is specified when the timer is constructed, and cannot be changed. The method does not execute on the thread that created the timer; it executes on a <xref:System.Threading.ThreadPool> thread supplied by the system.
+The timer delegate is specified when the timer is constructed and cannot be changed. The method does not execute on the thread that created the timer; it executes on a <xref:System.Threading.ThreadPool> thread supplied by the system.
 
 > [!TIP]
 > .NET includes several timer classes, each of which offers different functionality:
@@ -122,34 +119,32 @@ Sub TimerCallback(state As Object)
  When you create a timer, you can specify an amount of time to wait before the first execution of the method (due time), and an amount of time to wait between subsequent executions (period). The <xref:System.Threading.Timer> class has the same resolution as the system clock. This means that if the period is less than the resolution of the system clock, the <xref:System.Threading.TimerCallback> delegate will execute at intervals defined by the resolution of the system clock, which is approximately 15 milliseconds on Windows 7 and Windows 8 systems. You can change the due time and period, or disable the timer, by using the <xref:System.Threading.Timer.Change%2A> method.
 
 > [!NOTE]
->  As long as you are using a <xref:System.Threading.Timer>, you must keep a reference to it. As with any managed object, a <xref:System.Threading.Timer> is subject to garbage collection when there are no references to it. The fact that a <xref:System.Threading.Timer> is still active does not prevent it from being collected.
+> As long as you are using a <xref:System.Threading.Timer>, you must keep a reference to it. As with any managed object, a <xref:System.Threading.Timer> is subject to garbage collection when there are no references to it. The fact that a <xref:System.Threading.Timer> is still active does not prevent it from being collected.
 
 > [!NOTE]
->  The system clock that is used is the same clock used by [GetTickCount](/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount), which is not affected by changes made with [timeBeginPeriod](/windows/win32/api/timeapi/nf-timeapi-timebeginperiod) and [timeEndPeriod](/windows/win32/api/timeapi/nf-timeapi-timeendperiod).
+> The system clock that is used is the same clock used by [GetTickCount](/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount), which is not affected by changes made with [timeBeginPeriod](/windows/win32/api/timeapi/nf-timeapi-timebeginperiod) and [timeEndPeriod](/windows/win32/api/timeapi/nf-timeapi-timeendperiod).
 
  When a timer is no longer needed, use the <xref:System.Threading.Timer.Dispose%2A> method to free the resources held by the timer. Note that callbacks can occur after the <xref:System.Threading.Timer.Dispose> method overload has been called, because the timer queues callbacks for execution by thread pool threads. You can use the <xref:System.Threading.Timer.Dispose%28System.Threading.WaitHandle%29> method overload to wait until all callbacks have completed.
 
  The callback method executed by the timer should be reentrant, because it is called on <xref:System.Threading.ThreadPool> threads. The callback can be executed simultaneously on two thread pool threads if the timer interval is less than the time required to execute the callback, or if all thread pool threads are in use and the callback is queued multiple times.
 
 > [!NOTE]
->  <xref:System.Threading.Timer?displayProperty=nameWithType> is a simple, lightweight timer that uses callback methods and is served by thread pool threads. It is not recommended for use with Windows Forms, because its callbacks do not occur on the user interface thread. <xref:System.Windows.Forms.Timer?displayProperty=nameWithType> is a better choice for use with Windows Forms. For server-based timer functionality, you might consider using <xref:System.Timers.Timer?displayProperty=nameWithType>, which raises events and has additional features.
-
-
+> <xref:System.Threading.Timer?displayProperty=nameWithType> is a simple, lightweight timer that uses callback methods and is served by thread pool threads. It is not recommended for use with Windows Forms, because its callbacks do not occur on the user interface thread. <xref:System.Windows.Forms.Timer?displayProperty=nameWithType> is a better choice for use with Windows Forms. For server-based timer functionality, you might consider using <xref:System.Timers.Timer?displayProperty=nameWithType>, which raises events and has additional features.
 
 ## Examples
- The following example defines a `StatusChecker` class  that includes a `CheckStatus` method whose signature is the same as the <xref:System.Threading.TimerCallback> delegate. The  `state` argument of the `CheckStatus` method is an <xref:System.Threading.AutoResetEvent> object that is used to synchronize the application thread and the thread pool thread that executes the callback delegate. The `StatusChecker` class also includes two state variables:
 
- `invokeCount`
+The following example defines a `StatusChecker` class that includes a `CheckStatus` method whose signature is the same as the <xref:System.Threading.TimerCallback> delegate. The  `state` argument of the `CheckStatus` method is an <xref:System.Threading.AutoResetEvent> object that is used to synchronize the application thread and the thread pool thread that executes the callback delegate. The `StatusChecker` class also includes two state variables:
+
+ `invokeCount`\
  Indicates the number of times the callback method has been invoked.
 
- `maxCount`
+ `maxCount`\
  Determines the maximum number of times the callback method should be invoked.
 
  The application thread creates the timer, which waits one second and then executes  the `CheckStatus` callback method every 250 milliseconds. The application thread then blocks until the <xref:System.Threading.AutoResetEvent> object is signaled. When the `CheckStatus` callback method executes `maxCount` times, it calls the `AutoResetEvent.Set` method to set the state of the <xref:System.Threading.AutoResetEvent> object to signaled. The first time this happens, the application thread calls the <xref:System.Threading.Timer.Change%28System.Int32%2CSystem.Int32%29> method so that the callback method now executes every half second. It once again blocks until the <xref:System.Threading.AutoResetEvent> object is signaled. When this happens, the timer is destroyed by calling its <xref:System.Threading.Timer.Dispose%2A> method, and the application terminates.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Timer/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Timer/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer/VB/source.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Timer/Overview/source.vb" id="Snippet1":::
 
  ]]></format>
     </remarks>
@@ -319,9 +314,8 @@ Sub TimerCallback(state As Object)
 ## Examples
  The following code example shows how to create a `TimerCallback` delegate and initialize a new instance of the `Timer` class.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Timer/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Timer/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer/VB/source.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Timer/Overview/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -495,9 +489,8 @@ Sub TimerCallback(state As Object)
 ## Examples
  The following code example shows how to create a `TimerCallback` delegate and initialize a new instance of the `Timer` class.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Timer2/CPP/source2.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Timer/.ctor/source2.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer2/VB/source2.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Timer/.ctor/source2.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -712,9 +705,8 @@ Sub TimerCallback(state As Object)
 ## Examples
  The following code example demonstrates how to start a `Timer` and, after a set number of invocations, change its period.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Timer/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Timer/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer/VB/source.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Timer/Overview/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -871,9 +863,8 @@ Sub TimerCallback(state As Object)
 ## Examples
  The following code example demonstrates how to start a `Timer` and, after a set number of invocations, change its period.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Timer2/CPP/source2.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Timer/.ctor/source2.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer2/VB/source2.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Timer/.ctor/source2.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -1028,9 +1019,8 @@ Sub TimerCallback(state As Object)
 ## Examples
  The following code example shows how to free the resources held by a `Timer`.
 
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Timer/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Timer/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer/VB/source.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Timer/Overview/source.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
