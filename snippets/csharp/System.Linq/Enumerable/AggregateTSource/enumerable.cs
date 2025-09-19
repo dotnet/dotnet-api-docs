@@ -243,7 +243,7 @@ namespace SequenceExamples
 
                 // Determine whether any pets over age 1 are also unvaccinated.
                 bool unvaccinated =
-                    pets.Any(p => p.Age > 1 && p.Vaccinated == false);
+                    pets.Any(p => p.Age > 1 && !p.Vaccinated);
 
                 Console.WriteLine(
                     "There {0} unvaccinated animals over age one.",
@@ -538,7 +538,7 @@ namespace SequenceExamples
 
                 try
                 {
-                    int numberUnvaccinated = pets.Count(p => p.Vaccinated == false);
+                    int numberUnvaccinated = pets.Count(p => !p.Vaccinated);
                     Console.WriteLine("There are {0} unvaccinated animals.", numberUnvaccinated);
                 }
                 catch (OverflowException)

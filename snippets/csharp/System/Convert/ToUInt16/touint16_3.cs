@@ -21,7 +21,7 @@ public struct HexString : IConvertible
       set {
          if (value.Trim().Length > 4)
             throw new ArgumentException("The string representation of a 160bit integer cannot have more than four characters.");
-         else if (! Regex.IsMatch(value, "([0-9,A-F]){1,4}", RegexOptions.IgnoreCase))
+         else if (!Regex.IsMatch(value, "([0-9,A-F]){1,4}", RegexOptions.IgnoreCase))
             throw new ArgumentException("The hexadecimal representation of a 16-bit integer contains invalid characters.");
          else
             hexString = value;

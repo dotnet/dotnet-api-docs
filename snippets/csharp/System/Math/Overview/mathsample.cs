@@ -75,7 +75,7 @@ namespace MathClassCS
 			double dxD = trpz.GetLeftBaseDegreeAngle();
 			Console.WriteLine("Trapezoid left base angle is: " + dxD.ToString() + " Degrees");
 			double dyD = trpz.GetRightBaseDegreeAngle();
-			Console.WriteLine("Trapezoid left base angle is: " + dyD.ToString() + " Degrees");
+			Console.WriteLine("Trapezoid right base angle is: " + dyD.ToString() + " Degrees");
 		}
 	}
 }

@@ -4,12 +4,6 @@ using System.Data.OleDb;
 
 class Class1
 {
-    static void Main()
-    {
-        string x = "Provider=SQLOLEDB;Data Source=(local);Integrated Security=SSPI;Initial Catalog=Northwind";
-        ReadData(x);
-    }
-
     // <Snippet1>
     public static void ReadData(string connectionString)
     {

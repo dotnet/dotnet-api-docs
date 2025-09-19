@@ -58,7 +58,7 @@ namespace MenuStyles
         //<SnippetMenuItemsCheckedEvent>
         private void OnChecked(object sender, RoutedEventArgs e)
         {
-            if (mi1.IsChecked == true)
+            if (mi1.IsChecked)
             {
                 textBlock1.Text = "Item is checked.";
             }
@@ -68,7 +68,7 @@ namespace MenuStyles
         //<SnippetMenuItemsUncheckedEvent>
         private void OnUnchecked(object sender, RoutedEventArgs e)
         {
-            if (mi1.IsChecked == false)
+            if (!mi1.IsChecked)
             {
                 textBlock1.Text = "Item is unchecked.";
             }

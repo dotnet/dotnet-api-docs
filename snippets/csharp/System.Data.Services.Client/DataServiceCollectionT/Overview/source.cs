@@ -1806,7 +1806,7 @@ namespace NorthwindClient
         //    // checking for relationships that return a null reference.
         //    //<snippetSelectProductWithNullsSpecific>
         //    var query = from p in context.Products
-        //                where (p.Discontinued == false && p.ProductID > 77)
+        //                where (!p.Discontinued && p.ProductID > 77)
         //                select new Product
         //                {
         //                    ProductID = p.ProductID,

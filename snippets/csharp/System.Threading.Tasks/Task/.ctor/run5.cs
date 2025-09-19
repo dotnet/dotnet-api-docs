@@ -23,14 +23,14 @@ public class Example
          int n2 = tasks[1].Result;
          int result = n1 + n2;
          bool validInput = false;
-         while (! validInput) {
+         while (!validInput) {
             ShowMessage(n1, n2);
             string userInput = Console.ReadLine();
             // Process user input.
             if (userInput.Trim().ToUpper() == "X") return;
             int answer;
             validInput = Int32.TryParse(userInput, out answer);
-            if (! validInput)
+            if (!validInput)
                Console.WriteLine("Invalid input. Try again, but enter only numbers. ");
             else if (answer == result)
                Console.WriteLine("Correct!");

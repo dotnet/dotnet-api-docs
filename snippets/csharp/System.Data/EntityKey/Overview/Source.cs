@@ -1499,7 +1499,7 @@ namespace ObjectServicesConceptsCS
                     Console.WriteLine("EntityCollection count after one entity has been removed: {0}",
                         entityCollection.Count);
 
-                    if (contains == false)
+                    if (!contains)
                         Console.WriteLine("The removed entity is not in in the collection any more.");
 
                     //Use IRelatedEnd to add the entity back.

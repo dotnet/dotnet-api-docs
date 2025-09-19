@@ -134,7 +134,7 @@ namespace RemotingSamples
       // Start listening to the port.
       public void StartListening(object data)
       {
-         if(myListening == false)
+         if (!myListening)
          {
             myTcpListener.Start();
             myListening = true;
@@ -147,7 +147,7 @@ namespace RemotingSamples
       // Stop listening to the port.
       public void StopListening(object data)
       {
-         if(myListening == true)
+         if (myListening)
          {
             myTcpListener.Stop();
             myListening = false;

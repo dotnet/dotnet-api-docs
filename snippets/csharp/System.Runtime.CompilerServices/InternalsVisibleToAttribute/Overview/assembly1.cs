@@ -27,7 +27,7 @@ public class FileUtilities
 {
    internal static string AppendDirectorySeparator(string dir)
    {
-      if (! dir.Trim().EndsWith(Path.DirectorySeparatorChar.ToString()))
+      if (!dir.Trim().EndsWith(Path.DirectorySeparatorChar.ToString()))
          return dir.Trim() + Path.DirectorySeparatorChar;
       else
          return dir;

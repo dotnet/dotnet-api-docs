@@ -40,7 +40,7 @@ namespace UEMsmqMessage
             // </Snippet7>
 
             // <Snippet8>
-            if (message.Authenticated == true)
+            if (message.Authenticated)
                 Console.WriteLine("Message was authenticated");
             // </Snippet8>
 

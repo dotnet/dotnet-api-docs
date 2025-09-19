@@ -4,13 +4,6 @@ using System.Data.SqlClient;
 
 class Program
 {
-    static void Main()
-    {
-        string connectionString =
-            "Persist Security Info=False;Integrated Security=SSPI;database=Northwind;server=(local)";
-        ExecuteSqlTransaction(connectionString);
-        Console.ReadLine();
-    }
     // <Snippet1>
     private static void ExecuteSqlTransaction(string connectionString)
     {

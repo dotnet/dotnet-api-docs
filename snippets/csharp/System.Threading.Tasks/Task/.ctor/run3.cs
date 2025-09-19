@@ -31,7 +31,7 @@ public class Example
       bool allExist = true;
       foreach (var title in titles) {
          string fn = title + ".txt";
-         if (! File.Exists(fn)) {
+         if (!File.Exists(fn)) {
             allExist = false;
             Console.WriteLine("Cannot find '{0}'", fn);
             break;

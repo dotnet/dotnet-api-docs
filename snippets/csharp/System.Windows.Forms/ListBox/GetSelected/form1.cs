@@ -138,7 +138,7 @@ namespace ListBoxGetSelectedEx
          for (int x = 0; x < listBox1.Items.Count; x++)
          {
             // Determine if the item is selected.
-            if(listBox1.GetSelected(x) == true)
+            if (listBox1.GetSelected(x))
                // Deselect all items that are selected.
                listBox1.SetSelected(x,false);      
             else

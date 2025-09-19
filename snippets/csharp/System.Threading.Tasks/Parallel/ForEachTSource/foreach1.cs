@@ -22,7 +22,7 @@ public class Example
                                                             nVowels++;
                                                          }
                                                       }
-                                                      if (! Char.IsWhiteSpace(uCh)) {
+                                                      if (!Char.IsWhiteSpace(uCh)) {
                                                          lock (obj) {
                                                             nNonWhiteSpace++;
                                                          }   

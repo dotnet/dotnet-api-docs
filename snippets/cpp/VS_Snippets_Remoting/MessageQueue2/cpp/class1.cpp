@@ -10,7 +10,7 @@ static void CreateQueue(String^ queuePath, bool transactional)
     if (!MessageQueue::Exists(queuePath))
     {
         MessageQueue^ queue = MessageQueue::Create(queuePath, transactional);
-        queue->Close();      
+        queue->Close();
     }
     else
     {
@@ -127,7 +127,7 @@ void PeekByCorrelationIdStringTimespan()
 
     // Designate a queue to receive the acknowledgement message for this
     // message.
-    msg->AdministrationQueue = 
+    msg->AdministrationQueue =
         gcnew MessageQueue(".\\exampleAdminQueue");
 
     // Set the message to generate an acknowledgement message upon its
@@ -144,7 +144,7 @@ void PeekByCorrelationIdStringTimespan()
     msg = queue->ReceiveById(id, TimeSpan::FromSeconds(10.0));
 
     // Connect to the admin queue.
-    MessageQueue^ adminQueue = 
+    MessageQueue^ adminQueue =
         gcnew MessageQueue(".\\exampleAdminQueue");
 
     // Set the admin queue's MessageReadPropertyFilter property to ensure
@@ -287,7 +287,7 @@ void ReceiveByCorrelationIdStringTimespan()
 
     // Designate a queue to receive the acknowledgement message for this
     // message.
-    msg->AdministrationQueue = 
+    msg->AdministrationQueue =
         gcnew MessageQueue(".\\exampleAdminQueue");
 
     // Set the message to generate an acknowledgement message upon its
@@ -304,7 +304,7 @@ void ReceiveByCorrelationIdStringTimespan()
     msg = queue->ReceiveById(id, TimeSpan::FromSeconds(10.0));
 
     // Connect to the admin queue.
-    MessageQueue^ adminQueue = 
+    MessageQueue^ adminQueue =
         gcnew MessageQueue(".\\exampleAdminQueue");
 
     // Set the admin queue's MessageReadPropertyFilter property to ensure
@@ -348,7 +348,7 @@ void ReceiveByCorrelationIdStringTransactionType()
     msg = queue->ReceiveById(id, TimeSpan::FromSeconds(10.0));
 
     // Connect to a transactional queue on the local computer.
-    MessageQueue^ transQueue = 
+    MessageQueue^ transQueue =
         gcnew MessageQueue(".\\exampleTransQueue");
 
     // Create a new message in response to the original message.
@@ -404,7 +404,7 @@ void ReceiveByCorrelationIdStringTimespanTransactionType()
     msg = queue->ReceiveById(id, TimeSpan::FromSeconds(10.0));
 
     // Connect to a transactional queue on the local computer.
-    MessageQueue^ transQueue = 
+    MessageQueue^ transQueue =
         gcnew MessageQueue(".\\exampleTransQueue");
 
     // Create a new message in response to the original message.
@@ -457,7 +457,7 @@ void ReceiveByCorrelationIdStringTimespanTransaction()
     msg = queue->ReceiveById(id, TimeSpan::FromSeconds(10.0));
 
     // Connect to a transactional queue on the local computer.
-    MessageQueue^ transQueue = 
+    MessageQueue^ transQueue =
         gcnew MessageQueue(".\\exampleTransQueue");
 
     // Create a new message in response to the original message.
@@ -510,7 +510,7 @@ void ReceiveByCorrelationIdStringTimespanTransaction()
     Console::WriteLine("Message.Label: {0}", responseMsg->Label);
     Console::WriteLine("Message.CorrelationId: {0}",
         responseMsg->CorrelationId);
-                       	
+
     // </snippet13>
 }
 
@@ -534,7 +534,7 @@ void ReceiveByCorrelationIdStringTransaction()
     msg = queue->ReceiveById(id, TimeSpan::FromSeconds(10.0));
 
     // Connect to a transactional queue on the local computer.
-    MessageQueue^ transQueue = 
+    MessageQueue^ transQueue =
         gcnew MessageQueue(".\\exampleTransQueue");
 
     // Create a new message in response to the original message.
@@ -582,7 +582,7 @@ void ReceiveByCorrelationIdStringTransaction()
         // Dispose of the transaction object.
         delete transaction;
         transQueue->Close();
-        queue->Close(); 
+        queue->Close();
     }
 
     // Display the response message's property values.
@@ -820,32 +820,6 @@ void GetAllMessages()
     queue->Close();
 
     // </snippet21>
-}
-
-void GetEnumerator()
-{
-    // <snippet22>
-
-    // Connect to a queue on the local computer.
-    MessageQueue^ queue = gcnew MessageQueue(".\\exampleQueue");
-
-    // Get an IEnumerator object.
-    System::Collections::IEnumerator^ enumerator = 
-        queue->GetMessageEnumerator2();
-
-    // Use the IEnumerator object to loop through the messages.
-    while(enumerator->MoveNext())
-    {
-        // Get a message from the enumerator.
-        Message^ msg = (Message^)enumerator->Current;
-
-        // Display the label of the message.
-        Console::WriteLine(msg->Label);
-    }
-
-    queue->Close();
-
-    // </snippet22>
 }
 
 void SetPermissionsStringAccessRights()

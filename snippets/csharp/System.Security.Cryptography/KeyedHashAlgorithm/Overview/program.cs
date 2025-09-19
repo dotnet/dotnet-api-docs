@@ -118,7 +118,7 @@ public class HMACMD5 : KeyedHashAlgorithm
     }
     protected override void HashCore(byte[] rgb, int ib, int cb)
     {
-        if (bHashing == false)
+        if (!bHashing)
         {
             hash1.TransformBlock(rgbInner, 0, 64, rgbInner, 0);
             bHashing = true;
@@ -128,7 +128,7 @@ public class HMACMD5 : KeyedHashAlgorithm
 
     protected override byte[] HashFinal()
     {
-        if (bHashing == false)
+        if (!bHashing)
         {
             hash1.TransformBlock(rgbInner, 0, 64, rgbInner, 0);
             bHashing = true;

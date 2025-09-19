@@ -480,7 +480,7 @@ private:
       GraphicsPath^ myPath = gcnew GraphicsPath;
       myPath->AddLine( 20, 20, 100, 20 );
       PointF lastPoint = myPath->GetLastPoint();
-      if ( lastPoint.IsEmpty == false )
+      if ( !lastPoint.IsEmpty )
       {
          String^ lastPointXString = lastPoint.X.ToString();
          String^ lastPointYString = lastPoint.Y.ToString();
