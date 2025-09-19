@@ -1,0 +1,1943 @@
+<Type Name="DeflateStream" FullName="System.IO.Compression.DeflateStream">
+  <TypeSignature Language="C#" Value="public class DeflateStream : System.IO.Stream" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit DeflateStream extends System.IO.Stream" />
+  <TypeSignature Language="DocId" Value="T:System.IO.Compression.DeflateStream" />
+  <TypeSignature Language="VB.NET" Value="Public Class DeflateStream&#xA;Inherits Stream" />
+  <TypeSignature Language="F#" Value="type DeflateStream = class&#xA;    inherit Stream" />
+  <TypeSignature Language="C++ CLI" Value="public ref class DeflateStream : System::IO::Stream" />
+  <AssemblyInfo>
+    <AssemblyName>System.IO.Compression</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="System" FromVersion="4.0.0.0" To="System.IO.Compression" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.IO.Compression" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.IO.Compression" FromVersion="4.0.0.0" To="System" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1" />
+    <TypeForwarding From="System.IO.Compression" FromVersion="4.2.0.0" To="System" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.IO.Stream</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Provides methods and properties for compressing and decompressing streams by using the Deflate algorithm.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+This class represents the Deflate algorithm, which is an industry-standard algorithm for lossless file compression and decompression. Starting with .NET Framework 4.5, the <xref:System.IO.Compression.DeflateStream> class uses the zlib library. As a result, it provides a better compression algorithm and, in most cases, a smaller compressed file than it provides in earlier versions of .NET Framework.
+
+This class does not inherently provide functionality for adding files to or extracting files from zip archives. To work with zip archives, use the <xref:System.IO.Compression.ZipArchive> and the <xref:System.IO.Compression.ZipArchiveEntry> classes.
+
+The <xref:System.IO.Compression.DeflateStream> class uses the same compression algorithm as the gzip data format used by the <xref:System.IO.Compression.GZipStream> class.
+
+The compression functionality in <xref:System.IO.Compression.DeflateStream> and <xref:System.IO.Compression.GZipStream> is exposed as a stream. Data is read on a byte-by-byte basis, so it is not possible to perform multiple passes to determine the best method for compressing entire files or large blocks of data. The <xref:System.IO.Compression.DeflateStream> and <xref:System.IO.Compression.GZipStream> classes are best used on uncompressed sources of data. If the source data is already compressed, using these classes may actually increase the size of the stream.
+
+The exact compressed byte sequence returned by <xref:System.IO.Compression.DeflateStream> can vary between .NET releases, platforms, and underlying compression engines. Changes in zlib versions, algorithm tweaks, and performance optimizations might produce different outputs for the same input data. But any data compressed by `DeflateStream` can always be decompressed to its original form without loss.
+
+## Examples
+
+The following example shows how to use the <xref:System.IO.Compression.DeflateStream> class to compress and decompress a file.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/Deflate/FileCompressionModeExample.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/Deflate/FileCompressionModeExample.vb" id="Snippet1":::
+
+      ]]></format>
+    </remarks>
+    <related type="Article" href="/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams">Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream</related>
+  </Docs>
+  <Members>
+    <MemberGroup MemberName=".ctor">
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.DeflateStream" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+Using the <xref:System.IO.Compression.DeflateStream> class to compress a file larger than 4 GB will cause an exception.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DeflateStream (System.IO.Stream stream, System.IO.Compression.CompressionLevel compressionLevel);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IO.Stream stream, valuetype System.IO.Compression.CompressionLevel compressionLevel) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.#ctor(System.IO.Stream,System.IO.Compression.CompressionLevel)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (stream As Stream, compressionLevel As CompressionLevel)" />
+      <MemberSignature Language="F#" Value="new System.IO.Compression.DeflateStream : System.IO.Stream * System.IO.Compression.CompressionLevel -&gt; System.IO.Compression.DeflateStream" Usage="new System.IO.Compression.DeflateStream (stream, compressionLevel)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DeflateStream(System::IO::Stream ^ stream, System::IO::Compression::CompressionLevel compressionLevel);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="compressionLevel" Type="System.IO.Compression.CompressionLevel" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      </Parameters>
+      <Docs>
+        <param name="stream">The stream to which compressed data is written.</param>
+        <param name="compressionLevel">One of the enumeration values that indicates whether to emphasize speed or compression efficiency when compressing data to the stream.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.DeflateStream" /> class by using the specified stream and compression level.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+You use this constructor when you want to specify whether compression efficiency or speed is more important for an instance of the <xref:System.IO.Compression.DeflateStream> class.
+
+[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/DeflateStream/.ctor_Stream_CompressionLevel.md)]
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The stream does not support write operations such as compression. (The <see cref="P:System.IO.Stream.CanWrite" /> property on the stream object is <see langword="false" />.)</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DeflateStream (System.IO.Stream stream, System.IO.Compression.CompressionMode mode);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IO.Stream stream, valuetype System.IO.Compression.CompressionMode mode) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.#ctor(System.IO.Stream,System.IO.Compression.CompressionMode)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (stream As Stream, mode As CompressionMode)" />
+      <MemberSignature Language="F#" Value="new System.IO.Compression.DeflateStream : System.IO.Stream * System.IO.Compression.CompressionMode -&gt; System.IO.Compression.DeflateStream" Usage="new System.IO.Compression.DeflateStream (stream, mode)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DeflateStream(System::IO::Stream ^ stream, System::IO::Compression::CompressionMode mode);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" />
+        <Parameter Name="mode" Type="System.IO.Compression.CompressionMode" />
+      </Parameters>
+      <Docs>
+        <param name="stream">The stream to which compressed data is written or from which data to decompress is read.</param>
+        <param name="mode">One of the enumeration values that indicates whether to compress data to the stream or decompress data from the stream.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.DeflateStream" /> class by using the specified stream and compression mode.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/DeflateStream/.ctor_Stream_CompressionMode.md)]
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="mode" /> is not a valid <see cref="T:System.IO.Compression.CompressionMode" /> value.
+
+ -or-
+
+ <see cref="T:System.IO.Compression.CompressionMode" /> is <see cref="F:System.IO.Compression.CompressionMode.Compress" /> and <see cref="P:System.IO.Stream.CanWrite" /> is <see langword="false" />.
+
+ -or-
+
+ <see cref="T:System.IO.Compression.CompressionMode" /> is <see cref="F:System.IO.Compression.CompressionMode.Decompress" /> and <see cref="P:System.IO.Stream.CanRead" /> is <see langword="false" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DeflateStream (System.IO.Stream stream, System.IO.Compression.CompressionLevel compressionLevel, bool leaveOpen);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IO.Stream stream, valuetype System.IO.Compression.CompressionLevel compressionLevel, bool leaveOpen) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.#ctor(System.IO.Stream,System.IO.Compression.CompressionLevel,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (stream As Stream, compressionLevel As CompressionLevel, leaveOpen As Boolean)" />
+      <MemberSignature Language="F#" Value="new System.IO.Compression.DeflateStream : System.IO.Stream * System.IO.Compression.CompressionLevel * bool -&gt; System.IO.Compression.DeflateStream" Usage="new System.IO.Compression.DeflateStream (stream, compressionLevel, leaveOpen)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DeflateStream(System::IO::Stream ^ stream, System::IO::Compression::CompressionLevel compressionLevel, bool leaveOpen);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="compressionLevel" Type="System.IO.Compression.CompressionLevel" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="leaveOpen" Type="System.Boolean" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      </Parameters>
+      <Docs>
+        <param name="stream">The stream to which compressed data is written.</param>
+        <param name="compressionLevel">One of the enumeration values that indicates whether to emphasize speed or compression efficiency when compressing data to the stream.</param>
+        <param name="leaveOpen">
+          <see langword="true" /> to leave the stream object open after disposing the <see cref="T:System.IO.Compression.DeflateStream" /> object; otherwise, <see langword="false" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.DeflateStream" /> class by using the specified stream and compression level, and optionally leaves the stream open.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+You use this constructor when you want to specify whether compression efficiency or speed is more important for an instance of the <xref:System.IO.Compression.DeflateStream> class, and whether to leave the stream object open after disposing the <xref:System.IO.Compression.DeflateStream> object.
+
+[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/DeflateStream/.ctor_Stream_CompressionLevel.md)]
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The stream does not support write operations such as compression. (The <see cref="P:System.IO.Stream.CanWrite" /> property on the stream object is <see langword="false" />.)</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DeflateStream (System.IO.Stream stream, System.IO.Compression.CompressionMode mode, bool leaveOpen);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IO.Stream stream, valuetype System.IO.Compression.CompressionMode mode, bool leaveOpen) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.#ctor(System.IO.Stream,System.IO.Compression.CompressionMode,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (stream As Stream, mode As CompressionMode, leaveOpen As Boolean)" />
+      <MemberSignature Language="F#" Value="new System.IO.Compression.DeflateStream : System.IO.Stream * System.IO.Compression.CompressionMode * bool -&gt; System.IO.Compression.DeflateStream" Usage="new System.IO.Compression.DeflateStream (stream, mode, leaveOpen)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; DeflateStream(System::IO::Stream ^ stream, System::IO::Compression::CompressionMode mode, bool leaveOpen);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" />
+        <Parameter Name="mode" Type="System.IO.Compression.CompressionMode" />
+        <Parameter Name="leaveOpen" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="stream">The stream to which compressed data is written or from which data to decompress is read.</param>
+        <param name="mode">One of the enumeration values that indicates whether to compress data to the stream or decompress data from the stream.</param>
+        <param name="leaveOpen">
+          <see langword="true" /> to leave the stream open after disposing the <see cref="T:System.IO.Compression.DeflateStream" /> object; otherwise, <see langword="false" />.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.DeflateStream" /> class by using the specified stream and compression mode, and optionally leaves the stream open.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/DeflateStream/.ctor_Stream_CompressionMode.md)]
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="mode" /> is not a valid <see cref="T:System.IO.Compression.CompressionMode" /> value.
+
+ -or-
+
+ <see cref="T:System.IO.Compression.CompressionMode" /> is <see cref="F:System.IO.Compression.CompressionMode.Compress" /> and <see cref="P:System.IO.Stream.CanWrite" /> is <see langword="false" />.
+
+ -or-
+
+ <see cref="T:System.IO.Compression.CompressionMode" /> is <see cref="F:System.IO.Compression.CompressionMode.Decompress" /> and <see cref="P:System.IO.Stream.CanRead" /> is <see langword="false" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DeflateStream (System.IO.Stream stream, System.IO.Compression.ZLibCompressionOptions compressionOptions, bool leaveOpen = false);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.IO.Stream stream, class System.IO.Compression.ZLibCompressionOptions compressionOptions, bool leaveOpen) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.#ctor(System.IO.Stream,System.IO.Compression.ZLibCompressionOptions,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (stream As Stream, compressionOptions As ZLibCompressionOptions, Optional leaveOpen As Boolean = false)" />
+      <MemberSignature Language="F#" Value="new System.IO.Compression.DeflateStream : System.IO.Stream * System.IO.Compression.ZLibCompressionOptions * bool -&gt; System.IO.Compression.DeflateStream" Usage="new System.IO.Compression.DeflateStream (stream, compressionOptions, leaveOpen)" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-9.0;net-10.0" />
+        <Parameter Name="compressionOptions" Type="System.IO.Compression.ZLibCompressionOptions" Index="1" FrameworkAlternate="net-9.0;net-10.0" />
+        <Parameter Name="leaveOpen" Type="System.Boolean" Index="2" FrameworkAlternate="net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="stream">The stream to which compressed data is written.</param>
+        <param name="compressionOptions">The options for fine tuning the compression stream.</param>
+        <param name="leaveOpen">
+          <see langword="true" /> to leave the stream object open after disposing the <see cref="T:System.IO.Compression.DeflateStream" /> object; otherwise, <see langword="false" /></param>
+        <summary>Initializes a new instance of the <see cref="T:System.IO.Compression.DeflateStream" /> class by using the specified stream, compression options, and optionally leaves the stream open.</summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="stream" /> or <paramref name="compressionOptions" /> is <see langword="null" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="BaseStream">
+      <MemberSignature Language="C#" Value="public System.IO.Stream BaseStream { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.IO.Stream BaseStream" />
+      <MemberSignature Language="DocId" Value="P:System.IO.Compression.DeflateStream.BaseStream" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property BaseStream As Stream" />
+      <MemberSignature Language="F#" Value="member this.BaseStream : System.IO.Stream" Usage="System.IO.Compression.DeflateStream.BaseStream" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::IO::Stream ^ BaseStream { System::IO::Stream ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="netframework-4.0">
+          <AttributeName Language="C#">[get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
+          <AttributeName Language="F#">[&lt;get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.IO.Stream</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a reference to the underlying stream.</summary>
+        <value>A stream object that represents the underlying stream.</value>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">The underlying stream is closed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="BeginRead">
+      <MemberSignature Language="C#" Value="public override IAsyncResult BeginRead (byte[] buffer, int offset, int count, AsyncCallback? asyncCallback, object? asyncState);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.IAsyncResult BeginRead(unsigned int8[] buffer, int32 offset, int32 count, class System.AsyncCallback asyncCallback, object asyncState) cil managed" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function BeginRead (buffer As Byte(), offset As Integer, count As Integer, asyncCallback As AsyncCallback, asyncState As Object) As IAsyncResult" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
+      <MemberSignature Language="F#" Value="override this.BeginRead : byte[] * int * int * AsyncCallback * obj -&gt; IAsyncResult" Usage="deflateStream.BeginRead (buffer, offset, count, asyncCallback, asyncState)" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override IAsyncResult ^ BeginRead(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count, AsyncCallback ^ asyncCallback, System::Object ^ asyncState);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override IAsyncResult BeginRead (byte[] buffer, int offset, int count, AsyncCallback asyncCallback, object asyncState);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override IAsyncResult BeginRead (byte[] array, int offset, int count, AsyncCallback asyncCallback, object asyncState);" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.IAsyncResult BeginRead(unsigned int8[] array, int32 offset, int32 count, class System.AsyncCallback asyncCallback, object asyncState) cil managed" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function BeginRead (array As Byte(), offset As Integer, count As Integer, asyncCallback As AsyncCallback, asyncState As Object) As IAsyncResult" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
+      <MemberSignature Language="F#" Value="override this.BeginRead : byte[] * int * int * AsyncCallback * obj -&gt; IAsyncResult" Usage="deflateStream.BeginRead (array, offset, count, asyncCallback, asyncState)" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override IAsyncResult ^ BeginRead(cli::array &lt;System::Byte&gt; ^ array, int offset, int count, AsyncCallback ^ asyncCallback, System::Object ^ asyncState);" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IAsyncResult</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Byte[]" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="array" Type="System.Byte[]" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netframework-4.8.1" />
+        <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="count" Type="System.Int32" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="asyncCallback" Type="System.AsyncCallback" Index="3" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="asyncState" Type="System.Object" Index="4" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="buffer">The byte array to read the data into.</param>
+        <param name="array">The byte array to read the data into.</param>
+        <param name="offset">The byte offset at which to begin reading data from the stream.</param>
+        <param name="count">The maximum number of bytes to read.</param>
+        <param name="asyncCallback">An optional asynchronous callback, to be called when the read operation is complete.</param>
+        <param name="asyncState">A user-provided object that distinguishes this particular asynchronous read request from other requests.</param>
+        <summary>Begins an asynchronous read operation. (Consider using the <see cref="M:System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)" /> method instead.)</summary>
+        <returns>An object that represents the asynchronous read operation, which could still be pending.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
+
+Starting with .NET Framework 4.5, you can perform asynchronous read operations by using the <xref:System.IO.Stream.ReadAsync%2A> method. The <xref:System.IO.Compression.DeflateStream.BeginRead%2A> method is still available in current versions to support legacy code; however, you can implement asynchronous I/O operations more easily by using the new async methods. For more information, see [Asynchronous File I/O](/dotnet/standard/io/asynchronous-file-i-o).
+
+Pass the <xref:System.IAsyncResult> return value to the <xref:System.IO.Compression.DeflateStream.EndRead%2A> method of the stream to determine how many bytes were read and to release operating system resources used for reading. You can do this either by using the same code that called <xref:System.IO.Compression.DeflateStream.BeginRead%2A> or in a callback passed to <xref:System.IO.Compression.DeflateStream.BeginRead%2A>.
+
+The current position in the stream is updated when the asynchronous read or write operation is issued, not when the I/O operation completes.
+
+Multiple simultaneous asynchronous requests render the request completion order uncertain.
+
+Use the <xref:System.IO.Compression.DeflateStream.CanRead%2A> property to determine whether the current <xref:System.IO.Compression.DeflateStream> object supports reading.
+
+If a stream is closed or you pass an invalid argument, exceptions are thrown immediately from <xref:System.IO.Compression.DeflateStream.BeginRead%2A>. Errors that occur during an asynchronous read request, such as a disk failure during the I/O request, occur on the thread pool thread and throw exceptions when calling <xref:System.IO.Compression.DeflateStream.EndRead%2A>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">The method tried to read asynchronously past the end of the stream, or a disk error occurred.</exception>
+        <exception cref="T:System.ArgumentException">One or more of the arguments is invalid.</exception>
+        <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+        <exception cref="T:System.NotSupportedException">The current <see cref="T:System.IO.Compression.DeflateStream" /> implementation does not support the read operation.</exception>
+        <exception cref="T:System.InvalidOperationException">This call cannot be completed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="BeginWrite">
+      <MemberSignature Language="C#" Value="public override IAsyncResult BeginWrite (byte[] buffer, int offset, int count, AsyncCallback? asyncCallback, object? asyncState);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.IAsyncResult BeginWrite(unsigned int8[] buffer, int32 offset, int32 count, class System.AsyncCallback asyncCallback, object asyncState) cil managed" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function BeginWrite (buffer As Byte(), offset As Integer, count As Integer, asyncCallback As AsyncCallback, asyncState As Object) As IAsyncResult" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="F#" Value="override this.BeginWrite : byte[] * int * int * AsyncCallback * obj -&gt; IAsyncResult" Usage="deflateStream.BeginWrite (buffer, offset, count, asyncCallback, asyncState)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override IAsyncResult ^ BeginWrite(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count, AsyncCallback ^ asyncCallback, System::Object ^ asyncState);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public override IAsyncResult BeginWrite (byte[] array, int offset, int count, AsyncCallback? asyncCallback, object? asyncState);" FrameworkAlternate="net-5.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.IAsyncResult BeginWrite(unsigned int8[] array, int32 offset, int32 count, class System.AsyncCallback asyncCallback, object asyncState) cil managed" FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function BeginWrite (array As Byte(), offset As Integer, count As Integer, asyncCallback As AsyncCallback, asyncState As Object) As IAsyncResult" FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="F#" Value="override this.BeginWrite : byte[] * int * int * AsyncCallback * obj -&gt; IAsyncResult" Usage="deflateStream.BeginWrite (array, offset, count, asyncCallback, asyncState)" FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override IAsyncResult ^ BeginWrite(cli::array &lt;System::Byte&gt; ^ array, int offset, int count, AsyncCallback ^ asyncCallback, System::Object ^ asyncState);" FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override IAsyncResult BeginWrite (byte[] array, int offset, int count, AsyncCallback asyncCallback, object asyncState);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IAsyncResult</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Byte[]" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;netframework-4.8.1" />
+        <Parameter Name="buffer" Type="System.Byte[]" Index="0" FrameworkAlternate="net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="count" Type="System.Int32" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="asyncCallback" Type="System.AsyncCallback" Index="3" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="asyncState" Type="System.Object" Index="4" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="array">The buffer to write data from.</param>
+        <param name="buffer">The buffer to write data from.</param>
+        <param name="offset">The byte offset to begin writing from.</param>
+        <param name="count">The maximum number of bytes to write.</param>
+        <param name="asyncCallback">An optional asynchronous callback, to be called when the write operation is complete.</param>
+        <param name="asyncState">A user-provided object that distinguishes this particular asynchronous write request from other requests.</param>
+        <summary>Begins an asynchronous write operation. (Consider using the <see cref="M:System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32)" /> method instead.)</summary>
+        <returns>An object that represents the asynchronous write operation, which could still be pending.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+Starting with .NET Framework 4.5, you can perform asynchronous write operations by using the <xref:System.IO.Stream.WriteAsync%2A> method. The <xref:System.IO.Compression.DeflateStream.BeginWrite%2A> method is still available in current versions to support legacy code; however, you can implement asynchronous I/O operations more easily by using the new async methods. For more information, see [Asynchronous File I/O](/dotnet/standard/io/asynchronous-file-i-o).
+
+Pass the <xref:System.IAsyncResult> object returned by the current method to <xref:System.IO.Compression.DeflateStream.EndWrite%2A> to ensure that the write completes and frees resources appropriately. You can do this either by using the same code that called <xref:System.IO.Compression.DeflateStream.BeginWrite%2A> or in a callback passed to <xref:System.IO.Compression.DeflateStream.BeginWrite%2A>. If an error occurs during an asynchronous write operation, an exception will not be thrown until <xref:System.IO.Compression.DeflateStream.EndWrite%2A> is called with the <xref:System.IAsyncResult> returned by this method.
+
+If a stream is writable, writing at the end of the stream expands the stream.
+
+The current position in the stream is updated when you issue the asynchronous read or write operation, not when the I/O operation completes. Multiple simultaneous asynchronous requests render the request completion order uncertain.
+
+Use the <xref:System.IO.Compression.DeflateStream.CanWrite%2A> property to determine whether the current <xref:System.IO.Compression.DeflateStream> object supports writing.
+
+If a stream is closed or you pass an invalid argument, exceptions are thrown immediately from <xref:System.IO.Compression.DeflateStream.BeginWrite%2A>. Errors that occur during an asynchronous write request, such as a disk failure during the I/O request, occur on the thread pool thread and throw exceptions when calling <xref:System.IO.Compression.DeflateStream.EndWrite%2A>.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.IO.IOException">The method tried to write asynchronously past the end of the stream, or a disk error occurred.</exception>
+        <exception cref="T:System.ArgumentException">One or more of the arguments is invalid.</exception>
+        <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+        <exception cref="T:System.NotSupportedException">The current <see cref="T:System.IO.Compression.DeflateStream" /> implementation does not support the write operation.</exception>
+        <exception cref="T:System.InvalidOperationException">The write operation cannot be performed because the stream is closed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CanRead">
+      <MemberSignature Language="C#" Value="public override bool CanRead { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool CanRead" />
+      <MemberSignature Language="DocId" Value="P:System.IO.Compression.DeflateStream.CanRead" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property CanRead As Boolean" />
+      <MemberSignature Language="F#" Value="member this.CanRead : bool" Usage="System.IO.Compression.DeflateStream.CanRead" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool CanRead { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether the stream supports reading while decompressing a file.</summary>
+        <value>
+          <see langword="true" /> if the <see cref="T:System.IO.Compression.CompressionMode" /> value is <see langword="Decompress" />, and the underlying stream is opened and supports reading; otherwise, <see langword="false" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CanSeek">
+      <MemberSignature Language="C#" Value="public override bool CanSeek { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool CanSeek" />
+      <MemberSignature Language="DocId" Value="P:System.IO.Compression.DeflateStream.CanSeek" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property CanSeek As Boolean" />
+      <MemberSignature Language="F#" Value="member this.CanSeek : bool" Usage="System.IO.Compression.DeflateStream.CanSeek" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool CanSeek { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether the stream supports seeking.</summary>
+        <value>
+          <see langword="false" /> in all cases.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CanWrite">
+      <MemberSignature Language="C#" Value="public override bool CanWrite { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool CanWrite" />
+      <MemberSignature Language="DocId" Value="P:System.IO.Compression.DeflateStream.CanWrite" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property CanWrite As Boolean" />
+      <MemberSignature Language="F#" Value="member this.CanWrite : bool" Usage="System.IO.Compression.DeflateStream.CanWrite" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool CanWrite { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether the stream supports writing.</summary>
+        <value>
+          <see langword="true" /> if the <see cref="T:System.IO.Compression.CompressionMode" /> value is <see langword="Compress" />, and the underlying stream supports writing and is not closed; otherwise, <see langword="false" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CopyTo">
+      <MemberSignature Language="C#" Value="public override void CopyTo (System.IO.Stream destination, int bufferSize);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void CopyTo(class System.IO.Stream destination, int32 bufferSize) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.CopyTo(System.IO.Stream,System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub CopyTo (destination As Stream, bufferSize As Integer)" />
+      <MemberSignature Language="F#" Value="override this.CopyTo : System.IO.Stream * int -&gt; unit" Usage="deflateStream.CopyTo (destination, bufferSize)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void CopyTo(System::IO::Stream ^ destination, int bufferSize);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="destination" Type="System.IO.Stream" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="bufferSize" Type="System.Int32" Index="1" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="destination">The stream to which the contents of the current Deflate stream will be copied.</param>
+        <param name="bufferSize">The size of the buffer. This value must be greater than zero. The default size is 81920.</param>
+        <summary>Reads the bytes from the current Deflate stream and writes them to another stream, using a specified buffer size.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Copying begins at the current position in the current Deflate stream and does not reset the position of the destination stream after the copy operation is complete.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CopyToAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task CopyToAsync (System.IO.Stream destination, int bufferSize, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task CopyToAsync(class System.IO.Stream destination, int32 bufferSize, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.CopyToAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function CopyToAsync (destination As Stream, bufferSize As Integer, cancellationToken As CancellationToken) As Task" />
+      <MemberSignature Language="F#" Value="override this.CopyToAsync : System.IO.Stream * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="deflateStream.CopyToAsync (destination, bufferSize, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task ^ CopyToAsync(System::IO::Stream ^ destination, int bufferSize, System::Threading::CancellationToken cancellationToken);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="destination" Type="System.IO.Stream" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="bufferSize" Type="System.Int32" Index="1" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="destination">The stream to which the contents of the current Deflate stream will be copied.</param>
+        <param name="bufferSize">The size, in bytes, of the buffer. This value must be greater than zero. The default size is 81920.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously reads the bytes from the current Deflate stream and writes them to another stream, using a specified buffer size.</summary>
+        <returns>A task that represents the asynchronous copy operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The `CopyToAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status?displayProperty=nameWithType> property.
+
+Copying begins at the current position in the current Deflate stream.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.Compression.DeflateStream.CopyTo(System.IO.Stream,System.Int32)>.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Dispose(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Sub Dispose (disposing As Boolean)" />
+      <MemberSignature Language="F#" Value="override this.Dispose : bool -&gt; unit" Usage="deflateStream.Dispose disposing" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override void Dispose(bool disposing);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">
+          <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+        <summary>Releases the unmanaged resources used by the <see cref="T:System.IO.Compression.DeflateStream" /> and optionally releases the managed resources.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method is called by the public <xref:System.ComponentModel.Component.Dispose> method and the <xref:System.Object.Finalize> method, if it has been overridden. <xref:System.ComponentModel.Component.Dispose> invokes the protected <xref:System.IO.Compression.DeflateStream.Dispose%2A> method with the `disposing` parameter set to `true`. `Finalize` invokes <xref:System.IO.Compression.DeflateStream.Dispose%2A> with `disposing` set to `false`.
+
+When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.IO.Compression.DeflateStream> references. This method invokes the <xref:System.ComponentModel.Component.Dispose> method of each referenced object.
+
+ ]]></format>
+        </remarks>
+        <block subset="none" type="overrides">
+          <para>
+            <see cref="M:System.ComponentModel.Component.Dispose" /> can be called multiple times by other objects. When overriding <see cref="M:System.IO.Compression.DeflateStream.Dispose(System.Boolean)" /> be careful not to reference objects that have been previously disposed of in an earlier call to <see cref="M:System.ComponentModel.Component.Dispose" />. For more information about how to implement <see cref="M:System.IO.Compression.DeflateStream.Dispose(System.Boolean)" />, see <see href="/dotnet/standard/garbage-collection/implementing-dispose">Implementing a Dispose Method</see>.
+
+ For more information about <see cref="M:System.ComponentModel.Component.Dispose" /> and <see cref="M:System.Object.Finalize" />, see <see href="/dotnet/standard/garbage-collection/unmanaged">Cleaning Up Unmanaged Resources</see>.</para>
+        </block>
+      </Docs>
+    </Member>
+    <Member MemberName="DisposeAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.ValueTask DisposeAsync ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance valuetype System.Threading.Tasks.ValueTask DisposeAsync() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.DisposeAsync" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function DisposeAsync () As ValueTask" />
+      <MemberSignature Language="F#" Value="override this.DisposeAsync : unit -&gt; System.Threading.Tasks.ValueTask" Usage="deflateStream.DisposeAsync " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::ValueTask DisposeAsync();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Asynchronously releases the unmanaged resources used by the <see cref="T:System.IO.Compression.DeflateStream" />.</summary>
+        <returns>A task that represents the asynchronous dispose operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The `DisposeAsync` method enables you to perform a resource-intensive dispose operation without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+This method disposes the Deflate stream by writing any changes to the backing store and closing the stream to release resources.
+
+Calling `DisposeAsync` allows the resources used by the <xref:System.IO.Compression.DeflateStream> to be reallocated for other purposes. For more information, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged).
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="EndRead">
+      <MemberSignature Language="C#" Value="public override int EndRead (IAsyncResult asyncResult);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 EndRead(class System.IAsyncResult asyncResult) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.EndRead(System.IAsyncResult)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function EndRead (asyncResult As IAsyncResult) As Integer" />
+      <MemberSignature Language="F#" Value="override this.EndRead : IAsyncResult -&gt; int" Usage="deflateStream.EndRead asyncResult" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int EndRead(IAsyncResult ^ asyncResult);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="asyncResult" Type="System.IAsyncResult" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="asyncResult">The reference to the pending asynchronous request to finish.</param>
+        <summary>Waits for the pending asynchronous read to complete. (Consider using the <see cref="M:System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)" /> method instead.)</summary>
+        <returns>The number of bytes read from the stream, between 0 (zero) and the number of bytes you requested. <see cref="T:System.IO.Compression.DeflateStream" /> returns 0 only at the end of the stream; otherwise, it blocks until at least one byte is available.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Starting with .NET Framework 4.5, you can perform asynchronous read operations by using the <xref:System.IO.Stream.ReadAsync%2A> method. The <xref:System.IO.Compression.DeflateStream.EndRead%2A> method is still available in current versions to support legacy code; however, you can implement asynchronous I/O operations more easily by using the new async methods. For more information, see [Asynchronous File I/O](/dotnet/standard/io/asynchronous-file-i-o).
+
+Call this method to determine how many bytes were read from the stream. This method can be called once to return the amount of bytes read between calls to <xref:System.IO.Compression.DeflateStream.BeginRead%2A> and <xref:System.IO.Compression.DeflateStream.EndRead%2A>.
+
+This method blocks until the I/O operation has completed.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="asyncResult" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="asyncResult" /> did not originate from a <see cref="M:System.IO.Compression.DeflateStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" /> method on the current stream.</exception>
+        <exception cref="T:System.SystemException">An exception was thrown during a call to <see cref="M:System.Threading.WaitHandle.WaitOne" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The end call is invalid because asynchronous read operations for this stream are not yet complete.
+
+-or-
+
+The stream is <see langword="null" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="EndWrite">
+      <MemberSignature Language="C#" Value="public override void EndWrite (IAsyncResult asyncResult);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void EndWrite(class System.IAsyncResult asyncResult) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.EndWrite(System.IAsyncResult)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub EndWrite (asyncResult As IAsyncResult)" />
+      <MemberSignature Language="F#" Value="override this.EndWrite : IAsyncResult -&gt; unit" Usage="deflateStream.EndWrite asyncResult" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void EndWrite(IAsyncResult ^ asyncResult);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="asyncResult" Type="System.IAsyncResult" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netcore-2.1;netframework-4.7.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netcore-2.2;netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="asyncResult">A reference to the outstanding asynchronous I/O request.</param>
+        <summary>Ends an asynchronous write operation. (Consider using the <see cref="M:System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32)" /> method instead.)</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Starting with .NET Framework 4.5, you can perform asynchronous write operations by using the <xref:System.IO.Stream.WriteAsync%2A> method. The <xref:System.IO.Compression.DeflateStream.EndWrite%2A> method is still available in current versions to support legacy code; however, you can implement asynchronous I/O operations more easily by using the new async methods. For more information, see [Asynchronous File I/O](/dotnet/standard/io/asynchronous-file-i-o).
+
+<xref:System.IO.Compression.DeflateStream.EndWrite%2A> must be called only once for every call to the <xref:System.IO.Compression.DeflateStream.BeginWrite%2A> method.
+
+This method blocks until the I/O operation has completed. Errors that occur during an asynchronous write request, such as a disk failure during the I/O request, occur on the thread pool thread and become visible upon a call to <xref:System.IO.Compression.DeflateStream.EndWrite%2A>. Exceptions thrown by the thread pool thread will not be visible when calling <xref:System.IO.Compression.DeflateStream.EndWrite%2A>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="asyncResult" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="asyncResult" /> did not originate from a <see cref="M:System.IO.Compression.DeflateStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)" /> method on the current stream.</exception>
+        <exception cref="T:System.Exception">An exception was thrown during a call to <see cref="M:System.Threading.WaitHandle.WaitOne" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The stream is <see langword="null" />.
+
+-or-
+
+The end write call is invalid.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Flush">
+      <MemberSignature Language="C#" Value="public override void Flush ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Flush() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Flush" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Flush ()" />
+      <MemberSignature Language="F#" Value="override this.Flush : unit -&gt; unit" Usage="deflateStream.Flush " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Flush();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>The current implementation of this method has no functionality.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+Flushes the internal buffer if the compression mode is set to <xref:System.IO.Compression.CompressionMode.Compress>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ObjectDisposedException">The stream is closed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="FlushAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task FlushAsync (System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task FlushAsync(valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.FlushAsync(System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function FlushAsync (cancellationToken As CancellationToken) As Task" />
+      <MemberSignature Language="F#" Value="override this.FlushAsync : System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="deflateStream.FlushAsync cancellationToken" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task ^ FlushAsync(System::Threading::CancellationToken cancellationToken);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously clears all buffers for this Deflate stream, causes any buffered data to be written to the underlying device, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous flush operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status?displayProperty=nameWithType> property.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.Compression.DeflateStream.Flush>.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Length">
+      <MemberSignature Language="C#" Value="public override long Length { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int64 Length" />
+      <MemberSignature Language="DocId" Value="P:System.IO.Compression.DeflateStream.Length" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property Length As Long" />
+      <MemberSignature Language="F#" Value="member this.Length : int64" Usage="System.IO.Compression.DeflateStream.Length" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property long Length { long get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property is not supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
+        <value>A long value.</value>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.NotSupportedException">This property is not supported on this stream.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Position">
+      <MemberSignature Language="C#" Value="public override long Position { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int64 Position" />
+      <MemberSignature Language="DocId" Value="P:System.IO.Compression.DeflateStream.Position" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Property Position As Long" />
+      <MemberSignature Language="F#" Value="member this.Position : int64 with get, set" Usage="System.IO.Compression.DeflateStream.Position" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property long Position { long get(); void set(long value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property is not supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
+        <value>A long value.</value>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.NotSupportedException">This property is not supported on this stream.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="public override int Read (Span&lt;byte&gt; buffer);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read(valuetype System.Span`1&lt;unsigned int8&gt; buffer) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Read(System.Span{System.Byte})" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Read (buffer As Span(Of Byte)) As Integer" />
+      <MemberSignature Language="F#" Value="override this.Read : Span&lt;byte&gt; -&gt; int" Usage="deflateStream.Read buffer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int Read(Span&lt;System::Byte&gt; buffer);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Span&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">A region of memory. When this method returns, the contents of this region are replaced by the bytes read from the current source.</param>
+        <summary>Reads a sequence of bytes from the current Deflate stream into a byte span and advances the position within the Deflate stream by the number of bytes read.</summary>
+        <returns>The total number of bytes read into the buffer. This can be less than the number of bytes allocated in the buffer if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
+
+Use the <xref:System.IO.Compression.DeflateStream.CanRead%2A> property to determine whether the current instance supports reading. Use the <xref:System.IO.Compression.DeflateStream.ReadAsync%2A> method to read asynchronously from the current stream.
+
+This method read a maximum of `buffer.Length` bytes from the current stream and store them in `buffer`. The current position within the Deflate stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the Deflate stream remains unchanged. This method will block until at least one byte of data can be read, in the event that no data is available. `Read` returns 0 only when there is no more data in the stream and no more is expected (such as a closed socket or end of file). The method is free to return fewer bytes than requested even if the end of the stream has not been reached.
+
+Use <xref:System.IO.BinaryReader> for reading primitive data types.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="public override int Read (byte[] array, int offset, int count);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read(unsigned int8[] array, int32 offset, int32 count) cil managed" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Read(System.Byte[],System.Int32,System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Read (array As Byte(), offset As Integer, count As Integer) As Integer" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="F#" Value="override this.Read : byte[] * int * int -&gt; int" Usage="deflateStream.Read (array, offset, count)" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int Read(cli::array &lt;System::Byte&gt; ^ array, int offset, int count);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override int Read (byte[] buffer, int offset, int count);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 Read(unsigned int8[] buffer, int32 offset, int32 count) cil managed" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Read (buffer As Byte(), offset As Integer, count As Integer) As Integer" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="F#" Value="override this.Read : byte[] * int * int -&gt; int" Usage="deflateStream.Read (buffer, offset, count)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int Read(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Byte[]" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="buffer" Type="System.Byte[]" Index="0" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+        <Parameter Name="offset" Type="System.Int32" Index="1" />
+        <Parameter Name="count" Type="System.Int32" Index="2" />
+      </Parameters>
+      <Docs>
+        <param name="array">The array to store decompressed bytes.</param>
+        <param name="buffer">The array to store decompressed bytes.</param>
+        <param name="offset">The byte offset at which the read bytes will be placed.</param>
+        <param name="count">The maximum number of decompressed bytes to read.</param>
+        <summary>Reads a number of decompressed bytes into the specified byte array.</summary>
+        <returns>The number of bytes that were read into the byte array.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
+
+The following example shows how to compress and decompress bytes by using the <xref:System.IO.Compression.DeflateStream.Read%2A> and <xref:System.IO.Compression.DeflateStream.Write%2A> methods.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/Deflate/MemoryWriteReadExample.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System.IO.Compression/Deflate/MemoryWriteReadExample.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/Deflate/MemoryWriteReadExample.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="array" /> or <paramref name="buffer" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.InvalidOperationException">The <see cref="T:System.IO.Compression.CompressionMode" /> value was <see langword="Compress" /> when the object was created.
+
+-or-
+
+ The underlying stream does not support reading.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="offset" /> or <paramref name="count" /> is less than zero.
+
+ -or-
+
+ <paramref name="array" /> or <paramref name="buffer" /> length minus the index starting point is less than <paramref name="count" />.</exception>
+        <exception cref="T:System.IO.InvalidDataException">The data is in an invalid format.</exception>
+        <exception cref="T:System.ObjectDisposedException">The stream is closed.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.ValueTask&lt;int&gt; ReadAsync (Memory&lt;byte&gt; buffer, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance valuetype System.Threading.Tasks.ValueTask`1&lt;int32&gt; ReadAsync(valuetype System.Memory`1&lt;unsigned int8&gt; buffer, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadAsync (buffer As Memory(Of Byte), Optional cancellationToken As CancellationToken = Nothing) As ValueTask(Of Integer)" />
+      <MemberSignature Language="F#" Value="override this.ReadAsync : Memory&lt;byte&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask&lt;int&gt;" Usage="deflateStream.ReadAsync (buffer, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask&lt;System.Int32&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Memory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The region of memory to write the data into.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously reads a sequence of bytes from the current Deflate stream, writes them to a byte memory range, advances the position within the Deflate stream by the number of bytes read, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation, which wraps the total number of bytes read into the buffer. The result value can be less than the number of bytes allocated in the buffer if that many bytes are not currently available, or it can be 0 (zero) if the end of the Deflate stream has been reached.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
+
+The `ReadAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Compression.DeflateStream.CanRead%2A> property to determine whether the current instance supports reading.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status?displayProperty=nameWithType> property.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;int&gt; ReadAsync (byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;int32&gt; ReadAsync(unsigned int8[] buffer, int32 offset, int32 count, valuetype System.Threading.CancellationToken cancellationToken) cil managed" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadAsync (buffer As Byte(), offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task(Of Integer)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="F#" Value="override this.ReadAsync : byte[] * int * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;int&gt;" Usage="deflateStream.ReadAsync (buffer, offset, count, cancellationToken)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task&lt;int&gt; ^ ReadAsync(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count, System::Threading::CancellationToken cancellationToken);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task&lt;int&gt; ReadAsync (byte[] array, int offset, int count, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task`1&lt;int32&gt; ReadAsync(unsigned int8[] array, int32 offset, int32 count, valuetype System.Threading.CancellationToken cancellationToken) cil managed" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadAsync (array As Byte(), offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task(Of Integer)" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="F#" Value="override this.ReadAsync : byte[] * int * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;int&gt;" Usage="deflateStream.ReadAsync (array, offset, count, cancellationToken)" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task&lt;int&gt; ^ ReadAsync(cli::array &lt;System::Byte&gt; ^ array, int offset, int count, System::Threading::CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.Int32&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Byte[]" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="buffer" Type="System.Byte[]" Index="0" FrameworkAlternate="net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="count" Type="System.Int32" Index="2" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="array">The buffer to write the data into.</param>
+        <param name="buffer">The buffer to write the data into.</param>
+        <param name="offset">The byte offset at which to begin writing data from the Deflate stream.</param>
+        <param name="count">The maximum number of bytes to read.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously reads a sequence of bytes from the current Deflate stream, writes them to a byte array, advances the position within the Deflate stream by the number of bytes read, and monitors cancellation requests.</summary>
+        <returns>A task that represents the asynchronous read operation, which wraps the total number of bytes read into the buffer. The result value can be less than the number of bytes requested if the number of bytes currently available is less than the requested number, or it can be 0 (zero) if the end of the Deflate stream has been reached.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+> [!IMPORTANT]
+> Starting in .NET 6, this method might not read as many bytes as were requested. For more information, see [Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream](/dotnet/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams).
+
+The `ReadAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Compression.DeflateStream.CanRead%2A> property to determine whether the current instance supports reading.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status?displayProperty=nameWithType> property.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.Compression.DeflateStream.Read(System.Byte[],System.Int32,System.Int32)>.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadByte">
+      <MemberSignature Language="C#" Value="public override int ReadByte ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int32 ReadByte() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.ReadByte" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ReadByte () As Integer" />
+      <MemberSignature Language="F#" Value="override this.ReadByte : unit -&gt; int" Usage="deflateStream.ReadByte " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override int ReadByte();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Reads a byte from the Deflate stream and advances the position within the stream by one byte, or returns -1 if at the end of the Deflate stream.</summary>
+        <returns>The unsigned byte cast to an <see cref="T:System.Int32" />, or -1 if at the end of the stream.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+Use the <xref:System.IO.Compression.DeflateStream.CanRead%2A> property to determine whether the current instance supports reading.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Seek">
+      <MemberSignature Language="C#" Value="public override long Seek (long offset, System.IO.SeekOrigin origin);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance int64 Seek(int64 offset, valuetype System.IO.SeekOrigin origin) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Seek(System.Int64,System.IO.SeekOrigin)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function Seek (offset As Long, origin As SeekOrigin) As Long" />
+      <MemberSignature Language="F#" Value="override this.Seek : int64 * System.IO.SeekOrigin -&gt; int64" Usage="deflateStream.Seek (offset, origin)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override long Seek(long offset, System::IO::SeekOrigin origin);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="origin" Type="System.IO.SeekOrigin" />
+      </Parameters>
+      <Docs>
+        <param name="offset">The location in the stream.</param>
+        <param name="origin">One of the <see cref="T:System.IO.SeekOrigin" /> values.</param>
+        <summary>This operation is not supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
+        <returns>A long value.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.NotSupportedException">This property is not supported on this stream.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="SetLength">
+      <MemberSignature Language="C#" Value="public override void SetLength (long value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void SetLength(int64 value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.SetLength(System.Int64)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub SetLength (value As Long)" />
+      <MemberSignature Language="F#" Value="override this.SetLength : int64 -&gt; unit" Usage="deflateStream.SetLength value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void SetLength(long value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="value">The length of the stream.</param>
+        <summary>This operation is not supported and always throws a <see cref="T:System.NotSupportedException" />.</summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.NotSupportedException">This property is not supported on this stream.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Write">
+      <MemberSignature Language="C#" Value="public override void Write (ReadOnlySpan&lt;byte&gt; buffer);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Write(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; buffer) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Write(System.ReadOnlySpan{System.Byte})" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Write (buffer As ReadOnlySpan(Of Byte))" />
+      <MemberSignature Language="F#" Value="override this.Write : ReadOnlySpan&lt;byte&gt; -&gt; unit" Usage="deflateStream.Write buffer" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Write(ReadOnlySpan&lt;System::Byte&gt; buffer);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">A region of memory. This method copies the contents of this region to the current Deflate stream.</param>
+        <summary>Writes a sequence of bytes to the current Deflate stream and advances the current position within this Deflate stream by the number of bytes written.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+Use the <xref:System.IO.Compression.DeflateStream.CanWrite%2A> property to determine whether the current instance supports writing. Use the <xref:System.IO.Compression.DeflateStream.WriteAsync%2A> method to write asynchronously to the current stream.
+
+If the write operation is successful, the position within the Deflate stream advances by the number of bytes written. If an exception occurs, the position within the Deflate stream remains unchanged.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Write">
+      <MemberSignature Language="C#" Value="public override void Write (byte[] array, int offset, int count);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Write(unsigned int8[] array, int32 offset, int32 count) cil managed" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.Write(System.Byte[],System.Int32,System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Write (array As Byte(), offset As Integer, count As Integer)" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="F#" Value="override this.Write : byte[] * int * int -&gt; unit" Usage="deflateStream.Write (array, offset, count)" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Write(cli::array &lt;System::Byte&gt; ^ array, int offset, int count);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override void Write (byte[] buffer, int offset, int count);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void Write(unsigned int8[] buffer, int32 offset, int32 count) cil managed" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub Write (buffer As Byte(), offset As Integer, count As Integer)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="F#" Value="override this.Write : byte[] * int * int -&gt; unit" Usage="deflateStream.Write (buffer, offset, count)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void Write(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Byte[]" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="buffer" Type="System.Byte[]" Index="0" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+        <Parameter Name="offset" Type="System.Int32" Index="1" />
+        <Parameter Name="count" Type="System.Int32" Index="2" />
+      </Parameters>
+      <Docs>
+        <param name="array">The buffer that contains the data to compress.</param>
+        <param name="buffer">The buffer that contains the data to compress.</param>
+        <param name="offset">The byte offset from which the bytes will be read.</param>
+        <param name="count">The maximum number of bytes to write.</param>
+        <summary>Writes compressed bytes to the underlying stream from the specified byte array.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The following example shows how to compress and decompress bytes by using the <xref:System.IO.Compression.DeflateStream.Read%2A> and <xref:System.IO.Compression.DeflateStream.Write%2A> methods.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/Deflate/MemoryWriteReadExample.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System.IO.Compression/Deflate/MemoryWriteReadExample.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/Deflate/MemoryWriteReadExample.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.ValueTask WriteAsync (ReadOnlyMemory&lt;byte&gt; buffer, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance valuetype System.Threading.Tasks.ValueTask WriteAsync(valuetype System.ReadOnlyMemory`1&lt;unsigned int8&gt; buffer, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function WriteAsync (buffer As ReadOnlyMemory(Of Byte), Optional cancellationToken As CancellationToken = Nothing) As ValueTask" />
+      <MemberSignature Language="F#" Value="override this.WriteAsync : ReadOnlyMemory&lt;byte&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.ValueTask" Usage="deflateStream.WriteAsync (buffer, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.ValueTask</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ReadOnlyMemory&lt;System.Byte&gt;" Index="0" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="1" FrameworkAlternate="netcore-3.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The region of memory to write data from.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously writes compressed bytes to the underlying Deflate stream from the specified read-only memory region.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The `WriteAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Compression.DeflateStream.CanWrite%2A> property to determine whether the current instance supports writing.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status?displayProperty=nameWithType> property.
+
+          ]]></format>
+        </remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteAsync">
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task WriteAsync (byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task WriteAsync(unsigned int8[] buffer, int32 offset, int32 count, valuetype System.Threading.CancellationToken cancellationToken) cil managed" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function WriteAsync (buffer As Byte(), offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="F#" Value="override this.WriteAsync : byte[] * int * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="deflateStream.WriteAsync (buffer, offset, count, cancellationToken)" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task ^ WriteAsync(cli::array &lt;System::Byte&gt; ^ buffer, int offset, int count, System::Threading::CancellationToken cancellationToken);" FrameworkAlternate="net-10.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public override System.Threading.Tasks.Task WriteAsync (byte[] array, int offset, int count, System.Threading.CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Threading.Tasks.Task WriteAsync(unsigned int8[] array, int32 offset, int32 count, valuetype System.Threading.CancellationToken cancellationToken) cil managed" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function WriteAsync (array As Byte(), offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="F#" Value="override this.WriteAsync : byte[] * int * int * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="deflateStream.WriteAsync (array, offset, count, cancellationToken)" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Threading::Tasks::Task ^ WriteAsync(cli::array &lt;System::Byte&gt; ^ array, int offset, int count, System::Threading::CancellationToken cancellationToken);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>4.1.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Byte[]" Index="0" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0" />
+        <Parameter Name="buffer" Type="System.Byte[]" Index="0" FrameworkAlternate="net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="offset" Type="System.Int32" Index="1" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="count" Type="System.Int32" Index="2" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="array">The buffer that contains the data to compress.</param>
+        <param name="buffer">The buffer that contains the data to compress.</param>
+        <param name="offset">The zero-based byte offset from which to begin copying bytes to the Deflate stream.</param>
+        <param name="count">The maximum number of bytes to write.</param>
+        <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None" />.</param>
+        <summary>Asynchronously writes compressed bytes to the underlying Deflate stream from the specified byte array.</summary>
+        <returns>A task that represents the asynchronous write operation.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The `WriteAsync` method enables you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in desktop apps where a time-consuming stream operation can block the UI thread and make the app appear as if it's not working. The async methods are used in conjunction with the `async` and `await` keywords in Visual Basic and C#.
+
+Use the <xref:System.IO.Compression.DeflateStream.CanWrite%2A> property to determine whether the current instance supports writing.
+
+If the operation is canceled before it completes, the returned task contains the <xref:System.Threading.Tasks.TaskStatus.Canceled?displayProperty=nameWithType> value for the <xref:System.Threading.Tasks.Task.Status?displayProperty=nameWithType> property.
+
+This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <xref:System.ArgumentException>, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <xref:System.IO.Compression.DeflateStream.Write(System.Byte[],System.Int32,System.Int32)>.
+
+]]></format>
+        </remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteByte">
+      <MemberSignature Language="C#" Value="public override void WriteByte (byte value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance void WriteByte(unsigned int8 value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.IO.Compression.DeflateStream.WriteByte(System.Byte)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Sub WriteByte (value As Byte)" />
+      <MemberSignature Language="F#" Value="override this.WriteByte : byte -&gt; unit" Usage="deflateStream.WriteByte value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override void WriteByte(System::Byte value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.IO.Compression</AssemblyName>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Byte" Index="0" FrameworkAlternate="net-7.0;net-8.0;net-9.0;net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="value">A byte to write to the stream.</param>
+        <summary>Writes a byte to the current Deflate stream and advances the current position within this Deflate stream by one.</summary>
+        <remarks>Writing one byte at a time in a loop is less efficient than writing multiple bytes at once. Prefer using the <see cref="M:System.IO.Compression.DeflateStream.Write(System.ReadOnlySpan{System.Byte})" /> or <see cref="M:System.IO.Compression.DeflateStream.WriteAsync(System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)" /> method for writing multiple bytes at once.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
