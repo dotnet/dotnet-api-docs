@@ -1,0 +1,154 @@
+<Type Name="IArgumentProvider" FullName="System.Linq.Expressions.IArgumentProvider">
+  <TypeSignature Language="C#" Value="public interface IArgumentProvider" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IArgumentProvider" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+  <TypeSignature Language="DocId" Value="T:System.Linq.Expressions.IArgumentProvider" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IArgumentProvider" />
+  <TypeSignature Language="F#" Value="type IArgumentProvider = interface" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IArgumentProvider" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract beforefieldinit IArgumentProvider" FrameworkAlternate="net-10.0;net-8.0;net-9.0" />
+  <AssemblyInfo>
+    <AssemblyName>System.Linq.Expressions</AssemblyName>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Core</AssemblyName>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Linq.Expressions" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Linq.Expressions" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Linq.Expressions" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Linq.Expressions" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Linq.Expressions" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Linq.Expressions" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Interfaces />
+  <Docs>
+    <summary>Provides an internal interface for accessing the arguments of multiple tree nodes (DynamicExpression, ElementInit, MethodCallExpression, InvocationExpression, NewExpression, and IndexExpression).  This API is for internal use only.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+      
+## Remarks
+
+You should not use this API.  It is public only due to assembly refactoring, and it exists only for internal performance optimizations. It enables two optimizations that reduce the size of the trees:
+  
+1. It enables the nodes to hold onto an <xref:System.Collections.Generic.IList%601> instead of a <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>.  This saves the cost of allocating the read-only collection for each node.
+  
+2. It enables specialized subclasses to be created that hold on to a specific number of arguments (for example, `Block2`, `Block2`, `Block4`).  Therefore, these nodes avoid allocating both a <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> and an array for storing their elements, thus saving 32 bytes per node.  This technique is used by various nodes, including <xref:System.Linq.Expressions.BlockExpression>, <xref:System.Linq.Expressions.InvocationExpression>, and <xref:System.Linq.Expressions.MethodCallExpression>.
+            
+The expression tree nodes continue to expose the original LINQ properties of <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> objects. They do this by reusing a field for storing both the array or an element that would normally be stored in the array.
+            
+For the array case, the collection is typed to <xref:System.Collections.Generic.IList%601> instead of <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>. When the node is initially constructed, it is an array.  The compiler or utilities in this library access the elements through this interface. Accessing array elements promotes the array to a <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>.
+            
+For the object case, the first argument is stored in a field typed to <xref:System.Object>. When the node is initially constructed, this field holds the <xref:System.Linq.Expressions.Expression> of the first argument.  When the compiler and utilities in this library access the arguments, they again use this interface, and the accessor for the first argument uses the internal `Expression.ReturnObject<T>(System.Object)` helper method to return the object that handles the <xref:System.Linq.Expressions.Expression> or <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> case. When the user accesses the <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>, the object field is updated to hold directly onto the <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>.
+            
+It is important that <xref:System.Linq.Expressions.Expression> properties consistently return the same <xref:System.Collections.ObjectModel.ReadOnlyCollection%601>. Otherwise, the rewriter tree walker used by expression visitors will break. It is a breaking change from LINQ v1 to return different <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> from the same <xref:System.Linq.Expressions.Expression> node. Currently, users can rely on object identity to tell if the node has changed.  Storing the <xref:System.Collections.ObjectModel.ReadOnlyCollection%601> in an overloaded field both reduces memory usage and maintains compatibility for the public API.
+
+      ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="ArgumentCount">
+      <MemberSignature Language="C#" Value="public int ArgumentCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 ArgumentCount" />
+      <MemberSignature Language="DocId" Value="P:System.Linq.Expressions.IArgumentProvider.ArgumentCount" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ArgumentCount As Integer" />
+      <MemberSignature Language="F#" Value="member this.ArgumentCount : int" Usage="System.Linq.Expressions.IArgumentProvider.ArgumentCount" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int ArgumentCount { int get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Linq.Expressions</AssemblyName>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Core</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Returns the number of arguments to the expression tree node. This API is for internal use only.</summary>
+        <value>The number of arguments to the expression tree node as <see cref="T:System.Int32" />.</value>
+        <remarks>You should not use this API. It is public only due to assembly refactoring, and it is used internally for performance optimizations.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetArgument">
+      <MemberSignature Language="C#" Value="public System.Linq.Expressions.Expression GetArgument (int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Linq.Expressions.Expression GetArgument(int32 index) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Linq.Expressions.IArgumentProvider.GetArgument(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetArgument (index As Integer) As Expression" />
+      <MemberSignature Language="F#" Value="abstract member GetArgument : int -&gt; System.Linq.Expressions.Expression" Usage="iArgumentProvider.GetArgument index" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Linq::Expressions::Expression ^ GetArgument(int index);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Linq.Expressions</AssemblyName>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+        <AssemblyVersion>5.0.0.0</AssemblyVersion>
+        <AssemblyVersion>6.0.0.0</AssemblyVersion>
+        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Core</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Linq.Expressions.Expression</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">The index of the argument.</param>
+        <summary>Returns the argument at <paramref name="index" />, throwing if <paramref name="index" /> is out of bounds. This API is for internal use only.</summary>
+        <returns>The argument at index.</returns>
+        <remarks>You should not use this API.  It is only public due to assembly refactoring, and it is used internally for performance optimizations.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

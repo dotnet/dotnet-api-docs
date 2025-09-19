@@ -1,0 +1,43 @@
+revision: 3
+schema-version: 5
+owner-ms-alias: adegeo
+
+config:
+  DocMetadata:
+    Headers:
+      - ["---", "#### "]
+
+    ParserRegex: "^\\* (.*): (.*)$"
+
+    ContentUrlRegex:
+      - "### Page URL\n\n(.*)"
+
+issues:
+
+  labeled:
+
+    # Temporary label to mark issues as updated for Quest. The label is instantly removed
+    - check:
+        - type: query
+          value: "length(Issue.Labels[?Name == ':world_map: mapQUEST']) != `0`"
+      pass:
+        - labels-remove: [":world_map: mapQUEST"]
+
+  reopened:
+
+    # Remove won't fix label
+    - labels-remove: ["won't fix"]
+
+  closed:
+
+    # Issue closed, remove in-progress label
+    - labels-remove: ["in-progress"]
+
+pull_request:
+
+  reopened: opened
+
+  opened:
+
+    # Set default sprint for new PRs
+    - milestone-set: "![sprint]"
