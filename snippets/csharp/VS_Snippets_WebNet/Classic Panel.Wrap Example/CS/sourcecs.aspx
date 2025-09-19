@@ -14,7 +14,7 @@
     }
      
     void Button1_Click(Object sender, EventArgs e) {
-       if (Panel1.Wrap == true) {
+       if (Panel1.Wrap) {
           Panel1.Wrap = false;
           Button1.Text = "Set Wrap=True";
        } 

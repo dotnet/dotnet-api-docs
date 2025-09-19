@@ -113,7 +113,7 @@ private:
       while ( myEnum->MoveNext() )
       {
          TreeNode^ myTreeNode = safe_cast<TreeNode^>(myEnum->Current);
-         if ( myTreeNode->IsSelected == true )
+         if ( myTreeNode->IsSelected)
          {
             
             // Remove the selected node from the 'myTreeViewBase' TreeView.

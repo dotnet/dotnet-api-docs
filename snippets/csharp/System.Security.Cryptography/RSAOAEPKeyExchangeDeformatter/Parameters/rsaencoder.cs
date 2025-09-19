@@ -122,9 +122,9 @@ class RSAEncoder
         rsaFormatter.SetKey(key);
         //</Snippet5>
 
-        // Create a random number using the RNGCryptoServiceProvider provider.
+        // Create a random number using the RandomNumberGenerator
         //<Snippet6>
-        RNGCryptoServiceProvider ring = new RNGCryptoServiceProvider(); 
+        RandomNumberGenerator ring = RandomNumberGenerator.Create(); 
         rsaFormatter.Rng = ring;
         //</Snippet6>
 

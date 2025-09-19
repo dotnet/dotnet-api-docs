@@ -91,7 +91,7 @@ public class MyTreeNode_FirstNode : Form
 		Cursor.Current = Cursors.Default;
 		// Begin repainting the TreeView.
 		myTreeView.EndUpdate();
-		if (myTreeView.Nodes[0].IsExpanded == false)
+		if (!myTreeView.Nodes[0].IsExpanded)
 			myTreeView.Nodes[0].Expand();
 	}
 
@@ -169,7 +169,7 @@ public class MyTreeNode_FirstNode : Form
 private void myCheckBox_CheckedChanged(object sender, System.EventArgs e)
 {
    // If the check box is checked, expand all the tree nodes.
-   if (myCheckBox.Checked == true)
+   if (myCheckBox.Checked)
    {
       myTreeView.ExpandAll();
    }
@@ -215,7 +215,7 @@ private void myButton_Click(object sender, System.EventArgs e)
 			myTreeView.SelectedNode = mySelectedNode;
 			myTreeView.LabelEdit = true;
 			mySelectedNode.BeginEdit();
-			if (mySelectedNode.IsEditing == true)
+			if (mySelectedNode.IsEditing)
 				MessageBox.Show("The name of node being edited: "+
 					mySelectedNode.Text);
 			mySelectedNode.BeginEdit();

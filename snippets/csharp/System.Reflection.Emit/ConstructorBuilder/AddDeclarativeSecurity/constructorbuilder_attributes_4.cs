@@ -60,7 +60,7 @@ internal class MyConstructorBuilder
       MethodAttributes myMethodAttributes = myConstructor.Attributes;
       Type myAttributeType = typeof(MethodAttributes);
       int myAttribValue = (int) myMethodAttributes;
-      if(! myAttributeType.IsEnum)
+      if (!myAttributeType.IsEnum)
       {
          Console.WriteLine("This is not an Enum");
       }

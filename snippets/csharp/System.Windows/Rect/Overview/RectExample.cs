@@ -1,5 +1,4 @@
 ﻿// <SnippetRectExampleWholePage>
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,7 +22,7 @@ namespace SDKSample
             // 150 wide. The left side of the rectangle is 10 pixels from the left of the 
             // Canvas and the top side of the rectangle is 100 pixels from the top of the Canvas.  
             // Note: You could alternatively use the Rect Constructor to create this:
-            // Rect my Rect1 = new Rect(10,100,150,100");
+            // Rect myRect1 = new Rect(10, 100, 150, 100);
             Rect myRect1 = new Rect();
             myRect1.X = 10;
             myRect1.Y = 100;

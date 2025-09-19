@@ -36,7 +36,7 @@ namespace Example
             string addressString = "catalog/shownew.htm?date=today";
             // Parse the string and create a new Uri instance, if possible.
             Uri result = null;
-            if (Uri.TryCreate(addressString, UriKind.RelativeOrAbsolute, out result) == true) {
+            if (Uri.TryCreate(addressString, UriKind.RelativeOrAbsolute, out result)) {
                 // The call was successful. Write the URI address to the console.
                 Console.Write(result.ToString());
                 // Check whether new Uri instance is absolute or relative.

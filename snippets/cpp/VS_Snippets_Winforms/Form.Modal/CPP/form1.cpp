@@ -101,7 +101,7 @@ namespace FormModalEx
          myForm->Show();
 
          // Determine if the form is modal.
-         if ( myForm->Modal == false )
+         if ( !myForm->Modal )
          {
             // Change borderstyle and make it not a top level window.
             myForm->FormBorderStyle = ::FormBorderStyle::FixedToolWindow;

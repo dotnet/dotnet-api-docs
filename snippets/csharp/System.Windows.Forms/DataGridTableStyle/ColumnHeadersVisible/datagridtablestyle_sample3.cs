@@ -197,7 +197,7 @@ namespace SampleDataGridTableStyle
          myDataGridTableStyle1 = new DataGridTableStyle();
          myHeaderLabel.Text = "Header Status :" 
             + myDataGridTableStyle1.ColumnHeadersVisible.ToString();
-         if(myDataGridTableStyle1.ColumnHeadersVisible == true)
+         if (myDataGridTableStyle1.ColumnHeadersVisible)
          {
             btnheader.Text = "Remove Header";
          }
@@ -257,7 +257,7 @@ namespace SampleDataGridTableStyle
       }      
       private void btnheader_Click(object sender, EventArgs e)
       {
-         if(myDataGridTableStyle1.ColumnHeadersVisible == true)
+         if (myDataGridTableStyle1.ColumnHeadersVisible)
          {            
             myDataGridTableStyle1.ColumnHeadersVisible = false;
             btnheader.Text = "Add Header";

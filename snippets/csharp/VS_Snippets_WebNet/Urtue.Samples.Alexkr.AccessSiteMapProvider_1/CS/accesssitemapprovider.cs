@@ -94,7 +94,7 @@ namespace Samples.AspNet.CS.Controls {
 
                 // If there is no initialization, this method is being
                 // called out of order.
-                if (! IsInitialized) {
+                if (!IsInitialized) {
                     throw new Exception("BuildSiteMap called incorrectly.");
                 }
 

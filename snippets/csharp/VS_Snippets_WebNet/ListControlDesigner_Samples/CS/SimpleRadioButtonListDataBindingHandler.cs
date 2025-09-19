@@ -24,7 +24,7 @@ namespace Examples.CS.WebControls.Design
             // If the binding exists, create a reference to the
             // list control, clear its ListItemCollection, and then add
             // an item to the collection.
-            if (! (dataSourceBinding == null))
+            if (!(dataSourceBinding == null))
             {
                 SimpleRadioButtonList simpleControl = 
                     (SimpleRadioButtonList)control;

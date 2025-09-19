@@ -211,7 +211,7 @@ public class TZExamples
    private DateTime ResolveAmbiguousTime(DateTime ambiguousTime)
    {
       // Time is not ambiguous
-      if (! TimeZoneInfo.Local.IsAmbiguousTime(ambiguousTime))
+      if (!TimeZoneInfo.Local.IsAmbiguousTime(ambiguousTime))
       { 
          return ambiguousTime; 
       }
@@ -269,7 +269,7 @@ public class TZExamples
       DateTime inputDate = DateTime.MinValue;
            
       Console.Write("Enter a local date and time: ");
-      while (! exitFlag)
+      while (!exitFlag)
       {
          dateString = Console.ReadLine();
          if (dateString.ToUpper() == "E")

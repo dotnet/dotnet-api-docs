@@ -12,7 +12,7 @@ class CopyDir
         }
 
         // Check if the target directory exists, if not, create it.
-        if (Directory.Exists(target.FullName) == false)
+        if (!Directory.Exists(target.FullName))
         {
             Directory.CreateDirectory(target.FullName);
         }

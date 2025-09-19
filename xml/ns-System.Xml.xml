@@ -11,41 +11,30 @@
  The <xref:System.Xml> namespace supports these standards:
 
 - [XML 1.0, including DTD support](https://www.w3.org/TR/2006/REC-xml-20060816/)
-
 - [XML namespaces](https://www.w3.org/TR/REC-xml-names/), both stream-level and DOM
-
 - [XML schemas](https://www.w3.org/2001/XMLSchema)
-
 - [XPath expressions](https://www.w3.org/TR/xpath)
-
 - [XSLT transformations](https://www.w3.org/TR/xslt)
-
 - [DOM Level 1 Core](https://www.w3.org/TR/REC-DOM-Level-1/)
-
 - [DOM Level 2 Core](https://www.w3.org/TR/DOM-Level-2/)
 
  See the section [Differences from the W3C specs](#diff) for two cases in which the XML classes differ from the W3C recommendations.
-
-<a name="related"></a>
-## Related namespaces
-
-.NET also provides other namespaces for XML-related operations. For a list, descriptions, and links, see [System.Xml Namespaces](/previous-versions/gg145036(v=vs.110)).
 
 <a name="async"></a>
 ## Processing XML asynchronously
  The <xref:System.Xml.XmlReader?displayProperty=nameWithType> and <xref:System.Xml.XmlWriter?displayProperty=nameWithType> classes include a number of asynchronous methods that are based on the asynchronous programming model. These methods can be identified by the string "Async" at the end of their names. With these methods, you can write asynchronous code that's similar to your synchronous code, and you can migrate your existing synchronous code to asynchronous code easily.
 
--   Use the asynchronous methods in apps where there is significant network stream latency. Avoid using the asynchronous APIs for memory stream or local file stream read/write operations. The input stream, <xref:System.Xml.XmlTextReader>, and <xref:System.Xml.XmlTextWriter> should support asynchronous operations as well. Otherwise, threads will still be blocked by I/O operations.
+- Use the asynchronous methods in apps where there is significant network stream latency. Avoid using the asynchronous APIs for memory stream or local file stream read/write operations. The input stream, <xref:System.Xml.XmlTextReader>, and <xref:System.Xml.XmlTextWriter> should support asynchronous operations as well. Otherwise, threads will still be blocked by I/O operations.
 
--   We don't recommend mixing synchronous and asynchronous function calls, because you might forget to use the `await` keyword or use a synchronous API where an asynchronous one is necessary.
+- We don't recommend mixing synchronous and asynchronous function calls, because you might forget to use the `await` keyword or use a synchronous API where an asynchronous one is necessary.
 
--   Do not set the <xref:System.Xml.XmlReaderSettings.Async%2A?displayProperty=nameWithType> or <xref:System.Xml.XmlWriterSettings.Async%2A?displayProperty=nameWithType> flag to `true` if you don't intend to use an asynchronous method.
+- Do not set the <xref:System.Xml.XmlReaderSettings.Async%2A?displayProperty=nameWithType> or <xref:System.Xml.XmlWriterSettings.Async%2A?displayProperty=nameWithType> flag to `true` if you don't intend to use an asynchronous method.
 
--   If you forget to specify the `await` keyword when you call an asynchronous method, the results are non-deterministic: You might receive the result you expected or an exception.
+- If you forget to specify the `await` keyword when you call an asynchronous method, the results are non-deterministic: You might receive the result you expected or an exception.
 
--   When an <xref:System.Xml.XmlReader> object is reading a large text node, it might cache only a partial text value and return the text node, so retrieving the <xref:System.Xml.XmlReader.Value%2A?displayProperty=nameWithType> property might be blocked by an I/O operation. Use the <xref:System.Xml.XmlReader.GetValueAsync%2A?displayProperty=nameWithType> method to get the text value in asynchronous mode, or use the <xref:System.Xml.XmlReader.ReadValueChunkAsync%2A?displayProperty=nameWithType> method to read a large text block in chunks.
+- When an <xref:System.Xml.XmlReader> object is reading a large text node, it might cache only a partial text value and return the text node, so retrieving the <xref:System.Xml.XmlReader.Value%2A?displayProperty=nameWithType> property might be blocked by an I/O operation. Use the <xref:System.Xml.XmlReader.GetValueAsync%2A?displayProperty=nameWithType> method to get the text value in asynchronous mode, or use the <xref:System.Xml.XmlReader.ReadValueChunkAsync%2A?displayProperty=nameWithType> method to read a large text block in chunks.
 
--   When you use an <xref:System.Xml.XmlWriter> object, call the <xref:System.Xml.XmlWriter.FlushAsync%2A?displayProperty=nameWithType> method before calling <xref:System.Xml.XmlWriter.Close%2A?displayProperty=nameWithType> to avoid blocking an I/O operation.
+- When you use an <xref:System.Xml.XmlWriter> object, call the <xref:System.Xml.XmlWriter.FlushAsync%2A?displayProperty=nameWithType> method before calling <xref:System.Xml.XmlWriter.Close%2A?displayProperty=nameWithType> to avoid blocking an I/O operation.
 
 <a name="diff"></a>
 ## Differences from the W3C specs
@@ -87,15 +76,11 @@
 
  Under the following conditions, the <xref:System.Xml> implementation does not satisfy the "Schema Component Constraint: Unique Particle Attribution," which is described in the [Constraints on Model Group Schema Components](https://go.microsoft.com/fwlink/?LinkId=137029) section of the W3C spec.
 
--   One of the elements in the group references another element.
-
--   The referenced element is a head element of a substitution group.
-
--   The substitution group contains an element that has the same name as one of the elements in the group.
-
--   The cardinality of the element that references the substitution group head element and the element with the same name as a substitution group element is not fixed (minOccurs < maxOccurs).
-
--   The definition of the element that references the substitution group precedes the definition of the element with the same name as a substitution group element.
+- One of the elements in the group references another element.
+- The referenced element is a head element of a substitution group.
+- The substitution group contains an element that has the same name as one of the elements in the group.
+- The cardinality of the element that references the substitution group head element and the element with the same name as a substitution group element is not fixed (minOccurs < maxOccurs).
+- The definition of the element that references the substitution group precedes the definition of the element with the same name as a substitution group element.
 
  For example, in the schema below the content model is ambiguous and should cause a compilation error, but <xref:System.Xml> compiles the schema without errors.
 
@@ -184,32 +169,32 @@
 
  The following scenarios are considered to be less vulnerable to denial of service attacks because the <xref:System.Xml> classes provide a means of protection from such attacks.
 
--   Parsing text XML data.
+- Parsing text XML data.
 
--   Parsing binary XML data if the binary XML data was generated by Microsoft SQL Server.
+- Parsing binary XML data if the binary XML data was generated by Microsoft SQL Server.
 
--   Writing XML documents and fragments from data sources to the file system, streams, a <xref:System.IO.TextWriter>, or a <xref:System.Text.StringBuilder>.
+- Writing XML documents and fragments from data sources to the file system, streams, a <xref:System.IO.TextWriter>, or a <xref:System.Text.StringBuilder>.
 
--   Loading documents into the Document Object Model (DOM) object if you are using an <xref:System.Xml.XmlReader> object and <xref:System.Xml.XmlReaderSettings.DtdProcessing%2A?displayProperty=nameWithType> set to <xref:System.Xml.DtdProcessing.Prohibit?displayProperty=nameWithType>.
+- Loading documents into the Document Object Model (DOM) object if you are using an <xref:System.Xml.XmlReader> object and <xref:System.Xml.XmlReaderSettings.DtdProcessing%2A?displayProperty=nameWithType> set to <xref:System.Xml.DtdProcessing.Prohibit?displayProperty=nameWithType>.
 
--   Navigating the DOM object.
+- Navigating the DOM object.
 
  The following scenarios are not recommended if you are concerned about denial of service attacks, or if you are working in an untrusted environment.
 
--   DTD processing.
+- DTD processing.
 
--   Schema processing. This includes adding an untrusted schema to the schema collection, compiling an untrusted schema, and validating by using an untrusted schema.
+- Schema processing. This includes adding an untrusted schema to the schema collection, compiling an untrusted schema, and validating by using an untrusted schema.
 
--   XSLT processing.
+- XSLT processing.
 
--   Parsing any arbitrary stream of user supplied binary XML data.
+- Parsing any arbitrary stream of user supplied binary XML data.
 
--   DOM operations such as querying, editing, moving sub-trees between documents, and saving DOM objects.
+- DOM operations such as querying, editing, moving sub-trees between documents, and saving DOM objects.
 
  If you are concerned about denial of service issues or if you are dealing with untrusted sources, do not enable DTD processing. This is disabled by default on <xref:System.Xml.XmlReader> objects that the <xref:System.Xml.XmlReader.Create%2A?displayProperty=nameWithType> method creates.
 
 > [!NOTE]
->  The <xref:System.Xml.XmlTextReader> allows DTD processing by default. Use the <xref:System.Xml.XmlTextReader.DtdProcessing%2A?displayProperty=nameWithType> property to disable this feature.
+> The <xref:System.Xml.XmlTextReader> allows DTD processing by default. Use the <xref:System.Xml.XmlTextReader.DtdProcessing%2A?displayProperty=nameWithType> property to disable this feature.
 
  If you have DTD processing enabled, you can use the <xref:System.Xml.XmlSecureResolver> class to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your app so that the XML processing is memory and time constrained. For example, you can configure timeout limits in your ASP.NET app.
 
@@ -223,15 +208,15 @@
 
  When creating an app that uses the <xref:System.Xml.Xsl.XslCompiledTransform> class, you should be aware of the following items and their implications:
 
--   XSLT scripting is disabled by default. XSLT scripting should be enabled only if you require script support and you are working in a fully trusted environment.
+- XSLT scripting is disabled by default. XSLT scripting should be enabled only if you require script support and you are working in a fully trusted environment.
 
--   The XSLT `document()` function is disabled by default. If you enable the `document()` function, restrict the resources that can be accessed by passing an <xref:System.Xml.XmlSecureResolver> object to the <xref:System.Xml.Xsl.XslCompiledTransform.Transform%2A?displayProperty=nameWithType> method.
+- The XSLT `document()` function is disabled by default. If you enable the `document()` function, restrict the resources that can be accessed by passing an <xref:System.Xml.XmlSecureResolver> object to the <xref:System.Xml.Xsl.XslCompiledTransform.Transform%2A?displayProperty=nameWithType> method.
 
--   Extension objects are enabled by default. If an <xref:System.Xml.Xsl.XsltArgumentList> object that contains extension objects is passed to the <xref:System.Xml.Xsl.XslCompiledTransform.Transform%2A?displayProperty=nameWithType> method, the extension objects are used.
+- Extension objects are enabled by default. If an <xref:System.Xml.Xsl.XsltArgumentList> object that contains extension objects is passed to the <xref:System.Xml.Xsl.XslCompiledTransform.Transform%2A?displayProperty=nameWithType> method, the extension objects are used.
 
--   XSLT style sheets can include references to other files and embedded script blocks. A malicious user can exploit this by supplying you with data or style sheets that, when executed, can cause your system to process until the computer runs low on resources.
+- XSLT style sheets can include references to other files and embedded script blocks. A malicious user can exploit this by supplying you with data or style sheets that, when executed, can cause your system to process until the computer runs low on resources.
 
--   XSLT apps that run in a mixed trust environment can result in style sheet spoofing. For example, a malicious user can load an object with a harmful style sheet and hand it off to another user who subsequently calls the <xref:System.Xml.Xsl.XslCompiledTransform.Transform%2A?displayProperty=nameWithType> method and executes the transformation.
+- XSLT apps that run in a mixed trust environment can result in style sheet spoofing. For example, a malicious user can load an object with a harmful style sheet and hand it off to another user who subsequently calls the <xref:System.Xml.Xsl.XslCompiledTransform.Transform%2A?displayProperty=nameWithType> method and executes the transformation.
 
  These security issues can be mitigated by not enabling scripting or the `document()` function unless the style sheet comes from a trusted source, and by not accepting <xref:System.Xml.Xsl.XslCompiledTransform> objects, XSLT style sheets, or XML source data from an untrusted source.
 

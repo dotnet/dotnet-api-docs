@@ -62,7 +62,7 @@ namespace Microsoft.WCF.Documentation
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("\t" + h.Namespace);
         Console.WriteLine("\t" + h.Relay);
-        if (h.IsReferenceParameter == true)
+        if (h.IsReferenceParameter)
         {
             Console.WriteLine("IsReferenceParameter header detected: " + h.ToString());
         }

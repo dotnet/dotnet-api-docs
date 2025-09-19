@@ -18,7 +18,7 @@ public:
       Label^ label1 = gcnew Label;
       
       // Determines if the tabControl1 controls collection is read-only.
-      if ( tabControl1->TabPages->IsReadOnly == true )
+      if (tabControl1->TabPages->IsReadOnly)
             label1->Text = "The tabControl1 controls collection is read-only.";
       else
             label1->Text = "The tabControl1 controls collection is not read-only.";

@@ -177,7 +177,7 @@ namespace SDKSample
                     break;
             }
 
-            if (e.Handled == true)
+            if (e.Handled)
             {
                 // Transform point light.
                 myLights.TransformPointLight(pointLightVector, spaceLinesChangeVector);

@@ -14,7 +14,7 @@ private void MyTextChangedHandler(System.Object sender, System.EventArgs e)
 {
     long val;    
     // Check the flag to prevent code re-entry. 
-    if(flag == false)
+    if (!flag)
     {
        // Set the flag to True to prevent re-entry of the code below.
        flag = true;

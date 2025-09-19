@@ -302,7 +302,7 @@ public:
          // while waiting for the asynchronous calls to complete.
          System::Threading::Thread::Sleep( 100 );
       }
-      while ( complete != true && Console::KeyAvailable == false );
+      while ( !complete && !Console::KeyAvailable );
 
       if ( Console::KeyAvailable )
       {

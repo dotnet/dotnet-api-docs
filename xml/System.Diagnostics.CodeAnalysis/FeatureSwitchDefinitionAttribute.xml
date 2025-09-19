@@ -8,6 +8,7 @@
   <AssemblyInfo>
     <AssemblyName>System.Runtime</AssemblyName>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Attribute</BaseTypeName>
@@ -22,10 +23,6 @@
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
-    <Attribute>
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
-    </Attribute>
   </Attributes>
   <Docs>
     <summary>
@@ -34,9 +31,15 @@
         corresponds to the feature switch specified by name.</para>
     </summary>
     <remarks>
-      <para>
-        IL rewriters and compilers can use this attribute to substitute the return value
-        of the specified property with the value of the feature switch.</para>
+      <format type="text/markdown"><![CDATA[
+IL rewriters and compilers can use this attribute to substitute the return value of the specified property with the value of the feature switch.
+
+The value of the feature switch can only be specified at the application level and affects the entire application. It is possible to get into situations where one library that is part of the application requires the feature switch to be turned on, but has no way to communicate this to the application author.
+
+Feature switches complicate unit testing and code sharing since different application configurations might have different values of the feature switch, and it's difficult to ensure all code paths work as expected.
+
+It is therefore preferable to structure APIs in a way that trimming can happen naturally without any feature switches. The use of feature switches should be reserved for situations where trimming needs to happen, but it's not feasible to change the APIs to allow trimming naturally.
+ ]]></format>
     </remarks>
     <example>
       <format type="text/markdown"><![CDATA[
@@ -58,7 +61,7 @@ When the app is trimmed with the following feature settings in the project file,
 
 ```xml
 <ItemGroup>
-  <RuntimeHostConfigurationOption Include="Feature.IsSupported" Value="false" />
+  <RuntimeHostConfigurationOption Include="Feature.IsSupported" Value="false" Trim="true" />
 </ItemGroup>
 ```
 ]]></format>
@@ -76,6 +79,7 @@ When the app is trimmed with the following feature settings in the project file,
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="switchName" Type="System.String" />
@@ -100,6 +104,7 @@ When the app is trimmed with the following feature settings in the project file,
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>

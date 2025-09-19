@@ -323,7 +323,7 @@ public class Sync_Send_Receive
         Thread myThread1 = new Thread(myThreadDelegate);
         myThread1.Start();
 
-        while (myThread1.IsAlive == true)
+        while (myThread1.IsAlive)
         {
             SendTo1();
         }
@@ -332,7 +332,7 @@ public class Sync_Send_Receive
         Console.WriteLine("UDP test2");
         Thread myThread2 = new Thread(new ThreadStart(Sync_Send_Receive.ReceiveFrom2));
         myThread2.Start();
-        while (myThread2.IsAlive == true)
+        while (myThread2.IsAlive)
         {
             SendTo2();
         }
@@ -341,7 +341,7 @@ public class Sync_Send_Receive
         Console.WriteLine("UDP test3");
         Thread myThread3 = new Thread(new ThreadStart(Sync_Send_Receive.ReceiveFrom3));
         myThread3.Start();
-        while (myThread3.IsAlive == true)
+        while (myThread3.IsAlive)
         {
             SendTo3();
         }
@@ -350,7 +350,7 @@ public class Sync_Send_Receive
         Console.WriteLine("UDP test4");
         Thread myThread4 = new Thread(new ThreadStart(Sync_Send_Receive.ReceiveFrom4));
         myThread4.Start();
-        while (myThread4.IsAlive == true)
+        while (myThread4.IsAlive)
         {
             SendTo4();
         }
