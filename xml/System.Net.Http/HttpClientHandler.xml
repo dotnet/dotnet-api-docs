@@ -138,8 +138,8 @@
  If you are using cookies by specifically adding them to the <xref:System.Net.Http.HttpRequestMessage.Headers> collection, these are not cleared when a redirect is followed, as the handler has no way of knowing what domain a cookie is allowed for. If you want to mimic browser behavior, use the <xref:System.Net.CookieContainer> class which allows you to specify the target domain for a cookie.
 
 > [!NOTE]
->  With <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> set to `true`, the .NET Framework will follow redirections even when being redirected to an HTTP URI from an HTTPS URI.
-.NET Core versions 1.0, 1.1 and 2.0 will not follow a redirection from HTTPS to HTTP even if <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect%2A> is set to `true`.
+> On .NET Core and .NET 5 and later versions, setting <xref:System.Net.Http.HttpClientHandler.AllowAutoRedirect> to `true` **does not enable** automatic redirection to an HTTP URI from an HTTPS URI.
+> Such (secure to insecure) redirections are only followed on .NET Framework.
 
  ]]></format>
         </remarks>
@@ -506,7 +506,7 @@ If the <xref:System.Net.Http.HttpClientHandler.UseDefaultCredentials> property h
 
  The <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property addresses this limitation. The delegate returned by the <xref:System.Net.Http.HttpClientHandler.DangerousAcceptAnyServerCertificateValidator%2A> property can be assigned to the <xref:System.Net.Http.HttpClientHandler.ServerCertificateCustomValidationCallback%2A> property, as the following example does:
 
-```cs
+```csharp
 handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
 ```
 
@@ -1234,8 +1234,8 @@ handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousA
         <ReturnType>System.Security.Authentication.SslProtocols</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the TLS/SSL protocol used by the <see cref="T:System.Net.Http.HttpClient" /> objects managed by the HttpClientHandler object.</summary>
-        <value>One of the values defined in the <see cref="T:System.Security.Authentication.SslProtocols" /> enumeration.</value>
+        <summary>Gets or sets the TLS/SSL protocols used by the <see cref="T:System.Net.Http.HttpClient" /> objects managed by the HttpClientHandler object.</summary>
+        <value>A bitwise combination of the enumeration values that specify the TLS/SSL protocols.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.PlatformNotSupportedException">.NET Framework 4.7.1 only: This property is not implemented.</exception>
       </Docs>

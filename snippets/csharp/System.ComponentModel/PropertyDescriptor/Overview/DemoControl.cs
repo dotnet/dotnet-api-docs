@@ -2,14 +2,13 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace ReadOnlyPropertyDescriptorTest
+namespace ReadOnlyPropertyDescriptorTest;
+
+[Designer(typeof(DemoControlDesigner))]
+public class DemoControl : Control
 {
-    [Designer(typeof(DemoControlDesigner))]
-    public class DemoControl : Control
+    public DemoControl()
     {
-        public DemoControl()
-        {
-        }
     }
 }
 // </snippet100>

@@ -5,7 +5,7 @@
   <TypeSignature Language="VB.NET" Value="Public Structure MetadataStringComparer" />
   <TypeSignature Language="F#" Value="type MetadataStringComparer = struct" />
   <TypeSignature Language="C++ CLI" Value="public value class MetadataStringComparer" />
-  <TypeSignature Language="C#" Value="public readonly struct MetadataStringComparer" FrameworkAlternate="net-10.0;net-10.0-pp;net-5.0;net-6.0;net-7.0;net-8.0;net-8.0-pp;net-9.0;net-9.0-pp;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6.2-pp;netstandard-2.0-pp" />
+  <TypeSignature Language="C#" Value="public readonly struct MetadataStringComparer" FrameworkAlternate="net-10.0;net-10.0-pp;net-5.0;net-6.0;net-7.0;net-8.0;net-8.0-pp;net-9.0;net-9.0-pp;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
   <AssemblyInfo>
     <AssemblyName>System.Reflection.Metadata</AssemblyName>
     <AssemblyVersion>1.0.22.0</AssemblyVersion>
@@ -47,20 +47,21 @@ No allocation is performed unless both the handle argument and the value argumen
 
 Obtain instances using <xref:System.Reflection.Metadata.MetadataReader.StringComparer>. A default-initialized instance is useless and behaves as a `null` reference.
 
-The code is optimized so that there is no additional overhead in re-obtaining a comparer over assigning it to a local. That is to say that a construct like:
+The code is optimized so that there is no additional overhead in reobtaining a comparer over assigning it to a local. That is to say that a construct like:
 
-```cs
+```csharp
 if (reader.StringComparer.Equals(typeDef.Namespace, "System") && reader.StringComparer.Equals(typeDef.Name, "Object")
 {
     /* found System.Object */
 }
 ```
-is no less efficient than:
 
-```cs
+...is no less efficient than:
+
+```csharp
 var comparer = reader.StringComparer;
-if (comparer.Equals(typeDef.Namespace, "System") && comparer.Equals(typeDef.Name, "Object") 
-{ 
+if (comparer.Equals(typeDef.Namespace, "System") && comparer.Equals(typeDef.Name, "Object")
+{
     /* found System.Object */
 }
 ```

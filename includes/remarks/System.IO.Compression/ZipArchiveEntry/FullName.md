@@ -7,4 +7,4 @@ You can specify any string as the path of an entry, including strings that speci
 The following example shows how to iterate through the contents of a .zip file, and extract files that contain the .txt extension.
 
 :::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
-:::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.io.compression.ziparchive/vb/program1.vb" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipArchive/Entries/program1.vb" id="Snippet1":::

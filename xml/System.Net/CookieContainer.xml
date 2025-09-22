@@ -77,6 +77,14 @@
 
  The <xref:System.Net.CookieContainer> has three properties that govern the volume of the content of the container: <xref:System.Net.CookieContainer.Capacity%2A>, <xref:System.Net.CookieContainer.MaxCookieSize%2A>, and <xref:System.Net.CookieContainer.PerDomainCapacity%2A>. These values have the default settings of 300, 4096, and 20 respectively. When a <xref:System.Net.Cookie> is added to the container, these properties are used to determine whether a <xref:System.Net.Cookie> already contained in the <xref:System.Net.CookieContainer> should be discarded to make room for the new one. The <xref:System.Net.CookieContainer> keeps track of each addition to ensure that neither the <xref:System.Net.CookieContainer.Capacity%2A> nor the <xref:System.Net.CookieContainer.PerDomainCapacity%2A> limits are exceeded. If one or both are exceeded, then <xref:System.Net.Cookie> instances held by the <xref:System.Net.CookieContainer> are removed. First, any expired <xref:System.Net.Cookie> is removed. If further capacity must be recaptured, then the least-recently used <xref:System.Net.CookieCollection> is purged.
 
+## Thread Safety
+ 
+  The methods for adding and retrieving <xref:System.Net.Cookie> instances to and from a <xref:System.Net.CookieContainer> are thread-safe and can be used concurrently from multiple threads.
+
+  > [!NOTE]
+  > Regardless of thread-safety, unanticipated sharing of <xref:System.Net.CookieContainer> instances can lead to issues when working with <xref:System.Net.Http.HttpClient> and <xref:System.Net.Http.HttpClientHandler> or <xref:System.Net.Http.SocketsHttpHandler>, since parts of the application that aren't intended to share cookies with each other might inadvertently do so.
+  > It is not recommended to use cookies together with <xref:System.Net.Http.IHttpClientFactory>.
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Net.Cookie" />
@@ -468,7 +476,7 @@
 ## Remarks
  If you add a <xref:System.Net.Cookie> instance for just one specific host, do not set the <xref:System.Net.Cookie.Domain%2A> property of the <xref:System.Net.Cookie> instance. This is set automatically, based on the URI.
 
- If your URI corresponds to your local domain and sends to all the hosts on the local domain, set the <xref:System.Net.Cookie><xref:System.Net.Cookie.Domain%2A> property equal to ".local". Otherwise, make sure it matches the host name used in the URI.
+ If your URI corresponds to your local domain and sends to all the hosts on the local domain, set the <xref:System.Net.Cookie.Domain?displayProperty=nameWithType> property equal to ".local". Otherwise, make sure it matches the host name used in the URI.
 
  If the <xref:System.Net.Cookie.Version%2A> property of a <xref:System.Net.Cookie> is Netscape, the <xref:System.Net.Cookie.Path%2A> property of the <xref:System.Net.Cookie>, if not set explicitly, is derived from the URI and is the complete path from the URI, including the page name.
 
@@ -545,7 +553,7 @@
 ## Remarks
  If you add a <xref:System.Net.Cookie> instance for just one specific host, do not set the <xref:System.Net.Cookie.Domain%2A> property of the <xref:System.Net.Cookie> instance. This is set automatically, based on the URI.
 
- If your URI corresponds to your local domain and sends to all the hosts on the local domain, set the <xref:System.Net.Cookie><xref:System.Net.Cookie.Domain%2A> property equal to ".local". Otherwise, make sure it matches the host name used in the URI.
+ If your URI corresponds to your local domain and sends to all the hosts on the local domain, set the <xref:System.Net.Cookie> <xref:System.Net.Cookie.Domain%2A> property equal to ".local". Otherwise, make sure it matches the host name used in the URI.
 
  If <xref:System.Net.CookieContainer.Count%2A> equals <xref:System.Net.CookieContainer.Capacity%2A>, one or more <xref:System.Net.Cookie> instances is removed from the container before adding the `cookie` parameter. Enough <xref:System.Net.Cookie> instances are removed to bring <xref:System.Net.CookieContainer.Count%2A> below <xref:System.Net.CookieContainer.Capacity%2A> as follows: if there are expired instances in scope they are cleaned up. If not, then the least recently used <xref:System.Net.CookieCollection> is found and removed from the container.
 

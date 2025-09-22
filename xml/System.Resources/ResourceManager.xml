@@ -327,7 +327,7 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="usingResourceset" /> is not a derived class of <see cref="T:System.Resources.ResourceSet" />.</exception>
+          <paramref name="usingResourceSet" /> is not a derived class of <see cref="T:System.Resources.ResourceSet" />.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="baseName" /> or <paramref name="assembly" /> parameter is <see langword="null" />.</exception>
         <block subset="none" type="usage">
           <para>This constructor lets you specify a <see cref="T:System.Resources.ResourceSet" /> implementation. If you do not want a specific <see cref="T:System.Resources.ResourceSet" /> implementation but would like to use a custom resource file format, you should derive from the <see cref="T:System.Resources.ResourceSet" /> class, override the <see cref="M:System.Resources.ResourceSet.GetDefaultReader" /> and <see cref="M:System.Resources.ResourceSet.GetDefaultWriter" /> methods, and pass that type to this constructor.</para>
@@ -392,7 +392,7 @@
  You can determine the names of embedded .resources files by compiling and running the following utility. This is a console app that accepts the name of a main assembly or satellite assembly as a command-line parameter. It displays the strings that should be provided as the `baseName` parameter of the <xref:System.Resources.ResourceManager.%23ctor%28System.String%2CSystem.Reflection.Assembly%29> or <xref:System.Resources.ResourceManager.%23ctor%28System.String%2CSystem.Reflection.Assembly%2CSystem.Type%29> constructor so that the resource manager can correctly identify the resource.
 
  :::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/resourcenames.cs" id="Snippet4":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.resources.resourcemanager.class/vb/resourcenames.vb" id="Snippet4":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/BaseName/resourcenames.vb" id="Snippet4":::
 
  ]]></format>
         </remarks>
@@ -893,10 +893,9 @@
 
 
 ## Examples
- The following example calls the <xref:System.Resources.ResourceManager.GetResourceSet%2A> method to retrieve culture-specific resources for the French (France) culture. It then enumerates all of the resources in the resource set. It contains the source code for an executable named ShowNumbers.exe. It also includes the following two text file that contain the names of numbers. The first, NumberResources.txt, contains the names of numbers from one to ten in the English language:
+ The following example calls the <xref:System.Resources.ResourceManager.GetResourceSet%2A> method to retrieve culture-specific resources for the French (France) culture. It then enumerates all of the resources in the resource set. It contains the source code for an executable named ShowNumbers.exe. The example includes two text files that contain the names of numbers. The first, NumberResources.txt, contains the names of numbers from one to ten in the English language:
 
-```
-
+```txt
 one=one
 two=two
 three=three
@@ -907,24 +906,20 @@ seven=seven
 eight=eight
 nine=nine
 ten=ten
-
 ```
 
  The second, NumberResources.fr-FR.txt, contains the names of numbers from one to four in the French language:
 
-```
-
+```txt
 one=un
 two=deux
 three=trois
 four=quatre
-
 ```
 
  You can use a batch file to generate the resource files, embed the English language resource file into the executable, and create a satellite assembly for the French language resources. Here's the batch file to generate an executable by using the Visual Basic compiler:
 
-```
-
+```bat
 resgen NumberResources.txt
 vbc shownumbers.vb /resource:NumberResources.resources
 
@@ -935,21 +930,19 @@ al /out:fr-FR\ShowNumbers.resources.dll /culture:fr-FR /embed:NumberResources.fr
 
  For the C# compiler, you can use the following batch file:
 
-```
-
+```bat
 resgen NumberResources.txt
 csc shownumbers.cs /resource:NumberResources.resources
 
 md fr-FR
 resgen NumberResources.fr-FR.txt
 al /out:fr-FR\ShowNumbers.resources.dll /culture:fr-FR /embed:NumberResources.fr-FR.resources
-
 ```
 
  :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetResourceSet/shownumbers.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.resources.resourcemanager.getresourceset/vb/shownumbers.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetResourceSet/shownumbers.vb" id="Snippet1":::
 
- Note that if you change the value of the `createIfNotExists` argument to `false`, the method call returns `null`, since Resource Manager has not already loaded the French language resources.
+If you change the value of the `createIfNotExists` argument to `false`, the method call returns `null`, since Resource Manager hasn't yet loaded the French language resources.
 
  ]]></format>
         </remarks>
@@ -1119,24 +1112,22 @@ al /out:fr-FR\ShowNumbers.resources.dll /culture:fr-FR /embed:NumberResources.fr
  The following example uses the <xref:System.Resources.ResourceManager.GetStream%28System.String%29> method to retrieve a bitmap that is used in an app's opening splash window. The following source code from a file named CreateResources.cs (for C#) or CreateResources.vb (for Visual Basic) generates a .resx file named AppResources.resx that contains the serialized image. In this case, the image is loaded from a file named SplashScreen.jpg; you can modify the file name to substitute your own image.
 
  :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/createresources.cs" id="Snippet4":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/createresources.vb" id="Snippet4":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetStream/createresources.vb" id="Snippet4":::
 
  The following code from a file named GetStream.cs (for C#) or GetStream.vb (for Visual Basic) then retrieves the resource and displays the image in a <xref:System.Windows.Forms.PictureBox?displayProperty=nameWithType> control.
 
  :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/getstream.cs" id="Snippet5":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/conceptual.resources.retrieving/vb/getstream.vb" id="Snippet5":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetStream/getstream.vb" id="Snippet5":::
 
  You can use the following batch file to build the C# example. For Visual Basic, change `csc` to `vbc`, and change the extension of the source code file from `.cs` to `.vb`.
 
-```
-
+```bat
 csc CreateResources.cs
 CreateResources
 
 resgen AppResources.resx
 
 csc GetStream.cs /resource:AppResources.resources
-
 ```
 
  ]]></format>
