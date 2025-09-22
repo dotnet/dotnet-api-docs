@@ -2175,12 +2175,19 @@ If the current Windows version exposes the [`GetTempPath2`](https://learn.micros
 
 On Windows versions that don't expose GetTempPath2, this method instead invokes the [`GetTempPath`](https://learn.microsoft.com/windows/win32/api/fileapi/nf-fileapi-gettemppathw) Win32 API and returns the resolved path. For more information on how this resolution is performed, including how to control the return value through the use of environment variables, see [the _Remarks_ section](https://learn.microsoft.com/windows/win32/api/fileapi/nf-fileapi-gettemppathw#remarks) of the GetTempPath documentation.
 
+# [MacOS](#tab/macos)
+
+If the `TMPDIR` environment variable has been set, this method returns the value specified by that environment variable. MacOS sets `TMPDIR` on login to a per-user temporary directory.
+
+Otherwise, this method returns `/tmp/`.
+
 # [Linux](#tab/linux)
 
 If the `TMPDIR` environment variable has been set, this method returns the value specified by that environment variable.
 
 Otherwise, this method returns `/tmp/`.
-
+The `/tmp/` directory on Linux is commonly shared among all users (`1777` permissions); ensure this meets your application's security needs.
+            
 ---
 
 ## Examples
