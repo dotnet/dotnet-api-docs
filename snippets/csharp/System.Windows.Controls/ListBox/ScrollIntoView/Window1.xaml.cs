@@ -76,7 +76,7 @@ namespace ListBox_Index
         //<SnippetListBoxItemsIsSelected2>
         private void SelectedItem(object sender, RoutedEventArgs e)
         {
-            if (item1.IsSelected == true)
+            if (item1.IsSelected)
             {
                 label2.Content = "IsSelected.";
             }

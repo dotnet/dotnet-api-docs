@@ -102,7 +102,7 @@ public class Example
 
         // Add the node after the node referred to by mark2.
         sentence.AddAfter(mark2, current);
-        IndicateNode(current, "Test 13: Add node removed in test 11 after a referenced node (brown):");
+        IndicateNode(current, "Test 13: Add node removed in test 12 after a referenced node (brown):");
 
         // The Remove method finds and removes the
         // first node that that has the specified value.
@@ -231,7 +231,7 @@ public class Example
 //Test 12: Remove current node (dog) and attempt to indicate it:
 //Node 'dog' is not in the list.
 
-//Test 13: Add node removed in test 11 after a referenced node (brown):
+//Test 13: Add node removed in test 12 after a referenced node (brown):
 //the quick brown (dog) jumps over the lazy old fox
 
 //Test 14: Remove node that has the value 'old':

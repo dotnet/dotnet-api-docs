@@ -84,11 +84,11 @@ class Form1 : Form
     //<snippet10>
     private void Button1_Click( object sender, EventArgs e )
     {
-        if ( RadioButton1.Checked == true )
+        if ( RadioButton1.Checked)
         {
             DataGridView1.Sort( new RowComparer( SortOrder.Ascending ) );
         }
-        else if ( RadioButton2.Checked == true )
+        else if ( RadioButton2.Checked)
         {
             DataGridView1.Sort( new RowComparer( SortOrder.Descending ) );
         }

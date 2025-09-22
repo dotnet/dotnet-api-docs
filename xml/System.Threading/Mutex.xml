@@ -17,6 +17,7 @@
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
@@ -32,6 +33,7 @@
   </AssemblyInfo>
   <TypeForwardingChain>
     <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Threading" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Threading" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
@@ -43,13 +45,9 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-8.0;net-9.0">
+    <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="net-8.0;net-9.0">
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
     </Attribute>
     <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
       <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(true)]</AttributeName>
@@ -59,57 +57,57 @@
   <Docs>
     <summary>A synchronization primitive that can also be used for interprocess synchronization.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When two or more threads need to access a shared resource at the same time, the system needs a synchronization mechanism to ensure that only one thread at a time uses the resource. <xref:System.Threading.Mutex> is a synchronization primitive that grants exclusive access to the shared resource to only one thread. If a thread acquires a mutex, the second thread that wants to acquire that mutex is suspended until the first thread releases the mutex.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When two or more threads need to access a shared resource at the same time, the system needs a synchronization mechanism to ensure that only one thread at a time uses the resource. <xref:System.Threading.Mutex> is a synchronization primitive that grants exclusive access to the shared resource to only one thread. If a thread acquires a mutex, the second thread that wants to acquire that mutex is suspended until the first thread releases the mutex.
+
 > [!IMPORTANT]
->  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.  
-  
- You can use the <xref:System.Threading.WaitHandle.WaitOne%2A?displayProperty=nameWithType> method to request ownership of a mutex. The calling thread blocks until one of the following occurs:  
-  
--   The mutex is signaled to indicate that it is not owned. When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `true`, and the calling thread assumes ownership of the mutex and accesses the resource protected by the mutex. When it has finished accessing the resource, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the mutex. The first example in the Examples section illustrates this pattern.  
-  
--   The time-out interval specified in the call to a <xref:System.Threading.WaitHandle.WaitOne%2A> method that has a `millisecondsTimeout` or `timeout` parameter has elapsed. When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `false`, and the calling thread makes no further attempt to acquire ownership of the mutex. In this case, you should structure your code so that access to the resource that is protected by the mutex is denied to the calling thread. Because the thread never acquired ownership of the mutex, it must not call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method. The second example in the Examples section illustrates this pattern.  
-  
- The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it. By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity. A mutex can also be passed across application domain boundaries.  
-  
- The thread that owns a mutex can request the same mutex in repeated calls to <xref:System.Threading.WaitHandle.WaitOne%2A> without blocking its execution. However, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method the same number of times to release ownership of the mutex.  
-  
- Because the <xref:System.Threading.Mutex> class inherits from <xref:System.Threading.WaitHandle>, you can also call the static <xref:System.Threading.WaitHandle.WaitAll%2A?displayProperty=nameWithType> and <xref:System.Threading.WaitHandle.WaitAny%2A?displayProperty=nameWithType> methods to synchronize access to a protected resource.  
-  
- If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled, and the next waiting thread gets ownership. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex. Before version 2.0 of the .NET Framework, no exception was thrown.  
-  
+>  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
+
+ You can use the <xref:System.Threading.WaitHandle.WaitOne%2A?displayProperty=nameWithType> method to request ownership of a mutex. The calling thread blocks until one of the following occurs:
+
+- The mutex is signaled to indicate that it is not owned. When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `true`, and the calling thread assumes ownership of the mutex and accesses the resource protected by the mutex. When it has finished accessing the resource, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the mutex. The first example in the Examples section illustrates this pattern.
+
+- The time-out interval specified in the call to a <xref:System.Threading.WaitHandle.WaitOne%2A> method that has a `millisecondsTimeout` or `timeout` parameter has elapsed. When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `false`, and the calling thread makes no further attempt to acquire ownership of the mutex. In this case, you should structure your code so that access to the resource that is protected by the mutex is denied to the calling thread. Because the thread never acquired ownership of the mutex, it must not call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method. The second example in the Examples section illustrates this pattern.
+
+ The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it. By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity. A mutex can also be passed across application domain boundaries.
+
+ The thread that owns a mutex can request the same mutex in repeated calls to <xref:System.Threading.WaitHandle.WaitOne%2A> without blocking its execution. However, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method the same number of times to release ownership of the mutex.
+
+ Because the <xref:System.Threading.Mutex> class inherits from <xref:System.Threading.WaitHandle>, you can also call the static <xref:System.Threading.WaitHandle.WaitAll%2A?displayProperty=nameWithType> and <xref:System.Threading.WaitHandle.WaitAny%2A?displayProperty=nameWithType> methods to synchronize access to a protected resource.
+
+ If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled, and the next waiting thread gets ownership. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex. Before version 2.0 of the .NET Framework, no exception was thrown.
+
 > [!CAUTION]
->  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.  
-  
- In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).  
-  
- Mutexes are of two types: local mutexes, which are unnamed, and named system mutexes. A local mutex exists only within your process. It can be used by any thread in your process that has a reference to the <xref:System.Threading.Mutex> object that represents the mutex. Each unnamed <xref:System.Threading.Mutex> object represents a separate local mutex.  
-  
- Named system mutexes are visible throughout the operating system, and can be used to synchronize the activities of processes. You can create a <xref:System.Threading.Mutex> object that represents a named system mutex by using a constructor that accepts a name. The operating-system object can be created at the same time, or it can exist before the creation of the <xref:System.Threading.Mutex> object. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex, and you can use the <xref:System.Threading.Mutex.OpenExisting%2A> method to open an existing named system mutex.  
-  
+>  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
+
+ In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).
+
+ Mutexes are of two types: local mutexes, which are unnamed, and named system mutexes. A local mutex exists only within your process. It can be used by any thread in your process that has a reference to the <xref:System.Threading.Mutex> object that represents the mutex. Each unnamed <xref:System.Threading.Mutex> object represents a separate local mutex.
+
+ Named system mutexes are visible throughout the operating system, and can be used to synchronize the activities of processes. You can create a <xref:System.Threading.Mutex> object that represents a named system mutex by using a constructor that accepts a name. The operating-system object can be created at the same time, or it can exist before the creation of the <xref:System.Threading.Mutex> object. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex, and you can use the <xref:System.Threading.Mutex.OpenExisting%2A> method to open an existing named system mutex.
+
 > [!NOTE]
-> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.  
-  
+> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.
+
 > [!CAUTION]
 > By default, a named mutex is not restricted to the user that created it. Other users may be able to open and use the mutex, including interfering with the mutex by entering the mutex and not exiting it. On Unix-like operating systems, the file system is used in the implementation of named mutexes, and other users may be able to interfere with named mutexes in more significant ways. On Windows, to restrict access to specific users, you can use a constructor overload or <xref:System.Threading.MutexAcl> and pass in a <xref:System.Security.AccessControl.MutexSecurity> when creating the named mutex. On Unix-like operating systems, currently there is no way to restrict access to a named mutex. Avoid using named mutexes without access restrictions on systems that might have untrusted users running code.
-  
+
 [!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
 
-  
-## Examples  
- This example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. Because each calling thread is blocked until it acquires ownership of the mutex, it must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the mutex.  
-  
+
+## Examples
+ This example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. Because each calling thread is blocked until it acquires ownership of the mutex, it must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the mutex.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/Overview/example1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example1.vb" id="Snippet1":::  
-  
- In the following example, each thread calls the <xref:System.Threading.WaitHandle.WaitOne%28System.Int32%29> method to acquire the mutex. If the time-out interval elapses, the method returns `false`, and the thread neither acquires the mutex nor gains access to the resource the mutex protects. The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is called only by the thread that acquires the mutex.  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/Overview/example1.vb" id="Snippet1":::
+
+ In the following example, each thread calls the <xref:System.Threading.WaitHandle.WaitOne%28System.Int32%29> method to acquire the mutex. If the time-out interval elapses, the method returns `false`, and the thread neither acquires the mutex nor gains access to the resource the mutex protects. The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is called only by the thread that acquires the mutex.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/Overview/example2.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example2.vb" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/Overview/example2.vb" id="Snippet2":::
+
  ]]></format>
     </remarks>
     <threadsafe>This type is thread safe.</threadsafe>
@@ -149,6 +147,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -176,20 +175,19 @@
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with default properties.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Calling this constructor overload is the same as calling the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor overload and specifying `false` for initial ownership of the mutex. That is, the calling thread does not own the mutex.  
-  
-   
-  
-## Examples  
- The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CPP/class1.cpp" id="Snippet1":::
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Calling this constructor overload is the same as calling the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor overload and specifying `false` for initial ownership of the mutex. That is, the calling thread does not own the mutex.
+
+
+
+## Examples
+ The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/class13.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/VB/class1.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/class13.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
@@ -216,6 +214,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -247,15 +246,14 @@
           <see langword="true" /> to give the calling thread initial ownership of the mutex; otherwise, <see langword="false" />.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the <xref:System.Threading.Mutex> owns it initially.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/CPP/class1.cpp" id="Snippet1":::
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the <xref:System.Threading.Mutex> owns it initially.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/class1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/VB/class1.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/class1.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
@@ -269,7 +267,7 @@
       <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean, name As String)" />
       <MemberSignature Language="F#" Value="new System.Threading.Mutex : bool * string -&gt; System.Threading.Mutex" Usage="new System.Threading.Mutex (initiallyOwned, name)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name);" />
-      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string? name);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string? name);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -283,6 +281,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -300,10 +299,6 @@
         <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="net-8.0;net-9.0">
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
           <AttributeName Language="C#">[System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]</AttributeName>
@@ -320,56 +315,117 @@
         <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, and a string that is the name of the mutex.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
- If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the mutex only if the named system mutex was created as a result of this call. Since there is no mechanism for determining whether the named system mutex was created, it is better to specify `false` for `initiallyOwned` when calling this constructor overload. You can use the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> constructor if you need to determine initial ownership.  
-  
- This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  
-  
- If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.  
-  
- If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.  
-  
- Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.  
-  
+ If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the mutex only if the named system mutex was created as a result of this call. Since there is no mechanism for determining whether the named system mutex was created, it is better to specify `false` for `initiallyOwned` when calling this constructor overload. You can use the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> constructor if you need to determine initial ownership.
+
+ This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.
+
+ If the named mutex has already been created with access control security and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.
+
+ If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor.
+
+ Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.
+
 > [!NOTE]
-> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.  
-  
+> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.
+
 > [!CAUTION]
 > By default, a named mutex is not restricted to the user that created it. Other users may be able to open and use the mutex, including interfering with the mutex by entering the mutex and not exiting it. On Unix-like operating systems, the file system is used in the implementation of named mutexes, and other users may be able to interfere with named mutexes in more significant ways. On Windows, to restrict access to specific users, you can use a constructor overload or <xref:System.Threading.MutexAcl> and pass in a <xref:System.Security.AccessControl.MutexSecurity> when creating the named mutex. On Unix-like operating systems, currently there is no way to restrict access to a named mutex. Avoid using named mutexes without access restrictions on systems that might have untrusted users running code.
-  
+
 [!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
 
-## Examples  
- The following example shows how a named mutex is used to signal between threads running in two separate processes.  
-  
- Run this program from two or more command windows. Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex `MyMutex`. The named mutex is a system object whose lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it. The named mutex is created when the first process creates its <xref:System.Threading.Mutex> object; in this example, the named mutex is owned by the first process that runs the program. The named mutex is destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released.  
-  
- The constructor overload used in this example cannot tell the calling thread whether initial ownership of the named mutex was granted. You should not use this constructor to request initial ownership unless you can be certain that the thread will create the named mutex.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/CPP/class1.cpp" id="Snippet1":::
+## Examples
+ The following example shows how a named mutex is used to signal between threads running in two separate processes.
+
+ Run this program from two or more command windows. Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex `MyMutex`. The named mutex is a system object whose lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it. The named mutex is created when the first process creates its <xref:System.Threading.Mutex> object; in this example, the named mutex is owned by the first process that runs the program. The named mutex is destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released.
+
+ The constructor overload used in this example cannot tell the calling thread whether initial ownership of the named mutex was granted. You should not use this constructor to request initial ownership unless you can be certain that the thread will create the named mutex.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/class11.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/VB/class1.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/class11.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names) for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
           .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+        <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
+        <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (string? name, System.Threading.NamedWaitHandleOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string name, valuetype System.Threading.NamedWaitHandleOptions options) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.String,System.Threading.NamedWaitHandleOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (name As String, options As NamedWaitHandleOptions)" />
+      <MemberSignature Language="F#" Value="new System.Threading.Mutex : string * System.Threading.NamedWaitHandleOptions -&gt; System.Threading.Mutex" Usage="new System.Threading.Mutex (name, options)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(System::String ^ name, System::Threading::NamedWaitHandleOptions options);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="net-10.0" />
+        <Parameter Name="options" Type="System.Threading.NamedWaitHandleOptions" Index="1" FrameworkAlternate="net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
+        <param name="options">The scope options for the named system mutex. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying system mutex object.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a string that is the name of the mutex and options to set user-scope and session-scope access. The calling thread does not request to have initial ownership of the mutex.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used, However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
+
+This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.
+
+If the named mutex has already been created with access control security and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.
+
+If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor.
+
+Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.
+
+The `options` parameter can be provided to specify whether the named mutex is accessible to the current user only or to all users. It also allows you to specify whether the named mutex is accessible to processes in the current session only or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
+
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+
+-or-
+
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.
+ -or-
+
+An object with the specified <paramref name="name" /> exists, but the specified <paramref name="options" /> are not compatible with the existing object's options.</exception>
         <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
         <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
@@ -381,7 +437,7 @@ There was some other error. The `HResult` property may provide more information.
       <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean, name As String, ByRef createdNew As Boolean)" />
       <MemberSignature Language="F#" Value="new System.Threading.Mutex : bool * string * bool -&gt; System.Threading.Mutex" Usage="new System.Threading.Mutex (initiallyOwned, name, createdNew)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name, [Runtime::InteropServices::Out] bool % createdNew);" />
-      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string? name, out bool createdNew);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string? name, out bool createdNew);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -395,6 +451,7 @@ There was some other error. The `HResult` property may provide more information.
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -412,10 +469,6 @@ There was some other error. The `HResult` property may provide more information.
         <Attribute FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6">
           <AttributeName Language="C#">[System.Security.SecurityCritical]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Security.SecurityCritical&gt;]</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="net-8.0;net-9.0">
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(2)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(2)&gt;]</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
           <AttributeName Language="C#">[System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]</AttributeName>
@@ -434,52 +487,116 @@ There was some other error. The `HResult` property may provide more information.
         <param name="createdNew">When this method returns, contains a Boolean that is <see langword="true" /> if a local mutex was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system mutex was created; <see langword="false" /> if the specified named system mutex already existed. This parameter is passed uninitialized.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, and a Boolean value that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
- If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.  
-  
- This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  
-  
- If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType> rights, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.  
-  
- If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.  
-  
- Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.  
-  
+ If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.
+
+ This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.
+
+ If the named mutex has already been created with access control security and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType> rights, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.
+
+ If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.
+
+ Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.
+
 > [!NOTE]
-> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.  
-  
+> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.
+
 > [!CAUTION]
 > By default, a named mutex is not restricted to the user that created it. Other users may be able to open and use the mutex, including interfering with the mutex by entering the mutex and not exiting it. On Unix-like operating systems, the file system is used in the implementation of named mutexes, and other users may be able to interfere with named mutexes in more significant ways. On Windows, to restrict access to specific users, you can use a constructor overload or <xref:System.Threading.MutexAcl> and pass in a <xref:System.Security.AccessControl.MutexSecurity> when creating the named mutex. On Unix-like operating systems, currently there is no way to restrict access to a named mutex. Avoid using named mutexes without access restrictions on systems that might have untrusted users running code.
 
-[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]   
-  
-## Examples  
- The following code example shows how a named mutex is used to signal between processes or threads. Run this program from two or more command windows. Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex "MyMutex". The named mutex is a system object. In this example, its lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it. The named mutex is created when the first process creates its local <xref:System.Threading.Mutex> object, and destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released. The named mutex is initially owned by the first process. The second process and any subsequent processes wait for earlier processes to release the named mutex.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/CPP/class1.cpp" id="Snippet1":::
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
+
+## Examples
+ The following code example shows how a named mutex is used to signal between processes or threads. Run this program from two or more command windows. Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex "MyMutex". The named mutex is a system object. In this example, its lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it. The named mutex is created when the first process creates its local <xref:System.Threading.Mutex> object, and destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released. The named mutex is initially owned by the first process. The second process and any subsequent processes wait for earlier processes to release the named mutex.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/class12.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/VB/class1.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/class12.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names) for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
           .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+        <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
+        <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string? name, System.Threading.NamedWaitHandleOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool initiallyOwned, string name, valuetype System.Threading.NamedWaitHandleOptions options) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Threading.NamedWaitHandleOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean, name As String, options As NamedWaitHandleOptions)" />
+      <MemberSignature Language="F#" Value="new System.Threading.Mutex : bool * string * System.Threading.NamedWaitHandleOptions -&gt; System.Threading.Mutex" Usage="new System.Threading.Mutex (initiallyOwned, name, options)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name, System::Threading::NamedWaitHandleOptions options);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="initiallyOwned" Type="System.Boolean" Index="0" FrameworkAlternate="net-10.0" />
+        <Parameter Name="name" Type="System.String" Index="1" FrameworkAlternate="net-10.0" />
+        <Parameter Name="options" Type="System.Threading.NamedWaitHandleOptions" Index="2" FrameworkAlternate="net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="initiallyOwned">
+          <see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
+        <param name="options">The scope options for the named system mutex. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying system mutex object.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, and options to set user-scope and session-scope access.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used, However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
+
+If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the mutex only if the named system mutex was created as a result of this call. Since there is no mechanism for determining whether the named system mutex was created, it is better to specify `false` for `initiallyOwned` when calling this constructor overload. You can use the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> constructor if you need to determine initial ownership.
+
+This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.
+
+If the named mutex has already been created with access control security and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.
+
+If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor.
+
+Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.
+
+The `options` parameter can be provided to specify whether the named mutex is accessible to the current user only or to all users. It also allows you to specify whether the named mutex is accessible to processes in the current session only or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+
+-or-
+
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.
+-or-
+
+An object with the specified <paramref name="name" /> exists, but the specified <paramref name="options" /> are not compatible with the existing object's options.</exception>
         <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
         <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
@@ -514,10 +631,10 @@ There was some other error. The `HResult` property may provide more information.
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="initiallyOwned" Type="System.Boolean" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
-        <Parameter Name="name" Type="System.String" Index="1" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
-        <Parameter Name="createdNew" Type="System.Boolean" RefType="out" Index="2" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
-        <Parameter Name="mutexSecurity" Type="System.Security.AccessControl.MutexSecurity" Index="3" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
+        <Parameter Name="initiallyOwned" Type="System.Boolean" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="name" Type="System.String" Index="1" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="createdNew" Type="System.Boolean" RefType="out" Index="2" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="mutexSecurity" Type="System.Security.AccessControl.MutexSecurity" Index="3" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="initiallyOwned">
@@ -527,66 +644,131 @@ There was some other error. The `HResult` property may provide more information.
         <param name="mutexSecurity">A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security to be applied to the named system mutex.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, a Boolean variable that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex, and the access control security to be applied to the named mutex.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown. Otherwise, a new synchronization object is created.
 
- If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.  
-  
- Use this constructor to apply access control security to a named system mutex when it is created, preventing other code from taking control of the mutex.  
-  
- This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  
-  
- If the named system mutex does not exist, it is created with the specified access control security. If the named mutex exists, the specified access control security is ignored.  
-  
+ If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.
+
+ Use this constructor to apply access control security to a named system mutex when it is created, preventing other code from taking control of the mutex.
+
+ This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.
+
+ If the named system mutex does not exist, it is created with the specified access control security. If the named mutex exists, the specified access control security is ignored.
+
 > [!NOTE]
->  The caller has full control over the newly created <xref:System.Threading.Mutex> object even if `mutexSecurity` denies or fails to grant some access rights to the current user. However, if the current user attempts to get another <xref:System.Threading.Mutex> object to represent the same named mutex, using either a constructor or the <xref:System.Threading.Mutex.OpenExisting%2A> method, Windows access control security is applied.  
-  
- If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.  
-  
- If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.  
-  
- Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.  
-  
+>  The caller has full control over the newly created <xref:System.Threading.Mutex> object even if `mutexSecurity` denies or fails to grant some access rights to the current user. However, if the current user attempts to get another <xref:System.Threading.Mutex> object to represent the same named mutex, using either a constructor or the <xref:System.Threading.Mutex.OpenExisting%2A> method, Windows access control security is applied.
+
+ If the named mutex has already been created with access control security and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.
+
+ If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.
+
+ Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.
+
 > [!NOTE]
-> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.  
-  
+> On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix `Global\`, the mutex is visible in all terminal server sessions. If its name begins with the prefix `Local\`, the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix `Local\`. Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names `Global\` and `Local\` describe the scope of the mutex name relative to terminal server sessions, not relative to processes.
+
 > [!CAUTION]
 > By default, a named mutex is not restricted to the user that created it. Other users may be able to open and use the mutex, including interfering with the mutex by entering the mutex and not exiting it. To restrict access to specific users, you can pass in a <xref:System.Security.AccessControl.MutexSecurity> when creating the named mutex. Avoid using named mutexes without access restrictions on systems that might have untrusted users running code.
 
-[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]  
-   
-  
-## Examples  
- The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  
-  
- If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  
-  
- If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.  
-  
- After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp" id="Snippet1":::
+[!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
+
+
+## Examples
+ The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.
+
+ If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.
+
+ If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.
+
+ After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names) for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
         <exception cref="T:System.ArgumentException">
           .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Mutex (bool initiallyOwned, string? name, System.Threading.NamedWaitHandleOptions options, out bool createdNew);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(bool initiallyOwned, string name, valuetype System.Threading.NamedWaitHandleOptions options, [out] bool&amp; createdNew) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Threading.NamedWaitHandleOptions,System.Boolean@)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (initiallyOwned As Boolean, name As String, options As NamedWaitHandleOptions, ByRef createdNew As Boolean)" />
+      <MemberSignature Language="F#" Value="new System.Threading.Mutex : bool * string * System.Threading.NamedWaitHandleOptions * bool -&gt; System.Threading.Mutex" Usage="new System.Threading.Mutex (initiallyOwned, name, options, createdNew)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Mutex(bool initiallyOwned, System::String ^ name, System::Threading::NamedWaitHandleOptions options, [Runtime::InteropServices::Out] bool % createdNew);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="initiallyOwned" Type="System.Boolean" Index="0" FrameworkAlternate="net-10.0" />
+        <Parameter Name="name" Type="System.String" Index="1" FrameworkAlternate="net-10.0" />
+        <Parameter Name="options" Type="System.Threading.NamedWaitHandleOptions" Index="2" FrameworkAlternate="net-10.0" />
+        <Parameter Name="createdNew" Type="System.Boolean" RefType="out" Index="3" FrameworkAlternate="net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="initiallyOwned"><see langword="true" /> to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, <see langword="false" />.</param>
+        <param name="name">The name, if the synchronization object is to be shared with other processes; otherwise, <see langword="null" /> or an empty string. The name is case-sensitive.</param>
+        <param name="options">The scope options for the named system mutex. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying system mutex object.</param>
+        <param name="createdNew">When this method returns, contains a Boolean that is <see langword="true" /> if a local mutex was created (that is, if <paramref name="name" /> is <see langword="null" /> or an empty string) or if the specified named system mutex was created; contains <see langword="false" /> if the specified named system mutex already existed. This parameter is passed uninitialized.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Threading.Mutex" /> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, options to set user-scope and session-scope access, and a Boolean value that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a `name` is provided and a synchronization object of the requested type already exists in the namespace, the existing synchronization object is used, However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object of a different type already exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well. Otherwise, a new synchronization object is created.
+
+If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.
+
+This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.
+
+If the named mutex has already been created with access control security and the caller does not have <xref:System.Security.AccessControl.MutexRights.FullControl?displayProperty=nameWithType> rights, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.
+
+If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.
+
+Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.
+
+The `options` parameter can be provided to specify whether the named mutex is accessible to the current user only or to all users. It also allows you to specify whether the named mutex is accessible to processes in the current session only or to all sessions. For more information, see <xref:System.Threading.NamedWaitHandleOptions>.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.UnauthorizedAccessException">The named mutex exists and has access control security, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.FullControl" />.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+
+-or-
+
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.
+ -or-
+
+An object with the specified <paramref name="name" /> exists, but the specified <paramref name="options" /> are not compatible with the existing object's options.</exception>
+        <related type="Article" href="/dotnet/standard/threading/">Managed Threading</related>
+        <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
     </Member>
     <Member MemberName="GetAccessControl">
@@ -622,35 +804,34 @@ There was some other error. The `HResult` property may provide more information.
         <summary>Gets a <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security for the named mutex.</summary>
         <returns>A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security for the named mutex.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Threading.Mutex.GetAccessControl%2A> method uses the following combination of flags (combined using the bitwise OR operation) to search for permissions: <xref:System.Security.AccessControl.AccessControlSections.Access?displayProperty=nameWithType>, <xref:System.Security.AccessControl.AccessControlSections.Owner?displayProperty=nameWithType>, and <xref:System.Security.AccessControl.AccessControlSections.Group?displayProperty=nameWithType>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Threading.Mutex.GetAccessControl%2A> method uses the following combination of flags (combined using the bitwise OR operation) to search for permissions: <xref:System.Security.AccessControl.AccessControlSections.Access?displayProperty=nameWithType>, <xref:System.Security.AccessControl.AccessControlSections.Owner?displayProperty=nameWithType>, and <xref:System.Security.AccessControl.AccessControlSections.Group?displayProperty=nameWithType>.
+
  The user must have <xref:System.Security.AccessControl.MutexRights.ReadPermissions?displayProperty=nameWithType> to call this method, and the mutex must have been opened with <xref:System.Security.AccessControl.MutexRights.ReadPermissions?displayProperty=nameWithType>.
 
 > [!NOTE]
 > In .NET Core and .NET 5+, the equivalent method is <xref:System.Threading.ThreadingAclExtensions.GetAccessControl%2A>.
 
-## Examples  
- The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  
-  
- If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  
-  
- If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.  
-  
- After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp" id="Snippet1":::
+## Examples
+ The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.
+
+ If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.
+
+ If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.
+
+ After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.UnauthorizedAccessException">The current <see cref="T:System.Threading.Mutex" /> object represents a named system mutex, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" />.  
-  
- -or-  
-  
+        <exception cref="T:System.UnauthorizedAccessException">The current <see cref="T:System.Threading.Mutex" /> object represents a named system mutex, but the user does not have <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" />.
+
+ -or-
+
  The current <see cref="T:System.Threading.Mutex" /> object represents a named system mutex, and was not opened with <see cref="F:System.Security.AccessControl.MutexRights.ReadPermissions" />.</exception>
       </Docs>
     </Member>
@@ -685,6 +866,7 @@ There was some other error. The `HResult` property may provide more information.
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -707,45 +889,44 @@ There was some other error. The `HResult` property may provide more information.
         <ReturnType>System.Threading.Mutex</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       </Parameters>
       <Docs>
         <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
         <summary>Opens the specified named mutex, if it already exists.</summary>
         <returns>An object that represents the named system mutex.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown.
 
- The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
-  
- Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  
-  
- This method overload is equivalent to calling the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> and <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> rights, combined by using the bitwise OR operation.  
-  
- Specifying the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  
-  
- This method does not request ownership of the mutex.  
-  
-   
-  
-## Examples  
- The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  
-  
- If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  
-  
- If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.  
-  
- After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp" id="Snippet1":::
+ The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.
+
+ Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.
+
+ This method overload is equivalent to calling the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> and <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> rights, combined by using the bitwise OR operation.
+
+ Specifying the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.
+
+ This method does not request ownership of the mutex.
+
+
+
+## Examples
+ The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.
+
+ If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.
+
+ If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.
+
+ After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -758,13 +939,13 @@ There was some other error. The `HResult` property may provide more information.
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names) for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>
@@ -797,8 +978,8 @@ There was some other error. The `HResult` property may provide more information.
         <ReturnType>System.Threading.Mutex</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
-        <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" Index="1" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" Index="1" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
@@ -806,36 +987,35 @@ There was some other error. The `HResult` property may provide more information.
         <summary>Opens the specified named mutex, if it already exists, with the desired security access.</summary>
         <returns>An object that represents the named system mutex.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown.
 
- The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  
-  
- The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open an existing named mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
-  
- Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  
-  
- This method does not request ownership of the mutex.  
-  
-   
-  
-## Examples  
- The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  
-  
- If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  
-  
- If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.  
-  
- After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp" id="Snippet1":::
+ The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.
+
+ The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open an existing named mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.
+
+ Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.
+
+ This method does not request ownership of the mutex.
+
+
+
+## Examples
+ The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.
+
+ If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.
+
+ If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.
+
+ After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -848,14 +1028,77 @@ There was some other error. The `HResult` property may provide more information.
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names) for more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the desired security access.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="OpenExisting">
+      <MemberSignature Language="C#" Value="public static System.Threading.Mutex OpenExisting (string name, System.Threading.NamedWaitHandleOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Threading.Mutex OpenExisting(string name, valuetype System.Threading.NamedWaitHandleOptions options) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.OpenExisting(System.String,System.Threading.NamedWaitHandleOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function OpenExisting (name As String, options As NamedWaitHandleOptions) As Mutex" />
+      <MemberSignature Language="F#" Value="static member OpenExisting : string * System.Threading.NamedWaitHandleOptions -&gt; System.Threading.Mutex" Usage="System.Threading.Mutex.OpenExisting (name, options)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Threading::Mutex ^ OpenExisting(System::String ^ name, System::Threading::NamedWaitHandleOptions options);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Mutex</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="net-10.0" />
+        <Parameter Name="options" Type="System.Threading.NamedWaitHandleOptions" Index="1" FrameworkAlternate="net-10.0" />
+      </Parameters>
+      <Docs>
+        <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive.</param>
+        <param name="options">The scope options for the named system mutex. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying system mutex object.</param>
+        <summary>Opens the specified named mutex, if it already exists. If the options are set to the current user only, the object's access controls are verified for the calling user.</summary>
+        <returns>An object that represents the named system mutex.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, a `WaitHandleCannotBeOpenedException` is thrown. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, a `WaitHandleCannotBeOpenedException` is thrown as well.
+
+The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.
+
+Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.
+
+This method does not request ownership of the mutex.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="name" /> is an empty string.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="name" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.
+
+-or-
+
+An object with the specified <paramref name="name" /> exists, but the specified <paramref name="options" /> are not compatible with the existing object's options.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive.
+
+-or-
+
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReleaseMutex">
@@ -878,6 +1121,7 @@ There was some other error. The `HResult` property may provide more information.
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -908,32 +1152,31 @@ There was some other error. The `HResult` property may provide more information.
       <Docs>
         <summary>Releases the <see cref="T:System.Threading.Mutex" /> once.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Whenever a thread acquires a mutex (for example, by calling its <xref:System.Threading.WaitHandle.WaitOne%2A> method), it must subsequently call <xref:System.Threading.Mutex.ReleaseMutex%2A> to relinquish ownership of the mutex and unblock other threads that are trying to gain ownership of the mutex. If the attempt to get ownership of the mutex fails (for example, when a call to the <xref:System.Threading.WaitHandle.WaitOne%2A> method with a `millisecondsTimeout` or a `timeout` parameter returns `false` because the request times out), the thread shouldn't call <xref:System.Threading.Mutex.ReleaseMutex%2A>, In this case, the thread should also not be allowed to access the resource protected by the mutex, as the following example shows.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Whenever a thread acquires a mutex (for example, by calling its <xref:System.Threading.WaitHandle.WaitOne%2A> method), it must subsequently call <xref:System.Threading.Mutex.ReleaseMutex%2A> to relinquish ownership of the mutex and unblock other threads that are trying to gain ownership of the mutex. If the attempt to get ownership of the mutex fails (for example, when a call to the <xref:System.Threading.WaitHandle.WaitOne%2A> method with a `millisecondsTimeout` or a `timeout` parameter returns `false` because the request times out), the thread shouldn't call <xref:System.Threading.Mutex.ReleaseMutex%2A>, In this case, the thread should also not be allowed to access the resource protected by the mutex, as the following example shows.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/Overview/example2.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example2.vb" id="Snippet2":::  
-  
- A thread that owns a mutex can specify the same mutex in repeated wait function calls without blocking its execution. The number of calls is kept by the common language runtime. The thread must call <xref:System.Threading.Mutex.ReleaseMutex%2A> the same number of times to release ownership of the mutex.  
-  
- If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled and the next waiting thread gets ownership. If no one owns the mutex, the state of the mutex is signaled. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex. Prior to version 2.0 of the .NET Framework, no exception was thrown.  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/Overview/example2.vb" id="Snippet2":::
+
+ A thread that owns a mutex can specify the same mutex in repeated wait function calls without blocking its execution. The number of calls is kept by the common language runtime. The thread must call <xref:System.Threading.Mutex.ReleaseMutex%2A> the same number of times to release ownership of the mutex.
+
+ If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled and the next waiting thread gets ownership. If no one owns the mutex, the state of the mutex is signaled. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex. Prior to version 2.0 of the .NET Framework, no exception was thrown.
+
 > [!CAUTION]
->  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.  
-  
- In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).  
-  
-   
-  
-## Examples  
- The following example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially. The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is used to release the mutex when it is no longer needed.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CPP/class1.cpp" id="Snippet1":::
+>  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
+
+ In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).
+
+
+
+## Examples
+ The following example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially. The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is used to release the mutex when it is no longer needed.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/class13.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/VB/class1.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/class13.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ApplicationException">The calling thread does not own the mutex.</exception>
@@ -971,41 +1214,40 @@ There was some other error. The `HResult` property may provide more information.
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="mutexSecurity" Type="System.Security.AccessControl.MutexSecurity" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinmac-3.0;netframework-4.8.1" />
+        <Parameter Name="mutexSecurity" Type="System.Security.AccessControl.MutexSecurity" Index="0" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="mutexSecurity">A <see cref="T:System.Security.AccessControl.MutexSecurity" /> object that represents the access control security to be applied to the named system mutex.</param>
         <summary>Sets the access control security for a named system mutex.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
  The user must have <xref:System.Security.AccessControl.MutexRights.ChangePermissions?displayProperty=nameWithType> rights to call this method, and the mutex must have been opened with <xref:System.Security.AccessControl.MutexRights.ChangePermissions?displayProperty=nameWithType>.
 
 > [!NOTE]
 > In .NET Core and .NET 5+, the equivalent method is <xref:System.Threading.ThreadingAclExtensions.SetAccessControl%2A>.
 
-## Examples  
- The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  
-  
- If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  
-  
- If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.  
-  
- After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp" id="Snippet1":::
+## Examples
+ The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.
+
+ If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.
+
+ If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.
+
+ After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.
+
  :::code language="csharp" source="~/snippets/csharp/System.Threading/Mutex/.ctor/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb" id="Snippet1":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/System.Threading/Mutex/.ctor/source.vb" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="mutexSecurity" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.UnauthorizedAccessException">The user does not have <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" />.  
-  
- -or-  
-  
+        <exception cref="T:System.UnauthorizedAccessException">The user does not have <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" />.
+
+ -or-
+
  The mutex was not opened with <see cref="F:System.Security.AccessControl.MutexRights.ChangePermissions" />.</exception>
         <exception cref="T:System.SystemException">The current <see cref="T:System.Threading.Mutex" /> object does not represent a named system mutex.</exception>
       </Docs>
@@ -1028,7 +1270,7 @@ There was some other error. The `HResult` property may provide more information.
       <MemberSignature Language="VB.NET" Value="Public Shared Function TryOpenExisting (name As String, ByRef result As Mutex) As Boolean" />
       <MemberSignature Language="F#" Value="static member TryOpenExisting : string * Mutex -&gt; bool" Usage="System.Threading.Mutex.TryOpenExisting (name, result)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryOpenExisting(System::String ^ name, [Runtime::InteropServices::Out] System::Threading::Mutex ^ % result);" />
-      <MemberSignature Language="C#" Value="public static bool TryOpenExisting (string name, out System.Threading.Mutex? result);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public static bool TryOpenExisting (string name, out System.Threading.Mutex? result);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Threading</AssemblyName>
@@ -1042,6 +1284,7 @@ There was some other error. The `HResult` property may provide more information.
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -1063,14 +1306,14 @@ There was some other error. The `HResult` property may provide more information.
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1">
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6;netstandard-2.0;netstandard-2.1">
           <Attributes>
-            <Attribute FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1">
+            <Attribute FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1">
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
             </Attribute>
-            <Attribute FrameworkAlternate="net-8.0;net-9.0">
+            <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1082,25 +1325,25 @@ There was some other error. The `HResult` property may provide more information.
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named mutex, if it already exists, and returns a value that indicates whether the operation succeeded.</summary>
         <returns>
-          <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> may be returned for invalid names.</returns>
+          <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> might be returned for invalid names.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned.
 
- To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
-  
- If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload, which throws an exception if the mutex does not exist.  
-  
- Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  
-  
- This method overload is equivalent to calling the <xref:System.Threading.Mutex.TryOpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%2CSystem.Threading.Mutex%40%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> and <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> rights, combined by using the bitwise OR operation. Specifying the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  
-  
- This method does not request ownership of the mutex.  
-  
+ To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.
+
+ If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload, which throws an exception if the mutex does not exist.
+
+ Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.
+
+ This method overload is equivalent to calling the <xref:System.Threading.Mutex.TryOpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%2CSystem.Threading.Mutex%40%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> and <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> rights, combined by using the bitwise OR operation. Specifying the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.
+
+ This method does not request ownership of the mutex.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -1112,12 +1355,12 @@ There was some other error. The `HResult` property may provide more information.
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>
@@ -1149,9 +1392,9 @@ There was some other error. The `HResult` property may provide more information.
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
-        <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" Index="1" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
-        <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="2" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0;netframework-4.8.1" />
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="rights" Type="System.Security.AccessControl.MutexRights" Index="1" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="2" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive. The backslash character (\\) is reserved and may only be used to specify a namespace. For more information on namespaces, see the remarks section. There may be further restrictions on the name depending on the operating system. For example, on Unix-based operating systems, the name after excluding the namespace must be a valid file name.</param>
@@ -1159,25 +1402,25 @@ There was some other error. The `HResult` property may provide more information.
         <param name="result">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
         <summary>Opens the specified named mutex, if it already exists, with the desired security access, and returns a value that indicates whether the operation succeeded.</summary>
         <returns>
-          <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> may be returned for invalid names.</returns>
+          <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> might be returned for invalid names.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://docs.microsoft.com/windows/win32/sync/object-names).
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `name` may be prefixed with `Global\` or `Local\` to specify a namespace. When the `Global` namespace is specified, the synchronization object may be shared with any processes on the system. When the `Local` namespace is specified, which is also the default when no namespace is specified, the synchronization object may be shared with processes in the same session. On Windows, a session is a login session, and services typically run in a different non-interactive session. On Unix-like operating systems, each shell has its own session. Session-local synchronization objects may be appropriate for synchronizing between processes with a parent/child relationship where they all run in the same session. For more information about synchronization object names on Windows, see [Object Names](https://learn.microsoft.com/windows/win32/sync/object-names).
 
  If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned.
 
- To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  
-  
- If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload, which throws an exception if the mutex does not exist.  
-  
- The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  
-  
- Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  
-  
- This method does not request ownership of the mutex.  
-  
+ To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.
+
+ If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload, which throws an exception if the mutex does not exist.
+
+ The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights.Synchronize?displayProperty=nameWithType> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights.Modify?displayProperty=nameWithType> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.
+
+ Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.
+
+ This method does not request ownership of the mutex.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -1189,12 +1432,85 @@ There was some other error. The `HResult` property may provide more information.
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">
-          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that may be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
 
 -or-
 
-There was some other error. The `HResult` property may provide more information.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions may depend on the operating system or configuration.</exception>
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="TryOpenExisting">
+      <MemberSignature Language="C#" Value="public static bool TryOpenExisting (string name, System.Threading.NamedWaitHandleOptions options, out System.Threading.Mutex? result);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryOpenExisting(string name, valuetype System.Threading.NamedWaitHandleOptions options, [out] class System.Threading.Mutex&amp; result) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Threading.Mutex.TryOpenExisting(System.String,System.Threading.NamedWaitHandleOptions,System.Threading.Mutex@)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function TryOpenExisting (name As String, options As NamedWaitHandleOptions, ByRef result As Mutex) As Boolean" />
+      <MemberSignature Language="F#" Value="static member TryOpenExisting : string * System.Threading.NamedWaitHandleOptions * Mutex -&gt; bool" Usage="System.Threading.Mutex.TryOpenExisting (name, options, result)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool TryOpenExisting(System::String ^ name, System::Threading::NamedWaitHandleOptions options, [Runtime::InteropServices::Out] System::Threading::Mutex ^ % result);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Threading</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="net-10.0" />
+        <Parameter Name="options" Type="System.Threading.NamedWaitHandleOptions" Index="1" FrameworkAlternate="net-10.0" />
+        <Parameter Name="result" Type="System.Threading.Mutex" RefType="out" Index="2" FrameworkAlternate="net-10.0">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
+            </Attribute>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="name">The name of the synchronization object to be shared with other processes. The name is case-sensitive.</param>
+        <param name="options">The scope options for the named system mutex. Defaults to access limited to current user and current session only. The specified options might affect the namespace for the name and access to the underlying system mutex object.</param>
+        <param name="result">When this method returns, contains a <see cref="T:System.Threading.Mutex" /> object that represents the named mutex if the call succeeded, or <see langword="null" /> if the call failed. This parameter is treated as uninitialized.</param>
+        <summary>Opens the specified named mutex, if it already exists, and returns a value that indicates whether the operation succeeded. If the options are set to the current user only, the object's access controls are verified for the calling user.</summary>
+        <returns>
+          <see langword="true" /> if the named mutex was opened successfully; otherwise, <see langword="false" />. In some cases, <see langword="false" /> might be returned for invalid names.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+If a synchronization object of the requested type exists in the namespace, the existing synchronization object is opened. However, if `options` specifies access limited to the current user and the synchronization object is not compatible with it, `false` is returned. If a synchronization object does not exist in the namespace, or a synchronization object of a different type exists in the namespace, `false` is returned as well.
+
+To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.
+
+If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload, which throws an exception if the mutex does not exist.
+
+Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.
+
+This method does not request ownership of the mutex.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="name" /> is an empty string.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="name" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.IOException">
+          <paramref name="name" /> is invalid. This can be for various reasons, including some restrictions that might be placed by the operating system, such as an unknown prefix or invalid characters. Note that the name and common prefixes "Global\\" and "Local\\" are case-sensitive. For some invalid names, the method may return <see langword="false" /> instead.
+
+-or-
+
+There was some other error. The `HResult` property might provide more information.</exception>
+        <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The named mutex exists, but the user does not have the security access required to use it.</exception>
       </Docs>
     </Member>

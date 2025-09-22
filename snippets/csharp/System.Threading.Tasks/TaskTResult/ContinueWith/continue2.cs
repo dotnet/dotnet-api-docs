@@ -14,7 +14,7 @@ public class Example
                                 // False = prime.
                                 bool[] values = new bool[upperBound + 1];
                                 for (int ctr = 2; ctr <= (int) Math.Sqrt(upperBound); ctr++) {
-                                   if (values[ctr] == false) {
+                                   if (!values[ctr]) {
                                       for (int product = ctr * ctr; product <= upperBound;
                                                                     product = product + ctr)
                                          values[product] = true;
@@ -27,7 +27,7 @@ public class Example
                                                   string output = String.Empty;
 
                                                   for (int ctr = 1; ctr <= numbers.GetUpperBound(0); ctr++)
-                                                     if (numbers[ctr] == false)
+                                                     if (!numbers[ctr])
                                                         primes.Add(ctr);
 
                                                   // Create the output string.

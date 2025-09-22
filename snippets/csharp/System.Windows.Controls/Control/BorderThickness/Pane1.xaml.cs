@@ -103,7 +103,7 @@ namespace ControlProps
         //<SnippetAdditionalControlProps4>
         void IsTabStop(object sender, RoutedEventArgs e)
         {
-            if (btn13.IsTabStop == true)
+            if (btn13.IsTabStop)
             {
                 btn13.Content = "Control is a tab stop.";
             }

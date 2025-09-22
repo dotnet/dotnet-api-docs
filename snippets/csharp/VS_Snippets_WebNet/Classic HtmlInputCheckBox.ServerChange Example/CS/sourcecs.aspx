@@ -14,7 +14,7 @@
          if (Prev_Check_State.Value == Check1.Checked.ToString())
             Span2.InnerHtml = "CheckBox1 did not change state between clicks.";
 
-         if (Check1.Checked == true)
+         if (Check1.Checked)
          {          
             Span1.InnerHtml = "CheckBox1 is selected!";
             Prev_Check_State.Value="True";

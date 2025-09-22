@@ -20,7 +20,7 @@ public:
    virtual bool ShouldSendCredential( Uri^ challengeUri, WebRequest^ request, NetworkCredential^ /*credential*/, IAuthenticationModule^ /*authModule*/ )
    {
       Console::WriteLine( L"Checking custom credential policy." );
-      if ( request->RequestUri->Host->Equals( L"www.contoso.com" ) || challengeUri->IsLoopback == true )
+      if ( request->RequestUri->Host->Equals( L"www.contoso.com" ) || challengeUri->IsLoopback )
             return true;
 
       return false;
@@ -41,7 +41,7 @@ public:
    {
       Console::WriteLine( L"Checking custom credential policy for HTTPS and basic." );
       bool answer = IntranetZoneCredentialPolicy::ShouldSendCredential( challengeUri, request, credential, authModule );
-      if ( answer == true )
+      if ( answer )
       {
          Console::WriteLine( L"Sending credential for intranet resource." );
          return answer;

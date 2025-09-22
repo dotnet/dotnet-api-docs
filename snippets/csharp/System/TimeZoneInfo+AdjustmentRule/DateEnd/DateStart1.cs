@@ -34,7 +34,7 @@ public class Example
                // Get start of transition
                TimeZoneInfo.TransitionTime daylightStart = adjustmentRule.DaylightTransitionStart;
                // Display information on floating date rule
-               if (! daylightStart.IsFixedDateRule)
+               if (!daylightStart.IsFixedDateRule)
                   Console.WriteLine("      Begins at {0:t} on the {1} {2} of {3}", 
                                  daylightStart.TimeOfDay, 
                                  (WeekOfMonth) daylightStart.Week,  

@@ -60,7 +60,7 @@ public class AcctNumberFormat : IFormatProvider, ICustomFormatter
 
       // Provide default formatting for unsupported format strings.
       string ufmt = fmt.ToUpper(CultureInfo.InvariantCulture);
-      if (! (ufmt == "H" || ufmt == "I"))
+      if (!(ufmt == "H" || ufmt == "I"))
          try {
             return HandleOtherFormats(fmt, arg);
          }

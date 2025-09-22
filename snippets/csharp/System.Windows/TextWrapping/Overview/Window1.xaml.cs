@@ -46,7 +46,7 @@ namespace SDKSample
         // <SnippetTextBoxBase8>
         private void undoAction(object sender, RoutedEventArgs e)
         {
-            if (myTextBox.CanUndo == true)
+            if (myTextBox.CanUndo)
             {
                 myTextBox.Undo();
             }
@@ -55,7 +55,7 @@ namespace SDKSample
         // <SnippetTextBoxBase9>
         private void redoAction(object sender, RoutedEventArgs e)
         {
-            if (myTextBox.CanRedo == true)
+            if (myTextBox.CanRedo)
             {
                 myTextBox.Redo();
             }

@@ -63,7 +63,7 @@ using System.Web.UI.WebControls;
 // <snippet3>
     public static void UpdateEmployee(NorthwindEmployee ne) {
       bool retval = ne.Update();
-      if (! retval) { throw new NorthwindDataException("Employee update failed."); }
+      if (!retval) { throw new NorthwindDataException("Employee update failed."); }
     }
 
     // This method is added as a conveniece wrapper on the original

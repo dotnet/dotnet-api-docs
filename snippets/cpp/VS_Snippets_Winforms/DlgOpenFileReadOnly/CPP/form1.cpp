@@ -83,7 +83,7 @@ namespace DlgOpenFileReadOnly_CS
          {
             // If ReadOnlyChecked is true, uses the OpenFile method to
             // open the file with read/only access.
-            if ( dlgOpenFile->ReadOnlyChecked == true )
+            if ( dlgOpenFile->ReadOnlyChecked )
             {
                return dynamic_cast<FileStream^>(dlgOpenFile->OpenFile());
             }

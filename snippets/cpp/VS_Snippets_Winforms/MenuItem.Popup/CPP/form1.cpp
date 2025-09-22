@@ -148,7 +148,7 @@ private:
 private:
    void PopupMyMenu( Object^ /*sender*/, System::EventArgs^ /*e*/ )
    {
-      if ( textBox1->Enabled == false || textBox1->Focused == false || textBox1->SelectedText->Length == 0 )
+      if ( !textBox1->Enabled || !textBox1->Focused || textBox1->SelectedText->Length == 0 )
       {
          menuCut->Enabled = false;
          menuCopy->Enabled = false;

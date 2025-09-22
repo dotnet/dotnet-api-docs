@@ -16,6 +16,7 @@
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <AssemblyInfo>
     <AssemblyName>WindowsBase</AssemblyName>
@@ -23,6 +24,8 @@
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
+    <TypeForwarding From="System.IO.Packaging" FromVersion="10.0.0.0" To="WindowsBase" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7-pp" />
+    <TypeForwarding From="WindowsBase" FromVersion="10.0.0.0" To="System.IO.Packaging" ToVersion="10.0.0.0" FrameworkAlternate="windowsdesktop-10.0" />
     <TypeForwarding From="WindowsBase" FromVersion="4.0.0.0" To="System.IO.Packaging" ToVersion="4.0.4.0" FrameworkAlternate="windowsdesktop-3.0" />
     <TypeForwarding From="WindowsBase" FromVersion="4.0.0.0" To="System.IO.Packaging" ToVersion="4.0.5.0" FrameworkAlternate="windowsdesktop-3.1" />
     <TypeForwarding From="WindowsBase" FromVersion="5.0.0.0" To="System.IO.Packaging" ToVersion="5.0.0.0" FrameworkAlternate="windowsdesktop-5.0" />
@@ -40,65 +43,57 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-8.0;windowsdesktop-9.0">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-8.0;windowsdesktop-9.0">
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>Represents a container that can store multiple data objects.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package> is an abstract class that can be used to organize objects into a single entity of a defined physical format for portability and efficient access.  
-  
- A ZIP file is the primary physical format for the <xref:System.IO.Packaging.Package>.  Other <xref:System.IO.Packaging.Package> implementations might use other physical formats such as an XML document, a database, or Web service.  
-  
- Like a file system, items contained in a <xref:System.IO.Packaging.Package> are referenced in a hierarchical organization of folders and files.  
-  
- Although <xref:System.IO.Packaging.Package> itself is an abstract class, the <xref:System.IO.Packaging.ZipPackage> derived class is used as default by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- A <xref:System.IO.Packaging.PackagePart> ("part") is the abstract class that represents an object that is stored in a <xref:System.IO.Packaging.Package>.  
-  
- A <xref:System.IO.Packaging.PackageRelationship> ("relationship") defines an association between a source <xref:System.IO.Packaging.Package> or <xref:System.IO.Packaging.PackagePart> and a target object.  A <xref:System.IO.Packaging.PackageRelationship> can be one of two types, each of which can be one of two forms:  
-  
--   A package-level relationship (created by the <xref:System.IO.Packaging.Package.CreateRelationship%2A?displayProperty=nameWithType> method) relates a <xref:System.IO.Packaging.Package> to either:  
-  
-    -   A target part in the package.  
-  
-    -   A target resource outside the package.  
-  
--   A part-level relationship (created by the <xref:System.IO.Packaging.PackagePart.CreateRelationship%2A?displayProperty=nameWithType> method) relates a source <xref:System.IO.Packaging.PackagePart> to either:  
-  
-    -   Another target part in the package.  
-  
-    -   A target resource outside the package.  
-  
- The relationship's source <xref:System.IO.Packaging.Package> or source <xref:System.IO.Packaging.PackagePart> is considered the "owner" of the relationship.  When the source object is deleted, all the relationships owned by the source object are also deleted.  The process of creating or deleting a relationship does not physically change either the source or target objects in any way.  
-  
- A <xref:System.IO.Packaging.PackageDigitalSignature> ("digital signature") is a composition of parts and relationships representing a digital signature included with a <xref:System.IO.Packaging.Package>.  The digital signature identifies the originator and validates that the signed parts and relationships contained in the <xref:System.IO.Packaging.Package> have not been modified.  
-  
- Packages also support Digital Rights Management (DRM) which allows content elements in a <xref:System.IO.Packaging.Package> to be encrypted with specific access rights granted to authorized users.  
-  
- Based on the <xref:System.IO.Packaging.Package> architecture, an <xref:System.Windows.Xps.Packaging.XpsDocument> is a package type designed for storing documents based on the open [XML Paper Specification (XPS)](https://www.ecma-international.org/publications-and-standards/standards/ecma-388/).  
-  
- .NET Framework uses packages to store content, resources, and relationships for pages and documents using a standard ZIP file by default. As with any ZIP file, your application can use the <xref:System.IO.Packaging> classes to store and optionally protect any type or number of data files in a single efficient-to-access container.  
-  
- For more information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows the basic steps for creating a <xref:System.IO.Packaging.Package>.  In this example, a package is created to contain a document together with a graphic image that is displayed as part of the document.  (This is similar to the case in which an HTML file has an \<IMG> tag that references an external image file.)  Two <xref:System.IO.Packaging.PackageRelationship> elements are also included in the package.  The first, a "package-level" relationship, defines the document part as the package's root element.  A second, "part-level" relationship defines the association between the document part (the "source" of the part-level relationship) and its use of the image part (the "target" of the part-level relationship).  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package> is an abstract class that can be used to organize objects into a single entity of a defined physical format for portability and efficient access.
+
+ A ZIP file is the primary physical format for the <xref:System.IO.Packaging.Package>. Other <xref:System.IO.Packaging.Package> implementations might use other physical formats such as an XML document, a database, or Web service.
+
+ Like a file system, items contained in a <xref:System.IO.Packaging.Package> are referenced in a hierarchical organization of folders and files.
+
+ Although <xref:System.IO.Packaging.Package> itself is an abstract class, the <xref:System.IO.Packaging.ZipPackage> derived class is used as default by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ A <xref:System.IO.Packaging.PackagePart> ("part") is the abstract class that represents an object that is stored in a <xref:System.IO.Packaging.Package>.
+
+ A <xref:System.IO.Packaging.PackageRelationship> ("relationship") defines an association between a source <xref:System.IO.Packaging.Package> or <xref:System.IO.Packaging.PackagePart> and a target object. A <xref:System.IO.Packaging.PackageRelationship> can be one of two types, each of which can be one of two forms:
+
+- A package-level relationship (created by the <xref:System.IO.Packaging.Package.CreateRelationship%2A?displayProperty=nameWithType> method) relates a <xref:System.IO.Packaging.Package> to either:
+
+    -   A target part in the package.
+    -   A target resource outside the package.
+
+- A part-level relationship (created by the <xref:System.IO.Packaging.PackagePart.CreateRelationship%2A?displayProperty=nameWithType> method) relates a source <xref:System.IO.Packaging.PackagePart> to either:
+
+    -   Another target part in the package.
+    -   A target resource outside the package.
+
+ The relationship's source <xref:System.IO.Packaging.Package> or source <xref:System.IO.Packaging.PackagePart> is considered the "owner" of the relationship. When the source object is deleted, all the relationships owned by the source object are also deleted. The process of creating or deleting a relationship does not physically change either the source or target objects in any way.
+
+ A <xref:System.IO.Packaging.PackageDigitalSignature> ("digital signature") is a composition of parts and relationships representing a digital signature included with a <xref:System.IO.Packaging.Package>. The digital signature identifies the originator and validates that the signed parts and relationships contained in the <xref:System.IO.Packaging.Package> have not been modified.
+
+ Packages also support Digital Rights Management (DRM), which allows content elements in a <xref:System.IO.Packaging.Package> to be encrypted with specific access rights granted to authorized users.
+
+ Based on the <xref:System.IO.Packaging.Package> architecture, an <xref:System.Windows.Xps.Packaging.XpsDocument> is a package type designed for storing documents based on the open [XML Paper Specification (XPS)](https://www.ecma-international.org/publications-and-standards/standards/ecma-388/).
+
+ .NET Framework uses packages to store content, resources, and relationships for pages and documents using a standard ZIP file by default. As with any ZIP file, your application can use the <xref:System.IO.Packaging> classes to store and optionally protect any type or number of data files in a single efficient-to-access container.
+
+ For more information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows the basic steps for creating a <xref:System.IO.Packaging.Package>. In this example, a package is created to contain a document together with a graphic image that is displayed as part of the document. (This is similar to the case in which an HTML file has an \<IMG> tag that references an external image file.)  Two <xref:System.IO.Packaging.PackageRelationship> elements are also included in the package. The first, a "package-level" relationship, defines the document part as the package's root element. A second, "part-level" relationship defines the association between the document part (the "source" of the part-level relationship) and its use of the image part (the "target" of the part-level relationship).
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackage":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.IO.Packaging.PackagePart" />
@@ -126,7 +121,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -134,6 +128,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -153,11 +148,11 @@
         <param name="openFileAccess">The file IO permissions for the package.</param>
         <summary>Initializes a new instance of the <see cref="T:System.IO.Packaging.Package" /> class that uses a given <see cref="T:System.IO.FileAccess" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.%23ctor%2A> is a protected constructor of the <xref:System.IO.Packaging.Package> abstract base class. When called in a derived class, the <xref:System.IO.Packaging.Package.%23ctor%2A> constructor initializes a new instance of the derived class.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.%23ctor%2A> is a protected constructor of the <xref:System.IO.Packaging.Package> abstract base class. When called in a derived class, the <xref:System.IO.Packaging.Package.%23ctor%2A> constructor initializes a new instance of the derived class.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">The value for <paramref name="openFileAccess" /> is not valid.</exception>
@@ -190,11 +185,11 @@
           <see langword="true" /> to open the package for streaming; otherwise, <see langword="false" />.</param>
         <summary>Initializes a new instance of the <see cref="T:System.IO.Packaging.Package" /> class that uses a given <see cref="T:System.IO.FileAccess" /> and streaming option.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.%23ctor%2A> is a protected constructor of the <xref:System.IO.Packaging.Package> abstract base abstract base class. When called in a derived class, the <xref:System.IO.Packaging.Package.%23ctor%2A> constructor initializes a new instance of the derived class.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.%23ctor%2A> is a protected constructor of the <xref:System.IO.Packaging.Package> abstract base abstract base class. When called in a derived class, the <xref:System.IO.Packaging.Package.%23ctor%2A> constructor initializes a new instance of the derived class.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">The value for <paramref name="openFileAccess" /> is not valid.</exception>
@@ -212,7 +207,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -220,6 +214,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -233,16 +228,16 @@
       <Docs>
         <summary>Saves and closes the package plus all underlying part streams.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For the <xref:System.IO.Packaging.Package> class <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> perform the same operation - there is no reason to call <xref:System.IO.Packaging.Package.Dispose%2A> if you call <xref:System.IO.Packaging.Package.Close%2A>, or vice-versa.  
-  
- <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> internally call <xref:System.IO.Packaging.Package.Flush%2A>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For the <xref:System.IO.Packaging.Package> class <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> perform the same operation - there is no reason to call <xref:System.IO.Packaging.Package.Dispose%2A> if you call <xref:System.IO.Packaging.Package.Close%2A>, or vice-versa.
+
+ <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> internally call <xref:System.IO.Packaging.Package.Flush%2A>.
+
 > [!NOTE]
->  The `using` statement (different from the `using` namespace directive) is the recommended way to <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> a package.  [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055) and [Reading a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160034) show how to close and dispose a package by using the `using` statement.  
-  
+> The `using` statement (different from the `using` namespace directive) is the recommended way to <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> a package.
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.IO.Packaging.PackagePart" />
@@ -257,21 +252,19 @@
       <Docs>
         <summary>Creates a new package part.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.CreatePart%2A> initializes an empty <xref:System.IO.Stream> for the new part.  The <xref:System.IO.Packaging.PackagePart.GetStream%2A?displayProperty=nameWithType> method can be used to obtain a reference to the stream instance associated with the part.  
-  
- For more information about package parts, see section 1.1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.PackagePart> and then store data into the part.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.CreatePart%2A> initializes an empty <xref:System.IO.Stream> for the new part. The <xref:System.IO.Packaging.PackagePart.GetStream%2A?displayProperty=nameWithType> method can be used to obtain a reference to the stream instance associated with the part.
+
+ For more information about package parts, see section 1.1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.PackagePart> and then store data into the part.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepart":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepart":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepart":::
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -291,7 +284,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -299,6 +291,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -324,23 +317,21 @@
         <summary>Creates a new uncompressed part with a given URI and content type.</summary>
         <returns>The new created part.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.CreatePart%2A> initializes an empty <xref:System.IO.Stream> for the new part.  The <xref:System.IO.Packaging.PackagePart.GetStream%2A?displayProperty=nameWithType> method can be used to obtain a reference to the stream instance associated with the part.  
-  
- The part <xref:System.IO.Packaging.PackagePart.CompressionOption%2A> is <xref:System.IO.Packaging.CompressionOption.NotCompressed?displayProperty=nameWithType>.  
-  
- For additional information about package parts, see section 1.1 in the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.PackagePart> and then store data into the part.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.CreatePart%2A> initializes an empty <xref:System.IO.Stream> for the new part. The <xref:System.IO.Packaging.PackagePart.GetStream%2A?displayProperty=nameWithType> method can be used to obtain a reference to the stream instance associated with the part.
+
+ The part <xref:System.IO.Packaging.PackagePart.CompressionOption%2A> is <xref:System.IO.Packaging.CompressionOption.NotCompressed?displayProperty=nameWithType>.
+
+ For additional information about package parts, see section 1.1 in the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.PackagePart> and then store data into the part.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepart":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepart":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepart":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -372,7 +363,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -380,6 +370,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -401,23 +392,21 @@
         <summary>Creates a new part with a given URI, content type, and compression option.</summary>
         <returns>The new created part.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For the default <xref:System.IO.Packaging.ZipPackage> derived class, the <xref:System.IO.Packaging.Package.CreatePart%2A> method only supports two `compressionOption` values, <xref:System.IO.Packaging.CompressionOption.NotCompressed> or <xref:System.IO.Packaging.CompressionOption.Normal> compression.  Other <xref:System.IO.Packaging.CompressionOption> values of <xref:System.IO.Packaging.CompressionOption.Maximum>, <xref:System.IO.Packaging.CompressionOption.Fast>, or <xref:System.IO.Packaging.CompressionOption.SuperFast> use <xref:System.IO.Packaging.CompressionOption.Normal> compression.  
-  
- <xref:System.IO.Packaging.Package.CreatePart%2A> creates an empty <xref:System.IO.Stream> for the new part.  The <xref:System.IO.Packaging.PackagePart.GetStream%2A?displayProperty=nameWithType> method can be used to obtain a reference to the stream instance associated with the part.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.PackagePart> and then store data into the part.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For the default <xref:System.IO.Packaging.ZipPackage> derived class, the <xref:System.IO.Packaging.Package.CreatePart%2A> method only supports two `compressionOption` values, <xref:System.IO.Packaging.CompressionOption.NotCompressed> or <xref:System.IO.Packaging.CompressionOption.Normal> compression. Other <xref:System.IO.Packaging.CompressionOption> values of <xref:System.IO.Packaging.CompressionOption.Maximum>, <xref:System.IO.Packaging.CompressionOption.Fast>, or <xref:System.IO.Packaging.CompressionOption.SuperFast> use <xref:System.IO.Packaging.CompressionOption.Normal> compression.
+
+ <xref:System.IO.Packaging.Package.CreatePart%2A> creates an empty <xref:System.IO.Stream> for the new part. The <xref:System.IO.Packaging.PackagePart.GetStream%2A?displayProperty=nameWithType> method can be used to obtain a reference to the stream instance associated with the part.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.PackagePart> and then store data into the part.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepart":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepart":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepart":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -450,7 +439,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -458,6 +446,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -479,17 +468,17 @@
         <summary>When overridden in a derived class, creates a new part in the package.</summary>
         <returns>The created part.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The derived <xref:System.IO.Packaging.Package.CreatePartCore%2A> method is called by the <xref:System.IO.Packaging.Package.CreatePart%2A> method to create a part based on the physical format implemented in the derived class.  
-  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived class implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used.  In the default operation, <xref:System.IO.Packaging.Package.CreatePart%2A> internally calls <xref:System.IO.Packaging.Package.CreatePartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to create a new part in a ZIP file.  
-  
- For the default <xref:System.IO.Packaging.ZipPackage> derived class, the <xref:System.IO.Packaging.Package.CreatePartCore%2A> method only supports two `compressionOption` values, <xref:System.IO.Packaging.CompressionOption.NotCompressed> or <xref:System.IO.Packaging.CompressionOption.Normal> compression.  Other <xref:System.IO.Packaging.CompressionOption> values of <xref:System.IO.Packaging.CompressionOption.Maximum>, <xref:System.IO.Packaging.CompressionOption.Fast>, or <xref:System.IO.Packaging.CompressionOption.SuperFast> use <xref:System.IO.Packaging.CompressionOption.Normal> compression.  
-  
- For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The derived <xref:System.IO.Packaging.Package.CreatePartCore%2A> method is called by the <xref:System.IO.Packaging.Package.CreatePart%2A> method to create a part based on the physical format implemented in the derived class.
+
+ By default, a <xref:System.IO.Packaging.ZipPackage> derived class implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.CreatePart%2A> internally calls <xref:System.IO.Packaging.Package.CreatePartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to create a new part in a ZIP file.
+
+ For the default <xref:System.IO.Packaging.ZipPackage> derived class, the <xref:System.IO.Packaging.Package.CreatePartCore%2A> method only supports two `compressionOption` values, <xref:System.IO.Packaging.CompressionOption.NotCompressed> or <xref:System.IO.Packaging.CompressionOption.Normal> compression. Other <xref:System.IO.Packaging.CompressionOption> values of <xref:System.IO.Packaging.CompressionOption.Maximum>, <xref:System.IO.Packaging.CompressionOption.Fast>, or <xref:System.IO.Packaging.CompressionOption.SuperFast> use <xref:System.IO.Packaging.CompressionOption.Normal> compression.
+
+ For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -506,27 +495,24 @@
       <Docs>
         <summary>Creates a package-level relationship to a given part.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A package-level relationship defines an association between the package and an associated target part or resource.  A package-level relationship can be one of two forms.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target <xref:System.IO.Packaging.PackagePart> inside the package.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.  
-  
- In a package-relationship the package is considered the "owner" of the relationship.  When the package is deleted, all the relationships owned by the package are also deleted.  The process of creating or deleting the relationship does not physically alter the target part or resource in any way.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example illustrates creating a <xref:System.IO.Packaging.PackageRelationship> between a <xref:System.IO.Packaging.Package> and a root document part.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A package-level relationship defines an association between the package and an associated target part or resource. A package-level relationship can be one of two forms.
+
+- Between a <xref:System.IO.Packaging.Package> to a target <xref:System.IO.Packaging.PackagePart> inside the package.
+- Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.
+
+ In a package-relationship the package is considered the "owner" of the relationship. When the package is deleted, all the relationships owned by the package are also deleted. The process of creating or deleting the relationship does not physically alter the target part or resource in any way.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example illustrates creating a <xref:System.IO.Packaging.PackageRelationship> between a <xref:System.IO.Packaging.Package> and a root document part.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackagerelationship":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackagerelationship":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackagerelationship":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -542,7 +528,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -550,6 +535,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -577,45 +563,42 @@
         <summary>Creates a package-level relationship to a part with a given URI, target mode, and relationship type.</summary>
         <returns>The package-level relationship to the specified part.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A package-level relationship defines an association between the package and an associated target part or resource.  A package-level relationship can be one of two forms.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target part in the package.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.  
-  
- In a package-relationship the package is considered the "owner" of the relationship.  When the package is deleted, all the relationships owned by the package are also deleted.  
-  
- <xref:System.IO.Packaging.Package.CreateRelationship%2A> does not physically change the target part or resource in any way.  
-  
- The target of a relationship cannot be another relationship.  
-  
- If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.Internal>, `targetUri` must be a relative URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification.  The internal relative URI can be either an absolute path that starts with a forward slash ("/") character such as "/page1.xaml" or "/images/picture4.jpg", or a relative path such as "../imagespicture1.jpg" that resolves against the package root ("/") as the base URI.  
-  
- If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.External>, `targetUri` can be either an absolute or relative URI formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. `http://www.microsoft.com/page2.xml` is an example of an absolute URI that references an external target resource "page2.xml".  "images/picture1.jpg" is an example of a relative URI that also references an external target resource "1.jpg" but which resolves against the URI of the package itself.  
-  
- `relationshipType` must be a URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification.  The following table shows the package-level `relationshipType` URIs defined by the Open Packaging Conventions (OPC) specification.  
-  
-|Package-level Relationship|Relationship Type URI|  
-|---------------------------------|---------------------------|  
-|Core Properties|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties`|  
-|Digital Signature|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature`|  
-|Digital Signature Certificate|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate`|  
-|Digital Signature Origin|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin`|  
-|Thumbnail|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail`|  
-  
- For more information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example illustrates how to use <xref:System.IO.Packaging.Package.CreateRelationship%2A> to create a <xref:System.IO.Packaging.PackageRelationship> between a <xref:System.IO.Packaging.Package> and a root document part.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A package-level relationship defines an association between the package and an associated target part or resource. A package-level relationship can be one of two forms.
+
+- Between a <xref:System.IO.Packaging.Package> to a target part in the package.
+- Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.
+
+ In a package-relationship the package is considered the "owner" of the relationship. When the package is deleted, all the relationships owned by the package are also deleted.
+
+ <xref:System.IO.Packaging.Package.CreateRelationship%2A> does not physically change the target part or resource in any way.
+
+ The target of a relationship cannot be another relationship.
+
+ If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.Internal>, `targetUri` must be a relative URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. The internal relative URI can be either an absolute path that starts with a forward slash ("/") character such as "/page1.xaml" or "/images/picture4.jpg", or a relative path such as "../imagespicture1.jpg" that resolves against the package root ("/") as the base URI.
+
+ If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.External>, `targetUri` can be either an absolute or relative URI formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. `http://www.microsoft.com/page2.xml` is an example of an absolute URI that references an external target resource "page2.xml". "images/picture1.jpg" is an example of a relative URI that also references an external target resource "1.jpg" but which resolves against the URI of the package itself.
+
+ `relationshipType` must be a URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. The following table shows the package-level `relationshipType` URIs defined by the Open Packaging Conventions (OPC) specification.
+
+|Package-level Relationship|Relationship Type URI|
+|---------------------------------|---------------------------|
+|Core Properties|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties`|
+|Digital Signature|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature`|
+|Digital Signature Certificate|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate`|
+|Digital Signature Origin|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin`|
+|Thumbnail|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail`|
+
+ For more information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example illustrates how to use <xref:System.IO.Packaging.Package.CreateRelationship%2A> to create a <xref:System.IO.Packaging.PackageRelationship> between a <xref:System.IO.Packaging.Package> and a root document part.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackagerelationship":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackagerelationship":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackagerelationship":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -632,18 +615,17 @@
       </Docs>
     </Member>
     <Member MemberName="CreateRelationship">
-      <MemberSignature Language="C#" Value="public System.IO.Packaging.PackageRelationship CreateRelationship (Uri targetUri, System.IO.Packaging.TargetMode targetMode, string relationshipType, string id);" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1" />
+      <MemberSignature Language="C#" Value="public System.IO.Packaging.PackageRelationship CreateRelationship (Uri targetUri, System.IO.Packaging.TargetMode targetMode, string relationshipType, string? id);" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-10.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.IO.Packaging.PackageRelationship CreateRelationship(class System.Uri targetUri, valuetype System.IO.Packaging.TargetMode targetMode, string relationshipType, string id) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.Packaging.Package.CreateRelationship(System.Uri,System.IO.Packaging.TargetMode,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function CreateRelationship (targetUri As Uri, targetMode As TargetMode, relationshipType As String, id As String) As PackageRelationship" />
       <MemberSignature Language="F#" Value="member this.CreateRelationship : Uri * System.IO.Packaging.TargetMode * string * string -&gt; System.IO.Packaging.PackageRelationship" Usage="package.CreateRelationship (targetUri, targetMode, relationshipType, id)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::IO::Packaging::PackageRelationship ^ CreateRelationship(Uri ^ targetUri, System::IO::Packaging::TargetMode targetMode, System::String ^ relationshipType, System::String ^ id);" />
-      <MemberSignature Language="C#" Value="public System.IO.Packaging.PackageRelationship CreateRelationship (Uri targetUri, System.IO.Packaging.TargetMode targetMode, string relationshipType, string? id);" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+      <MemberSignature Language="C#" Value="public System.IO.Packaging.PackageRelationship CreateRelationship (Uri targetUri, System.IO.Packaging.TargetMode targetMode, string relationshipType, string id);" FrameworkAlternate="netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -651,6 +633,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -666,7 +649,7 @@
         <Parameter Name="relationshipType" Type="System.String" />
         <Parameter Name="id" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-8.0;windowsdesktop-9.0">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -681,49 +664,46 @@
         <summary>Creates a package-level relationship to a part with a given URI, target mode, relationship type, and identifier (ID).</summary>
         <returns>The package-level relationship to the specified part.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A package-level relationship defines an association between the package and an associated target part or resource.  A package-level relationship can be one of two forms.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target part in the package.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.  
-  
- In a package-relationship the package is considered the "owner" of the relationship.  When the package is deleted, all the relationships owned by the package are also deleted.  
-  
- <xref:System.IO.Packaging.Package.CreateRelationship%2A> does not physically change the target part or resource in any way.  
-  
- The target of a relationship cannot be another relationship.  
-  
- `id` must be a valid XML identifier.  The `id` type is xsd:ID and must follow the naming conventions prescribed in the XML Schema Part 2: Datatypes specification (see [https://www.w3.org/TR/xmlschema-2/#ID](https://www.w3.org/TR/xmlschema-2/#ID)).  
-  
- If `id` is specified as `null` a unique ID will be automatically generated.  An `id` specified by an empty string is not valid.  
-  
- If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.Internal>, `targetUri` must be a relative URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification.  The internal relative URI can be either an absolute path that starts with a forward slash ("/") character such as "/page1.xaml" or "/images/picture4.jpg", or a relative path such as "../imagespicture1.jpg" that resolves against the package root ("/") as the base URI.  
-  
- If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.External>, `targetUri` can be either an absolute or relative URI formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. `http://www.microsoft.com/page2.xml` is an example of an absolute URI that references an external target resource "page2.xml".  "images/picture1.jpg" is an example of a relative URI that also references an external target resource "1.jpg" but which resolves against the URI of the package itself.  
-  
- `relationshipType` must be a URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification.  The following table shows the package-level `relationshipType` URIs defined by the Open Packaging Conventions (OPC) specification.  
-  
-|Package-level Relationship|Relationship Type URI|  
-|---------------------------------|---------------------------|  
-|Core Properties|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties`|  
-|Digital Signature|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature`|  
-|Digital Signature Certificate|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate`|  
-|Digital Signature Origin|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin`|  
-|Thumbnail|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail`|  
-  
- For additional information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example illustrates how to use <xref:System.IO.Packaging.Package.CreateRelationship%2A> to create a <xref:System.IO.Packaging.PackageRelationship> between a <xref:System.IO.Packaging.Package> and a root document part.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A package-level relationship defines an association between the package and an associated target part or resource. A package-level relationship can be one of two forms.
+
+- Between a <xref:System.IO.Packaging.Package> to a target part in the package.
+- Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.
+
+ In a package-relationship the package is considered the "owner" of the relationship. When the package is deleted, all the relationships owned by the package are also deleted.
+
+ <xref:System.IO.Packaging.Package.CreateRelationship%2A> does not physically change the target part or resource in any way.
+
+ The target of a relationship cannot be another relationship.
+
+ `id` must be a valid XML identifier. The `id` type is xsd:ID and must follow the naming conventions prescribed in the XML Schema Part 2: Datatypes specification (see [https://www.w3.org/TR/xmlschema-2/#ID](https://www.w3.org/TR/xmlschema-2/#ID)).
+
+ If `id` is specified as `null` a unique ID will be automatically generated. An `id` specified by an empty string is not valid.
+
+ If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.Internal>, `targetUri` must be a relative URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. The internal relative URI can be either an absolute path that starts with a forward slash ("/") character such as "/page1.xaml" or "/images/picture4.jpg", or a relative path such as "../imagespicture1.jpg" that resolves against the package root ("/") as the base URI.
+
+ If `targetMode` is specified as <xref:System.IO.Packaging.TargetMode.External>, `targetUri` can be either an absolute or relative URI formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. `http://www.microsoft.com/page2.xml` is an example of an absolute URI that references an external target resource "page2.xml". "images/picture1.jpg" is an example of a relative URI that also references an external target resource "1.jpg" but which resolves against the URI of the package itself.
+
+ `relationshipType` must be a URI that is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. The following table shows the package-level `relationshipType` URIs defined by the Open Packaging Conventions (OPC) specification.
+
+|Package-level Relationship|Relationship Type URI|
+|---------------------------------|---------------------------|
+|Core Properties|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties`|
+|Digital Signature|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature`|
+|Digital Signature Certificate|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate`|
+|Digital Signature Origin|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin`|
+|Thumbnail|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail`|
+
+ For additional information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example illustrates how to use <xref:System.IO.Packaging.Package.CreateRelationship%2A> to create a <xref:System.IO.Packaging.PackageRelationship> between a <xref:System.IO.Packaging.Package> and a root document part.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackagerelationship":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackagerelationship":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackagerelationship":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -753,7 +733,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -761,6 +740,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -777,15 +757,15 @@
         <param name="partUri">The URI of the part to delete.</param>
         <summary>Deletes a part with a given URI from the package.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- `partUri` must be a relative URI that consists of an absolute path which starts with a forward slash ("/") character.  The absolute path is relative to the package root and is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification.  "/page1.xaml" and "/images/picture4.jpg" are examples of valid part URIs.  
-  
- No exception is raised if a part with the specified `partUri` is not in the package.  (You can use the <xref:System.IO.Packaging.Package.PartExists%2A> method to determine whether a part with a specified `partUri` is in the package.)  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ `partUri` must be a relative URI that consists of an absolute path which starts with a forward slash ("/") character. The absolute path is relative to the package root and is formed according to the [RFC 3986](https://tools.ietf.org/html/rfc3986) Uniform Resource Identifier (URI) Generic Syntax specification. "/page1.xaml" and "/images/picture4.jpg" are examples of valid part URIs.
+
+ No exception is raised if a part with the specified `partUri` is not in the package. (You can use the <xref:System.IO.Packaging.Package.PartExists%2A> method to determine whether a part with a specified `partUri` is in the package.)
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -815,7 +795,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -823,6 +802,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -839,18 +819,18 @@
         <param name="partUri">The <see cref="P:System.IO.Packaging.PackagePart.Uri" /> of the <see cref="T:System.IO.Packaging.PackagePart" /> to delete.</param>
         <summary>When overridden in a derived class, deletes a part with a given URI.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived class implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used.  In the default operation, <xref:System.IO.Packaging.Package.DeletePart%2A> internally calls <xref:System.IO.Packaging.Package.DeletePartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to perform the actual delete operation based on the physical format implemented in the derived class.  
-  
- For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ By default, a <xref:System.IO.Packaging.ZipPackage> derived class implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.DeletePart%2A> internally calls <xref:System.IO.Packaging.Package.DeletePartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to perform the actual delete operation based on the physical format implemented in the derived class.
+
+ For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>The derived class <see cref="M:System.IO.Packaging.Package.DeletePartCore(System.Uri)" /> implementation is called by the <see cref="M:System.IO.Packaging.Package.DeletePart(System.Uri)" /> method to the specified part based on the physical format implemented in the derived class.  
-  
+          <para>The derived class <see cref="M:System.IO.Packaging.Package.DeletePartCore(System.Uri)" /> implementation is called by the <see cref="M:System.IO.Packaging.Package.DeletePart(System.Uri)" /> method to the specified part based on the physical format implemented in the derived class.
+
  The derived <see cref="M:System.IO.Packaging.Package.DeletePartCore(System.Uri)" /> implementation should make no assumptions about the order or operations performed by the <see cref="M:System.IO.Packaging.Package.DeletePart(System.Uri)" /> method that calls it.</para>
         </block>
         <altmember cref="M:System.IO.Packaging.Package.CreatePartCore(System.Uri,System.String,System.IO.Packaging.CompressionOption)" />
@@ -867,7 +847,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -875,6 +854,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -891,23 +871,22 @@
         <param name="id">The <see cref="P:System.IO.Packaging.PackageRelationship.Id" /> of the <see cref="T:System.IO.Packaging.PackageRelationship" /> to delete.</param>
         <summary>Deletes a package-level relationship.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- A package-level relationship defines an association between the package and an associated target part or resource.  A package-level relationship can be one of two forms.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target part in the package.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.  
-  
- In a package-relationship the package is considered the "owner" of the relationship.  When the package is deleted, all the relationships owned by the package are also deleted.  
-  
- No exception is raised if a relationship with the specified `id` is not in the package.  
-  
- <xref:System.IO.Packaging.Package.DeleteRelationship%2A> does not physically change the target part in any way.  
-  
- For more information about package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A package-level relationship defines an association between the package and an associated target part or resource. A package-level relationship can be one of two forms.
+
+- Between a <xref:System.IO.Packaging.Package> to a target part in the package.
+- Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.
+
+ In a package-relationship the package is considered the "owner" of the relationship. When the package is deleted, all the relationships owned by the package are also deleted.
+
+ No exception is raised if a relationship with the specified `id` is not in the package.
+
+ <xref:System.IO.Packaging.Package.DeleteRelationship%2A> does not physically change the target part in any way.
+
+ For more information about package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -929,7 +908,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -937,6 +915,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -954,20 +933,20 @@
           <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         <summary>Flushes and saves the content of all parts and relationships, closes the package, and releases all resources.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- To make sure that all changes are correctly saved, <xref:System.IO.Packaging.Package.Dispose%2A> also finalizes, flushes, and closes all parts and relationships that are contained in the package.  
-  
- For the <xref:System.IO.Packaging.Package> class, <xref:System.IO.Packaging.Package.Dispose%2A> and <xref:System.IO.Packaging.Package.Close%2A> perform the same operation - there is no reason to call <xref:System.IO.Packaging.Package.Dispose%2A> if you call <xref:System.IO.Packaging.Package.Close%2A>, or vice-versa.  
-  
- <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> internally call <xref:System.IO.Packaging.Package.Flush%2A>.  
-  
- Derived classes that allocate and manage non-memory resources should override this method to release resources when <xref:System.IO.Packaging.Package.Dispose%2A> is called. Derived-class overrides should also call <xref:System.IO.Packaging.Package.Flush%2A> and the base-class <xref:System.IO.Packaging.Package.Dispose%2A> method to make sure that base-class cleanup is always performed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ To make sure that all changes are correctly saved, <xref:System.IO.Packaging.Package.Dispose%2A> also finalizes, flushes, and closes all parts and relationships that are contained in the package.
+
+ For the <xref:System.IO.Packaging.Package> class, <xref:System.IO.Packaging.Package.Dispose%2A> and <xref:System.IO.Packaging.Package.Close%2A> perform the same operation - there is no reason to call <xref:System.IO.Packaging.Package.Dispose%2A> if you call <xref:System.IO.Packaging.Package.Close%2A>, or vice-versa.
+
+ <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> internally call <xref:System.IO.Packaging.Package.Flush%2A>.
+
+ Derived classes that allocate and manage non-memory resources should override this method to release resources when <xref:System.IO.Packaging.Package.Dispose%2A> is called. Derived-class overrides should also call <xref:System.IO.Packaging.Package.Flush%2A> and the base-class <xref:System.IO.Packaging.Package.Dispose%2A> method to make sure that base-class cleanup is always performed.
+
 > [!NOTE]
->  The `using` statement (different from the `using` namespace directive) is the recommended way to <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> a package. [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055) shows how to close and dispose a package by using the `using` statement.  
-  
+> The `using` statement (different from the `using` namespace directive) is the recommended way to <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> a package.
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.IO.Packaging.Package.Flush" />
@@ -986,7 +965,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -994,6 +972,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1007,11 +986,11 @@
         <summary>Gets the file access setting for the package.</summary>
         <value>One of the <see cref="T:System.IO.FileAccess" /> values: <see cref="F:System.IO.FileAccess.Read" />, <see cref="F:System.IO.FileAccess.Write" />, or <see cref="F:System.IO.FileAccess.ReadWrite" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.IO.Packaging.Package.FileOpenAccess%2A> property has no default value.  The file access setting is specified in the <xref:System.IO.Packaging.Package.%23ctor%2A> constructor call when you create a new package, or in the <xref:System.IO.Packaging.Package.Open%2A> call when you open an existing package.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.IO.Packaging.Package.FileOpenAccess%2A> property has no default value. The file access setting is specified in the <xref:System.IO.Packaging.Package.%23ctor%2A> constructor call when you create a new package, or in the <xref:System.IO.Packaging.Package.Open%2A> call when you open an existing package.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The package is not open (<see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> or <see cref="M:System.IO.Packaging.Package.Close" /> has been called).</exception>
@@ -1028,7 +1007,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1036,6 +1014,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1049,15 +1028,15 @@
       <Docs>
         <summary>Saves the contents of all parts and relationships that are contained in the package.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.Flush%2A> internally calls the derived class's <xref:System.IO.Packaging.Package.FlushCore%2A> implementation to perform the actual format-specific flush operation.  The derived class's <xref:System.IO.Packaging.Package.FlushCore%2A> method is responsible for actually saving the part and relationship content to the specific physical derived class implementation.  
-  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> base class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.Flush%2A> internally calls <xref:System.IO.Packaging.Package.FlushCore%2A> to save the parts and relationships in a ZIP file package.  
-  
- <xref:System.IO.Packaging.Package.Flush%2A> is called automatically by the <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> methods.  When <xref:System.IO.Packaging.Package.Close%2A> or <xref:System.IO.Packaging.Package.Dispose%2A> is called you do not have to call <xref:System.IO.Packaging.Package.Flush%2A> separately.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.Flush%2A> internally calls the derived class's <xref:System.IO.Packaging.Package.FlushCore%2A> implementation to perform the actual format-specific flush operation. The derived class's <xref:System.IO.Packaging.Package.FlushCore%2A> method is responsible for actually saving the part and relationship content to the specific physical derived class implementation.
+
+ By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> base class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.Flush%2A> internally calls <xref:System.IO.Packaging.Package.FlushCore%2A> to save the parts and relationships in a ZIP file package.
+
+ <xref:System.IO.Packaging.Package.Flush%2A> is called automatically by the <xref:System.IO.Packaging.Package.Close%2A> and <xref:System.IO.Packaging.Package.Dispose%2A> methods. When <xref:System.IO.Packaging.Package.Close%2A> or <xref:System.IO.Packaging.Package.Dispose%2A> is called you do not have to call <xref:System.IO.Packaging.Package.Flush%2A> separately.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The package is not open (<see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> or <see cref="M:System.IO.Packaging.Package.Close" /> has been called).</exception>
@@ -1079,7 +1058,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1087,6 +1065,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1100,11 +1079,11 @@
       <Docs>
         <summary>When overridden in a derived class, saves the content of all parts and relationships to the derived class store.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.FlushCore%2A> is called by the <xref:System.IO.Packaging.Package.Flush%2A> method to perform the actual flush operation based on the physical format implemented in the derived class.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.FlushCore%2A> is called by the <xref:System.IO.Packaging.Package.Flush%2A> method to perform the actual flush operation based on the physical format implemented in the derived class.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -1123,7 +1102,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1131,6 +1109,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1148,25 +1127,23 @@
         <summary>Returns the part with a given URI.</summary>
         <returns>The part with the specified <paramref name="partUri" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- An <xref:System.InvalidOperationException> is thrown if a part with the specified `partUri` does not exist.  
-  
- The <xref:System.IO.Packaging.Package.PartExists%2A> method can be used to determine whether `partUri` references an existing part.  
-  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> base class is provided and used.  In the default operation, <xref:System.IO.Packaging.Package.GetPart%2A> internally calls <xref:System.IO.Packaging.Package.GetPartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to return a requested part from a ZIP file.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to locate, retrieve, and read parts that are contained in a package.  For the complete sample, see [Reading a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160034).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ An <xref:System.InvalidOperationException> is thrown if a part with the specified `partUri` does not exist.
+
+ The <xref:System.IO.Packaging.Package.PartExists%2A> method can be used to determine whether `partUri` references an existing part.
+
+ By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> base class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.GetPart%2A> internally calls <xref:System.IO.Packaging.Package.GetPartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to return a requested part from a ZIP file.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to locate, retrieve, and read parts that are contained in a package.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/GetPart/PackageRead.cs" id="Snippetpackagereadusing":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageRead/visualbasic/packageread.vb" id="Snippetpackagereadusing":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageRead/visualbasic/packageread.vb" id="Snippetpackagereadusing":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1188,18 +1165,17 @@
       </Docs>
     </Member>
     <Member MemberName="GetPartCore">
-      <MemberSignature Language="C#" Value="protected abstract System.IO.Packaging.PackagePart GetPartCore (Uri partUri);" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1" />
+      <MemberSignature Language="C#" Value="protected abstract System.IO.Packaging.PackagePart? GetPartCore (Uri partUri);" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-10.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.IO.Packaging.PackagePart GetPartCore(class System.Uri partUri) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.IO.Packaging.Package.GetPartCore(System.Uri)" />
       <MemberSignature Language="VB.NET" Value="Protected MustOverride Function GetPartCore (partUri As Uri) As PackagePart" />
       <MemberSignature Language="F#" Value="abstract member GetPartCore : Uri -&gt; System.IO.Packaging.PackagePart" Usage="package.GetPartCore partUri" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::IO::Packaging::PackagePart ^ GetPartCore(Uri ^ partUri);" />
-      <MemberSignature Language="C#" Value="protected abstract System.IO.Packaging.PackagePart? GetPartCore (Uri partUri);" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+      <MemberSignature Language="C#" Value="protected abstract System.IO.Packaging.PackagePart GetPartCore (Uri partUri);" FrameworkAlternate="netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1207,6 +1183,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1215,6 +1192,12 @@
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.IO.Packaging.PackagePart</ReturnType>
+        <Attributes>
+          <Attribute FrameworkAlternate="net-10.0-pp">
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
         <Parameter Name="partUri" Type="System.Uri" />
@@ -1224,18 +1207,18 @@
         <summary>When overridden in a derived class, returns the part addressed by a given URI.</summary>
         <returns>The requested part; or <see langword="null" />, if a part with the specified <paramref name="partUri" /> is not in the package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used.  In the default operation, <xref:System.IO.Packaging.Package.GetPart%2A> internally calls <xref:System.IO.Packaging.Package.GetPartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to retrieve a part from a ZIP file.  
-  
- For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.GetPart%2A> internally calls <xref:System.IO.Packaging.Package.GetPartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to retrieve a part from a ZIP file.
+
+ For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
-          <para>The derived class  <see cref="M:System.IO.Packaging.Package.GetPartCore(System.Uri)" /> implementation is called by the <see cref="M:System.IO.Packaging.Package.GetPart(System.Uri)" /> method to access and return the specified part based on the physical format implemented in the derived class.  
-  
+          <para>The derived class  <see cref="M:System.IO.Packaging.Package.GetPartCore(System.Uri)" /> implementation is called by the <see cref="M:System.IO.Packaging.Package.GetPart(System.Uri)" /> method to access and return the specified part based on the physical format implemented in the derived class.
+
  The derived <see cref="M:System.IO.Packaging.Package.GetPartCore(System.Uri)" /> implementation should make no assumptions about the order or operations performed by the <see cref="M:System.IO.Packaging.Package.GetPart(System.Uri)" /> method that calls it.</para>
         </block>
         <altmember cref="M:System.IO.Packaging.Package.GetPartsCore" />
@@ -1252,7 +1235,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1260,6 +1242,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1274,24 +1257,18 @@
         <summary>Returns a collection of all the parts in the package.</summary>
         <returns>A collection of all the <see cref="T:System.IO.Packaging.PackagePart" /> elements that are contained in the package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.GetParts%2A> returns a collection of all parts that are contained in the package including <xref:System.IO.Packaging.PackageRelationship> parts.  
-  
- <xref:System.IO.Packaging.Package.GetParts%2A> will never return `null`; however, the returned collection will contain zero elements if the package contains no parts.  
-  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> base class is provided and used.  In the default operation, <xref:System.IO.Packaging.Package.GetParts%2A> calls the <xref:System.IO.Packaging.Package.GetPartsCore%2A> method of the <xref:System.IO.Packaging.ZipPackage> class to return the parts from a ZIP file.  
-  
- For more information about packages and package parts, see section 1.1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to use the <xref:System.IO.Packaging.Package.GetParts%2A> method to obtain a collection of the parts that are contained in a <xref:System.IO.Packaging.Package>.  For the complete program source code, see [Creating a Package with a Digital Signature Sample](https://go.microsoft.com/fwlink/?LinkID=159966).  
-  
-  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+<xref:System.IO.Packaging.Package.GetParts%2A> returns a collection of all parts that are contained in the package including <xref:System.IO.Packaging.PackageRelationship> parts.
+
+<xref:System.IO.Packaging.Package.GetParts%2A> will never return `null`; however, the returned collection will contain zero elements if the package contains no parts.
+
+By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> base class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.GetParts%2A> calls the <xref:System.IO.Packaging.Package.GetPartsCore%2A> method of the <xref:System.IO.Packaging.ZipPackage> class to return the parts from a ZIP file.
+
+For more information about packages and package parts, see section 1.1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The package is not open (<see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> or <see cref="M:System.IO.Packaging.Package.Close" /> has been called).</exception>
@@ -1314,7 +1291,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1322,6 +1298,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1336,15 +1313,15 @@
         <summary>When overridden in a derived class, returns an array of all the parts in the package.</summary>
         <returns>An array of all the parts that are contained in the package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The derived class <xref:System.IO.Packaging.Package.GetPartsCore%2A> implementation is called by the <xref:System.IO.Packaging.Package.GetParts%2A> method to access and return the array of parts based on the physical format implemented in the derived class.  
-  
- By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used.  In the default operation, <xref:System.IO.Packaging.Package.GetParts%2A> internally calls <xref:System.IO.Packaging.Package.GetPartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to retrieve the parts from a ZIP file.  
-  
- For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The derived class <xref:System.IO.Packaging.Package.GetPartsCore%2A> implementation is called by the <xref:System.IO.Packaging.Package.GetParts%2A> method to access and return the array of parts based on the physical format implemented in the derived class.
+
+ By default, a <xref:System.IO.Packaging.ZipPackage> derived implementation of the abstract <xref:System.IO.Packaging.Package> class is provided and used. In the default operation, <xref:System.IO.Packaging.Package.GetParts%2A> internally calls <xref:System.IO.Packaging.Package.GetPartCore%2A> of the <xref:System.IO.Packaging.ZipPackage> class to retrieve the parts from a ZIP file.
+
+ For more information about the package model and package parts, see Chapter 1 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -1364,7 +1341,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1372,6 +1348,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1389,13 +1366,13 @@
         <summary>Returns the package-level relationship with a given identifier.</summary>
         <returns>The package-level relationship with the specified <paramref name="id" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- `id` must be a valid XML identifier. The `id` type is xsd:ID and must follow the naming conventions prescribed in the [section 3.3.8 of the XML Schema Part 2: Datatypes specification](https://www.w3.org/TR/xmlschema-2/#ID).  
-  
- For additional information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ `id` must be a valid XML identifier. The `id` type is xsd:ID and must follow the naming conventions prescribed in the [section 3.3.8 of the XML Schema Part 2: Datatypes specification](https://www.w3.org/TR/xmlschema-2/#ID).
+
+ For additional information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1422,7 +1399,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1430,6 +1406,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1450,21 +1427,20 @@
         <summary>Returns a collection of all the package-level relationships.</summary>
         <returns>A collection of all the package-level relationships that are contained in the package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.GetRelationships%2A> will never return `null`; however the returned collection may contain zero elements if the package contains no package-level relationships.  
-  
- A package-level relationship defines an association between the package and an associated target part or resource.  A package-level relationship can be one of two forms.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target part in the package.  
-  
--   Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.  
-  
- In a package-relationship the package is considered the "owner" of the relationship.  When the package is deleted, all the relationships owned by the package are also deleted.  The process of creating or deleting the relationship does not physically alter the target part or resource in any way.  
-  
- For additional information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.GetRelationships%2A> will never return `null`; however the returned collection may contain zero elements if the package contains no package-level relationships.
+
+ A package-level relationship defines an association between the package and an associated target part or resource. A package-level relationship can be one of two forms.
+
+- Between a <xref:System.IO.Packaging.Package> to a target part in the package.
+- Between a <xref:System.IO.Packaging.Package> to a target resource outside the package.
+
+ In a package-relationship the package is considered the "owner" of the relationship. When the package is deleted, all the relationships owned by the package are also deleted. The process of creating or deleting the relationship does not physically alter the target part or resource in any way.
+
+ For additional information about packaging and package relationships, see section 1.3 of the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The package is not open (<see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> or <see cref="M:System.IO.Packaging.Package.Close" /> has been called).</exception>
@@ -1486,7 +1462,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1494,6 +1469,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1511,31 +1487,29 @@
         <summary>Returns a collection of all the package-level relationships that match a given <see cref="P:System.IO.Packaging.PackageRelationship.RelationshipType" />.</summary>
         <returns>A collection of package-level relationships that match the specified <paramref name="relationshipType" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.Package.GetRelationships%2A> will never return `null`; however the returned collection may contain zero elements if there are no package-level relationships that match the specified `relationshipType`.  
-  
- The following table shows the package-level `relationshipType` URIs defined by the Open Packaging Conventions (OPC) specification.  
-  
-|Package-level Relationship|Relationship Type URI|  
-|---------------------------------|---------------------------|  
-|Core Properties|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties`|  
-|Digital Signature|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature`|  
-|Digital Signature Certificate|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate`|  
-|Digital Signature Origin|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin`|  
-|Thumbnail|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail`|  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to retrieve the relationships that have been defined for the package.  For the complete sample, see [Reading a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160034).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.Package.GetRelationships%2A> will never return `null`; however the returned collection may contain zero elements if there are no package-level relationships that match the specified `relationshipType`.
+
+ The following table shows the package-level `relationshipType` URIs defined by the Open Packaging Conventions (OPC) specification.
+
+|Package-level Relationship|Relationship Type URI|
+|---------------------------------|---------------------------|
+|Core Properties|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties`|
+|Digital Signature|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature`|
+|Digital Signature Certificate|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate`|
+|Digital Signature Origin|`http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin`|
+|Thumbnail|`http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail`|
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to retrieve the relationships that have been defined for the package.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/GetPart/PackageRead.cs" id="Snippetpackagereadusing":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageRead/visualbasic/packageread.vb" id="Snippetpackagereadusing":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageRead/visualbasic/packageread.vb" id="Snippetpackagereadusing":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1558,21 +1532,19 @@
       <Docs>
         <summary>Opens a package.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackage":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1588,7 +1560,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1596,6 +1567,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1613,13 +1585,13 @@
         <summary>Opens a package on a given IO stream.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1638,7 +1610,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1646,6 +1617,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1663,23 +1635,21 @@
         <summary>Opens a package at a given path and file name.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- This <xref:System.IO.Packaging.Package.Open%2A> method opens the package with default attributes <xref:System.IO.FileMode.OpenOrCreate>, <xref:System.IO.FileAccess.ReadWrite>, and <xref:System.IO.FileShare.None> (to specify different attributes use one of the other Open method overloads).  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ This <xref:System.IO.Packaging.Package.Open%2A> method opens the package with default attributes <xref:System.IO.FileMode.OpenOrCreate>, <xref:System.IO.FileAccess.ReadWrite>, and <xref:System.IO.FileShare.None> (to specify different attributes use one of the other Open method overloads).
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackage":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1697,7 +1667,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1705,6 +1674,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1724,13 +1694,13 @@
         <summary>Opens a package with a given IO stream and file mode.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1751,7 +1721,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1759,6 +1728,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1778,23 +1748,21 @@
         <summary>Opens a package at a given path using a given file mode.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- This <xref:System.IO.Packaging.Package.Open%2A> method opens the package with default attributes <xref:System.IO.FileAccess.ReadWrite> and <xref:System.IO.FileShare.None> (to specify different attributes use one of the other Open method overloads).  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ This <xref:System.IO.Packaging.Package.Open%2A> method opens the package with default attributes <xref:System.IO.FileAccess.ReadWrite> and <xref:System.IO.FileShare.None> (to specify different attributes use one of the other Open method overloads).
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackage":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1813,7 +1781,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1821,6 +1788,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1848,13 +1816,13 @@
         <summary>Opens a package with a given IO stream, file mode, and file access setting.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1874,7 +1842,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1882,6 +1849,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1903,23 +1871,21 @@
         <summary>Opens a package at a given path using a given file mode and file access setting.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- This <xref:System.IO.Packaging.Package.Open%2A> method opens the package with a default <xref:System.IO.FileShare.None> attribute (to specify a different attribute use the <xref:System.IO.Packaging.Package.Open%2A> method overload).  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to open and read a <xref:System.IO.Packaging.Package> that contains <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.  For the complete sample, see [Reading a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160034).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ This <xref:System.IO.Packaging.Package.Open%2A> method opens the package with a default <xref:System.IO.FileShare.None> attribute (to specify a different attribute use the <xref:System.IO.Packaging.Package.Open%2A> method overload).
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to open and read a <xref:System.IO.Packaging.Package> that contains <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/GetPart/PackageRead.cs" id="Snippetpackagereadusing":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageRead/visualbasic/packageread.vb" id="Snippetpackagereadusing":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageRead/visualbasic/packageread.vb" id="Snippetpackagereadusing":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -1938,7 +1904,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -1946,6 +1911,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -1975,21 +1941,19 @@
         <summary>Opens a package at a given path using a given file mode, file access, and file share setting.</summary>
         <returns>The opened package.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
-   
-  
-## Examples  
- The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.  For the complete sample, see [Writing a Package Sample](https://go.microsoft.com/fwlink/?LinkID=160055).  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ <xref:System.IO.Packaging.ZipPackage> is the default package type that is used by the <xref:System.IO.Packaging.Package.Open%2A> method.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
+## Examples
+ The following example shows how to create a new <xref:System.IO.Packaging.Package> that incorporates <xref:System.IO.Packaging.PackageRelationship> and <xref:System.IO.Packaging.PackagePart> elements together with stored data.
+
  :::code language="csharp" source="~/snippets/csharp/System.IO.Packaging/Package/Overview/PackageWrite.cs" id="Snippetpackagewritecreatepackage":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Wpf/PackageWrite/visualbasic/packagewrite.vb" id="Snippetpackagewritecreatepackage":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2008,7 +1972,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -2016,6 +1979,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -2029,11 +1993,11 @@
         <summary>Gets the core properties of the package.</summary>
         <value>The core properties of the package.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For additional information about core package properties, see section 3.1 in the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For additional information about core package properties, see section 3.1 in the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ObjectDisposedException">The package is not open (<see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> or <see cref="M:System.IO.Packaging.Package.Close" /> has been called).</exception>
@@ -2050,7 +2014,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -2058,6 +2021,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -2076,13 +2040,13 @@
         <returns>
           <see langword="true" /> if a part with the specified <paramref name="partUri" /> is in the package; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The `partUri` should begin with a forward-slash character "/" and be absolute from the root of the package.  
-  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The `partUri` should begin with a forward-slash character "/" and be absolute from the root of the package.
+
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2108,7 +2072,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -2116,6 +2079,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -2134,11 +2098,11 @@
         <returns>
           <see langword="true" /> if a package-level relationship with the specified <paramref name="id" /> is in the package; otherwise, <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ For additional information, see the Open Packaging Conventions (OPC) specification available for download at <https://www.ecma-international.org/publications-and-standards/standards/ecma-376/>.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -2164,7 +2128,6 @@
       <AssemblyInfo>
         <AssemblyName>System.IO.Packaging</AssemblyName>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>4.0.4.0</AssemblyVersion>
         <AssemblyVersion>4.0.5.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -2172,6 +2135,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>WindowsBase</AssemblyName>
@@ -2183,7 +2147,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>This member supports the Windows Presentation Foundation (WPF) infrastructure and is not intended for application use.  Use the type-safe <see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> method instead.</summary>
+        <summary>This member supports the Windows Presentation Foundation (WPF) infrastructure and is not intended for application use. Use the type-safe <see cref="M:System.IO.Packaging.Package.Dispose(System.Boolean)" /> method instead.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 

@@ -1,87 +1,85 @@
-﻿Imports System.Runtime.Serialization
-Imports System.ServiceModel
-Imports System.ServiceModel.Security
+﻿Imports System.ServiceModel
 Imports System.ServiceModel.Description
-Imports System.Security.Cryptography.X509Certificates
+Imports System.ServiceModel.Security
 
 Namespace Example
-	Public Class Test
-		Shared Sub Main()
-			Dim t As New Test()
-			t.Snippet1()
-		End Sub
+    Public Class Test
+        Shared Sub Main()
+            Dim t As New Test()
+            t.Snippet1()
+        End Sub
 
 
-			Private Sub Snippet1()
-				'<snippet1>
-				' Create a service host.
-				Dim httpUri As New Uri("http://localhost/Calculator")
-				Dim sh As New ServiceHost(GetType(Calculator), httpUri)
+        Private Sub Snippet1()
+            '<snippet1>
+            ' Create a service host.
+            Dim httpUri As New Uri("http://localhost/Calculator")
+            Dim sh As New ServiceHost(GetType(Calculator), httpUri)
 
-				' Create a binding that uses a WindowsServiceCredential.
-				Dim b As New WSHttpBinding(SecurityMode.Message)
-				b.Security.Message.ClientCredentialType = MessageCredentialType.Windows
+            ' Create a binding that uses a WindowsServiceCredential.
+            Dim b As New WSHttpBinding(SecurityMode.Message)
+            b.Security.Message.ClientCredentialType = MessageCredentialType.Windows
 
-				' Add an endpoint.
-				sh.AddServiceEndpoint(GetType(ICalculator), b, "WindowsCalculator")
+            ' Add an endpoint.
+            sh.AddServiceEndpoint(GetType(ICalculator), b, "WindowsCalculator")
 
-				' Get a reference to the WindowsServiceCredential object.
-				Dim winCredential As WindowsServiceCredential = sh.Credentials.WindowsAuthentication
-				' Print out values.
-				Console.WriteLine("IncludeWindowsGroup: {0}", winCredential.IncludeWindowsGroups)
-				Console.WriteLine("UserNamePasswordValidationMode: {0}", winCredential.AllowAnonymousLogons)
+            ' Get a reference to the WindowsServiceCredential object.
+            Dim winCredential As WindowsServiceCredential = sh.Credentials.WindowsAuthentication
+            ' Print out values.
+            Console.WriteLine("IncludeWindowsGroup: {0}", winCredential.IncludeWindowsGroups)
+            Console.WriteLine("UserNamePasswordValidationMode: {0}", winCredential.AllowAnonymousLogons)
 
-				Console.ReadLine()
-				'</snippet1>
-			End Sub
-			Private Sub Snippet2()
-				'<snippet2>
-				' Create a service host.
-				Dim httpUri As New Uri("http://localhost/Calculator")
-				Dim sh As New ServiceHost(GetType(Calculator), httpUri)
+            Console.ReadLine()
+            '</snippet1>
+        End Sub
+        Private Sub Snippet2()
+            '<snippet2>
+            ' Create a service host.
+            Dim httpUri As New Uri("http://localhost/Calculator")
+            Dim sh As New ServiceHost(GetType(Calculator), httpUri)
 
-				' Create a binding that uses a WindowsServiceCredential .
-				Dim b As New WSHttpBinding(SecurityMode.Message)
-				b.Security.Message.ClientCredentialType = MessageCredentialType.Windows
+            ' Create a binding that uses a WindowsServiceCredential .
+            Dim b As New WSHttpBinding(SecurityMode.Message)
+            b.Security.Message.ClientCredentialType = MessageCredentialType.Windows
 
-				' Add an endpoint.
-				sh.AddServiceEndpoint(GetType(ICalculator), b, "WindowsCalculator")
+            ' Add an endpoint.
+            sh.AddServiceEndpoint(GetType(ICalculator), b, "WindowsCalculator")
 
-				' Get a reference to the WindowsServiceCredential object.
-				Dim ssCredential As SecureConversationServiceCredential = sh.Credentials.SecureConversationAuthentication
+            ' Get a reference to the WindowsServiceCredential object.
+            Dim ssCredential As SecureConversationServiceCredential = sh.Credentials.SecureConversationAuthentication
 
-				'</snippet2>
-			End Sub
-			Private Sub Snippet3()
-				'<snippet3>
-				' Create a service host.
-				Dim httpUri As New Uri("http://localhost/Calculator")
-				Dim sh As New ServiceHost(GetType(Calculator), httpUri)
+            '</snippet2>
+        End Sub
+        Private Sub Snippet3()
+            '<snippet3>
+            ' Create a service host.
+            Dim httpUri As New Uri("http://localhost/Calculator")
+            Dim sh As New ServiceHost(GetType(Calculator), httpUri)
 
-				' Create a binding that uses a WindowsServiceCredential .
-				Dim b As New WSHttpBinding(SecurityMode.Message)
-				b.Security.Message.ClientCredentialType = MessageCredentialType.Windows
+            ' Create a binding that uses a WindowsServiceCredential .
+            Dim b As New WSHttpBinding(SecurityMode.Message)
+            b.Security.Message.ClientCredentialType = MessageCredentialType.Windows
 
-				' Add an endpoint.
-				sh.AddServiceEndpoint(GetType(ICalculator), b, "WindowsCalculator")
+            ' Add an endpoint.
+            sh.AddServiceEndpoint(GetType(ICalculator), b, "WindowsCalculator")
 
-				' Clone these credentials.
-				Dim cloneCredential As ServiceCredentials = sh.Credentials.Clone()
+            ' Clone these credentials.
+            Dim cloneCredential As ServiceCredentials = sh.Credentials.Clone()
 
-				'</snippet3>
-			End Sub
-	End Class
+            '</snippet3>
+        End Sub
+    End Class
 
-	<ServiceContract> _
-	Friend Interface ICalculator
-		<OperationContract> _
-		Function Add(ByVal a As Double, ByVal b As Double) As Double
-	End Interface
+    <ServiceContract>
+    Friend Interface ICalculator
+        <OperationContract>
+        Function Add(ByVal a As Double, ByVal b As Double) As Double
+    End Interface
 
-	Public Class Calculator
-		Implements ICalculator
-		Public Function Add(ByVal a As Double, ByVal b As Double) As Double Implements ICalculator.Add
-			Return a + b
-		End Function
-	End Class
+    Public Class Calculator
+        Implements ICalculator
+        Public Function Add(ByVal a As Double, ByVal b As Double) As Double Implements ICalculator.Add
+            Return a + b
+        End Function
+    End Class
 End Namespace

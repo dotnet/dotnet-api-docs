@@ -102,7 +102,7 @@ namespace WindowsApplication1
       {
          if(textBox1.Text != "")
          {
-            if(checkedListBox1.CheckedItems.Contains(textBox1.Text)== false)
+            if(!checkedListBox1.CheckedItems.Contains(textBox1.Text))
                checkedListBox1.Items.Add(textBox1.Text,CheckState.Checked);
             textBox1.Text = "";
          }
@@ -156,7 +156,7 @@ namespace WindowsApplication1
          IEnumerator myEnumerator;
          myEnumerator = checkedListBox1.CheckedIndices.GetEnumerator();
          int y;
-         while (myEnumerator.MoveNext() != false)
+         while (myEnumerator.MoveNext())
          {
             y =(int) myEnumerator.Current;
             checkedListBox1.SetItemChecked(y, false);

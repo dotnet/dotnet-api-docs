@@ -1,6 +1,6 @@
 <Type Name="IsolatedStorageContainment" FullName="System.Security.Permissions.IsolatedStorageContainment">
   <TypeSignature Language="C#" Value="public enum IsolatedStorageContainment" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed IsolatedStorageContainment extends System.Enum" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed IsolatedStorageContainment extends System.Enum" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-10.0;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
   <TypeSignature Language="DocId" Value="T:System.Security.Permissions.IsolatedStorageContainment" />
   <TypeSignature Language="VB.NET" Value="Public Enum IsolatedStorageContainment" />
   <TypeSignature Language="F#" Value="type IsolatedStorageContainment = " />
@@ -23,12 +23,16 @@
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="System.Security.Permissions" FromVersion="10.0.0.0" To="mscorlib" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7-pp" />
+  </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Attributes>
-    <Attribute FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-plat-ext-9.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0">
       <AttributeName Language="C#">[System.Obsolete("Code Access Security is not supported or honored by the runtime.", DiagnosticId="SYSLIB0003", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Obsolete("Code Access Security is not supported or honored by the runtime.", DiagnosticId="SYSLIB0003", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
     </Attribute>
@@ -44,43 +48,34 @@
   <Docs>
     <summary>Specifies the permitted use of isolated storage.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
+      <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
 [!INCLUDE[cas-deprecated](~/includes/cas-deprecated.md)]
 
- Isolated storage uses evidence to determine a unique storage area for use by an application or component. The identity of an assembly uniquely determines the root of a virtual file system for use by that assembly. Thus, rather than many applications and components sharing a common resource such as the file system or registry, each has its own file area inherently assigned to it.  
-  
- Four basic isolation scopes are used when assigning isolated storage:  
-  
--   `User` - Code is always scoped according to the current user. The same assembly will receive different stores when being run by different users.  
-  
--   `Machine` - Code is always scoped according to the machine. The same assembly will receive the same stores when being run by different users on the same machine.  
-  
--   `Assembly` - Code is identified cryptographically by strong name (for example, Microsoft.Office.\* or Microsoft.Office.Word), by publisher (based on public key), by URL (for example, `http://www.fourthcoffee.com/process/grind.htm`), by site, or by zone.  
-  
--   `Domain` - Code is identified based on evidence associated with the application domain. Web application identity is derived from the site's URL, or by the Web page's URL, site, or zone. Local code identity is based on the application directory path.  
-  
- For definitions of URL, site, and zone, see <xref:System.Security.Permissions.UrlIdentityPermission>, <xref:System.Security.Permissions.SiteIdentityPermission>, and <xref:System.Security.Permissions.ZoneIdentityPermission>.  
-  
- These identities are grouped together, in which case the identities are applied one after another until the desired isolated storage is created. The valid groupings are User+Assembly and User+Assembly+Domain. This grouping of identities is useful in many different applications.  
-  
- If data is stored by domain, user, and assembly, the data is private in that only code in that assembly can access the data. The data store is also isolated by the application in which it runs, so that the assembly does not represent a potential leak by exposing data to other applications.  
-  
- Isolation by assembly and user could be used for user data that applies across multiple applications; for example, license information, or a user's personal information (name, authentication credentials, and so on) that is independent of an application.  
-  
- <xref:System.Security.Permissions.IsolatedStorageContainment> exposes flags that determine whether an application is allowed to use isolated storage and, if so, which identity combinations are allowed to use it. It also determines whether an application is allowed to store information in a location that can roam with a user (Windows Roaming User Profiles or Folder Redirection must be configured).  
-  
-   
-  
-## Examples  
- This example shows how to tell the CLR that code in this assembly requires the <xref:System.Security.Permissions.IsolatedStoragePermission> and also demonstrates how to write and read from isolated storage.  
-  
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/IsolatedStoragePermissionAttribute/cpp/IsolatedStoragePermissionAttribute.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System.Security.Permissions/IsolatedStorageContainment/Overview/IsolatedStoragePermissionAttribute.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_CLR/IsolatedStoragePermissionAttribute/VB/program.vb" id="Snippet1":::  
-  
+ Isolated storage uses evidence to determine a unique storage area for use by an application or component. The identity of an assembly uniquely determines the root of a virtual file system for use by that assembly. Thus, rather than many applications and components sharing a common resource such as the file system or registry, each has its own file area inherently assigned to it.
+
+ Four basic isolation scopes are used when assigning isolated storage:
+
+-   `User` - Code is always scoped according to the current user. The same assembly will receive different stores when being run by different users.
+
+-   `Machine` - Code is always scoped according to the machine. The same assembly will receive the same stores when being run by different users on the same machine.
+
+-   `Assembly` - Code is identified cryptographically by strong name (for example, Microsoft.Office.\* or Microsoft.Office.Word), by publisher (based on public key), by URL (for example, `http://www.fourthcoffee.com/process/grind.htm`), by site, or by zone.
+
+-   `Domain` - Code is identified based on evidence associated with the application domain. Web application identity is derived from the site's URL, or by the Web page's URL, site, or zone. Local code identity is based on the application directory path.
+
+ For definitions of URL, site, and zone, see <xref:System.Security.Permissions.UrlIdentityPermission>, <xref:System.Security.Permissions.SiteIdentityPermission>, and <xref:System.Security.Permissions.ZoneIdentityPermission>.
+
+ These identities are grouped together, in which case the identities are applied one after another until the desired isolated storage is created. The valid groupings are User+Assembly and User+Assembly+Domain. This grouping of identities is useful in many different applications.
+
+ If data is stored by domain, user, and assembly, the data is private in that only code in that assembly can access the data. The data store is also isolated by the application in which it runs, so that the assembly does not represent a potential leak by exposing data to other applications.
+
+ Isolation by assembly and user could be used for user data that applies across multiple applications; for example, license information, or a user's personal information (name, authentication credentials, and so on) that is independent of an application.
+
+ <xref:System.Security.Permissions.IsolatedStorageContainment> exposes flags that determine whether an application is allowed to use isolated storage and, if so, which identity combinations are allowed to use it. It also determines whether an application is allowed to store information in a location that can roam with a user (Windows Roaming User Profiles or Folder Redirection must be configured).
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Security.Permissions.IsolatedStoragePermission" />
@@ -106,7 +101,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -114,6 +108,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -139,7 +134,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -147,6 +141,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -172,7 +167,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -180,6 +174,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -205,7 +200,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -213,6 +207,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -238,7 +233,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -246,6 +240,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -272,7 +267,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -280,6 +274,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -306,7 +301,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -314,6 +308,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -339,7 +334,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -347,6 +341,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -373,7 +368,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -381,6 +375,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -407,7 +402,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -415,6 +409,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -441,7 +436,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -449,6 +443,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>
@@ -475,7 +470,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Security.Permissions</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
         <AssemblyVersion>4.0.3.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
@@ -483,6 +477,7 @@
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Permissions.IsolatedStorageContainment</ReturnType>

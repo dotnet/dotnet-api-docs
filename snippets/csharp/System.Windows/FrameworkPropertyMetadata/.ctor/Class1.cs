@@ -21,7 +21,7 @@ namespace PropertyMetadataAPIs
       public Boolean SupportsMyFeature
       {
           get { return _supportsMyFeature; }
-          set { if (this.IsSealed != true) _supportsMyFeature = value; } //else may want to raise exception 
+          set { if (!this.IsSealed) _supportsMyFeature = value; } //else may want to raise exception 
       }
       protected override void Merge(PropertyMetadata baseMetadata, DependencyProperty dp)
       {
@@ -29,7 +29,7 @@ namespace PropertyMetadataAPIs
           MyCustomPropertyMetadata mcpm = baseMetadata as MyCustomPropertyMetadata;
           if (mcpm != null)
           {
-              if (this.SupportsMyFeature == false)
+              if (!this.SupportsMyFeature)
               {//if not set, revert to base
                   this.SupportsMyFeature = mcpm.SupportsMyFeature;
               }

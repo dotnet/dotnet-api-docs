@@ -24,4 +24,14 @@ public class Sample
     doc.Save(Console.Out);
   }
 }
+/*
+    The example displays the following output:
+
+    Display the modified XML...
+    <?xml version="1.0" encoding="us-ascii"?>
+    <book genre="novel" ISBN="1-861001-57-5">
+        <title>Pride And Prejudice</title>
+        <price>19.95</price>
+    </book>
+*/
    // </Snippet1>
