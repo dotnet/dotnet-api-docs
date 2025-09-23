@@ -43,7 +43,7 @@ namespace SDKSample
             drawingContext.DrawGeometry(Fill, new System.Windows.Media.Pen(Stroke, StrokeThickness), _textGeometry);
 
             // Draw the text highlight based on the properties that are set.
-            if (Highlight == true)
+            if (Highlight)
             {
                 drawingContext.DrawGeometry(null, new System.Windows.Media.Pen(Stroke, StrokeThickness), _textHighLightGeometry);
             }
@@ -59,8 +59,8 @@ namespace SDKSample
             System.Windows.FontStyle fontStyle = FontStyles.Normal;
             FontWeight fontWeight = FontWeights.Medium;
 
-            if (Bold == true) fontWeight = FontWeights.Bold;
-            if (Italic == true) fontStyle = FontStyles.Italic;
+            if (Bold) fontWeight = FontWeights.Bold;
+            if (Italic) fontStyle = FontStyles.Italic;
 
             // Create the formatted text based on the properties set.
             FormattedText formattedText = new FormattedText(
@@ -80,7 +80,7 @@ namespace SDKSample
             _textGeometry = formattedText.BuildGeometry(new System.Windows.Point(0, 0));
 
             // Build the geometry object that represents the text highlight.
-            if (Highlight == true)
+            if (Highlight)
             {
                 _textHighLightGeometry = formattedText.BuildHighlightGeometry(new System.Windows.Point(0, 0));
             }

@@ -326,7 +326,7 @@ namespace XMLProcessingApp
         //************************************************************************************
         private void validateCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (validateCheckBox.Checked == true)
+            if (validateCheckBox.Checked)
             {
                 generateSchemaCheckBox.Enabled = true;
                 generateSchemaCheckBox.Visible = true;
@@ -482,18 +482,18 @@ namespace XMLProcessingApp
         //************************************************************************************
         private void addFilterButton_Click(object sender, EventArgs e)
         {
-            if (condition1Panel.Visible != true)
+            if (!condition1Panel.Visible)
             {
                 condition1Panel.Visible = true;
                 applyLabel.Visible = true;
                 matchesLabel.Visible = true;
                 matchesComboBox.Visible = true;
             }
-            else if (condition2Panel.Visible != true)
+            else if (!condition2Panel.Visible)
             {
                 condition2Panel.Visible = true;
             }
-            else if (condition3Panel.Visible != true)
+            else if (!condition3Panel.Visible)
             {
                 condition3Panel.Visible = true;
             }
@@ -509,17 +509,17 @@ namespace XMLProcessingApp
         //************************************************************************************
         private void clearButton_Click(object sender, EventArgs e)
         {
-            if (condition4Panel.Visible != false)
+            if (condition4Panel.Visible)
             {
                 condition4Panel.Visible = false;
                 condition4CheckBox.Checked = false;
             }
-            else if (condition3Panel.Visible != false)
+            else if (condition3Panel.Visible)
             {
                 condition3Panel.Visible = false;
                 condition3CheckBox.Checked = false;
             }
-            else if (condition2Panel.Visible != false)
+            else if (condition2Panel.Visible)
             {
                 condition2Panel.Visible = false;
                 condition2CheckBox.Checked = false;
@@ -659,25 +659,25 @@ namespace XMLProcessingApp
             ArrayList Operators = new ArrayList();
             ArrayList Values =new ArrayList();
 
-            if (condition1CheckBox.Checked == true)
+            if (condition1CheckBox.Checked)
             {
                 Conditions.Add(condition1ComboBox.Text);
                 Operators.Add(operator1ComboBox.Text);
                 Values.Add(condition1TextBox.Text);
             }
-            if (condition2CheckBox.Checked == true)
+            if (condition2CheckBox.Checked)
             {
                 Conditions.Add(condition2ComboBox.Text);
                 Operators.Add(operator2ComboBox.Text);
                 Values.Add(condition2TextBox.Text);
             }
-            if (condition3CheckBox.Checked == true)
+            if (condition3CheckBox.Checked)
             {
                 Conditions.Add(condition3ComboBox.Text);
                 Operators.Add(operator3ComboBox.Text);
                 Values.Add(condition3TextBox.Text);
             }
-            if (condition4CheckBox.Checked == true)
+            if (condition4CheckBox.Checked)
             {
                 Conditions.Add(condition4ComboBox.Text);
                 Operators.Add(operator4ComboBox.Text);
@@ -695,19 +695,19 @@ namespace XMLProcessingApp
         {
             filterTreeView.Nodes.Clear();
 
-            if (condition1CheckBox.Checked == true)
+            if (condition1CheckBox.Checked)
             {
                 ConditionCheckChanged(condition1CheckBox);
             }
-            else if (condition2CheckBox.Checked == true)
+            else if (condition2CheckBox.Checked)
             {
                 ConditionCheckChanged(condition2CheckBox);
             }
-            else if (condition3CheckBox.Checked == true)
+            else if (condition3CheckBox.Checked)
             {
                 ConditionCheckChanged(condition3CheckBox);
             }
-            else if (condition4CheckBox.Checked == true)
+            else if (condition4CheckBox.Checked)
             {
                 ConditionCheckChanged(condition4CheckBox);
             }
@@ -719,10 +719,10 @@ namespace XMLProcessingApp
         //************************************************************************************
         private void ShowOrHideFilterBox()
         {
-            if (condition1CheckBox.Checked == false &&
-                condition2CheckBox.Checked == false &&
-                condition3CheckBox.Checked == false &&
-                condition4CheckBox.Checked == false)
+            if (!condition1CheckBox.Checked &&
+                !condition2CheckBox.Checked &&
+                !condition3CheckBox.Checked &&
+                !condition4CheckBox.Checked)
             {
                 filterBox.Visible = false;
             }
@@ -738,7 +738,7 @@ namespace XMLProcessingApp
         //************************************************************************************
         private void FilterChecked(ArrayList conditions, ArrayList operatorSymbols, ArrayList values, CheckBox conditionCheckBox)
         {
-            if (conditionCheckBox.Checked == true)
+            if (conditionCheckBox.Checked)
             {
                 XmlNodeList nodes = null;
 
@@ -763,7 +763,7 @@ namespace XMLProcessingApp
                         break;
                      }
                  }
-                if (failure != true)
+                if (!failure)
                 {
                     nodes = _xmlHelperMethods.ApplyFilters
                     (conditions, operatorSymbols, values, _doc, matchesComboBox.Text);

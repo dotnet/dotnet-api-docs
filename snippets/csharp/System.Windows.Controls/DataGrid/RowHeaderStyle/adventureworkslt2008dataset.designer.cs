@@ -43,7 +43,7 @@ namespace DataGrid_RowHeader {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         protected AdventureWorksLT2008DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
-            if ((this.IsBinarySerialized(info, context) == true)) {
+            if (this.IsBinarySerialized(info, context)) {
                 this.InitVars(false);
                 global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
@@ -189,7 +189,7 @@ namespace DataGrid_RowHeader {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
             this.tableCustomer = ((CustomerDataTable)(base.Tables["Customer"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableCustomer != null)) {
                     this.tableCustomer.InitVars();
                 }
@@ -849,7 +849,7 @@ SELECT CustomerID, FirstName COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, Last
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet.CustomerDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);

@@ -202,7 +202,7 @@ namespace SampleDataGridTableStyle
       {
          myDataGridTableStyle1 = gcnew DataGridTableStyle;
          myHeaderLabel->Text = String::Concat( "Header Status : ", myDataGridTableStyle1->ColumnHeadersVisible );
-         if ( myDataGridTableStyle1->ColumnHeadersVisible == true )
+         if (myDataGridTableStyle1->ColumnHeadersVisible)
          {
             btnheader->Text = "Remove Header";
          }
@@ -263,7 +263,7 @@ namespace SampleDataGridTableStyle
 
       void btnheader_Click( Object^ /*sender*/, EventArgs^ /*e*/ )
       {
-         if ( myDataGridTableStyle1->ColumnHeadersVisible == true )
+         if (myDataGridTableStyle1->ColumnHeadersVisible)
          {
             myDataGridTableStyle1->ColumnHeadersVisible = false;
             btnheader->Text = "Add Header";

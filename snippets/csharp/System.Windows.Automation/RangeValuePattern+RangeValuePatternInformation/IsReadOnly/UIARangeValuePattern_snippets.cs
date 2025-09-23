@@ -57,7 +57,7 @@ namespace UIARangeValuePattern_snip
         private AutomationElement StartTargetApp(string target)
         {
             Process p = Process.Start(target);
-            if (p.WaitForInputIdle(50000) == false)
+            if (!p.WaitForInputIdle(50000))
             {
                 return null;
             }

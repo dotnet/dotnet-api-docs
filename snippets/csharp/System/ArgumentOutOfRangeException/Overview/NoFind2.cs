@@ -9,7 +9,7 @@ public class Example18
                            "runOnPhrase" };
       foreach (var phrase in phrases) {
          string word = GetSecondWord(phrase);
-         if (! string.IsNullOrEmpty(word))
+         if (!string.IsNullOrEmpty(word))
             Console.WriteLine("Second word is {0}", word);
       }
    }

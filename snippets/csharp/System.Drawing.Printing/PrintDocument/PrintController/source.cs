@@ -13,11 +13,11 @@ public class Form1: Form
 // <Snippet1>
  public void myPrint()
  {
-    if (useMyPrintController == true)
+    if (useMyPrintController)
     {
        myPrintDocument.PrintController = 
           new myControllerImplementation();     
-       if (wantsStatusDialog == true)
+       if (wantsStatusDialog)
        {
           myPrintDocument.PrintController = 
              new PrintControllerWithStatusDialog

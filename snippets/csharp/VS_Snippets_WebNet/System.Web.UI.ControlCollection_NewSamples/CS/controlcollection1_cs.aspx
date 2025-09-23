@@ -37,7 +37,7 @@
        // use the SyncRoot method to get an object that 
        // allows the enumeration of all controls to be 
        // thread safe.
-       if (myButton.Controls.IsSynchronized == false)
+       if (!myButton.Controls.IsSynchronized)
        {
            lock (myButton.Controls.SyncRoot)
            {

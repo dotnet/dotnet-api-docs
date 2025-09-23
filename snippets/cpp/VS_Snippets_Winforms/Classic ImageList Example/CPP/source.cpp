@@ -137,7 +137,7 @@ namespace myImageRotator
     private:
         void button1_Click (Object^ /*sender*/, System::EventArgs^ /*e*/)
         {
-            if(imageList1->Images->Empty != true)
+            if(!imageList1->Images->Empty)
             {
                 if(imageList1->Images->Count-1 > currentImage)
                 {

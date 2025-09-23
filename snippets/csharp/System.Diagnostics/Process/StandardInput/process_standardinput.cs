@@ -8,7 +8,6 @@
 // The sort command results are displayed to the user on the console.
 
 // <Snippet1>
-
 using System;
 using System.IO;
 using System.Diagnostics;

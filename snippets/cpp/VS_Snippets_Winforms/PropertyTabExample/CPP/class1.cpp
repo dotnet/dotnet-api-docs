@@ -47,7 +47,7 @@ namespace TypeCategoryTabExample
          img = "AAEAAAD/////AQAAAAAAAAAMAgAAAFRTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0xLjAuMzMwMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJhd2luZy5CaXRtYXABAAAABERhdGEHAgIAAAAJAwAAAA8DAAAA9gAAAAJCTfYAAAAAAAAANgAAACgAAAAIAAAACAAAAAEAGAAAAAAAAAAAAMQOAADEDgAAAAAAAAAAAAD///////////////////////////////////9ZgABZgADzPz/zPz/zPz9AgP//////////gAD/gAD/AAD/AAD/AACKyub///////+AAACAAAAAAP8AAP8AAP9AgP////////9ZgABZgABz13hz13hz13hAgP//////////gAD/gACA/wCA/wCA/wAA//////////+AAACAAAAAAP8AAP8AAP9AgP////////////////////////////////////8L";
       }
 
-	  //<Snippet2>
+	   //<Snippet2>
       // Returns the properties of the specified component extended with
       // a CategoryAttribute reflecting the name of the type of the property.
       [ReflectionPermission(SecurityAction::Demand, Flags=ReflectionPermissionFlag::MemberAccess)]
@@ -75,7 +75,7 @@ namespace TypeCategoryTabExample
       {
          return this->GetProperties( component, nullptr );
       }
-	  //</Snippet2>
+	   //</Snippet2>
 
       property String^ TabName 
       {
@@ -84,30 +84,6 @@ namespace TypeCategoryTabExample
          {
             return "Properties by Type";
          }
-      }
-
-      property System::Drawing::Bitmap^ Bitmap 
-      {
-         // Provides an image for the property tab.
-         virtual System::Drawing::Bitmap^ get() override
-         {
-            System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap( DeserializeFromBase64Text( img ) );
-            return bmp;
-         }
-      }
-
-   private:
-
-      // This method can be used to retrieve an Image from a block of Base64-encoded text.
-      Image^ DeserializeFromBase64Text( String^ text )
-      {
-         Image^ img = nullptr;
-         array<Byte>^memBytes = Convert::FromBase64String( text );
-         IFormatter^ formatter = gcnew BinaryFormatter;
-         MemoryStream^ stream = gcnew MemoryStream( memBytes );
-         img = dynamic_cast<Image^>(formatter->Deserialize( stream ));
-         stream->Close();
-         return img;
       }
    };
 }

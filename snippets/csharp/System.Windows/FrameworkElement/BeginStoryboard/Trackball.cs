@@ -108,7 +108,7 @@ namespace DemoDev
                 delta /= 2;
                 Quaternion q = _rotation;
 
-                if (_rotating == true)
+                if (_rotating)
                 {
                     // We can redefine this 2D mouse delta as a 3D mouse delta
                     // where "into the screen" is Z
@@ -140,7 +140,7 @@ namespace DemoDev
             if (!Enabled) return;
             e.Handled = true;
 
-            if (Keyboard.IsKeyDown(Key.F1) == true)
+            if (Keyboard.IsKeyDown(Key.F1))
             {
                 Reset();
                 return;
@@ -158,7 +158,7 @@ namespace DemoDev
 
             _scaling = (e.MiddleButton == MouseButtonState.Pressed);
 
-            if (Keyboard.IsKeyDown(Key.Space) == false)
+            if (!Keyboard.IsKeyDown(Key.Space))
                 _rotating = true;
             else
                 _rotating = false;
@@ -173,7 +173,7 @@ namespace DemoDev
 
             // Stuff the current initial + delta into initial so when we next move we
             // start at the right place.
-            if (_rotating == true)
+            if (_rotating)
             {
                 _rotation = _rotationDelta * _rotation;
             }

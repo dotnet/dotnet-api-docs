@@ -40,7 +40,7 @@ class AddTakeDemo
             {
                 try
                 {
-                    // Consume consume the BlockingCollection
+                    // Consume the BlockingCollection
                     while (true) Console.WriteLine(bc.Take());
                 }
                 catch (InvalidOperationException)

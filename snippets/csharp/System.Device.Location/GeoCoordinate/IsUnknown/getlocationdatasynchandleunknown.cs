@@ -17,7 +17,7 @@ namespace GetLocationPropertyHandleUnknown
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
             watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
 
-            if (watcher.Position.Location.IsUnknown != true)
+            if (!watcher.Position.Location.IsUnknown)
             {
                 GeoCoordinate coord = watcher.Position.Location;
 

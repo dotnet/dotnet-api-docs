@@ -1,5 +1,4 @@
 ﻿// <Snippet1>
-// <Snippet3>
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -49,14 +48,13 @@ class ProcessInformation
                 startInfo.Verb = verbToUse;
                 if (verbToUse.ToLower().IndexOf("printto") >= 0)
                 {
-                    // printto implies a specific printer.  Ask for the network address.
+                    // printto implies a specific printer. Ask for the network address.
                     // The address must be in the form \\server\printer.
                     // The printer address is passed as the Arguments property.
                     Console.Write("Enter the network address of the target printer: ");
                     var arguments = Console.ReadLine();
                     startInfo.Arguments = arguments;
                 }
-                // </Snippet4>
 
                 try
                 {
@@ -81,6 +79,7 @@ class ProcessInformation
                     Console.WriteLine($"Unable to start '{fileName}' with verb {verbToUse}");
                 }
             }
+            // </Snippet4>
         }
         else
         {
@@ -90,5 +89,4 @@ class ProcessInformation
         }
     }
 }
-// </Snippet3>
 // </Snippet1>

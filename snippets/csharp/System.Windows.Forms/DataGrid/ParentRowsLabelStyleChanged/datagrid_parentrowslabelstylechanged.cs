@@ -180,7 +180,7 @@ public class MyForm : Form
    // Set the 'ParentRowsVisible' property on click of a button.
    private void ToggleVisible_Clicked(object sender, EventArgs e)
    {
-      if (myDataGrid.ParentRowsVisible == true)
+      if (myDataGrid.ParentRowsVisible)
          myDataGrid.ParentRowsVisible = false;
       else
          myDataGrid.ParentRowsVisible = true;

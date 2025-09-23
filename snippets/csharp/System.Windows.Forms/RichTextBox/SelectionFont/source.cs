@@ -109,7 +109,7 @@ namespace CSExample
             System.Drawing.Font currentFont = richTextBox1.SelectionFont;
             System.Drawing.FontStyle newFontStyle;
 
-            if (richTextBox1.SelectionFont.Bold == true)
+            if (richTextBox1.SelectionFont.Bold)
             {
                newFontStyle = FontStyle.Regular;
             }

@@ -43,7 +43,7 @@ namespace DataGrid_FrozenColumns {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         protected AdventureWorksLT2008DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
-            if ((this.IsBinarySerialized(info, context) == true)) {
+            if (this.IsBinarySerialized(info, context)) {
                 this.InitVars(false);
                 global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
@@ -1272,7 +1272,7 @@ SELECT SalesOrderID, SalesOrderDetailID, OrderQty, ProductID, UnitPrice, UnitPri
             global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
             for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
                 global::System.Data.DataRow row = updatedRows[i];
-                if ((allAddedRows.Contains(row) == false)) {
+                if (!allAddedRows.Contains(row)) {
                     realUpdatedRows.Add(row);
                 }
             }
@@ -1288,11 +1288,11 @@ SELECT SalesOrderID, SalesOrderDetailID, OrderQty, ProductID, UnitPrice, UnitPri
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
-            if ((dataSet.HasChanges() == false)) {
+            if (!dataSet.HasChanges()) {
                 return 0;
             }
             if (((this._salesOrderDetailTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._salesOrderDetailTableAdapter.Connection) == false))) {
+                        && (!this.MatchTableAdapterConnection(this._salesOrderDetailTableAdapter.Connection)))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -1474,15 +1474,15 @@ SELECT SalesOrderID, SalesOrderDetailID, OrderQty, ProductID, UnitPrice, UnitPri
                 global::System.Data.DataRow newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 for (
                 ; ((newParent != null) 
-                            && ((object.ReferenceEquals(newParent, child) == false) 
-                            && (object.ReferenceEquals(newParent, parent) == false))); 
+                            && ((!object.ReferenceEquals(newParent, child) ) 
+                            && (!object.ReferenceEquals(newParent, parent) ))); 
                 ) {
                     newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 }
                 if ((newParent == null)) {
                     for (newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original); ((newParent != null) 
-                                && ((object.ReferenceEquals(newParent, child) == false) 
-                                && (object.ReferenceEquals(newParent, parent) == false))); 
+                                && ((!object.ReferenceEquals(newParent, child) ) 
+                                && (!object.ReferenceEquals(newParent, parent) ))); 
                     ) {
                         newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
                     }

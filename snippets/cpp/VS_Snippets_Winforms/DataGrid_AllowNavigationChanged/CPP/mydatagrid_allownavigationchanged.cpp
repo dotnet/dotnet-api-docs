@@ -164,7 +164,7 @@ private:
 private:
    void myButton_Click( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
-      if ( myDataGrid->AllowNavigation == true )
+      if ( myDataGrid->AllowNavigation )
             myDataGrid->AllowNavigation = false;
       else
             myDataGrid->AllowNavigation = true;

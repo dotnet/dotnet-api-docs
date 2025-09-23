@@ -7,7 +7,6 @@
    as an inner exception.*/
 
 // <Snippet1>
-
 using System;
 using System.Runtime.InteropServices;
 

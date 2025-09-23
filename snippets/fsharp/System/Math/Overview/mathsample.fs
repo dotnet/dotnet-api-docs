@@ -41,5 +41,5 @@ printfn $"Trapezoid right base angle is: {dyR} Radians"
 let dxD = trpz.GetLeftBaseDegreeAngle()
 printfn $"Trapezoid left base angle is: {dxD} Degrees"
 let dyD = trpz.GetRightBaseDegreeAngle()
-printfn $"Trapezoid left base angle is: {dyD} Degrees"
+printfn $"Trapezoid right base angle is: {dyD} Degrees"
 // </snippet1>
