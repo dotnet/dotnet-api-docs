@@ -32,7 +32,7 @@ public class Test
    public void GetSerializers()
    {
       // Create an array of types.
-      Type[]types = [typeof(Instrument), typeof(Player), typeof(Piece)];
+      Type[] types = [typeof(Instrument), typeof(Player), typeof(Piece)];
 
         // Create an array for XmlSerializer objects.
         XmlSerializer[]serializers= new XmlSerializer[3];
