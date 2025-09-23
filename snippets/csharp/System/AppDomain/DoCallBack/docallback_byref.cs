@@ -1,7 +1,7 @@
 ﻿using System;
 
 // <Snippet3>
-public class PingPong : MarshalByRefObject
+public class CallbackByRefSnippet : MarshalByRefObject
 {
     private string greetings = "PING!";
 
@@ -9,7 +9,7 @@ public class PingPong : MarshalByRefObject
     {
         AppDomain otherDomain = AppDomain.CreateDomain("otherDomain");
 
-        PingPong pp = new PingPong();
+        CallbackByRefSnippet pp = new CallbackByRefSnippet();
         pp.MyCallBack();
         pp.greetings = "PONG!";
         otherDomain.DoCallBack(new CrossAppDomainDelegate(pp.MyCallBack));

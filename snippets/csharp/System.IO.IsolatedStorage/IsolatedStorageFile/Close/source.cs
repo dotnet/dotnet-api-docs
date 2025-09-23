@@ -85,7 +85,6 @@ public class LoginPrefs
         get { return myNewPrefs; }
     }
 
-    //<snippet4>
     private bool GetPrefsForUser()
     {
         try
@@ -140,7 +139,6 @@ public class LoginPrefs
             return true;
         }
     }
-    //</snippet4>
     //<snippet3>
     public bool GetIsoStoreInfo()
     {
@@ -266,7 +264,7 @@ public class LoginPrefs
                 IsolatedStorageScope.Domain,
                 typeof(System.Security.Policy.Url),
                 typeof(System.Security.Policy.Url));
-            //<Snippet16>			
+            //<Snippet16>
             String[] dirNames = isoFile.GetDirectoryNames("*");
             String[] fileNames = isoFile.GetFileNames("Archive\\*");
 
@@ -297,7 +295,7 @@ public class LoginPrefs
         {
             Console.WriteLine(e.ToString());
         }
-        //</Snippet16>		
+        //</Snippet16>
     }
     //</snippet8>
     //<snippet7>
@@ -386,7 +384,7 @@ public class LoginPrefs
             //</Snippet12>
             isoStream.Position = 0;  // Position to overwrite the old data.
             //</snippet7>
-            //<snippet5>
+
             StreamWriter writer = new StreamWriter(isoStream);
             // Update the data based on the new inputs.
             writer.WriteLine(this.NewsUrl);
@@ -396,7 +394,7 @@ public class LoginPrefs
             double d = isoFile.CurrentSize / isoFile.MaximumSize;
             Console.WriteLine("CurrentSize = " + isoFile.CurrentSize.ToString());
             Console.WriteLine("MaximumSize = " + isoFile.MaximumSize.ToString());
-            //</snippet5>
+
             // StreamWriter.Close implicitly closes isoStream.
             writer.Close();
             isoFile.Close();

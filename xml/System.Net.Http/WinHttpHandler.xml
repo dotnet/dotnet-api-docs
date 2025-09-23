@@ -17,30 +17,52 @@
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.1</AssemblyVersion>
+    <AssemblyVersion>8.0.0.2</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.1</AssemblyVersion>
+    <AssemblyVersion>9.0.0.2</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Net.Http.HttpMessageHandler</BaseTypeName>
   </Base>
   <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>
       Handles messages based on the WinHTTP interface of Windows. This class is intended for use in server environments.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
+      <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
- <xref:System.Net.Http.WinHttpHandler> is similar to other existing classes such as <xref:System.Net.Http.HttpClientHandler>. <xref:System.Net.Http.WinHttpHandler> provides a handler underneath an <xref:System.Net.Http.HttpClient> instance and is used to send HTTP requests out to a server and receive server responses. The <xref:System.Net.Http.WinHttpHandler> implementation supports HTTP versions up to HTTP/2.  
-  
- <xref:System.Net.Http.WinHttpHandler> is designed to be used primarily in server environments by ASP.NET Core and other .NET applications that communicate with HTTP servers. <xref:System.Net.Http.WinHttpHandler> also provides developers with more granular control over the application's HTTP communication than the <xref:System.Net.Http.HttpClientHandler> class. This allows developers to implement more advanced HTTP scenarios or modify system defaults (for example, proxy settings, timeouts, and server SSL certificate validation).  
-  
- <xref:System.Net.Http.WinHttpHandler> is not intended to be a replacement for <xref:System.Net.Http.HttpClientHandler>. Instead, it's a more advanced version that's provided for scenarios where <xref:System.Net.Http.HttpClientHandler> is insufficient. <xref:System.Net.Http.WinHttpHandler> is implemented as a thin wrapper on the WinHTTP interface of Windows and is only supported on Windows systems.  
-  
+ <xref:System.Net.Http.WinHttpHandler> is similar to other existing classes such as <xref:System.Net.Http.HttpClientHandler>. <xref:System.Net.Http.WinHttpHandler> provides a handler underneath an <xref:System.Net.Http.HttpClient> instance and is used to send HTTP requests out to a server and receive server responses. The <xref:System.Net.Http.WinHttpHandler> implementation supports HTTP versions up to HTTP/2.
+
+ <xref:System.Net.Http.WinHttpHandler> provides developers with more granular control over the application's HTTP communication than the <xref:System.Net.Http.HttpClientHandler> class. This allows developers to implement more advanced HTTP scenarios or modify system defaults (for example, proxy settings, timeouts, and server SSL certificate validation).
+
+ <xref:System.Net.Http.WinHttpHandler> is not intended to be a replacement for <xref:System.Net.Http.HttpClientHandler>. Instead, it's a more advanced version that's provided for scenarios where <xref:System.Net.Http.HttpClientHandler> is insufficient. <xref:System.Net.Http.WinHttpHandler> is implemented as a thin wrapper on the WinHTTP interface of Windows and is only supported on Windows systems.
+
  When using a chain of multiple handlers, <xref:System.Net.Http.WinHttpHandler> should be at the bottom of the chain.
 
 This class is also available for use in Desktop apps by installing it as a NuGet package. For more information, see [System.Net.Http.WinHttpHandler NuGet package](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler/).
 
 Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included in the *System.Net.Http.dll* assembly as part of the .NET runtime. For more information, see [WinHttpHandler removed from .NET runtime](/dotnet/core/compatibility/3.1-5.0#winhttphandler-removed-from-net-runtime).
+
+### Trailing headers
+
+Starting with version 6.0.0, <xref:System.Net.Http.WinHttpHandler> supports trailing headers, also known as trailers ([RFC 7230 - 4.1.2. Chunked Trailer Part](https://tools.ietf.org/html/rfc7230#section-4.1.2)).
+
+- On .NET Standard 2.1 and .NET 8 or later, trailers are added to <xref:System.Net.Http.HttpResponseMessage.TrailingHeaders>.
+- On .NET Framework, trailers are added to a well-known property in <xref:System.Net.Http.HttpRequestMessage.Properties?displayProperty=nameWithType> on the request object corresponding to the response (<xref:System.Net.Http.HttpResponseMessage.RequestMessage?displayProperty=nameWithType>). The name of the property is `__ResponseTrailers`, the type of the property value is <xref:System.Net.Http.Headers.HttpHeaders>.
+
+Trailer support is implemented via the `WINHTTP_QUERY_FLAG_TRAILERS` [Query Info Flag](/windows/win32/winhttp/query-info-flags) which has been introduced in Windows 11, version 21H2 (10.0; Build 22000). On Windows systems where `WINHTTP_QUERY_FLAG_TRAILERS` is unsupported, trailers are ignored.
 
  ]]></format>
     </remarks>
@@ -55,16 +77,9 @@ Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included 
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
       <Docs>
@@ -82,16 +97,9 @@ Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included 
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.DecompressionMethods</ReturnType>
@@ -100,11 +108,11 @@ Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included 
         <summary>Gets or sets the type of decompression method used by the handler for automatic decompression of the HTTP content response.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is `GZip | Deflate`.
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `None`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -119,16 +127,9 @@ Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included 
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -138,12 +139,12 @@ Starting in .NET 5, <xref:System.Net.Http.WinHttpHandler> is no longer included 
         <value>
           <see langword="true" /> to follow HTTP redirection responses; otherwise, <see langword="false" />. The default is <see langword="true" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
+          <format type="text/markdown"><![CDATA[
+
 ## Remarks
 
-When this property is set to `true`, all HTTP redirect responses from the server will be followed automatically except if they are redirecting from an HTTPS endpoint to an HTTP endpoint.  
-  
+When this property is set to `true`, all HTTP redirect responses from the server will be followed automatically except if they are redirecting from an HTTPS endpoint to an HTTP endpoint.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -158,16 +159,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -189,16 +183,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.Http.ClientCertificateOption</ReturnType>
@@ -207,11 +194,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets a value that indicates if the certificate is automatically picked from the certificate store or if the caller is allowed to pass in a specific client certificate.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is <xref:System.Net.Http.ClientCertificateOption.Manual?displayProperty=nameWithType>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is <xref:System.Net.Http.ClientCertificateOption.Manual?displayProperty=nameWithType>.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -226,17 +213,16 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Security.Cryptography.X509Certificates.X509Certificate2Collection</ReturnType>
       </ReturnValue>
@@ -244,36 +230,29 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets a collection of client authentication SSL certificates that are used for client authentication by the handler if the <see cref="P:System.Net.Http.WinHttpHandler.ClientCertificateOption" /> property is set to <see langword="Manual" />.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is an empty collection.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is an empty collection.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="CookieContainer">
-      <MemberSignature Language="C#" Value="public System.Net.CookieContainer CookieContainer { get; set; }" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Net.CookieContainer? CookieContainer { get; set; }" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.CookieContainer CookieContainer" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.WinHttpHandler.CookieContainer" />
       <MemberSignature Language="VB.NET" Value="Public Property CookieContainer As CookieContainer" />
       <MemberSignature Language="F#" Value="member this.CookieContainer : System.Net.CookieContainer with get, set" Usage="System.Net.Http.WinHttpHandler.CookieContainer" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::CookieContainer ^ CookieContainer { System::Net::CookieContainer ^ get(); void set(System::Net::CookieContainer ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.CookieContainer? CookieContainer { get; set; }" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0" />
+      <MemberSignature Language="C#" Value="public System.Net.CookieContainer CookieContainer { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.CookieContainer</ReturnType>
@@ -282,11 +261,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the managed cookie container object. This property is only used when the <see cref="P:System.Net.Http.WinHttpHandler.CookieUsePolicy" /> property is set to UseSpecifiedCookieContainer. Otherwise, the <see cref="M:System.Net.Http.WinHttpHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)" /> method will throw an exception.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is `null`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `null`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -301,16 +280,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.Http.CookieUsePolicy</ReturnType>
@@ -319,51 +291,37 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets a value that indicates how cookies should be managed and used. Developers can choose to ignore cookies, allow the handler to automatically manage them or manually handle them using a <see cref="T:System.Net.CookieContainer" /> object.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default for this property is <xref:System.Net.Http.CookieUsePolicy.UseInternalCookieStoreOnly?displayProperty=nameWithType>. If this value is set to <xref:System.Net.Http.CookieUsePolicy.UseSpecifiedCookieContainer?displayProperty=nameWithType>, then a container object must be initialized and assigned to the <xref:System.Net.Http.WinHttpHandler.CookieContainer%2A> property. Otherwise, an exception will be thrown when trying to send a request.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default for this property is <xref:System.Net.Http.CookieUsePolicy.UseInternalCookieStoreOnly?displayProperty=nameWithType>. If this value is set to <xref:System.Net.Http.CookieUsePolicy.UseSpecifiedCookieContainer?displayProperty=nameWithType>, then a container object must be initialized and assigned to the <xref:System.Net.Http.WinHttpHandler.CookieContainer%2A> property. Otherwise, an exception will be thrown when trying to send a request.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="DefaultProxyCredentials">
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials DefaultProxyCredentials { get; set; }" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials? DefaultProxyCredentials { get; set; }" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.ICredentials DefaultProxyCredentials" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.WinHttpHandler.DefaultProxyCredentials" />
       <MemberSignature Language="VB.NET" Value="Public Property DefaultProxyCredentials As ICredentials" />
       <MemberSignature Language="F#" Value="member this.DefaultProxyCredentials : System.Net.ICredentials with get, set" Usage="System.Net.Http.WinHttpHandler.DefaultProxyCredentials" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::ICredentials ^ DefaultProxyCredentials { System::Net::ICredentials ^ get(); void set(System::Net::ICredentials ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials? DefaultProxyCredentials { get; set; }" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials DefaultProxyCredentials { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.ICredentials</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the credentials used to authenticate the user to an authenticating proxy.</summary>
-        <value>To be added.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is <xref:System.Net.CredentialCache.DefaultCredentials?displayProperty=nameWithType>.  
-  
- ]]></format>
-        </remarks>
+        <summary>When the default (system) proxy is used, gets or sets the credentials used to submit to the default proxy server for authentication.</summary>
+        <value>The credentials used to authenticate the user to an authenticating proxy.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="Dispose">
@@ -387,16 +345,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -421,9 +372,7 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -445,16 +394,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -463,11 +405,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the maximum number of allowed HTTP redirects.</summary>
         <value>The maximum number of allowed HTTP redirects.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is 50. This value only applies if <xref:System.Net.Http.WinHttpHandler.AutomaticRedirection%2A> is set to `true`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is 50. This value only applies if <xref:System.Net.Http.WinHttpHandler.AutomaticRedirection%2A> is set to `true`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -482,16 +424,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -500,11 +435,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the maximum number of TCP connections allowed to a single server.</summary>
         <value>The maximum number of TCP connections allowed to a single server.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is `int.MaxValue`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `int.MaxValue`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -519,16 +454,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -537,11 +465,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the maximum amount of data that can be drained from responses in bytes.</summary>
         <value>The maximum amount of data that can be drained from responses in bytes.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is 65536.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Starting with .NET 10, the default value for this property is 1MB (1024 * 1024 B). For earlier versions, the value for this property is 64 KB (65 536 B)
+
  ]]></format>
         </remarks>
       </Docs>
@@ -556,29 +484,22 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the maximum size of the header portion from the server response in bytes.</summary>
-        <value>The maximum size of the header portion from the server response in bytes.</value>
+        <summary>Gets or sets the maximum length, in kilobytes (1024 bytes), of the response headers.</summary>
+        <value>The maximum length, in kilobytes (1024 bytes), of the response headers.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This property protects the client from an unauthorized server attempting to stall the client by sending a response with an infinite amount of header data. The default value for this property is 65536.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This property protects the client from an unauthorized server attempting to stall the client by sending a response with an infinite amount of header data. The default value for this property is 64 KB (equivalent to 65536 bytes).
+
  ]]></format>
         </remarks>
       </Docs>
@@ -593,16 +514,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -611,11 +525,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets a value that indicates whether the handler sends an Authorization header with the request.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is `false`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `false`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -630,17 +544,16 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.Object&gt;</ReturnType>
       </ReturnValue>
@@ -651,26 +564,19 @@ When this property is set to `true`, all HTTP redirect responses from the server
       </Docs>
     </Member>
     <Member MemberName="Proxy">
-      <MemberSignature Language="C#" Value="public System.Net.IWebProxy Proxy { get; set; }" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Net.IWebProxy? Proxy { get; set; }" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.IWebProxy Proxy" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.WinHttpHandler.Proxy" />
       <MemberSignature Language="VB.NET" Value="Public Property Proxy As IWebProxy" />
       <MemberSignature Language="F#" Value="member this.Proxy : System.Net.IWebProxy with get, set" Usage="System.Net.Http.WinHttpHandler.Proxy" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::IWebProxy ^ Proxy { System::Net::IWebProxy ^ get(); void set(System::Net::IWebProxy ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.IWebProxy? Proxy { get; set; }" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0" />
+      <MemberSignature Language="C#" Value="public System.Net.IWebProxy Proxy { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.IWebProxy</ReturnType>
@@ -679,11 +585,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the custom proxy when the <see cref="P:System.Net.Http.WinHttpHandler.WindowsProxyUsePolicy" /> property is set to use a custom proxy.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is `null`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `null`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -698,16 +604,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
@@ -716,11 +615,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the timeout for receiving the data portion of a response from the server.</summary>
         <value>The timeout for receiving the data portion of a response from the server.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is 30 seconds.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is 30 seconds.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -735,16 +634,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
@@ -753,11 +645,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the timeout for receiving the headers of a response from the server.</summary>
         <value>The timeout for receiving the headers of a response from the server.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is 30 seconds.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is 30 seconds.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -772,16 +664,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task&lt;System.Net.Http.HttpResponseMessage&gt;</ReturnType>
@@ -796,6 +681,7 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Sends an HTTP request as an asynchronous operation.</summary>
         <returns>The task object representing the asynchronous operation.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
     <Member MemberName="SendTimeout">
@@ -808,16 +694,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
@@ -826,74 +705,73 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the timeout for sending a request.</summary>
         <value>The timeout for sending a request.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is 30 seconds.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is 30 seconds.
+
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="ServerCertificateValidationCallback">
-      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt; ServerCertificateValidationCallback { get; set; }" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt;? ServerCertificateValidationCallback { get; set; }" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Func`5&lt;class System.Net.Http.HttpRequestMessage, class System.Security.Cryptography.X509Certificates.X509Certificate2, class System.Security.Cryptography.X509Certificates.X509Chain, valuetype System.Net.Security.SslPolicyErrors, bool&gt; ServerCertificateValidationCallback" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.WinHttpHandler.ServerCertificateValidationCallback" />
       <MemberSignature Language="VB.NET" Value="Public Property ServerCertificateValidationCallback As Func(Of HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, Boolean)" />
       <MemberSignature Language="F#" Value="member this.ServerCertificateValidationCallback : Func&lt;System.Net.Http.HttpRequestMessage, System.Security.Cryptography.X509Certificates.X509Certificate2, System.Security.Cryptography.X509Certificates.X509Chain, System.Net.Security.SslPolicyErrors, bool&gt; with get, set" Usage="System.Net.Http.WinHttpHandler.ServerCertificateValidationCallback" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ ServerCertificateValidationCallback { Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ get(); void set(Func&lt;System::Net::Http::HttpRequestMessage ^, System::Security::Cryptography::X509Certificates::X509Certificate2 ^, System::Security::Cryptography::X509Certificates::X509Chain ^, System::Net::Security::SslPolicyErrors, bool&gt; ^ value); };" />
-      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt;? ServerCertificateValidationCallback { get; set; }" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0" />
+      <MemberSignature Language="C#" Value="public Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,bool&gt; ServerCertificateValidationCallback { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 1, 1 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1, 1, 1 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Func&lt;System.Net.Http.HttpRequestMessage,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors,System.Boolean&gt;</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets or sets a callback method to validate the server certificate. This callback is part of the SSL handshake.</summary>
-        <value>The callback should return <see langword="true" /> if the server certificate is considered valid and the request should be sent. Otherwise, return <see langword="false" />.</value>
+        <value>The callback should return <see langword="true" /> if the server certificate is considered valid and the request should be sent. Otherwise, returns <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value is `null`. If this property is `null`, the server certificate is validated using standard well-known certificate authorities.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value is `null`. If this property is `null`, the server certificate is validated using standard well-known certificate authorities.
+
+ The delegate's `sslPolicyErrors` argument contains any certificate errors returned by SSPI while authenticating the server. The <xref:System.Boolean> value returned by this delegate determines whether the authentication is allowed to succeed.
+
+## Examples
+
+The following code example implements the callback. If there are validation errors, this method returns `false` preventing communication with the unauthenticated server. Otherwise, it allows for additional validation and return `true` if the certificate is valid.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Net.Http/WinHttpHandler/program.cs" id="Snippet1":::
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="ServerCredentials">
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials ServerCredentials { get; set; }" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;netcore-1.0;netcore-1.1;xamarinandroid-7.1;xamarinios-10.8;xamarinmac-3.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials? ServerCredentials { get; set; }" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Net.ICredentials ServerCredentials" />
       <MemberSignature Language="DocId" Value="P:System.Net.Http.WinHttpHandler.ServerCredentials" />
       <MemberSignature Language="VB.NET" Value="Public Property ServerCredentials As ICredentials" />
       <MemberSignature Language="F#" Value="member this.ServerCredentials : System.Net.ICredentials with get, set" Usage="System.Net.Http.WinHttpHandler.ServerCredentials" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::ICredentials ^ ServerCredentials { System::Net::ICredentials ^ get(); void set(System::Net::ICredentials ^ value); };" />
-      <MemberSignature Language="C#" Value="public System.Net.ICredentials? ServerCredentials { get; set; }" FrameworkAlternate="dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0" />
+      <MemberSignature Language="C#" Value="public System.Net.ICredentials ServerCredentials { get; set; }" FrameworkAlternate="netcore-1.0;netcore-1.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.ICredentials</ReturnType>
@@ -902,11 +780,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the credentials to be used by the client to authenticate to the server.</summary>
         <value>The credentials to be used by the client to authenticate to the server.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value for this property is `null`.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value for this property is `null`.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -921,16 +799,9 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Security.Authentication.SslProtocols</ReturnType>
@@ -939,11 +810,11 @@ When this property is set to `true`, all HTTP redirect responses from the server
         <summary>Gets or sets the collection of TLS/SSL protocols supported by the client.</summary>
         <value>The collection of TLS/SSL protocols supported by the client.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value is `SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12`.
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value is `None`, which is the recommended value. It allows the operating system to choose the best protocol to use, and to block protocols that are not secure. For more information, see <xref:System.Security.Authentication.SslProtocols>.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -958,8 +829,7 @@ When this property is set to `true`, all HTTP redirect responses from the server
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -990,8 +860,7 @@ Only supported on Windows 10 version 2004 or newer.
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
@@ -1022,8 +891,7 @@ Only supported on Windows 10 version 2004 or newer.
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
@@ -1054,16 +922,9 @@ Only supported on Windows 10 version 2004 or newer.
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.0</AssemblyVersion>
-        <AssemblyVersion>4.0.3.1</AssemblyVersion>
-        <AssemblyVersion>4.0.4.0</AssemblyVersion>
-        <AssemblyVersion>4.0.5.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Net.Http.WindowsProxyUsePolicy</ReturnType>
@@ -1072,11 +933,11 @@ Only supported on Windows 10 version 2004 or newer.
         <summary>Gets or sets the proxy setting. This property can be set to disable the proxy, use a custom proxy, or use the proxy settings of WinHTTP or WinInet on the machine.</summary>
         <value>To be added.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default value of this property is the WinHTTP stack proxy settings.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default value of this property is the WinHTTP stack proxy settings.
+
  ]]></format>
         </remarks>
       </Docs>

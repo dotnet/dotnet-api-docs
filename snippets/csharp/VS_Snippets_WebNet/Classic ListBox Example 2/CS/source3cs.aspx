@@ -11,7 +11,7 @@
           string msg = "";
           foreach (ListItem li in ListBox1.Items)
           {
-              if (li.Selected == true)
+              if (li.Selected)
               {
                   msg += "<BR>" + li.Text + " is selected.";
               }

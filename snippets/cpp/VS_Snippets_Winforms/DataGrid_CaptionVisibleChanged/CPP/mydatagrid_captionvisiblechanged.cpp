@@ -169,7 +169,7 @@ private:
    // Set the 'CaptionVisible' property on click of a button.
    void myButton_Click( Object^ /*sender*/, EventArgs^ /*e*/ )
    {
-      if ( myDataGrid->CaptionVisible == true )
+      if (myDataGrid->CaptionVisible)
             myDataGrid->CaptionVisible = false;
       else
             myDataGrid->CaptionVisible = true;

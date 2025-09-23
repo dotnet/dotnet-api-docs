@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 delegate void StringCopy(string[] stringArray1,
@@ -8,25 +8,27 @@ delegate void StringCopy(string[] stringArray1,
 
 public class TestDelegate
 {
-   public static void Main()
-   {
-      string[] ordinals = {"First", "Second", "Third", "Fourth", "Fifth",
-                           "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"};
-      string[] copiedOrdinals = new string[ordinals.Length];
-      StringCopy copyOperation = CopyStrings;
-      copyOperation(ordinals, copiedOrdinals, 3, 5);
-      foreach (string ordinal in copiedOrdinals)
-         Console.WriteLine(string.IsNullOrEmpty(ordinal) ? "<None>" : ordinal);
-   }
+    public static void Main()
+    {
+        string[] ordinals = ["First", "Second", "Third", "Fourth", "Fifth",
+                           "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"];
+        string[] copiedOrdinals = new string[ordinals.Length];
+        StringCopy copyOperation = CopyStrings;
+        copyOperation(ordinals, copiedOrdinals, 3, 5);
 
-   private static void CopyStrings(string[] source, string[] target,
-                                   int startPos, int number)
-   {
-      if (source.Length != target.Length)
-         throw new IndexOutOfRangeException("The source and target arrays must have the same number of elements.");
+        Console.WriteLine();
+        foreach (string ordinal in copiedOrdinals)
+            Console.WriteLine(string.IsNullOrEmpty(ordinal) ? "<None>" : ordinal);
+    }
 
-      for (int ctr = startPos; ctr <= startPos + number - 1; ctr++)
-         target[ctr] = string.Copy(source[ctr]);
-   }
+    private static void CopyStrings(string[] source, string[] target,
+                                    int startPos, int number)
+    {
+        if (source.Length != target.Length)
+            throw new IndexOutOfRangeException("The source and target arrays must have the same number of elements.");
+
+        for (int ctr = startPos; ctr <= startPos + number - 1; ctr++)
+            target[ctr] = source[ctr];
+    }
 }
 // </Snippet1>

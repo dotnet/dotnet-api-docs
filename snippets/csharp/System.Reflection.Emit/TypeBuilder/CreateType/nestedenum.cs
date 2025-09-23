@@ -1,5 +1,4 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -96,5 +95,4 @@ internal class TypeResolveHandler
 	return m_Module.Assembly;
     }
 }
-
 // </Snippet1>

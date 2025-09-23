@@ -25,7 +25,7 @@ public class Example
                                                          for (int ctr = 0; ctr < order.Length; ctr++) {
                                                              order[ctr] = rnd.NextDouble();
                                                              if (order[ctr] == 0) {
-                                                                if (! wasZero) {
+                                                                if (!wasZero) {
                                                                    wasZero = true;
                                                                 }
                                                                 else {

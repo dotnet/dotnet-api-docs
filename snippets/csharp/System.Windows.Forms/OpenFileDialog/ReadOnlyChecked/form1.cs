@@ -93,7 +93,7 @@ namespace DlgOpenFileReadOnly_CS
             string path = null;
 
             try {
-                if(dlgOpenFile.ReadOnlyChecked == true)
+                if (dlgOpenFile.ReadOnlyChecked)
                 {
                     return (FileStream)dlgOpenFile.OpenFile();
                 }

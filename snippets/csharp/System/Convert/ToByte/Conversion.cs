@@ -152,7 +152,7 @@ public class Class1
       try
       {
          targetNumber = Convert.ToInt16(value, 16);
-         if (! isNegative && ((targetNumber & 0x8000) != 0))
+         if (!isNegative && ((targetNumber & 0x8000) != 0))
             throw new OverflowException();
          else
             Console.WriteLine("0x{0} converts to {1}.", value, targetNumber);
@@ -195,7 +195,7 @@ public class Class1
       try
       {
          targetNumber = Convert.ToInt64(value, 16);
-         if (! isSigned && ((targetNumber & 0x80000000) != 0))
+         if (!isSigned && ((targetNumber & 0x80000000) != 0))
             throw new OverflowException();
          else
             Console.WriteLine("0x{0} converts to {1}.", value, targetNumber);
@@ -238,7 +238,7 @@ public class Class1
       try
       {
          targetNumber = Convert.ToSByte(value, 16);
-         if (! isSigned && ((targetNumber & 0x80) != 0))
+         if (!isSigned && ((targetNumber & 0x80) != 0))
             throw new OverflowException();
          else
             Console.WriteLine("0x{0} converts to {1}.", value, targetNumber);

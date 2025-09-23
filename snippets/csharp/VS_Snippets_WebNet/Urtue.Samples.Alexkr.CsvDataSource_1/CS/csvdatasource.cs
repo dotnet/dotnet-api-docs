@@ -134,7 +134,7 @@
                     }
 
                     // Do not add the first row as data if the CSV file includes column names.
-                    if (! IncludesColumnNames)
+                    if (!IncludesColumnNames)
                         data.Rows.Add(CopyRowData(dataValues, data.NewRow()));
 
                     // Do the following to add data.

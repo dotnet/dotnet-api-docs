@@ -212,7 +212,7 @@ namespace WorkflowInvokerExample
 
             invoker.InvokeCompleted += delegate(object sender, InvokeCompletedEventArgs args)
             {
-                if (args.Cancelled == true)
+                if (args.Cancelled)
                 {
                     Console.WriteLine("Workflow was cancelled.");
                 }
@@ -252,7 +252,7 @@ namespace WorkflowInvokerExample
 
             invoker.InvokeCompleted += delegate(object sender, InvokeCompletedEventArgs args)
             {
-                if (args.Cancelled == true)
+                if (args.Cancelled)
                 {
                     Console.WriteLine("The workflow was cancelled.");
                 }

@@ -16,55 +16,67 @@
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
+    <TypeForwarding From="System.Design" FromVersion="10.0.0.0" To="System.Windows.Forms.Design" ToVersion="10.0.0.0" FrameworkAlternate="windowsdesktop-10.0" />
     <TypeForwarding From="System.Design" FromVersion="4.0.0.0" To="System.Windows.Forms.Design" ToVersion="4.0.0.0" FrameworkAlternate="windowsdesktop-3.0;windowsdesktop-3.1" />
     <TypeForwarding From="System.Design" FromVersion="5.0.0.0" To="System.Windows.Forms.Design" ToVersion="5.0.0.0" FrameworkAlternate="windowsdesktop-5.0" />
     <TypeForwarding From="System.Design" FromVersion="6.0.0.0" To="System.Windows.Forms.Design" ToVersion="6.0.0.0" FrameworkAlternate="windowsdesktop-6.0" />
     <TypeForwarding From="System.Design" FromVersion="7.0.0.0" To="System.Windows.Forms.Design" ToVersion="7.0.0.0" FrameworkAlternate="windowsdesktop-7.0" />
+    <TypeForwarding From="System.Design" FromVersion="8.0.0.0" To="System.Windows.Forms.Design" ToVersion="8.0.0.0" FrameworkAlternate="windowsdesktop-8.0" />
+    <TypeForwarding From="System.Design" FromVersion="9.0.0.0" To="System.Windows.Forms.Design" ToVersion="9.0.0.0" FrameworkAlternate="windowsdesktop-9.0" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces>
-    <Interface FrameworkAlternate="windowsdesktop-7.0">
+    <Interface FrameworkAlternate="windowsdesktop-9.0">
       <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
   </Interfaces>
+  <Attributes>
+    <Attribute FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
   <Docs>
     <summary>Specifies generic undo/redo functionality at design time.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.ComponentModel.Design.UndoEngine> abstract class provides a default implementation of undo functionality at design time. An undo unit represents a single unit of undoable work. This unit is added to a stack and the user can then walk the stack to undo each action. Undo units typically are designed to toggle, which means that calling undo twice returns the application to its starting state.  
-  
- The <xref:System.ComponentModel.Design.UndoEngine> class takes advantage of the following characteristics of objects running within the designer:  
-  
--   All interesting objects can be persisted to some format by the designer loader.  
-  
--   All objects raise property-change notifications when a property is changed.  
-  
--   <xref:System.ComponentModel.Design.IDesignerHost> offers the idea of transactions, which can be used to fabricate an undo action that spans multiple smaller actions.  
-  
- With these features, <xref:System.ComponentModel.Design.UndoEngine> can fabricate any undo units it needs automatically.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.ComponentModel.Design.UndoEngine> abstract class provides a default implementation of undo functionality at design time. An undo unit represents a single unit of undoable work. This unit is added to a stack and the user can then walk the stack to undo each action. Undo units typically are designed to toggle, which means that calling undo twice returns the application to its starting state.
+
+ The <xref:System.ComponentModel.Design.UndoEngine> class takes advantage of the following characteristics of objects running within the designer:
+
+- All interesting objects can be persisted to some format by the designer loader.
+
+- All objects raise property-change notifications when a property is changed.
+
+-   <xref:System.ComponentModel.Design.IDesignerHost> offers the idea of transactions, which can be used to fabricate an undo action that spans multiple smaller actions.
+
+ With these features, <xref:System.ComponentModel.Design.UndoEngine> can fabricate any undo units it needs automatically.
+
 > [!NOTE]
->  Do not change property values directly. The <xref:System.ComponentModel.Design.UndoEngine> class requires you to use the appropriate <xref:System.ComponentModel.TypeDescriptor> to change property values.  
-  
- <xref:System.ComponentModel.Design.UndoEngine> monitors for change notifications to create undo units, and the units themselves consist of serialized object states. The following table shows the services that must be available when <xref:System.ComponentModel.Design.UndoEngine> is created.  
-  
-|Service|Description|  
-|-------------|-----------------|  
-|<xref:System.ComponentModel.Design.Serialization.ComponentSerializationService>|Saves property and object values for a component before and after a change is made.|  
-|<xref:System.ComponentModel.Design.IComponentChangeService>|Notifies the undo engine of changes made to components.|  
-|<xref:System.ComponentModel.Design.IDesignerHost>|Used to track transactions.|  
-  
+>  Do not change property values directly. The <xref:System.ComponentModel.Design.UndoEngine> class requires you to use the appropriate <xref:System.ComponentModel.TypeDescriptor> to change property values.
+
+ <xref:System.ComponentModel.Design.UndoEngine> monitors for change notifications to create undo units, and the units themselves consist of serialized object states. The following table shows the services that must be available when <xref:System.ComponentModel.Design.UndoEngine> is created.
+
+|Service|Description|
+|-------------|-----------------|
+|<xref:System.ComponentModel.Design.Serialization.ComponentSerializationService>|Saves property and object values for a component before and after a change is made.|
+|<xref:System.ComponentModel.Design.IComponentChangeService>|Notifies the undo engine of changes made to components.|
+|<xref:System.ComponentModel.Design.IDesignerHost>|Used to track transactions.|
+
 > [!NOTE]
->  Because the <xref:System.ComponentModel.Design.UndoEngine> class requires <xref:System.ComponentModel.Design.Serialization.ComponentSerializationService> and <xref:System.ComponentModel.Design.IComponentChangeService>, it is available only at design time.  
-  
- The undo engine tracks transactions and creates a single undo unit that encompasses a transaction. As a result, the undo engine has control over the duration of an undoable action. Also, because transactions can be named, undoable actions inherit their names from the current transaction. If no transaction is available and a change is reported, the undo engine creates an undo name based on the type of change (for example, "Change property 'Text'").  
-  
+>  Because the <xref:System.ComponentModel.Design.UndoEngine> class requires <xref:System.ComponentModel.Design.Serialization.ComponentSerializationService> and <xref:System.ComponentModel.Design.IComponentChangeService>, it is available only at design time.
+
+ The undo engine tracks transactions and creates a single undo unit that encompasses a transaction. As a result, the undo engine has control over the duration of an undoable action. Also, because transactions can be named, undoable actions inherit their names from the current transaction. If no transaction is available and a change is reported, the undo engine creates an undo name based on the type of change (for example, "Change property 'Text'").
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" />
@@ -93,6 +105,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="provider" Type="System.IServiceProvider" />
@@ -101,11 +116,11 @@
         <param name="provider">A parenting service provider.</param>
         <summary>Initializes a new instance of the <see cref="T:System.ComponentModel.Design.UndoEngine" /> class.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.ComponentModel.Design.UndoEngine> requires several services from the `provider` parameter to be useful.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.ComponentModel.Design.UndoEngine> requires several services from the `provider` parameter to be useful.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -135,6 +150,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -146,23 +164,24 @@
         <param name="unit">The undo unit to add.</param>
         <summary>Adds an <see cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" /> to the undo stack.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Create the `unit` parameter by calling the <xref:System.ComponentModel.Design.UndoEngine.CreateUndoUnit%2A> method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Create the `unit` parameter by calling the <xref:System.ComponentModel.Design.UndoEngine.CreateUndoUnit%2A> method.
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" />
       </Docs>
     </Member>
     <Member MemberName="CreateUndoUnit">
-      <MemberSignature Language="C#" Value="protected virtual System.ComponentModel.Design.UndoEngine.UndoUnit CreateUndoUnit (string name, bool primary);" />
+      <MemberSignature Language="C#" Value="protected virtual System.ComponentModel.Design.UndoEngine.UndoUnit CreateUndoUnit (string name, bool primary);" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.ComponentModel.Design.UndoEngine/UndoUnit CreateUndoUnit(string name, bool primary) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.UndoEngine.CreateUndoUnit(System.String,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Protected Overridable Function CreateUndoUnit (name As String, primary As Boolean) As UndoEngine.UndoUnit" />
       <MemberSignature Language="F#" Value="abstract member CreateUndoUnit : string * bool -&gt; System.ComponentModel.Design.UndoEngine.UndoUnit&#xA;override this.CreateUndoUnit : string * bool -&gt; System.ComponentModel.Design.UndoEngine.UndoUnit" Usage="undoEngine.CreateUndoUnit (name, primary)" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual System::ComponentModel::Design::UndoEngine::UndoUnit ^ CreateUndoUnit(System::String ^ name, bool primary);" />
+      <MemberSignature Language="C#" Value="protected virtual System.ComponentModel.Design.UndoEngine.UndoUnit CreateUndoUnit (string? name, bool primary);" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -175,12 +194,22 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ComponentModel.Design.UndoEngine+UndoUnit</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="name" Type="System.String">
+          <Attributes>
+            <Attribute FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
         <Parameter Name="primary" Type="System.Boolean" />
       </Parameters>
       <Docs>
@@ -190,13 +219,13 @@
         <summary>Creates a new <see cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" />.</summary>
         <returns>A new <see cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" /> with a specified name.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The default implementation of the <xref:System.ComponentModel.Design.UndoEngine.CreateUndoUnit%2A> method simply returns a new <xref:System.ComponentModel.Design.UndoEngine.UndoUnit>.  
-  
- By default, <xref:System.ComponentModel.Design.UndoEngine> does nothing with the `primary` parameter, but some implementations of undo, such as those involving the COM `Microsoft.VisualStudio.OLE.Interop.IOleParentUndoUnit` design pattern, may need to identify the difference between a primary unit and its children.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The default implementation of the <xref:System.ComponentModel.Design.UndoEngine.CreateUndoUnit%2A> method simply returns a new <xref:System.ComponentModel.Design.UndoEngine.UndoUnit>.
+
+ By default, <xref:System.ComponentModel.Design.UndoEngine> does nothing with the `primary` parameter, but some implementations of undo, such as those involving the COM `Microsoft.VisualStudio.OLE.Interop.IOleParentUndoUnit` design pattern, may need to identify the difference between a primary unit and its children.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -220,6 +249,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -231,11 +263,11 @@
         <param name="unit">The unit to discard.</param>
         <summary>Discards an <see cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Before the <xref:System.ComponentModel.Design.UndoEngine.DiscardUndoUnit%2A> method is called, the undo unit is closed and then undone.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Before the <xref:System.ComponentModel.Design.UndoEngine.DiscardUndoUnit%2A> method is called, the undo unit is closed and then undone.
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.ComponentModel.Design.UndoEngine.UndoUnit" />
@@ -272,6 +304,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -307,6 +342,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -340,6 +378,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -380,6 +421,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -399,12 +443,13 @@
       </Docs>
     </Member>
     <Member MemberName="GetService">
-      <MemberSignature Language="C#" Value="protected object GetService (Type serviceType);" />
+      <MemberSignature Language="C#" Value="protected object GetService (Type serviceType);" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance object GetService(class System.Type serviceType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.UndoEngine.GetService(System.Type)" />
       <MemberSignature Language="VB.NET" Value="Protected Function GetService (serviceType As Type) As Object" />
       <MemberSignature Language="F#" Value="member this.GetService : Type -&gt; obj" Usage="undoEngine.GetService serviceType" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; System::Object ^ GetService(Type ^ serviceType);" />
+      <MemberSignature Language="C#" Value="protected object? GetService (Type serviceType);" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -417,6 +462,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
@@ -452,6 +500,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -484,6 +535,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -498,12 +552,13 @@
       </Docs>
     </Member>
     <Member MemberName="Undoing">
-      <MemberSignature Language="C#" Value="public event EventHandler Undoing;" />
+      <MemberSignature Language="C#" Value="public event EventHandler Undoing;" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0" />
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler Undoing" />
       <MemberSignature Language="DocId" Value="E:System.ComponentModel.Design.UndoEngine.Undoing" />
       <MemberSignature Language="VB.NET" Value="Public Custom Event Undoing As EventHandler " />
       <MemberSignature Language="F#" Value="member this.Undoing : EventHandler " Usage="member this.Undoing : System.EventHandler " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ Undoing;" />
+      <MemberSignature Language="C#" Value="public event EventHandler? Undoing;" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -516,7 +571,16 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
       </ReturnValue>
@@ -544,6 +608,9 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -556,12 +623,13 @@
       </Docs>
     </Member>
     <Member MemberName="Undone">
-      <MemberSignature Language="C#" Value="public event EventHandler Undone;" />
+      <MemberSignature Language="C#" Value="public event EventHandler Undone;" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0" />
       <MemberSignature Language="ILAsm" Value=".event class System.EventHandler Undone" />
       <MemberSignature Language="DocId" Value="E:System.ComponentModel.Design.UndoEngine.Undone" />
       <MemberSignature Language="VB.NET" Value="Public Custom Event Undone As EventHandler " />
       <MemberSignature Language="F#" Value="member this.Undone : EventHandler " Usage="member this.Undone : System.EventHandler " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event EventHandler ^ Undone;" />
+      <MemberSignature Language="C#" Value="public event EventHandler? Undone;" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Design</AssemblyName>
@@ -574,18 +642,27 @@
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-8.0;windowsdesktop-9.0">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.EventHandler</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Occurs immediately after an undo action is performed.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.ComponentModel.Design.UndoEngine.Undone> event is always raised, even if an exception is thrown.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.ComponentModel.Design.UndoEngine.Undone> event is always raised, even if an exception is thrown.
+
  ]]></format>
         </remarks>
       </Docs>

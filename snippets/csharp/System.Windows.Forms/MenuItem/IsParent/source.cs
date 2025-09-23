@@ -10,7 +10,7 @@ public class Form1: Form
  public void DisableMyChildMenus ()
  {
     // Determine if menuItem2 is a parent menu.
-    if(menuItem2.IsParent == true)
+    if (menuItem2.IsParent)
     {
        // Loop through all the submenus.
        for(int i = 0; i < menuItem2.MenuItems.Count; i++)

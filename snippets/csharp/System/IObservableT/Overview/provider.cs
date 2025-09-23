@@ -33,7 +33,7 @@ public class LocationTracker : IObservable<Location>
 
    public IDisposable Subscribe(IObserver<Location> observer)
    {
-      if (! observers.Contains(observer))
+      if (!observers.Contains(observer))
          observers.Add(observer);
       return new Unsubscriber(observers, observer);
    }
@@ -60,7 +60,7 @@ public class LocationTracker : IObservable<Location>
    public void TrackLocation(Nullable<Location> loc)
    {
       foreach (var observer in observers) {
-         if (! loc.HasValue)
+         if (!loc.HasValue)
             observer.OnError(new LocationUnknownException());
          else
             observer.OnNext(loc.Value);

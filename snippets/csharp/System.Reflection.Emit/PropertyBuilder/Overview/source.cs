@@ -1,14 +1,11 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
 
 class PropertyBuilderDemo
-
 {
-
    public static Type BuildDynamicTypeWithProperties()
    {
         AppDomain myDomain = Thread.GetDomain();

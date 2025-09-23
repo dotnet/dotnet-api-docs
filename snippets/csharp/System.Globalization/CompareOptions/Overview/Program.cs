@@ -1,0 +1,2 @@
+﻿CompareOptionsExample.Run();
+StringSort.Run();

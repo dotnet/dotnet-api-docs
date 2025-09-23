@@ -4,11 +4,6 @@ using System.Data.Odbc;
 
 class Program
 {
-    static void Main()
-    {
-        string connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\Samples\\Northwind.mdb";
-        ExecuteTransaction(connectionString);
-    }
     // <Snippet1>
     public static void ExecuteTransaction(string connectionString)
     {
@@ -61,6 +56,6 @@ class Program
             // The connection is automatically closed when the
             // code exits the using block.
         }
-        // </Snippet1>
     }
+    // </Snippet1>
 }

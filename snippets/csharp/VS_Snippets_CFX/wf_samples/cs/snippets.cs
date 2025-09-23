@@ -1105,7 +1105,7 @@ class snippets
 
             ResumeLayout(true);
 
-            if (btnAutoSynch.Checked == true)
+            if (btnAutoSynch.Checked)
             {
                 this.xomlView.Text = GetCurrentXoml();
             }
@@ -1674,7 +1674,7 @@ class snippets
 
         protected override void OnPaint(ActivityDesignerPaintEventArgs e)
         {
-            if (this.UseBasePaint == true)
+            if (this.UseBasePaint)
             {
                 base.OnPaint(e);
                 return;

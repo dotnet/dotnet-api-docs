@@ -78,7 +78,7 @@ public class Example
          Console.WriteLine();
          if (Array.Exists(validChars, ch => ch.Equals(Char.ToUpper(keyPressed.KeyChar))))
             valid = true;
-      } while (! valid);
+      } while (!valid);
       return keyPressed.KeyChar;
    }
 }

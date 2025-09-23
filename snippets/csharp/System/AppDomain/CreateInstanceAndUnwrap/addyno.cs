@@ -1,5 +1,4 @@
 ﻿// <Snippet1>
-
 using System;
 using System.IO;
 using System.Threading;
@@ -8,13 +7,10 @@ using System.Reflection.Emit;
 using System.Runtime.Remoting;
 
 class ADDyno
-
 {
-
    public static Type CreateADynamicAssembly(ref AppDomain myNewDomain,
 					     string executableNameNoExe)
    {
-
 	string executableName = executableNameNoExe + ".exe";
 
 	AssemblyName myAsmName = new AssemblyName();
@@ -171,5 +167,4 @@ class ADDyno
 				myObjInstance, new object[] { });
    }
 }
-
 // </Snippet1>

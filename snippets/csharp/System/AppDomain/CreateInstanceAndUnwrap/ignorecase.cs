@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-class Test {
+class IgnoreCaseSnippet {
 
    static void Main() {
       InstantiateINT32(false);     // Failed!

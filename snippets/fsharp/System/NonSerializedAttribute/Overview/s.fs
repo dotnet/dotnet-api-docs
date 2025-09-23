@@ -34,8 +34,6 @@ let main _ =
     let stream = File.Open("data.xml", FileMode.Create)
     let formatter = SoapFormatter()
 
-    //BinaryFormatter formatter = new BinaryFormatter()
-
     formatter.Serialize(stream, obj)
     stream.Close()
 

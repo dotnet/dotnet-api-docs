@@ -1,14 +1,13 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Threading;
 using System.Reflection;
 using System.Reflection.Emit;
 
-class TestILGenerator {
-
-  	public static Type DynamicDotProductGen() {
-	
+class TestILGenerator
+{
+  	public static Type DynamicDotProductGen()
+	{
 	   Type ivType = null;
 	   Type[] ctorParams = new Type[] { typeof(int),
 		               		    typeof(int),
@@ -179,5 +178,4 @@ class TestILGenerator {
 	   // (10, 10, 10) . (20, 20, 20) = 600
 	}
 }
-
 // </Snippet1>

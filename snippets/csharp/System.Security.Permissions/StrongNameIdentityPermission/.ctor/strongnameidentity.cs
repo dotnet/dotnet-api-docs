@@ -1,5 +1,4 @@
 ﻿// <Snippet1>
-
 using System;
 using System.Security;
 using System.Security.Permissions;
@@ -225,5 +224,4 @@ public class StrongNameIdentityDemo
         }
     }
 }
-
 // </Snippet1>

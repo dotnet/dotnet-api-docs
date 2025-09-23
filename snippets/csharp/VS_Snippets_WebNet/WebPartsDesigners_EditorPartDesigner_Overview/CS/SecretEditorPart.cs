@@ -60,7 +60,7 @@ namespace Samples.AspNet.CS.Controls
         public override void Initialize(IComponent component)
         {
             // Validate the associated control
-            if (! (component is SecretEditorPart))
+            if (!(component is SecretEditorPart))
             {
                 string msg = "The associated control must be of type 'SecretEditorPart'";
                 throw new ArgumentException(msg);
