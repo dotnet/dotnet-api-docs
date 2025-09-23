@@ -25,20 +25,17 @@ public class Test
 {
    public static void Main()
    {
-      Test t = new Test();
+      Test t = new();
       t.GetSerializers();
    }
 
    public void GetSerializers()
    {
       // Create an array of types.
-      Type[]types = new Type[3];
-      types[0] = typeof(Instrument);
-      types[1] = typeof(Player);
-      types[2] = typeof(Piece);
+      Type[]types = [typeof(Instrument), typeof(Player), typeof(Piece)];
 
-      // Create an array for XmlSerializer objects.
-      XmlSerializer[]serializers= new XmlSerializer[3];
+        // Create an array for XmlSerializer objects.
+        XmlSerializer[]serializers= new XmlSerializer[3];
       serializers = XmlSerializer.FromTypes(types);
       // Create one Instrument and serialize it.
       Instrument i = new Instrument();
