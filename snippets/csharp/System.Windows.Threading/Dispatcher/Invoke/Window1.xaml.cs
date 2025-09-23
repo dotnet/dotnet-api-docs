@@ -103,14 +103,14 @@ namespace SDKSamples
                 if (e.Delta > 0)
                 {
                     // Execute the Slider DecreaseSmall RoutedCommand.
-                    // The slider.value propety is passed as the command parameter.
+                    // The slider.value property is passed as the command parameter.
                     ((RoutedCommand)Slider.DecreaseSmall).Execute(
                         source.Value, source);
                 }
                 else
                 {
                     // Execute the Slider IncreaseSmall RoutedCommand.
-                    // The slider.value propety is passed as the command parameter.
+                    // The slider.value property is passed as the command parameter.
                     ((RoutedCommand)Slider.IncreaseSmall).Execute(
                         source.Value, source);
                 }
@@ -127,14 +127,14 @@ namespace SDKSamples
                 if (e.ChangedButton == MouseButton.XButton1)
                 {
                     // Execute the Slider DecreaseSmall RoutedCommand.
-                    // The slider.value propety is passed as the command parameter.
+                    // The slider.value property is passed as the command parameter.
                     ((RoutedCommand)Slider.DecreaseSmall).Execute(
                         source.Value, source);
                 }
                 if (e.ChangedButton == MouseButton.XButton2)
                 {
                     // Execute the Slider IncreaseSmall RoutedCommand.
-                    // The slider.value propety is passed as the command parameter.
+                    // The slider.value property is passed as the command parameter.
                     ((RoutedCommand)Slider.IncreaseSmall).Execute(
                         source.Value, source);
                 }

@@ -27,7 +27,7 @@ private:
       
       // Prints the name of each property in the collection.
       Object^ myProperty;
-      while ( ie->MoveNext() == true )
+      while ( ie->MoveNext() )
       {
          myProperty = ie->Current;
          textBox1->Text = textBox1->Text + myProperty + "\n";

@@ -58,7 +58,7 @@ namespace copy
             var original = "This is a single sentence.";
             var len = original.Length; 
             var ptr = Marshal.StringToHGlobalUni(original);
-            string result;
+            string? result;
             unsafe 
             {
                 char *ch = (char *) ptr.ToPointer();

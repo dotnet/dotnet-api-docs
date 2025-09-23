@@ -85,7 +85,7 @@ using System.Web.UI.WebControls;
 
     public static void InsertNewEmployee(NorthwindEmployee ne) {
       bool retval = ne.Save();
-      if (! retval) { throw new NorthwindDataException("InsertNewEmployee failed."); }
+      if (!retval) { throw new NorthwindDataException("InsertNewEmployee failed."); }
     }
 // </snippet3>
     // And so on...
@@ -126,7 +126,7 @@ using System.Web.UI.WebControls;
           this.lastName         = sdr["LastName"].ToString();
           this.title            = sdr["Title"].ToString();
           this.titleOfCourtesy  = sdr["TitleOfCourtesy"].ToString();
-          if (! sdr.IsDBNull(4)) {
+          if (!sdr.IsDBNull(4)) {
             this.reportsTo        = sdr.GetInt32(4);
           }
         }

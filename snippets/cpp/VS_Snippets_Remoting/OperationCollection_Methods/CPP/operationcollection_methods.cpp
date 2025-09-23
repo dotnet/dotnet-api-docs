@@ -51,7 +51,7 @@ int main()
 
       // <Snippet3>
       // <Snippet4>
-      if ( myOperationCollection->Contains( myOperation ) == true )
+      if ( myOperationCollection->Contains( myOperation ))
       {
          Console::WriteLine( "The index of the added 'myOperation' operation is : {0}", myOperationCollection->IndexOf( myOperation ) );
       }

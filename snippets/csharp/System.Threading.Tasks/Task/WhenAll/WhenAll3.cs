@@ -22,7 +22,7 @@ public class Example
          tasks.Add(Task.Run( () => { var png = new Ping();
                                      try {
                                         var reply = png.Send(url);
-                                        if (! (reply.Status == IPStatus.Success)) {
+                                        if (!(reply.Status == IPStatus.Success)) {
                                            Interlocked.Increment(ref failed);
                                            throw new TimeoutException("Unable to reach " + url + ".");
                                         }

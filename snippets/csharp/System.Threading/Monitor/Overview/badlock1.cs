@@ -32,7 +32,7 @@ public class Example
          String msg = String.Empty;
          foreach (var ie in e.InnerExceptions) {
             Console.WriteLine("{0}", ie.GetType().Name);
-            if (! msg.Contains(ie.Message))
+            if (!msg.Contains(ie.Message))
                msg += ie.Message + Environment.NewLine;
          }
          Console.WriteLine("\nException Message(s):");

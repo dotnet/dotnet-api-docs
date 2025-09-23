@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Data.Common;
-using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Globalization;
+using Microsoft.Data.SqlClient;
 
 namespace DataViewSamples
 {
@@ -36,8 +33,7 @@ namespace DataViewSamples
             // Create a new adapter and give it a query to fetch sales order, contact,
             // address, and product information for sales in the year 2002. Point connection
             // information to the configuration setting "AdventureWorks".
-            string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks;"
-                + "Integrated Security=true;";
+            string connectionString = "Data Source=localhost;Initial Catalog=AdventureWorks;Integrated Security=true;";
 
             SqlDataAdapter da = new SqlDataAdapter(
                 "SELECT SalesOrderID, ContactID, OrderDate, OnlineOrderFlag, " +
@@ -85,14 +81,14 @@ namespace DataViewSamples
             // Add data relations.
             DataTable orderHeader = ds.Tables["SalesOrderHeader"];
             DataTable orderDetail = ds.Tables["SalesOrderDetail"];
-            DataRelation order = new DataRelation("SalesOrderHeaderDetail",
+            DataRelation order = new("SalesOrderHeaderDetail",
                                      orderHeader.Columns["SalesOrderID"],
                                      orderDetail.Columns["SalesOrderID"], true);
             ds.Relations.Add(order);
 
             DataTable contact = ds.Tables["Contact"];
             DataTable orderHeader2 = ds.Tables["SalesOrderHeader"];
-            DataRelation orderContact = new DataRelation("SalesOrderContact",
+            DataRelation orderContact = new("SalesOrderContact",
                                             contact.Columns["ContactID"],
                                             orderHeader2.Columns["ContactID"], true);
             ds.Relations.Add(orderContact);
@@ -114,14 +110,16 @@ namespace DataViewSamples
             if (size > 1)
             {
                 // Convert the word to uppercase characters.
-                word = word.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+                word = word.ToUpper(CultureInfo.InvariantCulture);
 
                 // Convert the word to a character array.
                 char[] chars = word.ToCharArray();
 
                 // Buffer to hold the character codes.
-                StringBuilder buffer = new StringBuilder();
-                buffer.Length = 0;
+                StringBuilder buffer = new()
+                {
+                    Length = 0
+                };
 
                 // The current and previous character codes.
                 int prevCode = 0;
@@ -228,8 +226,8 @@ namespace DataViewSamples
 
             EnumerableRowCollection<DataRow> query =
                 from order in orders.AsEnumerable()
-                where (order.Field<Int16>("OrderQty") > 2 &&
-                    order.Field<Int16>("OrderQty") < 6)
+                where (order.Field<short>("OrderQty") > 2 &&
+                    order.Field<short>("OrderQty") < 6)
                 select order;
 
             DataView view = query.AsDataView();
@@ -472,7 +470,7 @@ namespace DataViewSamples
             bindingSource1.DataSource = view;
             dataGridView1.AutoResizeColumns();
 
-           // </SnippetLDVFromQueryWhere2>
+            // </SnippetLDVFromQueryWhere2>
         }
 
         private void button18_Click(object sender, EventArgs e)
@@ -553,7 +551,7 @@ namespace DataViewSamples
 
             view.Sort = "Color";
 
-            object[] criteria = new object[] { "Red"};
+            object[] criteria = new object[] { "Red" };
 
             DataRowView[] foundRowsView = view.FindRows(criteria);
             // </SnippetLDVFromQueryFindRows>
@@ -649,15 +647,18 @@ namespace DataViewSamples
             DataTable productsTable = (DataTable)view.Table;
 
             // Set RowStateFilter to display the current rows.
-            view.RowStateFilter = DataViewRowState.CurrentRows ;
+            view.RowStateFilter = DataViewRowState.CurrentRows;
 
             // Query the DataView for red colored products ordered by list price.
             var productQuery = from DataRowView rowView in view
                                where rowView.Row.Field<string>("Color") == "Red"
                                orderby rowView.Row.Field<decimal>("ListPrice")
-                               select new { Name = rowView.Row.Field<string>("Name"),
-                                            Color = rowView.Row.Field<string>("Color"),
-                                            Price = rowView.Row.Field<decimal>("ListPrice")};
+                               select new
+                               {
+                                   Name = rowView.Row.Field<string>("Name"),
+                                   Color = rowView.Row.Field<string>("Color"),
+                                   Price = rowView.Row.Field<decimal>("ListPrice")
+                               };
 
             // Bind the query results to another DataGridView.
             dataGridView2.DataSource = productQuery.ToList();

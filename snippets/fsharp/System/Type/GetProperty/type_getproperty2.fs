@@ -18,7 +18,7 @@ try
     let myType = typeof<MyClass>
     // Get the PropertyInfo by passing the property name and specifying the BindingFlags.
     let myPropInfo = myType.GetProperty("MyProperty", BindingFlags.Public ||| BindingFlags.Instance)
-    // Display Name propety to console.
+    // Display Name property to console.
     printfn $"{myPropInfo.Name} is a property of MyClass."
 with :? NullReferenceException as e ->
     printfn $"MyProperty does not exist in MyClass.{e.Message}"

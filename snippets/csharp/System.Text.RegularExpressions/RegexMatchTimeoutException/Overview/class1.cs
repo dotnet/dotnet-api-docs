@@ -41,7 +41,7 @@ public class Example
                               timeout);
             // Write to event log named RegexTimeouts
             try {
-               if (! EventLog.SourceExists("RegexTimeouts"))
+               if (!EventLog.SourceExists("RegexTimeouts"))
                   EventLog.CreateEventSource("RegexTimeouts", "RegexTimeouts");
 
                EventLog log = new EventLog("RegexTimeouts");

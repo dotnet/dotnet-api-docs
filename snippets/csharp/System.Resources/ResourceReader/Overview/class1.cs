@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Resources;
 
-public class Example
+public class Example1
 {
-   public static void Main()
+   public static void Run()
    {
       Console.WriteLine("Resources in ApplicationResources.resources:");
       ResourceReader res = new ResourceReader(@".\ApplicationResources.resources");

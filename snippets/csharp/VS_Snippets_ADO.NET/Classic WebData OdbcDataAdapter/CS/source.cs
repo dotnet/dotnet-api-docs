@@ -4,11 +4,6 @@ using System.Data.Odbc;
 
 class Program
 {
-    static void Main()
-    {
-        //string connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\Samples\\Northwind.mdb";
-    }
-
     // <Snippet1>
     public DataSet GetDataSetFromAdapter(
         DataSet dataSet, string connectionString, string queryString)

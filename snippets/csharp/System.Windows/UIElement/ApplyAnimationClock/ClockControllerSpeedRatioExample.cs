@@ -122,9 +122,9 @@ namespace Microsoft.Samples.Animation.TimingBehaviors
             
             TextBox theTextBox = (TextBox)e.Source;
             if (theTextBox.Text == null || theTextBox.Text.Length < 1
-                || Double.TryParse(theTextBox.Text, 
+                || !Double.TryParse(theTextBox.Text, 
                     System.Globalization.NumberStyles.Any, 
-                    null, out doubleParseResult) == false)
+                    null, out doubleParseResult))
                 speedRatioButton.IsEnabled = false;
             else 
                 speedRatioButton.IsEnabled = true;

@@ -2,81 +2,69 @@
 using System;
 using System.Collections.Generic;
 
-class Example
+static class Example
 {
-   static void Main()
-   {
-      BoxEqualityComparer boxEqC = new BoxEqualityComparer();
+    static void Main()
+    {
+        BoxEqualityComparer comparer = new();
 
-      var boxes = new Dictionary<Box, string>(boxEqC);
+        Dictionary<Box, string> boxes = new(comparer);
 
-      var redBox = new Box(4, 3, 4);
-      AddBox(boxes, redBox, "red");
+        AddBox(new Box(4, 3, 4), "red");
+        AddBox(new Box(4, 3, 4), "blue");
+        AddBox(new Box(3, 4, 3), "green");
 
-      var blueBox = new Box(4, 3, 4);
-      AddBox(boxes, blueBox, "blue");
+        Console.WriteLine($"The dictionary contains {boxes.Count} Box objects.");
 
-      var greenBox = new Box(3, 4, 3);
-      AddBox(boxes, greenBox, "green");
-      Console.WriteLine();
-
-      Console.WriteLine("The dictionary contains {0} Box objects.",
-                        boxes.Count);
-   }
-
-   private static void AddBox(Dictionary<Box, String> dict, Box box, String name)
-   {
-      try {
-         dict.Add(box, name);
-      }
-      catch (ArgumentException e) {
-         Console.WriteLine("Unable to add {0}: {1}", box, e.Message);
-      }
-   }
+        void AddBox(Box box, string name)
+        {
+            try
+            {
+                boxes.Add(box, name);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine($"Unable to add {box}: {e.Message}");
+            }
+        }
+    }
 }
 
-public class Box
+class Box
 {
-    public Box(int h,  int l, int w)
+    public int Height { get; }
+    public int Length { get; }
+    public int Width { get; }
+
+    public Box(int height, int length, int width)
     {
-        this.Height = h;
-        this.Length = l;
-        this.Width = w;
+        Height = height;
+        Length = length;
+        Width = width;
     }
 
-    public int Height { get; set; }
-    public int Length { get; set; }
-    public int Width { get; set; }
-
-    public override String ToString()
-    {
-       return String.Format("({0}, {1}, {2})", Height, Length, Width);
-    }
+    public override string ToString() => $"({Height}, {Length}, {Width})";
 }
 
 class BoxEqualityComparer : IEqualityComparer<Box>
 {
-    public bool Equals(Box b1, Box b2)
+    public bool Equals(Box? b1, Box? b2)
     {
-        if (b2 == null && b1 == null)
-           return true;
-        else if (b1 == null || b2 == null)
-           return false;
-        else if(b1.Height == b2.Height && b1.Length == b2.Length
-                            && b1.Width == b2.Width)
+        if (ReferenceEquals(b1, b2))
             return true;
-        else
+
+        if (b2 is null || b1 is null)
             return false;
+
+        return b1.Height == b2.Height
+            && b1.Length == b2.Length
+            && b1.Width == b2.Width;
     }
 
-    public int GetHashCode(Box bx)
-    {
-        int hCode = bx.Height ^ bx.Length ^ bx.Width;
-        return hCode.GetHashCode();
-    }
+    public int GetHashCode(Box box) => box.Height ^ box.Length ^ box.Width;
 }
+
 // The example displays the following output:
 //    Unable to add (4, 3, 4): An item with the same key has already been added.
-//
 //    The dictionary contains 2 Box objects.
 // </Snippet1>

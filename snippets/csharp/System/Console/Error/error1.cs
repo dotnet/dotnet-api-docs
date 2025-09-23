@@ -8,7 +8,7 @@ public class Example
       int increment = 0;
       bool exitFlag = false;
 
-      while (! exitFlag) {
+      while (!exitFlag) {
          if (Console.IsOutputRedirected)
             Console.Error.WriteLine("Generating multiples of numbers from {0} to {1}",
                                     increment + 1, increment + 10);
@@ -29,7 +29,7 @@ public class Example
                              increment + 1, increment + 10);
          Char response = Console.ReadKey(true).KeyChar;
          Console.Error.WriteLine(response);
-         if (! Console.IsOutputRedirected)
+         if (!Console.IsOutputRedirected)
             Console.CursorTop--;
 
          if (Char.ToUpperInvariant(response) == 'N')

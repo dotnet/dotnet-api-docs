@@ -29,7 +29,7 @@ namespace SDKSample
             PngBitmapDecoder pngDecoder = new PngBitmapDecoder(pngStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             BitmapFrame pngFrame = pngDecoder.Frames[0];
             InPlaceBitmapMetadataWriter pngInplace = pngFrame.CreateInPlaceBitmapMetadataWriter();
-            if (pngInplace.TrySave() == true)
+            if (pngInplace.TrySave())
             { pngInplace.SetQuery("/Text/Description", "Have a nice day."); }
             pngStream.Close();
             // </SnippetSetQuery>

@@ -55,7 +55,7 @@ class RSACSPSample
             {
 
                 //Import the RSA Key information. This only needs
-                //toinclude the public key information.
+                //to include the public key information.
                 RSA.ImportParameters(RSAKeyInfo);
 
                 //Encrypt the passed byte array and specify OAEP padding.  

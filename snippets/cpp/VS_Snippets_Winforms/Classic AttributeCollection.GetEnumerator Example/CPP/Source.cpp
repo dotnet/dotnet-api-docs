@@ -26,7 +26,7 @@ private:
       // Prints the type of each attribute in the collection.
       Object^ myAttribute;
       System::Text::StringBuilder^ text = gcnew System::Text::StringBuilder;
-      while ( ie->MoveNext() == true )
+      while ( ie->MoveNext() )
       {
          myAttribute = ie->Current;
          text->Append( myAttribute );

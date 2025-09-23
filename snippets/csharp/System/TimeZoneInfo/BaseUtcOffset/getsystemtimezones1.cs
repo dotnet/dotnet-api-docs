@@ -41,7 +41,7 @@ public class Example
             
                sw.WriteLine("      From {0} to {1}", rule.DateStart, rule.DateEnd);
                sw.WriteLine("      Delta: {0}", rule.DaylightDelta);
-               if (! transTimeStart.IsFixedDateRule)
+               if (!transTimeStart.IsFixedDateRule)
                {
                   sw.WriteLine("      Begins at {0:t} on {1} of week {2} of {3}", transTimeStart.TimeOfDay, 
                                                                                 transTimeStart.DayOfWeek,                                                                                 

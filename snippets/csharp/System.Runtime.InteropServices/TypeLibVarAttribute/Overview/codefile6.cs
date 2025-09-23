@@ -1,7 +1,6 @@
 ﻿// System.Runtime.InteropServices.TypeLibVarAttribute
 // System.Runtime.InteropServices.TypeLibVarFlags
 // <Snippet1>
-
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;

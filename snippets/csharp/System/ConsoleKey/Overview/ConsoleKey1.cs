@@ -16,11 +16,11 @@ public class ConsoleKeyExample
                        String.Format("You pressed {0}", input.Key.ToString()));
          bool modifiers = false;
 
-         if ((input.Modifiers & ConsoleModifiers.Alt) == ConsoleModifiers.Alt) {
+         if (input.Modifiers.HasFlag(ConsoleModifiers.Alt)) {
             output.Append(", together with " + ConsoleModifiers.Alt.ToString());
             modifiers = true;
          }
-         if ((input.Modifiers & ConsoleModifiers.Control) == ConsoleModifiers.Control)
+         if (input.Modifiers.HasFlag(ConsoleModifiers.Control))
          {
             if (modifiers) {
                output.Append(" and ");
@@ -31,7 +31,7 @@ public class ConsoleKeyExample
             }
             output.Append(ConsoleModifiers.Control.ToString());
          }
-         if ((input.Modifiers & ConsoleModifiers.Shift) == ConsoleModifiers.Shift)
+         if (input.Modifiers.HasFlag(ConsoleModifiers.Shift))
          {
             if (modifiers) {
                output.Append(" and ");
@@ -49,23 +49,23 @@ public class ConsoleKeyExample
    }
 }
 // The output from a sample console session might appear as follows:
-//       Press a key, along with Alt, Ctrl, or Shift.
+//       Press a key, together with Alt, Ctrl, or Shift.
 //       Press Esc to exit.
 //       You pressed D.
 //
-//       Press a key, along with Alt, Ctrl, or Shift.
+//       Press a key, together with Alt, Ctrl, or Shift.
 //       Press Esc to exit.
-//       You pressed X, along with Shift.
+//       You pressed X, together with Shift.
 //
-//       Press a key, along with Alt, Ctrl, or Shift.
+//       Press a key, together with Alt, Ctrl, or Shift.
 //       Press Esc to exit.
-//       You pressed L, along with Control and Shift.
+//       You pressed L, together with Control and Shift.
 //
-//       Press a key, along with Alt, Ctrl, or Shift.
+//       Press a key, together with Alt, Ctrl, or Shift.
 //       Press Esc to exit.
-//       You pressed P, along with Alt and Control and Shift.
+//       You pressed P, together with Alt and Control and Shift.
 //
-//       Press a key, along with Alt, Ctrl, or Shift.
+//       Press a key, together with Alt, Ctrl, or Shift.
 //       Press Esc to exit.
 //       You pressed Escape.
 // </Snippet1>

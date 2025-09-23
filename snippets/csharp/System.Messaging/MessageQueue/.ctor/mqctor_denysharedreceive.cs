@@ -9,7 +9,6 @@ namespace MyProject
 	/// </summary>
 	public class MyNewQueue
 	{
-
 		//**************************************************
 		// Provides an entry point into the application.
 		//		
@@ -22,8 +21,8 @@ namespace MyProject
 			// Create a new instance of the class.
 			MyNewQueue myNewQueue = new MyNewQueue();
 
-			// Output the count of Lowest priority messages.
-			myNewQueue.GetExclusiveAccess();
+            // Output the count of Lowest priority messages.
+            GetExclusiveAccess();
 						
 			return;
 		}
@@ -34,7 +33,7 @@ namespace MyProject
 		// queue.
 		//**************************************************
 		
-		public void GetExclusiveAccess()
+		public static void GetExclusiveAccess()
 		{
 			try
 			{

@@ -14,7 +14,7 @@ public class Example
 
       foreach (var fmt in culture.DateTimeFormat.GetAllDateTimePatterns()) {
          total += 1;
-         if (! DateTime.TryParse(date1.ToString(fmt), out date2)) {
+         if (!DateTime.TryParse(date1.ToString(fmt), out date2)) {
             noRoundTrip++;
             Console.WriteLine("Unable to parse {0:" + fmt + "} (format '{1}')",
                               date1, fmt);

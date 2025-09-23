@@ -35,7 +35,7 @@ public class Example : IComparer
       SortVersion ver = null;
 
       // If the data has not been saved, create it.
-      if (! File.Exists(FILENAME)) {
+      if (!File.Exists(FILENAME)) {
          regions = GenerateData();
          ver = CultureInfo.CurrentCulture.CompareInfo.Version;
          reindex = true;

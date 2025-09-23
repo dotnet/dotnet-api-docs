@@ -30,7 +30,7 @@ namespace X509CertEncrypt
             sw.WriteLine("Test data to be encrypted");
             sw.Close();
 
-            // Get the certifcate to use to encrypt the key.
+            // Get the certificate to use to encrypt the key.
             X509Certificate2 cert = GetCertificateFromStore("CN=CERT_SIGN_TEST_CERT");
             if (cert == null)
             {
@@ -85,7 +85,7 @@ namespace X509CertEncrypt
             using (Aes aes = Aes.Create())
             {
                 // Create instance of Aes for
-                // symetric encryption of the data.
+                // symmetric encryption of the data.
                 aes.KeySize = 256;
                 aes.Mode = CipherMode.CBC;
                 using (ICryptoTransform transform = aes.CreateEncryptor())
@@ -107,7 +107,7 @@ namespace X509CertEncrypt
                     // for the encrypted file (outFs):
                     // - length of the key
                     // - length of the IV
-                    // - ecrypted key
+                    // - encrypted key
                     // - the IV
                     // - the encrypted cipher content
 
@@ -167,7 +167,7 @@ namespace X509CertEncrypt
         {
 
             // Create instance of Aes for
-            // symetric decryption of the data.
+            // symmetric decryption of the data.
             using (Aes aes = Aes.Create())
             {
                 aes.KeySize = 256;

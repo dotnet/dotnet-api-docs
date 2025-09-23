@@ -12,7 +12,7 @@ class Test
         {
             Console.WriteLine("Drive {0}", d.Name);
             Console.WriteLine("  Drive type: {0}", d.DriveType);
-            if (d.IsReady == true)
+            if (d.IsReady)
             {
                 Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
                 Console.WriteLine("  File system: {0}", d.DriveFormat);

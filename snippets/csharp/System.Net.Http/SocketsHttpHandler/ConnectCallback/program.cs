@@ -1,5 +1,4 @@
-using System;
-using System.IO;
+﻿using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -14,6 +13,8 @@ class HttpClientHandler_SecureExample
 
         handler.ConnectCallback = async (ctx, ct) =>
         {
+            DnsEndPoint dnsEndPoint = ctx.DnsEndPoint;
+            IPAddress[] addresses = await Dns.GetHostAddressesAsync(dnsEndPoint.Host, dnsEndPoint.AddressFamily, ct);
             var s = new Socket(SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
             try
             {
@@ -21,7 +22,8 @@ class HttpClientHandler_SecureExample
                 s.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime, 5);
                 s.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, 5);
                 s.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount, 5);
-                await s.ConnectAsync(ctx.DnsEndPoint, ct);
+
+                await s.ConnectAsync(addresses, dnsEndPoint.Port, ct);
                 return new NetworkStream(s, ownsSocket: true);
             }
             catch
@@ -37,7 +39,7 @@ class HttpClientHandler_SecureExample
         // Call asynchronous network methods in a try/catch block to handle exceptions
         try
         {
-            HttpResponseMessage response = await client.GetAsync("https://docs.microsoft.com/");
+            HttpResponseMessage response = await client.GetAsync("https://learn.microsoft.com/");
 
             response.EnsureSuccessStatusCode();
 
