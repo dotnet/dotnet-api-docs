@@ -433,11 +433,17 @@
         <Parameter Name="valueFactory" Type="System.Func&lt;TKey,TValue&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="valueFactory">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="key">The key of the value to find. It cannot be <see langword="null" />.</param>
+        <param name="valueFactory">The callback that creates a value for key, if one does not exist already. It cannot be <see langword="null" />.</param>
+        <summary>
+          <para>Searches for a specified key in the table and returns the corresponding value. If the key does not exist in the table, the method invokes the supplied factory to create a value that is bound to the specified key.</para>
+        </summary>
+        <returns>The value bound to <typeparamref name="TKey" /> in the current <see cref="T:System.Runtime.CompilerServices.ConditionalWeakTable`2" /> instance, after the method completes.</returns>
+        <remarks>
+          <para>If multiple threads try to initialize the same key, the table may invoke <paramref name="valueFactory" /> multiple times with the same key. Exactly one of these calls will succeed and the returned value of that call will be the one added to the table and returned by all the racing <see cref="M:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetOrAdd(`0,System.Func{`0,`1})" /> calls. This rule permits the table to invoke <paramref name="valueFactory" /> outside the internal table lock, to prevent deadlocks.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> or <paramref name="valueFactory" /> are <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetOrAdd">
@@ -469,11 +475,15 @@
         <Parameter Name="value" Type="TValue" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The key of the value to find. It cannot be <see langword="null" />.</param>
+        <param name="value">The value to add and bind to <typeparamref name="TKey" />, if one does not exist already.</param>
+        <summary>
+          <para>Searches for a specified key in the table and returns the corresponding value. If the key does not exist in the table, the method adds the given value and binds it to the specified key.</para>
+        </summary>
+        <returns>The value bound to <typeparamref name="TKey" /> in the current <see cref="T:System.Runtime.CompilerServices.ConditionalWeakTable`2" /> instance, after the method completes.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetOrAdd&lt;TArg&gt;">
@@ -519,13 +529,19 @@
         <Parameter Name="factoryArgument" Type="TArg" Index="2" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <typeparam name="TArg">To be added.</typeparam>
-        <param name="key">To be added.</param>
-        <param name="valueFactory">To be added.</param>
-        <param name="factoryArgument">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TArg">The type of the additional argument to use with the value factory.</typeparam>
+        <param name="key">The key of the value to find. It cannot be <see langword="null" />.</param>
+        <param name="valueFactory">The callback that creates a value for key, if one does not exist already. It cannot be <see langword="null" />.</param>
+        <param name="factoryArgument">The additional argument to supply to <paramref name="valueFactory" /> upon invocation.</param>
+        <summary>
+          <para>Searches for a specified key in the table and returns the corresponding value. If the key does not exist in the table, the method invokes the supplied factory to create a value that is bound to the specified key.</para>
+        </summary>
+        <returns>The value bound to <typeparamref name="TKey" /> in the current <see cref="T:System.Runtime.CompilerServices.ConditionalWeakTable`2" /> instance, after the method completes.</returns>
+        <remarks>
+          <para>If multiple threads try to initialize the same key, the table may invoke <paramref name="valueFactory" /> multiple times with the same key. Exactly one of these calls will succeed and the returned value of that call will be the one added to the table and returned by all the racing <see cref="M:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetOrAdd``1(`0,System.Func{`0,``0,`1},``0)" /> calls. This rule permits the table to invoke <paramref name="valueFactory" /> outside the internal table lock, to prevent deadlocks.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> or <paramref name="valueFactory" /> are <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetOrCreateValue">
@@ -792,11 +808,14 @@ Note: In the <see href="https://go.microsoft.com/fwlink/?LinkID=247912">.NET for
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="key">The key to remove.</param>
+        <param name="value">value removed from the table, if it was present.</param>
+        <summary>Removes a key and its value from the table, and returns the removed value if it was present.</summary>
+        <returns>
+          <see langword="true" /> if the key is found and removed; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;TKey,TValue&gt;&gt;.GetEnumerator">
@@ -943,6 +962,8 @@ retrieved. Additionally, it may not return all entries that were present when th
         <returns>
           <see langword="true" /> if the key/value pair was added; <see langword="false" /> if the table already contained the key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="key" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryGetValue">
