@@ -3,12 +3,12 @@ using System;
 using System.IO;
 using System.Xml;
 
-public class Sample {
-
-  public static void Main() {
-
+public class Sample1
+{
+  public static void CreateElementExample()
+  {
     // Create the XmlDocument.
-    XmlDocument doc = new XmlDocument();
+    XmlDocument doc = new();
     string xmlData = "<book xmlns:bk='urn:samples'></book>";
 
     doc.Load(new StringReader(xmlData));
@@ -22,4 +22,4 @@ public class Sample {
     doc.Save(Console.Out);
   }
 }
-   // </Snippet1>
+// </Snippet1>
