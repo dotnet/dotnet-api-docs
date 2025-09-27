@@ -34,9 +34,13 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">The type of the object this <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> tracks to.</typeparam>
+    <summary>
+      <para>Represents a strongly-typed GC handle to a managed object.</para>
+      <para>The object is allowed to be collected. When the object is collected, handle target is set to <see langword="null" />.</para>
+    </summary>
+    <remarks>&lt;para&gt;&lt;para&gt;This type corresponds to &lt;see cref="F:System.Runtime.InteropServices.GCHandleType.Weak" /&gt; or &lt;see cref="F:System.Runtime.InteropServices.GCHandleType.WeakTrackResurrection" /&gt;.&lt;/para&gt;&lt;para&gt; This type is unsafe if used incorrectly. Incorrect usage like mismanagement of lifetime, providing invalid handle value or concurrent disposal can result in hard to diagnose crashes or data corruptions.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;</remarks>
+    <seealso cref="T:System.Runtime.InteropServices.GCHandle" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -55,9 +59,9 @@
         <Parameter Name="trackResurrection" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="target">To be added.</param>
-        <param name="trackResurrection">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="target">The object that uses the <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" />.</param>
+        <param name="trackResurrection">Whether to track the object when it's resurrected in the finalizer.</param>
+        <summary>Allocates a handle for the specified object.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -81,8 +85,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        <remarks>This method is not thread safe.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -121,6 +125,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -162,6 +167,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.IEquatable`1.Equals(`0)" />
       </Docs>
     </Member>
     <Member MemberName="FromIntPtr">
@@ -189,10 +195,10 @@
         <Parameter Name="value" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">An <see cref="T:System.IntPtr" /> handle to a managed object to create a <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object from.</param>
+        <summary>Returns a new <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object created from a handle to a managed object.</summary>
+        <returns>A new <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object that corresponds to the value parameter.</returns>
+        <remarks>&lt;para&gt;&lt;para&gt;This method doesn't validate the provided handle value. The caller must ensure the validity of the handle.&lt;/para&gt;&lt;para&gt; The &lt;see cref="T:System.IntPtr" /&gt; representation of &lt;see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /&gt; is not interchangable with &lt;see cref="T:System.Runtime.InteropServices.GCHandle" /&gt;.&lt;/para&gt;&lt;para&gt;&lt;/para&gt;</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -218,8 +224,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for the current instance.</summary>
+        <returns>A hash code for the current instance.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -245,7 +251,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Determine whether this handle has been allocated or not.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -276,8 +282,9 @@
       </Parameters>
       <Docs>
         <param name="target">To be added.</param>
-        <summary>To be added.</summary>
+        <summary>Sets the object this handle represents.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.NullReferenceException">If the handle is not initialized or already disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToIntPtr">
@@ -306,10 +313,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object to retrieve an internal integer representation from.</param>
+        <summary>Returns the internal integer representation of a <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object.</summary>
+        <returns>An <see cref="T:System.IntPtr" /> object that represents a <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object.</returns>
+        <remarks>
+          <para>The <see cref="T:System.IntPtr" /> representation of <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> is not interchangable with <see cref="T:System.Runtime.InteropServices.GCHandle" />.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetTarget">
@@ -344,10 +353,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="target">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="target">When this method returns, contains the target object, if it is available.</param>
+        <summary>Tries to retrieve the target object that is referenced by the current <see cref="T:System.Runtime.InteropServices.WeakGCHandle`1" /> object.</summary>
+        <returns>
+          <see langword="true" /> if the target was retrieved; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.NullReferenceException">If the handle is not initialized or already disposed.</exception>
       </Docs>
     </Member>
   </Members>
