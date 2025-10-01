@@ -277,13 +277,36 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="sourceFileName">To be added.</param>
-        <param name="entryName">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The zip archive to add the file to.</param>
+        <param name="sourceFileName">
+          <para>The path to the file on the file system to be copied from. The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.</para>
+        </param>
+        <param name="entryName">The name of the entry to be created.</param>
+        <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
+        <summary>&lt;para&gt;&lt;p&gt;Asynchronously adds a file from the file system to the archive under the specified entry name.&lt;/para&gt;&lt;para&gt;The new entry in the archive will contain the contents of the file.&lt;/para&gt;&lt;para&gt;The last write time of the archive entry is set to the last write time of the file on the file system.&lt;/para&gt;&lt;para&gt;If an entry with the specified name already exists in the archive, a second entry will be created that has an identical name.&lt;/para&gt;&lt;para&gt;If the specified source file has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.&lt;/p&gt;&lt;p&gt;If an entry with the specified name already exists in the archive, a second entry will be created that has an identical name.&lt;/p&gt;&lt;p&gt;Since no &lt;code&gt;CompressionLevel&lt;/code&gt; is specified, the default provided by the implementation of the underlying compression algorithm will be used; the &lt;code&gt;ZipArchive&lt;/code&gt; will not impose its own default.&lt;/para&gt;&lt;para&gt;(Currently, the underlying compression algorithm is provided by the &lt;code&gt;System.IO.Compression.DeflateStream&lt;/code&gt; class.)&lt;/p&gt;&lt;/para&gt;</summary>
+        <returns>A wrapper for the newly created entry.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>sourceFileName is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>-or-</para>
+          <para>entryName is a zero-length string.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">sourceFileName or entryName is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">
+          <para>In sourceFileName, the specified path, file name, or both exceed the system-defined maximum length.</para>
+          <para>For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+        </exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified sourceFileName is invalid, (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">An I/O error occurred while opening the file specified by sourceFileName.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <para>sourceFileName specified a directory.</para>
+          <para>-or-</para>
+          <para>The caller does not have the required permission.</para>
+        </exception>
+        <exception cref="T:System.IO.FileNotFoundException">The file specified in sourceFileName was not found.</exception>
+        <exception cref="T:System.NotSupportedException">sourceFileName is in an invalid format or the ZipArchive does not support writing.</exception>
+        <exception cref="T:System.ObjectDisposedException">The ZipArchive has already been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">An asynchronous operation is cancelled.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateEntryFromFileAsync">
@@ -311,14 +334,37 @@
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="4" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="sourceFileName">To be added.</param>
-        <param name="entryName">To be added.</param>
-        <param name="compressionLevel">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The zip archive to add the file to.</param>
+        <param name="sourceFileName">
+          <para>The path to the file on the file system to be copied from. The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory.</para>
+        </param>
+        <param name="entryName">The name of the entry to be created.</param>
+        <param name="compressionLevel">The level of the compression (speed/memory vs. compressed size trade-off).</param>
+        <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
+        <summary>&lt;para&gt;&lt;p&gt;Asynchronously adds a file from the file system to the archive under the specified entry name.&lt;/para&gt;&lt;para&gt;The new entry in the archive will contain the contents of the file.&lt;/para&gt;&lt;para&gt;The last write time of the archive entry is set to the last write time of the file on the file system.&lt;/para&gt;&lt;para&gt;If an entry with the specified name already exists in the archive, a second entry will be created that has an identical name.&lt;/para&gt;&lt;para&gt;If the specified source file has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.&lt;/p&gt;&lt;p&gt;If an entry with the specified name already exists in the archive, a second entry will be created that has an identical name.&lt;/p&gt;&lt;/para&gt;</summary>
+        <returns>A wrapper for the newly created entry.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>sourceFileName is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>-or-</para>
+          <para>entryName is a zero-length string.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">sourceFileName or entryName is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">
+          <para>In sourceFileName, the specified path, file name, or both exceed the system-defined maximum length.</para>
+          <para>For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+        </exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified sourceFileName is invalid, (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">An I/O error occurred while opening the file specified by sourceFileName.</exception>
+        <exception cref="T:System.UnauthorizedAccessException">
+          <para>sourceFileName specified a directory.</para>
+          <para>-or-</para>
+          <para>The caller does not have the required permission.</para>
+        </exception>
+        <exception cref="T:System.IO.FileNotFoundException">The file specified in sourceFileName was not found.</exception>
+        <exception cref="T:System.NotSupportedException">sourceFileName is in an invalid format or the ZipArchive does not support writing.</exception>
+        <exception cref="T:System.ObjectDisposedException">The ZipArchive has already been closed.</exception>
+        <exception cref="T:System.OperationCanceledException">An asynchronous operation is cancelled.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectory">
@@ -507,12 +553,45 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The zip archive to extract files from.</param>
+        <param name="destinationDirectoryName">
+          <para>The path to the directory on the file system.</para>
+          <para>The directory specified must not exist. The path is permitted to specify relative or absolute path information.</para>
+          <para>Relative path information is interpreted as relative to the current working directory.</para>
+        </param>
+        <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
+        <summary>
+          <para>Asynchronously extracts all of the files in the archive to a directory on the file system. The specified directory may already exist.</para>
+          <para>This method will create all subdirectories and the specified directory if necessary.</para>
+          <para>If there is an error while extracting the archive, the archive will remain partially extracted.</para>
+          <para>Each entry will be extracted such that the extracted file has the same relative path to destinationDirectoryName as the entry has to the root of the archive. If a file to be archived has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</para>
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>destinationDirectoryName is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">destinationDirectoryName is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">
+          <para>The specified path, file name, or both exceed the system-defined maximum length.</para>
+          <para>For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+        </exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid, (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">
+          <para>An archive entry?s name is zero-length, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>-or-</para>
+          <para>Extracting an archive entry would have resulted in a destination file that is outside destinationDirectoryName (for example, if the entry name contains parent directory accessors).</para>
+          <para>-or-</para>
+          <para>An archive entry has the same name as an already extracted entry from the same archive.</para>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.NotSupportedException">destinationDirectoryName is in an invalid format.</exception>
+        <exception cref="T:System.IO.InvalidDataException">
+          <para>An archive entry was not found or was corrupt.</para>
+          <para>-or-</para>
+          <para>An archive entry has been compressed using a compression method that is not supported.</para>
+        </exception>
+        <exception cref="T:System.OperationCanceledException">An asynchronous operation is cancelled.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToDirectoryAsync">
@@ -539,13 +618,46 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationDirectoryName">To be added.</param>
-        <param name="overwriteFiles">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The zip archive to extract files from.</param>
+        <param name="destinationDirectoryName">
+          <para>The path to the directory on the file system.</para>
+          <para>The directory specified must not exist. The path is permitted to specify relative or absolute path information.</para>
+          <para>Relative path information is interpreted as relative to the current working directory.</para>
+        </param>
+        <param name="overwriteFiles">
+          <see langword="true" /> to indicate overwrite.</param>
+        <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
+        <summary>
+          <para>Extracts all of the files in the archive to a directory on the file system. The specified directory may already exist.</para>
+          <para>This method will create all subdirectories and the specified directory if necessary.</para>
+          <para>If there is an error while extracting the archive, the archive will remain partially extracted.</para>
+          <para>Each entry will be extracted such that the extracted file has the same relative path to destinationDirectoryName as the entry has to the root of the archive. If a file to be archived has an invalid last modified time, the first datetime representable in the Zip timestamp format (midnight on January 1, 1980) will be used.</para>
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>destinationDirectoryName is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">destinationDirectoryName is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">
+          <para>The specified path, file name, or both exceed the system-defined maximum length.</para>
+          <para>For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+        </exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">The specified path is invalid, (for example, it is on an unmapped drive).</exception>
+        <exception cref="T:System.IO.IOException">
+          <para>An archive entry?s name is zero-length, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>-or-</para>
+          <para>Extracting an archive entry would have resulted in a destination file that is outside destinationDirectoryName (for example, if the entry name contains parent directory accessors).</para>
+          <para>-or-</para>
+          <para>An archive entry has the same name as an already extracted entry from the same archive.</para>
+        </exception>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.NotSupportedException">destinationDirectoryName is in an invalid format.</exception>
+        <exception cref="T:System.IO.InvalidDataException">
+          <para>An archive entry was not found or was corrupt.</para>
+          <para>-or-</para>
+          <para>An archive entry has been compressed using a compression method that is not supported.</para>
+        </exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="ExtractToFile">
@@ -782,12 +894,48 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationFileName">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The zip archive entry to extract a file from.</param>
+        <param name="destinationFileName">
+          <para>The name of the file that will hold the contents of the entry.</para>
+          <para>The path is permitted to specify relative or absolute path information.</para>
+          <para>Relative path information is interpreted as relative to the current working directory.</para>
+        </param>
+        <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
+        <summary>
+          <para>Asynchronously creates a file on the file system with the entry's contents and the specified name. The last write time of the file is set to the entry's last write time. This method does not allow overwriting of an existing file with the same name. Attempting to extract explicit directories (entries with names that end in directory separator characters) will not result in the creation of a directory.</para>
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>destinationFileName is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>-or-</para>
+          <para>destinationFileName specifies a directory.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">destinationFileName is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">
+          <para>The specified path, file name, or both exceed the system-defined maximum length.</para>
+          <para>For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+        </exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">
+          <para>The path specified in destinationFileName is invalid (for example, it is on an unmapped drive).</para>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <para>An I/O error has occurred.</para>
+          <para>-or-</para>
+          <para>The entry is currently open for writing.</para>
+          <para>-or-</para>
+          <para>The entry has been deleted from the archive.</para>
+        </exception>
+        <exception cref="T:System.NotSupportedException">
+          <para>destinationFileName is in an invalid format -or-</para>
+          <para>The ZipArchive that this entry belongs to was opened in a write-only mode.</para>
+        </exception>
+        <exception cref="T:System.IO.InvalidDataException">
+          <para>The entry is missing from the archive or is corrupt and cannot be read -or-</para>
+          <para>The entry has been compressed using a compression method that is not supported.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">The ZipArchive that this entry belongs to has been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExtractToFileAsync">
@@ -814,13 +962,53 @@ A <see cref="T:System.IO.Compression.ZipArchiveEntry" /> has been compressed usi
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destinationFileName">To be added.</param>
-        <param name="overwrite">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The zip archive entry to extract a file from.</param>
+        <param name="destinationFileName">
+          <para>The name of the file that will hold the contents of the entry.</para>
+          <para>The path is permitted to specify relative or absolute path information.</para>
+          <para>Relative path information is interpreted as relative to the current working directory.</para>
+        </param>
+        <param name="overwrite">
+          <see langword="true" /> to indicate overwrite.</param>
+        <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
+        <summary>
+          <para>Asynchronously creates a file on the file system with the entry's contents and the specified name.</para>
+          <para>The last write time of the file is set to the entry's last write time.</para>
+          <para>This method does allows overwriting of an existing file with the same name.</para>
+        </summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>destinationFileName is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>-or-</para>
+          <para>destinationFileName specifies a directory.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">destinationFileName is <see langword="null" />.</exception>
+        <exception cref="T:System.IO.PathTooLongException">
+          <para>The specified path, file name, or both exceed the system-defined maximum length.</para>
+          <para>For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+        </exception>
+        <exception cref="T:System.IO.DirectoryNotFoundException">
+          <para>The path specified in destinationFileName is invalid (for example, it is on an unmapped drive).</para>
+        </exception>
+        <exception cref="T:System.IO.IOException">
+          <para>An I/O error has occurred.</para>
+          <para>-or-</para>
+          <para>The entry is currently open for writing.</para>
+          <para>-or-</para>
+          <para>The entry has been deleted from the archive.</para>
+        </exception>
+        <exception cref="T:System.NotSupportedException">
+          <para>destinationFileName is in an invalid format -or-</para>
+          <para>The ZipArchive that this entry belongs to was opened in a write-only mode.</para>
+        </exception>
+        <exception cref="T:System.IO.InvalidDataException">
+          <para>The entry is missing from the archive or is corrupt and cannot be read -or-</para>
+          <para>The entry has been compressed using a compression method that is not supported.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">The ZipArchive that this entry belongs to has been disposed.</exception>
+        <exception cref="T:System.OperationCanceledException">An asynchronous operation is cancelled.</exception>
       </Docs>
     </Member>
   </Members>
