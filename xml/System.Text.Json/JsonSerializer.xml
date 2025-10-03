@@ -2481,12 +2481,20 @@ The <xref:System.Text.Json.JsonReaderOptions> used to create the instance of the
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <param name="utf8Json">To be added.</param>
-        <param name="jsonTypeInfo">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="jsonTypeInfo">Metadata about the type to convert.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Reads the UTF-8 encoded text representing a single JSON value into an instance specified by the <paramref name="jsonTypeInfo" />.</para>
+          <para>The PipeReader will be read to completion.</para>
+        </summary>
+        <returns>A <paramref name="jsonTypeInfo" /> representation of the JSON value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> or <paramref name="jsonTypeInfo" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">
+          <para>The JSON is invalid, or there is remaining data in the PipeReader.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsync">
@@ -2527,7 +2535,7 @@ The <xref:System.Text.Json.JsonReaderOptions> used to create the instance of the
         <exception cref="T:System.ArgumentNullException">
           <paramref name="utf8Json" /> or <paramref name="jsonTypeInfo" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Text.Json.JsonException">The JSON is invalid,
-            or when there is remaining data in the Stream.</exception>
+            or there is remaining data in the Stream.</exception>
         <exception cref="T:System.OperationCanceledException">The cancellation token was canceled. This exception is stored into the returned task.</exception>
       </Docs>
     </Member>
@@ -2575,13 +2583,24 @@ The <xref:System.Text.Json.JsonReaderOptions> used to create the instance of the
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <param name="utf8Json">To be added.</param>
-        <param name="returnType">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="returnType">The type of the object to convert to and return.</param>
+        <param name="options">Options to control the behavior during reading.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Reads the UTF-8 encoded text representing a single JSON value into a <paramref name="returnType" />.</para>
+          <para>The PipeReader will be read to completion.</para>
+        </summary>
+        <returns>A <paramref name="returnType" /> representation of the JSON value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> or <paramref name="returnType" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">
+          <para>The JSON is invalid, the <paramref name="returnType" /> is not compatible with the JSON, or there is remaining data in the PipeReader.</para>
+        </exception>
+        <exception cref="T:System.NotSupportedException">
+          <para>There is no compatible <see cref="T:System.Text.Json.Serialization.JsonConverter" /> for <paramref name="returnType" /> or its serializable members.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsync">
@@ -2611,13 +2630,27 @@ The <xref:System.Text.Json.JsonReaderOptions> used to create the instance of the
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <param name="utf8Json">To be added.</param>
-        <param name="returnType">To be added.</param>
-        <param name="context">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="returnType">The type of the object to convert to and return.</param>
+        <param name="context">A metadata provider for serializable types.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Reads the UTF-8 encoded text representing a single JSON value into a <paramref name="returnType" />.</para>
+          <para>The PipeReader will be read to completion.</para>
+        </summary>
+        <returns>A <paramref name="returnType" /> representation of the JSON value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" />, <paramref name="returnType" />, or <paramref name="context" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">
+          <para>The JSON is invalid, the <paramref name="returnType" /> is not compatible with the JSON, or there is remaining data in the PipeReader.</para>
+        </exception>
+        <exception cref="T:System.NotSupportedException">
+          <para>There is no compatible <see cref="T:System.Text.Json.Serialization.JsonConverter" /> for <paramref name="returnType" /> or its serializable members.</para>
+        </exception>
+        <exception cref="T:System.InvalidOperationException">
+          <para>The <see cref="M:System.Text.Json.Serialization.JsonSerializerContext.GetTypeInfo(System.Type)" /> method on the provided <paramref name="context" /> did not return a compatible <see cref="T:System.Text.Json.Serialization.Metadata.JsonTypeInfo" /> for <paramref name="returnType" />.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsync">
@@ -2805,13 +2838,24 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="TValue">The type to deserialize the JSON value into.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="options">Options to control the behavior during reading.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Reads the UTF-8 encoded text representing a single JSON value into a <typeparamref name="TValue" />.</para>
+          <para>The PipeReader will be read to completion.</para>
+        </summary>
+        <returns>A <typeparamref name="TValue" /> representation of the JSON value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">
+          <para>The JSON is invalid, <typeparamref name="TValue" /> is not compatible with the JSON, or there is remaining data in the PipeReader.</para>
+        </exception>
+        <exception cref="T:System.NotSupportedException">
+          <para>There is no compatible <see cref="T:System.Text.Json.Serialization.JsonConverter" /> for <typeparamref name="TValue" /> or its serializable members.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsync&lt;TValue&gt;">
@@ -2850,13 +2894,21 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="jsonTypeInfo">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="TValue">The type to deserialize the JSON value into.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="jsonTypeInfo">Metadata about the type to convert.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Reads the UTF-8 encoded text representing a single JSON value into a <typeparamref name="TValue" />.</para>
+          <para>The PipeReader will be read to completion.</para>
+        </summary>
+        <returns>A <typeparamref name="TValue" /> representation of the JSON value.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> or <paramref name="jsonTypeInfo" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Text.Json.JsonException">
+          <para>The JSON is invalid, <typeparamref name="TValue" /> is not compatible with the JSON, or there is remaining data in the PipeReader.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsync&lt;TValue&gt;">
@@ -3045,13 +3097,17 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="TValue">The element type to deserialize asynchronously.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="options">Options to control the behavior during reading.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Wraps the UTF-8 encoded text into an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that can be used to deserialize root-level JSON arrays in a streaming manner.</para>
+        </summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> representation of the provided JSON array.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsyncEnumerable&lt;TValue&gt;">
@@ -3090,13 +3146,17 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="2" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="jsonTypeInfo">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <typeparam name="TValue">The element type to deserialize asynchronously.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="jsonTypeInfo">Metadata about the element type to convert.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Wraps the UTF-8 encoded text into an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that can be used to deserialize root-level JSON arrays in a streaming manner.</para>
+        </summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> representation of the provided JSON array.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> or <paramref name="jsonTypeInfo" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsyncEnumerable&lt;TValue&gt;">
@@ -3259,14 +3319,22 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="topLevelValues">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TValue">The element type to deserialize asynchronously.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="topLevelValues">
+          <see langword="true" /> to deserialize from a sequence of top-level JSON values, or <see langword="false" /> to deserialize from a single top-level array.</param>
+        <param name="options">Options to control the behavior during reading.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Wraps the UTF-8 encoded text into an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that can be used to deserialize sequences of JSON values in a streaming manner.</para>
+        </summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> representation of the provided JSON sequence.</returns>
+        <remarks>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="true" />, treats the PipeReader as a sequence of whitespace separated top-level JSON values and attempts to deserialize each value into <typeparamref name="TValue" />.</para>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="false" />, treats the PipeReader as a JSON array and attempts to serialize each element into <typeparamref name="TValue" />.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsyncEnumerable&lt;TValue&gt;">
@@ -3306,14 +3374,21 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="jsonTypeInfo">To be added.</param>
-        <param name="topLevelValues">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TValue">The element type to deserialize asynchronously.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="jsonTypeInfo">Metadata about the element type to convert.</param>
+        <param name="topLevelValues">Whether to deserialize from a sequence of top-level JSON values.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Wraps the UTF-8 encoded text into an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that can be used to deserialize sequences of JSON values in a streaming manner.</para>
+        </summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> representation of the provided JSON sequence.</returns>
+        <remarks>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="true" />, treats the PipeReader as a sequence of whitespace separated top-level JSON values and attempts to deserialize each value into <typeparamref name="TValue" />.</para>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="false" />, treats the PipeReader as a JSON array and attempts to serialize each element into <typeparamref name="TValue" />.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> or <paramref name="jsonTypeInfo" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsyncEnumerable&lt;TValue&gt;">
@@ -3364,14 +3439,22 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="topLevelValues">To be added.</param>
-        <param name="options">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TValue">The element type to deserialize asynchronously.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="topLevelValues">
+          <see langword="true" /> to deserialize from a sequence of top-level JSON values, or <see langword="false" /> to deserialize from a single top-level array.</param>
+        <param name="options">Options to control the behavior during reading.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Wraps the UTF-8 encoded text into an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that can be used to deserialize sequences of JSON values in a streaming manner.</para>
+        </summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> representation of the provided JSON sequence.</returns>
+        <remarks>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="true" />, treats the stream as a sequence of whitespace separated top-level JSON values and attempts to deserialize each value into <typeparamref name="TValue" />.</para>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="false" />, treats the stream as a JSON array and attempts to serialize each element into <typeparamref name="TValue" />.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="DeserializeAsyncEnumerable&lt;TValue&gt;">
@@ -3412,14 +3495,21 @@ There is remaining data in the stream.</exception>
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="3" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <typeparam name="TValue">To be added.</typeparam>
-        <param name="utf8Json">To be added.</param>
-        <param name="jsonTypeInfo">To be added.</param>
-        <param name="topLevelValues">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <typeparam name="TValue">The element type to deserialize asynchronously.</typeparam>
+        <param name="utf8Json">JSON data to parse.</param>
+        <param name="jsonTypeInfo">Metadata about the element type to convert.</param>
+        <param name="topLevelValues">Whether to deserialize from a sequence of top-level JSON values.</param>
+        <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> that can be used to cancel the read operation.</param>
+        <summary>
+          <para>Wraps the UTF-8 encoded text into an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> that can be used to deserialize sequences of JSON values in a streaming manner.</para>
+        </summary>
+        <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1" /> representation of the provided JSON sequence.</returns>
+        <remarks>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="true" />, treats the stream as a sequence of whitespace separated top-level JSON values and attempts to deserialize each value into <typeparamref name="TValue" />.</para>
+          <para>When <paramref name="topLevelValues" /> is set to <see langword="false" />, treats the stream as a JSON array and attempts to serialize each element into <typeparamref name="TValue" />.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="utf8Json" /> or <paramref name="jsonTypeInfo" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsReflectionEnabledByDefault">

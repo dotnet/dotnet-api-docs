@@ -314,10 +314,16 @@
         <Parameter Name="ciphertext" Type="System.Byte[]" Index="0" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="ciphertext">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ciphertext">The data to unwrap.</param>
+        <summary>Unwraps a key that was wrapped using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</summary>
+        <returns>The unwrapped key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="ciphertext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="ciphertext" /> has a <see cref="P:System.Array.Length" /> that does not correspond to the output of the Key Wrap with Padding algorithm.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DecryptKeyWrapPadded">
@@ -357,10 +363,14 @@
         <Parameter Name="ciphertext" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="ciphertext">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ciphertext">The data to unwrap.</param>
+        <summary>Unwraps a key that was wrapped using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</summary>
+        <returns>The unwrapped key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="ciphertext" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> that does not correspond to the output of the Key Wrap with Padding algorithm.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DecryptKeyWrapPadded">
@@ -395,11 +405,23 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="ciphertext">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ciphertext">The data to unwrap.</param>
+        <param name="destination">The buffer to receive the unwrapped key.</param>
+        <summary>Unwraps a key that was wrapped using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</summary>
+        <returns>The number of bytes in the unwrapped key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para><paramref name="ciphertext" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> that does not correspond to the output of the Key Wrap with Padding algorithm.</para>
+          <para>-or-</para>
+          <para><paramref name="destination" /> has a <see cref="P:System.Span`1.Length" /> that is more than 16 bytes shorter than <paramref name="ciphertext" />, thus guaranteed too short to hold the unwrapped key.</para>
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para><paramref name="ciphertext" /> and <paramref name="destination" /> overlap.</para>
+          <para>-or-</para>
+          <para>The unwrap algorithm failed to unwrap the ciphertext.</para>
+          <para>-or-</para>
+          <para>An error occurred during the cryptographic operation.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="DecryptKeyWrapPaddedCore">
@@ -434,11 +456,19 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">The data to unwrap.</param>
+        <param name="destination">The buffer to receive the unwrapped key.</param>
+        <summary>Unwraps a key that was wrapped using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</summary>
+        <returns>The number of bytes in the unwrapped key.</returns>
+        <remarks>
+          <para>When called by the base class, <paramref name="source" /> is pre-validated to be at least 16 bytes long and a multiple of 8 bytes.</para>
+          <para>When called by the base class, <paramref name="destination" /> will always be exactly 8 bytes shorter than <paramref name="source" />, so any valid value will always fit.</para>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The unwrap algorithm failed to unwrap the ciphertext.</para>
+          <para>-or-</para>
+          <para>An error occurred during the cryptographic operation.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="EncryptKeyWrapPadded">
@@ -472,10 +502,13 @@
         <Parameter Name="plaintext" Type="System.Byte[]" Index="0" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="plaintext">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="plaintext">The data to wrap.</param>
+        <summary>Wraps a key using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</summary>
+        <returns>The wrapped data.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="plaintext" /> is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred during the cryptographic operation.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncryptKeyWrapPadded">
@@ -515,10 +548,13 @@
         <Parameter Name="plaintext" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="plaintext">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="plaintext">The data to wrap.</param>
+        <summary>Wraps a key using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</summary>
+        <returns>The wrapped data.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="plaintext" /> is empty.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred during the cryptographic operation.</exception>
       </Docs>
     </Member>
     <Member MemberName="EncryptKeyWrapPadded">
@@ -553,10 +589,23 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="plaintext">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="plaintext">The data to wrap.</param>
+        <param name="destination">The buffer to receive the wrapped data.</param>
+        <summary>
+          <para>Wraps a key using the IETF RFC 5649 AES Key Wrap with Padding algorithm, writing the result to a specified buffer.</para>
+        </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para><paramref name="plaintext" /> is empty.</para>
+          <para>-or-</para>
+          <para><paramref name="destination" /> is not precisely sized.</para>
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para><paramref name="plaintext" /> and <paramref name="destination" /> overlap.</para>
+          <para>-or-</para>
+          <para>An error occurred during the cryptographic operation.</para>
+        </exception>
+        <seealso cref="M:System.Security.Cryptography.Aes.GetKeyWrapPaddedLength(System.Int32)" />
       </Docs>
     </Member>
     <Member MemberName="EncryptKeyWrapPaddedCore">
@@ -591,10 +640,16 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">The data to wrap.</param>
+        <param name="destination">The buffer to receive the wrapped data.</param>
+        <summary>
+          <para>Wraps a key using the IETF RFC 5649 AES Key Wrap with Padding algorithm, writing the result to a specified buffer.</para>
+        </summary>
+        <remarks>
+          <para>When called by the base class, <paramref name="source" /> is pre-validated to not be empty.</para>
+          <para>When called by the base class, <paramref name="destination" /> is pre-validated to be exactly the length returned by <see cref="M:System.Security.Cryptography.Aes.GetKeyWrapPaddedLength(System.Int32)" /> for the given input.</para>
+        </remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred during the cryptographic operation.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetKeyWrapPaddedLength">
@@ -628,10 +683,17 @@
         <Parameter Name="plaintextLengthInBytes" Type="System.Int32" Index="0" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="plaintextLengthInBytes">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="plaintextLengthInBytes">The length of the plaintext to be wrapped, in bytes.</param>
+        <summary>
+          <para>Computes the output length of the IETF RFC 5649 AES Key Wrap with Padding Algorithm for the specified plaintext length.</para>
+        </summary>
+        <returns>The padded length of the key wrap for the specified plaintext.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para><paramref name="plaintextLengthInBytes" /> is less than or equal to zero.</para>
+          <para>-or-</para>
+          <para><paramref name="plaintextLengthInBytes" /> represents a plaintext length that, when wrapped, has a length that cannot be represented as a signed 32-bit integer.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="LegalBlockSizes">
@@ -749,12 +811,31 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="ciphertext">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="ciphertext">The data to unwrap.</param>
+        <param name="destination">The buffer to receive the unwrapped key.</param>
+        <param name="bytesWritten">
+          <para>When this method returns, contains the number of bytes written to <paramref name="destination" />.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Attempts to unwrap a key that was wrapped using the IETF RFC 5649 AES Key Wrap with Padding algorithm.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> is long enough to receive the unwrapped key; otherwise, <see langword="false" />.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="ciphertext" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> that does not correspond to the output of the Key Wrap with Padding algorithm.</para>
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para><paramref name="ciphertext" /> and <paramref name="destination" /> overlap.</para>
+          <para>-or-</para>
+          <para>The unwrap algorithm failed to unwrap the ciphertext.</para>
+          <para>-or-</para>
+          <para>An error occurred during the cryptographic operation.</para>
+        </exception>
       </Docs>
     </Member>
   </Members>

@@ -192,9 +192,13 @@ similar to how <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoResolve
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a value that indicates whether duplicate property names are allowed when deserializing JSON objects.</summary>
+        <value><see langword="true" /> if duplicate property names are allowed when deserializing JSON objects. The default is <see langword="true" />.</value>
+        <remarks>
+          <para>If set to <see langword="false" />, <see cref="T:System.Text.Json.JsonException" /> is thrown when a duplicate property name is encountered during deserialization.</para>
+          <para>Duplicate property names are not allowed in serialization.</para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">This property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllowOutOfOrderMetadataProperties">
@@ -214,9 +218,9 @@ similar to how <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoResolve
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Allows JSON metadata properties to be specified after regular properties in a deserialized JSON object.</summary>
-        <value>To be added.</value>
-        <remarks>When set to <see langword="true" />, removes the requirement that JSON metadata properties, such as \\$id and \\$type, be specified at the very start of the deserialized JSON object. If you enable this setting, it can result in over-buffering when deserializing large JSON payloads in the context of streaming deserialization.
+        <summary>Gets or sets a value that indicates whether JSON metadata properties can be specified after regular properties in a deserialized JSON object.</summary>
+        <value><see langword="true" /> if JSON metadata properties, such as \\$id and \\$type, aren't required to be specified at the very start of the deserialized JSON object; <see langword="false" /> if JSON metadata properties must be specified before regular properties.</value>
+        <remarks>If you enable this setting, it can result in over-buffering when deserializing large JSON payloads in the context of streaming deserialization.
         </remarks>
         <exception cref="T:System.InvalidOperationException">This property is set after serialization or deserialization has occurred.</exception>
       </Docs>
@@ -793,7 +797,7 @@ For more information, see [How to ignore properties with System.Text.Json](/dotn
         <remarks>Allowed characters are space and horizontal tab.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="value" /> contains an invalid character.</exception>
-        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
+        <exception cref="T:System.InvalidOperationException">This property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="IndentSize">
@@ -818,7 +822,7 @@ For more information, see [How to ignore properties with System.Text.Json](/dotn
         <remarks>Allowed values are all integers between 0 and 127, included.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="value" /> is out of the allowed range.</exception>
-        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
+        <exception cref="T:System.InvalidOperationException">This property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
@@ -976,7 +980,7 @@ Going past this depth throws a <xref:System.Text.Json.JsonException>.
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">Thrown when the new line string is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the new line string is not <c>\n</c> or <c>\r\n</c>.</exception>
-        <exception cref="T:System.InvalidOperationException">Thrown if this property is set after serialization or deserialization has occurred.</exception>
+        <exception cref="T:System.InvalidOperationException">This property is set after serialization or deserialization has occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="NumberHandling">
@@ -1319,9 +1323,12 @@ Use <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve> to enable un
         <ReturnType>System.Text.Json.JsonSerializerOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a read-only, singleton instance of <see cref="T:System.Text.Json.JsonSerializerOptions" /> that uses the strict configuration.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>Each <see cref="T:System.Text.Json.JsonSerializerOptions" /> instance encapsulates its own serialization metadata caches, so using fresh default instances every time one is needed can result in redundant recomputation of converters.</para>
+          <para>This property provides a shared instance that can be consumed by any number of components without necessitating any converter recomputation.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetTypeInfo">

@@ -249,12 +249,17 @@ Callers should either restrict the number of events added to the same `Activity`
         <Parameter Name="timestamp" Type="System.DateTimeOffset" Index="2" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <param name="exception">To be added.</param>
-        <param name="tags">To be added.</param>
-        <param name="timestamp">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="exception">The exception to add to the attached events list.</param>
+        <param name="tags">The tags to add to the exception event.</param>
+        <param name="timestamp">The timestamp to add to the exception event.</param>
+        <summary>Add an <see cref="T:System.Diagnostics.ActivityEvent" /> object containing the exception information to the <see cref="P:System.Diagnostics.Activity.Events" /> list.</summary>
+        <returns>
+          <see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <para>- The name of the event will be "exception", and it will include the tags "exception.message", "exception.stacktrace", and "exception.type", in addition to the tags provided in the <paramref name="tags" /> parameter.</para>
+          <para>- Any registered <see cref="T:System.Diagnostics.ActivityListener" /> with the <see cref="P:System.Diagnostics.ActivityListener.ExceptionRecorder" /> callback will be notified about this exception addition before the <see cref="T:System.Diagnostics.ActivityEvent" /> object is added to the <see cref="P:System.Diagnostics.Activity.Events" /> list.</para>
+          <para>- Any registered <see cref="T:System.Diagnostics.ActivityListener" /> with the <see cref="P:System.Diagnostics.ActivityListener.ExceptionRecorder" /> callback that adds "exception.message", "exception.stacktrace", or "exception.type" tags will not have these tags overwritten, except by any subsequent <see cref="T:System.Diagnostics.ActivityListener" /> that explicitly overwrites them.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddLink">
@@ -277,10 +282,13 @@ Callers should either restrict the number of events added to the same `Activity`
         <Parameter Name="link" Type="System.Diagnostics.ActivityLink" Index="0" FrameworkAlternate="net-10.0;net-10.0-pp;net-8.0-pp;net-9.0;net-9.0-pp;netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
       </Parameters>
       <Docs>
-        <param name="link">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="link">The <see cref="T:System.Diagnostics.ActivityLink" /> to add.</param>
+        <summary>Adds an <see cref="T:System.Diagnostics.ActivityLink" /> to the <see cref="P:System.Diagnostics.Activity.Links" /> list.</summary>
+        <returns>
+          <see langword="this" /> for convenient chaining.</returns>
+        <remarks>
+          <para>For contexts that are available during span creation, adding links at span creation is preferred to calling <see cref="M:System.Diagnostics.Activity.AddLink(System.Diagnostics.ActivityLink)" /> later, because head sampling decisions can only consider information present during span creation.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AddTag">
@@ -1236,6 +1244,7 @@ An operation name is the *coarsest* name that is useful for grouping/filtering. 
         <summary>Gets the parent <see cref="T:System.Diagnostics.Activity" /> that created this activity.</summary>
         <value>The parent of this <see cref="T:System.Diagnostics.Activity" />, if it is from the same process, or <see langword="null" /> if this instance has no parent (it is a root activity) or if the parent is from outside the process.</value>
         <remarks>To be added.</remarks>
+        <seealso cref="P:System.Diagnostics.Activity.ParentId" />
       </Docs>
     </Member>
     <Member MemberName="ParentId">
@@ -1884,6 +1893,8 @@ Use <xref:System.Diagnostics.DiagnosticSource.StartActivity%2A?displayProperty=n
 
 ]]></format>
         </remarks>
+        <seealso cref="M:System.Diagnostics.DiagnosticSource.StartActivity(System.Diagnostics.Activity,System.Object)" />
+        <seealso cref="M:System.Diagnostics.Activity.SetStartTime(System.DateTime)" />
       </Docs>
     </Member>
     <Member MemberName="StartTimeUtc">
@@ -2022,6 +2033,8 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
 
 ]]></format>
         </remarks>
+        <seealso cref="M:System.Diagnostics.DiagnosticSource.StopActivity(System.Diagnostics.Activity,System.Object)" />
+        <seealso cref="M:System.Diagnostics.Activity.SetEndTime(System.DateTime)" />
       </Docs>
     </Member>
     <Member MemberName="TagObjects">
@@ -2091,6 +2104,7 @@ Call <xref:System.Diagnostics.DiagnosticSource.StopActivity%2A?displayProperty=n
         <summary>Gets a collection of key/value pairs that represent information that will be logged along with the <see cref="T:System.Diagnostics.Activity" /> to the logging system.</summary>
         <value>Information that will be logged along with the <see cref="T:System.Diagnostics.Activity" /> to the logging system.</value>
         <remarks>In .NET 5 and later versions, the order of the tags in the list matches the order in which they're added to the list. In previous versions, the order is reversed, that is, the first item added is last in the list.</remarks>
+        <seealso cref="P:System.Diagnostics.Activity.Baggage" />
       </Docs>
     </Member>
     <Member MemberName="TraceId">
