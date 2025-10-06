@@ -384,14 +384,69 @@ If the comment byte length is larger than <xref:System.UInt16.MaxValue>, it will
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" Index="4" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <param name="mode">To be added.</param>
-        <param name="leaveOpen">To be added.</param>
-        <param name="entryNameEncoding">To be added.</param>
-        <param name="cancellationToken">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="stream">The input or output stream.</param>
+        <param name="mode">One of the enumeration values that specifies whether the stream supports reading, writing, and seeking.</param>
+        <param name="leaveOpen">
+          <see langword="true" /> to leave the stream open upon disposing the ZipArchive, otherwise <see langword="false" />.</param>
+        <param name="entryNameEncoding">
+          The encoding to use when reading or writing entry names and comments in this ZipArchive.
+        </param>
+        <param name="cancellationToken">The optional cancellation token to monitor.</param>
+        <summary>Asynchronously initializes and returns a new instance of <see cref="T:System.IO.Compression.ZipArchive" /> on the given stream in the specified mode, specifying whether to leave the stream open, with an optional encoding and an optional cancellation token.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>Specifying a value for <paramref name="entryNameEncoding" /> other than <see langword="null" /> is discouraged. However, this might be necessary for interoperability with ZIP archive tools and libraries that don't correctly support UTF-8 encoding for entry names.</para>
+          <para>This value is used as follows:</para>
+          <dl>
+            <li><strong>Reading (opening) ZIP archive files:</strong>
+              <ul>
+                <li>If <paramref name="entryNameEncoding" /> is not specified (<c>== null</c>):
+                  <ul>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<c>Encoding.Default</c>) to decode the entry name and comment.</li>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li>
+                  </ul>
+                </li>
+                <li>If <paramref name="entryNameEncoding" /> is specified (<c>!= null</c>):
+                  <ul>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Writing (saving) ZIP archive files:</strong>
+              <ul>
+                <li>If <paramref name="entryNameEncoding" /> is not specified (<c>== null</c>):
+                  <ul>
+                    <li>For entry names and comments that contain characters outside the ASCII range, the language encoding flag (EFS) will be set in the general purpose bit flag of the local file header, and UTF-8 (<c>Encoding.UTF8</c>) will be used to encode the entry name and comment into bytes.</li>
+                    <li>For entry names and comments that don't contain characters outside the ASCII range, the language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header, and the current system default code page (<c>Encoding.Default</c>) will be used to encode the entry names and comments into bytes.</li>
+                  </ul>
+                </li>
+                <li>If <paramref name="entryNameEncoding" /> is specified (<c>!= null</c>):
+                  <ul>
+                    <li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.</li>
+                    <li>The language encoding flag (EFS) in the general purpose bit flag of the local file header will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </dl>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>The stream is already closed.</para>
+          <para>-or-</para>
+          <para><paramref name="mode" /> is incompatible with the capabilities of the stream.</para>
+        </exception>
+        <exception cref="T:System.ArgumentNullException">The stream is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="mode" /> specified an invalid value.</exception>
+        <exception cref="T:System.IO.InvalidDataException">
+          <para>The contents of the stream could not be interpreted as a ZIP file.</para>
+          <para>-or-</para>
+          <para><paramref name="mode" /> is Update and an entry is missing from the archive or is corrupt and cannot be read.</para>
+          <para>-or-</para>
+          <para><paramref name="mode" /> is Update and an entry is too large to fit into memory.</para>
+        </exception>
+        <exception cref="T:System.ArgumentException">A Unicode encoding other than UTF-8 was specified for <paramref name="entryNameEncoding" />.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateEntry">
