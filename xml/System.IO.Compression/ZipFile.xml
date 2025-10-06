@@ -935,19 +935,23 @@ An I/O error occurred while opening a file to be archived.</exception>
           <para>(Currently, the underlying compression algorithm is provided by the <see cref="T:System.IO.Compression.DeflateStream" /> class.)</para>
           <para>Specifying a value for <paramref name="entryNameEncoding" /> other than <see langword="null" /> is discouraged.</para>
           <para>However, this may be necessary for interoperability with zip archive tools and libraries that do not correctly support UTF-8 encoding for entry names or comments.</para>
-          <para>This value is used as follows while creating the archive:</para>
-          <para>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):</para>
-          <list>
-            <item>For file names or comments that contain characters outside the ASCII range:
-              <br />The language encoding flag (EFS) will be set in the general purpose bit flag of the local file header of the corresponding entry, and UTF-8 (<code>Encoding.UTF8</code>) will be used to encode the entry name and comment into bytes.</item>
-            <item>For file names or comments that do not contain characters outside the ASCII range:
-              <br />The language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header of the corresponding entry, and the current system default code page (<code>Encoding.Default</code>) will be used to encode the entry names and comments into bytes.</item>
-          </list>
-          <para>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):</para>
-          <list>
-            <item>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.
-              <br />The language encoding flag (EFS) in the general purpose bit flag of the local file header for each entry will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</item>
-          </list>
+
+          <ul>
+            <li>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):
+              <ul>
+                <li>For file names or comments that contain characters outside the ASCII range:
+                  <br />The language encoding flag (EFS) will be set in the general purpose bit flag of the local file header of the corresponding entry, and UTF-8 (<code>Encoding.UTF8</code>) will be used to encode the entry name and comment into bytes.</li>
+                <li>For file names or comments that do not contain characters outside the ASCII range:
+                  <br />The language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header of the corresponding entry, and the current system default code page (<code>Encoding.Default</code>) will be used to encode the entry names and comments into bytes.</li>
+              </ul>
+            </li>
+            <li>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):
+              <ul>
+                <li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.
+                  <br />The language encoding flag (EFS) in the general purpose bit flag of the local file header for each entry will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li>
+              </ul>
+            </li>
+          </ul>
           <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -2058,16 +2062,20 @@ An archive entry has been compressed using a compression method that isn't suppo
           <para>If there is an error while extracting the archive, the archive will remain partially extracted. Each entry will be extracted such that the extracted file has the same relative path to the destinationDirectoryName as the entry has to the archive. The path is permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory. If a file to be archived has an invalid last modified time, the first datetime representable in the zip timestamp format (midnight on January 1, 1980) will be used.</para>
           <para>Specifying a value other than <see langword="null" /> for <paramref name="entryNameEncoding" /> is discouraged. However, this might be necessary for interoperability with zip archive tools and libraries that do not correctly support UTF-8 encoding for entry names or comments.</para>
           <para>This value is used as follows:</para>
-          <para>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):</para>
-          <list>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</item>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</item>
-          </list>
-          <para>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):</para>
-          <list>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</item>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</item>
-          </list>
+          <ul>
+            <li>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):
+              <ul>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</li>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
+              </ul>
+            </li>
+            <li>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):
+              <ul>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
+              </ul>
+            </li>
+          </ul>
           <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para>
         </remarks>
         <exception cref="T:System.ArgumentException">
@@ -2230,16 +2238,20 @@ An archive entry has been compressed using a compression method that isn't suppo
         <remarks>
           <para>Specifying a value other than <see langword="null" /> for <paramref name="entryNameEncoding" /> is discouraged. However, this might be necessary for interoperability with zip archive tools and libraries that do not correctly support UTF-8 encoding for entry names or comments.</para>
           <para>This value is used as follows:</para>
-          <para>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):</para>
-          <list>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</item>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</item>
-          </list>
-          <para>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):</para>
-          <list>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</item>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</item>
-          </list>
+          <ul>
+            <li>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):
+              <ul>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</li>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
+              </ul>
+            </li>
+            <li>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):
+              <ul>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
+                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
+              </ul>
+            </li>
+          </ul>
           <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para></remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.
@@ -2532,7 +2544,7 @@ An unspecified I/O error occurred while opening the file.</exception>
           <para>If <see cref="F:System.IO.Compression.ZipArchiveMode.Create" /> is specified, the file is opened with <code>System.IO.FileMode.CreateNew</code>, and will throw a <code>System.IO.IOException</code> if the file already exists.</para>
           <para>If <see cref="F:System.IO.Compression.ZipArchiveMode.Update" /> is specified, the file is opened with <code>System.IO.FileMode.OpenOrCreate</code>.</para>
           <para>If the file exists and is a zip file, its entries will become accessible and can be modified, and new entries can be created.</para>
-          <para>If the file exists and is not a zip file, a <see cref="T:System.IO.Compressions.ZipArchiveException" /> is thrown.</para>
+          <para>If the file exists and is not a zip file, a <see cref="T:System.IO.InvalidDataException" /> is thrown.</para>
           <para>If the file exists and is empty or does not exist, a new zip file will be created.</para>
           <para>Creating a zip file with the <see cref="F:System.IO.Compression.ZipArchiveMode.Create" /> mode is more efficient when creating a new zip file.</para>
         </remarks>
@@ -2614,27 +2626,45 @@ An unspecified I/O error occurred while opening the file.</exception>
           <para>If <see cref="F:System.IO.Compression.ZipArchiveMode.Create" /> is specified, the file is opened with <code>System.IO.FileMode.CreateNew</code>, and will throw a <code>System.IO.IOException</code> if the file already exists.</para>
           <para>If <see cref="F:System.IO.Compression.ZipArchiveMode.Update" /> is specified, the file is opened with <code>System.IO.FileMode.OpenOrCreate</code>.</para>
           <para>If the file exists and is a zip file, its entries will become accessible and can be modified, and new entries can be created.</para>
-          <para>If the file exists and is not a zip file, a <see cref="T:System.IO.Compressions.ZipArchiveException" /> is thrown.</para>
+          <para>If the file exists and is not a zip file, a <see cref="T:System.IO.InvalidDataException" /> is thrown.</para>
           <para>If the file exists and is empty or does not exist, a new zip file will be created.</para>
           <para>Creating a zip file with the <see cref="F:System.IO.Compression.ZipArchiveMode.Create" /> mode is more efficient when creating a new zip file.</para>
           <para>Specifying a value other than <see langword="null" /> for <paramref name="entryNameEncoding" /> is discouraged. However, this might be necessary for interoperability with zip archive tools and libraries that do not correctly support UTF-8 encoding for entry names or comments.</para>
           <para>This value is used as follows:</para>
-          <para><strong>Reading (opening) zip archive files:</strong> </para>
-          <para>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):</para>
-          <list>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</item>
-            <item>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</item>
-          </list>
-          <para>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):</para>
-          <list>
-            <item>For entry names or comments that contain characters outside the ASCII range, the language encoding flag (EFS) will be set in the general purpose bit flag of the local file header, and UTF-8 (<code>Encoding.UTF8</code>) will be used to encode the entry name and comment into bytes.</item>
-            <item>For entry names or comments that do not contain characters outside the ASCII range, the language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header, and the current system default code page (<code>Encoding.Default</code>) will be used to encode the entry names and comments into bytes.</item>
-          </list>
-          <para>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):</para>
-          <list>
-            <item>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.</item>
-            <item>The language encoding flag (EFS) in the general purpose bit flag of the local file header will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</item>
-          </list>
+          <dl>
+            <li><strong>Reading (opening) ZIP archive files:</strong>
+              <ul>
+                <li>If <paramref name="entryNameEncoding" /> is not specified (<c>== null</c>):
+                  <ul>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<c>Encoding.Default</c>) to decode the entry name and comment.</li>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li>
+                  </ul>
+                </li>
+                <li>If <paramref name="entryNameEncoding" /> is specified (<c>!= null</c>):
+                  <ul>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
+                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Writing (saving) ZIP archive files:</strong>
+              <ul>
+                <li>If <paramref name="entryNameEncoding" /> is not specified (<c>== null</c>):
+                  <ul>
+                    <li>For entry names and comments that contain characters outside the ASCII range, the language encoding flag (EFS) will be set in the general purpose bit flag of the local file header, and UTF-8 (<c>Encoding.UTF8</c>) will be used to encode the entry name and comment into bytes.</li>
+                    <li>For entry names and comments that don't contain characters outside the ASCII range, the language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header, and the current system default code page (<c>Encoding.Default</c>) will be used to encode the entry names and comments into bytes.</li>
+                  </ul>
+                </li>
+                <li>If <paramref name="entryNameEncoding" /> is specified (<c>!= null</c>):
+                  <ul>
+                    <li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.</li>
+                    <li>The language encoding flag (EFS) in the general purpose bit flag of the local file header will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </dl>
           <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para>
         </remarks>
         <exception cref="T:System.ArgumentException">
