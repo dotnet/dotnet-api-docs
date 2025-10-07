@@ -6,100 +6,105 @@ public class Example
 {
     public static void Main()
     {
-        string[] input = { "Brachiosaurus",
-                           "Amargasaurus",
-                           "Mamenchisaurus" };
+        string[] input = { "Apple",
+                           "Banana",
+                           "Orange" };
 
-        List<string> dinosaurs = new List<string>(input);
+        List<string> fruits = new List<string>(input);
 
-        Console.WriteLine("\nCapacity: {0}", dinosaurs.Capacity);
-
+        Console.WriteLine("\nCapacity: {0}", fruits.Capacity);
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+
+        foreach (string fruit in fruits)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(fruit);
         }
 
-        Console.WriteLine("\nAddRange(dinosaurs)");
-        dinosaurs.AddRange(dinosaurs);
+        Console.WriteLine("\nAddRange(fruits)");
+        fruits.AddRange(fruits);
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+
+        foreach (string fruit in fruits)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(fruit);
         }
 
         Console.WriteLine("\nRemoveRange(2, 2)");
-        dinosaurs.RemoveRange(2, 2);
+        fruits.RemoveRange(2, 2);
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+
+        foreach (string fruit in fruits)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(fruit);
         }
 
-        input = new string[] { "Tyrannosaurus",
-                               "Deinonychus",
-                               "Velociraptor"};
+        input = new string[] { "Mango",
+                               "Pineapple",
+                               "Watermelon"};
 
         Console.WriteLine("\nInsertRange(3, input)");
-        dinosaurs.InsertRange(3, input);
+        fruits.InsertRange(3, input);
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+
+        foreach (string fruit in fruits)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(fruit);
         }
 
-        Console.WriteLine("\noutput = dinosaurs.GetRange(2, 3).ToArray()");
-        string[] output = dinosaurs.GetRange(2, 3).ToArray();
+        Console.WriteLine("\noutput = fruits.GetRange(2, 3).ToArray()");
+        string[] output = fruits.GetRange(2, 3).ToArray();
 
         Console.WriteLine();
-        foreach( string dinosaur in output )
+
+        foreach (string fruit in output)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(fruit);
         }
     }
 }
 
-/* This code example produces the following output:
+/*
+    This code example produces the following output:
 
-Capacity: 3
+    Capacity: 3
 
-Brachiosaurus
-Amargasaurus
-Mamenchisaurus
+    Apple
+    Banana
+    Orange
 
-AddRange(dinosaurs)
+    AddRange(fruits)
 
-Brachiosaurus
-Amargasaurus
-Mamenchisaurus
-Brachiosaurus
-Amargasaurus
-Mamenchisaurus
+    Apple
+    Banana
+    Orange
+    Apple
+    Banana
+    Orange
 
-RemoveRange(2, 2)
+    RemoveRange(2, 2)
 
-Brachiosaurus
-Amargasaurus
-Amargasaurus
-Mamenchisaurus
+    Apple
+    Banana
+    Banana
+    Orange
 
-InsertRange(3, input)
+    InsertRange(3, input)
 
-Brachiosaurus
-Amargasaurus
-Amargasaurus
-Tyrannosaurus
-Deinonychus
-Velociraptor
-Mamenchisaurus
+    Apple
+    Banana
+    Banana
+    Mango
+    Pineapple
+    Watermelon
+    Orange
 
-output = dinosaurs.GetRange(2, 3).ToArray()
+    output = fruits.GetRange(2, 3).ToArray()
 
-Amargasaurus
-Tyrannosaurus
-Deinonychus
- */
+    Banana
+    Mango
+    Pineapple
+*/
 // </Snippet1>
