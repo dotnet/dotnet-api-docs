@@ -1,9 +1,9 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Public Class Example
+Partial Public Class Example
 
-    Public Shared Sub Main()
+    Public Shared Sub ShowDinos()
         ' <snippet2>
         Dim dinosaurs As New List(Of String)
 

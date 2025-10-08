@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public partial class Example
 {
-    public static void Main()
+    public static void ShowFruits()
     {
         string[] input = { "Apple",
                            "Banana",
@@ -24,7 +24,6 @@ public class Example
         fruits.AddRange(fruits);
 
         Console.WriteLine();
-
         foreach (string fruit in fruits)
         {
             Console.WriteLine(fruit);
@@ -34,7 +33,6 @@ public class Example
         fruits.RemoveRange(2, 2);
 
         Console.WriteLine();
-
         foreach (string fruit in fruits)
         {
             Console.WriteLine(fruit);
@@ -48,7 +46,6 @@ public class Example
         fruits.InsertRange(3, input);
 
         Console.WriteLine();
-
         foreach (string fruit in fruits)
         {
             Console.WriteLine(fruit);
@@ -58,7 +55,6 @@ public class Example
         string[] output = fruits.GetRange(2, 3).ToArray();
 
         Console.WriteLine();
-
         foreach (string fruit in output)
         {
             Console.WriteLine(fruit);

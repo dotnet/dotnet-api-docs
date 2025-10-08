@@ -1,7 +1,7 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Public Class Example
+Partial Public Class Example
 
     Public Shared Sub Main()
 

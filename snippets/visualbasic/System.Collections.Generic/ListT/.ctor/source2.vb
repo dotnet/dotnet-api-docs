@@ -1,8 +1,8 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Public Class Example
-    Public Shared Sub Main()
+Partial Public Class Example
+    Public Shared Sub ShowFruits()
 
         Dim input() As String = { "Apple", _
                                   "Banana", _
@@ -21,7 +21,6 @@ Public Class Example
         fruits.AddRange(fruits)
 
         Console.WriteLine()
-
         For Each fruit As String In fruits
             Console.WriteLine(fruit)
         Next
@@ -30,7 +29,6 @@ Public Class Example
         fruits.RemoveRange(2, 2)
 
         Console.WriteLine()
-
         For Each fruit As String In fruits
             Console.WriteLine(fruit)
         Next
@@ -43,7 +41,6 @@ Public Class Example
         fruits.InsertRange(3, input)
 
         Console.WriteLine()
-
         For Each fruit As String In fruits
             Console.WriteLine(fruit)
         Next
@@ -52,7 +49,6 @@ Public Class Example
         Dim output() As String = fruits.GetRange(2, 3).ToArray()
 
         Console.WriteLine()
-
         For Each fruit As String In output
             Console.WriteLine(fruit)
         Next

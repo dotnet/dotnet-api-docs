@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public partial class Example
 {
     public static void Main()
     {
