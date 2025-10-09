@@ -1,65 +1,56 @@
 ﻿// <Snippet1>
-using System;
-using System.Collections.Generic;
+string[] input = { "Apple",
+                   "Banana",
+                   "Orange" };
 
-public partial class Example
+List<string> fruits = new List<string>(input);
+
+Console.WriteLine("\nCapacity: {0}", fruits.Capacity);
+Console.WriteLine();
+
+foreach (string fruit in fruits)
 {
-    public static void ShowFruits()
-    {
-        string[] input = { "Apple",
-                           "Banana",
-                           "Orange" };
+    Console.WriteLine(fruit);
+}
 
-        List<string> fruits = new List<string>(input);
+Console.WriteLine("\nAddRange(fruits)");
+fruits.AddRange(fruits);
 
-        Console.WriteLine("\nCapacity: {0}", fruits.Capacity);
-        Console.WriteLine();
+Console.WriteLine();
+foreach (string fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
 
-        foreach (string fruit in fruits)
-        {
-            Console.WriteLine(fruit);
-        }
+Console.WriteLine("\nRemoveRange(2, 2)");
+fruits.RemoveRange(2, 2);
 
-        Console.WriteLine("\nAddRange(fruits)");
-        fruits.AddRange(fruits);
+Console.WriteLine();
+foreach (string fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
 
-        Console.WriteLine();
-        foreach (string fruit in fruits)
-        {
-            Console.WriteLine(fruit);
-        }
+input = new string[] { "Mango",
+                       "Pineapple",
+                       "Watermelon" };
 
-        Console.WriteLine("\nRemoveRange(2, 2)");
-        fruits.RemoveRange(2, 2);
+Console.WriteLine("\nInsertRange(3, input)");
+fruits.InsertRange(3, input);
 
-        Console.WriteLine();
-        foreach (string fruit in fruits)
-        {
-            Console.WriteLine(fruit);
-        }
+Console.WriteLine();
+foreach (string fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
 
-        input = new string[] { "Mango",
-                               "Pineapple",
-                               "Watermelon"};
+Console.WriteLine("\noutput = fruits.GetRange(2, 3).ToArray()");
+string[] output = fruits.GetRange(2, 3).ToArray();
 
-        Console.WriteLine("\nInsertRange(3, input)");
-        fruits.InsertRange(3, input);
-
-        Console.WriteLine();
-        foreach (string fruit in fruits)
-        {
-            Console.WriteLine(fruit);
-        }
-
-        Console.WriteLine("\noutput = fruits.GetRange(2, 3).ToArray()");
-        string[] output = fruits.GetRange(2, 3).ToArray();
-
-        Console.WriteLine();
-        foreach (string fruit in output)
-        {
-            Console.WriteLine(fruit);
-        }
-    }
+Console.WriteLine();
+foreach (string fruit in output)
+{
+    Console.WriteLine(fruit);
 }
 
 /*

@@ -1,102 +1,101 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Partial Public Class Example
-
-    Public Shared Sub ShowDinos()
+Partial Public Class Program
+    Public Shared Sub ShowPlanets()
         ' <snippet2>
-        Dim dinosaurs As New List(Of String)
+        Dim planets As New List(Of String)
 
-        Console.WriteLine(vbLf & "Capacity: {0}", dinosaurs.Capacity)
+        Console.WriteLine(vbLf & "Capacity: {0}", planets.Capacity)
 
-        dinosaurs.Add("Tyrannosaurus")
-        dinosaurs.Add("Amargasaurus")
-        dinosaurs.Add("Mamenchisaurus")
-        dinosaurs.Add("Deinonychus")
-        dinosaurs.Add("Compsognathus")
+        planets.Add("Mercury")
+        planets.Add("Venus")
+        planets.Add("Earth")
+        planets.Add("Mars")
+        planets.Add("Jupiter")
         ' </snippet2>
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each planet As String In planets
+            Console.WriteLine(planet)
         Next
 
-        Console.WriteLine(vbLf & "Capacity: {0}", dinosaurs.Capacity)
-        Console.WriteLine("Count: {0}", dinosaurs.Count)
+        Console.WriteLine(vbLf & "Capacity: {0}", planets.Capacity)
+        Console.WriteLine("Count: {0}", planets.Count)
 
-        Console.WriteLine(vbLf & "Contains(""Deinonychus""): {0}", _
-            dinosaurs.Contains("Deinonychus"))
+        Console.WriteLine(vbLf & "Contains(""Mars""): {0}", _
+            planets.Contains("Mars"))
 
-        Console.WriteLine(vbLf & "Insert(2, ""Compsognathus"")")
-        dinosaurs.Insert(2, "Compsognathus")
+        Console.WriteLine(vbLf & "Insert(2, ""Saturn"")")
+        planets.Insert(2, "Saturn")
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each planet As String In planets
+            Console.WriteLine(planet)
         Next
         ' <snippet3>
         ' Shows how to access the list using the Item property.
-        Console.WriteLine(vbLf & "dinosaurs(3): {0}", dinosaurs(3))
+        Console.WriteLine(vbLf & "planets(3): {0}", planets(3))
         ' </snippet3>
-        Console.WriteLine(vbLf & "Remove(""Compsognathus"")")
-        dinosaurs.Remove("Compsognathus")
+        Console.WriteLine(vbLf & "Remove(""Jupiter"")")
+        planets.Remove("Jupiter")
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each planet As String In planets
+            Console.WriteLine(planet)
         Next
 
-        dinosaurs.TrimExcess()
+        planets.TrimExcess()
         Console.WriteLine(vbLf & "TrimExcess()")
-        Console.WriteLine("Capacity: {0}", dinosaurs.Capacity)
-        Console.WriteLine("Count: {0}", dinosaurs.Count)
+        Console.WriteLine("Capacity: {0}", planets.Capacity)
+        Console.WriteLine("Count: {0}", planets.Count)
 
-        dinosaurs.Clear()
+        planets.Clear()
         Console.WriteLine(vbLf & "Clear()")
-        Console.WriteLine("Capacity: {0}", dinosaurs.Capacity)
-        Console.WriteLine("Count: {0}", dinosaurs.Count)
+        Console.WriteLine("Capacity: {0}", planets.Capacity)
+        Console.WriteLine("Count: {0}", planets.Count)
     End Sub
 End Class
 
 ' This code example produces the following output:
 '
-'Capacity: 0
+' Capacity: 0
 '
-'Tyrannosaurus
-'Amargasaurus
-'Mamenchisaurus
-'Deinonychus
-'Compsognathus
+' Mercury
+' Venus
+' Earth
+' Mars
+' Jupiter
 '
-'Capacity: 8
-'Count: 5
+' Capacity: 8
+' Count: 5
 '
-'Contains("Deinonychus"): True
+' Contains("Mars"): True
 '
-'Insert(2, "Compsognathus")
+' Insert(2, "Saturn")
 '
-'Tyrannosaurus
-'Amargasaurus
-'Compsognathus
-'Mamenchisaurus
-'Deinonychus
-'Compsognathus
+' Mercury
+' Venus
+' Saturn
+' Earth
+' Mars
+' Jupiter
 '
-'dinosaurs(3): Mamenchisaurus
+' planets(3): Earth
 '
-'Remove("Compsognathus")
+' Remove("Jupiter")
 '
-'Tyrannosaurus
-'Amargasaurus
-'Mamenchisaurus
-'Deinonychus
-'Compsognathus
+' Mercury
+' Venus
+' Saturn
+' Earth
+' Mars
 '
-'TrimExcess()
-'Capacity: 5
-'Count: 5
+' TrimExcess()
+' Capacity: 5
+' Count: 5
 '
-'Clear()
-'Capacity: 5
-'Count: 0
+' Clear()
+' Capacity: 5
+' Count: 0
 ' </Snippet1>

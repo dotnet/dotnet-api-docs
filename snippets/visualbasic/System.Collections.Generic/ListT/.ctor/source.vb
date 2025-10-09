@@ -1,39 +1,38 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Partial Public Class Example
-
+Partial Public Class Program
     Public Shared Sub Main()
 
-        Dim dinosaurs As New List(Of String)(4)
+        Dim animals As New List(Of String)(4)
 
-        Console.WriteLine(vbLf & "Capacity: {0}", dinosaurs.Capacity)
+        Console.WriteLine(vbLf & "Capacity: {0}", animals.Capacity)
 
-        dinosaurs.Add("Tyrannosaurus")
-        dinosaurs.Add("Amargasaurus")
-        dinosaurs.Add("Mamenchisaurus")
-        dinosaurs.Add("Deinonychus")
+        animals.Add("Cat")
+        animals.Add("Dog")
+        animals.Add("Squirrel")
+        animals.Add("Wolf")
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each animal As String In animals
+            Console.WriteLine(animal)
         Next
 
         Console.WriteLine(vbLf & _
-            "Dim roDinosaurs As IList(Of String) = dinosaurs.AsReadOnly")
-        Dim roDinosaurs As IList(Of String) = dinosaurs.AsReadOnly
+            "Dim roAnimals As IList(Of String) = animals.AsReadOnly")
+        Dim roAnimals As IList(Of String) = animals.AsReadOnly
 
         Console.WriteLine(vbLf & "Elements in the read-only IList:")
-        For Each dinosaur As String In roDinosaurs
-            Console.WriteLine(dinosaur)
+        For Each animal As String In roAnimals
+            Console.WriteLine(animal)
         Next
 
-        Console.WriteLine(vbLf & "dinosaurs(2) = ""Coelophysis""")
-        dinosaurs(2) = "Coelophysis"
+        Console.WriteLine(vbLf & "animals(2) = ""Lion""")
+        animals(2) = "Lion"
 
         Console.WriteLine(vbLf & "Elements in the read-only IList:")
-        For Each dinosaur As String In roDinosaurs
-            Console.WriteLine(dinosaur)
+        For Each animal As String In roAnimals
+            Console.WriteLine(animal)
         Next
 
     End Sub
@@ -41,26 +40,26 @@ End Class
 
 ' This code example produces the following output:
 '
-'Capacity: 4
+' Capacity: 4
 '
-'Tyrannosaurus
-'Amargasaurus
-'Mamenchisaurus
-'Deinonychus
+' Cat
+' Dog
+' Squirrel
+' Wolf
 '
-'Dim roDinosaurs As IList(Of String) = dinosaurs.AsReadOnly
+' Dim roAnimals As IList(Of String) = animals.AsReadOnly
 '
-'Elements in the read-only IList:
-'Tyrannosaurus
-'Amargasaurus
-'Mamenchisaurus
-'Deinonychus
+' Elements in the read-only IList:
+' Cat
+' Dog
+' Squirrel
+' Wolf
 '
-'dinosaurs(2) = "Coelophysis"
+' animals(2) = "Lion"
 '
-'Elements in the read-only IList:
-'Tyrannosaurus
-'Amargasaurus
-'Coelophysis
-'Deinonychus
+' Elements in the read-only IList:
+' Cat
+' Dog
+' Lion
+' Wolf
 ' </Snippet1>

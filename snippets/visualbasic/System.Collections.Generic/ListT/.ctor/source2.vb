@@ -1,7 +1,7 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Partial Public Class Example
+Partial Public Class Program
     Public Shared Sub ShowFruits()
 
         Dim input() As String = { "Apple", _
