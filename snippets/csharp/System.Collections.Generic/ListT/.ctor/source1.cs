@@ -1,4 +1,7 @@
 ﻿// <Snippet1>
+using System;
+using System.Collections.Generic;
+
 string[] input = { "Apple",
                    "Banana",
                    "Orange" };
