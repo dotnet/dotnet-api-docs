@@ -3,9 +3,9 @@ using System;
 using System.IO;
 using System.Linq;
 
-class Program
+partial class Example2
 {
-    static void Main(string[] args)
+    static void EnumerationOptionsExample()
     {
         try
         {
@@ -13,7 +13,7 @@ class Program
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             // Set the options for the enumeration.
-            var options = new EnumerationOptions()
+            var options = new EnumerationOptions
             {
                 IgnoreInaccessible = true,
                 MatchCasing = MatchCasing.CaseInsensitive,

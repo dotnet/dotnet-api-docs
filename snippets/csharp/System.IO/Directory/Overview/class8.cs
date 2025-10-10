@@ -2,36 +2,33 @@
 using System;
 using System.IO;
 
-namespace ConsoleApplication
+partial class Example1
 {
-    class Program
+    static void EnumerationOptionsExample()
     {
-        static void Main(string[] args)
+        string sourceDirectory = @"C:\current";
+        string archiveDirectory = @"C:\archive";
+
+        var options = new EnumerationOptions
         {
-            string sourceDirectory = @"C:\current";
-            string archiveDirectory = @"C:\archive";
+            MatchCasing = MatchCasing.CaseInsensitive,
+            MatchType = MatchType.Simple,
+            RecurseSubdirectories = true
+        };
 
-            var options = new EnumerationOptions()
+        try
+        {
+            var txtFiles = Directory.EnumerateFiles(sourceDirectory, "*.txt", options);
+
+            foreach (string currentFile in txtFiles)
             {
-                MatchCasing = MatchCasing.CaseInsensitive,
-                MatchType = MatchType.Simple,
-                RecurseSubdirectories = true
-            };
-
-            try
-            {
-                var txtFiles = Directory.EnumerateFiles(sourceDirectory, "*.txt", options);
-
-                foreach (string currentFile in txtFiles)
-                {
-                    string fileName = currentFile.Substring(sourceDirectory.Length + 1);
-                    Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
-                }
+                string fileName = currentFile.Substring(sourceDirectory.Length + 1);
+                Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 }

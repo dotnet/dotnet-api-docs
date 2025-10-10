@@ -2,8 +2,9 @@
 Imports System.IO
 Imports System.Xml.Linq
 
-Module Module1
-    Sub Main()
+Partial Class Example2
+    Shared Sub EnumerationOptionsExample()
+
         Try
             ' Set a variable to the My Documents Path.
             Dim docPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -34,6 +35,7 @@ Module Module1
         Catch ex As Exception
             Console.WriteLine(ex.Message)
         End Try
+
     End Sub
-End Module
+End Class
 ' </Snippet1>

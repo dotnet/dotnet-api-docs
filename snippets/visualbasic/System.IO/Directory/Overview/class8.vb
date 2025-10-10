@@ -1,8 +1,9 @@
 ' <Snippet16>
 Imports System.IO
 
-Module Module1
-    Sub Main()
+Partial Class Example1
+    Shared Sub EnumerationOptionsExample()
+
         Dim sourceDirectory As String = "C:\current"
         Dim archiveDirectory As String = "C:\archive"
 
@@ -22,6 +23,7 @@ Module Module1
         Catch ex As Exception
             Console.WriteLine(ex.Message)
         End Try
+
     End Sub
-End Module
+End Class
 ' </Snippet16>
