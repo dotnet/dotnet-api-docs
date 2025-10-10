@@ -1,4 +1,4 @@
-' <Snippet16>
+' <Snippet1>
 Imports System.IO
 
 Partial Class Example1
@@ -26,4 +26,4 @@ Partial Class Example1
 
     End Sub
 End Class
-' </Snippet16>
+' </Snippet1>

@@ -1,4 +1,4 @@
-// <Snippet16>
+// <Snippet1>
 using System;
 using System.IO;
 
@@ -32,4 +32,4 @@ partial class Example1
         }
     }
 }
-// </Snippet16>
+// <Snippet1>

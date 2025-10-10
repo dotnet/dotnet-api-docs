@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Security.AccessControl
 
 Partial Class Program
-    Shared Sub CreateDirectoryExample()
+    Shared Sub DirectorySecurityExample()
 
         Dim securityRules As DirectorySecurity = New DirectorySecurity()
         securityRules.AddAccessRule(New FileSystemAccessRule("Domain\account1", FileSystemRights.Read, AccessControlType.Allow))

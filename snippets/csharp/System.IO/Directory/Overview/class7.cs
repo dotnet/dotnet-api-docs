@@ -5,7 +5,7 @@ using System.Security.AccessControl;
 
 partial class Program
 {
-    static void CreateDirectoryExample()
+    static void DirectorySecurityExample()
     {
         DirectorySecurity securityRules = new DirectorySecurity();
         securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\account1", FileSystemRights.Read, AccessControlType.Allow));
