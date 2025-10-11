@@ -32,4 +32,4 @@ partial class Example1
         }
     }
 }
-// <Snippet1>
+// </Snippet1>
