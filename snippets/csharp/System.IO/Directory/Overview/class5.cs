@@ -2,29 +2,26 @@
 using System;
 using System.IO;
 
-namespace ConsoleApplication
+partial class Example1
 {
-    class Program
+    static void SearchOptionExample()
     {
-        static void Main(string[] args)
+        string sourceDirectory = @"C:\current";
+        string archiveDirectory = @"C:\archive";
+
+        try
         {
-            string sourceDirectory = @"C:\current";
-            string archiveDirectory = @"C:\archive";
+            var txtFiles = Directory.EnumerateFiles(sourceDirectory, "*.txt", SearchOption.AllDirectories);
 
-            try
+            foreach (string currentFile in txtFiles)
             {
-                var txtFiles = Directory.EnumerateFiles(sourceDirectory, "*.txt", SearchOption.AllDirectories);
-
-                foreach (string currentFile in txtFiles)
-                {
-                    string fileName = currentFile.Substring(sourceDirectory.Length + 1);
-                    Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
-                }
+                string fileName = currentFile.Substring(sourceDirectory.Length + 1);
+                Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
     }
 }

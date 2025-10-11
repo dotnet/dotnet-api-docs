@@ -1,9 +1,9 @@
 ﻿' <snippet14>
 Imports System.IO
 
-Module Module1
+Partial Class Program
+    Shared Sub DirectoryMoveExample()
 
-    Sub Main()
         Dim sourceDirectory As String = "C:\source"
         Dim destinationDirectory As String = "C:\destination"
 
@@ -14,6 +14,5 @@ Module Module1
         End Try
 
     End Sub
-
-End Module
+End Class
 ' </snippet14>

@@ -1,18 +1,27 @@
-﻿// <Snippet1>
+// <Snippet1>
 using System;
 using System.IO;
 using System.Linq;
 
 partial class Example2
 {
-    static void SearchOptionExample()
+    static void EnumerationOptionsExample()
     {
         try
         {
             // Set a variable to the My Documents path.
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            var files = from file in Directory.EnumerateFiles(docPath, "*.txt", SearchOption.AllDirectories)
+            // Set the options for the enumeration.
+            var options = new EnumerationOptions
+            {
+                IgnoreInaccessible = true,
+                MatchCasing = MatchCasing.CaseInsensitive,
+                MatchType = MatchType.Simple,
+                RecurseSubdirectories = true
+            };
+
+            var files = from file in Directory.EnumerateFiles(docPath, "*.txt", options)
                         from line in File.ReadLines(file)
                         where line.Contains("Microsoft")
                         select new
@@ -28,13 +37,13 @@ partial class Example2
 
             Console.WriteLine($"{files.Count()} files found.");
         }
-        catch (UnauthorizedAccessException uAEx)
-        {
-            Console.WriteLine(uAEx.Message);
-        }
         catch (PathTooLongException pathEx)
         {
             Console.WriteLine(pathEx.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 }

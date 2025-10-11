@@ -1,9 +1,9 @@
 ﻿' <snippet12>
 Imports System.IO
 
-Module Module1
+Partial Class Example1
+    Shared Sub OneStringExample()
 
-    Sub Main()
         Dim sourceDirectory As String = "C:\current"
         Dim archiveDirectory As String = "C:\archive"
 
@@ -19,6 +19,5 @@ Module Module1
         End Try
 
     End Sub
-
-End Module
+End Class
 ' </snippet12>

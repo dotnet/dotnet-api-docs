@@ -1,4 +1,4 @@
-﻿module program
+module program3
 
 // <Snippet1>
 open System
@@ -9,9 +9,17 @@ try
     let docPath =
         Environment.GetFolderPath Environment.SpecialFolder.MyDocuments
 
+    // Set the options for the enumeration.
+    let options = new EnumerationOptions(
+        IgnoreInaccessible = true,
+        MatchCasing = MatchCasing.CaseInsensitive,
+        MatchType = MatchType.Simple,
+        RecurseSubdirectories = true
+    )
+
     let files =
         query {
-            for file in Directory.EnumerateFiles(docPath, "*.txt", SearchOption.AllDirectories) do
+            for file in Directory.EnumerateFiles(docPath, "*.txt", options) do
             for line in File.ReadLines file do
             where (line.Contains "Microsoft")
             select {| File = file; Line = line |}
@@ -19,9 +27,9 @@ try
 
     for f in files do
         printfn $"{f.File}\t{f.Line}"
-    printfn $"{Seq.length files} files found."
 
+    printfn $"{Seq.length files} files found."
 with
-| :? UnauthorizedAccessException as uAEx -> printfn $"{uAEx.Message}"
 | :? PathTooLongException as pathEx -> printfn $"{pathEx.Message}"
+| ex -> printfn $"{ex.Message}"
 // </Snippet1>

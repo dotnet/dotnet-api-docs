@@ -1,9 +1,9 @@
 ﻿' <snippet10>
 Imports System.IO
 
-Module Module1
+Partial Class Example1
+    Shared Sub TwoStringExample()
 
-    Sub Main()
         Dim sourceDirectory As String = "C:\current"
         Dim archiveDirectory As String = "C:\archive"
 
@@ -17,7 +17,7 @@ Module Module1
         Catch e As Exception
             Console.WriteLine(e.Message)
         End Try
-    End Sub
 
-End Module
+    End Sub
+End Class
 ' </snippet10>

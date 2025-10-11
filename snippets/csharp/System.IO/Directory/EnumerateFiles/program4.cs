@@ -1,17 +1,24 @@
-﻿// <snippet10>
+// <Snippet1>
 using System;
 using System.IO;
 
 partial class Example1
 {
-    static void TwoStringsExample()
+    static void EnumerationOptionsExample()
     {
         string sourceDirectory = @"C:\current";
         string archiveDirectory = @"C:\archive";
 
+        var options = new EnumerationOptions
+        {
+            MatchCasing = MatchCasing.CaseInsensitive,
+            MatchType = MatchType.Simple,
+            RecurseSubdirectories = true
+        };
+
         try
         {
-            var txtFiles = Directory.EnumerateFiles(sourceDirectory, "*.txt");
+            var txtFiles = Directory.EnumerateFiles(sourceDirectory, "*.txt", options);
 
             foreach (string currentFile in txtFiles)
             {
@@ -19,10 +26,10 @@ partial class Example1
                 Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName));
             }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(ex.Message);
         }
     }
 }
-// </snippet10>
+// </Snippet1>
