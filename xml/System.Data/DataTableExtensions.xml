@@ -52,7 +52,9 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Defines the extension methods to the <see cref="T:System.Data.DataTable" /> class. <see cref="T:System.Data.DataTableExtensions" /> is a static class.</summary>
+    <summary>
+            This static class defines the DataTable extension methods.
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -239,9 +241,11 @@
         <Parameter Name="source" Type="System.Data.DataTable" RefType="this" />
       </Parameters>
       <Docs>
-        <param name="source">The source <see cref="T:System.Data.DataTable" /> to make enumerable.</param>
-        <summary>Returns an <see cref="T:System.Collections.Generic.IEnumerable`1" /> object, where the generic parameter <paramref name="T" /> is <see cref="T:System.Data.DataRow" />. This object can be used in a LINQ expression or method query.</summary>
-        <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> object, where the generic parameter <paramref name="T" /> is <see cref="T:System.Data.DataRow" />.</returns>
+        <param name="source">The source DataTable to make enumerable.</param>
+        <summary>
+            This method returns a IEnumerable of Datarows.
+            </summary>
+        <returns>IEnumerable of datarows.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -321,9 +325,14 @@
       </Parameters>
       <Docs>
         <typeparam name="T">The type of objects in the source sequence, typically <see cref="T:System.Data.DataRow" />.</typeparam>
-        <param name="source">The source <see cref="T:System.Collections.Generic.IEnumerable`1" /> sequence.</param>
-        <summary>Returns a <see cref="T:System.Data.DataTable" /> that contains copies of the <see cref="T:System.Data.DataRow" /> objects, given an input <see cref="T:System.Collections.Generic.IEnumerable`1" /> object where the generic parameter <paramref name="T" /> is <see cref="T:System.Data.DataRow" />.</summary>
-        <returns>A <see cref="T:System.Data.DataTable" /> that contains the input sequence as the type of <see cref="T:System.Data.DataRow" /> objects.</returns>
+        <param name="source">The input sequence of DataRows</param>
+        <summary>
+            This method takes an input sequence of DataRows and produces a DataTable object
+            with copies of the source rows.
+            Also note that this will cause the rest of the query to execute at this point in time
+            (e.g. there is no more delayed execution after this sequence operator).
+            </summary>
+        <returns>DataTable containing copies of the source DataRows. Properties for the DataTable table will be taken from first DataRow in the source.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -350,12 +359,8 @@
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">The source <see cref="T:System.Collections.Generic.IEnumerable`1" /> sequence is <see langword="null" /> and a new table cannot be created.</exception>
-        <exception cref="T:System.InvalidOperationException">A <see cref="T:System.Data.DataRow" /> in the source sequence has a state of <see cref="F:System.Data.DataRowState.Deleted" />.
-
- The source sequence does not contain any <see cref="T:System.Data.DataRow" /> objects.
-
- A <see cref="T:System.Data.DataRow" /> in the source sequence is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">if source is null</exception>
+        <exception cref="T:System.InvalidOperationException">if source is empty</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyToDataTable&lt;T&gt;">
@@ -412,7 +417,9 @@
         <param name="source">The source <see cref="T:System.Collections.Generic.IEnumerable`1" /> sequence.</param>
         <param name="table">The destination <see cref="T:System.Data.DataTable" />.</param>
         <param name="options">A <see cref="T:System.Data.LoadOption" /> enumeration that specifies the <see cref="T:System.Data.DataTable" /> load options.</param>
-        <summary>Copies <see cref="T:System.Data.DataRow" /> objects to the specified <see cref="T:System.Data.DataTable" />, given an input <see cref="T:System.Collections.Generic.IEnumerable`1" /> object where the generic parameter <paramref name="T" /> is <see cref="T:System.Data.DataRow" />.</summary>
+        <summary>
+            Delegates to other CopyToDataTable overload with a null FillErrorEventHandler.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -500,11 +507,23 @@
       </Parameters>
       <Docs>
         <typeparam name="T">The type of objects in the source sequence, typically <see cref="T:System.Data.DataRow" />.</typeparam>
-        <param name="source">The source <see cref="T:System.Collections.Generic.IEnumerable`1" /> sequence.</param>
-        <param name="table">The destination <see cref="T:System.Data.DataTable" />.</param>
-        <param name="options">A <see cref="T:System.Data.LoadOption" /> enumeration that specifies the <see cref="T:System.Data.DataTable" /> load options.</param>
-        <param name="errorHandler">A <see cref="T:System.Data.FillErrorEventHandler" /> delegate that represents the method that will handle an error.</param>
-        <summary>Copies <see cref="T:System.Data.DataRow" /> objects to the specified <see cref="T:System.Data.DataTable" />, given an input <see cref="T:System.Collections.Generic.IEnumerable`1" /> object where the generic parameter <paramref name="T" /> is <see cref="T:System.Data.DataRow" />.</summary>
+        <param name="source">The input sequence of DataRows. CopyToDataTable uses DataRowVersion.Default when retrieving values from source DataRow
+            which will include proposed values for DataRow being edited. Null DataRow in the sequence are skipped.</param>
+        <param name="table">The target DataTable to load.</param>
+        <param name="options">The target DataTable to load.</param>
+        <param name="errorHandler">Error handler for recoverable errors.
+            Recoverable errors include:
+              A source DataRow is in the deleted or detached state.
+              DataTable.LoadDataRow threw an exception, i.e. wrong # of columns in source row
+            Unrecoverable errors include:
+              exceptions from IEnumerator, DataTable.BeginLoadData or DataTable.EndLoadData</param>
+        <summary>
+            This method takes an input sequence of DataRows and produces a DataTable object
+            with copies of the source rows.
+            Also note that this will cause the rest of the query to execute at this point in time
+            (e.g. there is no more delayed execution after this sequence operator).
+            </summary>
+        <returns>DataTable containing copies of the source DataRows.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -534,16 +553,8 @@
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The copied <see cref="T:System.Data.DataRow" /> objects do not fit the schema of the destination <see cref="T:System.Data.DataTable" />.</exception>
-        <exception cref="T:System.ArgumentNullException">The source <see cref="T:System.Collections.Generic.IEnumerable`1" /> sequence is <see langword="null" /> or the destination <see cref="T:System.Data.DataTable" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">A <see cref="T:System.Data.DataRow" /> in the source sequence has a state of <see cref="F:System.Data.DataRowState.Deleted" />.
-
- -or-
-
- The source sequence does not contain any <see cref="T:System.Data.DataRow" /> objects.
-
- -or-
-
- A <see cref="T:System.Data.DataRow" /> in the source sequence is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">if table is null</exception>
+        <exception cref="T:System.InvalidOperationException">if source DataRow is in Deleted or Detached state</exception>
       </Docs>
     </Member>
   </Members>
