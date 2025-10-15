@@ -75,7 +75,11 @@
   </Attributes>
   <Docs>
     <typeparam name="T">The type of the elements in the vector. <typeparamref name="T" /> can be any primitive numeric type.</typeparam>
-    <summary>Represents a single vector of a specified numeric type that is suitable for low-level optimization of parallel algorithms.</summary>
+    <summary>
+            A structure that represents a single Vector. The count of this Vector is fixed but CPU register dependent.
+            This struct only supports numerical types. This type is intended to be used as a building block for vectorizing
+            large algorithms. This type is immutable, individual elements cannot be modified.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
@@ -318,7 +322,8 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="value">The numeric type that defines the type of the components in the vector.</param>
-        <summary>Creates a vector whose components are of a specified type.</summary>
+        <summary>
+            Constructs a vector whose components are all <code>value</code></summary>
         <remarks>To be added. </remarks>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
       </Docs>
@@ -357,7 +362,9 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="values">The values to add to the vector, as an array of objects of type T. The array must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
-        <summary>Creates a vector from a specified array.</summary>
+        <summary>
+            Constructs a vector from the given array. The size of the given array must be at least Vector'T.Count.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -411,7 +418,10 @@ The type `T` can be any of the following numeric types:
       <Docs>
         <param name="values">The values to add to the vector, as an array of objects of type T. The array must contain at least <see cref="P:System.Numerics.Vector`1.Count" /> elements from the specified index and only the first <see cref="P:System.Numerics.Vector`1.Count" /> elements are used.</param>
         <param name="index">The starting index position from which to create the vector.</param>
-        <summary>Creates a vector from a specified array starting at a specified index position.</summary>
+        <summary>
+            Constructs a vector from the given array, starting from the given index.
+            The array must contain at least Vector'T.Count from the given index.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -604,8 +614,10 @@ The type `T` can be any of the following numeric types:
         <Parameter Name="destination" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="destination">The array to receive a copy of the vector values.</param>
-        <summary>Copies the vector instance to a specified destination array.</summary>
+        <param name="destination">The destination array which the values are copied into</param>
+        <summary>
+            Copies the vector to the given destination array. The destination array must be at least size Vector'T.Count.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -614,12 +626,11 @@ The type `T` can be any of the following numeric types:
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="destination" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">The number of elements in the current vector is greater than the number of elements available in the <paramref name="destination" /> array.</exception>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
         <exception cref="T:System.NullReferenceException">
           <paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">If the destination array is null</exception>
+        <exception cref="T:System.ArgumentException">If number of elements in source vector is greater than those available in destination array</exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -665,9 +676,11 @@ The type `T` can be any of the following numeric types:
         <Parameter Name="startIndex" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="destination">The array to receive a copy of the vector values.</param>
-        <param name="startIndex">The starting index in <paramref name="destination" /> at which to begin the copy operation.</param>
-        <summary>Copies the vector instance to a specified destination array starting at a specified index position.</summary>
+        <param name="destination">The destination array which the values are copied into</param>
+        <param name="startIndex">The index to start copying to</param>
+        <summary>
+            Copies the vector to the given destination array. The destination array must be at least size Vector'T.Count.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -676,14 +689,12 @@ The type `T` can be any of the following numeric types:
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="destination" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">The number of elements in the current instance is greater than the number of elements available from <paramref name="startIndex" /> to the end of the <paramref name="destination" /> array.</exception>
-        <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="index" /> is less than zero or greater than the last index in <paramref name="destination" />.</exception>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
         <exception cref="T:System.NullReferenceException">
           <paramref name="destination" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentNullException">If the destination array is null</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">If index is greater than end of the array or index is less than zero</exception>
+        <exception cref="T:System.ArgumentException">If number of elements in source vector is greater than those available in destination array</exception>
       </Docs>
     </Member>
     <Member MemberName="Count">
@@ -719,7 +730,9 @@ The type `T` can be any of the following numeric types:
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns the number of elements stored in the vector.</summary>
+        <summary>
+            Returns the number of elements stored in the vector. This value is hardware dependent.
+            </summary>
         <value>The number of elements stored in the vector.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">Access to the property getter via reflection is not supported.
@@ -782,10 +795,11 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="other">The vector to compare with this instance.</param>
-        <summary>Returns a value that indicates whether this instance is equal to a specified vector.</summary>
-        <returns>
-          <see langword="true" /> if the current instance and <paramref name="other" /> are equal; otherwise, <see langword="false" />.</returns>
+        <param name="other">The vector to compare this instance to.</param>
+        <summary>
+            Returns a boolean indicating whether the given vector is equal to this vector instance.
+            </summary>
+        <returns>True if the other vector is equal to this instance; False otherwise.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -848,10 +862,11 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="obj">The object to compare with this instance.</param>
-        <summary>Returns a value that indicates whether this instance is equal to a specified object.</summary>
-        <returns>
-          <see langword="true" /> if the current instance and <paramref name="obj" /> are equal; otherwise, <see langword="false" />. The method returns <see langword="false" /> if <paramref name="obj" /> is null, or if <paramref name="obj" /> is a vector of a different type than the current instance.</returns>
+        <param name="obj">The Object to compare against.</param>
+        <summary>
+            Returns a boolean indicating whether the given Object is equal to this vector instance.
+            </summary>
+        <returns>True if the Object is equal to this vector; False otherwise.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -903,7 +918,9 @@ The type `T` can be any of the following numeric types:
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the hash code for this instance.</summary>
+        <summary>
+            Returns the hash code for this instance.
+            </summary>
         <returns>The hash code.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
@@ -1017,7 +1034,9 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="index">The index of the element to return.</param>
-        <summary>Gets the element at a specified index.</summary>
+        <summary>
+            Returns the element at the given index.
+            </summary>
         <value>The element at index <paramref name="index" />.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">
@@ -1070,7 +1089,9 @@ The type `T` can be any of the following numeric types:
         <ReturnType>System.Numerics.Vector&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns a vector containing all ones.</summary>
+        <summary>
+            Returns a vector containing all ones.
+            </summary>
         <value>A vector containing all ones.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
@@ -1127,9 +1148,11 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector to add.</param>
-        <param name="right">The second vector to add.</param>
-        <summary>Adds two vectors together.</summary>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Adds two vectors together.
+            </summary>
         <returns>The summed vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -1193,10 +1216,12 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector.</param>
-        <param name="right">The second vector.</param>
-        <summary>Returns a new vector by performing a bitwise <see langword="And" /> operation on each of the elements in two vectors.</summary>
-        <returns>The vector that results from the bitwise <see langword="And" /> of <paramref name="left" /> and <paramref name="right" />.</returns>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Returns a new vector by performing a bitwise-and operation on each of the elements in the given vectors.
+            </summary>
+        <returns>The resultant vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1259,10 +1284,12 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector.</param>
-        <param name="right">The second vector.</param>
-        <summary>Returns a new vector by performing a bitwise <see langword="Or" /> operation on each of the elements in two vectors.</summary>
-        <returns>The vector that results from the bitwise <see langword="Or" /> of the elements in <paramref name="left" /> and <paramref name="right" />.</returns>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Returns a new vector by performing a bitwise-or operation on each of the elements in the given vectors.
+            </summary>
+        <returns>The resultant vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1325,10 +1352,12 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector.</param>
-        <param name="right">The second vector.</param>
-        <summary>Divides the first vector by the second.</summary>
-        <returns>The vector that results from dividing <paramref name="left" /> by <paramref name="right" />.</returns>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Divides the first vector by the second.
+            </summary>
+        <returns>The vector resulting from the division.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1437,10 +1466,11 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="left">The first vector to compare.</param>
-        <param name="right">The second vector to compare.</param>
-        <summary>Returns a value that indicates whether each pair of elements in two specified vectors are equal.</summary>
-        <returns>
-          <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
+        <param name="right">The first vector to compare.</param>
+        <summary>
+            Returns a boolean indicating whether each pair of elements in the given vectors are equal.
+            </summary>
+        <returns>True if all elements are equal; False otherwise.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1503,10 +1533,12 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector.</param>
-        <param name="right">The second vector.</param>
-        <summary>Returns a new vector by performing a bitwise <see langword="XOr" /> operation on each of the elements in two vectors.</summary>
-        <returns>The vector that results from the bitwise <see langword="XOr" /> of the elements in <paramref name="left" /> and <paramref name="right" />.</returns>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Returns a new vector by performing a bitwise-exclusive-or operation on each of the elements in the given vectors.
+            </summary>
+        <returns>The resultant vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -2257,9 +2289,10 @@ The type `T` can be any of the following numeric types:
       <Docs>
         <param name="left">The first vector to compare.</param>
         <param name="right">The second vector to compare.</param>
-        <summary>Returns a value that indicates whether any single pair of elements in the specified vectors is equal.</summary>
-        <returns>
-          <see langword="true" /> if any element pairs in left and right are equal. <see langword="false" /> if no element pairs are equal.</returns>
+        <summary>
+            Returns a boolean indicating whether any single pair of elements in the given vectors are not equal.
+            </summary>
+        <returns>True if left and right are not equal; False otherwise.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
       </Docs>
@@ -2360,10 +2393,12 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector.</param>
-        <param name="right">The second vector.</param>
-        <summary>Returns a new vector whose values are the product of each pair of elements in two specified vectors.</summary>
-        <returns>The element-wise product vector.</returns>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Multiplies two vectors together.
+            </summary>
+        <returns>The product vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -2420,8 +2455,10 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="value">The source vector.</param>
-        <param name="factor">A scalar value.</param>
-        <summary>Multiplies a vector by a specified scalar value.</summary>
+        <param name="factor">The scalar value.</param>
+        <summary>
+            Multiplies a vector by the given scalar.
+            </summary>
         <returns>The scaled vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -2480,7 +2517,9 @@ The type `T` can be any of the following numeric types:
       <Docs>
         <param name="factor">The scalar value.</param>
         <param name="value">The source vector.</param>
-        <summary>Multiplies a vector by a specified scalar value.</summary>
+        <summary>
+            Multiplies a vector by the given scalar.
+            </summary>
         <returns>The scaled vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -2537,7 +2576,9 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="value">The source vector.</param>
-        <summary>Returns a new vector whose elements are obtained by taking the one's complement of a specified vector's elements.</summary>
+        <summary>
+            Returns a new vector whose elements are obtained by taking the one's complement of the given vector's elements.
+            </summary>
         <returns>The one's complement vector.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>
@@ -2639,10 +2680,12 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="left">The first vector.</param>
-        <param name="right">The second vector.</param>
-        <summary>Subtracts the second vector from the first.</summary>
-        <returns>The vector that results from subtracting <paramref name="right" /> from <paramref name="left" />.</returns>
+        <param name="left">The first source vector.</param>
+        <param name="right">The second source vector.</param>
+        <summary>
+            Subtracts the second vector from the first.
+            </summary>
+        <returns>The difference vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -2697,8 +2740,10 @@ The type `T` can be any of the following numeric types:
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">The vector to negate.</param>
-        <summary>Negates a given vector.</summary>
+        <param name="value">The source vector.</param>
+        <summary>
+            Negates a given vector.
+            </summary>
         <returns>The negated vector.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -2842,8 +2887,10 @@ The type `T` can be any of the following numeric types:
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the string representation of this vector using default formatting.</summary>
-        <returns>The string representation of this vector.</returns>
+        <summary>
+            Returns a String representing this vector.
+            </summary>
+        <returns>The string representation.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -2911,8 +2958,10 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="format">The format of individual elements.</param>
-        <summary>Returns the string representation of this vector using the specified format string to format individual elements.</summary>
-        <returns>The string representation of the current instance.</returns>
+        <summary>
+            Returns a String representing this vector, using the specified format string to format individual elements.
+            </summary>
+        <returns>The string representation.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -2980,9 +3029,12 @@ The type `T` can be any of the following numeric types:
       </Parameters>
       <Docs>
         <param name="format">The format of individual elements.</param>
-        <param name="formatProvider">A format provider that supplies culture-specific formatting information.</param>
-        <summary>Returns the string representation of this vector using the specified format string to format individual elements and the specified format provider to define culture-specific formatting.</summary>
-        <returns>The string representation of the current instance.</returns>
+        <param name="formatProvider">The format provider to use when formatting elements.</param>
+        <summary>
+            Returns a String representing this vector, using the specified format string to format individual elements
+            and the given IFormatProvider.
+            </summary>
+        <returns>The string representation.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -3129,7 +3181,9 @@ The type `T` can be any of the following numeric types:
         <ReturnType>System.Numerics.Vector&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns a vector containing all zeroes.</summary>
+        <summary>
+            Returns a vector containing all zeroes.
+            </summary>
         <value>A vector containing all zeroes.</value>
         <remarks>To be added.</remarks>
         <exception cref="T:System.NotSupportedException">.NET 5 and later: Type <see langword="T" /> is not supported.</exception>

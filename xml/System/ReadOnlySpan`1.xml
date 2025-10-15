@@ -90,7 +90,10 @@
   </Attributes>
   <Docs>
     <typeparam name="T">The type of items in the <see cref="T:System.ReadOnlySpan`1" />.</typeparam>
-    <summary>Provides a type-safe and memory-safe read-only representation of a contiguous region of arbitrary memory.</summary>
+    <summary>
+            ReadOnlySpan represents a contiguous region of arbitrary memory. Unlike arrays, it can point to either managed
+            or native memory, or to memory allocated on the stack. It is type- and memory-safe.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[`ReadOnlySpan<T>` is a [ref struct](/dotnet/csharp/language-reference/builtin-types/struct#ref-struct) that is allocated on the stack and can never escape to the managed heap. Ref struct types have a number of restrictions to ensure that they cannot be promoted to the managed heap, including that they can't be boxed, captured in lambda expressions, assigned to variables of type <xref:System.Object>, assigned to `dynamic` variables, and they cannot implement any interface type.
 
@@ -184,11 +187,12 @@ A `ReadOnlySpan<T>` instance is often used to reference the elements of an array
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="array">The array from which to create the <see cref="T:System.ReadOnlySpan`1" />.</param>
-        <summary>Creates a new <see cref="T:System.ReadOnlySpan`1" /> over the entirety of a specified array.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[If the array is null, this constructor returns a null `ReadOnlySpan<T>`.]]></format>
-        </remarks>
+        <param name="array">The target array.</param>
+        <summary>
+            Creates a new read-only span over the entirety of the target array.
+            </summary>
+        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">Thrown when <paramref name="array" /> is covariant and array's type is not exactly T[].</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -231,18 +235,25 @@ A `ReadOnlySpan<T>` instance is often used to reference the elements of an array
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="pointer">A pointer to the starting address of a specified number of <typeparamref name="T" /> elements in memory.</param>
-        <param name="length">The number of <typeparamref name="T" /> elements to be included in the <see cref="T:System.ReadOnlySpan`1" />.</param>
-        <summary>Creates a new <see cref="T:System.ReadOnlySpan`1" /> from a specified number of <typeparamref name="T" /> elements starting at a specified memory address.</summary>
+        <param name="pointer">An unmanaged pointer to memory.</param>
+        <param name="length">The number of <typeparamref name="T" /> elements the memory contains.</param>
+        <summary>
+            Creates a new read-only span over the target unmanaged buffer.  Clearly this
+            is quite dangerous, because we are creating arbitrarily typed T's
+            out of a void*-typed block of memory.  And the length is not checked.
+            But if this creation is correct, then all subsequent uses are correct.
+            </summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
           This constructor should be used with care, since it creates arbitrarily typed `T`s from a `void*`-typed block of memory, and neither `pointer` nor `length` are validated by the constructor.
           ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <typeparamref name="T" /> is a reference type or contains references and therefore cannot be stored in unmanaged memory.</exception>
+            Thrown when <typeparamref name="T" /> is reference type or contains pointers and hence cannot be stored in unmanaged memory.
+            </exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="length" /> is negative.</exception>
+            Thrown when the specified <paramref name="length" /> is negative.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -289,30 +300,18 @@ A `ReadOnlySpan<T>` instance is often used to reference the elements of an array
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">The array from which to create the <see cref="T:System.ReadOnlySpan`1" />.</param>
-        <param name="start">The zero-based index of the first element to include.</param>
-        <param name="length">The number of elements to include.</param>
-        <summary>Creates a new <see cref="T:System.ReadOnlySpan`1" /> that includes a specified number of elements of an array starting at a specified index.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-### Remarks
-
-This method returns `default` when `array` is `null`.
-
-            ]]></format>
-        </remarks>
+        <param name="array">The target array.</param>
+        <param name="start">The index at which to begin the read-only span.</param>
+        <param name="length">The number of items in the read-only span.</param>
+        <summary>
+            Creates a new read-only span over the portion of the target array beginning
+            at 'start' index and ending at 'end' index (exclusive).
+            </summary>
+        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">Thrown when <paramref name="array" /> is covariant and array's type is not exactly T[].</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="array" /> is <see langword="null" />, but <paramref name="start" /> or <paramref name="length" /> is non-zero.
-
--or-
-
-<paramref name="start" /> is outside the bounds of the array.
-
--or-
-
-<paramref name="start" /> and <paramref name="length" /> exceeds the number of elements in the array.
-        </exception>
+            Thrown when the specified <paramref name="start" /> or end index is not in the range (&lt;0 or &gt;=Length).
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="CastUp&lt;TDerived&gt;">
@@ -420,7 +419,14 @@ This method returns `default` when `array` is `null`.
       </Parameters>
       <Docs>
         <param name="destination">The span to copy items into.</param>
-        <summary>Copies the contents of this <see cref="T:System.ReadOnlySpan`1" /> into a destination <see cref="T:System.Span`1" />.</summary>
+        <summary>
+             Copies the contents of this read-only span into destination span. If the source
+             and destinations overlap, this method behaves as if the original values in
+             a temporary location before the destination is overwritten.
+            
+             <param name="destination">The span to copy items into.</param><exception cref="T:System.ArgumentException">
+             Thrown when the destination Span is shorter than the source Span.
+             </exception></summary>
         <remarks>
           <format type="text/markdown"><![CDATA[If the `source` and `destination` overlap, the entirety of `source` is handled as if it was copied to a temporary location before it is copied to `destination`.]]></format>
         </remarks>
@@ -468,7 +474,9 @@ This method returns `default` when `array` is `null`.
         <ReturnType>System.ReadOnlySpan&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns an empty <see cref="T:System.ReadOnlySpan`1" />.</summary>
+        <summary>
+            Returns a 0-length read-only span whose base is the null pointer.
+            </summary>
         <value>An empty <see cref="T:System.ReadOnlySpan`1" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -526,7 +534,11 @@ This method returns `default` when `array` is `null`.
       </Parameters>
       <Docs>
         <param name="obj">Not supported.</param>
-        <summary>Not supported. Throws a <see cref="T:System.NotSupportedException" />.</summary>
+        <summary>
+            This method is not supported as spans cannot be boxed. To compare two spans, use operator==.
+            <exception cref="T:System.NotSupportedException">
+            Always thrown by this method.
+            </exception></summary>
         <returns>Not supported.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[Not supported.]]></format>
@@ -575,7 +587,7 @@ This method returns `default` when `array` is `null`.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns an enumerator for this <see cref="T:System.ReadOnlySpan`1" />.</summary>
+        <summary>Gets an enumerator for this span.</summary>
         <returns>An enumerator for this read-only span.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[Instead of calling the <xref:System.ReadOnlySpan%601.GetEnumerator%2A> method directly, you can use the C# `foreach` statement and the Visual Basic `For Each`...`Next` construct to enumerate a <xref:System.ReadOnlySpan%601>.]]></format>
@@ -627,7 +639,11 @@ This method returns `default` when `array` is `null`.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Not supported. Throws a <see cref="T:System.NotSupportedException" />.</summary>
+        <summary>
+            This method is not supported as spans cannot be boxed.
+            <exception cref="T:System.NotSupportedException">
+            Always thrown by this method.
+            </exception></summary>
         <returns>Not supported.</returns>
         <remarks>Not supported.</remarks>
         <exception cref="T:System.NotSupportedException">Always thrown by this method.</exception>
@@ -680,9 +696,10 @@ This method returns `default` when `array` is `null`.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns a read-only reference to an object of type T that can be used for pinning.
-
-This method is intended to support .NET compilers and is not intended to be called by user code.</summary>
+        <summary>
+            Returns a reference to the 0th element of the Span. If the Span is empty, returns null reference.
+            It can be used for pinning and is required to support the use of span within a fixed statement.
+            </summary>
         <returns>A reference to the element of the span at index 0, or <see langword="null" /> if the span is empty.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -738,7 +755,9 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns a value that indicates the current read-only span is empty.</summary>
+        <summary>
+            Returns true if Length is 0.
+            </summary>
         <value>
           <see langword="true" /> when the current span is empty; otherwise <see langword="false" />.</value>
         <remarks>To be added.</remarks>
@@ -787,12 +806,15 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index">The zero-based index of the element to get.</param>
-        <summary>Gets an item from the read-only span at the specified zero-based index.</summary>
-        <value>The element from the read-only span.</value>
+        <param name="index" />
+        <summary>
+            Returns the specified element of the read-only span.
+            </summary>
+        <value />
         <remarks>To be added.</remarks>
         <exception cref="T:System.IndexOutOfRangeException">
-          <paramref name="index" /> is less then zero or greater than or equal to <see cref="P:System.ReadOnlySpan`1.Length" />.</exception>
+            Thrown when index less than 0 or index greater than or equal to Length
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -829,7 +851,9 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The number of items in the read-only span.</summary>
+        <summary>
+            The number of items in the read-only span.
+            </summary>
         <value>The number of items.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -888,7 +912,10 @@ The following example demonstrates creating an integer array, pinning it, and wr
       <Docs>
         <param name="left">The first span to compare.</param>
         <param name="right">The second span to compare.</param>
-        <summary>Returns a value that indicates whether two <see cref="T:System.ReadOnlySpan`1" /> instances are equal.</summary>
+        <summary>
+            Returns true if left and right point at the same memory and have the same length.  Note that
+            this does *not* check to see if the *contents* are equal.
+            </summary>
         <returns>
           <see langword="true" /> if the two <see cref="T:System.ReadOnlySpan`1" /> instances are equal; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1063,7 +1090,10 @@ The following example demonstrates creating an integer array, pinning it, and wr
       <Docs>
         <param name="left">The first read-only span to compare.</param>
         <param name="right">The second read-only span to compare.</param>
-        <summary>Returns a value that indicates whether two <see cref="T:System.ReadOnlySpan`1" /> instances are not equal.</summary>
+        <summary>
+            Returns false if left and right point at the same memory and have the same length.  Note that
+            this does *not* check to see if the *contents* are equal.
+            </summary>
         <returns>
           <see langword="true" /> if the two <see cref="T:System.ReadOnlySpan`1" /> instances are not equal; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -1114,12 +1144,15 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <Parameter Name="start" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">The zero-based index at which to begin the slice.</param>
-        <summary>Forms a slice out of the current read-only span that begins at a specified index.</summary>
+        <param name="start">The index at which to begin this slice.</param>
+        <summary>
+            Forms a slice out of the given read-only span, beginning at 'start'.
+            </summary>
         <returns>A span that consists of all elements of the current span from <paramref name="start" /> to the end of the span.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="start" /> is greater than the number of items in the read-only span.</exception>
+            Thrown when the specified <paramref name="start" /> index is not in range (&lt;0 or &gt;=Length).
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -1166,13 +1199,16 @@ The following example demonstrates creating an integer array, pinning it, and wr
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">The zero-based index at which to begin this slice.</param>
-        <param name="length">The desired length for the slice.</param>
-        <summary>Forms a slice out of the current read-only span starting at a specified index for a specified length.</summary>
+        <param name="start">The index at which to begin this slice.</param>
+        <param name="length">The desired length for the slice (exclusive).</param>
+        <summary>
+            Forms a slice out of the given read-only span, beginning at 'start', of given length
+            </summary>
         <returns>A read-only span that consists of <paramref name="length" /> elements from the current span starting at <paramref name="start" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="start" /> is less than zero or greater than <see cref="P:System.Span`1.Length" />.</exception>
+            Thrown when the specified <paramref name="start" /> or end index is not in range (&lt;0 or &gt;=Length).
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="ToArray">
@@ -1210,7 +1246,11 @@ The following example demonstrates creating an integer array, pinning it, and wr
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Copies the contents of this read-only span into a new array.</summary>
+        <summary>
+            Copies the contents of this read-only span into a new array.  This heap
+            allocates, so should generally be avoided, however it is sometimes
+            necessary to bridge the gap with APIs written in terms of arrays.
+            </summary>
         <returns>An array containing the data in the current span.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[This method performs a heap allocation and data copy, and therefore, should be avoided if possible. It it sometimes necessary when APIs that support <xref:System.ReadOnlySpan%601> are not available, but APIs that work with arrays are.]]></format>
@@ -1252,7 +1292,10 @@ The following example demonstrates creating an integer array, pinning it, and wr
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the string representation of this <see cref="T:System.ReadOnlySpan`1" />.</summary>
+        <summary>
+            For <see cref="T:System.Span`1" />, returns a new instance of string that represents the characters pointed to by the span.
+            Otherwise, returns a <see cref="T:System.String" /> with the name of the type and the number of elements.
+            </summary>
         <returns>The string representation of this instance.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[For a `ReadOnlySpan<Char>`, the `ToString` method returns a <xref:System.String> that contains the characters pointed to by the span. Otherwise, it returns a <xref:System.String> with the name of the type and the number of elements that the span contains.]]></format>
@@ -1303,8 +1346,14 @@ The following example demonstrates creating an integer array, pinning it, and wr
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="destination">The target of the copy operation.</param>
-        <summary>Attempts to copy the contents of this <see cref="T:System.ReadOnlySpan`1" /> into a <see cref="T:System.Span`1" /> and returns a value to indicate whether or not the operation succeeded.</summary>
+        <param name="destination">The span to copy items into.</param>
+        <summary>
+             Copies the contents of this read-only span into destination span. If the source
+             and destinations overlap, this method behaves as if the original values in
+             a temporary location before the destination is overwritten.
+            
+             <returns>If the destination span is shorter than the source span, this method
+             return false and no data is written to the destination.</returns></summary>
         <returns>
           <see langword="true" /> if the copy operation succeeded; otherwise, <see langword="false" />.</returns>
         <remarks>

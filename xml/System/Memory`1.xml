@@ -86,7 +86,10 @@
   </Attributes>
   <Docs>
     <typeparam name="T">The type of items in the <see cref="T:System.Memory`1" />. </typeparam>
-    <summary>Represents a contiguous region of memory. </summary>
+    <summary>
+            Memory represents a contiguous region of arbitrary memory similar to <see cref="T:System.Span`1" />.
+            Unlike <see cref="T:System.Span`1" />, it is not a byref-like type.
+            </summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
@@ -148,21 +151,12 @@ In addition to `Memory<T>`, you can use <xref:System.ReadOnlyMemory%601?displayP
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="array">The array from which to create the <see cref="T:System.Memory`1" /> object.</param>
-        <summary>Creates a new <see cref="T:System.Memory`1" /> object over the entirety of a specified array.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-If `array` is `null`, this constructor returns a <xref:System.Memory%601> object with a `default<T>` value.
-
-      ]]></format>
-        </remarks>
-        <exception cref="T:System.ArrayTypeMismatchException">
-          <typeparamref name="T" /> is a reference type, and <paramref name="array" /> is not an array of type <typeparamref name="T" />.
-
--or-
-
-The array is <see href="https://learn.microsoft.com/dotnet/csharp/programming-guide/concepts/covariance-contravariance/">covariant.</see></exception>
+        <param name="array">The target array.</param>
+        <summary>
+            Creates a new memory over the entirety of the target array.
+            </summary>
+        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">Thrown when <paramref name="array" /> is covariant and array's type is not exactly T[].</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -209,31 +203,18 @@ The array is <see href="https://learn.microsoft.com/dotnet/csharp/programming-gu
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">The source array.</param>
-        <param name="start">The index of the first element to include in the new <see cref="T:System.Memory`1" />.</param>
-        <param name="length">The number of elements to include in the new <see cref="T:System.Memory`1" />.</param>
-        <summary>Creates a new <see cref="T:System.Memory`1" /> object that includes a specified number of elements of an array beginning at a specified index. </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-If `array` is `null`, this constructor returns a  <xref:System.Memory%601> object with a `default<T>` value.
-
-       ]]></format>
-        </remarks>
+        <param name="array">The target array.</param>
+        <param name="start">The index at which to begin the memory.</param>
+        <param name="length">The number of items in the memory.</param>
+        <summary>
+            Creates a new memory over the portion of the target array beginning
+            at 'start' index and ending at 'end' index (exclusive).
+            </summary>
+        <remarks>Returns default when <paramref name="array" /> is null.</remarks>
+        <exception cref="T:System.ArrayTypeMismatchException">Thrown when <paramref name="array" /> is covariant and array's type is not exactly T[].</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="array" /> is <see langword="null" />, but <paramref name="start" /> or <paramref name="length" /> is non-zero.
-
-
--or-
-
-<paramref name="start" /> is outside the bounds of the array.
-
--or-
-
-<paramref name="start" /> and <paramref name="length" /> exceeds the number of elements in the array.
-        </exception>
-        <exception cref="T:System.ArrayTypeMismatchException">
-          <typeparamref name="T" /> is a reference type, and <paramref name="array" /> is not an array of type <typeparamref name="T" />.</exception>
+            Thrown when the specified <paramref name="start" /> or end index is not in the range (&lt;0 or &gt;=Length).
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -281,7 +262,14 @@ If `array` is `null`, this constructor returns a  <xref:System.Memory%601> objec
       </Parameters>
       <Docs>
         <param name="destination">The destination <see cref="T:System.Memory`1" /> object.</param>
-        <summary>Copies the contents of a <see cref="T:System.Memory`1" /> object into a destination <see cref="T:System.Memory`1" /> object.</summary>
+        <summary>
+             Copies the contents of the memory into the destination. If the source
+             and destination overlap, this method behaves as if the original values are in
+             a temporary location before the destination is overwritten.
+            
+             <param name="destination">The Memory to copy items into.</param><exception cref="T:System.ArgumentException">
+             Thrown when the destination is shorter than the source.
+             </exception></summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -332,7 +320,8 @@ This method copies all of the contents of the current <xref:System.Memory%601> i
         <ReturnType>System.Memory&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns an empty <see cref="T:System.Memory`1" /> object.</summary>
+        <summary>
+            Returns an empty <see cref="T:System.Memory`1" /></summary>
         <value>An empty object.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -387,7 +376,10 @@ This method copies all of the contents of the current <xref:System.Memory%601> i
       </Parameters>
       <Docs>
         <param name="other">The object to compare with the current instance.</param>
-        <summary>Determines whether the specified <see cref="T:System.Memory`1" /> object is equal to the current object.</summary>
+        <summary>
+            Returns true if the memory points to the same array and has the same length.  Note that
+            this does *not* check to see if the *contents* are equal.
+            </summary>
         <returns>
           <see langword="true" /> if the current instance and <paramref name="other" /> are equal; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -457,7 +449,10 @@ The `Equals(Memory<T>)` method performs a test for reference equality; it does n
       </Parameters>
       <Docs>
         <param name="obj">The object to compare with the current instance.</param>
-        <summary>Determines whether the specified object is equal to the current object.</summary>
+        <summary>
+            Determines whether the specified object is equal to the current object.
+            Returns true if the object is Memory or ReadOnlyMemory and if both objects point to the same array and have the same length.
+            </summary>
         <returns>
           <see langword="true" /> if the current instance and <paramref name="obj" /> are equal; otherwise, <see langword="false" />.</returns>
         <remarks>
@@ -510,7 +505,9 @@ Two <xref:System.Memory%601> objects are equal if both objects point to the same
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the hash code for this instance.</summary>
+        <summary>
+            Serves as the default hash function.
+            </summary>
         <returns>A 32-bit signed integer hash code.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -549,7 +546,9 @@ Two <xref:System.Memory%601> objects are equal if both objects point to the same
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Indicates whether the current instance is empty.</summary>
+        <summary>
+            Returns true if Length is 0.
+            </summary>
         <value>
           <see langword="true" /> if the current instance is empty; otherwise, <see langword="false" />. </value>
         <remarks>A <see cref="T:System.Memory`1" /> object is empty if its length is 0.</remarks>
@@ -589,7 +588,9 @@ Two <xref:System.Memory%601> objects are equal if both objects point to the same
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of items in the current instance.</summary>
+        <summary>
+            The number of items in the memory.
+            </summary>
         <value>The number of items in the current instance.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -798,7 +799,13 @@ Two <xref:System.Memory%601> objects are equal if both objects point to the same
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Creates a handle for the <see cref="T:System.Memory`1" /> object.</summary>
+        <summary>
+            Creates a handle for the memory.
+            The GC will not move the memory until the returned <see cref="T:System.Buffers.MemoryHandle" />
+            is disposed, enabling taking and using the memory's address.
+            <exception cref="T:System.ArgumentException">
+            An instance with nonprimitive (non-blittable) members cannot be pinned.
+            </exception></summary>
         <returns>A handle for the <see cref="T:System.Memory`1" /> object.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -852,12 +859,15 @@ The garbage collector will not move the memory until the returned <xref:System.B
         <Parameter Name="start" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">The index at which to begin the slice.</param>
-        <summary>Forms a slice out of the current memory that begins at a specified index.</summary>
+        <param name="start">The index at which to begin this slice.</param>
+        <summary>
+            Forms a slice out of the given memory, beginning at 'start'.
+            </summary>
         <returns>An object that contains all elements of the current instance from <paramref name="start" /> to the end of the instance.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="start" /> is less than zero or greater than <see cref="P:System.Memory`1.Length" />. </exception>
+            Thrown when the specified <paramref name="start" /> index is not in range (&lt;0 or &gt;=Length).
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="Slice">
@@ -904,17 +914,16 @@ The garbage collector will not move the memory until the returned <xref:System.B
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="start">The index at which to begin the slice.</param>
-        <param name="length">The number of elements to include in the slice.</param>
-        <summary>Forms a slice out of the current memory starting at a specified index for a specified length.</summary>
+        <param name="start">The index at which to begin this slice.</param>
+        <param name="length">The desired length for the slice (exclusive).</param>
+        <summary>
+            Forms a slice out of the given memory, beginning at 'start', of given length
+            </summary>
         <returns>An object that contains <paramref name="length" /> elements from the current instance starting at <paramref name="start" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
-          <paramref name="start" /> is less than zero or greater than <see cref="P:System.Memory`1.Length" />.
-
--or-
-
-<paramref name="length" /> is greater than <see cref="P:System.Memory`1.Length" /> - <paramref name="start" /></exception>
+            Thrown when the specified <paramref name="start" /> or end index is not in range (&lt;0 or &gt;=Length).
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="Span">
@@ -957,7 +966,9 @@ The garbage collector will not move the memory until the returned <xref:System.B
         <ReturnType>System.Span&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Returns a span from the current instance.</summary>
+        <summary>
+            Returns a span from the memory.
+            </summary>
         <value>A span created from the current <see cref="T:System.Memory`1" /> object.</value>
         <remarks>Although it doesn't involve copying, it's costly to access this property.
           Instead of accessing this property multiple times, it's better to assign its result to a variable (if possible).</remarks>
@@ -998,7 +1009,11 @@ The garbage collector will not move the memory until the returned <xref:System.B
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Copies the contents from the memory into a new array.</summary>
+        <summary>
+            Copies the contents from the memory into a new array.  This heap
+            allocates, so should generally be avoided, however it is sometimes
+            necessary to bridge the gap with APIs written in terms of arrays.
+            </summary>
         <returns>An array containing the elements in the current memory.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -1046,7 +1061,10 @@ Each call to the `ToArray` method returns a new array.
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Returns the string representation of this <see cref="T:System.Memory`1" /> object.</summary>
+        <summary>
+            For <see cref="T:System.Memory`1" />, returns a new instance of string that represents the characters pointed to by the memory.
+            Otherwise, returns a <see cref="T:System.String" /> with the name of the type and the number of elements.
+            </summary>
         <returns>the string representation of this <see cref="T:System.Memory`1" /> object.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -1101,8 +1119,14 @@ For a `Memory<Char>`, the `ToString` method returns a <xref:System.String> that 
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="destination">The destination <see cref="T:System.Memory`1" /> object.</param>
-        <summary>Copies the contents of the memory into a destination <see cref="T:System.Memory`1" /> instance.</summary>
+        <param name="destination">The span to copy items into.</param>
+        <summary>
+             Copies the contents of the memory into the destination. If the source
+             and destination overlap, this method behaves as if the original values are in
+             a temporary location before the destination is overwritten.
+            
+             <returns>If the destination is shorter than the source, this method
+             return false and no data is written to the destination.</returns></summary>
         <returns>
           <see langword="true" /> if the copy operation succeeds; otherwise, <see langword="false" />.</returns>
         <remarks>

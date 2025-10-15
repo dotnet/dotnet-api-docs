@@ -638,7 +638,7 @@ An I/O error occurred while opening a file to be archived.</exception>
           <para>The directory structure is preserved in the archive, and a recursive search is done for files to be archived. The archive must not exist. If the directory is empty, an empty archive is created. If a file in the directory cannot be added to the archive, the archive will be left incomplete and invalid and the method will throw an exception. This method does not include the base directory into the archive.</para>
           <para>If an error is encountered while adding files to the archive, this method stops adding files and leaves the archive in an invalid state. The paths are permitted to specify relative or absolute path information. Relative path information is interpreted as relative to the current working directory. If a file in the archive has data in the last write time field that is not a valid zip timestamp, an indicator value of 1980 January 1 at midnight will be used for the file's last modified time.If an entry with the specified name already exists in the archive, a second entry is created that has an identical name. Since no <code>CompressionLevel</code> is specified, the default provided by the implementation of the underlying compression algorithm is used; the <code>ZipArchive</code> will not impose its own default.</para>
           <para>(Currently, the underlying compression algorithm is provided by the <see cref="T:System.IO.Compression.DeflateStream" /> class.)</para>
-          </remarks>
+        </remarks>
         <exception cref="T:System.ArgumentException">
           <para>
             <paramref name="sourceDirectoryName" /> or <paramref name="destinationArchiveFileName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by <code>InvalidPathChars</code>.</para>
@@ -763,8 +763,7 @@ An I/O error occurred while opening a file to be archived.</exception>
         <param name="destinationArchiveFileName">The name of the archive to be created.</param>
         <param name="compressionLevel">One of the enumeration values that specifies the level of the compression (speed/memory vs. compressed size trade-off).</param>
         <param name="includeBaseDirectory">
-          <see langword="true" /> to indicate that a directory named <paramref name="sourceDirectoryName" /> should be included at the root of the archive. <see langword=
-          "false" /> to indicate that the files and directories in <paramref name="sourceDirectoryName" /> should be included directly in the archive.
+          <see langword="true" /> to indicate that a directory named <paramref name="sourceDirectoryName" /> should be included at the root of the archive. <see langword="false" /> to indicate that the files and directories in <paramref name="sourceDirectoryName" /> should be included directly in the archive.
         </param>
         <param name="cancellationToken">The cancellation token to monitor for cancellation requests.</param>
         <summary>
@@ -918,7 +917,8 @@ An I/O error occurred while opening a file to be archived.</exception>
         <param name="destinationArchiveFileName">The name of the archive to be created.</param>
         <param name="compressionLevel">One of the enumeration values that specifies the level of the compression (speed/memory vs. compressed size trade-off).</param>
         <param name="includeBaseDirectory">
-          <para><see langword="true" /> to indicate that a directory named <paramref name="sourceDirectoryName" /> should be included at the root of the archive. <see langword="false" /> to indicate that the files and directories in <paramref name="sourceDirectoryName" /> should be included directly in the archive.</para>
+          <para>
+            <see langword="true" /> to indicate that a directory named <paramref name="sourceDirectoryName" /> should be included at the root of the archive. <see langword="false" /> to indicate that the files and directories in <paramref name="sourceDirectoryName" /> should be included directly in the archive.</para>
         </param>
         <param name="entryNameEncoding">
           The encoding to use when reading or writing entry names and comments in this ZipArchive.
@@ -935,22 +935,14 @@ An I/O error occurred while opening a file to be archived.</exception>
           <para>(Currently, the underlying compression algorithm is provided by the <see cref="T:System.IO.Compression.DeflateStream" /> class.)</para>
           <para>Specifying a value for <paramref name="entryNameEncoding" /> other than <see langword="null" /> is discouraged.</para>
           <para>However, this may be necessary for interoperability with zip archive tools and libraries that do not correctly support UTF-8 encoding for entry names or comments.</para>
-
           <ul>
             <li>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):
-              <ul>
-                <li>For file names or comments that contain characters outside the ASCII range:
-                  <br />The language encoding flag (EFS) will be set in the general purpose bit flag of the local file header of the corresponding entry, and UTF-8 (<code>Encoding.UTF8</code>) will be used to encode the entry name and comment into bytes.</li>
-                <li>For file names or comments that do not contain characters outside the ASCII range:
-                  <br />The language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header of the corresponding entry, and the current system default code page (<code>Encoding.Default</code>) will be used to encode the entry names and comments into bytes.</li>
-              </ul>
-            </li>
+              <ul><li>For file names or comments that contain characters outside the ASCII range:
+                  <br />The language encoding flag (EFS) will be set in the general purpose bit flag of the local file header of the corresponding entry, and UTF-8 (<code>Encoding.UTF8</code>) will be used to encode the entry name and comment into bytes.</li><li>For file names or comments that do not contain characters outside the ASCII range:
+                  <br />The language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header of the corresponding entry, and the current system default code page (<code>Encoding.Default</code>) will be used to encode the entry names and comments into bytes.</li></ul></li>
             <li>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):
-              <ul>
-                <li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.
-                  <br />The language encoding flag (EFS) in the general purpose bit flag of the local file header for each entry will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li>
-              </ul>
-            </li>
+              <ul><li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.
+                  <br />The language encoding flag (EFS) in the general purpose bit flag of the local file header for each entry will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li></ul></li>
           </ul>
           <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para>
         </remarks>
@@ -2006,9 +1998,11 @@ An archive entry has been compressed using a compression method that isn't suppo
         <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
         <exception cref="T:System.NotSupportedException">
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is in an invalid format.</exception>
-        <exception cref="T:System.IO.FileNotFoundException"><paramref name="sourceArchiveFileName" /> was not found.</exception>
+        <exception cref="T:System.IO.FileNotFoundException">
+          <paramref name="sourceArchiveFileName" /> was not found.</exception>
         <exception cref="T:System.IO.InvalidDataException">
-          <para><paramref name="sourceArchiveFileName" /> not a valid ZipArchive.</para>
+          <para>
+            <paramref name="sourceArchiveFileName" /> not a valid ZipArchive.</para>
           <para>-or-</para>
           <para>An archive entry was not found or was corrupt.</para>
           <para>-or-</para>
@@ -2064,17 +2058,9 @@ An archive entry has been compressed using a compression method that isn't suppo
           <para>This value is used as follows:</para>
           <ul>
             <li>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):
-              <ul>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</li>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
-              </ul>
-            </li>
+              <ul><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</li><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li></ul></li>
             <li>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):
-              <ul>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
-              </ul>
-            </li>
+              <ul><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li></ul></li>
           </ul>
           <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para>
         </remarks>
@@ -2240,26 +2226,20 @@ An archive entry has been compressed using a compression method that isn't suppo
           <para>This value is used as follows:</para>
           <ul>
             <li>If <paramref name="entryNameEncoding" /> is not specified (<code>== null</code>):
-              <ul>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</li>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
-              </ul>
-            </li>
+              <ul><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<code>Encoding.Default</code>) to decode the entry name and comment.</li><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li></ul></li>
             <li>If <paramref name="entryNameEncoding" /> is specified (<code>!= null</code>):
-              <ul>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
-                <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li>
-              </ul>
-            </li>
+              <ul><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<code>Encoding.UTF8</code>) to decode the entry name and comment.</li></ul></li>
           </ul>
-          <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para></remarks>
+          <para>Unicode encodings other than UTF-8 can't be used for the <paramref name="entryNameEncoding" />, otherwise an <see cref="T:System.ArgumentException" /> is thrown.</para>
+        </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.
         </exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.PathTooLongException">
-          <para><paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> specifies a path, file name, or both that exceeds the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
+          <para>
+            <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> specifies a path, file name, or both that exceeds the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</para>
         </exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">
           <para>The path specified by <paramref name="sourceArchiveFileName" /> or <paramref name="destinationDirectoryName" /> is invalid, (for example, it is on an unmapped drive).</para>
@@ -2632,36 +2612,22 @@ An unspecified I/O error occurred while opening the file.</exception>
           <para>Specifying a value other than <see langword="null" /> for <paramref name="entryNameEncoding" /> is discouraged. However, this might be necessary for interoperability with zip archive tools and libraries that do not correctly support UTF-8 encoding for entry names or comments.</para>
           <para>This value is used as follows:</para>
           <dl>
-            <li><strong>Reading (opening) ZIP archive files:</strong>
+            <li>
+              <strong>Reading (opening) ZIP archive files:</strong>
               <ul>
                 <li>If <paramref name="entryNameEncoding" /> is not specified (<c>== null</c>):
-                  <ul>
-                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<c>Encoding.Default</c>) to decode the entry name and comment.</li>
-                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li>
-                  </ul>
-                </li>
+                  <ul><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the current system default code page (<c>Encoding.Default</c>) to decode the entry name and comment.</li><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li></ul></li>
                 <li>If <paramref name="entryNameEncoding" /> is specified (<c>!= null</c>):
-                  <ul>
-                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li>
-                    <li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li>
-                  </ul>
-                </li>
+                  <ul><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header is <em>not</em> set, use the specified <paramref name="entryNameEncoding" /> to decode the entry name and comment.</li><li>For entries where the language encoding flag (EFS) in the general purpose bit flag of the local file header <em>is</em> set, use UTF-8 (<c>Encoding.UTF8</c>) to decode the entry name and comment.</li></ul></li>
               </ul>
             </li>
-            <li><strong>Writing (saving) ZIP archive files:</strong>
+            <li>
+              <strong>Writing (saving) ZIP archive files:</strong>
               <ul>
                 <li>If <paramref name="entryNameEncoding" /> is not specified (<c>== null</c>):
-                  <ul>
-                    <li>For entry names and comments that contain characters outside the ASCII range, the language encoding flag (EFS) will be set in the general purpose bit flag of the local file header, and UTF-8 (<c>Encoding.UTF8</c>) will be used to encode the entry name and comment into bytes.</li>
-                    <li>For entry names and comments that don't contain characters outside the ASCII range, the language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header, and the current system default code page (<c>Encoding.Default</c>) will be used to encode the entry names and comments into bytes.</li>
-                  </ul>
-                </li>
+                  <ul><li>For entry names and comments that contain characters outside the ASCII range, the language encoding flag (EFS) will be set in the general purpose bit flag of the local file header, and UTF-8 (<c>Encoding.UTF8</c>) will be used to encode the entry name and comment into bytes.</li><li>For entry names and comments that don't contain characters outside the ASCII range, the language encoding flag (EFS) will not be set in the general purpose bit flag of the local file header, and the current system default code page (<c>Encoding.Default</c>) will be used to encode the entry names and comments into bytes.</li></ul></li>
                 <li>If <paramref name="entryNameEncoding" /> is specified (<c>!= null</c>):
-                  <ul>
-                    <li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.</li>
-                    <li>The language encoding flag (EFS) in the general purpose bit flag of the local file header will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li>
-                  </ul>
-                </li>
+                  <ul><li>The specified <paramref name="entryNameEncoding" /> will always be used to encode the entry names and comments into bytes.</li><li>The language encoding flag (EFS) in the general purpose bit flag of the local file header will be set if and only if the specified <paramref name="entryNameEncoding" /> is a UTF-8 encoding.</li></ul></li>
               </ul>
             </li>
           </dl>
@@ -2814,7 +2780,8 @@ An unspecified I/O error occurred while opening the file.</exception>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentException">
-          <para><paramref name="archiveFileName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
+          <para>
+            <paramref name="archiveFileName" /> is a zero-length string, contains only whitespace, or contains one or more invalid characters as defined by InvalidPathChars.</para>
         </exception>
         <exception cref="T:System.ArgumentNullException">archiveFileName is <see langword="null" />.</exception>
         <exception cref="T:System.IO.PathTooLongException">
@@ -2824,7 +2791,8 @@ An unspecified I/O error occurred while opening the file.</exception>
         <exception cref="T:System.IO.DirectoryNotFoundException">The specified archiveFileName is invalid, (for example, it is on an unmapped drive).</exception>
         <exception cref="T:System.IO.IOException">An unspecified I/O error occurred while opening the file.</exception>
         <exception cref="T:System.UnauthorizedAccessException">
-          <para><paramref name="archiveFileName" /> specified a directory.</para>
+          <para>
+            <paramref name="archiveFileName" /> specified a directory.</para>
           <para>-or-</para>
           <para>The caller does not have the required permission.</para>
         </exception>
