@@ -28,7 +28,9 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>
+            Represents the context for validating a validatable object.
+            </summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -75,7 +77,10 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets the current depth in the validation hierarchy.
+            This is used to prevent stack overflows from circular references.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -96,7 +101,10 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets the prefix used to identify the current object being validated in a complex object graph.
+            This is used to build property paths in validation error messages (e.g., "Customer.Address.Street").
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -123,7 +131,9 @@
         <ReturnType>System.Action&lt;Microsoft.Extensions.Validation.ValidationErrorContext&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Optional event raised when a validation error is reported.
+            </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -149,9 +159,28 @@
         <ReturnType>System.ComponentModel.DataAnnotations.ValidationContext</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets the validation context used for validating objects that implement <see cref="T:System.ComponentModel.DataAnnotations.IValidatableObject" /> or have <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />.
+            This context provides access to service provider and other validation metadata.
+            </summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <remarks>
+            This property should be set by the consumer of the <see cref="T:Microsoft.Extensions.Validation.IValidatableInfo" />
+            interface to provide the necessary context for validation. The object should be initialized
+            with the current object being validated, the display name, and the service provider to support
+            the complete set of validation scenarios.
+            </remarks>
+        <example>
+          <code>
+            var validationContext = new ValidationContext(objectToValidate, serviceProvider, items);
+            var validationOptions = serviceProvider.GetService&lt;IOptions&lt;ValidationOptions&gt;&gt;()?.Value;
+            var validateContext = new ValidateContext
+            {
+                ValidationContext = validationContext,
+                ValidationOptions = validationOptions
+            };
+            </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="ValidationErrors">
@@ -176,7 +205,11 @@
         <ReturnType>System.Collections.Generic.Dictionary&lt;System.String,System.String[]&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets the dictionary of validation errors collected during validation.
+            Keys are property names or paths, and values are arrays of error messages.
+            In the default implementation, this dictionary is initialized when the first error is added.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -203,7 +236,10 @@
         <ReturnType>Microsoft.Extensions.Validation.ValidationOptions</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>
+            Gets or sets the validation options that control validation behavior,
+            including validation depth limits and resolver registration.
+            </summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
