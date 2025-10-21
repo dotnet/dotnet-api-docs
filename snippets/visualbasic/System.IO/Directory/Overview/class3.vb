@@ -1,9 +1,9 @@
 ﻿' <snippet11>
 Imports System.IO
 
-Module Module1
+Partial Class Program
+    Shared Sub EnumerateFilesExample()
 
-    Sub Main()
         Dim archiveDirectory As String = "C:\archive"
 
         Dim files = From retrievedFile In Directory.EnumerateFiles(archiveDirectory, "*.txt", SearchOption.AllDirectories)
@@ -17,8 +17,7 @@ Module Module1
         Console.WriteLine("{0} lines found.", files.Count.ToString())
 
     End Sub
-
-End Module
+End Class
 ' </snippet11>
 
 
