@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-class Program
+partial class Example2
 {
-    static void Main(string[] args)
+    static void OneStringExample()
     {
         try
         {
             // LINQ query for all files containing the word 'Europe'.
-            var files = from file in
-                Directory.EnumerateFiles(@"\\archives1\library\")
-                where file.ToLower().Contains("europe")
-                select file;
+            var files = from file in Directory.EnumerateFiles(@"\\archives1\library\")
+                        where file.ToLower().Contains("europe")
+                        select file;
 
             foreach (var file in files)
             {
                 Console.WriteLine("{0}", file);
             }
+
             Console.WriteLine("{0} files found.", files.Count<string>().ToString());
         }
         catch (UnauthorizedAccessException UAEx)
