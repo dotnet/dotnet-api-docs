@@ -19,7 +19,7 @@ class Test
 
             // Change the current directory.
             Environment.CurrentDirectory = (target);
-            if (path.Equals(Directory.GetCurrentDirectory()))
+            if (target.Equals(Directory.GetCurrentDirectory()))
             {
                 Console.WriteLine("You are in the temp directory.");
             }
