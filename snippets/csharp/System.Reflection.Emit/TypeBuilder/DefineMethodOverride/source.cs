@@ -83,7 +83,7 @@ class Test
 
         Type tc = tb.CreateType();
 
-        Object test = Activator.CreateInstance(tc);
+        object test = Activator.CreateInstance(tc);
 
         MethodInfo mi = typeof(I).GetMethod("M");
         mi.Invoke(test, null);
