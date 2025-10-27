@@ -10,7 +10,7 @@ public static void MySerializeIPEndPointClassMethod(){
 //<Snippet1>
 
 //Creates an IpEndPoint.
-IPAddress ipAddress = Dns.Resolve("www.contoso.com").AddressList[0];
+IPAddress ipAddress = Dns.GetHostEntry("www.contoso.com").AddressList[0];
 IPEndPoint ipLocalEndPoint = new IPEndPoint(ipAddress, 11000);
 
 //Serializes the IPEndPoint.
