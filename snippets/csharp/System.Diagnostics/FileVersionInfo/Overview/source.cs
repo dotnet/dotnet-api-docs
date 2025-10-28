@@ -9,8 +9,6 @@ class Class1
     public static void Main(string[] args)
     {
         // Get the file version for the notepad.
-        // Use either of the two following commands.
-        FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, "Notepad.exe"));
         FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, "Notepad.exe"));
 
         // Print the file name and version number.
