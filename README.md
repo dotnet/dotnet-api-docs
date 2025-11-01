@@ -12,7 +12,7 @@ To contribute, see:
 
 - The [.NET Contributor Guide :ledger:](https://learn.microsoft.com/contribute/dotnet/dotnet-contribute) for instructions on procedures we use.
 - Issues labeled [`help wanted` :label:](https://github.com/dotnet/dotnet-api-docs/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+) for ideas.
-- The API reference docs for some assemblies are maintained in the assembly's source code outside this repo, then edits to the XML here are auto-generated and ported. Docs for APIs in those assemblies should be updated by editing the source code comments. See [here](https://github.com/dotnet/runtime/docs/adding-api-guidelines.md#documentation) for details.
+- The API reference docs for some assemblies are maintained in the assembly's source code outside this repo. Edits to the XML here are auto-generated and ported, so docs for APIs in those assemblies should be updated by editing the source code comments. See [here](https://github.com/dotnet/runtime/docs/adding-api-guidelines.md#documentation) for details.
 
 ## :bookmark_tabs: Code of conduct
 
