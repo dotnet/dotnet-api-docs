@@ -15,7 +15,7 @@ public class Example
       
       string filename = Environment.GetCommandLineArgs()[1].Trim();
       // Check whether the file exists.
-      if (! File.Exists(filename)) {
+      if (!File.Exists(filename)) {
          Console.WriteLine("{0} does not exist.", filename);
          return;
       }   

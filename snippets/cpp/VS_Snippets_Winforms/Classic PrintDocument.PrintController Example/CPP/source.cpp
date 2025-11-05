@@ -22,11 +22,11 @@ protected:
 public:
    void myPrint()
    {
-      if ( useMyPrintController == true )
+      if ( useMyPrintController)
       {
          myPrintDocument->PrintController =
             gcnew myControllerImplementation;
-         if ( wantsStatusDialog == true )
+         if ( wantsStatusDialog)
          {
             myPrintDocument->PrintController =
                gcnew PrintControllerWithStatusDialog(

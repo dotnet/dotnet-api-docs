@@ -37,7 +37,7 @@ public class Example
       // Invoke each delegate that doesn't write to a file.
       for (int ctr = 0; ctr < outputMessage.GetInvocationList().Length; ctr++) {
          var outputMsg = outputMessage.GetInvocationList()[ctr];
-         if (! outputMsg.GetMethodInfo().Name.Contains("File"))
+         if (!outputMsg.GetMethodInfo().Name.Contains("File"))
             outputMsg.DynamicInvoke( new String[] { "Hi!" } );
       }
    }

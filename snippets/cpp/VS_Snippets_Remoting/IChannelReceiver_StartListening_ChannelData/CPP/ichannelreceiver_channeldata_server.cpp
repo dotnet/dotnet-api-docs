@@ -115,7 +115,7 @@ public:
    // Start listening to the port.
    virtual void StartListening( Object^ data )
    {
-      if ( myListening == false )
+      if ( !myListening )
       {
          myTcpListener->Start();
          myListening = true;
@@ -128,7 +128,7 @@ public:
    // Stop listening to the port.
    virtual void StopListening( Object^ data )
    {
-      if ( myListening == true )
+      if ( myListening )
       {
          myTcpListener->Stop();
          myListening = false;

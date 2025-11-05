@@ -21,7 +21,7 @@ public:
    {
       
       // Determine if menuItem2 is a parent menu.
-      if ( menuItem2->IsParent == true )
+      if ( menuItem2->IsParent)
       {
          
          // Loop through all the submenus.

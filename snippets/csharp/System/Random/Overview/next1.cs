@@ -1,31 +1,31 @@
 ﻿using System;
 
-public class Example
+public class Example8
 {
-   public static void Main()
-   {
-      // <Snippet3>
-      Random rnd = new Random();
-      string[] malePetNames = { "Rufus", "Bear", "Dakota", "Fido",
+    public static void Main()
+    {
+        // <Snippet3>
+        Random rnd = new();
+        string[] malePetNames = [ "Rufus", "Bear", "Dakota", "Fido",
                                 "Vanya", "Samuel", "Koani", "Volodya",
-                                "Prince", "Yiska" };
-      string[] femalePetNames = { "Maggie", "Penny", "Saya", "Princess",
+                                "Prince", "Yiska" ];
+        string[] femalePetNames = [ "Maggie", "Penny", "Saya", "Princess",
                                   "Abby", "Laila", "Sadie", "Olivia",
-                                  "Starlight", "Talla" };
+                                  "Starlight", "Talla" ];
 
-      // Generate random indexes for pet names.
-      int mIndex = rnd.Next(malePetNames.Length);
-      int fIndex = rnd.Next(femalePetNames.Length);
+        // Generate random indexes for pet names.
+        int mIndex = rnd.Next(malePetNames.Length);
+        int fIndex = rnd.Next(femalePetNames.Length);
 
-      // Display the result.
-      Console.WriteLine("Suggested pet name of the day: ");
-      Console.WriteLine("   For a male:     {0}", malePetNames[mIndex]);
-      Console.WriteLine("   For a female:   {0}", femalePetNames[fIndex]);
+        // Display the result.
+        Console.WriteLine("Suggested pet name of the day: ");
+        Console.WriteLine($"   For a male:     {malePetNames[mIndex]}");
+        Console.WriteLine($"   For a female:   {femalePetNames[fIndex]}");
 
-      // The example displays output similar to the following:
-      //       Suggested pet name of the day:
-      //          For a male:     Koani
-      //          For a female:   Maggie
-      // </Snippet3>
-   }
+        // The example displays output similar to the following:
+        //       Suggested pet name of the day:
+        //          For a male:     Koani
+        //          For a female:   Maggie
+        // </Snippet3>
+    }
 }

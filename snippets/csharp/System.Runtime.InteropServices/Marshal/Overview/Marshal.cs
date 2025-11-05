@@ -17,16 +17,7 @@ public sealed class App
         // Demonstrate the use of public static fields of the Marshal class.
         Console.WriteLine("SystemDefaultCharSize={0}, SystemMaxDBCSCharSize={1}",
             Marshal.SystemDefaultCharSize, Marshal.SystemMaxDBCSCharSize);
-	//</snippet2>
-
-        //<snippet3>
-        // Demonstrate the use of the SizeOf method of the Marshal class.
-        Console.WriteLine("Number of bytes needed by a Point object: {0}",
-            Marshal.SizeOf(typeof(Point)));
-        Point p = new Point();
-        Console.WriteLine("Number of bytes needed by a Point object: {0}",
-            Marshal.SizeOf(p));
-        //</snippet3>
+	    //</snippet2>
 
         //<snippet4>
         // Demonstrate how to call GlobalAlloc and
@@ -56,7 +47,5 @@ public sealed class App
 // This code produces the following output.
 //
 // SystemDefaultCharSize=2, SystemMaxDBCSCharSize=1
-// Number of bytes needed by a Point object: 8
-// Number of bytes needed by a Point object: 8
 // CloseHandle call failed with an error code of: 6
 //</snippet1>

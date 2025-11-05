@@ -2,68 +2,69 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public partial class Program
 {
     public static void Main()
     {
-        List<string> dinosaurs = new List<string>(4);
+        List<string> animals = new List<string>(4);
 
-        Console.WriteLine("\nCapacity: {0}", dinosaurs.Capacity);
+        Console.WriteLine("\nCapacity: {0}", animals.Capacity);
 
-        dinosaurs.Add("Tyrannosaurus");
-        dinosaurs.Add("Amargasaurus");
-        dinosaurs.Add("Mamenchisaurus");
-        dinosaurs.Add("Deinonychus");
+        animals.Add("Cat");
+        animals.Add("Dog");
+        animals.Add("Squirrel");
+        animals.Add("Wolf");
 
         Console.WriteLine();
-        foreach(string s in dinosaurs)
+        foreach (string animal in animals)
         {
-            Console.WriteLine(s);
+            Console.WriteLine(animal);
         }
 
-        Console.WriteLine("\nIList<string> roDinosaurs = dinosaurs.AsReadOnly()");
-        IList<string> roDinosaurs = dinosaurs.AsReadOnly();
+        Console.WriteLine("\nIList<string> roAnimals = animals.AsReadOnly()");
+        IList<string> roAnimals = animals.AsReadOnly();
 
         Console.WriteLine("\nElements in the read-only IList:");
-        foreach(string dinosaur in roDinosaurs)
+        foreach (string animal in roAnimals)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(animal);
         }
 
-        Console.WriteLine("\ndinosaurs[2] = \"Coelophysis\"");
-        dinosaurs[2] = "Coelophysis";
+        Console.WriteLine("\nanimals[2] = \"Lion\"");
+        animals[2] = "Lion";
 
         Console.WriteLine("\nElements in the read-only IList:");
-        foreach(string dinosaur in roDinosaurs)
+        foreach (string animal in roAnimals)
         {
-            Console.WriteLine(dinosaur);
+            Console.WriteLine(animal);
         }
     }
 }
 
-/* This code example produces the following output:
+/*
+    This code example produces the following output:
 
-Capacity: 4
+    Capacity: 4
 
-Tyrannosaurus
-Amargasaurus
-Mamenchisaurus
-Deinonychus
+    Cat
+    Dog
+    Squirrel
+    Wolf
 
-IList<string> roDinosaurs = dinosaurs.AsReadOnly()
+    IList<string> roAnimals = animals.AsReadOnly()
 
-Elements in the read-only IList:
-Tyrannosaurus
-Amargasaurus
-Mamenchisaurus
-Deinonychus
+    Elements in the read-only IList:
+    Cat
+    Dog
+    Squirrel
+    Wolf
 
-dinosaurs[2] = "Coelophysis"
+    animals[2] = "Lion"
 
-Elements in the read-only IList:
-Tyrannosaurus
-Amargasaurus
-Coelophysis
-Deinonychus
- */
+    Elements in the read-only IList:
+    Cat
+    Dog
+    Lion
+    Wolf
+*/
 // </Snippet1>

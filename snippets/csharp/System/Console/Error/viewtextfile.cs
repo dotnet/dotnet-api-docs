@@ -14,7 +14,7 @@ public class ViewTextFile
 
       for (int ctr = 1; ctr <= args.GetUpperBound(0); ctr++)  {
          // Check whether the file exists.
-         if (! File.Exists(args[ctr])) {
+         if (!File.Exists(args[ctr])) {
             errorOutput += String.Format("'{0}' does not exist.\n", args[ctr]);
          }
          else {
@@ -30,7 +30,7 @@ public class ViewTextFile
       }
 
       // Check for error conditions.
-      if (! String.IsNullOrEmpty(errorOutput)) {
+      if (!String.IsNullOrEmpty(errorOutput)) {
          // Write error information to a file.
          Console.SetError(new StreamWriter(@".\ViewTextFile.Err.txt"));
          Console.Error.WriteLine(errorOutput);

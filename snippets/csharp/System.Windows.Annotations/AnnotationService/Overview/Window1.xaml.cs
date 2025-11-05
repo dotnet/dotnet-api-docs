@@ -232,7 +232,7 @@ namespace SDKSample
                 _annotService = new AnnotationService(docViewer);
 
             // If the AnnotationService is currently enabled, disable it.
-            if (_annotService.IsEnabled == true)
+            if (_annotService.IsEnabled)
                 _annotService.Disable();
 
             // Open a stream to the file for storing annotations.
@@ -349,7 +349,7 @@ namespace SDKSample
                 return; // DocumentViewer has not been initialized yet.
 
             // If Annotations are disabled, use normal DocuementViewer.Print()
-            if (menuViewAnnotations.IsChecked == false)
+            if (!menuViewAnnotations.IsChecked)
             {
                 docViewer.Print();
             }

@@ -89,9 +89,6 @@ public class QueueExample
             // Demonstrate GetAllMessages.
             example.GetAllMessages();
 
-            // Demonstrate GetEnumerator.
-            example.GetEnumerator();
-
             // Demonstrate SetPermissions.
             example.SetPermissions_StringAccessrights();
 
@@ -113,7 +110,7 @@ public class QueueExample
             // Demonstrate Purge.
             example.Purge();
         }
-        catch(System.Exception e)
+        catch (Exception e)
         {
             // Write the exception information to the console.
             Console.WriteLine(e);
@@ -123,7 +120,7 @@ public class QueueExample
     // Creates a new queue.
     public static void CreateQueue(string queuePath, bool transactional)
     {
-        if(!MessageQueue.Exists(queuePath))
+        if (!MessageQueue.Exists(queuePath))
         {
             MessageQueue.Create(queuePath, transactional);
         }
@@ -206,7 +203,7 @@ public class QueueExample
             // Commit the transaction.
             transaction.Commit();
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             // Cancel the transaction.
             transaction.Abort();
@@ -569,7 +566,7 @@ public class QueueExample
             // Commit the transaction.
             transaction.Commit();
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             // Cancel the transaction.
             transaction.Abort();
@@ -645,7 +642,7 @@ public class QueueExample
             // Commit the transaction.
             transaction.Commit();
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             // Cancel the transaction.
             transaction.Abort();
@@ -752,7 +749,7 @@ public class QueueExample
             // Commit the transaction.
             transaction.Commit();
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             // Cancel the transaction.
             transaction.Abort();
@@ -801,7 +798,7 @@ public class QueueExample
             // Commit the transaction.
             transaction.Commit();
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             // Cancel the transaction.
             transaction.Abort();
@@ -875,36 +872,13 @@ public class QueueExample
         Message[] msgs = queue.GetAllMessages();
 
         // Loop through the messages.
-        foreach(Message msg in msgs)
+        foreach (Message msg in msgs)
         {
             // Display the label of each message.
             Console.WriteLine(msg.Label);
         }
 
         // </snippet21>
-    }
-
-        public void GetEnumerator()
-    {
-        // <snippet22>
-
-        // Connect to a queue on the local computer.
-        MessageQueue queue = new MessageQueue(".\\exampleQueue");
-
-        // Get an IEnumerator object.
-        System.Collections.IEnumerator enumerator = queue.GetEnumerator();
-
-        // Use the IEnumerator object to loop through the messages.
-        while(enumerator.MoveNext())
-        {
-            // Get a message from the enumerator.
-            Message msg = (Message)enumerator.Current;
-
-            // Display the label of the message.
-            Console.WriteLine(msg.Label);
-        }
-
-        // </snippet22>
     }
 
     public void SetPermissions_StringAccessrights()

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Navigation;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.IO;
 
 namespace SDKSample
 {
     public partial class MyApp : Application
     {
+        [STAThread]
+        public static void Main()
+        {
+            MyApp app = new MyApp();
+            app.InitializeComponent();
+            app.Run();
+        }
 
         public MyApp()
         {
@@ -30,9 +33,10 @@ namespace SDKSample
                 StreamWriter wr = new StreamWriter("error.txt");
                 wr.Write(args.ExceptionObject.ToString());
                 wr.Close();
-            }catch( Exception e)
+            }
+            catch(Exception)
             {
-               throw e;
+                throw;
             }
             MessageBox.Show("Unhandled exception: " + args.ExceptionObject.ToString());
         }

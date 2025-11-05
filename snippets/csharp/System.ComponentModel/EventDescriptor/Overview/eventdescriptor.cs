@@ -1,110 +1,98 @@
 ﻿using System;
-using System.Drawing;
-using System.Collections;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
-using System.Data;
 
-namespace EventDescriptor
+namespace EventDescriptor;
+
+/// <summary>
+/// Summary description for Form1.
+/// </summary>
+public class Form1 : Form
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
-	public class Form1 : System.Windows.Forms.Form
-	{
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.TextBox textBox1;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    Button button1;
+    TextBox textBox1;
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    readonly Container _components;
 
-		public Form1()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+    public Form1() =>
+        //
+        // Required for Windows Form Designer support
+        //
+        InitializeComponent();
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-		}
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _components?.Dispose();
+        }
+        base.Dispose(disposing);
+    }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+    #region Windows Form Designer generated code
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    void InitializeComponent()
+    {
+        button1 = new Button();
+        textBox1 = new TextBox();
+        SuspendLayout();
+        //
+        // button1
+        //
+        button1.Name = "button1";
+        button1.TabIndex = 0;
+        button1.Text = "button1";
+        //
+        // textBox1
+        //
+        textBox1.Location = new Point(8, 96);
+        textBox1.Multiline = true;
+        textBox1.Name = "textBox1";
+        textBox1.Size = new Size(608, 160);
+        textBox1.TabIndex = 1;
+        textBox1.Text = "textBox1";
+        //
+        // Form1
+        //
+        ClientSize = new Size(632, 273);
+        Controls.AddRange(
+        [
+            textBox1,
+            button1
+        ]);
+        Name = "Form1";
+        Text = "Form1";
+        Load += Form1_Load;
+        ResumeLayout(false);
+    }
+    #endregion
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.button1 = new System.Windows.Forms.Button();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.SuspendLayout();
-			// 
-			// button1
-			// 
-			this.button1.Name = "button1";
-			this.button1.TabIndex = 0;
-			this.button1.Text = "button1";
-			// 
-			// textBox1
-			// 
-			this.textBox1.Location = new System.Drawing.Point(8, 96);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(608, 160);
-			this.textBox1.TabIndex = 1;
-			this.textBox1.Text = "textBox1";
-			// 
-			// Form1
-			// 
-			this.ClientSize = new System.Drawing.Size(632, 273);
-			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.textBox1,
-																		  this.button1});
-			this.Name = "Form1";
-			this.Text = "Form1";
-			this.Load += new System.EventHandler(this.Form1_Load);
-			this.ResumeLayout(false);
-		}
-		#endregion
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    [STAThread]
+    static void Main() => Application.Run(new Form1());
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main() 
-		{
-			Application.Run(new Form1());
-		}
-
-		private void Form1_Load(object sender, System.EventArgs e)
-		{
-//<snippet1>
-EventDescriptorCollection events = TypeDescriptor.GetEvents(button1);
-// Displays each event's information in the collection in a text box.
-foreach (System.ComponentModel.EventDescriptor myEvent in events) {
-    textBox1.Text += myEvent.Category + '\n';
-    textBox1.Text += myEvent.Description + '\n';
-    textBox1.Text += myEvent.DisplayName + '\n';
-}
-//</snippet1>
-		}
-	}
+    void Form1_Load(object sender, EventArgs e)
+    {
+        //<snippet1>
+        EventDescriptorCollection events = TypeDescriptor.GetEvents(button1);
+        // Displays each event's information in the collection in a text box.
+        foreach (System.ComponentModel.EventDescriptor myEvent in events)
+        {
+            textBox1.Text += myEvent.Category + '\n';
+            textBox1.Text += myEvent.Description + '\n';
+            textBox1.Text += myEvent.DisplayName + '\n';
+        }
+        //</snippet1>
+    }
 }

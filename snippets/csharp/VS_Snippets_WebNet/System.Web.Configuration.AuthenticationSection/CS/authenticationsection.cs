@@ -1,61 +1,43 @@
 ﻿using System;
-using System.Configuration;
-using System.Web.Configuration;
 using System.Web;
+using System.Web.Configuration;
 
 namespace Samples.AspNet.Configuration
 {
-
     class UsingAuthenticationSection
     {
-         public static void Main()
-         {
- 
+        public static void Main()
+        {
             // <Snippet1>
             // Get the Web application configuration.
             System.Configuration.Configuration configuration =
-                System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(
+                WebConfigurationManager.OpenWebConfiguration(
                 "/aspnetTest");
 
-            // Get the section.
+            // Get the authentication section.
             AuthenticationSection authenticationSection =
                 (AuthenticationSection)configuration.GetSection(
                 "system.web/authentication");
-
             // </Snippet1>
 
             // <Snippet2>
-            AuthenticationSection newauthenticationSection = 
+            AuthenticationSection newauthenticationSection =
                 new AuthenticationSection();
-
             // </Snippet2>
-
-            // <Snippet3>
-            // Get the current Passport property.
-            PassportAuthentication currentPassport = 
-                authenticationSection.Passport;
-
-            // Get the Passport redirect URL.
-            string passRedirectUrl = 
-                currentPassport.RedirectUrl;
-
-            // </Snippet3>
 
             // <Snippet4>
             // Get the current Mode property.
-            AuthenticationMode currentMode = 
+            AuthenticationMode currentMode =
                 authenticationSection.Mode;
 
             // Set the Mode property to Windows.
-            authenticationSection.Mode = 
+            authenticationSection.Mode =
                 AuthenticationMode.Windows;
-
             // </Snippet4>
 
             // <Snippet5>
             // Get the current Forms property.
-            
-            FormsAuthenticationConfiguration currentForms = 
+            FormsAuthenticationConfiguration currentForms =
                 authenticationSection.Forms;
 
             // Get the Forms attributes.
@@ -71,8 +53,7 @@ namespace Samples.AspNet.Configuration
             FormsProtectionEnum protection = currentForms.Protection;
             string defaultUrl = currentForms.DefaultUrl;
             string domain = currentForms.Domain;
-
             // </Snippet5>
         }
-    } 
+    }
 }

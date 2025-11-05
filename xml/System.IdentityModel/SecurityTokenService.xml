@@ -26,11 +26,11 @@
 
  The following list provides a brief overview of the methods of primary importance to the developer for use in a test or development environment.
 
--   The <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> method. This method returns a <xref:System.IdentityModel.Scope> object that contains information about the RP. This object is used in the rest of the token issuance pipeline and includes information about the signing and encrypting credentials to use in the response, as well as the `AppliesTo` and `ReplyTo` (if required) addresses. You must override this method.
+- The <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> method. This method returns a <xref:System.IdentityModel.Scope> object that contains information about the RP. This object is used in the rest of the token issuance pipeline and includes information about the signing and encrypting credentials to use in the response, as well as the `AppliesTo` and `ReplyTo` (if required) addresses. You must override this method.
 
--   The <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> method. This method returns an <xref:System.Security.Claims.ClaimsIdentity> object that contains the claims to return to the RP. You must override this method.
+- The <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> method. This method returns an <xref:System.Security.Claims.ClaimsIdentity> object that contains the claims to return to the RP. You must override this method.
 
--   The <xref:System.IdentityModel.SecurityTokenService.Issue%2A> method. This method implements the token request pipeline, which processes an incoming security token request (RST) and returns a response (RSTR) to the caller that contains a token that can be used to authenticate with an RP. Many of the other methods defined in the <xref:System.IdentityModel.SecurityTokenService> class are called from this method, including the <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> and <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> methods. You do not have to override this method, but an understanding of the token request pipeline it implements may be helpful.
+- The <xref:System.IdentityModel.SecurityTokenService.Issue%2A> method. This method implements the token request pipeline, which processes an incoming security token request (RST) and returns a response (RSTR) to the caller that contains a token that can be used to authenticate with an RP. Many of the other methods defined in the <xref:System.IdentityModel.SecurityTokenService> class are called from this method, including the <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> and <xref:System.IdentityModel.SecurityTokenService.GetOutputClaimsIdentity%2A> methods. You do not have to override this method, but an understanding of the token request pipeline it implements may be helpful.
 
  An STS is configured through the <xref:System.IdentityModel.Configuration.SecurityTokenServiceConfiguration> class.
 
@@ -818,16 +818,16 @@
 ## Remarks
  The <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> method is called from the token issuance pipeline after the <xref:System.IdentityModel.SecurityTokenService.ValidateRequest%2A> method and should return a <xref:System.IdentityModel.Scope> object configured for the incoming request. (The token issuance pipeline is implemented in the <xref:System.IdentityModel.SecurityTokenService.Issue%2A> method.) The <xref:System.IdentityModel.Scope> object encapsulates information about the RP associated with the security token request (RST). This includes information about the encrypting and signing credentials to be used with the RP and whether or not to encrypt any issued tokens and/or symmetric keys in the response. Some typical tasks performed in the <xref:System.IdentityModel.SecurityTokenService.GetScope%2A> method are:
 
--   Determine whether the RP for which the token is intended is a recognized RP. How this is accomplished depends on your implementation. If the intended RP is not a valid RP for this STS, then the method should throw an <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.
+- Determine whether the RP for which the token is intended is a recognized RP. How this is accomplished depends on your implementation. If the intended RP is not a valid RP for this STS, then the method should throw an <xref:System.IdentityModel.Protocols.WSTrust.InvalidRequestException>.
 
--   Determine the signing credentials to be used in the response (RSTR) and set the <xref:System.IdentityModel.Scope.SigningCredentials%2A> property accordingly.
+- Determine the signing credentials to be used in the response (RSTR) and set the <xref:System.IdentityModel.Scope.SigningCredentials%2A> property accordingly.
 
--   Determine whether the response and/or any included symmetrical keys should be encrypted and the credentials to be used for encryption. Set the <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A>, <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A>, and <xref:System.IdentityModel.Scope.EncryptingCredentials%2A> properties accordingly.
+- Determine whether the response and/or any included symmetrical keys should be encrypted and the credentials to be used for encryption. Set the <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A>, <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A>, and <xref:System.IdentityModel.Scope.EncryptingCredentials%2A> properties accordingly.
 
     > [!IMPORTANT]
     >  By default, the <xref:System.IdentityModel.Scope.TokenEncryptionRequired%2A> and <xref:System.IdentityModel.Scope.SymmetricKeyEncryptionRequired%2A> properties are set `true` to prevent the STS from issuing tokens that are not secure. It is recommended that these properties never be set to `false` in a production environment.
 
--   Determine the address to which the response should be returned. Set either the <xref:System.IdentityModel.Scope.AppliesToAddress%2A> or <xref:System.IdentityModel.Scope.ReplyToAddress%2A> property accordingly.
+- Determine the address to which the response should be returned. Set either the <xref:System.IdentityModel.Scope.AppliesToAddress%2A> or <xref:System.IdentityModel.Scope.ReplyToAddress%2A> property accordingly.
 
 
 

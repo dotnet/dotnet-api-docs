@@ -44,7 +44,7 @@ namespace Samples.AspNet.Controls.CS {
            // Call OnDataBinding here if bound to a data source using the
            // DataSource property (instead of a DataSourceID), because the
            // databinding statement is evaluated before the call to GetData.       
-            if (! IsBoundUsingDataSourceID) {
+            if (!IsBoundUsingDataSourceID) {
                 OnDataBinding(EventArgs.Empty);
             }            
             

@@ -11,12 +11,12 @@
       {
         if (HtmlSelect1.SelectedIndex >= 0)
         {
-          if (HtmlSelect1.Multiple == true)
+          if (HtmlSelect1.Multiple)
           {
             Div1.InnerHtml = "You selected:";
             for (int i=0; i<=HtmlSelect1.Items.Count - 1; i++)
             {
-              if (HtmlSelect1.Items[i].Selected == true)
+              if (HtmlSelect1.Items[i].Selected)
               {
                 Div1.InnerHtml += "<br /> &nbsp;&nbsp; " + HtmlSelect1.Items[i].Value; 
               }     

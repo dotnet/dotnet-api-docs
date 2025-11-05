@@ -22,7 +22,7 @@ using Microsoft.Win32;
         {
             Console.WriteLine("Checking custom credential policy.");
             if (request.RequestUri.Host == "www.contoso.com" ||
-                challengeUri.IsLoopback == true)
+                challengeUri.IsLoopback)
                 return true;
 
             return false;
@@ -49,7 +49,7 @@ using Microsoft.Win32;
             Console.WriteLine("Checking custom credential policy for HTTPS and basic.");
             bool answer = base.ShouldSendCredential(challengeUri, request, credential, authModule);
 
-            if (answer == true)
+            if (answer )
             {
                 Console.WriteLine("Sending credential for intranet resource.");
                 return answer;

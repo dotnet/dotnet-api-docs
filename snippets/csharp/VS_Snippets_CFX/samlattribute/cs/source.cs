@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //-----------------------------------------------------------------------------
 using System;
@@ -80,7 +80,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
             return samlAttributes;
         }
         //</snippet1>
-        public static void Main() {}
+        public static void Main() { }
 
         #region Helper Methods
         /// <summary>
@@ -139,7 +139,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
                 return false;
 
             List<ClaimSet> claimsets = new List<ClaimSet>(authContext.ClaimSets);
-            ClaimSet myClaimSet = claimsets.Find((Predicate<ClaimSet>)delegate(ClaimSet target)
+            ClaimSet myClaimSet = claimsets.Find((Predicate<ClaimSet>)delegate (ClaimSet target)
             {
                 X509CertificateClaimSet certClaimSet = target.Issuer as X509CertificateClaimSet;
                 return certClaimSet != null && certClaimSet.X509Certificate.Subject == "CN=HomeRealmSTS.com";
@@ -247,8 +247,8 @@ namespace Microsoft.ServiceModel.Samples.Federation
     /// Abstract base class for STS implementations.
     /// </summary>
 	public abstract class SecurityTokenService : ISecurityTokenService
-	{
-		string stsName; // The name of the STS. Used to populate saml:Assertion/@Issuer
+    {
+        string stsName; // The name of the STS. Used to populate saml:Assertion/@Issuer
         SecurityToken issuerToken; // The SecurityToken used to sign issued tokens
         SecurityToken proofKeyEncryptionToken; // The SecurityToken used to encrypt the proof key in the issued token.
 
@@ -289,7 +289,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
             get { return this.proofKeyEncryptionToken; }
         }
 
-		#region Abstract methods
+        #region Abstract methods
 
         /// <summary>
         /// Abstract method for setting up claims in the SAML Token issued by the STS
@@ -322,10 +322,14 @@ namespace Microsoft.ServiceModel.Samples.Federation
         protected static BinarySecretSecurityToken CreateProofToken(int keySize)
         {
             // Create an array to store the key bytes.
-            byte[] key = new byte[keySize/8];
+            byte[] key = new byte[keySize / 8];
+
             // Create some random bytes.
-            RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-            random.GetNonZeroBytes(key);
+            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+            {
+                random.GetNonZeroBytes(key);
+            }
+
             // Create a BinarySecretSecurityToken from the random bytes and return it.
             return new BinarySecretSecurityToken(key);
         }
@@ -409,9 +413,12 @@ namespace Microsoft.ServiceModel.Samples.Federation
             {
                 // Create an array to store the entropy bytes.
                 stsEntropy = new byte[keySize / 8];
+
                 // Create some random bytes.
-                RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-                random.GetNonZeroBytes(stsEntropy);
+                using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+                {
+                    random.GetNonZeroBytes(stsEntropy);
+                }
                 // Compute the combined key.
                 key = RequestSecurityTokenResponse.ComputeCombinedKey(senderEntropy, stsEntropy, keySize);
             }
@@ -419,9 +426,12 @@ namespace Microsoft.ServiceModel.Samples.Federation
             {
                 // Create an array to store the entropy bytes.
                 key = new byte[keySize / 8];
+
                 // Create some random bytes.
-                RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-                random.GetNonZeroBytes(key);
+                using (RandomNumberGenerator random = RandomNumberGenerator.Create())
+                {
+                    random.GetNonZeroBytes(key);
+                }
             }
 
             // Create a BinarySecretSecurityToken to be the proof token, based on the key material
@@ -846,14 +856,14 @@ namespace Microsoft.ServiceModel.Samples.Federation
                     !xr.IsEmptyElement &&
                     XmlNodeType.Element == xr.NodeType)
                 {
-		    // <Snippet11>
+                    // <Snippet11>
                     // Create a DataContractSerializer for an EndpointAddress10.
                     DataContractSerializer dcs = new DataContractSerializer(typeof(EndpointAddress10));
                     // Read the EndpointAddress10 from the DataContractSerializer.
                     EndpointAddress10 ea10 = (EndpointAddress10)dcs.ReadObject(xr, false);
                     // Convert the EndpointAddress10 into an EndpointAddress.
                     ea = ea10.ToEndpointAddress();
-		    // </Snippet11>
+                    // </Snippet11>
                 }
 
                 // Look for the end-tag that corresponds to the start-tag that the reader was positioned
@@ -1064,7 +1074,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
             byte[] a = issuerEntropy; // A(0)
             byte[] b = new byte[kha.HashSize / 8 + a.Length]; // Buffer for A(i) + seed
 
-            for (int i = 0; i < key.Length; )
+            for (int i = 0; i < key.Length;)
             {
                 // Calculate A(i+1).
                 kha.Initialize();
@@ -1348,20 +1358,20 @@ namespace Microsoft.ServiceModel.Samples.Federation
         /// </summary>
         public static void LoadAppSettings()
         {
-/*		
-            BookDB = ConfigurationManager.AppSettings["bookDB"];
-            CheckIfLoaded(BookDB);
-            BookDB = string.Format("{0}\\{1}", System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, BookDB);
+            /*		
+                        BookDB = ConfigurationManager.AppSettings["bookDB"];
+                        CheckIfLoaded(BookDB);
+                        BookDB = string.Format("{0}\\{1}", System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, BookDB);
 
-            CertDistinguishedName = ConfigurationManager.AppSettings["certDistinguishedName"];
-            CheckIfLoaded(CertDistinguishedName);
+                        CertDistinguishedName = ConfigurationManager.AppSettings["certDistinguishedName"];
+                        CheckIfLoaded(CertDistinguishedName);
 
-            TargetDistinguishedName = ConfigurationManager.AppSettings["targetDistinguishedName"];
-            CheckIfLoaded(TargetDistinguishedName);
+                        TargetDistinguishedName = ConfigurationManager.AppSettings["targetDistinguishedName"];
+                        CheckIfLoaded(TargetDistinguishedName);
 
-            IssuerDistinguishedName = ConfigurationManager.AppSettings["issuerDistinguishedName"];
-            CheckIfLoaded(IssuerDistinguishedName);
-            */
+                        IssuerDistinguishedName = ConfigurationManager.AppSettings["issuerDistinguishedName"];
+                        CheckIfLoaded(IssuerDistinguishedName);
+                        */
         }
 
         /// <summary>

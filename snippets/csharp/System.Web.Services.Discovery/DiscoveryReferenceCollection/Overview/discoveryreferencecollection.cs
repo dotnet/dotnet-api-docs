@@ -46,8 +46,7 @@ class MyDiscoveryDocumentClass
          + myDiscoveryReferenceCollection.Count.ToString());
 
       // Call the Contains method.
-      if (myDiscoveryReferenceCollection.Contains(myDiscoveryDocReference1)
-         != true)
+      if (!myDiscoveryReferenceCollection.Contains(myDiscoveryDocReference1))
       {
          throw new Exception("Element not found in collection.");
       }

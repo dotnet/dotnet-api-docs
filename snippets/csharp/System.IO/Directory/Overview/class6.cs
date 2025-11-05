@@ -2,23 +2,20 @@
 using System;
 using System.IO;
 
-namespace ConsoleApplication
+partial class Program
 {
-    class Program
+    static void DirectoryMoveExample()
     {
-        static void Main(string[] args)
-        {
-            string sourceDirectory = @"C:\source";
-            string destinationDirectory = @"C:\destination";
+        string sourceDirectory = @"C:\source";
+        string destinationDirectory = @"C:\destination";
 
-            try
-            {
-                Directory.Move(sourceDirectory, destinationDirectory);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+        try
+        {
+            Directory.Move(sourceDirectory, destinationDirectory);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
     }
 }

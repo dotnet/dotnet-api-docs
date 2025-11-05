@@ -1,0 +1,23 @@
+﻿' <snippet12>
+Imports System.IO
+
+Partial Class Example1
+    Shared Sub OneStringExample()
+
+        Dim sourceDirectory As String = "C:\current"
+        Dim archiveDirectory As String = "C:\archive"
+
+        Try
+            Dim txtFiles = Directory.EnumerateFiles(sourceDirectory)
+
+            For Each currentFile As String In txtFiles
+                Dim fileName = currentFile.Substring(sourceDirectory.Length + 1)
+                Directory.Move(currentFile, Path.Combine(archiveDirectory, fileName))
+            Next
+        Catch e As Exception
+            Console.WriteLine(e.Message)
+        End Try
+
+    End Sub
+End Class
+' </snippet12>

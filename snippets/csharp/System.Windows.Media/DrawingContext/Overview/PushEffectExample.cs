@@ -1,10 +1,7 @@
 ﻿// <SnippetPushEffectExampleWholePage> 
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Navigation;
 using System.Windows.Media.Effects;
 
 namespace SDKSample
@@ -35,21 +32,6 @@ namespace SDKSample
 
                 // This rectangle is drawn at 50% opacity.
                 dc.DrawRectangle(Brushes.Blue, shapeOutlinePen, new Rect(25, 25, 25, 25));
-
-                // Blurs subsquent drawings. 
-                dc.PushEffect(new BlurBitmapEffect(), null);
-
-                // This rectangle is blurred and drawn at 50% opacity (0.5 x 0.5). 
-                dc.DrawRectangle(Brushes.Blue, shapeOutlinePen, new Rect(50, 50, 25, 25));
-
-                // This rectangle is also blurred and drawn at 50% opacity.
-                dc.DrawRectangle(Brushes.Blue, shapeOutlinePen, new Rect(75, 75, 25, 25));
-
-                // Stop applying the blur to subsquent drawings.
-                dc.Pop();
-
-                // This rectangle is drawn at 50% opacity with no blur effect.
-                dc.DrawRectangle(Brushes.Blue, shapeOutlinePen, new Rect(100, 100, 25, 25));
             }
 
             // Display the drawing using an image control.

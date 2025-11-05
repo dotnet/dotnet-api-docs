@@ -28,12 +28,21 @@
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <AssemblyVersion>6.2.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.1.0.0</AssemblyVersion>
+    <AssemblyVersion>8.1.1.0</AssemblyVersion>
+    <AssemblyVersion>8.1.2.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Private.ServiceModel</AssemblyName>
+    <AssemblyVersion>4.10.3.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="System.ServiceModel" FromVersion="4.0.0.0" To="System.ServiceModel.Duplex" ToVersion="4.6.0.0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0" />
-    <TypeForwarding From="System.ServiceModel" FromVersion="4.0.0.0" To="System.ServiceModel.Duplex" ToVersion="4.7.0.0" FrameworkAlternate="dotnet-plat-ext-3.1" />
-    <TypeForwarding From="System.ServiceModel" FromVersion="4.0.0.0" To="System.ServiceModel.Duplex" ToVersion="5.0.0.0" FrameworkAlternate="dotnet-plat-ext-5.0" />
     <TypeForwarding From="System.ServiceModel" FromVersion="4.0.0.0" To="System.ServiceModel.Duplex" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
+    <TypeForwarding From="System.ServiceModel" FromVersion="4.0.0.0" To="System.ServiceModel.Primitives" ToVersion="8.1.2.0" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp" />
+    <TypeForwarding From="System.ServiceModel.Duplex" FromVersion="8.1.2.0" To="System.ServiceModel.Primitives" ToVersion="8.1.2.0" FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp" />
+    <TypeForwarding From="System.ServiceModel.Duplex" FromVersion="6.0.0.0" To="System.ServiceModel.Primitives" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0-pp;net-7.0-pp" />
+    <TypeForwarding From="System.ServiceModel.Duplex" FromVersion="8.1.2.0" To="System.ServiceModel" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7-pp" />
+    <TypeForwarding From="System.ServiceModel.Primitives" FromVersion="8.1.2.0" To="System.ServiceModel" ToVersion="4.0.0.0" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7-pp" />
   </TypeForwardingChain>
   <TypeParameters>
     <TypeParameter Name="TChannel">
@@ -60,15 +69,10 @@
 
  Special note for Managed C++ users deriving from this class:
 
--   Put your cleanup code in (On)(Begin)Close (and/or OnAbort), not in a destructor.
-
--   Avoid destructors: they cause the compiler to auto-generate <xref:System.IDisposable>
-
--   Avoid non-reference members: they can cause the compiler to auto-generate <xref:System.IDisposable>
-
--   Avoid finalizers; but if you include one, you should suppress the build warning and call <xref:System.GC.SuppressFinalize%28System.Object%29> and the finalizer itself from (On)(Begin)Close (and/or OnAbort) in order to emulate what would have been the auto-generated <xref:System.IDisposable> behavior.
-
-
+- Put your cleanup code in (On)(Begin)Close (and/or OnAbort), not in a destructor.
+- Avoid destructors: they cause the compiler to auto-generate <xref:System.IDisposable>.
+- Avoid non-reference members: they can cause the compiler to auto-generate <xref:System.IDisposable>.
+- Avoid finalizers; but if you include one, you should suppress the build warning and call <xref:System.GC.SuppressFinalize%28System.Object%29> and the finalizer itself from (On)(Begin)Close (and/or OnAbort) in order to emulate what would have been the auto-generated <xref:System.IDisposable> behavior.
 
 ## Examples
  The following example shows the use in the client of a duplex WCF client type, the `SampleDuplexHelloClient`, to pass a new <xref:System.ServiceModel.InstanceContext?displayProperty=nameWithType> object with the callback object to listen for callbacks.
@@ -106,8 +110,11 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -143,15 +150,19 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
-        <AssemblyVersion>4.6.0.0</AssemblyVersion>
-        <AssemblyVersion>4.7.0.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.2.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.1.0.0</AssemblyVersion>
+        <AssemblyVersion>8.1.1.0</AssemblyVersion>
+        <AssemblyVersion>8.1.2.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Private.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.10.3.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -192,9 +203,12 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpoint" Type="System.ServiceModel.Description.ServiceEndpoint" Index="1" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="endpoint" Type="System.ServiceModel.Description.ServiceEndpoint" Index="1" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -221,9 +235,12 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -256,6 +273,9 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
           <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
@@ -263,8 +283,8 @@
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpoint" Type="System.ServiceModel.Description.ServiceEndpoint" Index="1" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="endpoint" Type="System.ServiceModel.Description.ServiceEndpoint" Index="1" FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An <see cref="T:System.ServiceModel.InstanceContext" /> object that associates the callback object with the channel to the service.</param>
@@ -294,28 +314,25 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
-        <AssemblyVersion>4.6.0.0</AssemblyVersion>
-        <AssemblyVersion>4.7.0.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.2.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Private.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.10.3.0</AssemblyVersion>
+      </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0">
-          <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
-        </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0">
           <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -349,10 +366,13 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="binding" Type="System.ServiceModel.Channels.Binding" Index="1" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="remoteAddress" Type="System.ServiceModel.EndpointAddress" Index="2" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="binding" Type="System.ServiceModel.Channels.Binding" Index="1" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="remoteAddress" Type="System.ServiceModel.EndpointAddress" Index="2" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -372,6 +392,47 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected DuplexClientBase (object callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(object callbackInstance, string endpointConfigurationName, class System.ServiceModel.EndpointAddress remoteAddress) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ServiceModel.DuplexClientBase`1.#ctor(System.Object,System.String,System.ServiceModel.EndpointAddress)" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (callbackInstance As Object, endpointConfigurationName As String, remoteAddress As EndpointAddress)" />
+      <MemberSignature Language="F#" Value="new System.ServiceModel.DuplexClientBase&lt;'Channel (requires 'Channel : null)&gt; : obj * string * System.ServiceModel.EndpointAddress -&gt; System.ServiceModel.DuplexClientBase&lt;'Channel (requires 'Channel : null)&gt;" Usage="new System.ServiceModel.DuplexClientBase&lt;'Channel (requires 'Channel : null)&gt; (callbackInstance, endpointConfigurationName, remoteAddress)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DuplexClientBase(System::Object ^ callbackInstance, System::String ^ endpointConfigurationName, System::ServiceModel::EndpointAddress ^ remoteAddress);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel</AssemblyName>
+        <AssemblyVersion>3.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="remoteAddress" Type="System.ServiceModel.EndpointAddress" Index="2" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+      </Parameters>
+      <Docs>
+        <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
+        <param name="endpointConfigurationName">The name of the client endpoint information in the application configuration file.</param>
+        <param name="remoteAddress">The address of the service endpoint to use.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.DuplexClientBase`1" /> class using the specified callback object, configuration name, and service endpoint address.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ WCF creates a new <xref:System.ServiceModel.InstanceContext> object using the `callbackInstance` object to handle all callback operations.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="callbackInstance" />, the configuration name or <paramref name="remoteAddress" /> is <see langword="null" />.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected DuplexClientBase (object callbackInstance, string endpointConfigurationName, string remoteAddress);" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(object callbackInstance, string endpointConfigurationName, string remoteAddress) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ServiceModel.DuplexClientBase`1.#ctor(System.Object,System.String,System.String)" />
@@ -387,10 +448,13 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
+      </AssemblyInfo>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="remoteAddress" Type="System.String" Index="2" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
+        <Parameter Name="remoteAddress" Type="System.String" Index="2" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netframework-4.6.2-pp;netframework-4.7-pp" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -428,15 +492,19 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
-        <AssemblyVersion>4.6.0.0</AssemblyVersion>
-        <AssemblyVersion>4.7.0.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.2.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>8.1.0.0</AssemblyVersion>
+        <AssemblyVersion>8.1.1.0</AssemblyVersion>
+        <AssemblyVersion>8.1.2.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Private.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.10.3.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -483,29 +551,26 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
-        <AssemblyVersion>4.6.0.0</AssemblyVersion>
-        <AssemblyVersion>4.7.0.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.2.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Private.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.10.3.0</AssemblyVersion>
+      </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0">
-          <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
-        </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0">
           <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="remoteAddress" Type="System.ServiceModel.EndpointAddress" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="remoteAddress" Type="System.ServiceModel.EndpointAddress" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -543,29 +608,26 @@
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.1.0</AssemblyVersion>
         <AssemblyVersion>4.0.2.0</AssemblyVersion>
-        <AssemblyVersion>4.6.0.0</AssemblyVersion>
-        <AssemblyVersion>4.7.0.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.2.0.0</AssemblyVersion>
       </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Private.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.10.3.0</AssemblyVersion>
+      </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0">
-          <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
-        </Attribute>
         <Attribute FrameworkAlternate="netframework-4.0">
           <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
-        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="remoteAddress" Type="System.String" Index="2" FrameworkAlternate="dotnet-plat-ext-2.1;dotnet-plat-ext-2.2;dotnet-plat-ext-3.0;dotnet-plat-ext-3.1;dotnet-plat-ext-5.0;dotnet-plat-ext-6.0;dotnet-plat-ext-7.0;dotnet-plat-ext-8.0;dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="callbackInstance" Type="System.ServiceModel.InstanceContext" Index="0" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
+        <Parameter Name="remoteAddress" Type="System.String" Index="2" FrameworkAlternate="dotnet-uwp-10.0;net-6.0-pp;net-7.0-pp;netcore-1.0;netcore-1.1;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.7-pp;netframework-4.8;netframework-4.8.1" />
       </Parameters>
       <Docs>
         <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
@@ -584,44 +646,6 @@
           <paramref name="callbackInstance" />, <paramref name="endpointConfigurationName" /> or <paramref name="remoteAddress" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected DuplexClientBase (object callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(object callbackInstance, string endpointConfigurationName, class System.ServiceModel.EndpointAddress remoteAddress) cil managed" />
-      <MemberSignature Language="DocId" Value="M:System.ServiceModel.DuplexClientBase`1.#ctor(System.Object,System.String,System.ServiceModel.EndpointAddress)" />
-      <MemberSignature Language="VB.NET" Value="Protected Sub New (callbackInstance As Object, endpointConfigurationName As String, remoteAddress As EndpointAddress)" />
-      <MemberSignature Language="F#" Value="new System.ServiceModel.DuplexClientBase&lt;'Channel (requires 'Channel : null)&gt; : obj * string * System.ServiceModel.EndpointAddress -&gt; System.ServiceModel.DuplexClientBase&lt;'Channel (requires 'Channel : null)&gt;" Usage="new System.ServiceModel.DuplexClientBase&lt;'Channel (requires 'Channel : null)&gt; (callbackInstance, endpointConfigurationName, remoteAddress)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DuplexClientBase(System::Object ^ callbackInstance, System::String ^ endpointConfigurationName, System::ServiceModel::EndpointAddress ^ remoteAddress);" />
-      <MemberType>Constructor</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System.ServiceModel</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="callbackInstance" Type="System.Object" Index="0" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="endpointConfigurationName" Type="System.String" Index="1" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.8;netframework-4.8.1" />
-        <Parameter Name="remoteAddress" Type="System.ServiceModel.EndpointAddress" Index="2" FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-      </Parameters>
-      <Docs>
-        <param name="callbackInstance">An object used to create the instance context that associates the callback object with the channel to the service.</param>
-        <param name="endpointConfigurationName">The name of the client endpoint information in the application configuration file.</param>
-        <param name="remoteAddress">The address of the service endpoint to use.</param>
-        <summary>Initializes a new instance of the <see cref="T:System.ServiceModel.DuplexClientBase`1" /> class using the specified callback object, configuration name, and service endpoint address.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- WCF creates a new <xref:System.ServiceModel.InstanceContext> object using the `callbackInstance` object to handle all callback operations.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="callbackInstance" />, the configuration name or <paramref name="remoteAddress" /> is <see langword="null" />.</exception>
-      </Docs>
-    </Member>
     <Member MemberName="CreateChannel">
       <MemberSignature Language="C#" Value="protected override TChannel CreateChannel ();" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance !TChannel CreateChannel() cil managed" />
@@ -637,6 +661,9 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Duplex</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>TChannel</ReturnType>
@@ -667,6 +694,10 @@
       <AssemblyInfo>
         <AssemblyName>System.ServiceModel.Primitives</AssemblyName>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Private.ServiceModel</AssemblyName>
+        <AssemblyVersion>4.10.3.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.ServiceModel.IDuplexContextChannel</ReturnType>

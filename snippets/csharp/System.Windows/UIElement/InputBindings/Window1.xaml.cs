@@ -129,7 +129,7 @@ namespace SDKSamples
         private void HelpCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // HelpFilesExists() determines if the help file exists
-            if (HelpFileExists() == true)
+            if (HelpFileExists())
             {
                 e.CanExecute = true;
             }
@@ -216,7 +216,7 @@ namespace SDKSamples
             {
                 if (command == MediaCommands.Play)
                 {
-                    if (IsPlaying() == false)
+                    if (!IsPlaying())
                     {
                         e.CanExecute = true;
                     }
@@ -228,7 +228,7 @@ namespace SDKSamples
 
                 if (command == MediaCommands.Stop)
                 {
-                    if (IsPlaying() == true)
+                    if (IsPlaying())
                     {
                         e.CanExecute = true;
                     }

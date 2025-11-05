@@ -36,7 +36,7 @@ namespace Shell_TaskbarItemSample
         // <snippet110>
         private void StartCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (this._backgroundWorker.IsBusy == false)
+            if (!this._backgroundWorker.IsBusy)
             {
                 this._backgroundWorker.RunWorkerAsync();
                 // When the task is started, change the ProgressState and Overlay
@@ -65,7 +65,7 @@ namespace Shell_TaskbarItemSample
         {
             // When the task ends, change the ProgressState and Overlay
             // of the taskbar item to indicate a stopped task.
-            if (e.Cancelled == true)
+            if (e.Cancelled)
             {
                 // The task was stopped by the user. Show the progress indicator
                 // in the paused state.
@@ -105,7 +105,7 @@ namespace Shell_TaskbarItemSample
             {
                 for (int i = 1; i <= 100; i++)
                 {
-                    if (_worker.CancellationPending == true)
+                    if (_worker.CancellationPending)
                     {
                         e.Cancel = true;
                         break;

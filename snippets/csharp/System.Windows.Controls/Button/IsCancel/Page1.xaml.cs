@@ -19,11 +19,11 @@ namespace ButtonProps
         void OnClickDefault(object sender, RoutedEventArgs e)
         {
             //<Snippet3>
-            if (btnDefault.IsDefault == true)
+            if (btnDefault.IsDefault)
             {
                 btnDefault.Content = "This is the default button.";
             }
-            if (btnDefault.IsDefaulted == true)
+            if (btnDefault.IsDefaulted)
             {
                 btnDefault.Content = "The button is defaulted.";
             }
@@ -32,7 +32,7 @@ namespace ButtonProps
         }
         void OnClickCancel(object sender, RoutedEventArgs e)
         {
-            if (btnCancel.IsCancel == true)
+            if (btnCancel.IsCancel)
             {
                 btnCancel.Content = "This is the cancel button.";
             }

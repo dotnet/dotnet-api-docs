@@ -23,7 +23,7 @@ public class Example
       foreach (var filename in filenames)
          tasks.Add( Task.Factory.StartNew( fn => { token.ThrowIfCancellationRequested(); 
 
-                                                   if (! File.Exists(fn.ToString())) {
+                                                   if (!File.Exists(fn.ToString())) {
                                                       source.Cancel();
                                                       token.ThrowIfCancellationRequested();
                                                    }
@@ -37,7 +37,7 @@ public class Example
                                            filename, token));
 
       var finalTask = Task.Factory.ContinueWhenAll(tasks.ToArray(), wordCountTasks => {
-                                                    if (! token.IsCancellationRequested) 
+                                                    if (!token.IsCancellationRequested) 
                                                        Console.WriteLine("\n{0,-25} {1,6} total words\n", 
                                                                          String.Format("{0} files", wordCountTasks.Length), 
                                                                          totalWords); 

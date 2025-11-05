@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Configuration;
-using System.Text;
 
 namespace Samples.AspNet
 {
     class ConnectionStrings
     {
-
         // <Snippet1>
-        // Create a connectionn string element and add it to
+        // Create a connection string element and add it to
         // the connection strings section.
         static ConnectionStrings()
         {
@@ -18,20 +16,20 @@ namespace Samples.AspNet
                     ConfigurationUserLevel.None);
 
             // Get the current connection strings count.
-            int connStrCnt = 
+            int connStrCnt =
                 ConfigurationManager.ConnectionStrings.Count;
- 
-            // Create the connection string name. 
-            string csName = 
+
+            // Create the connection string name.
+            string csName =
                 "ConnStr" + connStrCnt.ToString();
 
             // Create a connection string element and
             // save it to the configuration file.
-           
+
             // Create a connection string element.
             ConnectionStringSettings csSettings =
                     new ConnectionStringSettings(csName,
-                    "LocalSqlServer: data source=127.0.0.1;Integrated Security=SSPI;" +
+                    "LocalSqlServer: data source=127.0.0.1;Integrated Security=True;" +
                     "Initial Catalog=aspnetdb", "System.Data.SqlClient");
 
             // Get the connection strings section.
@@ -40,7 +38,7 @@ namespace Samples.AspNet
 
             // Add the new element.
             csSection.ConnectionStrings.Add(csSettings);
-                
+
             // Save the configuration file.
             config.Save(ConfigurationSaveMode.Modified);
         }
@@ -49,35 +47,33 @@ namespace Samples.AspNet
         // <Snippet2>
         static void ShowConnectionStrings()
         {
-             // Get the application configuration file.
+            // Get the application configuration file.
             System.Configuration.Configuration config =
                     ConfigurationManager.OpenExeConfiguration(
                     ConfigurationUserLevel.None);
 
             // <Snippet3>
-            // Get the conectionStrings section.
+            // Get the connectionStrings section.
             ConnectionStringsSection csSection =
                 config.ConnectionStrings;
-            
-            for (int i = 0; i < 
+
+            for (int i = 0; i <
                 ConfigurationManager.ConnectionStrings.Count; i++)
             {
-                ConnectionStringSettings cs = 
+                ConnectionStringSettings cs =
                     csSection.ConnectionStrings[i];
-                
+
                 // <Snippet4>
-                Console.WriteLine("  Connection String: \"{0}\"",
-                    cs.ConnectionString);
+                Console.WriteLine($"  Connection String: \"{cs.ConnectionString}\"");
                 // </Snippet4>
 
-                Console.WriteLine("#{0}", i);
+                Console.WriteLine($"#{i}");
                 // <Snippet5>
-                Console.WriteLine("  Name: {0}", cs.Name);
+                Console.WriteLine($"  Name: {cs.Name}");
                 // </Snippet5>
 
                 // <Snippet6>
-                Console.WriteLine("  Provider Name: {0}", 
-                    cs.ProviderName);
+                Console.WriteLine($"  Provider Name: {cs.ProviderName}");
                 // </Snippet6>
             }
             // </Snippet3>
@@ -90,27 +86,27 @@ namespace Samples.AspNet
         // configuration file.
         static void AddConnectionStrings()
         {
-           
+
             // Get the count of the connection strings.
-            int connStrCnt = 
+            int connStrCnt =
                 ConfigurationManager.ConnectionStrings.Count;
-            
+
             // Define the string name.
-            string csName = "ConnStr" + 
+            string csName = "ConnStr" +
                 connStrCnt.ToString();
 
             // Get the configuration file.
             System.Configuration.Configuration config =
                 ConfigurationManager.OpenExeConfiguration(
                 ConfigurationUserLevel.None);
-            
+
             // <Snippet8>
             // Add the connection string.
             ConnectionStringsSection csSection =
                 config.ConnectionStrings;
             csSection.ConnectionStrings.Add(
                 new ConnectionStringSettings(csName,
-                    "LocalSqlServer: data source=127.0.0.1;Integrated Security=SSPI;" +
+                    "LocalSqlServer: data source=127.0.0.1;Integrated Security=True;" +
                     "Initial Catalog=aspnetdb", "System.Data.SqlClient"));
             // </Snippet8>
 
@@ -135,7 +131,7 @@ namespace Samples.AspNet
             ConnectionStringsSection csSection =
                 config.ConnectionStrings;
             csSection.ConnectionStrings.Clear();
-           
+
             // Save the configuration file.
             config.Save(ConfigurationSaveMode.Modified);
 
@@ -168,7 +164,7 @@ namespace Samples.AspNet
                 int index = csCollection.IndexOf(cs);
 
                 Console.WriteLine(
-                     "Connection string settings index: {0}", 
+                     "Connection string settings index: {0}",
                      index.ToString());
             }
             catch (ConfigurationErrorsException err)
@@ -207,7 +203,7 @@ namespace Samples.AspNet
 
                     // Save the configuration file.
                     config.Save(ConfigurationSaveMode.Modified);
-                    
+
                     Console.WriteLine(
                      "Connection string settings removed.");
                 }
@@ -239,7 +235,7 @@ namespace Samples.AspNet
                  csSection.ConnectionStrings;
 
                 // Remove the element.
-                    csCollection.Remove("ConnStr0");
+                csCollection.Remove("ConnStr0");
 
                 // Save the configuration file.
                 config.Save(ConfigurationSaveMode.Modified);
@@ -275,7 +271,7 @@ namespace Samples.AspNet
 
                 // Save the configuration file.
                 config.Save(ConfigurationSaveMode.Modified);
-                
+
                 Console.WriteLine(
                      "Connection string settings removed.");
             }
@@ -337,7 +333,7 @@ namespace Samples.AspNet
                 // with the specified name.
                 ConnectionStringSettings cs =
                     csCollection["ConnStr0"];
-               
+
                 Console.WriteLine(
                     "cs: {0}", cs.Name);
             }
@@ -350,7 +346,7 @@ namespace Samples.AspNet
 
         static void Main(string[] args)
         {
-            
+
             // Display current connection strings.
             // ShowConnectionStrings();
 

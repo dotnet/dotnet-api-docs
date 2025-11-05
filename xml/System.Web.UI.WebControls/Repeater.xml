@@ -52,106 +52,103 @@
   <Docs>
     <summary>A data-bound list control that allows custom layout by repeating a specified template for each item displayed in the list.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- In this topic:  
-  
--   [Introduction](#introduction)  
-  
--   [Data Binding](#data_binding)  
-  
--   [Templates](#templates)  
-  
--   [Declarative Syntax](#declarative_syntax)  
-  
-<a name="introduction"></a>   
-## Introduction  
- The <xref:System.Web.UI.WebControls.Repeater> control is a basic templated data-bound list. It has no built-in layout or styles, so you must explicitly declare all layout, formatting, and style tags within the control's templates.  
-  
- The <xref:System.Web.UI.WebControls.Repeater> control allows you to split markup tags across the templates.  To create a table using templates, include the begin table tag (`<table>`) in the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A>, a single table row tag (`<tr>`) in the <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>, and the end table tag (`</table>`) in the <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A>.  
-  
- The <xref:System.Web.UI.WebControls.Repeater> control has no built-in selection capabilities or editing support. You can use the <xref:System.Web.UI.WebControls.Repeater.ItemCommand> event to process control events that are raised from the templates to the control.  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ In this topic:
+
+-   [Introduction](#introduction)
+
+-   [Data Binding](#data_binding)
+
+-   [Templates](#templates)
+
+-   [Declarative Syntax](#declarative_syntax)
+
+<a name="introduction"></a>
+## Introduction
+ The <xref:System.Web.UI.WebControls.Repeater> control is a basic templated data-bound list. It has no built-in layout or styles, so you must explicitly declare all layout, formatting, and style tags within the control's templates.
+
+ The <xref:System.Web.UI.WebControls.Repeater> control allows you to split markup tags across the templates.  To create a table using templates, include the begin table tag (`<table>`) in the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A>, a single table row tag (`<tr>`) in the <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>, and the end table tag (`</table>`) in the <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A>.
+
+ The <xref:System.Web.UI.WebControls.Repeater> control has no built-in selection capabilities or editing support. You can use the <xref:System.Web.UI.WebControls.Repeater.ItemCommand> event to process control events that are raised from the templates to the control.
+
 > [!CAUTION]
->  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).  
-  
-<a name="data_binding"></a>   
-## Data Binding  
- The <xref:System.Web.UI.WebControls.Repeater> control provides two properties to support data binding. To bind data to any collection that implements the <xref:System.Collections.IEnumerable?displayProperty=nameWithType> interface (such as a <xref:System.Data.DataView?displayProperty=nameWithType>, a <xref:System.Collections.ArrayList?displayProperty=nameWithType>, or an array), or the <xref:System.ComponentModel.IListSource> interface, use the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property to specify the data source. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property, you must manually write the code to perform data binding. To automatically bind the <xref:System.Web.UI.WebControls.Repeater> control to a data source represented by a data source control, set the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to the <xref:System.Web.UI.Control.ID%2A> of the data source control to use. When you set the <xref:System.Web.UI.WebControls.BaseDataList.DataSourceID%2A> property, the <xref:System.Web.UI.WebControls.Repeater> control automatically binds to the specified data source control on the first request. Therefore, you do not need to explicitly call the <xref:System.Web.UI.WebControls.BaseDataList.DataBind%2A> method unless you have changed data-related properties of the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
- A <xref:System.Web.UI.WebControls.Repeater> control binds its <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A> and <xref:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate%2A> to either the data model declared and referenced by its <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property or the data source control specified by its <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property. The <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A>, <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A>, and <xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A> are not data-bound.  
-  
- If the <xref:System.Web.UI.WebControls.Repeater> control's data source is set but no data is returned, the control renders the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A> and <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A> with no items. If the data source is `null`, the <xref:System.Web.UI.WebControls.Repeater> is not rendered.  
-  
-<a name="templates"></a>   
-## Templates  
- At a minimum, every <xref:System.Web.UI.WebControls.Repeater> control must define an <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>. However, other optional templates described in the following table can be used to customize the appearance of the list.  
-  
-|Template name|Description|  
-|-------------------|-----------------|  
-|<xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>|Defines the content and layout of items within the list. This template is required.|  
-|<xref:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate%2A>|If defined, determines the content and layout of alternating (zero-based odd-indexed) items. If not defined, <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A> is used.|  
-|<xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A>|If defined, is rendered between items (and alternating items). If not defined, a separator is not rendered.|  
-|<xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A>|If defined, determines the content and layout of the list header. If not defined, a header is not rendered.|  
-|<xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A>|If defined, determines the content and layout of the list footer. If not defined, a footer is not rendered.|  
-  
-<a name="declarative_syntax"></a>   
-## Declarative Syntax  
-  
-```  
-<asp:Repeater  
-    DataMember="string"  
-    DataSource="string"  
-    DataSourceID="string"  
-    EnableTheming="True|False"  
-    EnableViewState="True|False"  
-    ID="string"  
-    OnDataBinding="DataBinding event handler"  
-    OnDisposed="Disposed event handler"  
-    OnInit="Init event handler"  
-    OnItemCommand="ItemCommand event handler"  
-    OnItemCreated="ItemCreated event handler"  
-    OnItemDataBound="ItemDataBound event handler"  
-    OnLoad="Load event handler"  
-    OnPreRender="PreRender event handler"  
-    OnUnload="Unload event handler"  
-    runat="server"  
-    Visible="True|False"  
->  
-        <AlternatingItemTemplate>  
-            <!-- child controls -->  
-        </AlternatingItemTemplate>  
-        <FooterTemplate>  
-            <!-- child controls -->  
-        </FooterTemplate>  
-        <HeaderTemplate>  
-            <!-- child controls -->  
-        </HeaderTemplate>  
-        <ItemTemplate>  
-            <!-- child controls -->  
-        </ItemTemplate>  
-        <SeparatorTemplate>  
-            <!-- child controls -->  
-        </SeparatorTemplate>  
-</asp:Repeater>  
-```  
-  
-   
-  
-## Examples  
- A Visual Studio Web site project with source code is available to accompany this topic: [Download](https://go.microsoft.com/fwlink/?LinkId=192873).  
-  
- The following code example demonstrates how to use two simple <xref:System.Web.UI.WebControls.Repeater> controls on a page. The <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property is used to specify the data source for the <xref:System.Web.UI.WebControls.Repeater> control. The first <xref:System.Web.UI.WebControls.Repeater> displays its items in a table; the second <xref:System.Web.UI.WebControls.Repeater> displays its items in a comma-separated list.  
-  
+>  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).
+
+<a name="data_binding"></a>
+## Data Binding
+ The <xref:System.Web.UI.WebControls.Repeater> control provides two properties to support data binding. To bind data to any collection that implements the <xref:System.Collections.IEnumerable?displayProperty=nameWithType> interface (such as a <xref:System.Data.DataView?displayProperty=nameWithType>, a <xref:System.Collections.ArrayList?displayProperty=nameWithType>, or an array), or the <xref:System.ComponentModel.IListSource> interface, use the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property to specify the data source. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property, you must manually write the code to perform data binding. To automatically bind the <xref:System.Web.UI.WebControls.Repeater> control to a data source represented by a data source control, set the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to the <xref:System.Web.UI.Control.ID%2A> of the data source control to use. When you set the <xref:System.Web.UI.WebControls.BaseDataList.DataSourceID%2A> property, the <xref:System.Web.UI.WebControls.Repeater> control automatically binds to the specified data source control on the first request. Therefore, you do not need to explicitly call the <xref:System.Web.UI.WebControls.BaseDataList.DataBind%2A> method unless you have changed data-related properties of the <xref:System.Web.UI.WebControls.Repeater> control.
+
+ A <xref:System.Web.UI.WebControls.Repeater> control binds its <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A> and <xref:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate%2A> to either the data model declared and referenced by its <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property or the data source control specified by its <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property. The <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A>, <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A>, and <xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A> are not data-bound.
+
+ If the <xref:System.Web.UI.WebControls.Repeater> control's data source is set but no data is returned, the control renders the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A> and <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A> with no items. If the data source is `null`, the <xref:System.Web.UI.WebControls.Repeater> is not rendered.
+
+<a name="templates"></a>
+## Templates
+ At a minimum, every <xref:System.Web.UI.WebControls.Repeater> control must define an <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>. However, other optional templates described in the following table can be used to customize the appearance of the list.
+
+|Template name|Description|
+|-------------------|-----------------|
+|<xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>|Defines the content and layout of items within the list. This template is required.|
+|<xref:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate%2A>|If defined, determines the content and layout of alternating (zero-based odd-indexed) items. If not defined, <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A> is used.|
+|<xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A>|If defined, is rendered between items (and alternating items). If not defined, a separator is not rendered.|
+|<xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A>|If defined, determines the content and layout of the list header. If not defined, a header is not rendered.|
+|<xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A>|If defined, determines the content and layout of the list footer. If not defined, a footer is not rendered.|
+
+<a name="declarative_syntax"></a>
+## Declarative Syntax
+
+```
+<asp:Repeater
+    DataMember="string"
+    DataSource="string"
+    DataSourceID="string"
+    EnableTheming="True|False"
+    EnableViewState="True|False"
+    ID="string"
+    OnDataBinding="DataBinding event handler"
+    OnDisposed="Disposed event handler"
+    OnInit="Init event handler"
+    OnItemCommand="ItemCommand event handler"
+    OnItemCreated="ItemCreated event handler"
+    OnItemDataBound="ItemDataBound event handler"
+    OnLoad="Load event handler"
+    OnPreRender="PreRender event handler"
+    OnUnload="Unload event handler"
+    runat="server"
+    Visible="True|False"
+>
+        <AlternatingItemTemplate>
+            <!-- child controls -->
+        </AlternatingItemTemplate>
+        <FooterTemplate>
+            <!-- child controls -->
+        </FooterTemplate>
+        <HeaderTemplate>
+            <!-- child controls -->
+        </HeaderTemplate>
+        <ItemTemplate>
+            <!-- child controls -->
+        </ItemTemplate>
+        <SeparatorTemplate>
+            <!-- child controls -->
+        </SeparatorTemplate>
+</asp:Repeater>
+```
+
+## Examples
+
+ The following code example demonstrates how to use two simple <xref:System.Web.UI.WebControls.Repeater> controls on a page. The <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property is used to specify the data source for the <xref:System.Web.UI.WebControls.Repeater> control. The first <xref:System.Web.UI.WebControls.Repeater> displays its items in a table; the second <xref:System.Web.UI.WebControls.Repeater> displays its items in a comma-separated list.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
- The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to specify the data source for a <xref:System.Web.UI.WebControls.Repeater> control. The <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property is set to the <xref:System.Web.UI.Control.ID%2A> property of the <xref:System.Web.UI.WebControls.SqlDataSource> control used to retrieve the data. When the page is loaded, the <xref:System.Web.UI.WebControls.Repeater> control automatically binds to the data source specified by the <xref:System.Web.UI.WebControls.SqlDataSource> control and the data is displayed to the user.  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater Example/VB/sourcevb.aspx" id="Snippet1":::
+
+ The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to specify the data source for a <xref:System.Web.UI.WebControls.Repeater> control. The <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property is set to the <xref:System.Web.UI.Control.ID%2A> property of the <xref:System.Web.UI.WebControls.SqlDataSource> control used to retrieve the data. When the page is loaded, the <xref:System.Web.UI.WebControls.Repeater> control automatically binds to the data source specified by the <xref:System.Web.UI.WebControls.SqlDataSource> control and the data is displayed to the user.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Repeater.DataSourceID/CS/repeater.datasourceidcs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Repeater.DataSourceID/VB/repeater.datasourceidvb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Repeater.DataSourceID/VB/repeater.datasourceidvb.aspx" id="Snippet1":::
+
  ]]></format>
     </remarks>
     <altmember cref="T:System.Web.UI.WebControls.DataGrid" />
@@ -232,22 +229,22 @@
         <summary>Gets or sets the object implementing <see cref="T:System.Web.UI.ITemplate" /> that defines how alternating items in the control are displayed.</summary>
         <value>A <see cref="T:System.Web.UI.ITemplate" /> that defines how alternating items are displayed. The default value is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this property to provide a different appearance for alternating items in the <xref:System.Web.UI.WebControls.Repeater> control from what is specified in the <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this property to provide a different appearance for alternating items in the <xref:System.Web.UI.WebControls.Repeater> control from what is specified in the <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A>.
+
 > [!CAUTION]
->  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate%2A> to display alternating items of the <xref:System.Web.UI.WebControls.Repeater> control in a light blue cell with bold font.  
-  
+>  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).
+
+
+
+## Examples
+ The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate%2A> to display alternating items of the <xref:System.Web.UI.WebControls.Repeater> control in a light blue cell with bold font.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.AlternatingItemTemplate Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.AlternatingItemTemplate Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.AlternatingItemTemplate Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.ItemTemplate" />
@@ -275,11 +272,11 @@
       <Docs>
         <summary>Occurs when data methods are being called.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The purpose of this event is to give you an opportunity to specify that the data methods to be called are on a different object than the <xref:System.Web.UI.Page> object.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The purpose of this event is to give you an opportunity to specify that the data methods to be called are on a different object than the <xref:System.Web.UI.Page> object.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -305,14 +302,14 @@
         <summary>Gets a <see cref="T:System.Web.UI.ControlCollection" /> that contains the child controls of the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</summary>
         <value>A <see cref="T:System.Web.UI.ControlCollection" /> that contains the child controls of the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use the <xref:System.Web.UI.WebControls.Repeater.Controls%2A> collection to manage the child controls of the <xref:System.Web.UI.WebControls.Repeater> control. It is commonly used to retrieve a child control from the collection. You can also add and remove child controls from the collection.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Web.UI.WebControls.Repeater.Controls%2A> collection to manage the child controls of the <xref:System.Web.UI.WebControls.Repeater> control. It is commonly used to retrieve a child control from the collection. You can also add and remove child controls from the collection.
+
 > [!NOTE]
->  To access a child control within a <xref:System.Web.UI.WebControls.Repeater> control, iterate through the <xref:System.Web.UI.WebControls.Repeater> control's <xref:System.Web.UI.WebControls.Repeater.Items%2A> collection to retrieve the <xref:System.Web.UI.WebControls.RepeaterItem> for a given index. Then call the **Repeater** item's inherited <xref:System.Web.UI.Control.FindControl%2A> method to retrieve a control with a particular ID.  
-  
+>  To access a child control within a <xref:System.Web.UI.WebControls.Repeater> control, iterate through the <xref:System.Web.UI.WebControls.Repeater> control's <xref:System.Web.UI.WebControls.Repeater.Items%2A> collection to retrieve the <xref:System.Web.UI.WebControls.RepeaterItem> for a given index. Then call the **Repeater** item's inherited <xref:System.Web.UI.Control.FindControl%2A> method to retrieve a control with a particular ID.
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Web.UI.ControlCollection" />
@@ -396,11 +393,11 @@
         <summary>Returns the <see cref="P:System.Web.UI.DataSourceSelectArguments.Empty" /> value.</summary>
         <returns>The <see cref="P:System.Web.UI.DataSourceSelectArguments.Empty" /> value.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The first call to the <xref:System.Web.UI.WebControls.Repeater.SelectArguments%2A> property calls the <xref:System.Web.UI.WebControls.Repeater.CreateDataSourceSelectArguments%2A> method to return the <xref:System.Web.UI.DataSourceSelectArguments.Empty%2A> value.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The first call to the <xref:System.Web.UI.WebControls.Repeater.SelectArguments%2A> property calls the <xref:System.Web.UI.WebControls.Repeater.CreateDataSourceSelectArguments%2A> method to return the <xref:System.Web.UI.DataSourceSelectArguments.Empty%2A> value.
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -433,17 +430,17 @@
         <summary>Creates a <see cref="T:System.Web.UI.WebControls.RepeaterItem" /> object with the specified item type and location within the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</summary>
         <returns>The new <see cref="T:System.Web.UI.WebControls.RepeaterItem" /> object.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Repeater.CreateItem%2A> method in a custom server control so that it always returns a new <xref:System.Web.UI.WebControls.RepeaterItem> and corresponding index and type in a custom <xref:System.Web.UI.WebControls.Repeater> server control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Repeater.CreateItem%2A> method in a custom server control so that it always returns a new <xref:System.Web.UI.WebControls.RepeaterItem> and corresponding index and type in a custom <xref:System.Web.UI.WebControls.Repeater> server control.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterCreateItem/CS/custom_repeater_createitemcs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterCreateItem/VB/custom_repeater_createitemvb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterCreateItem/VB/custom_repeater_createitemvb.aspx" id="Snippet1":::
+
  :::code language="csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterCreateItem/CS/custom_repeater_createitem.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterCreateItem/VB/custom_repeater_createitem.vb" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterCreateItem/VB/custom_repeater_createitem.vb" id="Snippet2":::
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -467,11 +464,11 @@
       <Docs>
         <summary>Occurs when the <see cref="T:System.Web.UI.WebControls.ModelDataSource" /> object is being created.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The purpose of this event is to give you an opportunity to change the <xref:System.Web.UI.WebControls.ModelDataSourceView> instance in scenarios where you want to use a custom class that derives from the <xref:System.Web.UI.WebControls.ModelDataSourceView> class.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The purpose of this event is to give you an opportunity to change the <xref:System.Web.UI.WebControls.ModelDataSourceView> instance in scenarios where you want to use a custom class that derives from the <xref:System.Web.UI.WebControls.ModelDataSourceView> class.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -497,26 +494,26 @@
       <Docs>
         <summary>Binds the <see cref="T:System.Web.UI.WebControls.Repeater" /> control and all its child controls to the specified data source.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind the data source specified by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property to the <xref:System.Web.UI.WebControls.Repeater> control. When you bind a data source to the <xref:System.Web.UI.WebControls.Repeater> control, the information in the data source is displayed in the control.  
-  
- The <xref:System.Web.UI.WebControls.BaseDataList.DataBind%2A> method is also commonly used to synchronize the data source and a data listing control after information in the data source is updated. This allows any changes in the data source to also be updated in a data listing control.  
-  
- If the data source for the <xref:System.Web.UI.WebControls.Repeater> control is specified by the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, you do not need to explicitly call the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method. ASP.NET calls this method automatically to bind the specified data source control to the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
-   
-  
-## Examples  
- The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method in a custom server control so that it always raises a data binding event in a custom <xref:System.Web.UI.WebControls.Repeater> server control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind the data source specified by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property to the <xref:System.Web.UI.WebControls.Repeater> control. When you bind a data source to the <xref:System.Web.UI.WebControls.Repeater> control, the information in the data source is displayed in the control.
+
+ The <xref:System.Web.UI.WebControls.BaseDataList.DataBind%2A> method is also commonly used to synchronize the data source and a data listing control after information in the data source is updated. This allows any changes in the data source to also be updated in a data listing control.
+
+ If the data source for the <xref:System.Web.UI.WebControls.Repeater> control is specified by the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, you do not need to explicitly call the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method. ASP.NET calls this method automatically to bind the specified data source control to the <xref:System.Web.UI.WebControls.Repeater> control.
+
+
+
+## Examples
+ The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method in a custom server control so that it always raises a data binding event in a custom <xref:System.Web.UI.WebControls.Repeater> server control.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterDataBind/CS/custom_repeater_databindcs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterDataBind/VB/custom_repeater_databindvb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterDataBind/VB/custom_repeater_databindvb.aspx" id="Snippet1":::
+
  :::code language="csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterDataBind/CS/custom_repeater_databind.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterDataBind/VB/custom_repeater_databind.vb" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterDataBind/VB/custom_repeater_databind.vb" id="Snippet2":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.DataSource" />
@@ -551,21 +548,21 @@
         <summary>Gets or sets the specific table in the <see cref="P:System.Web.UI.WebControls.Repeater.DataSource" /> to bind to the control.</summary>
         <value>A string that specifies a table in the <see cref="P:System.Web.UI.WebControls.Repeater.DataSource" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If the data source specified by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property contains multiple sources of data, use the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to specify the specific source to bind to the control. For example, if you have a <xref:System.Data.DataSet?displayProperty=nameWithType> with multiple tables, you must specify which table to bind to the control. After you have specified the data source, use the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind the data source to the control.  
-  
- The value of this property is stored in view state.  
-  
-   
-  
-## Examples  
- The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to specify a table in the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> to bind to the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the data source specified by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property contains multiple sources of data, use the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to specify the specific source to bind to the control. For example, if you have a <xref:System.Data.DataSet?displayProperty=nameWithType> with multiple tables, you must specify which table to bind to the control. After you have specified the data source, use the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind the data source to the control.
+
+ The value of this property is stored in view state.
+
+
+
+## Examples
+ The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to specify a table in the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> to bind to the <xref:System.Web.UI.WebControls.Repeater> control.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.DataMember Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.DataMember Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.DataMember Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.DataSource" />
@@ -611,25 +608,25 @@
         <summary>Gets or sets the data source that provides data for populating the list.</summary>
         <value>An <see cref="T:System.Collections.IEnumerable" /> or <see cref="T:System.ComponentModel.IListSource" /> object that contains a collection of values used to supply data to this control. The default value is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this property to specify the source of data to populate the <xref:System.Web.UI.WebControls.Repeater> control. The <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> can be any <xref:System.Collections.IEnumerable?displayProperty=nameWithType> collection such as a <xref:System.Data.DataView?displayProperty=nameWithType> for accessing databases, a <xref:System.Collections.ArrayList?displayProperty=nameWithType>, or an array, or an <xref:System.ComponentModel.IListSource> object. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property you must manually write the code to bind to the data source.  
-  
- If the data source specified by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property contains multiple sources of data, use the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to specify the specific source to bind to the control. For example, if you have a <xref:System.Data.DataSet?displayProperty=nameWithType> with multiple tables, you must specify which table to bind to the control. After you have specified the data source, use the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind the data source to the control.  
-  
- Alternately, you can use the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to automatically bind to a data source represented by a data source control. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, the <xref:System.Web.UI.WebControls.Repeater> control automatically binds to the specified data source control. You do not need to write code that explicitly calls the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method unless you dynamically change properties of the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
- If values are specified for both the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property and the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, ASP.NET is not able to resolve the data source and a <xref:System.Web.HttpException?displayProperty=nameWithType> is thrown.  
-  
-   
-  
-## Examples  
- The following example demonstrates how to specify the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> of the <xref:System.Web.UI.WebControls.Repeater> control when the page is loaded.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this property to specify the source of data to populate the <xref:System.Web.UI.WebControls.Repeater> control. The <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> can be any <xref:System.Collections.IEnumerable?displayProperty=nameWithType> collection such as a <xref:System.Data.DataView?displayProperty=nameWithType> for accessing databases, a <xref:System.Collections.ArrayList?displayProperty=nameWithType>, or an array, or an <xref:System.ComponentModel.IListSource> object. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property you must manually write the code to bind to the data source.
+
+ If the data source specified by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property contains multiple sources of data, use the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to specify the specific source to bind to the control. For example, if you have a <xref:System.Data.DataSet?displayProperty=nameWithType> with multiple tables, you must specify which table to bind to the control. After you have specified the data source, use the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind the data source to the control.
+
+ Alternately, you can use the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to automatically bind to a data source represented by a data source control. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, the <xref:System.Web.UI.WebControls.Repeater> control automatically binds to the specified data source control. You do not need to write code that explicitly calls the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method unless you dynamically change properties of the <xref:System.Web.UI.WebControls.Repeater> control.
+
+ If values are specified for both the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property and the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, ASP.NET is not able to resolve the data source and a <xref:System.Web.HttpException?displayProperty=nameWithType> is thrown.
+
+
+
+## Examples
+ The following example demonstrates how to specify the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> of the <xref:System.Web.UI.WebControls.Repeater> control when the page is loaded.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.DataSource Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.DataSource Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.DataSource Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <see cref="P:System.Web.UI.WebControls.Repeater.DataSource" /> object specified is not a supported source of data for the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</exception>
@@ -669,34 +666,34 @@
         <summary>Gets or sets the <see cref="P:System.Web.UI.Control.ID" /> property of the data source control that the <see cref="T:System.Web.UI.WebControls.Repeater" /> control should use to retrieve its data source.</summary>
         <value>The <see langword="ID" /> property of the data source control.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to access the <xref:System.Web.UI.Control.ID%2A> property of the data source control that the <xref:System.Web.UI.WebControls.Repeater> control should use to retrieve its data source. The data source control that is referenced by the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property can be any control that implements the <xref:System.Web.UI.IDataSource> interface. The data source control must exist either in the same naming container as the <xref:System.Web.UI.WebControls.Repeater> control that references it or in a parent control of the <xref:System.Web.UI.WebControls.Repeater> control. When you specify a value for the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, the <xref:System.Web.UI.WebControls.Repeater> control binds to the specified data source control. You do not need to write code that explicitly calls the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method.  
-  
- Alternatively, you can use the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property to specify the source of values to bind to the <xref:System.Web.UI.WebControls.Repeater> control. The data source must be a collection that implements the <xref:System.Collections.IEnumerable?displayProperty=nameWithType> interface (such as the <xref:System.Data.DataView?displayProperty=nameWithType> or <xref:System.Collections.ArrayList?displayProperty=nameWithType> object) or the <xref:System.ComponentModel.IListSource> interface. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property, you must write the code to perform the data binding.  
-  
- If values are specified for both the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> and <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> properties, ASP.NET is not able to resolve the data source and an <xref:System.Web.HttpException?displayProperty=nameWithType> exception is thrown.  
-  
- The value of this property is stored in view state.  
-  
-   
-  
-## Examples  
- The following code example demonstrates how to set the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to the <xref:System.Web.UI.Control.ID%2A> property of a <xref:System.Web.UI.WebControls.SqlDataSource> control. When the page is loaded, the <xref:System.Web.UI.WebControls.Repeater> control binds to the data source that is specified by the <xref:System.Web.UI.WebControls.SqlDataSource> control and the data is displayed to the user.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to access the <xref:System.Web.UI.Control.ID%2A> property of the data source control that the <xref:System.Web.UI.WebControls.Repeater> control should use to retrieve its data source. The data source control that is referenced by the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property can be any control that implements the <xref:System.Web.UI.IDataSource> interface. The data source control must exist either in the same naming container as the <xref:System.Web.UI.WebControls.Repeater> control that references it or in a parent control of the <xref:System.Web.UI.WebControls.Repeater> control. When you specify a value for the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, the <xref:System.Web.UI.WebControls.Repeater> control binds to the specified data source control. You do not need to write code that explicitly calls the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method.
+
+ Alternatively, you can use the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property to specify the source of values to bind to the <xref:System.Web.UI.WebControls.Repeater> control. The data source must be a collection that implements the <xref:System.Collections.IEnumerable?displayProperty=nameWithType> interface (such as the <xref:System.Data.DataView?displayProperty=nameWithType> or <xref:System.Collections.ArrayList?displayProperty=nameWithType> object) or the <xref:System.ComponentModel.IListSource> interface. When you set the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property, you must write the code to perform the data binding.
+
+ If values are specified for both the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> and <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> properties, ASP.NET is not able to resolve the data source and an <xref:System.Web.HttpException?displayProperty=nameWithType> exception is thrown.
+
+ The value of this property is stored in view state.
+
+
+
+## Examples
+ The following code example demonstrates how to set the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property to the <xref:System.Web.UI.Control.ID%2A> property of a <xref:System.Web.UI.WebControls.SqlDataSource> control. When the page is loaded, the <xref:System.Web.UI.WebControls.Repeater> control binds to the data source that is specified by the <xref:System.Web.UI.WebControls.SqlDataSource> control and the data is displayed to the user.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Repeater.DataSourceID/CS/repeater.datasourceidcs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Repeater.DataSourceID/VB/repeater.datasourceidvb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Repeater.DataSourceID/VB/repeater.datasourceidvb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
-        <exception cref="T:System.Web.HttpException">The data source cannot be resolved for one of the following reasons:  
-  
--   A value is specified for both the <see cref="P:System.Web.UI.WebControls.Repeater.DataSource" /> and <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> properties.  
-  
--   The data source specified by the <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> property cannot be found on the page.  
-  
--   The data source specified by the <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> property does not implement <see cref="T:System.Web.UI.IDataSource" />.</exception>
+        <exception cref="T:System.Web.HttpException">The data source cannot be resolved for one of the following reasons:
+
+- A value is specified for both the <see cref="P:System.Web.UI.WebControls.Repeater.DataSource" /> and <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> properties.
+
+- The data source specified by the <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> property cannot be found on the page.
+
+- The data source specified by the <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> property does not implement <see cref="T:System.Web.UI.IDataSource" />.</exception>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.DataSource" />
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
       </Docs>
@@ -728,16 +725,16 @@
         <value>
           <see langword="true" /> to use themes; otherwise, <see langword="false" />. The default is <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater.EnableTheming%2A> property indicates whether themes are enabled. When the <xref:System.Web.UI.WebControls.Repeater.EnableTheming%2A> property is `true`, the theme directory for the application is searched for control skins to apply. If no skin for the particular control exists in the theme directory, skins are not applied.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater.EnableTheming%2A> property indicates whether themes are enabled. When the <xref:System.Web.UI.WebControls.Repeater.EnableTheming%2A> property is `true`, the theme directory for the application is searched for control skins to apply. If no skin for the particular control exists in the theme directory, skins are not applied.
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Web.UI.WebControls.Repeater.EnsureDataBound" />
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
-        <related type="Article" href="https://docs.microsoft.com/previous-versions/aspnet/ykzx33wh(v=vs.100)">ASP.NET Themes Overview</related>
+        <related type="Article" href="https://learn.microsoft.com/previous-versions/aspnet/ykzx33wh(v=vs.100)">ASP.NET Themes Overview</related>
       </Docs>
     </Member>
     <Member MemberName="EnsureDataBound">
@@ -760,11 +757,11 @@
       <Docs>
         <summary>Verifies that the <see cref="T:System.Web.UI.WebControls.Repeater" /> control requires data binding and that a valid data source control is specified before calling the <see cref="M:System.Web.UI.WebControls.Repeater.DataBind" /> method.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- When you specify a value for the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, ASP.NET automatically binds the <xref:System.Web.UI.WebControls.Repeater> control to the specified data source control. When ASP.NET performs data binding for the <xref:System.Web.UI.WebControls.Repeater> control, it first calls the <xref:System.Web.UI.WebControls.Repeater.EnsureDataBound%2A> method to verify that the control has not already been data bound and that a valid data source control that implements the <xref:System.Web.UI.IDataSource> interface is specified for its <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property. The <xref:System.Web.UI.WebControls.Repeater.EnsureDataBound%2A> method then calls the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ When you specify a value for the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property, ASP.NET automatically binds the <xref:System.Web.UI.WebControls.Repeater> control to the specified data source control. When ASP.NET performs data binding for the <xref:System.Web.UI.WebControls.Repeater> control, it first calls the <xref:System.Web.UI.WebControls.Repeater.EnsureDataBound%2A> method to verify that the control has not already been data bound and that a valid data source control that implements the <xref:System.Web.UI.IDataSource> interface is specified for its <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property. The <xref:System.Web.UI.WebControls.Repeater.EnsureDataBound%2A> method then calls the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method.
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" />
@@ -819,22 +816,22 @@
         <summary>Gets or sets the <see cref="T:System.Web.UI.ITemplate" /> that defines how the footer section of the <see cref="T:System.Web.UI.WebControls.Repeater" /> control is displayed.</summary>
         <value>A <see cref="T:System.Web.UI.ITemplate" /> that defines how the footer section of the <see cref="T:System.Web.UI.WebControls.Repeater" /> control is displayed. The default value is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this property to create a template that controls how the footer section of a <xref:System.Web.UI.WebControls.Repeater> control is displayed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this property to create a template that controls how the footer section of a <xref:System.Web.UI.WebControls.Repeater> control is displayed.
+
 > [!CAUTION]
->  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A> to control the appearance of the footer for the <xref:System.Web.UI.WebControls.Repeater> control. Notice that the <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A> contains the table's end tag (`</table>`).  
-  
+>  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).
+
+
+
+## Examples
+ The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A> to control the appearance of the footer for the <xref:System.Web.UI.WebControls.Repeater> control. Notice that the <xref:System.Web.UI.WebControls.Repeater.FooterTemplate%2A> contains the table's end tag (`</table>`).
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.FooterTemplate Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.FooterTemplate Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.FooterTemplate Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.HeaderTemplate" />
@@ -865,11 +862,11 @@
         <summary>Returns an <see cref="T:System.Collections.IEnumerable" /> interface from the data source.</summary>
         <returns>An object implementing <see cref="T:System.Collections.IEnumerable" /> that represents the data from the data source.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The data source is specified either by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property or by the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> and <xref:System.Web.UI.WebControls.Repeater.SelectArguments%2A> properties.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The data source is specified either by the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A> property or by the <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> and <xref:System.Web.UI.WebControls.Repeater.SelectArguments%2A> properties.
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -922,22 +919,22 @@
         <summary>Gets or sets the <see cref="T:System.Web.UI.ITemplate" /> that defines how the header section of the <see cref="T:System.Web.UI.WebControls.Repeater" /> control is displayed.</summary>
         <value>A <see cref="T:System.Web.UI.ITemplate" /> that defines how the header section of the <see cref="T:System.Web.UI.WebControls.Repeater" /> control is displayed. The default value is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this property to create a template that controls how the header section of a <xref:System.Web.UI.WebControls.Repeater> control is displayed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this property to create a template that controls how the header section of a <xref:System.Web.UI.WebControls.Repeater> control is displayed.
+
 > [!CAUTION]
->  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A> to control the appearance of the header for the <xref:System.Web.UI.WebControls.Repeater> control. Notice that the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A> contains the table's start tag (`<table>`).  
-  
+>  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).
+
+
+
+## Examples
+ The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A> to control the appearance of the header for the <xref:System.Web.UI.WebControls.Repeater> control. Notice that the <xref:System.Web.UI.WebControls.Repeater.HeaderTemplate%2A> contains the table's start tag (`<table>`).
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.FooterTemplate Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.FooterTemplate Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.FooterTemplate Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.FooterTemplate" />
@@ -974,11 +971,11 @@
         <value>
           <see langword="true" />, if the control has been initialized, otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater.Initialized%2A> property is a helper property that is used to determine whether data binding is required when the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A>, <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>, or <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property is changed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater.Initialized%2A> property is a helper property that is used to determine whether data binding is required when the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A>, <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>, or <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property is changed.
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -1032,11 +1029,11 @@
         <value>
           <see langword="true" /> if the <see cref="P:System.Web.UI.WebControls.Repeater.DataSourceID" /> property is set to a value other than an empty string (""); otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater.IsBoundUsingDataSourceID%2A> property is a helper property that determines whether the control is bound to an ASP.NET 2.0 data source control, such as an <xref:System.Web.UI.WebControls.ObjectDataSource> or a <xref:System.Web.UI.WebControls.SqlDataSource> control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater.IsBoundUsingDataSourceID%2A> property is a helper property that determines whether the control is bound to an ASP.NET 2.0 data source control, such as an <xref:System.Web.UI.WebControls.ObjectDataSource> or a <xref:System.Web.UI.WebControls.SqlDataSource> control.
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -1062,11 +1059,11 @@
         <value>
           <see langword="true" /> if data binding is automatic; otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Data binding is automatic if the <xref:System.Web.UI.WebControls.Repeater> control is bound to a data source control or if model binders are in use.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Data binding is automatic if the <xref:System.Web.UI.WebControls.Repeater> control is bound to a data source control or if model binders are in use.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1091,23 +1088,23 @@
       <Docs>
         <summary>Occurs when a button is clicked in the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This event is raised when a button in the <xref:System.Web.UI.WebControls.Repeater> control is clicked.  
-  
- This event causes a round-trip from the client to occur.  
-  
- For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.Repeater.ItemCommand> event of the <xref:System.Web.UI.WebControls.Repeater> control. Information about the button is displayed when a <xref:System.Web.UI.WebControls.Button> control within the <xref:System.Web.UI.WebControls.Repeater> control is clicked.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This event is raised when a button in the <xref:System.Web.UI.WebControls.Repeater> control is clicked.
+
+ This event causes a round-trip from the client to occur.
+
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).
+
+
+
+## Examples
+ The following example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.Repeater.ItemCommand> event of the <xref:System.Web.UI.WebControls.Repeater> control. Information about the button is displayed when a <xref:System.Web.UI.WebControls.Button> control within the <xref:System.Web.UI.WebControls.Repeater> control is clicked.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemCommand Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCommand Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCommand Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Web.UI.WebControls.Repeater.OnItemCommand(System.Web.UI.WebControls.RepeaterCommandEventArgs)" />
@@ -1136,21 +1133,21 @@
       <Docs>
         <summary>Occurs when an item is created in the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This event is raised when an item is created in the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
- For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.Repeater.ItemCreated> event of the <xref:System.Web.UI.WebControls.Repeater> control. A new line of text indicating the item type is displayed whenever a <xref:System.Web.UI.WebControls.Repeater> item is created.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This event is raised when an item is created in the <xref:System.Web.UI.WebControls.Repeater> control.
+
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).
+
+
+
+## Examples
+ The following example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.Repeater.ItemCreated> event of the <xref:System.Web.UI.WebControls.Repeater> control. A new line of text indicating the item type is displayed whenever a <xref:System.Web.UI.WebControls.Repeater> item is created.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemCreated Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCreated Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCreated Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Web.UI.WebControls.Repeater.OnItemCreated(System.Web.UI.WebControls.RepeaterItemEventArgs)" />
@@ -1179,21 +1176,21 @@
       <Docs>
         <summary>Occurs after an item in the <see cref="T:System.Web.UI.WebControls.Repeater" /> control is data-bound but before it is rendered on the page.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- This event is raised when an item in the <xref:System.Web.UI.WebControls.Repeater> control is data-bound.  
-  
- For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
-  
-   
-  
-## Examples  
- The following example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.Repeater.ItemDataBound> event of the <xref:System.Web.UI.WebControls.Repeater> control. The data is modified after it is bound to an item in the <xref:System.Web.UI.WebControls.Repeater> control but before it is rendered on the page.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This event is raised when an item in the <xref:System.Web.UI.WebControls.Repeater> control is data-bound.
+
+ For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).
+
+
+
+## Examples
+ The following example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.Repeater.ItemDataBound> event of the <xref:System.Web.UI.WebControls.Repeater> control. The data is modified after it is bound to an item in the <xref:System.Web.UI.WebControls.Repeater> control but before it is rendered on the page.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemDataBound Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemDataBound Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemDataBound Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Web.UI.WebControls.Repeater.OnItemDataBound(System.Web.UI.WebControls.RepeaterItemEventArgs)" />
@@ -1233,19 +1230,19 @@
         <summary>Gets a collection of <see cref="T:System.Web.UI.WebControls.RepeaterItem" /> objects in the <see cref="T:System.Web.UI.WebControls.Repeater" /> control.</summary>
         <value>A collection of <see cref="T:System.Web.UI.WebControls.RepeaterItem" /> objects. The default is an empty <see cref="T:System.Web.UI.WebControls.RepeaterItemCollection" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater> control populates the <xref:System.Web.UI.WebControls.Repeater.Items%2A> collection by enumerating every object in its <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>. The <xref:System.Web.UI.WebControls.Repeater.Items%2A> collection is then used by the <xref:System.Web.UI.WebControls.Repeater> control to render each item in the control.  
-  
-   
-  
-## Examples  
- The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.Items%2A> property to determine the index of the item selected from the <xref:System.Web.UI.WebControls.Repeater> control.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater> control populates the <xref:System.Web.UI.WebControls.Repeater.Items%2A> collection by enumerating every object in its <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>. The <xref:System.Web.UI.WebControls.Repeater.Items%2A> collection is then used by the <xref:System.Web.UI.WebControls.Repeater> control to render each item in the control.
+
+
+
+## Examples
+ The following example demonstrates how to use the <xref:System.Web.UI.WebControls.Repeater.Items%2A> property to determine the index of the item selected from the <xref:System.Web.UI.WebControls.Repeater> control.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.Items Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.Items Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.Items Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="T:System.Web.UI.WebControls.RepeaterItemCollection" />
@@ -1299,22 +1296,22 @@
         <summary>Gets or sets the <see cref="T:System.Web.UI.ITemplate" /> that defines how items in the <see cref="T:System.Web.UI.WebControls.Repeater" /> control are displayed.</summary>
         <value>A <see cref="T:System.Web.UI.ITemplate" /> that defines how items in the <see cref="T:System.Web.UI.WebControls.Repeater" /> control are displayed. The default value is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use this property to create a template that controls how items in the <xref:System.Web.UI.WebControls.Repeater> control are displayed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this property to create a template that controls how items in the <xref:System.Web.UI.WebControls.Repeater> control are displayed.
+
 > [!CAUTION]
->  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).  
-  
-   
-  
-## Examples  
- The following example illustrates how to use a simple <xref:System.Web.UI.WebControls.Repeater> control to display a table of items. Notice the use of the <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A> to display each item in the data source.  
-  
+>  This control can be used to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).
+
+
+
+## Examples
+ The following example illustrates how to use a simple <xref:System.Web.UI.WebControls.Repeater> control to display a table of items. Notice the use of the <xref:System.Web.UI.WebControls.Repeater.ItemTemplate%2A> to display each item in the data source.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemTemplate Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemTemplate Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemTemplate Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.AlternatingItemTemplate" />
@@ -1353,13 +1350,13 @@
         <summary>The name of the model type for strongly typed data binding.</summary>
         <value>The name of the model type.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- If you set this property and use the <xref:System.Web.UI.WebControls.Repeater.SelectMethod%2A> property, the type that is returned by the Select method must be of the type specified by this property or must be capable of being cast to the type specified by this property.  
-  
- Setting this property automatically enables Dynamic Data functionality.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If you set this property and use the <xref:System.Web.UI.WebControls.Repeater.SelectMethod%2A> property, the type that is returned by the Select method must be of the type specified by this property or must be capable of being cast to the type specified by this property.
+
+ Setting this property automatically enables Dynamic Data functionality.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1416,17 +1413,17 @@
         <returns>
           <see langword="true" /> if the <see cref="E:System.Web.UI.WebControls.Repeater.ItemCommand" /> was raised, otherwise <see langword="false" />.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Repeater.OnDataBinding%2A> method in a custom server control so that if the event argument is a command type, the <xref:System.Web.UI.WebControls.Repeater> control always calls the <xref:System.Web.UI.WebControls.Repeater.OnItemCommand%2A> and bubbles up the event, or returns `false` and cancels the event.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.Repeater.OnDataBinding%2A> method in a custom server control so that if the event argument is a command type, the <xref:System.Web.UI.WebControls.Repeater> control always calls the <xref:System.Web.UI.WebControls.Repeater.OnItemCommand%2A> and bubbles up the event, or returns `false` and cancels the event.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterOnBubbleEvent/CS/custom_repeater_onbubbleeventcs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnBubbleEvent/VB/custom_repeater_onbubbleeventvb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnBubbleEvent/VB/custom_repeater_onbubbleeventvb.aspx" id="Snippet1":::
+
  :::code language="csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterOnBubbleEvent/CS/custom_repeater_onbubbleevent.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnBubbleEvent/VB/custom_repeater_onbubbleevent.vb" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnBubbleEvent/VB/custom_repeater_onbubbleevent.vb" id="Snippet2":::
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -1480,17 +1477,17 @@
         <param name="e">An <see cref="T:System.EventArgs" /> object that contains the event data.</param>
         <summary>Raises the <see langword="DataBinding" /> event.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Examples  
- The following code examples demonstrate how to override the <xref:System.Web.UI.WebControls.Repeater.OnDataBinding%2A> method in a custom server control so that if the event argument is a command type, the <xref:System.Web.UI.WebControls.Repeater> control always calls the <xref:System.Web.UI.WebControls.Repeater.OnItemCommand%2A> and bubbles up the event, or returns `false` and cancels the event.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following code examples demonstrate how to override the <xref:System.Web.UI.WebControls.Repeater.OnDataBinding%2A> method in a custom server control so that if the event argument is a command type, the <xref:System.Web.UI.WebControls.Repeater> control always calls the <xref:System.Web.UI.WebControls.Repeater.OnItemCommand%2A> and bubbles up the event, or returns `false` and cancels the event.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterOnDataBinding/CS/custom_repeater_ondatabindingcs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnDataBinding/VB/custom_repeater_ondatabindingvb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnDataBinding/VB/custom_repeater_ondatabindingvb.aspx" id="Snippet1":::
+
  :::code language="csharp" source="~/snippets/csharp/VS_Snippets_WebNet/CustomRepeaterOnDataBinding/CS/custom_repeater_ondatabinding.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnDataBinding/VB/custom_repeater_ondatabinding.vb" id="Snippet2":::  
-  
+ :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/CustomRepeaterOnDataBinding/VB/custom_repeater_ondatabinding.vb" id="Snippet2":::
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -1516,11 +1513,11 @@
       <Docs>
         <summary>Determines whether data binding is required.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater.OnDataPropertyChanged%2A> method is a helper method that is called when the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A>, <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>, or <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property is changed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater.OnDataPropertyChanged%2A> method is a helper method that is called when the <xref:System.Web.UI.WebControls.Repeater.DataMember%2A>, <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>, or <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A> property is changed.
+
  ]]></format>
         </remarks>
         <exception cref="T:System.Web.HttpException">
@@ -1560,11 +1557,11 @@
         <param name="e">An <see cref="T:System.EventArgs" /> object that contains the event data.</param>
         <summary>Sets the <see cref="P:System.Web.UI.WebControls.Repeater.RequiresDataBinding" /> property to <see langword="true" />.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater.OnDataSourceViewChanged%2A> method is a helper method that participates in the data binding process. This method is called when the <xref:System.Web.UI.DataSourceView> object that is associated data source control raises its <xref:System.Web.UI.DataSourceView.DataSourceViewChanged> event. The event causes the <xref:System.Web.UI.WebControls.Repeater> control to bind data to the updated data.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater.OnDataSourceViewChanged%2A> method is a helper method that participates in the data binding process. This method is called when the <xref:System.Web.UI.DataSourceView> object that is associated data source control raises its <xref:System.Web.UI.DataSourceView.DataSourceViewChanged> event. The event causes the <xref:System.Web.UI.WebControls.Repeater> control to bind data to the updated data.
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.RequiresDataBinding" />
@@ -1621,19 +1618,19 @@
         <param name="e">The <see cref="T:System.Web.UI.WebControls.RepeaterCommandEventArgs" /> object that contains the event data.</param>
         <summary>Raises the <see cref="E:System.Web.UI.WebControls.Repeater.ItemCommand" /> event.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Raising an event invokes the event handler through a delegate. For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
-  
-   
-  
-## Examples  
- The following example illustrates a way to handle an <xref:System.Web.UI.WebControls.Repeater.ItemCommand> event of the <xref:System.Web.UI.WebControls.Repeater> control. Information about the button is displayed whenever a <xref:System.Web.UI.WebControls.Button> control within the <xref:System.Web.UI.WebControls.Repeater> control is clicked.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Raising an event invokes the event handler through a delegate. For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).
+
+
+
+## Examples
+ The following example illustrates a way to handle an <xref:System.Web.UI.WebControls.Repeater.ItemCommand> event of the <xref:System.Web.UI.WebControls.Repeater> control. Information about the button is displayed whenever a <xref:System.Web.UI.WebControls.Button> control within the <xref:System.Web.UI.WebControls.Repeater> control is clicked.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemCommand Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCommand Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCommand Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -1669,19 +1666,19 @@
         <param name="e">The <see cref="T:System.Web.UI.WebControls.RepeaterItemEventArgs" /> object that contains the event data.</param>
         <summary>Raises the <see cref="E:System.Web.UI.WebControls.Repeater.ItemCreated" /> event.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Raising an event invokes the event handler through a delegate. For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
-  
-   
-  
-## Examples  
- The following example illustrates a way to handle the <xref:System.Web.UI.WebControls.Repeater.ItemCreated> event of the <xref:System.Web.UI.WebControls.Repeater> control. A new line of text indicating the item type is displayed whenever a <xref:System.Web.UI.WebControls.Repeater> item is created.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Raising an event invokes the event handler through a delegate. For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).
+
+
+
+## Examples
+ The following example illustrates a way to handle the <xref:System.Web.UI.WebControls.Repeater.ItemCreated> event of the <xref:System.Web.UI.WebControls.Repeater> control. A new line of text indicating the item type is displayed whenever a <xref:System.Web.UI.WebControls.Repeater> item is created.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemCreated Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCreated Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemCreated Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -1717,19 +1714,19 @@
         <param name="e">The <see cref="T:System.Web.UI.WebControls.RepeaterItemEventArgs" /> object that contains the event data.</param>
         <summary>Raises the <see cref="E:System.Web.UI.WebControls.Repeater.ItemDataBound" /> event.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Raising an event invokes the event handler through a delegate. For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).  
-  
-   
-  
-## Examples  
- The following example illustrates a way to handle the <xref:System.Web.UI.WebControls.Repeater.ItemDataBound> event of the <xref:System.Web.UI.WebControls.Repeater> control. The data is modified after it is bound to an item in the <xref:System.Web.UI.WebControls.Repeater> control but before it is rendered on the page.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Raising an event invokes the event handler through a delegate. For more information about how to handle events, see [Handling and Raising Events](/dotnet/standard/events/).
+
+
+
+## Examples
+ The following example illustrates a way to handle the <xref:System.Web.UI.WebControls.Repeater.ItemDataBound> event of the <xref:System.Web.UI.WebControls.Repeater> control. The data is modified after it is bound to an item in the <xref:System.Web.UI.WebControls.Repeater> control but before it is rendered on the page.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.ItemDataBound Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemDataBound Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.ItemDataBound Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <block subset="none" type="overrides">
@@ -1764,11 +1761,11 @@
         <param name="e">The <see cref="T:System.Web.UI.WebControls.RepeaterItemEventArgs" /> object that contains the event data.</param>
         <summary>Raises the <see cref="E:System.Web.UI.Control.Load" /> event and performs other initialization.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater.OnLoad%2A> method notifies the <xref:System.Web.UI.WebControls.Repeater> control that it should perform actions that are common to each HTTP request for the page that it is associated with, such as setting up a database query. At this stage in the page life cycle, server controls in the hierarchy are created and initialized, view state is restored, and form controls reflect client-side data.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater.OnLoad%2A> method notifies the <xref:System.Web.UI.WebControls.Repeater> control that it should perform actions that are common to each HTTP request for the page that it is associated with, such as setting up a database query. At this stage in the page life cycle, server controls in the hierarchy are created and initialized, view state is restored, and form controls reflect client-side data.
+
  ]]></format>
         </remarks>
         <altmember cref="M:System.Web.UI.Control.OnLoad(System.EventArgs)" />
@@ -1798,11 +1795,11 @@
         <param name="e">The <see cref="T:System.Web.UI.WebControls.RepeaterItemEventArgs" /> object contains the event data.</param>
         <summary>Raises the <see cref="E:System.Web.UI.Control.PreRender" /> event.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.Control.PreRender> event is used to perform any updates before the output for the server control is rendered to the page. Any changes in the view state of the server control can be saved during this event. Such changes made in the rendering phase are not saved.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.Control.PreRender> event is used to perform any updates before the output for the server control is rendered to the page. Any changes in the view state of the server control can be saved during this event. Such changes made in the rendering phase are not saved.
+
  ]]></format>
         </remarks>
         <altmember cref="E:System.Web.UI.Control.PreRender" />
@@ -1840,15 +1837,15 @@
         <value>
           <see langword="true" /> if the <see cref="T:System.Web.UI.WebControls.Repeater" /> control needs to bind to a data source; otherwise, <see langword="false" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The <xref:System.Web.UI.WebControls.Repeater> control uses the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property to determine whether the control needs to call the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind to its specified data source.  
-  
- Each time the set accessor is called on either the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>, <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A>, or <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to change the data source after the <xref:System.Web.UI.WebControls.Repeater.OnInit%2A> method has already been called, ASP.NET sets the value of the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property to `true`. The value of the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property is also set to `true` when the <xref:System.Web.UI.WebControls.Repeater.OnDataSourceViewChanged%2A> method is called.  
-  
- ASP.NET sets the value of the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property to `false` immediately after the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method is called.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Web.UI.WebControls.Repeater> control uses the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property to determine whether the control needs to call the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method to bind to its specified data source.
+
+ Each time the set accessor is called on either the <xref:System.Web.UI.WebControls.Repeater.DataSource%2A>, <xref:System.Web.UI.WebControls.Repeater.DataSourceID%2A>, or <xref:System.Web.UI.WebControls.Repeater.DataMember%2A> property to change the data source after the <xref:System.Web.UI.WebControls.Repeater.OnInit%2A> method has already been called, ASP.NET sets the value of the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property to `true`. The value of the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property is also set to `true` when the <xref:System.Web.UI.WebControls.Repeater.OnDataSourceViewChanged%2A> method is called.
+
+ ASP.NET sets the value of the <xref:System.Web.UI.WebControls.Repeater.RequiresDataBinding%2A> property to `false` immediately after the <xref:System.Web.UI.WebControls.Repeater.DataBind%2A> method is called.
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.DataSource" />
@@ -1899,11 +1896,11 @@
         <summary>Gets a <see cref="T:System.Web.UI.DataSourceSelectArguments" /> object that the <see cref="T:System.Web.UI.WebControls.Repeater" /> control uses when retrieving data from a data source control.</summary>
         <value>A <see cref="T:System.Web.UI.DataSourceSelectArguments" /> object used to retrieve data. The default is the <see cref="P:System.Web.UI.DataSourceSelectArguments.Empty" /> value.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- The first call to the <xref:System.Web.UI.DataSourceSelectArguments> object calls the <xref:System.Web.UI.WebControls.Repeater.CreateDataSourceSelectArguments%2A> method to create the <xref:System.Web.UI.DataSourceSelectArguments.Empty%2A> object.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The first call to the <xref:System.Web.UI.DataSourceSelectArguments> object calls the <xref:System.Web.UI.WebControls.Repeater.CreateDataSourceSelectArguments%2A> method to create the <xref:System.Web.UI.DataSourceSelectArguments.Empty%2A> object.
+
  ]]></format>
         </remarks>
         <related type="Article" href="https://msdn.microsoft.com/library/55c4b177-05ff-4327-be38-a8a97b16d41e">Repeater Web Server Control Overview</related>
@@ -1938,11 +1935,11 @@
         <summary>The name of the method to call in order to read data.</summary>
         <value>The name of the method.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Setting this property causes model binding to be used as the data binding method.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Setting this property causes model binding to be used as the data binding method.
+
  ]]></format>
         </remarks>
       </Docs>
@@ -1994,22 +1991,22 @@
         <summary>Gets or sets the <see cref="T:System.Web.UI.ITemplate" /> interface that defines how the separator between items is displayed.</summary>
         <value>An <see cref="T:System.Web.UI.ITemplate" /> that defines how the separator between items is displayed. The default is <see langword="null" />.</value>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Use the <xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A> property to create a template that controls how the separator between items is displayed.  
-  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A> property to create a template that controls how the separator between items is displayed.
+
 > [!CAUTION]
->  You can use the <xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A> property to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).  
-  
-   
-  
-## Examples  
- The following code example demonstrates how to create a template to control how separators between items are displayed.  
-  
+>  You can use the <xref:System.Web.UI.WebControls.Repeater.SeparatorTemplate%2A> property to display user input, which might include malicious client script. Check any information that is sent from a client for executable script, SQL statements, or other code before displaying it in your application. ASP.NET provides an input request validation feature to block script and HTML in user input. Validation server controls are also provided to assess user input. For more information, see [Validation Server Control Syntax](https://msdn.microsoft.com/library/96d2c59e-693c-4079-9b53-b3ff0d9e9133).
+
+
+
+## Examples
+ The following code example demonstrates how to create a template to control how separators between items are displayed.
+
  :::code language="aspx-csharp" source="~/snippets/csharp/VS_Snippets_WebNet/Classic Repeater.SeparatorTemplate Example/CS/sourcecs.aspx" id="Snippet1":::
- :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.SeparatorTemplate Example/VB/sourcevb.aspx" id="Snippet1":::  
-  
+ :::code language="aspx-vb" source="~/snippets/visualbasic/VS_Snippets_WebNet/Classic Repeater.SeparatorTemplate Example/VB/sourcevb.aspx" id="Snippet1":::
+
  ]]></format>
         </remarks>
         <altmember cref="P:System.Web.UI.WebControls.Repeater.HeaderTemplate" />
