@@ -2,9 +2,8 @@
 Imports System.IO
 Imports System.Xml.Serialization
 
-
 ' Three classes are included here. Each one will
-' be used to create three XmlSerializer objects. 
+' be used to create three XmlSerializer objects.
 
 Public Class Instrument
     Public InstrumentName As String
@@ -19,19 +18,19 @@ Public Class Piece
 End Class
 
 Public Class Test
-    
+
     Public Shared Sub Main()
         Dim t As New Test()
         t.GetSerializers()
-    End Sub    
-    
+    End Sub
+
     Public Sub GetSerializers()
         ' Create an array of types.
         Dim types(3) As Type
         types(0) = GetType(Instrument)
         types(1) = GetType(Player)
         types(2) = GetType(Piece)
-        
+
         ' Create an array for XmlSerializer objects.
         Dim serializers(3) As XmlSerializer
         serializers = XmlSerializer.FromTypes(types)

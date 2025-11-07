@@ -32,8 +32,12 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents an SLH-DSA key.</summary>
+    <remarks>
+      <para>This algorithm is specified by FIPS-205.</para>
+      <para>Developers are encouraged to program against the <see cref="T:System.Security.Cryptography.SlhDsa" /> base class, rather than any specific derived class.</para>
+      <para>The derived classes are intended for interop with the underlying system cryptographic libraries.</para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -56,9 +60,11 @@
         <Parameter Name="algorithm" Type="System.Security.Cryptography.SlhDsaAlgorithm" />
       </Parameters>
       <Docs>
-        <param name="algorithm">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="algorithm">The specific SLH-DSA algorithm for this key.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Security.Cryptography.SlhDsa" /> class.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="algorithm" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Algorithm">
@@ -81,8 +87,8 @@
         <ReturnType>System.Security.Cryptography.SlhDsaAlgorithm</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets the specific SLH-DSA algorithm for this key.</summary>
+        <value>The specific SLH-DSA algorithm for this key.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -110,7 +116,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Releases all resources used by the <see cref="T:System.Security.Cryptography.SlhDsa" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -137,8 +143,13 @@
         <Parameter Name="disposing" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="disposing">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="disposing">
+          <para>
+            <see langword="true" /> to release managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</para>
+        </param>
+        <summary>
+          <para>Called by the <c>Dispose()</c> and <c>Finalize()</c> methods to release the managed and unmanaged resources used by the current instance of the <see cref="T:System.Security.Cryptography.SlhDsa" /> class.</para>
+        </summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -173,11 +184,27 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Exports the current key in the PKCS#8 EncryptedPrivateKeyInfo format with a byte-based password.</summary>
+        <returns>A byte array containing the PKCS#8 EncryptedPrivateKeyInfo representation of the this key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="pbeParameters" /> specifies a KDF that requires a char-based password.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="pbeParameters" /> does not represent a valid password-based encryption algorithm.</para>
+          <para>-or-</para>
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportEncryptedPkcs8PrivateKey">
@@ -211,11 +238,24 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>Exports the current key in the PKCS#8 EncryptedPrivateKeyInfo format with a char-based password.</summary>
+        <returns>A byte array containing the PKCS#8 EncryptedPrivateKeyInfo representation of the this key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="pbeParameters" /> does not represent a valid password-based encryption algorithm.</para>
+          <para>-or-</para>
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportEncryptedPkcs8PrivateKey">
@@ -247,6 +287,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ExportEncryptedPkcs8PrivateKey(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters)" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="password" /> or <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportEncryptedPkcs8PrivateKeyPem">
@@ -280,11 +323,29 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>
+          <para>Exports the current key in a PEM-encoded representation of the PKCS#8 EncryptedPrivateKeyInfo representation of this key, using a byte-based password.</para>
+        </summary>
+        <returns>A string containing the PEM-encoded PKCS#8 EncryptedPrivateKeyInfo.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="pbeParameters" /> specifies a KDF that requires a char-based password.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="pbeParameters" /> does not represent a valid password-based encryption algorithm.</para>
+          <para>-or-</para>
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportEncryptedPkcs8PrivateKeyPem">
@@ -318,11 +379,26 @@
         <Parameter Name="pbeParameters" Type="System.Security.Cryptography.PbeParameters" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <summary>
+          <para>Exports the current key in a PEM-encoded representation of the PKCS#8 EncryptedPrivateKeyInfo representation of this key, using a char-based password.</para>
+        </summary>
+        <returns>A string containing the PEM-encoded PKCS#8 EncryptedPrivateKeyInfo.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="pbeParameters" /> does not represent a valid password-based encryption algorithm.</para>
+          <para>-or-</para>
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportEncryptedPkcs8PrivateKeyPem">
@@ -354,6 +430,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ExportEncryptedPkcs8PrivateKeyPem(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters)" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="password" /> or <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportPkcs8PrivateKey">
@@ -377,9 +456,17 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the current key in the PKCS#8 PrivateKeyInfo format.</summary>
+        <returns>A byte array containing the PKCS#8 PrivateKeyInfo representation of the this key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportPkcs8PrivateKeyPem">
@@ -403,9 +490,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the current key in a PEM-encoded representation of the PKCS#8 PrivateKeyInfo format.</summary>
+        <returns>A string containing the PEM-encoded representation of the PKCS#8 PrivateKeyInfo.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while exporting the key.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSlhDsaPrivateKey">
@@ -429,9 +518,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the current key in the FIPS 205 private key format.</summary>
+        <returns>The FIPS 205 private key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The current instance cannot export a private key.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSlhDsaPrivateKey">
@@ -457,9 +552,19 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">
+          <para>The buffer to receive the private key. Its length must be exactly <see cref="P:System.Security.Cryptography.SlhDsaAlgorithm.PrivateKeySizeInBytes" />.</para>
+        </param>
+        <summary>Exports the current key in the FIPS 205 private key format.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" /> is the incorrect length to receive the private key.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The current instance cannot export a private key.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSlhDsaPrivateKeyCore">
@@ -485,8 +590,8 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The buffer to receive the private key.</param>
+        <summary>When overridden in a derived class, exports the FIPS 205 private key to the specified buffer.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -511,9 +616,13 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the public-key portion of the current key in the FIPS 205 public key format.</summary>
+        <returns>The FIPS 205 public key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>An error occurred while exporting the key.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSlhDsaPublicKey">
@@ -539,10 +648,21 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">
+          <para>The buffer to receive the public key. Its length must be exactly <see cref="P:System.Security.Cryptography.SlhDsaAlgorithm.PublicKeySizeInBytes" />.</para>
+        </param>
+        <summary>Exports the public-key portion of the current key in the FIPS 205 public key format.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>
+            <paramref name="destination" /> is required to be exactly <see cref="P:System.Security.Cryptography.SlhDsaAlgorithm.PublicKeySizeInBytes" /> in length.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="destination" /> is the incorrect length to receive the public key.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>An error occurred while exporting the key.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">The object has already been disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSlhDsaPublicKeyCore">
@@ -568,8 +688,8 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="destination">The buffer to receive the public key.</param>
+        <summary>When overridden in a derived class, exports the FIPS 205 public key to the specified buffer.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -594,9 +714,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Exports the public-key portion of the current key in the X.509 SubjectPublicKeyInfo format.</summary>
+        <returns>A byte array containing the X.509 SubjectPublicKeyInfo representation of the public-key portion of this key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while exporting the key.</exception>
       </Docs>
     </Member>
     <Member MemberName="ExportSubjectPublicKeyInfoPem">
@@ -620,9 +742,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>
+          <para>Exports the public-key portion of the current key in a PEM-encoded representation of the X.509 SubjectPublicKeyInfo format.</para>
+        </summary>
+        <returns>
+          <para>A string containing the PEM-encoded representation of the X.509 SubjectPublicKeyInfo representation of the public-key portion of this key.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while exporting the key.</exception>
       </Docs>
     </Member>
     <Member MemberName="GenerateKey">
@@ -648,10 +776,16 @@
         <Parameter Name="algorithm" Type="System.Security.Cryptography.SlhDsaAlgorithm" />
       </Parameters>
       <Docs>
-        <param name="algorithm">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="algorithm">An algorithm identifying what kind of SLH-DSA key to generate.</param>
+        <summary>Generates a new SLH-DSA key for the specified algorithm.</summary>
+        <returns>The generated object.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="algorithm" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred generating the SLH-DSA key.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportEncryptedPkcs8PrivateKey">
@@ -684,11 +818,28 @@
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="passwordBytes">The bytes to use as a password when decrypting the key material.</param>
+        <param name="source">The bytes of a PKCS#8 EncryptedPrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <summary>Imports an SLH-DSA private key from a PKCS#8 EncryptedPrivateKeyInfo structure.</summary>
+        <returns>The imported key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The contents of <paramref name="source" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.</para>
+          <para>-or-</para>
+          <para>The specified password is incorrect.</para>
+          <para>-or-</para>
+          <para>The EncryptedPrivateKeyInfo indicates the Key Derivation Function (KDF) to apply is the legacy PKCS#12 KDF, which requires <see cref="T:System.Char" />-based passwords.</para>
+          <para>-or-</para>
+          <para>The value does not represent an SLH-DSA key.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains trailing data after the ASN.1 structure.</para>
+          <para>-or-</para>
+          <para>The algorithm-specific import failed.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportEncryptedPkcs8PrivateKey">
@@ -721,11 +872,26 @@
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="password">The password to use when decrypting the key material.</param>
+        <param name="source">The bytes of a PKCS#8 EncryptedPrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <summary>Imports an SLH-DSA private key from a PKCS#8 EncryptedPrivateKeyInfo structure.</summary>
+        <returns>The imported key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The contents of <paramref name="source" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.</para>
+          <para>-or-</para>
+          <para>The specified password is incorrect.</para>
+          <para>-or-</para>
+          <para>The value does not represent an SLH-DSA key.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains trailing data after the ASN.1 structure.</para>
+          <para>-or-</para>
+          <para>The algorithm-specific import failed.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportEncryptedPkcs8PrivateKey">
@@ -757,6 +923,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportEncryptedPkcs8PrivateKey(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Byte})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="password" /> or <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromEncryptedPem">
@@ -789,11 +958,35 @@
         <Parameter Name="passwordBytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="passwordBytes">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The PEM text of the encrypted key to import.</param>
+        <param name="passwordBytes">The bytes to use as a password when decrypting the key material.</param>
+        <summary>Imports an SLH-DSA key from an encrypted RFC 7468 PEM-encoded string.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>Unsupported or malformed PEM-encoded objects will be ignored. If multiple supported PEM labels are found, an exception is thrown to prevent importing a key when the key is ambiguous.</para>
+          <para>This method supports the <c>ENCRYPTED PRIVATE KEY</c> PEM label.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="source" /> does not contain a PEM-encoded key with a recognized label.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains multiple PEM-encoded keys with a recognized label.</para>
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The password is incorrect.</para>
+          <para>-or-</para>
+          <para>The base-64 decoded contents of the PEM text from <paramref name="source" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.</para>
+          <para>-or-</para>
+          <para>The base-64 decoded contents of the PEM text from <paramref name="source" /> indicate the key is for an algorithm other than the algorithm represented by this instance.</para>
+          <para>-or-</para>
+          <para>The base-64 decoded contents of the PEM text from <paramref name="source" /> represent the key in a format that is not supported.</para>
+          <para>-or-</para>
+          <para>An error occurred while importing the key.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromEncryptedPem">
@@ -826,11 +1019,36 @@
         <Parameter Name="password" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="source">The PEM text of the encrypted key to import.</param>
+        <param name="password">The password to use for decrypting the key material.</param>
+        <summary>Imports an SLH-DSA key from an encrypted RFC 7468 PEM-encoded string.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <para>When the base-64 decoded contents of <paramref name="source" /> indicate an algorithm that uses PBKDF1 (Password-Based Key Derivation Function 1) or PBKDF2 (Password-Based Key Derivation Function 2), the password is converted to bytes via the UTF-8 encoding.</para>
+          <para>Unsupported or malformed PEM-encoded objects will be ignored. If multiple supported PEM labels are found, an exception is thrown to prevent importing a key when the key is ambiguous.</para>
+          <para>This method supports the <c>ENCRYPTED PRIVATE KEY</c> PEM label.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="source" /> does not contain a PEM-encoded key with a recognized label.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains multiple PEM-encoded keys with a recognized label.</para>
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The password is incorrect.</para>
+          <para>-or-</para>
+          <para>The base-64 decoded contents of the PEM text from <paramref name="source" /> do not represent an ASN.1-BER-encoded PKCS#8 EncryptedPrivateKeyInfo structure.</para>
+          <para>-or-</para>
+          <para>The base-64 decoded contents of the PEM text from <paramref name="source" /> indicate the key is for an algorithm other than the algorithm represented by this instance.</para>
+          <para>-or-</para>
+          <para>The base-64 decoded contents of the PEM text from <paramref name="source" /> represent the key in a format that is not supported.</para>
+          <para>-or-</para>
+          <para>An error occurred while importing the key.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromEncryptedPem">
@@ -862,6 +1080,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportFromEncryptedPem(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Byte})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> or <paramref name="passwordBytes" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromEncryptedPem">
@@ -893,6 +1114,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportFromEncryptedPem(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> or <paramref name="password" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromPem">
@@ -924,10 +1148,37 @@
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="source">The text of the PEM key to import.</param>
+        <summary>Imports an SLH-DSA key from an RFC 7468 PEM-encoded string.</summary>
+        <returns>The imported SLH-DSA key.</returns>
+        <remarks>
+          <para>Unsupported or malformed PEM-encoded objects will be ignored. If multiple supported PEM labels are found, an exception is raised to prevent importing a key when the key is ambiguous.</para>
+          <para>This method supports the following PEM labels:</para>
+          <para>
+            <list type="bullet">
+              <item>
+                <description>PUBLIC KEY</description>
+              </item>
+              <item>
+                <description>PRIVATE KEY</description>
+              </item>
+            </list>
+          </para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="source" /> contains an encrypted PEM-encoded key.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains multiple PEM-encoded SLH-DSA keys.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains no PEM-encoded SLH-DSA keys.</para>
+        </exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while importing the key.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportFromPem">
@@ -957,6 +1208,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportFromPem(System.ReadOnlySpan{System.Char})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportPkcs8PrivateKey">
@@ -986,6 +1240,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportPkcs8PrivateKey(System.ReadOnlySpan{System.Byte})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportPkcs8PrivateKey">
@@ -1017,10 +1274,23 @@
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The bytes of a PKCS#8 PrivateKeyInfo structure in the ASN.1-BER encoding.</param>
+        <summary>Imports an SLH-DSA private key from a PKCS#8 PrivateKeyInfo structure.</summary>
+        <returns>The imported key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The contents of <paramref name="source" /> do not represent an ASN.1-BER-encoded PKCS#8 PrivateKeyInfo structure.</para>
+          <para>-or-</para>
+          <para>The PrivateKeyInfo value does not represent an SLH-DSA key.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains trailing data after the ASN.1 structure.</para>
+          <para>-or-</para>
+          <para>The algorithm-specific import failed.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSlhDsaPrivateKey">
@@ -1052,6 +1322,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportSlhDsaPrivateKey(System.Security.Cryptography.SlhDsaAlgorithm,System.ReadOnlySpan{System.Byte})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="algorithm" /> or <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSlhDsaPrivateKey">
@@ -1085,11 +1358,19 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="algorithm">To be added.</param>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="algorithm">The specific SLH-DSA algorithm for this key.</param>
+        <param name="source">The bytes of a FIPS 205 private key.</param>
+        <summary>Imports an SLH-DSA private key in the FIPS 205 private key format.</summary>
+        <returns>The imported key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="source" /> has a length that is not valid for the SLH-DSA algorithm.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="algorithm" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while importing the key.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSlhDsaPublicKey">
@@ -1121,6 +1402,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportSlhDsaPublicKey(System.Security.Cryptography.SlhDsaAlgorithm,System.ReadOnlySpan{System.Byte})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="algorithm" /> or <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSlhDsaPublicKey">
@@ -1154,11 +1438,19 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="algorithm">To be added.</param>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="algorithm">The specific SLH-DSA algorithm for this key.</param>
+        <param name="source">The bytes of a FIPS 205 public key.</param>
+        <summary>Imports an SLH-DSA public key in the FIPS 205 public key format.</summary>
+        <returns>The imported key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="source" /> has a length that is not valid for the SLH-DSA algorithm.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="algorithm" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while importing the key.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSubjectPublicKeyInfo">
@@ -1188,6 +1480,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.ImportSubjectPublicKeyInfo(System.ReadOnlySpan{System.Byte})" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="source" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="ImportSubjectPublicKeyInfo">
@@ -1219,10 +1514,23 @@
         <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="source">The bytes of an X.509 SubjectPublicKeyInfo structure in the ASN.1-DER encoding.</param>
+        <summary>Imports an SLH-DSA public key from an X.509 SubjectPublicKeyInfo structure.</summary>
+        <returns>The imported key.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The contents of <paramref name="source" /> do not represent an ASN.1-DER-encoded X.509 SubjectPublicKeyInfo structure.</para>
+          <para>-or-</para>
+          <para>The SubjectPublicKeyInfo value does not represent an SLH-DSA key.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="source" /> contains trailing data after the ASN.1 structure.</para>
+          <para>-or-</para>
+          <para>The algorithm-specific import failed.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <para>The platform does not support SLH-DSA. Callers can use the <see cref="P:System.Security.Cryptography.SlhDsa.IsSupported" /> property to determine if the platform supports SLH-DSA.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="IsSupported">
@@ -1245,8 +1553,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value indicating whether the current platform supports SLH-DSA.</summary>
+        <value>
+          <see langword="true" /> if the current platform supports SLH-DSA; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -1280,11 +1589,24 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">The data to sign.</param>
+        <param name="context">
+          <para>An optional context-specific value to limit the scope of the signature.</para>
+          <para>The default value is <see langword="null" />.</para>
+        </param>
+        <summary>Signs the specified data.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>A <see langword="null" /> context is treated as empty.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="data" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="context" /> has a length in excess of 255 bytes.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The instance represents only a public key.</para>
+          <para>-or-</para>
+          <para>An error occurred while signing the data.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="SignData">
@@ -1311,12 +1633,28 @@
         <Parameter Name="context" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">The data to sign.</param>
+        <param name="destination">
+          <para>The buffer to receive the signature. Its length must be exactly <see cref="P:System.Security.Cryptography.SlhDsaAlgorithm.SignatureSizeInBytes" />.</para>
+        </param>
+        <param name="context">
+          <para>An optional context-specific value to limit the scope of the signature.</para>
+          <para>The default value is an empty buffer.</para>
+        </param>
+        <summary>Signs the specified data, writing the signature into the provided buffer.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The buffer in <paramref name="destination" /> is the incorrect length to receive the signature.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="context" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> in excess of 255 bytes.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The instance represents only a public key.</para>
+          <para>-or-</para>
+          <para>An error occurred while signing the data.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="SignDataCore">
@@ -1344,11 +1682,14 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="context">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="data">The data to sign.</param>
+        <param name="context">The signature context.</param>
+        <param name="destination">The buffer to receive the signature, which will always be the exactly correct size for the algorithm.</param>
+        <summary>
+          <para>When overridden in a derived class, computes the signature of the specified data and context, writing it into the provided buffer.</para>
+        </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while signing the data.</exception>
       </Docs>
     </Member>
     <Member MemberName="SignPreHash">
@@ -1382,12 +1723,31 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="hashAlgorithmOid">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="hash">The hash to sign.</param>
+        <param name="hashAlgorithmOid">The OID of the hash algorithm used to create the hash.</param>
+        <param name="context">
+          <para>An optional context-specific value to limit the scope of the signature.</para>
+          <para>The default value is <see langword="null" />.</para>
+        </param>
+        <summary>Signs the specified hash using the FIPS 205 pre-hash signing algorithm.</summary>
         <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>A <see langword="null" /> context is treated as empty.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="hash" /> or <paramref name="hashAlgorithmOid" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="context" /> has a length in excess of 255 bytes.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithmOid" /> is not a well-formed OID.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="hashAlgorithmOid" /> is a well-known algorithm and <paramref name="hash" /> does not have the expected length.</para>
+          <para>-or-</para>
+          <para>The instance represents only a public key.</para>
+          <para>-or-</para>
+          <para>An error occurred while signing the hash.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="SignPreHash">
@@ -1422,12 +1782,36 @@
         <Parameter Name="context" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="hashAlgorithmOid">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="hash">The hash to sign.</param>
+        <param name="destination">
+          <para>The buffer to receive the signature. Its length must be exactly <see cref="P:System.Security.Cryptography.SlhDsaAlgorithm.SignatureSizeInBytes" />.</para>
+        </param>
+        <param name="hashAlgorithmOid">The OID of the hash algorithm used to create the hash.</param>
+        <param name="context">
+          <para>An optional context-specific value to limit the scope of the signature.</para>
+          <para>The default value is an empty buffer.</para>
+        </param>
+        <summary>Signs the specified hash using the FIPS 205 pre-hash signing algorithm, writing the signature into the provided buffer.</summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="hashAlgorithmOid" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">The buffer in <paramref name="destination" /> is the incorrect length to receive the signature.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="context" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> in excess of 255 bytes.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithmOid" /> is not a well-formed OID.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="hashAlgorithmOid" /> is a well-known algorithm and <paramref name="hash" /> does not have the expected length.</para>
+          <para>-or-</para>
+          <para>The instance represents only a public key.</para>
+          <para>-or-</para>
+          <para>An error occurred while signing the hash.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="SignPreHashCore">
@@ -1463,12 +1847,15 @@
         <Parameter Name="destination" Type="System.Span&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="context">To be added.</param>
-        <param name="hashAlgorithmOid">To be added.</param>
-        <param name="destination">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="hash">The hash to sign.</param>
+        <param name="context">The signature context.</param>
+        <param name="hashAlgorithmOid">The OID of the hash algorithm used to create the hash.</param>
+        <param name="destination">The buffer to receive the signature, which will always be the exactly correct size for the algorithm.</param>
+        <summary>
+          <para>When overridden in a derived class, computes the pre-hash signature of the specified hash and context, writing it into the provided buffer.</para>
+        </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while signing the hash.</exception>
       </Docs>
     </Member>
     <Member MemberName="ThrowIfDisposed">
@@ -1529,13 +1916,37 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="passwordBytes">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="passwordBytes">The bytes to use as a password when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The buffer to receive the PKCS#8 EncryptedPrivateKeyInfo value.</param>
+        <param name="bytesWritten">
+          <para>When this method returns, contains the number of bytes written to the <paramref name="destination" /> buffer.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Attempts to export the current key in the PKCS#8 EncryptedPrivateKeyInfo format into a provided buffer, using a byte-based password.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> was large enough to hold the result; otherwise, <see langword="false" />.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="pbeParameters" /> specifies a KDF that requires a char-based password.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="pbeParameters" /> does not represent a valid password-based encryption algorithm.</para>
+          <para>-or-</para>
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportEncryptedPkcs8PrivateKey">
@@ -1571,13 +1982,34 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="password">To be added.</param>
-        <param name="pbeParameters">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="password">The password to use when encrypting the key material.</param>
+        <param name="pbeParameters">The password-based encryption (PBE) parameters to use when encrypting the key material.</param>
+        <param name="destination">The buffer to receive the PKCS#8 EncryptedPrivateKeyInfo value.</param>
+        <param name="bytesWritten">
+          <para>When this method returns, contains the number of bytes written to the <paramref name="destination" /> buffer.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Attempts to export the current key in the PKCS#8 EncryptedPrivateKeyInfo format into a provided buffer, using a char-based password.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> was large enough to hold the result; otherwise, <see langword="false" />.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="pbeParameters" /> does not represent a valid password-based encryption algorithm.</para>
+          <para>-or-</para>
+          <para>This instance only represents a public key.</para>
+          <para>-or-</para>
+          <para>The private key is not exportable.</para>
+          <para>-or-</para>
+          <para>An error occurred while exporting the key.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportEncryptedPkcs8PrivateKey">
@@ -1620,6 +2052,9 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.Security.Cryptography.SlhDsa.TryExportEncryptedPkcs8PrivateKey(System.ReadOnlySpan{System.Char},System.Security.Cryptography.PbeParameters,System.Span{System.Byte},System.Int32@)" />
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="password" /> or <paramref name="pbeParameters" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportPkcs8PrivateKey">
@@ -1646,11 +2081,21 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer to receive the PKCS#8 PrivateKeyInfo value.</param>
+        <param name="bytesWritten">
+          <para>When this method returns, contains the number of bytes written to the <paramref name="destination" /> buffer.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Attempts to export the current key in the PKCS#8 PrivateKeyInfo format into the provided buffer.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> was large enough to hold the result; otherwise, <see langword="false" />.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while exporting the key.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportPkcs8PrivateKeyCore">
@@ -1677,11 +2122,18 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer to receive the PKCS#8 PrivateKeyInfo value.</param>
+        <param name="bytesWritten">When this method returns, contains the number of bytes written to the <paramref name="destination" /> buffer.</param>
+        <summary>
+          <para>When overridden in a derived class, attempts to export the current key in the PKCS#8 PrivateKeyInfo format into the provided buffer.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> was large enough to hold the result; otherwise, <see langword="false" />.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while exporting the key.</exception>
       </Docs>
     </Member>
     <Member MemberName="TryExportSubjectPublicKeyInfo">
@@ -1708,11 +2160,21 @@
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="destination">The buffer to receive the X.509 SubjectPublicKeyInfo value.</param>
+        <param name="bytesWritten">
+          <para>When this method returns, contains the number of bytes written to the <paramref name="destination" /> buffer.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>
+          <para>Attempts to export the public-key portion of the current key in the X.509 SubjectPublicKeyInfo format into the provided buffer.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> was large enough to hold the result; otherwise, <see langword="false" />.</para>
+        </returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while exporting the key.</exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyData">
@@ -1746,12 +2208,24 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="signature">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="data">The data to verify.</param>
+        <param name="signature">The signature to verify.</param>
+        <param name="context">
+          <para>The context value which was provided during signing.</para>
+          <para>The default value is <see langword="null" />.</para>
+        </param>
+        <summary>Verifies that the specified signature is valid for this key and the provided data.</summary>
+        <returns>
+          <see langword="true" /> if the signature validates the data; otherwise, <see langword="false" />.</returns>
+        <remarks>A <see langword="null" /> context is treated as empty.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="data" /> or <paramref name="signature" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="context" /> has a length in excess of 255 bytes.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>An error occurred while verifying the data.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyData">
@@ -1778,12 +2252,24 @@
         <Parameter Name="context" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="signature">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="data">The data to verify.</param>
+        <param name="signature">The signature to verify.</param>
+        <param name="context">
+          <para>The context value which was provided during signing.</para>
+          <para>The default value is an empty buffer.</para>
+        </param>
+        <summary>Verifies that the specified signature is valid for this key and the provided data.</summary>
+        <returns>
+          <see langword="true" /> if the signature validates the data; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="context" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> in excess of 255 bytes.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>An error occurred while verifying the data.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyDataCore">
@@ -1811,12 +2297,14 @@
         <Parameter Name="signature" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="context">To be added.</param>
-        <param name="signature">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="data">The data to verify.</param>
+        <param name="context">The signature context.</param>
+        <param name="signature">The signature to verify.</param>
+        <summary>When overridden in a derived class, verifies the signature of the specified data and context.</summary>
+        <returns>
+          <see langword="true" /> if the signature validates the data; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while verifying the data.</exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyPreHash">
@@ -1851,13 +2339,31 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="signature">To be added.</param>
-        <param name="hashAlgorithmOid">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="hash">The hash to verify.</param>
+        <param name="signature">The signature to verify.</param>
+        <param name="hashAlgorithmOid">The OID of the hash algorithm used to create the hash.</param>
+        <param name="context">
+          <para>The context value which was provided during signing.</para>
+          <para>The default value is <see langword="null" />.</para>
+        </param>
+        <summary>Verifies that the specified FIPS 205 pre-hash signature is valid for this key and the provided hash.</summary>
+        <returns>
+          <see langword="true" /> if the signature validates the hash; otherwise, <see langword="false" />.</returns>
+        <remarks>A <see langword="null" /> context is treated as empty.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="hash" /> or <paramref name="signature" /> or <paramref name="hashAlgorithmOid" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="context" /> has a length in excess of 255 bytes.</exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithmOid" /> is not a well-formed OID.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="hashAlgorithmOid" /> is a well-known algorithm and <paramref name="hash" /> does not have the expected length.</para>
+          <para>-or-</para>
+          <para>An error occurred while verifying the hash.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyPreHash">
@@ -1892,13 +2398,33 @@
         <Parameter Name="context" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="signature">To be added.</param>
-        <param name="hashAlgorithmOid">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hash">The hash to verify.</param>
+        <param name="signature">The signature to verify.</param>
+        <param name="hashAlgorithmOid">The OID of the hash algorithm used to create the hash.</param>
+        <param name="context">
+          <para>The context value which was provided during signing.</para>
+          <para>The default value is an empty buffer.</para>
+        </param>
+        <summary>Verifies that the specified FIPS 205 pre-hash signature is valid for this key and the provided hash.</summary>
+        <returns>
+          <see langword="true" /> if the signature validates the hash; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="hashAlgorithmOid" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="context" /> has a <see cref="P:System.ReadOnlySpan`1.Length" /> in excess of 255 bytes.</para>
+        </exception>
+        <exception cref="T:System.ObjectDisposedException">This instance has been disposed.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithmOid" /> is not a well-formed OID.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="hashAlgorithmOid" /> is a well-known algorithm and <paramref name="hash" /> does not have the expected length.</para>
+          <para>-or-</para>
+          <para>An error occurred while verifying the hash.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="VerifyPreHashCore">
@@ -1934,13 +2460,15 @@
         <Parameter Name="signature" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
-        <param name="hash">To be added.</param>
-        <param name="context">To be added.</param>
-        <param name="hashAlgorithmOid">To be added.</param>
-        <param name="signature">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hash">The data to verify.</param>
+        <param name="context">The signature context.</param>
+        <param name="hashAlgorithmOid">The OID of the hash algorithm used to create the hash.</param>
+        <param name="signature">The signature to verify.</param>
+        <summary>When overridden in a derived class, verifies the pre-hash signature of the specified hash and context.</summary>
+        <returns>
+          <see langword="true" /> if the signature validates the hash; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">An error occurred while verifying the hash.</exception>
       </Docs>
     </Member>
   </Members>

@@ -378,26 +378,30 @@
       <Docs>
         <summary>Communicates a request for cancellation.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
 
-## Remarks
- The associated <xref:System.Threading.CancellationToken> will be notified of the cancellation and will transition to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns true.
+The associated <xref:System.Threading.CancellationToken> is notified of the cancellation and transitions to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns true.  
+  
+Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> are executed, if they haven't already been executed by a previous call to <xref:System.Threading.CancellationTokenSource.Cancel>. Subsequent calls to <xref:System.Threading.CancellationTokenSource.Cancel> won't execute the same callback again unless reregistered. (Avoid multiple calls to <xref:System.Threading.CancellationTokenSource.Cancel>, because the intent of such code is often unclear.)
 
- Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed.
+Callbacks are executed synchronously in LIFO order. 
 
- We recommend that cancelable operations and callbacks registered with <xref:System.Threading.CancellationToken> not throw exceptions.
+We recommend that cancelable operations and callbacks registered with <xref:System.Threading.CancellationToken> not throw exceptions.
+ 
+This overload of Cancel aggregates any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.
 
- This overload of Cancel will aggregate any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.
-
- Calling this method has the same effect as calling [`Cancel(false)`](xref:System.Threading.CancellationTokenSource.Cancel(System.Boolean)).
+Calling this method has the same effect as calling [`Cancel(false)`](xref:System.Threading.CancellationTokenSource.Cancel(System.Boolean)).
 
 ## Examples
- The following example uses a random number generator to emulate a data collection application that reads 10 integral values from eleven different instruments. A value of zero indicates that the measurement has failed for one instrument, in which case the operation should be cancelled and no overall mean should be computed.
 
- To handle the possible cancellation of the operation, the example instantiates a <xref:System.Threading.CancellationTokenSource> object that generates a cancellation token which is passed to a <xref:System.Threading.Tasks.TaskFactory> object. The <xref:System.Threading.Tasks.TaskFactory> object in turn passes the cancellation token to each of the tasks responsible for collecting readings for a particular instrument. The <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%60%602%28System.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2CSystem.Func%7BSystem.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2C%60%601%7D%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> method is called to ensure that the mean is computed only after all readings have been gathered successfully. If a task has not because it has been cancelled, the call to the <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%2A?displayProperty=nameWithType> method throws an exception.
+The following example uses a random number generator to emulate a data collection application that reads 10 integral values from eleven different instruments. A value of zero indicates that the measurement has failed for one instrument, in which case the operation should be cancelled and no overall mean should be computed.
 
- :::code language="csharp" source="~/snippets/csharp/System.Threading/CancellationToken/Overview/cancel1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Threading/CancellationToken/Overview/cancel1.vb" id="Snippet1":::
+To handle the possible cancellation of the operation, the example instantiates a <xref:System.Threading.CancellationTokenSource> object that generates a cancellation token which is passed to a <xref:System.Threading.Tasks.TaskFactory> object. The <xref:System.Threading.Tasks.TaskFactory> object in turn passes the cancellation token to each of the tasks responsible for collecting readings for a particular instrument. The <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%60%602%28System.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2CSystem.Func%7BSystem.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2C%60%601%7D%2CSystem.Threading.CancellationToken%29?displayProperty=nameWithType> method is called to ensure that the mean is computed only after all readings have been gathered successfully. If a task has not because it has been cancelled, the call to the <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%2A?displayProperty=nameWithType> method throws an exception.
+
+:::code language="csharp" source="~/snippets/csharp/System.Threading/CancellationToken/Overview/cancel1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Threading/CancellationToken/Overview/cancel1.vb" id="Snippet1":::
 
  ]]></format>
         </remarks>
@@ -453,18 +457,21 @@
           <see langword="true" /> if exceptions should immediately propagate; otherwise, <see langword="false" />.</param>
         <summary>Communicates a request for cancellation, and specifies whether remaining callbacks and cancelable operations should be processed if an exception occurs.</summary>
         <remarks>
-          <format type="text/markdown"><![CDATA[
+          <format type="text/markdown"><![CDATA[  
+  
+## Remarks  
 
-## Remarks
- The associated <xref:System.Threading.CancellationToken> will be notified of the cancellation and will transition to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns `true`.
+The associated <xref:System.Threading.CancellationToken> is notified of the cancellation and transitions to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns `true`.  
+  
+Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> are executed, if they haven't already been executed by a previous call to <xref:System.Threading.CancellationTokenSource.Cancel>. Subsequent calls to <xref:System.Threading.CancellationTokenSource.Cancel> won't execute the same callback again unless reregistered. (Avoid multiple calls to <xref:System.Threading.CancellationTokenSource.Cancel>, because the intent of such code is often unclear.)
 
- Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed. Callbacks will be executed synchronously in LIFO order.
+Callbacks are executed synchronously in LIFO order.
+  
+We recommend that cancelable operations and callbacks registered with <xref:System.Threading.CancellationToken> not throw exceptions. 
+  
+If `throwOnFirstException` is `true`, an exception will immediately propagate out of the call to <xref:System.Threading.CancellationTokenSource.Cancel%2A>, preventing the remaining callbacks and cancelable operations from being processed.  
 
- We recommend that cancelable operations and callbacks registered with <xref:System.Threading.CancellationToken> not throw exceptions.
-
- If `throwOnFirstException` is `true`, an exception will immediately propagate out of the call to <xref:System.Threading.CancellationTokenSource.Cancel%2A>, preventing the remaining callbacks and cancelable operations from being processed.
-
- If `throwOnFirstException` is `false`, this overload will aggregate any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.
+If `throwOnFirstException` is `false`, this overload aggregates any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.  
 
  ]]></format>
         </remarks>
@@ -632,8 +639,8 @@
         <summary>Communicates a request for cancellation asynchronously.</summary>
         <returns>A task that will complete after cancelable operations and callbacks registered with the associated <see cref="T:System.Threading.CancellationToken" /> have completed.</returns>
         <remarks>
-          <para> The associated <see cref="T:System.Threading.CancellationToken" /> will be notified of the cancellation and will synchronously transition to a state where <see cref="P:System.Threading.CancellationToken.IsCancellationRequested" /> returns <see langword="true" />.
-            Any callbacks or cancelable operations registered with the <see cref="T:System.Threading.CancellationToken" />  will be executed asynchronously, with the returned <see cref="T:System.Threading.Tasks.Task" /> representing their eventual completion.
+          <para> The associated <see cref="T:System.Threading.CancellationToken" /> is notified of the cancellation and synchronously transitions to a state where <see cref="P:System.Threading.CancellationToken.IsCancellationRequested" /> returns <see langword="true" />.
+            Any callbacks or cancelable operations registered with the <see cref="T:System.Threading.CancellationToken" /> will be executed asynchronously, with the returned <see cref="T:System.Threading.Tasks.Task" /> representing their eventual completion.
             </para>
           <para> Callbacks registered with the token should not throw exceptions.
             However, any such exceptions that are thrown will be aggregated into an <see cref="T:System.AggregateException" />, such that one callback throwing an exception will not prevent other registered callbacks from being executed.

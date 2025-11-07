@@ -39,10 +39,10 @@ Class Test
         Dim name As String = "DefineMethodOverrideExample"
         Dim asmName As New AssemblyName(name)
         Dim ab As AssemblyBuilder = _
-            AppDomain.CurrentDomain.DefineDynamicAssembly( _
-                asmName, AssemblyBuilderAccess.RunAndSave)
+            AssemblyBuilder.DefineDynamicAssembly( _
+                asmName, AssemblyBuilderAccess.Run)
         Dim mb As ModuleBuilder = _
-            ab.DefineDynamicModule(name, name & ".dll")
+            ab.DefineDynamicModule(name)
         
         Dim tb As TypeBuilder = _
             mb.DefineType("C", TypeAttributes.Public, GetType(A))
@@ -83,9 +83,6 @@ Class Test
         il.Emit(OpCodes.Ret)
         
         Dim tc As Type = tb.CreateType()
-        
-        ' Save the emitted assembly, to examine with Ildasm.exe.
-        ab.Save(name & ".dll")
         
         Dim test As Object = Activator.CreateInstance(tc)
         

@@ -40,9 +40,16 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">The type of the object this <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> tracks to.</typeparam>
+    <summary>
+      Represents a strongly typed GC handle to a managed object.
+    </summary>
+    <remarks>
+      <para>The object is pinned at a fixed location in the GC heap and allows its address to be taken.</para>
+      <para>This type corresponds to <see cref="F:System.Runtime.InteropServices.GCHandleType.Pinned" />.</para>
+      <para>This type is unsafe if used incorrectly. Incorrect usage like mismanagement of lifetime, providing invalid handle value or concurrent disposal can result in hard to diagnose crashes or data corruptions.</para>
+    </remarks>
+    <seealso cref="T:System.Runtime.InteropServices.GCHandle" />
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -61,8 +68,8 @@
         <Parameter Name="target" Type="T" />
       </Parameters>
       <Docs>
-        <param name="target">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="target">The object that uses the <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" />.</param>
+        <summary>Allocates a handle for the specified object.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -86,8 +93,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        <remarks>This method is not thread safe.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -126,6 +133,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc />
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -167,6 +175,7 @@
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
+        <inheritdoc cref="M:System.IEquatable`1.Equals(`0)" />
       </Docs>
     </Member>
     <Member MemberName="FromIntPtr">
@@ -194,10 +203,13 @@
         <Parameter Name="value" Type="System.IntPtr" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">An <see cref="T:System.IntPtr" /> handle to a managed object to create a <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> object from.</param>
+        <summary>Returns a new <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> object created from a handle to a managed object.</summary>
+        <returns>A new <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> object that corresponds to the value parameter.</returns>
+        <remarks>
+          <para>This method doesn't validate the provided handle value. The caller must ensure the validity of the handle.</para>
+          <para> The <see cref="T:System.IntPtr" /> representation of <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> is not interchangable with <see cref="T:System.Runtime.InteropServices.GCHandle" />.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetAddressOfObjectData">
@@ -226,9 +238,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Retrieves the address of object data in a <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" />.</summary>
+        <returns>
+          <para>The address of first instance field of the pinned object, or <see langword="null" /> if the handle doesn't point to any object.</para>
+        </returns>
+        <remarks>
+          <para> This method is intended to be used with types other than array or <see cref="T:System.String" />.</para>
+          <para>For array or <see cref="T:System.String" />, use <see cref="M:System.Runtime.InteropServices.GCHandleExtensions.GetAddressOfArrayData``1(System.Runtime.InteropServices.PinnedGCHandle{``0[]})" /> or <see cref="M:System.Runtime.InteropServices.GCHandleExtensions.GetAddressOfStringData(System.Runtime.InteropServices.PinnedGCHandle{System.String})" /> instead.</para>
+          <para> This method should only be used for blittable types.</para>
+        </remarks>
+        <exception cref="T:System.NullReferenceException">The handle is not initialized or is already disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -254,8 +273,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <summary>Returns the hash code for the current instance.</summary>
+        <returns>A hash code for the current instance.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -281,7 +300,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets a value that indicates whether this handle has been allocated or not.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
@@ -308,9 +327,10 @@
         <ReturnType>T</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Gets or sets the object this handle represents.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.NullReferenceException">The handle is not initialized or is already disposed.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToIntPtr">
@@ -339,10 +359,12 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> object to retrieve an internal integer representation from.</param>
+        <summary>Returns the internal integer representation of a <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> object.</summary>
+        <returns>An <see cref="T:System.IntPtr" /> object that represents a <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> object.</returns>
+        <remarks>
+          <para>The <see cref="T:System.IntPtr" /> representation of <see cref="T:System.Runtime.InteropServices.PinnedGCHandle`1" /> is not interchangable with <see cref="T:System.Runtime.InteropServices.GCHandle" />.</para>
+        </remarks>
       </Docs>
     </Member>
   </Members>

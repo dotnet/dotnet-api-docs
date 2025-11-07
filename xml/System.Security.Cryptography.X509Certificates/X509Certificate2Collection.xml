@@ -794,11 +794,24 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="exportParameters">To be added.</param>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="exportParameters">The algorithm parameters to use for the export.</param>
+        <param name="password">The password to use for the export.</param>
+        <summary>Exports the certificates and private keys in PKCS#12 / PFX format.</summary>
+        <returns>A byte array containing the encoded PKCS#12.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="password" /> contains a Unicode 'NULL' character.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="exportParameters" /> is <see langword="null" /> .</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The export operation failed.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="exportParameters" /> specifies a <see cref="P:System.Security.Cryptography.PbeParameters.HashAlgorithm" /> value that is not supported for the <see cref="P:System.Security.Cryptography.PbeParameters.EncryptionAlgorithm" /> value.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="exportParameters" /> contains an invalid encryption algorithm for <see cref="P:System.Security.Cryptography.PbeParameters.EncryptionAlgorithm" />.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportPkcs12">
@@ -834,11 +847,18 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="exportParameters">To be added.</param>
-        <param name="password">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="exportParameters">The algorithm parameters to use for the export.</param>
+        <param name="password">The password to use for the export.</param>
+        <summary>Exports the certificate and private key in PKCS#12 / PFX format.</summary>
+        <returns>A byte array containing the encoded PKCS#12.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="password" /> contains a Unicode 'NULL' character.</exception>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="exportParameters" /> is not a valid value.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>The export operation failed.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="ExportPkcs7Pem">
@@ -990,11 +1010,21 @@
         <Parameter Name="thumbprintBytes" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="thumbprintBytes">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hashAlgorithm">The name of the hash algorithm to compute the thumbprint.</param>
+        <param name="thumbprintBytes">The thumbprint to match.</param>
+        <summary>Searches the collection for certificates with a matching thumbprint.</summary>
+        <returns>A collection of certificates with a matching thumbprint.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="hashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or empty.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <paramref name="hashAlgorithm" /> specifies a hash algorithm not supported by the current platform.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithm" /> specifies an unknown hash algorithm.</para>
+          <para>-or-</para>
+          <para>An error occured while finding the certificates with a matching thumbprint.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="FindByThumbprint">
@@ -1029,11 +1059,29 @@
         <Parameter Name="thumbprintHex" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="thumbprintHex">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hashAlgorithm">The name of the hash algorithm to compute the thumbprint.</param>
+        <param name="thumbprintHex">The thumbprint to match, hex-encoded.</param>
+        <summary>Searches the collection for certificates with a matching thumbprint.</summary>
+        <returns>A collection of certificates with a matching thumbprint.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="hashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or empty.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="thumbprintHex" /> contains invalid hexadecimal characters.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="thumbprintHex" /> does not decode evenly and contains an odd number of characters.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <paramref name="hashAlgorithm" /> specifies a hash algorithm not supported by the current platform.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithm" /> specifies an unknown hash algorithm.</para>
+          <para>-or-</para>
+          <para>An error occured while finding the certificates with a matching thumbprint.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="FindByThumbprint">
@@ -1062,11 +1110,31 @@
         <Parameter Name="thumbprintHex" Type="System.String" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="hashAlgorithm">To be added.</param>
-        <param name="thumbprintHex">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="hashAlgorithm">The name of the hash algorithm to compute the thumbprint.</param>
+        <param name="thumbprintHex">The thumbprint to match, hex-encoded.</param>
+        <summary>Searches the collection for certificates with a matching thumbprint.</summary>
+        <returns>A collection of certificates with a matching thumbprint.</returns>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="thumbprintHex" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <para>
+            <paramref name="hashAlgorithm" />.<see cref="P:System.Security.Cryptography.HashAlgorithmName.Name" /> is <see langword="null" /> or empty.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="thumbprintHex" /> contains invalid hexadecimal characters.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="thumbprintHex" /> does not decode evenly and contains an odd number of characters.</para>
+        </exception>
+        <exception cref="T:System.PlatformNotSupportedException">
+          <paramref name="hashAlgorithm" /> specifies a hash algorithm not supported by the current platform.</exception>
+        <exception cref="T:System.Security.Cryptography.CryptographicException">
+          <para>
+            <paramref name="hashAlgorithm" /> specifies an unknown hash algorithm.</para>
+          <para>-or-</para>
+          <para>An error occured while finding the certificates with a matching thumbprint.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">

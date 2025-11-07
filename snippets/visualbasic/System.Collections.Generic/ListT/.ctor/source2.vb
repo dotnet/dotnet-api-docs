@@ -1,57 +1,56 @@
 ﻿' <Snippet1>
 Imports System.Collections.Generic
 
-Public Class Example
+Partial Public Class Program
+    Public Shared Sub ShowFruits()
 
-    Public Shared Sub Main()
+        Dim input() As String = { "Apple", _
+                                  "Banana", _
+                                  "Orange" }
 
-        Dim input() As String = { "Brachiosaurus", _
-                                  "Amargasaurus", _
-                                  "Mamenchisaurus" }
+        Dim fruits As New List(Of String)(input)
 
-        Dim dinosaurs As New List(Of String)(input)
-
-        Console.WriteLine(vbLf & "Capacity: {0}", dinosaurs.Capacity)
-
+        Console.WriteLine(vbLf & "Capacity: {0}", fruits.Capacity)
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+
+        For Each fruit As String In fruits
+            Console.WriteLine(fruit)
         Next
 
-        Console.WriteLine(vbLf & "AddRange(dinosaurs)")
-        dinosaurs.AddRange(dinosaurs)
+        Console.WriteLine(vbLf & "AddRange(fruits)")
+        fruits.AddRange(fruits)
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each fruit As String In fruits
+            Console.WriteLine(fruit)
         Next
 
         Console.WriteLine(vbLf & "RemoveRange(2, 2)")
-        dinosaurs.RemoveRange(2, 2)
+        fruits.RemoveRange(2, 2)
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each fruit As String In fruits
+            Console.WriteLine(fruit)
         Next
 
-        input = New String() { "Tyrannosaurus", _
-                               "Deinonychus", _
-                               "Velociraptor" }
+        input = New String() { "Mango", _
+                               "Pineapple", _
+                               "Watermelon" }
 
         Console.WriteLine(vbLf & "InsertRange(3, input)")
-        dinosaurs.InsertRange(3, input)
+        fruits.InsertRange(3, input)
 
         Console.WriteLine()
-        For Each dinosaur As String In dinosaurs
-            Console.WriteLine(dinosaur)
+        For Each fruit As String In fruits
+            Console.WriteLine(fruit)
         Next
 
-        Console.WriteLine(vbLf & "output = dinosaurs.GetRange(2, 3).ToArray")
-        Dim output() As String = dinosaurs.GetRange(2, 3).ToArray()
-        
+        Console.WriteLine(vbLf & "output = fruits.GetRange(2, 3).ToArray")
+        Dim output() As String = fruits.GetRange(2, 3).ToArray()
+
         Console.WriteLine()
-        For Each dinosaur As String In output
-            Console.WriteLine(dinosaur)
+        For Each fruit As String In output
+            Console.WriteLine(fruit)
         Next
 
     End Sub
@@ -59,41 +58,41 @@ End Class
 
 ' This code example produces the following output:
 '
-'Capacity: 3
+' Capacity: 3
 '
-'Brachiosaurus
-'Amargasaurus
-'Mamenchisaurus
+' Apple
+' Banana
+' Orange
 '
-'AddRange(dinosaurs)
+' AddRange(fruits)
 '
-'Brachiosaurus
-'Amargasaurus
-'Mamenchisaurus
-'Brachiosaurus
-'Amargasaurus
-'Mamenchisaurus
+' Apple
+' Banana
+' Orange
+' Apple
+' Banana
+' Orange
 '
-'RemoveRange(2, 2)
+' RemoveRange(2, 2)
 '
-'Brachiosaurus
-'Amargasaurus
-'Amargasaurus
-'Mamenchisaurus
+' Apple
+' Banana
+' Banana
+' Orange
 '
-'InsertRange(3, input)
+' InsertRange(3, input)
 '
-'Brachiosaurus
-'Amargasaurus
-'Amargasaurus
-'Tyrannosaurus
-'Deinonychus
-'Velociraptor
-'Mamenchisaurus
+' Apple
+' Banana
+' Banana
+' Mango
+' Pineapple
+' Watermelon
+' Orange
 '
-'output = dinosaurs.GetRange(2, 3).ToArray
+' output = fruits.GetRange(2, 3).ToArray
 '
-'Amargasaurus
-'Tyrannosaurus
-'Deinonychus
+' Banana
+' Mango
+' Pineapple
 ' </Snippet1>

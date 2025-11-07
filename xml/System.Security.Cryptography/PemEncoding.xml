@@ -98,10 +98,17 @@ IETF RFC 7468 permits different decoding rules. This method always uses lax rule
         <Parameter Name="pemData" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="pemData">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pemData">The text containing the PEM-encoded data.</param>
+        <summary>Finds the first PEM-encoded data.</summary>
+        <returns>
+          <para>A value that specifies the location, label, and data location of the encoded data.</para>
+        </returns>
+        <remarks>
+          <para>IETF RFC 7468 permits different decoding rules. This method always uses lax rules.</para>
+          <para>This does not validate the UTF-8 data outside of encapsulation boundaries and is ignored. It is the caller's responsibility to ensure the entire input is UTF-8 if required.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="pemData" /> does not contain a well-formed PEM-encoded value.</exception>
       </Docs>
     </Member>
     <Member MemberName="GetEncodedSize">
@@ -223,11 +230,18 @@ IETF RFC 7468 permits different decoding rules. This method always uses lax rule
         <Parameter Name="fields" Type="System.Security.Cryptography.PemFields" RefType="out" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="pemData">To be added.</param>
-        <param name="fields">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pemData">The text containing the PEM-encoded data.</param>
+        <param name="fields">
+          <para>When this method returns, contains a value that specifies the location, label, and data location of the encoded data; or that specifies those locations as empty if no PEM-encoded data is found.</para>
+          <para>This parameter is treated as uninitialized.</para>
+        </param>
+        <summary>Attempts to find the first PEM-encoded data.</summary>
+        <returns>
+          <see langword="true" /> if PEM-encoded data was found; otherwise <see langword="false" />.</returns>
+        <remarks>
+          <para>IETF RFC 7468 permits different decoding rules. This method always uses lax rules.</para>
+          <para>This does not validate the UTF-8 data outside of encapsulation boundaries and is ignored. It is the caller's responsibility to ensure the entire input is UTF-8 if required.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryWrite">
@@ -314,13 +328,35 @@ This method always wraps the base-64 encoded text to 64 characters, per the reco
         <Parameter Name="bytesWritten" Type="System.Int32" RefType="out" Index="3" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="utf8Label">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="destination">To be added.</param>
-        <param name="bytesWritten">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="utf8Label">The label to write.</param>
+        <param name="data">The data to write.</param>
+        <param name="destination">The buffer to receive the PEM-encoded text.</param>
+        <param name="bytesWritten">
+          <para>When this method returns, this parameter contains the number of UTF-8 encoded bytes written to <paramref name="destination" />.</para>
+        </param>
+        <summary>
+          <para>Tries to write the provided data and label as PEM-encoded data into a provided buffer.</para>
+        </summary>
+        <returns>
+          <para>
+            <see langword="true" /> if <paramref name="destination" /> is large enough to contain the PEM-encoded text, otherwise <see langword="false" />.</para>
+        </returns>
+        <remarks>
+          <para>This method always wraps the base-64 encoded text to 64 characters, per the recommended wrapping of IETF RFC 7468. Unix-style line endings are used for line breaks.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="utf8Label" /> exceeds the maximum possible label length.</para>
+          <para>
+            <para>-or-</para>
+            <paramref name="data" /> exceeds the maximum possible encoded data length.</para>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <para>The resulting PEM-encoded text is larger than <see cref="F:System.Int32.MaxValue" />.</para>
+          <para>- or -</para>
+          <para>
+            <paramref name="utf8Label" /> contains invalid characters or is malformed UTF-8.</para>
+        </exception>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -471,11 +507,26 @@ This method always wraps the base-64 encoded text to 64 characters, per the
         <Parameter Name="data" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="1" FrameworkAlternate="net-10.0" />
       </Parameters>
       <Docs>
-        <param name="utf8Label">To be added.</param>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="utf8Label">The label to encode.</param>
+        <param name="data">The data to encode.</param>
+        <summary>Creates an encoded PEM with the given label and data.</summary>
+        <returns>An array containing the bytes representing the UTF-8 encoding of the PEM.</returns>
+        <remarks>
+          <para>This method always wraps the base-64 encoded text to 64 characters, per the recommended wrapping of RFC-7468. Unix-style line endings are used for line breaks.</para>
+        </remarks>
+        <exception cref="T:System.ArgumentOutOfRangeException">
+          <para>
+            <paramref name="utf8Label" /> exceeds the maximum possible label length.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="data" /> exceeds the maximum possible encoded data length.</para>
+        </exception>
+        <exception cref="T:System.ArgumentException">
+          <para>The resulting PEM-encoded text is larger than <see cref="F:System.Int32.MaxValue" />.</para>
+          <para>-or-</para>
+          <para>
+            <paramref name="utf8Label" /> contains invalid characters or is malformed UTF-8.</para>
+        </exception>
       </Docs>
     </Member>
   </Members>
