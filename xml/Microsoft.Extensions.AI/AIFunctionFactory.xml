@@ -20,6 +20,7 @@
     <AssemblyVersion>9.7.0.0</AssemblyVersion>
     <AssemblyVersion>9.9.0.0</AssemblyVersion>
     <AssemblyVersion>9.10.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -51,7 +52,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.10.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.AI.AIFunction</ReturnType>
@@ -119,6 +120,11 @@
           <para>
             By default, return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
             <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided, or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or
+            any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> (e.g. <c>AIContent[]</c>, <c>List&lt;AIContent&gt;</c>) are
+            special-cased and are not serialized: the created function returns the original instance(s) directly to enable
+            callers (such as an <c>IChatClient</c>) to perform type tests and implement specialized handling. If
+            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" /> is supplied, that delegate governs the behavior instead.
             Handling of return values can be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
             </para>
         </remarks>
@@ -136,7 +142,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.10.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.AI.AIFunction</ReturnType>
@@ -222,6 +228,8 @@
           <para>
             By default, return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
             <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided, or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or any type
+            assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are returned directly without serialization.
             Handling of return values can be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
             </para>
         </remarks>
@@ -246,7 +254,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.10.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.AI.AIFunction</ReturnType>
@@ -329,6 +337,8 @@
           <para>
             By default, return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="options" />'s
             <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> if provided, or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or
+            any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are not serialized and are instead returned directly.
             Handling of return values can be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
             </para>
         </remarks>
@@ -352,7 +362,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.10.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.AI.AIFunction</ReturnType>
@@ -380,7 +390,7 @@
         <param name="method">The method to be represented via the created <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</param>
         <param name="name">
             The name to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, the name will be derived from
-            the name of <paramref name="method" />.
+            any <see cref="T:System.ComponentModel.DisplayNameAttribute" /> on <paramref name="method" />, if available, or else from the name of <paramref name="method" />.
             </param>
         <param name="description">
             The description to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, a description will be derived from
@@ -427,7 +437,9 @@
             </para>
           <para>
             Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="serializerOptions" /> if provided,
-            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a
+            derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are not serialized;
+            they are returned as-is to facilitate specialized handling.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -448,7 +460,7 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.10.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.AI.AIFunction</ReturnType>
@@ -481,7 +493,7 @@
             </param>
         <param name="name">
             The name to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, the name will be derived from
-            the name of <paramref name="method" />.
+            any <see cref="T:System.ComponentModel.DisplayNameAttribute" /> on <paramref name="method" />, if available, or else from the name of <paramref name="method" />.
             </param>
         <param name="description">
             The description to use for the <see cref="T:Microsoft.Extensions.AI.AIFunction" />. If <see langword="null" />, a description will be derived from
@@ -531,7 +543,9 @@
             </para>
           <para>
             Return values are serialized to <see cref="T:System.Text.Json.JsonElement" /> using <paramref name="serializerOptions" /> if provided,
-            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />.
+            or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a
+            derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are returned
+            without serialization to enable specialized handling.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -550,7 +564,7 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI.Abstractions</AssemblyName>
-        <AssemblyVersion>9.10.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>Microsoft.Extensions.AI.AIFunctionDeclaration</ReturnType>
