@@ -112,7 +112,7 @@ public partial class _Default : System.Web.UI.Page
       Response.Write("RequestLengthDiskThreshold: " +
         configSection.RequestLengthDiskThreshold + "<br>");
 
-      // Set the RequestLengthDiskThreshold property value to 512 bytes.
+      // Set the RequestLengthDiskThreshold property value to 512 kilobytes.
       configSection.RequestLengthDiskThreshold = 512;
       // </Snippet12>
 
