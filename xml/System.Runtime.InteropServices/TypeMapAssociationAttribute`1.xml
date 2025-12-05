@@ -32,7 +32,40 @@
   <Docs>
     <typeparam name="TTypeMapGroup">The type of the type map group.</typeparam>
     <summary>Represents an attribute that creates a type association between a type and its proxy.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Types used in a managed-to-unmanaged interop operation can use `TypeMapAssociationAttribute` to define a conditional link between the source and proxy type. If the source is kept, so is the proxy type. If trimming observes an explicit allocation of the source type, the entry is inserted into the map.
+
+When an application is trimmed, an entry in the Proxy Type Map is included when the "source type" is referenced in one of the following ways in reachable code:
+
+- The argument to the `ldtoken` IL instruction when <xref:System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute> is specified with one of the flags that preserves constructors for the storage location.
+- Calls to <xref:System.Type.GetType%2A?displayProperty=nameWithType> with a constant string representing the type name when <xref:System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute> is specified with one of the flags that preserves constructors for the storage location.
+- The type of a method argument to the `newobj` instruction.
+- The generic argument to the <xref:System.Activator.CreateInstance%60%601> method.
+- The argument to the `box` instruction.
+- The argument to the `newarr` instruction.
+- The argument to the `mkrefany` instruction.
+- The argument to the `refanyval` instruction.
+
+If the type is an interface type and the user could possibly see a `RuntimeTypeHandle` for the type as part of a casting or virtual method resolution operation (such as with <xref:System.Runtime.InteropServices.IDynamicInterfaceCastable>), then the following cases also apply:
+
+- The argument to the `isinst` IL instruction.
+- The argument to the `castclass` IL instruction.
+- The owning type of the method argument to `callvirt` or `ldvirtftn`.
+
+Finally, if the trimming tool determines that it's impossible to retrieve a <xref:System.Type> instance that represents the "source type" at runtime, then the entry might be omitted from the Proxy Type Map as its existence is unobservable.
+
+> [!IMPORTANT]
+> Conflicting key/value mappings are not allowed.
+
+> [!NOTE]
+> The underlying format of the produced maps is implementation-defined. Different .NET form factors might use different formats. Additionally, it's not guaranteed that the `TypeMapAttribute`, `TypeMapAssociationAttribute`, and `TypeMapAssemblyTargetAttribute` attributes are present in the final image after a trimming tool has been run.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">

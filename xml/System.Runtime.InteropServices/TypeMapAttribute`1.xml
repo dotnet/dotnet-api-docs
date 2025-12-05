@@ -36,7 +36,39 @@
   <Docs>
     <typeparam name="TTypeMapGroup">The type of the type map group.</typeparam>
     <summary>Represents an attribute that defines type mapping between a string and a type.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Types involved in unmanaged-to-managed interop operations can be referenced in a `TypeMapAttribute` assembly attribute that declares the external type system name, a target type, and optionally a "trim target" to determine if the target type should be included in the map. If the constructor that doesn't take a trim target is used, the entry is always emitted into the type map.
+
+When an application is trimmed, an entry in the External Type Map is included when the "trim target" type is referenced in one of the following ways in reachable code:
+
+- The argument to the `ldtoken` IL instruction.
+- The argument to the `unbox` IL instruction.
+- The argument to the `unbox.any` IL instruction.
+- The argument to the `isinst` IL instruction.
+- The argument to the `castclass` IL instruction.
+- The argument to the `box` instruction. (If the trimming tool can determine that this box doesn't escape and could be stack allocated, it can ignore this `box` instruction and any corresponding `unbox` or `unbox.any` instructions.)
+- The argument to the `mkrefany` instruction.
+- The argument to the `refanyval` instruction.
+- The argument to the `newarr` instruction.
+- The type of a method argument to the `newobj` instruction if it's a class type.
+- The owning type of an instance method argument to `call` or `ldftn`, or the owning type of any method argument to `callvirt` or `ldvirtftn`. (If the owning type is an interface and the trimming tool can determine that there's only one implementation of the interface, it's free to interpret the method token argument as though it's the method on the only implementing type.)
+- The generic argument to the <xref:System.Activator.CreateInstance%60%601> method.
+- Calls to <xref:System.Type.GetType%2A?displayProperty=nameWithType> with a constant string representing the type name.
+
+Many of these instructions can be passed a generic parameter. In that case, the trimming tool should consider type arguments of instantiations of that type as having met one of these rules and include any entries with those types as "trim target" types.
+
+> [!IMPORTANT]
+> Conflicting key/value mappings are not allowed.
+
+> [!NOTE]
+> The underlying format of the produced maps is implementation-defined. Different .NET form factors might use different formats. Additionally, it's not guaranteed that the `TypeMapAttribute`, `TypeMapAssociationAttribute`, and `TypeMapAssemblyTargetAttribute` attributes are present in the final image after a trimming tool has been run.
+
+      ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
