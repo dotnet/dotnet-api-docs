@@ -30,7 +30,7 @@ public class Example
         Console.WriteLine();
         foreach( string s in icoll )
         {
-            Console.WriteLine("Value = {0}", s);
+            Console.WriteLine($"Value = {s}");
         }
 
         // When you use foreach to enumerate dictionary elements
@@ -39,8 +39,7 @@ public class Example
         Console.WriteLine();
         foreach( DictionaryEntry de in openWith )
         {
-            Console.WriteLine("Key = {0}, Value = {1}",
-                de.Key, de.Value);
+            Console.WriteLine($"Key = {de.Key}, Value = {de.Value}");
         }
     }
 }
