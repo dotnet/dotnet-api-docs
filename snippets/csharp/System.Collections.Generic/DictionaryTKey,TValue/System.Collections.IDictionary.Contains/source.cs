@@ -25,7 +25,7 @@ public class Example
         if (!openWith.Contains("ht"))
         {
             openWith.Add("ht", "hypertrm.exe");
-            Console.WriteLine($"Value added for key = \"ht\": {openWith["ht"]}");
+            Console.WriteLine($"""Value added for key = "ht": {openWith["ht"]}""");
         }
 
         // IDictionary.Contains returns false if the wrong data

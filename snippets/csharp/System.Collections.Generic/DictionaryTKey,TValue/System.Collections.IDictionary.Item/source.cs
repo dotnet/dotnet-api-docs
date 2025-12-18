@@ -22,12 +22,12 @@ public class Example
 
         // The Item property is another name for the indexer, so you
         // can omit its name when accessing elements.
-        Console.WriteLine($"For key = \"rtf\", value = {openWith["rtf"]}.");
+        Console.WriteLine($"""For key = "rtf", value = {openWith["rtf"]}.""");
 
         // The indexer can be used to change the value associated
         // with a key.
         openWith["rtf"] = "winword.exe";
-        Console.WriteLine($"For key = \"rtf\", value = {openWith["rtf"]}.");
+        Console.WriteLine($"""For key = "rtf", value = {openWith["rtf"]}.""");
 
         // If a key does not exist, setting the indexer for that key
         // adds a new key/value pair.
@@ -54,6 +54,6 @@ public class Example
         // Unlike the default Item property on the Dictionary class
         // itself, IDictionary.Item does not throw an exception
         // if the requested key is not in the dictionary.
-        Console.WriteLine($"For key = \"tif\", value = {openWith["tif"]}.");
+        Console.WriteLine($"""For key = "tif", value = {openWith["tif"]}.""");
     }
 }
