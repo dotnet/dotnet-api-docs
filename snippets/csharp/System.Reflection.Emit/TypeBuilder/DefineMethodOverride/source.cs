@@ -40,9 +40,9 @@ class Test
         string name = "DefineMethodOverrideExample";
         AssemblyName asmName = new AssemblyName(name);
         AssemblyBuilder ab =
-            AppDomain.CurrentDomain.DefineDynamicAssembly(
-                asmName, AssemblyBuilderAccess.RunAndSave);
-        ModuleBuilder mb = ab.DefineDynamicModule(name, name + ".dll");
+            AssemblyBuilder.DefineDynamicAssembly(
+                asmName, AssemblyBuilderAccess.Run);
+        ModuleBuilder mb = ab.DefineDynamicModule(name);
 
         TypeBuilder tb =
             mb.DefineType("C", TypeAttributes.Public, typeof(A));
@@ -83,10 +83,7 @@ class Test
 
         Type tc = tb.CreateType();
 
-        // Save the emitted assembly, to examine with Ildasm.exe.
-        ab.Save(name + ".dll");
-
-        Object test = Activator.CreateInstance(tc);
+        object test = Activator.CreateInstance(tc);
 
         MethodInfo mi = typeof(I).GetMethod("M");
         mi.Invoke(test, null);

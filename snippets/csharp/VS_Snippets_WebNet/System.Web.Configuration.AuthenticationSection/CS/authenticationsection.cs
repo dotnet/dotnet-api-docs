@@ -25,15 +25,6 @@ namespace Samples.AspNet.Configuration
                 new AuthenticationSection();
             // </Snippet2>
 
-            // <Snippet3>
-            // Get the current Passport property.
-            PassportAuthentication currentPassport =
-                authenticationSection.Passport;
-
-            // Get the Passport redirect URL.
-            string passRedirectUrl = currentPassport.RedirectUrl;
-            // </Snippet3>
-
             // <Snippet4>
             // Get the current Mode property.
             AuthenticationMode currentMode =

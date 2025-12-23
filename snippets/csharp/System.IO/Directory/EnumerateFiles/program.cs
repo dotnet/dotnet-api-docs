@@ -3,15 +3,14 @@ using System;
 using System.IO;
 using System.Linq;
 
-class Program
+partial class Example2
 {
-    static void Main(string[] args)
+    static void SearchOptionExample()
     {
         try
         {
             // Set a variable to the My Documents path.
-            string docPath =
-            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             var files = from file in Directory.EnumerateFiles(docPath, "*.txt", SearchOption.AllDirectories)
                         from line in File.ReadLines(file)
@@ -26,7 +25,8 @@ class Program
             {
                 Console.WriteLine($"{f.File}\t{f.Line}");
             }
-            Console.WriteLine($"{files.Count().ToString()} files found.");
+
+            Console.WriteLine($"{files.Count()} files found.");
         }
         catch (UnauthorizedAccessException uAEx)
         {

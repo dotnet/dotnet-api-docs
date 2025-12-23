@@ -27,8 +27,10 @@
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
@@ -44,7 +46,7 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute FrameworkAlternate="net-8.0;net-9.0">
+    <Attribute FrameworkAlternate="net-10.0;net-8.0;net-9.0">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
@@ -66,27 +68,25 @@
  To perform an action within a transaction, you must first create a transaction. Then you must call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method before each change or set of changes occurs, and the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method after each change or set of changes occur. Finally, complete and close the transaction by calling the <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> method.
 
 > [!NOTE]
->  When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.
+> When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.
 
  To perform a transaction, complete the following steps:
 
-1.  Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.
+1. Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.
 
-2.  Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.
+2. Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.
 
-3.  To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.
+3. To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.
 
  In C#, you can use the `using` statement rather than a `try/finally` block, such as in the following example.
 
-```
+```csharp
 using (host.CreateTransaction() {
 // Insert your code here.
 }
 ```
 
  To cancel and attempt to roll back a transaction before it has been committed, call the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method. When the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method is invoked, the actions tracked by the <xref:System.ComponentModel.Design.DesignerTransaction> are reversed to attempt to roll back the changes. To undo actions that occurred as part of earlier transactions, you must use the undo command provided by the development environment.
-
-
 
 ## Examples
  The following code example program demonstrates how to create a <xref:System.ComponentModel.Design.DesignerTransaction> from a designer. To run this sample, compile the source code into a class library. You must add a reference to the System.Design assembly. In a new project, add a reference to the compiled DLL and add the component in the library to the **Toolbox**.
@@ -99,7 +99,7 @@ using (host.CreateTransaction() {
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Winforms/DesignerTransaction Sample/CPP/source.cpp" id="Snippet1":::
  :::code language="csharp" source="~/snippets/csharp/System.ComponentModel.Design/DesignerTransaction/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Winforms/DesignerTransaction Sample/VB/source.vb" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.ComponentModel.Design/DesignerTransaction/Overview/source.vb" id="Snippet1":::
 
  ]]></format>
     </remarks>
@@ -119,11 +119,11 @@ using (host.CreateTransaction() {
       </Docs>
     </MemberGroup>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected DesignerTransaction ();" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="protected DesignerTransaction ();" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.DesignerTransaction.#ctor" />
-      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction();" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction();" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="C#" Value="public DesignerTransaction ();" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="VB.NET" Value="Public Sub New ()" FrameworkAlternate="netframework-1.1" />
@@ -151,6 +151,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -165,12 +166,12 @@ using (host.CreateTransaction() {
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected DesignerTransaction (string description);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string description) cil managed" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="protected DesignerTransaction (string description);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string description) cil managed" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.Design.DesignerTransaction.#ctor(System.String)" />
-      <MemberSignature Language="VB.NET" Value="Protected Sub New (description As String)" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (description As String)" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="F#" Value="new System.ComponentModel.Design.DesignerTransaction : string -&gt; System.ComponentModel.Design.DesignerTransaction" Usage="new System.ComponentModel.Design.DesignerTransaction description" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction(System::String ^ description);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; DesignerTransaction(System::String ^ description);" FrameworkAlternate="net-10.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberSignature Language="C#" Value="public DesignerTransaction (string description);" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string description) cil managed" FrameworkAlternate="netframework-1.1" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (description As String)" FrameworkAlternate="netframework-1.1" />
@@ -198,6 +199,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -251,6 +253,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -292,6 +295,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -346,6 +350,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -396,6 +401,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -450,6 +456,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -503,6 +510,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
         <Attribute FrameworkAlternate="netframework-4.0">
@@ -570,6 +578,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -621,6 +630,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -672,6 +682,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -726,6 +737,7 @@ using (host.CreateTransaction() {
         <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>

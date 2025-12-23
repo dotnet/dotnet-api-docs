@@ -8,25 +8,44 @@
   <AssemblyInfo>
     <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.1.0.0</AssemblyVersion>
+    <AssemblyVersion>9.3.0.0</AssemblyVersion>
+    <AssemblyVersion>9.4.0.0</AssemblyVersion>
+    <AssemblyVersion>9.5.0.0</AssemblyVersion>
+    <AssemblyVersion>9.6.0.0</AssemblyVersion>
+    <AssemblyVersion>9.7.0.0</AssemblyVersion>
+    <AssemblyVersion>9.9.0.0</AssemblyVersion>
+    <AssemblyVersion>9.10.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Microsoft.Extensions.AI.CachingChatClient</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>
-            A delegating chat client that caches the results of completion calls, storing them as JSON in an <see cref="T:Microsoft.Extensions.Caching.Distributed.IDistributedCache" />.
+            A delegating chat client that caches the results of response calls, storing them as JSON in an <see cref="T:Microsoft.Extensions.Caching.Distributed.IDistributedCache" />.
             </summary>
     <remarks>
+      <para>
+            The <see cref="T:Microsoft.Extensions.AI.DistributedCachingChatClient" /> employs JSON serialization as part of storing cached data. It is not guaranteed that
+            the object models used by <see cref="T:Microsoft.Extensions.AI.ChatMessage" />, <see cref="T:Microsoft.Extensions.AI.ChatOptions" />, <see cref="T:Microsoft.Extensions.AI.ChatResponse" />, <see cref="T:Microsoft.Extensions.AI.ChatResponseUpdate" />,
+            or any of the other objects in the chat client pipeline will roundtrip through JSON serialization with full fidelity. For example,
+            <see cref="P:Microsoft.Extensions.AI.ChatMessage.RawRepresentation" /> will be ignored, and <see cref="T:System.Object" /> values in <see cref="P:Microsoft.Extensions.AI.ChatMessage.AdditionalProperties" />
+            will deserialize as <see cref="T:System.Text.Json.JsonElement" /> rather than as the original type. In general, code using <see cref="T:Microsoft.Extensions.AI.DistributedCachingChatClient" />
+            should only rely on accessing data that can be preserved well enough through JSON serialization and deserialization.
+            </para>
+      <para>
             The provided implementation of <see cref="T:Microsoft.Extensions.AI.IChatClient" /> is thread-safe for concurrent use so long as the employed
             <see cref="T:Microsoft.Extensions.Caching.Distributed.IDistributedCache" /> is similarly thread-safe for concurrent use.
-            </remarks>
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -39,7 +58,7 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
         <Parameter Name="innerClient" Type="Microsoft.Extensions.AI.IChatClient" />
@@ -52,41 +71,90 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="CacheKeyAdditionalValues">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IReadOnlyList&lt;object&gt;? CacheKeyAdditionalValues { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IReadOnlyList`1&lt;object&gt; CacheKeyAdditionalValues" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.AI.DistributedCachingChatClient.CacheKeyAdditionalValues" />
+      <MemberSignature Language="VB.NET" Value="Public Property CacheKeyAdditionalValues As IReadOnlyList(Of Object)" />
+      <MemberSignature Language="F#" Value="member this.CacheKeyAdditionalValues : System.Collections.Generic.IReadOnlyList&lt;obj&gt; with get, set" Usage="Microsoft.Extensions.AI.DistributedCachingChatClient.CacheKeyAdditionalValues" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Collections::Generic::IReadOnlyList&lt;System::Object ^&gt; ^ CacheKeyAdditionalValues { System::Collections::Generic::IReadOnlyList&lt;System::Object ^&gt; ^ get(); void set(System::Collections::Generic::IReadOnlyList&lt;System::Object ^&gt; ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IReadOnlyList&lt;System.Object&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets or sets additional values used to inform the cache key employed for storing state.</summary>
+        <value>To be added.</value>
+        <remarks>Any values set in this list will augment the other values used to inform the cache key.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="GetCacheKey">
-      <MemberSignature Language="C#" Value="protected override string GetCacheKey (bool streaming, System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, Microsoft.Extensions.AI.ChatOptions? options);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance string GetCacheKey(bool streaming, class System.Collections.Generic.IList`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; chatMessages, class Microsoft.Extensions.AI.ChatOptions options) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.GetCacheKey(System.Boolean,System.Collections.Generic.IList{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overrides Function GetCacheKey (streaming As Boolean, chatMessages As IList(Of ChatMessage), options As ChatOptions) As String" />
-      <MemberSignature Language="F#" Value="override this.GetCacheKey : bool * System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions -&gt; string" Usage="distributedCachingChatClient.GetCacheKey (streaming, chatMessages, options)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::String ^ GetCacheKey(bool streaming, System::Collections::Generic::IList&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ chatMessages, Microsoft::Extensions::AI::ChatOptions ^ options);" />
+      <MemberSignature Language="C#" Value="protected override string GetCacheKey (System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt; messages, Microsoft.Extensions.AI.ChatOptions? options, scoped ReadOnlySpan&lt;object?&gt; additionalValues);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance string GetCacheKey(class System.Collections.Generic.IEnumerable`1&lt;class Microsoft.Extensions.AI.ChatMessage&gt; messages, class Microsoft.Extensions.AI.ChatOptions options, valuetype System.ReadOnlySpan`1&lt;object&gt; additionalValues) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.GetCacheKey(System.Collections.Generic.IEnumerable{Microsoft.Extensions.AI.ChatMessage},Microsoft.Extensions.AI.ChatOptions,System.ReadOnlySpan{System.Object})" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function GetCacheKey (messages As IEnumerable(Of ChatMessage), options As ChatOptions, additionalValues As ReadOnlySpan(Of Object)) As String" />
+      <MemberSignature Language="F#" Value="override this.GetCacheKey : seq&lt;Microsoft.Extensions.AI.ChatMessage&gt; * Microsoft.Extensions.AI.ChatOptions * ReadOnlySpan&lt;obj&gt; -&gt; string" Usage="distributedCachingChatClient.GetCacheKey (messages, options, additionalValues)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::String ^ GetCacheKey(System::Collections::Generic::IEnumerable&lt;Microsoft::Extensions::AI::ChatMessage ^&gt; ^ messages, Microsoft::Extensions::AI::ChatOptions ^ options, ReadOnlySpan&lt;System::Object ^&gt; additionalValues);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="streaming" Type="System.Boolean" />
-        <Parameter Name="chatMessages" Type="System.Collections.Generic.IList&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
+        <Parameter Name="messages" Type="System.Collections.Generic.IEnumerable&lt;Microsoft.Extensions.AI.ChatMessage&gt;" />
         <Parameter Name="options" Type="Microsoft.Extensions.AI.ChatOptions">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0-pp;net-9.0-pp">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
+        <Parameter Name="additionalValues" Type="System.ReadOnlySpan&lt;System.Object&gt;">
+          <Attributes>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 0, 2 })&gt;]</AttributeName>
+            </Attribute>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ParamCollection]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ParamCollection&gt;]</AttributeName>
+            </Attribute>
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp">
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.ScopedRef]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.ScopedRef&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
-        <param name="streaming">To be added.</param>
-        <param name="chatMessages">To be added.</param>
-        <param name="options">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-        <inheritdoc />
+        <param name="messages">The messages to inform the key.</param>
+        <param name="options">The <see cref="T:Microsoft.Extensions.AI.ChatOptions" /> to inform the key.</param>
+        <param name="additionalValues">Any other values to inform the key.</param>
+        <summary>Computes a cache key for the specified values.</summary>
+        <returns>The computed key.</returns>
+        <remarks>
+          <para>
+            The <paramref name="messages" />, <paramref name="options" />, and <paramref name="additionalValues" /> are serialized to JSON using <see cref="P:Microsoft.Extensions.AI.DistributedCachingChatClient.JsonSerializerOptions" />
+            in order to compute the key.
+            </para>
+          <para>
+            The generated cache key is not guaranteed to be stable across releases of the library.
+            </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="JsonSerializerOptions">
@@ -99,7 +167,7 @@
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Text.Json.JsonSerializerOptions</ReturnType>
@@ -111,21 +179,21 @@
       </Docs>
     </Member>
     <Member MemberName="ReadCacheAsync">
-      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatCompletion?&gt; ReadCacheAsync (string key, System.Threading.CancellationToken cancellationToken);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class Microsoft.Extensions.AI.ChatCompletion&gt; ReadCacheAsync(string key, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse?&gt; ReadCacheAsync (string key, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class Microsoft.Extensions.AI.ChatResponse&gt; ReadCacheAsync(string key, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.ReadCacheAsync(System.String,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overrides Function ReadCacheAsync (key As String, cancellationToken As CancellationToken) As Task(Of ChatCompletion)" />
-      <MemberSignature Language="F#" Value="override this.ReadCacheAsync : string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatCompletion&gt;" Usage="distributedCachingChatClient.ReadCacheAsync (key, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task&lt;Microsoft::Extensions::AI::ChatCompletion ^&gt; ^ ReadCacheAsync(System::String ^ key, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function ReadCacheAsync (key As String, cancellationToken As CancellationToken) As Task(Of ChatResponse)" />
+      <MemberSignature Language="F#" Value="override this.ReadCacheAsync : string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;" Usage="distributedCachingChatClient.ReadCacheAsync (key, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task&lt;Microsoft::Extensions::AI::ChatResponse ^&gt; ^ ReadCacheAsync(System::String ^ key, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatCompletion&gt;</ReturnType>
+        <ReturnType>System.Threading.Tasks.Task&lt;Microsoft.Extensions.AI.ChatResponse&gt;</ReturnType>
         <Attributes>
-          <Attribute FrameworkAlternate="net-8.0-pp">
+          <Attribute FrameworkAlternate="net-10.0-pp">
             <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })]</AttributeName>
             <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })&gt;]</AttributeName>
           </Attribute>
@@ -145,21 +213,21 @@
       </Docs>
     </Member>
     <Member MemberName="ReadCacheStreamingAsync">
-      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;?&gt; ReadCacheStreamingAsync (string key, System.Threading.CancellationToken cancellationToken);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class System.Collections.Generic.IReadOnlyList`1&lt;class Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;&gt; ReadCacheStreamingAsync(string key, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;?&gt; ReadCacheStreamingAsync (string key, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task`1&lt;class System.Collections.Generic.IReadOnlyList`1&lt;class Microsoft.Extensions.AI.ChatResponseUpdate&gt;&gt; ReadCacheStreamingAsync(string key, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
       <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.ReadCacheStreamingAsync(System.String,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overrides Function ReadCacheStreamingAsync (key As String, cancellationToken As CancellationToken) As Task(Of IReadOnlyList(Of StreamingChatCompletionUpdate))" />
-      <MemberSignature Language="F#" Value="override this.ReadCacheStreamingAsync : string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;&gt;" Usage="distributedCachingChatClient.ReadCacheStreamingAsync (key, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task&lt;System::Collections::Generic::IReadOnlyList&lt;Microsoft::Extensions::AI::StreamingChatCompletionUpdate ^&gt; ^&gt; ^ ReadCacheStreamingAsync(System::String ^ key, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function ReadCacheStreamingAsync (key As String, cancellationToken As CancellationToken) As Task(Of IReadOnlyList(Of ChatResponseUpdate))" />
+      <MemberSignature Language="F#" Value="override this.ReadCacheStreamingAsync : string * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;&gt;" Usage="distributedCachingChatClient.ReadCacheStreamingAsync (key, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task&lt;System::Collections::Generic::IReadOnlyList&lt;Microsoft::Extensions::AI::ChatResponseUpdate ^&gt; ^&gt; ^ ReadCacheStreamingAsync(System::String ^ key, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;&gt;</ReturnType>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;&gt;</ReturnType>
         <Attributes>
-          <Attribute FrameworkAlternate="net-8.0-pp">
+          <Attribute FrameworkAlternate="net-10.0-pp">
             <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2, 1 })]</AttributeName>
             <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2, 1 })&gt;]</AttributeName>
           </Attribute>
@@ -179,23 +247,23 @@
       </Docs>
     </Member>
     <Member MemberName="WriteCacheAsync">
-      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task WriteCacheAsync (string key, Microsoft.Extensions.AI.ChatCompletion value, System.Threading.CancellationToken cancellationToken);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task WriteCacheAsync(string key, class Microsoft.Extensions.AI.ChatCompletion value, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.WriteCacheAsync(System.String,Microsoft.Extensions.AI.ChatCompletion,System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overrides Function WriteCacheAsync (key As String, value As ChatCompletion, cancellationToken As CancellationToken) As Task" />
-      <MemberSignature Language="F#" Value="override this.WriteCacheAsync : string * Microsoft.Extensions.AI.ChatCompletion * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="distributedCachingChatClient.WriteCacheAsync (key, value, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task ^ WriteCacheAsync(System::String ^ key, Microsoft::Extensions::AI::ChatCompletion ^ value, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task WriteCacheAsync (string key, Microsoft.Extensions.AI.ChatResponse value, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task WriteCacheAsync(string key, class Microsoft.Extensions.AI.ChatResponse value, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.WriteCacheAsync(System.String,Microsoft.Extensions.AI.ChatResponse,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function WriteCacheAsync (key As String, value As ChatResponse, cancellationToken As CancellationToken) As Task" />
+      <MemberSignature Language="F#" Value="override this.WriteCacheAsync : string * Microsoft.Extensions.AI.ChatResponse * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="distributedCachingChatClient.WriteCacheAsync (key, value, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task ^ WriteCacheAsync(System::String ^ key, Microsoft::Extensions::AI::ChatResponse ^ value, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="Microsoft.Extensions.AI.ChatCompletion" />
+        <Parameter Name="value" Type="Microsoft.Extensions.AI.ChatResponse" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>
@@ -209,23 +277,23 @@
       </Docs>
     </Member>
     <Member MemberName="WriteCacheStreamingAsync">
-      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task WriteCacheStreamingAsync (string key, System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt; value, System.Threading.CancellationToken cancellationToken);" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task WriteCacheStreamingAsync(string key, class System.Collections.Generic.IReadOnlyList`1&lt;class Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt; value, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
-      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.WriteCacheStreamingAsync(System.String,System.Collections.Generic.IReadOnlyList{Microsoft.Extensions.AI.StreamingChatCompletionUpdate},System.Threading.CancellationToken)" />
-      <MemberSignature Language="VB.NET" Value="Protected Overrides Function WriteCacheStreamingAsync (key As String, value As IReadOnlyList(Of StreamingChatCompletionUpdate), cancellationToken As CancellationToken) As Task" />
-      <MemberSignature Language="F#" Value="override this.WriteCacheStreamingAsync : string * System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="distributedCachingChatClient.WriteCacheStreamingAsync (key, value, cancellationToken)" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task ^ WriteCacheStreamingAsync(System::String ^ key, System::Collections::Generic::IReadOnlyList&lt;Microsoft::Extensions::AI::StreamingChatCompletionUpdate ^&gt; ^ value, System::Threading::CancellationToken cancellationToken);" />
+      <MemberSignature Language="C#" Value="protected override System.Threading.Tasks.Task WriteCacheStreamingAsync (string key, System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt; value, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.Threading.Tasks.Task WriteCacheStreamingAsync(string key, class System.Collections.Generic.IReadOnlyList`1&lt;class Microsoft.Extensions.AI.ChatResponseUpdate&gt; value, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.AI.DistributedCachingChatClient.WriteCacheStreamingAsync(System.String,System.Collections.Generic.IReadOnlyList{Microsoft.Extensions.AI.ChatResponseUpdate},System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Protected Overrides Function WriteCacheStreamingAsync (key As String, value As IReadOnlyList(Of ChatResponseUpdate), cancellationToken As CancellationToken) As Task" />
+      <MemberSignature Language="F#" Value="override this.WriteCacheStreamingAsync : string * System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt; * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task" Usage="distributedCachingChatClient.WriteCacheStreamingAsync (key, value, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; override System::Threading::Tasks::Task ^ WriteCacheStreamingAsync(System::String ^ key, System::Collections::Generic::IReadOnlyList&lt;Microsoft::Extensions::AI::ChatResponseUpdate ^&gt; ^ value, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.AI</AssemblyName>
-        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Threading.Tasks.Task</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.StreamingChatCompletionUpdate&gt;" />
+        <Parameter Name="value" Type="System.Collections.Generic.IReadOnlyList&lt;Microsoft.Extensions.AI.ChatResponseUpdate&gt;" />
         <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
       </Parameters>
       <Docs>

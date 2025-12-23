@@ -7,13 +7,13 @@ printfn "One dimension (Rank=1):"
 let numbers1 = [| 1..9 |]
 
 for i in numbers1 do
-    printf $"{i} " 
+    printf $"{i} "
 printfn "\n\nArray.Clear(numbers1, 2, 5)"
 
 Array.Clear(numbers1, 2, 5)
 
 for i in numbers1 do
-    printf $"{i} " 
+    printf $"{i} "
 
 printfn "\n\nTwo dimensions (Rank=2):"
 
@@ -42,8 +42,12 @@ numbers3[1, 0, 0] <- 5
 numbers3[1, 1, 0] <- 7
 numbers3[1, 0, 1] <- 6
 numbers3[1, 1, 1] <- 8
+numbers3[2, 0, 0] <- 9
+numbers3[2, 1, 0] <- 10
+numbers3[2, 0, 1] <- 11
+numbers3[2, 1, 1] <- 12
 
-for i = 0 to 1 do
+for i = 0 to 2 do
     for j = 0 to 1 do
         for k = 0 to 1 do
             printf $"{numbers3[i, j, k]} "
@@ -85,11 +89,17 @@ for i = 0 to 1 do
 // 5 6
 // 7 8
 //
+// 9 10
+// 11 12
+//
 // Array.Clear(numbers3, 2, 5)
 // 1 2
 // 0 0
 //
 // 0 0
 // 0 8
+//
+// 9 10
+// 11 12
 //
 //</snippet1>
