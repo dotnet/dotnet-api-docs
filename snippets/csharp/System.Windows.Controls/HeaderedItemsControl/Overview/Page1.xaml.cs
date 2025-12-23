@@ -44,7 +44,7 @@ namespace HeaderedItemsControlSimple
         void OnClick(object sender, RoutedEventArgs e)
         {
             //<SnippetHeaderedItemsControl_HasHeader>
-            if (hitemsCtrl.HasHeader == true)
+            if (hitemsCtrl.HasHeader)
             {
                 MessageBox.Show(hitemsCtrl.Header.ToString());
             }

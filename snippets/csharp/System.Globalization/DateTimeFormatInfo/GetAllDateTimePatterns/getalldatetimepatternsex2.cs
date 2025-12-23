@@ -19,7 +19,7 @@ public class Example
          noRoundTrip = 0;
          foreach (var pattern in culture.DateTimeFormat.GetAllDateTimePatterns(fmt)) {
             total++;
-            if (! DateTime.TryParse(date1.ToString(pattern), out date2)) {
+            if (!DateTime.TryParse(date1.ToString(pattern), out date2)) {
                noRoundTrip++;
                Console.WriteLine("Unable to parse {0:" + pattern + "} (format '{1}')",
                                  date1, pattern);

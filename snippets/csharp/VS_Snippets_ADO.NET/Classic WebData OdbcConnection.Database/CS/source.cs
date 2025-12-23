@@ -15,7 +15,7 @@ namespace Classic_WebData_OdbcConnection.DatabaseCS
 		// <Snippet1>
 		private static void CreateOdbcConnection()
 		{
-			string connectionString = "Driver={SQL Native Client};Server=(local);Trusted_Connection=Yes;Database=AdventureWorks;";
+			string connectionString = "...";
 
 			using (OdbcConnection connection = new OdbcConnection(connectionString))
 			{

@@ -1,0 +1,131 @@
+<Type Name="TypeMapAttribute&lt;TTypeMapGroup&gt;" FullName="System.Runtime.InteropServices.TypeMapAttribute&lt;TTypeMapGroup&gt;">
+  <TypeSignature Language="C#" Value="public sealed class TypeMapAttribute&lt;TTypeMapGroup&gt; : Attribute" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit TypeMapAttribute`1&lt;TTypeMapGroup&gt; extends System.Attribute" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.InteropServices.TypeMapAttribute`1" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class TypeMapAttribute(Of TTypeMapGroup)&#xA;Inherits Attribute" />
+  <TypeSignature Language="F#" Value="type TypeMapAttribute&lt;'ypeMapGroup&gt; = class&#xA;    inherit Attribute" />
+  <TypeSignature Language="C++ CLI" Value="generic &lt;typename TTypeMapGroup&gt;&#xA;public ref class TypeMapAttribute sealed : Attribute" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter Name="TTypeMapGroup">
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+    </TypeParameter>
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>System.Attribute</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.AttributeUsage(System.AttributeTargets.Assembly, AllowMultiple=true)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.AttributeUsage(System.AttributeTargets.Assembly, AllowMultiple=true)&gt;]</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <typeparam name="TTypeMapGroup">The type of the type map group.</typeparam>
+    <summary>Represents an attribute that defines type mapping between a string and a type.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Types involved in unmanaged-to-managed interop operations can be referenced in a <xref:System.Runtime.InteropServices.TypeMapAttribute`1> assembly attribute that declares the external type system name, a target type, and optionally a "trim target" to determine if the target type should be included in the map. If the constructor that doesn't take a trim target is used, the entry is always emitted into the type map.
+
+When an application is trimmed, an entry in the External Type Map is included when the "trim target" type is referenced in one of the following ways in reachable code:
+
+- The argument to the `ldtoken` IL instruction.
+- The argument to the `unbox` IL instruction.
+- The argument to the `unbox.any` IL instruction.
+- The argument to the `isinst` IL instruction.
+- The argument to the `castclass` IL instruction.
+- The argument to the `box` instruction. (If the trimming tool can determine that this box doesn't escape and could be stack allocated, it can ignore this `box` instruction and any corresponding `unbox` or `unbox.any` instructions.)
+- The argument to the `mkrefany` instruction.
+- The argument to the `refanyval` instruction.
+- The argument to the `newarr` instruction.
+- The type of a method argument to the `newobj` instruction if it's a class type.
+- The owning type of an instance method argument to `call` or `ldftn`, or the owning type of any method argument to `callvirt` or `ldvirtftn`. If the owning type is an interface and the trimming tool can determine that there's only one implementation of the interface, it's free to interpret the method token argument as though it's the method on the only implementing type.
+- The generic argument to the <xref:System.Activator.CreateInstance%60%601> method.
+- Calls to <xref:System.Type.GetType%2A?displayProperty=nameWithType> with a constant string representing the type name.
+
+Many of these instructions can be passed a generic parameter. In that case, the trimming tool should consider type arguments of instantiations of that type as having met one of these rules and include any entries with those types as "trim target" types.
+
+> [!IMPORTANT]
+> Conflicting key/value mappings are not allowed.
+
+> [!NOTE]
+> The underlying format of the produced maps is implementation-defined. Different .NET form factors might use different formats. Additionally, it isn't guaranteed that the <xref:System.Runtime.InteropServices.TypeMapAttribute`1>, <xref:System.Runtime.InteropServices.TypeMapAssociationAttribute`1>, and <xref:System.Runtime.InteropServices.TypeMapAssemblyTargetAttribute`1> attributes are present in the final image after a trimming tool has been run.
+
+      ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public TypeMapAttribute (string value, Type target);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string value, class System.Type target) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.TypeMapAttribute`1.#ctor(System.String,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (value As String, target As Type)" />
+      <MemberSignature Language="F#" Value="new System.Runtime.InteropServices.TypeMapAttribute&lt;'ypeMapGroup&gt; : string * Type -&gt; System.Runtime.InteropServices.TypeMapAttribute&lt;'ypeMapGroup&gt;" Usage="new System.Runtime.InteropServices.TypeMapAttribute&lt;'ypeMapGroup&gt; (value, target)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; TypeMapAttribute(System::String ^ value, Type ^ target);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="value" Type="System.String" />
+        <Parameter Name="target" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="value">The string representation of the key.</param>
+        <param name="target">The type value.</param>
+        <summary>Initializes a new instance of <see cref="T:System.Runtime.InteropServices.TypeMapAttribute`1" />.</summary>
+        <remarks>This mapping is unconditionally inserted into the type map.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public TypeMapAttribute (string value, Type target, Type trimTarget);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string value, class System.Type target, class System.Type trimTarget) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.TypeMapAttribute`1.#ctor(System.String,System.Type,System.Type)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (value As String, target As Type, trimTarget As Type)" />
+      <MemberSignature Language="F#" Value="new System.Runtime.InteropServices.TypeMapAttribute&lt;'ypeMapGroup&gt; : string * Type * Type -&gt; System.Runtime.InteropServices.TypeMapAttribute&lt;'ypeMapGroup&gt;" Usage="new System.Runtime.InteropServices.TypeMapAttribute&lt;'ypeMapGroup&gt; (value, target, trimTarget)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; TypeMapAttribute(System::String ^ value, Type ^ target, Type ^ trimTarget);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.InteropServices</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Interop types may be removed by trimming")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Interop types may be removed by trimming")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <Parameters>
+        <Parameter Name="value" Type="System.String" />
+        <Parameter Name="target" Type="System.Type" />
+        <Parameter Name="trimTarget" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="value">The string representation of key.</param>
+        <param name="target">The type value.</param>
+        <param name="trimTarget">The type used by the trimmer to determine type map inclusion.</param>
+        <summary>Initializes a new instance of <see cref="T:System.Runtime.InteropServices.TypeMapAttribute`1" />.</summary>
+        <remarks>
+          <para>This mapping is only included in the type map if trimming observes a type check using the <see cref="T:System.Type" /> represented by <paramref name="trimTarget" />.</para>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

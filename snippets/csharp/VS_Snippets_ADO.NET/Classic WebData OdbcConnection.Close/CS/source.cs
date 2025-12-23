@@ -7,14 +7,6 @@ namespace Classic_WebData_OdbcConnection.CloseCS
 {
 	class Program
 	{
-		static void Main(string[] args)
-		{
-			string connectionString;
-			connectionString = "Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\Samples\\Northwind.mdb";
-
-			CreateOdbcConnection(connectionString);
-		}
-
 		// <Snippet1>
 		private static void CreateOdbcConnection(string connectionString)
 		{

@@ -66,7 +66,7 @@ private void MyButtonAddAllClick(object sender, EventArgs e)
       TreeNodeCollection myTreeNodeCollection = myTreeViewBase.Nodes;
       foreach(TreeNode myTreeNode in myTreeNodeCollection)
       {
-         if (myTreeNode.IsSelected == true)
+         if (myTreeNode.IsSelected)
          {
             // Remove the selected node from the 'myTreeViewBase' TreeView.
             myTreeViewBase.Nodes.Remove(myTreeNode);

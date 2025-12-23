@@ -58,7 +58,7 @@ public class LocationSimulator : IObservable<Location>
       _location = new Location(_location.Latitude + rnd.Next(-1, 2),
                                _location.Longitude + rnd.Next(-1, 2),
                                DateTime.UtcNow, status);
-      if (! _location.Equals(_lastLocation))
+      if (!_location.Equals(_lastLocation))
       {
          // Notify observers.
          foreach (IObserver<Location> observer in observers)

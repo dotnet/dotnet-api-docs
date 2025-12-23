@@ -19,7 +19,7 @@ public class Example
                             Console.WriteLine("N:       {0:N0}", n);   
                          } );
      TimeSpan ts = TimeSpan.FromMilliseconds(150);
-     if (! t.Wait(ts))
+     if (!t.Wait(ts))
         Console.WriteLine("The timeout interval elapsed.");
    }
 }

@@ -52,7 +52,7 @@ namespace DataGrid1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         protected AdventureWorksLT2008DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
-            if ((this.IsBinarySerialized(info, context) == true)) {
+            if (this.IsBinarySerialized(info, context)) {
                 this.InitVars(false);
                 global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
@@ -231,25 +231,25 @@ namespace DataGrid1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         internal void InitVars(bool initTable) {
             this.tableAddress = ((AddressDataTable)(base.Tables["Address"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableAddress != null)) {
                     this.tableAddress.InitVars();
                 }
             }
             this.tableCustomer = ((CustomerDataTable)(base.Tables["Customer"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableCustomer != null)) {
                     this.tableCustomer.InitVars();
                 }
             }
             this.tableCustomerAddress = ((CustomerAddressDataTable)(base.Tables["CustomerAddress"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableCustomerAddress != null)) {
                     this.tableCustomerAddress.InitVars();
                 }
             }
             this.tableProduct = ((ProductDataTable)(base.Tables["Product"]));
-            if ((initTable == true)) {
+            if (initTable) {
                 if ((this.tableProduct != null)) {
                     this.tableProduct.InitVars();
                 }
@@ -3067,7 +3067,7 @@ SELECT AddressID, AddressLine1, AddressLine2, City, StateProvince COLLATE SQL_La
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet.AddressDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);
@@ -3634,7 +3634,7 @@ SELECT CustomerID, NameStyle, Title, FirstName COLLATE SQL_Latin1_General_CP1_CI
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet.CustomerDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);
@@ -4291,7 +4291,7 @@ SELECT CustomerID, AddressID, AddressType COLLATE SQL_Latin1_General_CP1_CI_AS A
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet.CustomerAddressDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);
@@ -4718,7 +4718,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
         public virtual int Fill(AdventureWorksLT2008DataSet.ProductDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
+            if (this.ClearBeforeFill) {
                 dataTable.Clear();
             }
             int returnValue = this.Adapter.Fill(dataTable);
@@ -4811,7 +4811,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_Size));
             }
-            if ((Original_Weight.HasValue == true)) {
+            if (Original_Weight.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[10].Value = ((decimal)(Original_Weight.Value));
             }
@@ -4819,7 +4819,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            if ((Original_ProductCategoryID.HasValue == true)) {
+            if (Original_ProductCategoryID.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[12].Value = ((int)(Original_ProductCategoryID.Value));
             }
@@ -4827,7 +4827,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[12].Value = global::System.DBNull.Value;
             }
-            if ((Original_ProductModelID.HasValue == true)) {
+            if (Original_ProductModelID.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((int)(Original_ProductModelID.Value));
             }
@@ -4836,7 +4836,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.DeleteCommand.Parameters[14].Value = global::System.DBNull.Value;
             }
             this.Adapter.DeleteCommand.Parameters[15].Value = ((System.DateTime)(Original_SellStartDate));
-            if ((Original_SellEndDate.HasValue == true)) {
+            if (Original_SellEndDate.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[17].Value = ((System.DateTime)(Original_SellEndDate.Value));
             }
@@ -4844,7 +4844,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
-            if ((Original_DiscontinuedDate.HasValue == true)) {
+            if (Original_DiscontinuedDate.HasValue) {
                 this.Adapter.DeleteCommand.Parameters[18].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[19].Value = ((System.DateTime)(Original_DiscontinuedDate.Value));
             }
@@ -4924,32 +4924,32 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
             else {
                 this.Adapter.InsertCommand.Parameters[5].Value = ((string)(Size));
             }
-            if ((Weight.HasValue == true)) {
+            if (Weight.HasValue) {
                 this.Adapter.InsertCommand.Parameters[6].Value = ((decimal)(Weight.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            if ((ProductCategoryID.HasValue == true)) {
+            if (ProductCategoryID.HasValue) {
                 this.Adapter.InsertCommand.Parameters[7].Value = ((int)(ProductCategoryID.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
-            if ((ProductModelID.HasValue == true)) {
+            if (ProductModelID.HasValue) {
                 this.Adapter.InsertCommand.Parameters[8].Value = ((int)(ProductModelID.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             this.Adapter.InsertCommand.Parameters[9].Value = ((System.DateTime)(SellStartDate));
-            if ((SellEndDate.HasValue == true)) {
+            if (SellEndDate.HasValue) {
                 this.Adapter.InsertCommand.Parameters[10].Value = ((System.DateTime)(SellEndDate.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            if ((DiscontinuedDate.HasValue == true)) {
+            if (DiscontinuedDate.HasValue) {
                 this.Adapter.InsertCommand.Parameters[11].Value = ((System.DateTime)(DiscontinuedDate.Value));
             }
             else {
@@ -5048,32 +5048,32 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
             else {
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Size));
             }
-            if ((Weight.HasValue == true)) {
+            if (Weight.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[6].Value = ((decimal)(Weight.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            if ((ProductCategoryID.HasValue == true)) {
+            if (ProductCategoryID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(ProductCategoryID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
-            if ((ProductModelID.HasValue == true)) {
+            if (ProductModelID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(ProductModelID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[9].Value = ((System.DateTime)(SellStartDate));
-            if ((SellEndDate.HasValue == true)) {
+            if (SellEndDate.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[10].Value = ((System.DateTime)(SellEndDate.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            if ((DiscontinuedDate.HasValue == true)) {
+            if (DiscontinuedDate.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[11].Value = ((System.DateTime)(DiscontinuedDate.Value));
             }
             else {
@@ -5124,7 +5124,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Original_Size));
             }
-            if ((Original_Weight.HasValue == true)) {
+            if (Original_Weight.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[26].Value = ((decimal)(Original_Weight.Value));
             }
@@ -5132,7 +5132,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
             }
-            if ((Original_ProductCategoryID.HasValue == true)) {
+            if (Original_ProductCategoryID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[28].Value = ((int)(Original_ProductCategoryID.Value));
             }
@@ -5140,7 +5140,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
             }
-            if ((Original_ProductModelID.HasValue == true)) {
+            if (Original_ProductModelID.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(Original_ProductModelID.Value));
             }
@@ -5149,7 +5149,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[31].Value = ((System.DateTime)(Original_SellStartDate));
-            if ((Original_SellEndDate.HasValue == true)) {
+            if (Original_SellEndDate.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[32].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[33].Value = ((System.DateTime)(Original_SellEndDate.Value));
             }
@@ -5157,7 +5157,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 this.Adapter.UpdateCommand.Parameters[32].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[33].Value = global::System.DBNull.Value;
             }
-            if ((Original_DiscontinuedDate.HasValue == true)) {
+            if (Original_DiscontinuedDate.HasValue) {
                 this.Adapter.UpdateCommand.Parameters[34].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[35].Value = ((System.DateTime)(Original_DiscontinuedDate.Value));
             }
@@ -5523,7 +5523,7 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
             global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
             for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
                 global::System.Data.DataRow row = updatedRows[i];
-                if ((allAddedRows.Contains(row) == false)) {
+                if (!allAddedRows.Contains(row)) {
                     realUpdatedRows.Add(row);
                 }
             }
@@ -5538,26 +5538,26 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
-            if ((dataSet.HasChanges() == false)) {
+            if (!dataSet.HasChanges()) {
                 return 0;
             }
             if (((this._addressTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._addressTableAdapter.Connection) == false))) {
+                        && (!this.MatchTableAdapterConnection(this._addressTableAdapter.Connection) ))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
             if (((this._customerTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._customerTableAdapter.Connection) == false))) {
+                        && (!this.MatchTableAdapterConnection(this._customerTableAdapter.Connection) ))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
             if (((this._customerAddressTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._customerAddressTableAdapter.Connection) == false))) {
+                        && (!this.MatchTableAdapterConnection(this._customerAddressTableAdapter.Connection) ))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
             if (((this._productTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._productTableAdapter.Connection) == false))) {
+                        && (!this.MatchTableAdapterConnection(this._productTableAdapter.Connection) ))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -5774,15 +5774,15 @@ SELECT ProductID, Name COLLATE SQL_Latin1_General_CP1_CI_AS AS Expr1, ProductNum
                 global::System.Data.DataRow newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 for (
                 ; ((newParent != null) 
-                            && ((object.ReferenceEquals(newParent, child) == false) 
-                            && (object.ReferenceEquals(newParent, parent) == false))); 
+                            && ((!object.ReferenceEquals(newParent, child) ) 
+                            && (!object.ReferenceEquals(newParent, parent) ))); 
                 ) {
                     newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 }
                 if ((newParent == null)) {
                     for (newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original); ((newParent != null) 
-                                && ((object.ReferenceEquals(newParent, child) == false) 
-                                && (object.ReferenceEquals(newParent, parent) == false))); 
+                                && ((!object.ReferenceEquals(newParent, child) ) 
+                                && (!object.ReferenceEquals(newParent, parent) ))); 
                     ) {
                         newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
                     }

@@ -7,7 +7,7 @@ public class Example
    public static void Main()
    {
       string filePath = @".\ROFile.txt";
-      if (! File.Exists(filePath))
+      if (!File.Exists(filePath))
          File.Create(filePath);
       // Keep existing attributes, and set ReadOnly attribute.
       File.SetAttributes(filePath, 

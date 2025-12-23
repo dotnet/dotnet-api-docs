@@ -21,7 +21,7 @@ namespace GetLocationProperty
 
             GeoCoordinate coord = watcher.Position.Location;
 
-            if (coord.IsUnknown != true)
+            if (!coord.IsUnknown)
             {
                 Console.WriteLine("Lat: {0}, Long: {1}",
                     coord.Latitude,

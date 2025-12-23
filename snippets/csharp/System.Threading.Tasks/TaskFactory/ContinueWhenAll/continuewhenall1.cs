@@ -19,7 +19,7 @@ public class Example
         
       // Determine the number of words in each file.
       foreach (var filename in filenames) 
-         tasks.Add( Task.Factory.StartNew( fn => { if (! File.Exists(fn.ToString()))
+         tasks.Add( Task.Factory.StartNew( fn => { if (!File.Exists(fn.ToString()))
                                                       throw new FileNotFoundException("{0} does not exist.", filename);
 
                                                    StreamReader sr = new StreamReader(fn.ToString());

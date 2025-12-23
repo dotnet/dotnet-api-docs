@@ -127,7 +127,7 @@ namespace Mssc.Services.ConnectionManagement
             }
             string proxy = args[0];
 
-            if ((rex.Match (proxy)).Success != true)
+            if (!(rex.Match (proxy)).Success)
             {
                 Console.WriteLine ("Input string format not allowed.");
                 return;

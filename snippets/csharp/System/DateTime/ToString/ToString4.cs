@@ -4,30 +4,33 @@ using System.Globalization;
 
 public class ToStringExample3
 {
-   public static void Main2()
-   {
-      CultureInfo[] cultures = new CultureInfo[] {CultureInfo.InvariantCulture,
-                                                  new CultureInfo("en-us"),
-                                                  new CultureInfo("fr-fr"),
-                                                  new CultureInfo("de-DE"),
-                                                  new CultureInfo("es-ES"),
-                                                  new CultureInfo("ja-JP")};
+    public static void Main()
+    {
+        CultureInfo[] cultures = [
+            CultureInfo.InvariantCulture,
+            new CultureInfo("en-us"),
+            new CultureInfo("fr-fr"),
+            new CultureInfo("de-DE"),
+            new CultureInfo("es-ES"),
+            new CultureInfo("ja-JP")
+        ];
 
-      DateTime thisDate = new DateTime(2009, 5, 1, 9, 0, 0);
+        DateTime thisDate = new(2025, 5, 1, 9, 0, 0);
 
-      foreach (CultureInfo culture in cultures)
-      {
-         string cultureName;
-         if (string.IsNullOrEmpty(culture.Name))
-            cultureName = culture.NativeName;
-         else
-            cultureName = culture.Name;
+        foreach (CultureInfo culture in cultures)
+        {
+            string cultureName;
 
-         Console.WriteLine("In {0}, {1}",
-                           cultureName, thisDate.ToString(culture));
-      }
-      }
+            if (string.IsNullOrEmpty(culture.Name))
+                cultureName = culture.NativeName;
+            else
+                cultureName = culture.Name;
+
+            Console.WriteLine($"In {cultureName}, {thisDate.ToString(culture)}");
+        }
+    }
 }
+
 // The example produces the following output:
 //    In Invariant Language (Invariant Country), 05/01/2009 09:00:00
 //    In en-US, 5/1/2009 9:00:00 AM

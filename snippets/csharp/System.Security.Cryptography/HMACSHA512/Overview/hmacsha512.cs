@@ -35,8 +35,8 @@ public class HMACSHA512example
             // Create a random key using a random number generator. This would be the
             //  secret key shared by sender and receiver.
             byte[] secretkey = new Byte[64];
-            //RNGCryptoServiceProvider is an implementation of a random number generator.
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
             {
                 // The array is now filled with cryptographically strong random bytes.
                 rng.GetBytes(secretkey);

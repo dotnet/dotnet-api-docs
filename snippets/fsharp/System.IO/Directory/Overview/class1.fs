@@ -1,4 +1,6 @@
-﻿//<Snippet5>
+﻿module class1
+
+//<Snippet5>
 //<Snippet4>
 //<Snippet3>
 //<Snippet2>
@@ -14,7 +16,7 @@ let printFileSystemEntries path =
 
         for str in directoryEntries do
             printfn $"{str}"
-    with 
+    with
     | :? ArgumentNullException ->
         printfn "Path is a null reference."
     | :? SecurityException ->

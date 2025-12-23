@@ -26,7 +26,7 @@ class Sample
                          ((Console.CursorVisible == true) ?
                            "VISIBLE" : "HIDDEN"));
         s = Console.ReadLine();
-        if (String.IsNullOrEmpty(s) == false)
+        if (!String.IsNullOrEmpty(s))
             if (s[0] == '+')
                 Console.CursorVisible = true;
             else if (s[0] == '-')

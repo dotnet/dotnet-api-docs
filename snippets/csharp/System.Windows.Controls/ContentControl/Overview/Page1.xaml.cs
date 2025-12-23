@@ -20,7 +20,7 @@ namespace ContentControlSimple
         //<Snippet4>
         void OnClick(object sender, RoutedEventArgs e)
         {
-            if (contCtrl.HasContent == true)
+            if (contCtrl.HasContent)
             {
                 MessageBox.Show("contCtrl has content");
             }

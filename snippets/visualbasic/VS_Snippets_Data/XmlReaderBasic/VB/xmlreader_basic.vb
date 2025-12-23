@@ -4,14 +4,14 @@ Imports System.Xml
 
 
 Class XmlReader_Samples
-    
-    
-    Shared Sub Main() 
-    
+
+
+    Shared Sub Main()
+
     End Sub
-     
-    
-Shared Sub AttributeCount() 
+
+
+Shared Sub AttributeCount()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 reader.ReadToDescendant("book")
 '<snippet1>
@@ -23,35 +23,35 @@ If reader.HasAttributes Then
     Console.WriteLine("  {0}", reader(i))
   Next i
   ' Move the reader back to the element node.
-  reader.MoveToElement() 
+  reader.MoveToElement()
 End If
-'</snippet1>    
+'</snippet1>
 End Sub
-    
+
 '==============================
-' 
-Shared Sub GetAttribute1() 
+'
+Shared Sub GetAttribute1()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 '<snippet2>
 reader.ReadToFollowing("book")
 Dim isbn As String = reader.GetAttribute(2)
  '</snippet2>
 End Sub
-    
+
 '==============================//
-' 
-Shared Sub GetAttribute2() 
+'
+Shared Sub GetAttribute2()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 '<snippet3>
 reader.ReadToFollowing("book")
 Dim isbn As String = reader.GetAttribute("ISBN")
 Console.WriteLine("The ISBN value: " + isbn)
-'</snippet3>    
+'</snippet3>
 End Sub
-       
+
 '==============================//
-' 
-Shared Sub MoveToAttribute1() 
+'
+Shared Sub MoveToAttribute1()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 reader.ReadToFollowing("book")
 '<snippet4>
@@ -64,24 +64,24 @@ If reader.HasAttributes Then
   Next i
   reader.MoveToElement() 'Moves the reader back to the element node.
 End If
-'</snippet4>    
+'</snippet4>
 End Sub
-        
+
 '==============================//
-' 
-Shared Sub MoveToFirstAttribute() 
+'
+Shared Sub MoveToFirstAttribute()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 '<snippet5>
 reader.ReadToFollowing("book")
 reader.MoveToFirstAttribute()
 Dim genre As String = reader.Value
 Console.WriteLine("The genre value: " + genre)
-'</snippet5>    
+'</snippet5>
 End Sub
-    
+
 '==============================//
-' 
-Shared Sub MoveToNextAttribute() 
+'
+Shared Sub MoveToNextAttribute()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 reader.ReadToFollowing("book")
 '<snippet6>
@@ -93,25 +93,25 @@ If reader.HasAttributes Then
   ' Move the reader back to the element node.
   reader.MoveToElement()
 End If
-'</snippet6>    
+'</snippet6>
 End Sub
-     
-    
+
+
 '==============================//
-' 
-Shared Sub Item() 
+'
+Shared Sub Item()
 Dim reader As XmlReader = XmlReader.Create("books.xml")
 '<snippet7>
 reader.ReadToDescendant("book")
 Dim isbn As String = reader("ISBN")
 Console.WriteLine("The ISBN value: " + isbn)
-'</snippet7>    
+'</snippet7>
 End Sub
-     
-    
+
+
 '==============================//
-' 
-Shared Sub Node_Value() 
+'
+Shared Sub Node_Value()
 '<snippet8>
 Dim settings As New XmlReaderSettings()
 settings.DtdProcessing = DtdProcessing.Parse
@@ -141,17 +141,24 @@ While reader.Read()
       Console.Write("</{0}>", reader.Name)
   End Select
 End While
-'</snippet8>    
+
+' The example displays the following output:
+'
+' <Item>Test with an entity: 123</Item><Item>Test with a child element <more> stuff</Item>
+' <Item>Test with a CDATA section <![CDATA[<456>]]> def</Item><Item>Test with a char entity: A</Item>
+' <!-- Fourteen chars in this element.--><Item>1234567890ABCD</Item></Items>
+
+'</snippet8>
 End Sub
-        
-    
+
+
 '==============================//
-' 
-Shared Sub NamespaceURI() 
+'
+Shared Sub NamespaceURI()
 '<snippet9>
 Dim reader As XmlReader = XmlReader.Create("book2.xml")
-        
-' Parse the file.  If they exist, display the prefix and 
+
+' Parse the file.  If they exist, display the prefix and
 ' namespace URI of each node.
 While reader.Read()
   If reader.IsStartElement() Then
@@ -164,13 +171,13 @@ While reader.Read()
   End If
 End While
 reader.Close()
-'</snippet9>    
+'</snippet9>
 End Sub
-     
-    
+
+
 '==============================
-' 
-Shared Sub IsStartElement() 
+'
+Shared Sub IsStartElement()
 Dim reader As XmlReader = XmlReader.Create("elems.xml")
 '<snippet10>
 While reader.Read()
@@ -187,16 +194,16 @@ While reader.Read()
     End If
   End If
 End While
-'</snippet10>    
+'</snippet10>
 End Sub
-     
-    
+
+
 '==============================
-' 
-Shared Sub ReadEndElement() 
+'
+Shared Sub ReadEndElement()
 '<snippet11>
-Using reader As XmlReader = XmlReader.Create("book3.xml")               
-  ' Parse the XML document.  ReadString is used to 
+Using reader As XmlReader = XmlReader.Create("book3.xml")
+  ' Parse the XML document.  ReadString is used to
   ' read the text content of the elements.
   reader.Read()
   reader.ReadStartElement("book")
@@ -208,14 +215,14 @@ Using reader As XmlReader = XmlReader.Create("book3.xml")
   Console.Write("The content of the price element:  ")
   Console.WriteLine(reader.ReadString())
   reader.ReadEndElement()
-  reader.ReadEndElement()            
+  reader.ReadEndElement()
 End Using
-'</snippet11>    
+'</snippet11>
 End Sub
-    
+
 '==============================
-' 
-Shared Sub ReadInnerXml() 
+'
+Shared Sub ReadInnerXml()
 '<snippet12>
 ' Load the file and ignore all white space.
 Dim settings As New XmlReaderSettings()
@@ -224,28 +231,28 @@ Using reader As XmlReader = XmlReader.Create("2books.xml")
 
   ' Moves the reader to the root element.
   reader.MoveToContent()
-                
+
   ' Moves to book node.
   reader.Read()
-                
+
   ' Note that ReadInnerXml only returns the markup of the node's children
   ' so the book's attributes are not returned.
   Console.WriteLine("Read the first book using ReadInnerXml...")
   Console.WriteLine(reader.ReadInnerXml())
-                
+
   ' ReadOuterXml returns the markup for the current node and its children
   ' so the book's attributes are also returned.
   Console.WriteLine("Read the second book using ReadOuterXml...")
   Console.WriteLine(reader.ReadOuterXml())
 
 End Using
-'</snippet12>    
+'</snippet12>
 End Sub
-     
-    
+
+
 '==============================
-' 
-Shared Sub ReadSubtree() 
+'
+Shared Sub ReadSubtree()
 '<snippet13>
 Dim settings As New XmlReaderSettings()
 settings.IgnoreWhitespace = True
@@ -254,26 +261,26 @@ Using reader As XmlReader = XmlReader.Create("books.xml", settings)
   ' Position the reader on the second book node.
   reader.ReadToFollowing("Book")
   reader.Skip()
-                
+
   ' Create another reader that contains just the second book node.
   Dim inner As XmlReader = reader.ReadSubtree()
-            
+
   inner.ReadToDescendant("Title")
   Console.WriteLine(inner.Name)
 
-  ' Do additional processing on the inner reader. After you 
-  ' are done, call Close on the inner reader and 
+  ' Do additional processing on the inner reader. After you
+  ' are done, call Close on the inner reader and
   ' continue processing using the original reader.
   inner.Close()
 
 End Using
-'</snippet13>    
+'</snippet13>
 End Sub
-     
-    
+
+
 '==============================
-' 
-Shared Sub ReadtoDescendant() 
+'
+Shared Sub ReadtoDescendant()
 '<snippet14>
 Using reader As XmlReader = XmlReader.Create("2books.xml")
 
@@ -298,13 +305,13 @@ Using reader As XmlReader = XmlReader.Create("2books.xml")
   Loop While reader.Read()
 
 End Using
-'</snippet14>    
+'</snippet14>
 End Sub
-     
-    
+
+
 '==============================
-' 
-Shared Sub ReadToFollowing() 
+'
+Shared Sub ReadToFollowing()
 '<snippet15>
 Using reader As XmlReader = XmlReader.Create("books.xml")
   reader.ReadToFollowing("book")
@@ -312,13 +319,13 @@ Using reader As XmlReader = XmlReader.Create("books.xml")
     Console.WriteLine("ISBN: {0}", reader.GetAttribute("ISBN"))
   Loop While reader.ReadToNextSibling("book")
 End Using
-'</snippet15>    
+'</snippet15>
 End Sub
-     
-    
+
+
 '==============================
-' 
-Shared Sub HasValue() 
+'
+Shared Sub HasValue()
 '<snippet16>
 Dim settings As New XmlReaderSettings()
 settings.IgnoreWhitespace = True
@@ -332,12 +339,12 @@ Using reader As XmlReader = XmlReader.Create("book1.xml", settings)
     End If
   End While
 End Using
-'</snippet16>    
+'</snippet16>
 End Sub
 
 '==============================
-' 
-Shared Sub IsStartElement_2() 
+'
+Shared Sub IsStartElement_2()
 Using reader As XmlReader = XmlReader.Create("books.xml")
 '<snippet17>
   ' Parse the file and display each price node.
@@ -346,8 +353,8 @@ Using reader As XmlReader = XmlReader.Create("books.xml")
       Console.WriteLine(reader.ReadInnerXml())
     End If
   End While
-'</snippet17>  
-End Using  
+'</snippet17>
+End Using
 End Sub
 
 End Class

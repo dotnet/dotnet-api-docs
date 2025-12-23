@@ -13,7 +13,7 @@ public class Example
       if (args.Length < 2)
          startValue = 2;
       else
-         if (! Int32.TryParse(args[1], out startValue))
+         if (!Int32.TryParse(args[1], out startValue))
             startValue = 2;
 
       ShowValues(startValue);

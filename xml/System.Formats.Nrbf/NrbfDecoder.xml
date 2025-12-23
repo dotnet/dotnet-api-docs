@@ -8,26 +8,26 @@
   <AssemblyInfo>
     <AssemblyName>System.Formats.Nrbf</AssemblyName>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-8.0;net-9.0;windowsdesktop-9.0">
+    <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-9.0">
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="net-8.0;net-9.0;windowsdesktop-9.0">
-      <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(1)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(1)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>
             Provides stateless methods for decoding .NET Remoting Binary Format (NRBF) encoded data.
             </summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+            NrbfDecoder is an implementation of an NRBF reader, but its behaviors don't strictly follow BinaryFormatter's implementation.
+            You shouldn't use the output of NrbfDecoder to determine whether a call to BinaryFormatter would be safe.
+            </remarks>
   </Docs>
   <Members>
     <Member MemberName="Decode">
@@ -40,6 +40,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Formats.Nrbf</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Formats.Nrbf.SerializationRecord</ReturnType>
@@ -48,7 +49,7 @@
         <Parameter Name="payload" Type="System.IO.Stream" />
         <Parameter Name="options" Type="System.Formats.Nrbf.PayloadOptions">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0;net-9.0;windowsdesktop-9.0">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-9.0">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -68,28 +69,36 @@
             </summary>
         <returns>A <see cref="T:System.Formats.Nrbf.SerializationRecord" /> that represents the root object.
             It can be either <see cref="T:System.Formats.Nrbf.PrimitiveTypeRecord`1" />,
-            a <see cref="T:System.Formats.Nrbf.ClassRecord" /> or an <see cref="T:System.Formats.Nrbf.ArrayRecord" />.</returns>
+            a <see cref="T:System.Formats.Nrbf.ClassRecord" />, or an <see cref="T:System.Formats.Nrbf.ArrayRecord" />.</returns>
         <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="payload" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="payload" /> does not support reading or is already closed.</exception>
-        <exception cref="T:System.Runtime.Serialization.SerializationException">Reading from <paramref name="payload" /> encounters invalid NRBF data.</exception>
+        <exception cref="T:System.Runtime.Serialization.SerializationException">Reading from <paramref name="payload" /> encountered invalid NRBF data.</exception>
+        <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        <exception cref="T:System.NotSupportedException">
+            Reading from <paramref name="payload" /> encountered unsupported records,
+            for example, arrays with non-zero offset or unsupported record types
+            (<see cref="F:System.Formats.Nrbf.SerializationRecordType.ClassWithMembers" />, <see cref="F:System.Formats.Nrbf.SerializationRecordType.SystemClassWithMembers" />,
+            <see cref="F:System.Formats.Nrbf.SerializationRecordType.MethodCall" />, or <see cref="F:System.Formats.Nrbf.SerializationRecordType.MethodReturn" />).
+            </exception>
         <exception cref="T:System.Text.DecoderFallbackException">Reading from <paramref name="payload" />
-            encounters an invalid UTF8 sequence.</exception>
+            encountered an invalid UTF8 sequence.</exception>
+        <exception cref="T:System.IO.EndOfStreamException">The end of the stream was reached before reading <see cref="F:System.Formats.Nrbf.SerializationRecordType.MessageEnd" /> record.</exception>
       </Docs>
     </Member>
     <Member MemberName="Decode">
-      <MemberSignature Language="C#" Value="public static System.Formats.Nrbf.SerializationRecord Decode (System.IO.Stream payload, out System.Collections.Generic.IReadOnlyDictionary&lt;System.Formats.Nrbf.SerializationRecordId,System.Formats.Nrbf.SerializationRecord&gt; recordMap, System.Formats.Nrbf.PayloadOptions? options = default, bool leaveOpen = false);" FrameworkAlternate="net-8.0;net-9.0;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0" />
+      <MemberSignature Language="C#" Value="public static System.Formats.Nrbf.SerializationRecord Decode (System.IO.Stream payload, out System.Collections.Generic.IReadOnlyDictionary&lt;System.Formats.Nrbf.SerializationRecordId,System.Formats.Nrbf.SerializationRecord&gt; recordMap, System.Formats.Nrbf.PayloadOptions? options = default, bool leaveOpen = false);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Formats.Nrbf.SerializationRecord Decode(class System.IO.Stream payload, [out] class System.Collections.Generic.IReadOnlyDictionary`2&lt;valuetype System.Formats.Nrbf.SerializationRecordId, class System.Formats.Nrbf.SerializationRecord&gt;&amp; recordMap, class System.Formats.Nrbf.PayloadOptions options, bool leaveOpen) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Formats.Nrbf.NrbfDecoder.Decode(System.IO.Stream,System.Collections.Generic.IReadOnlyDictionary{System.Formats.Nrbf.SerializationRecordId,System.Formats.Nrbf.SerializationRecord}@,System.Formats.Nrbf.PayloadOptions,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Public Shared Function Decode (payload As Stream, ByRef recordMap As IReadOnlyDictionary(Of SerializationRecordId, SerializationRecord), Optional options As PayloadOptions = Nothing, Optional leaveOpen As Boolean = false) As SerializationRecord" />
       <MemberSignature Language="F#" Value="static member Decode : System.IO.Stream * IReadOnlyDictionary * System.Formats.Nrbf.PayloadOptions * bool -&gt; System.Formats.Nrbf.SerializationRecord" Usage="System.Formats.Nrbf.NrbfDecoder.Decode (payload, recordMap, options, leaveOpen)" />
-      <MemberSignature Language="C#" Value="public static System.Formats.Nrbf.SerializationRecord Decode (System.IO.Stream payload, out System.Collections.Generic.IReadOnlyDictionary&lt;System.Formats.Nrbf.SerializationRecordId,System.Formats.Nrbf.SerializationRecord&gt; recordMap, System.Formats.Nrbf.PayloadOptions options = default, bool leaveOpen = false);" FrameworkAlternate="windowsdesktop-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Formats.Nrbf</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Formats.Nrbf.SerializationRecord</ReturnType>
@@ -99,7 +108,7 @@
         <Parameter Name="recordMap" Type="System.Collections.Generic.IReadOnlyDictionary&lt;System.Formats.Nrbf.SerializationRecordId,System.Formats.Nrbf.SerializationRecord&gt;" RefType="out" />
         <Parameter Name="options" Type="System.Formats.Nrbf.PayloadOptions">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0;net-9.0">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-9.0">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -134,6 +143,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Formats.Nrbf</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Formats.Nrbf.ClassRecord</ReturnType>
@@ -142,7 +152,7 @@
         <Parameter Name="payload" Type="System.IO.Stream" />
         <Parameter Name="options" Type="System.Formats.Nrbf.PayloadOptions">
           <Attributes>
-            <Attribute FrameworkAlternate="net-8.0;net-9.0;windowsdesktop-9.0">
+            <Attribute FrameworkAlternate="net-10.0-pp;net-8.0-pp;net-9.0-pp;windowsdesktop-10.0;windowsdesktop-9.0">
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -173,6 +183,7 @@
       <AssemblyInfo>
         <AssemblyName>System.Formats.Nrbf</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -183,17 +194,16 @@
       <Docs>
         <param name="stream">The stream to inspect. The stream must be both readable and seekable.</param>
         <summary>
-            Checks if given stream starts with <see href="https://learn.microsoft.com/openspecs/windows_protocols/ms-nrbf/a7e578d3-400a-4249-9424-7529d10d1b3c">NRBF payload header</see>.
+            Checks if the given stream starts with the <see href="https://learn.microsoft.com/openspecs/windows_protocols/ms-nrbf/a7e578d3-400a-4249-9424-7529d10d1b3c">NRBF payload header</see>.
             </summary>
         <returns>
-          <see langword="true" /> if it starts with NRBF payload header; otherwise, <see langword="false" />.</returns>
-        <remarks>
-          <para>When this method returns, <paramref name="stream" /> will be restored to its original position.</para>
-        </remarks>
+          <see langword="true" /> if the stream starts with the NRBF payload header; otherwise, <see langword="false" />.</returns>
+        <remarks>When this method returns, <paramref name="stream" /> is restored to its original position.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="stream" /> is <see langword="null" />.</exception>
         <exception cref="T:System.NotSupportedException">The stream does not support reading or seeking.</exception>
         <exception cref="T:System.ObjectDisposedException">The stream was closed.</exception>
+        <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
       </Docs>
     </Member>
     <Member MemberName="StartsWithPayloadHeader">
@@ -207,13 +217,8 @@
       <AssemblyInfo>
         <AssemblyName>System.Formats.Nrbf</AssemblyName>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="net-8.0;net-9.0;windowsdesktop-9.0">
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.NullableContext(0)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.NullableContext(0)&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -223,10 +228,10 @@
       <Docs>
         <param name="bytes">The buffer to inspect.</param>
         <summary>
-            Checks if given buffer starts with <see href="https://learn.microsoft.com/openspecs/windows_protocols/ms-nrbf/a7e578d3-400a-4249-9424-7529d10d1b3c">NRBF payload header</see>.
+            Checks if the given buffer starts with the <see href="https://learn.microsoft.com/openspecs/windows_protocols/ms-nrbf/a7e578d3-400a-4249-9424-7529d10d1b3c">NRBF payload header</see>.
             </summary>
         <returns>
-          <see langword="true" /> if it starts with NRBF payload header; otherwise, <see langword="false" />.</returns>
+          <see langword="true" /> if the buffer starts with the NRBF payload header; otherwise, <see langword="false" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

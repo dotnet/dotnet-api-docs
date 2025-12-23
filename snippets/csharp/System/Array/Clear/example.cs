@@ -3,7 +3,7 @@ using System;
 
 class Example
 {
-    public static void Main()
+    public static void RunIt()
     {
         Console.WriteLine("One dimension (Rank=1):");
         int[] numbers1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -50,12 +50,12 @@ class Example
             Console.WriteLine();
         }
 
-        Console.WriteLine("Three dimensions (Rank=3):");
-        int[, ,] numbers3 = {{{1, 2}, {3, 4}},
+        Console.WriteLine("\nThree dimensions (Rank=3):");
+        int[,,] numbers3 = {{{1, 2}, {3, 4}},
                              {{5, 6}, {7, 8}},
                              {{9, 10}, {11, 12}}};
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 2; j++)
             {
@@ -71,7 +71,7 @@ class Example
         Console.WriteLine("Array.Clear(numbers3, 2, 5)");
         Array.Clear(numbers3, 2, 5);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 2; j++)
             {
@@ -85,6 +85,7 @@ class Example
         }
     }
 }
+
 /*  This code example produces the following output:
  *
  * One dimension (Rank=1):
@@ -106,15 +107,21 @@ class Example
  * Three dimensions (Rank=3):
  * 1 2
  * 3 4
- *
+ * 
  * 5 6
  * 7 8
- *
+ * 
+ * 9 10
+ * 11 12
+ * 
  * Array.Clear(numbers3, 2, 5)
  * 1 2
  * 0 0
- *
+ * 
  * 0 0
  * 0 8
+ * 
+ * 9 10
+ * 11 12
  */
 //</snippet1>

@@ -26,7 +26,7 @@
 
  You can configure the <xref:System.Web.Security.AuthorizationStoreRoleProvider> object to use either a local XML file or an Active Directory or Active Directory Application Mode (ADAM) server. When using a local file, the connection string should look like the following example.
 
-```
+```txt
 msxml://<path to xml file>
 ```
 
@@ -35,7 +35,7 @@ msxml://<path to xml file>
  `msxml://~\App_Data\datafilename.xml`
 
 > [!IMPORTANT]
->  Storing an XML data file in the Web application directory is a potential security threat. By default, IIS will serve XML data files to the Web. To improve security when using a local data file in an ASP.NET application, you should store the data file in the `App_Data` directory. Files stored in the `App_Data` directory will not be served to the Web.
+> Storing an XML data file in the Web application directory is a potential security threat. By default, IIS will serve XML data files to the Web. To improve security when using a local data file in an ASP.NET application, you should store the data file in the `App_Data` directory. Files stored in the `App_Data` directory will not be served to the Web.
 
  If you are using an Active Directory or ADAM server for the policy store, your connection string should be similar to the following example.
 
@@ -44,13 +44,13 @@ msxml://<path to xml file>
  The exceptions listed in the documentation for <xref:System.Web.Security.AuthorizationStoreRoleProvider> object methods are the exceptions that are raised by the <xref:System.Web.Security.AuthorizationStoreRoleProvider> object. Since the provider relies on the underlying Authentication Manager runtime, a <xref:System.Runtime.InteropServices.COMException> exception may be thrown whenever the <xref:System.Web.Security.AuthorizationStoreRoleProvider> object forwards a method call to the Authentication Manager runtime.
 
 > [!IMPORTANT]
->  The <xref:System.Web.Security.AuthorizationStoreRoleProvider> object has the following requirements for running in partial-trust environments:
+> The <xref:System.Web.Security.AuthorizationStoreRoleProvider> object has the following requirements for running in partial-trust environments:
 >
->  When using a file-based policy store in an ASP.NET application, the file I/O permissions granted by the current trust level determine whether read and write actions are allowed by the provider. The ASP.NET application must have read permission on the file to read data from the policy store, and must have write permission to save new information or update existing information in the policy store. The default Medium-trust policy file gives an ASP.NET application read/write permissions in its application directory. The default Low-trust policy file only gives an ASP.NET application read permission in its application directory. In addition, the process identity under which the ASP.NET application runs must have file-system permissions to read and/or write the policy file.
+> When using a file-based policy store in an ASP.NET application, the file I/O permissions granted by the current trust level determine whether read and write actions are allowed by the provider. The ASP.NET application must have read permission on the file to read data from the policy store, and must have write permission to save new information or update existing information in the policy store. The default Medium-trust policy file gives an ASP.NET application read/write permissions in its application directory. The default Low-trust policy file only gives an ASP.NET application read permission in its application directory. In addition, the process identity under which the ASP.NET application runs must have file-system permissions to read and/or write the policy file.
 >
->  When using an Active Directory or ADAM server, the ASP.NET application needs unmanaged-code permission because the internal <xref:System.Web.Security.AuthorizationStoreRoleProvider> object code uses COM interop.
+> When using an Active Directory or ADAM server, the ASP.NET application needs unmanaged-code permission because the internal <xref:System.Web.Security.AuthorizationStoreRoleProvider> object code uses COM interop.
 >
->  When using the <xref:System.Web.Security.AuthorizationStoreRoleProvider> object outside of ASP.NET, the calling code needs unmanaged-code permission.
+> When using the <xref:System.Web.Security.AuthorizationStoreRoleProvider> object outside of ASP.NET, the calling code needs unmanaged-code permission.
 
 
 
@@ -244,17 +244,17 @@ msxml://<path to xml file>
  If a value is not specified for the `applicationName` attribute in the Web.config file, then the <xref:System.Web.HttpRequest.ApplicationPath%2A?displayProperty=nameWithType> property value for the current <xref:System.Web.HttpContext.Request%2A?displayProperty=nameWithType> object is used.
 
 > [!NOTE]
->  Authorization-manager application names cannot contain the "/" character that is included in the <xref:System.Web.HttpRequest.ApplicationPath%2A?displayProperty=nameWithType> property. As a result, the default value for the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property cannot be used as an authorization-manager application name, and in the application's Web.config file, you must always specify an `applicationName` attribute in the `provider` element to configure your <xref:System.Web.Security.AuthorizationStoreRoleProvider> instance.
+> Authorization-manager application names cannot contain the "/" character that is included in the <xref:System.Web.HttpRequest.ApplicationPath%2A?displayProperty=nameWithType> property. As a result, the default value for the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property cannot be used as an authorization-manager application name, and in the application's Web.config file, you must always specify an `applicationName` attribute in the `provider` element to configure your <xref:System.Web.Security.AuthorizationStoreRoleProvider> instance.
 
 > [!CAUTION]
->  Because a single default role provider instance is used for all of the requests served by an <xref:System.Web.HttpApplication> object, you can have multiple requests executing concurrently and attempting to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property value. The <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property is not thread safe for multiple writes, and changing the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property value can result in unexpected behavior when there are multiple users of an application. We recommend that you avoid writing code that allows users to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property unless you must. An example of an application where setting the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property may be required is an administrative application that manages role data for multiple applications. Such an application should be a single-user application and not a Web application.
+> Because a single default role provider instance is used for all of the requests served by an <xref:System.Web.HttpApplication> object, you can have multiple requests executing concurrently and attempting to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property value. The <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property is not thread safe for multiple writes, and changing the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property value can result in unexpected behavior when there are multiple users of an application. We recommend that you avoid writing code that allows users to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property unless you must. An example of an application where setting the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property may be required is an administrative application that manages role data for multiple applications. Such an application should be a single-user application and not a Web application.
 
 
 
 ## Examples
  The following example shows the \<roleManager> element in the `system.web` section of the Web.config file for an ASP.NET application. It specifies the application's <xref:System.Web.Security.AuthorizationStoreRoleProvider> instance and sets the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ApplicationName%2A> property to `MyApplication`.
 
-```
+```xml
 <roleManager defaultProvider="AuthorizationStoreProvider"
   enabled="true"
   cacheRolesInCookie="true"
@@ -936,7 +936,7 @@ msxml://<path to xml file>
  The <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property can be set using the `scopeName` configuration attribute for the provider instance in the `providers` section of the `roleManager` configuration section.
 
 > [!CAUTION]
->  Because a single default role provider instance is used for all of the requests served by an <xref:System.Web.HttpApplication> object, you can have multiple requests executing concurrently and attempting to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property value. The <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property is not thread safe for multiple writes, and changing the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property value can result in unexpected behavior when there are multiple users of an application. We recommend that you avoid writing code that allows users to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property unless you must. An example of an application where setting the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property may be required is an administrative application that manages role data for multiple applications. Such an application should be a single-user application and not a Web application.
+> Because a single default role provider instance is used for all of the requests served by an <xref:System.Web.HttpApplication> object, you can have multiple requests executing concurrently and attempting to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property value. The <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property is not thread safe for multiple writes, and changing the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property value can result in unexpected behavior when there are multiple users of an application. We recommend that you avoid writing code that allows users to set the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property unless you must. An example of an application where setting the <xref:System.Web.Security.AuthorizationStoreRoleProvider.ScopeName%2A> property may be required is an administrative application that manages role data for multiple applications. Such an application should be a single-user application and not a Web application.
 
  ]]></format>
         </remarks>

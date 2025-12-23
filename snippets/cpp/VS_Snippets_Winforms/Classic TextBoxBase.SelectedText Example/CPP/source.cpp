@@ -36,7 +36,7 @@ private:
    void Menu_Paste( System::Object^ sender, System::EventArgs^ e )
    {
       // Determine if there is any text in the Clipboard to paste into the text box.
-      if ( Clipboard::GetDataObject()->GetDataPresent( DataFormats::Text ) == true )
+      if ( Clipboard::GetDataObject()->GetDataPresent( DataFormats::Text ))
       {
          // Determine if any text is selected in the text box.
          if ( textBox1->SelectionLength > 0 )
@@ -57,7 +57,7 @@ private:
    void Menu_Undo( System::Object^ sender, System::EventArgs^ e )
    {
       // Determine if last operation can be undone in text box.   
-      if ( textBox1->CanUndo == true )
+      if ( textBox1->CanUndo)
       {
          // Undo the last operation.
          textBox1->Undo();
