@@ -32,23 +32,17 @@ namespace Demo2
         //<Snippet5>
         [Event(1, Message = "Application Failure: {0}", Level = EventLevel.Error, Keywords = Keywords.Diagnostic)]
         public void Failure(string message) { WriteEvent(1, message); }
-        //</Snippet5>
 
-        //<Snippet6>
         [Event(2, Message = "Starting up.", Keywords = Keywords.Perf, Level = EventLevel.Informational)]
         public void Startup() { WriteEvent(2); }
-        //</Snippet6>
 
-        //<Snippet7>
         [Event(3, Message = "loading page {1} activityID={0}", Opcode = EventOpcode.Start,
             Task = Tasks.Page, Keywords = Keywords.Page, Level = EventLevel.Informational)]
         public void PageStart(int ID, string url) { if (IsEnabled()) WriteEvent(3, ID, url); }
-        //</Snippet7>
-
-        //<Snippet8>
+        
         [Event(4, Opcode = EventOpcode.Stop, Task = Tasks.Page, Keywords = Keywords.Page, Level = EventLevel.Informational)]
         public void PageStop(int ID) { if (IsEnabled()) WriteEvent(4, ID); }
-        //</Snippet8>
+        //</Snippet5>
 
         //<Snippet9>
         [Event(5, Opcode = EventOpcode.Start, Task = Tasks.DBQuery, Keywords = Keywords.DataBase, Level = EventLevel.Informational)]
