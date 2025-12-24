@@ -34,26 +34,32 @@ Class MyCompanyEventSource
     Public Sub Failure(ByVal message As String)
         WriteEvent(1, message)
     End Sub
+    '</Snippet5>
 
+    '<Snippet6>
     <[Event](2, Message:="Starting up.", Keywords:=Keywords.Perf, Level:=EventLevel.Informational)> _
     Public Sub Startup()
         WriteEvent(2)
     End Sub
+    '</Snippet6>
 
+    '<Snippet7>
     <[Event](3, Message:="loading page {1} activityID={0}", Opcode:=EventOpcode.Start, Task:=Tasks.Page, Keywords:=Keywords.Page, Level:=EventLevel.Informational)> _
     Public Sub PageStart(ByVal ID As Integer, ByVal url As String)
         If IsEnabled() Then
             WriteEvent(3, ID, url)
         End If
     End Sub
+    '</Snippet7>
 
+    '</Snippet8>
     <[Event](4, Opcode:=EventOpcode.Stop, Task:=Tasks.Page, Keywords:=Keywords.Page, Level:=EventLevel.Informational)> _
     Public Sub PageStop(ByVal ID As Integer)
         If IsEnabled() Then
             WriteEvent(4, ID)
         End If
     End Sub
-    '</Snippet5>
+    '</Snippet8>
 
     '<Snippet9>
     <[Event](5, Opcode:=EventOpcode.Start, Task:=Tasks.DBQuery, Keywords:=Keywords.DataBase, Level:=EventLevel.Informational)> _
