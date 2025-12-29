@@ -52,7 +52,7 @@ Class MyCompanyEventSource
     End Sub
     '</Snippet7>
 
-    '</Snippet8>
+    '<Snippet8>
     <[Event](4, Opcode:=EventOpcode.Stop, Task:=Tasks.Page, Keywords:=Keywords.Page, Level:=EventLevel.Informational)> _
     Public Sub PageStop(ByVal ID As Integer)
         If IsEnabled() Then
