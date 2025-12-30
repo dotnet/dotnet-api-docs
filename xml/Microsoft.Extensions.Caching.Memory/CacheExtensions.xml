@@ -113,9 +113,9 @@
         <param name="cache">The <see cref="T:Microsoft.Extensions.Caching.Memory.IMemoryCache" /> instance this method extends.</param>
         <param name="key">The key of the value to get.</param>
         <summary>
-            Gets the value associated with this key if present.
+            Gets the value associated with this key if present and castable to <typeparamref name="TItem" />.
             </summary>
-        <returns>The value associated with this key, or <c>default(TItem)</c> if the key is not present.</returns>
+        <returns>The value associated with this key, or <c>default(TItem)</c> if the key is not present or the stored value can't be cast to <typeparamref name="TItem" />.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -595,13 +595,15 @@
         <typeparam name="TItem">The type of the object to get.</typeparam>
         <param name="cache">The <see cref="T:Microsoft.Extensions.Caching.Memory.IMemoryCache" /> instance this method extends.</param>
         <param name="key">The key of the value to get.</param>
-        <param name="value">The value associated with the given key.</param>
+        <param name="value">The value associated with the given key, or <c>default(TItem)</c> if the key is not found or the stored value can't be cast to <typeparamref name="TItem" />.</param>
         <summary>
-            Tries to get the value associated with the given key.
+            Tries to get the value associated with the given key and cast it to <typeparamref name="TItem" />.
             </summary>
         <returns>
-          <c>true</c> if the key was found; <c>false</c> otherwise.</returns>
-        <remarks>To be added.</remarks>
+          <c>true</c> if the key was found and the stored value can be cast to <typeparamref name="TItem" />; <c>false</c> otherwise.</returns>
+        <remarks>
+          This method returns <c>false</c> both when the key is not present in the cache and when the key is present but the stored value can't be cast to <typeparamref name="TItem" />. If you need to distinguish between these two cases (for example, in instrumented caches tracking hit/miss metrics), use the non-generic <see cref="M:Microsoft.Extensions.Caching.Memory.IMemoryCache.TryGetValue(System.Object,System.Object@)" /> method instead, which returns <c>true</c> if the key is present regardless of type.
+        </remarks>
       </Docs>
     </Member>
   </Members>

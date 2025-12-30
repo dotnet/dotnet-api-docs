@@ -97,7 +97,7 @@ Application domains, which are represented by <xref:System.AppDomain> objects, h
 - If an assembly is loaded into the default application domain, it cannot be unloaded from memory while the process is running. However, if you open a second application domain to load and execute the assembly, the assembly is unloaded when that application domain is unloaded. Use this technique to minimize the working set of long-running processes that occasionally use large DLLs.
 
  > [!NOTE]
- > On .NET Core, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. For .NET Core, there is exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
+ > On .NET Core and .NET 5+, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. These versions have exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
 
  Multiple application domains can run in a single process; however, there is not a one-to-one correlation between application domains and threads. Several threads can belong to a single application domain, and while a given thread is not confined to a single application domain, at any given time, a thread executes in a single application domain.
 
@@ -7306,7 +7306,7 @@ The friendly name of the default application domain is the file name of the proc
  Beginning with the .NET Framework version 2.0, this event is raised in each application domain that registers an event handler.
 
 > [!NOTE]
->  In .NET Framework, the total execution time of all <xref:System.AppDomain.ProcessExit> event handlers is limited, just as the total execution time of all finalizers is limited at process shutdown. The default is two seconds. An unmanaged host can change this execution time by calling the [ICLRPolicyManager::SetTimeout](/dotnet/framework/unmanaged-api/hosting/iclrpolicymanager-settimeout-method) method with the [OPR_ProcessExit](/dotnet/framework/unmanaged-api/hosting/eclroperation-enumeration) enumeration value. This time limit does not exist in .NET Core.
+>  In .NET Framework, the total execution time of all <xref:System.AppDomain.ProcessExit> event handlers is limited, just as the total execution time of all finalizers is limited at process shutdown. The default is two seconds. An unmanaged host can change this execution time by calling the [ICLRPolicyManager::SetTimeout](/dotnet/framework/unmanaged-api/hosting/iclrpolicymanager-settimeout-method) method with the [OPR_ProcessExit](/dotnet/framework/unmanaged-api/hosting/eclroperation-enumeration) enumeration value. This time limit does not exist in .NET Core and .NET 5+.
 
  In the .NET Framework versions 1.0 and 1.1, this event is raised only in the default application domain, and only if an event handler is registered in the default application domain.
 
@@ -7839,7 +7839,7 @@ The friendly name of the default application domain is the file name of the proc
  The following example demonstrates how to use the <xref:System.AppDomain.SetData%28System.String%2CSystem.Object%29> method to create a new value pair. The example then uses the <xref:System.AppDomain.GetData%2A> method to retrieve the value, and displays it to the console.
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ADGetData/CPP/adgetdata.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/GetData/adgetdata.cs" interactive="try-dotnet" id="Snippet1":::
+ :::code language="csharp" source="~/snippets/csharp/System/AppDomain/GetData/adgetdata.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/GetData/adgetdata.fs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/GetData/adgetdata.vb" id="Snippet1":::
 

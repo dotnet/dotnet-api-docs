@@ -113,7 +113,7 @@ Partial Class _Default
       Response.Write("RequestLengthDiskThreshold: " & _
         configSection.RequestLengthDiskThreshold & "<br>")
 
-      ' Set the RequestLengthDiskThreshold property value to 512 bytes.
+      ' Set the RequestLengthDiskThreshold property value to 512 kilobytes.
       configSection.RequestLengthDiskThreshold = 512
       ' </Snippet12>
 
