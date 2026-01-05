@@ -51,26 +51,25 @@
     <remarks>
       <format type="text/markdown"><![CDATA[
 
-## Remarks
 The <xref:System.Net.Mail.MailAddress> class is used by the <xref:System.Net.Mail.SmtpClient> and <xref:System.Net.Mail.MailMessage> classes to store address information for email messages.
 
-A mail address is composed of a <xref:System.Net.Mail.MailAddress.User%2A> name, <xref:System.Net.Mail.MailAddress.Host%2A> name and optionally, a <xref:System.Net.Mail.MailAddress.DisplayName%2A>. The <xref:System.Net.Mail.MailAddress.DisplayName%2A> can contain non-ASCII characters if you encode them.
+A mail address is composed of a [user name](xref:System.Net.Mail.MailAddress.User), [host name](xref:System.Net.Mail.MailAddress.Host), and an optional [display name](xref:System.Net.Mail.MailAddress.DisplayName). <xref:System.Net.Mail.MailAddress.DisplayName> can contain non-ASCII characters if you encode them.
 
 The <xref:System.Net.Mail.MailAddress> class supports the following mail address formats:
 
-- A simple address format of `user@host`. If a <xref:System.Net.Mail.MailAddress.DisplayName%2A> is not set, this is the mail address format generated.
-- A standard quoted display name format of `"display name" <user@host>`. If a <xref:System.Net.Mail.MailAddress.DisplayName%2A> is set, this is the format generated.
+- A simple address format of `user@host`. If a <xref:System.Net.Mail.MailAddress.DisplayName> is not set, this is the mail address format that's generated.
+- A standard quoted display name format of `"display name" <user@host>`. If a <xref:System.Net.Mail.MailAddress.DisplayName> is set, this is the format that's generated.
 
-    - Angle brackets are added around the <xref:System.Net.Mail.MailAddress.User%2A> name and <xref:System.Net.Mail.MailAddress.Host%2A> name, if these are not included. For example, `"display name" user@host` is changed to `"display name" <user@host>`.
-    - Quotes are added around the <xref:System.Net.Mail.MailAddress.DisplayName%2A>, if these are not included. For example, `display name <user@host>` is changed to `"display name" <user@host>`.
-    - Unicode characters are supported in the <xref:System.Net.Mail.MailAddress.DisplayName%2A> property.
+  - If they're not already included, angle brackets are added around the <xref:System.Net.Mail.MailAddress.User> name and <xref:System.Net.Mail.MailAddress.Host> name. For example, `"display name" user@host` is changed to `"display name" <user@host>`.
+  - If they're not already included, quotes are added around the <xref:System.Net.Mail.MailAddress.DisplayName>. For example, `display name <user@host>` is changed to `"display name" <user@host>`.
+  - Unicode characters are supported in the <xref:System.Net.Mail.MailAddress.DisplayName> property.
 
 Within these two formats, the following elements are allowed:
 
-- A <xref:System.Net.Mail.MailAddress.User%2A> name with quotes. For example, `"user name"@host`.
-- Consecutive and trailing dots in user names. For example, `user...name..@host`.
+- A <xref:System.Net.Mail.MailAddress.User> name with quotes. For example, `"user name"@host`.
 - Bracketed domain literals. For example, `<user@[my domain]>`.
 - Comments. For example, `(comment)"display name"(comment)<(comment)user(comment)@(comment)domain(comment)>(comment)`. Comments are removed before transmission.
+- .NET 9 and earlier ONLY: Consecutive and trailing dots in user names. For example, `user...name..@host`. (Starting in .NET 10, consecutive dots aren't allowed.)
 
 A comma is used to separate elements in a list of mail addresses. As a result, a comma should not be used in unquoted display names in a list. The following mail addresses would be allowed:
 
@@ -90,19 +89,21 @@ The following mail address would not be allowed:
 
 `"John "Jr" Doe" <user@host>`
 
-When the username is not quoted, all text between the start of the string (or comma) and the address are considered part of the <xref:System.Net.Mail.MailAddress.DisplayName%2A>, including comments. For example:
+When the username is not quoted, all text between the start of the string (or comma) and the address is considered part of the <xref:System.Net.Mail.MailAddress.DisplayName>, including comments. For example:
 
 `(non comment) unquoted display (non comment) name (non comment) <user@host>`
 
-Although the <xref:System.Net.Mail.MailAddress> class accepts a mail address as valid, other mail servers may not accept the mail address.
+Although the <xref:System.Net.Mail.MailAddress> class accepts a mail address as valid, other mail servers might not accept the mail address.
 
 The <xref:System.Net.Mail.MailAddress> class does not support the following mail address formats:
 
 - Mixed quoted and unquoted display names. For example, `display "name" <user@host>`.
 - Groups, as defined in RFC 2822 Section 3.4 published by the IETF.
 - The obsolete user name formats of `"user"."name"@host`, `user."name"@host` or `"user".name@host`.
+- .NET 10 and later versions only: Consecutive dots in the user name, for example, `user...name@host.com`.
 
 ## Examples
+
 The following code example demonstrates sending an email message by using the <xref:System.Net.Mail.SmtpClient>, <xref:System.Net.Mail.MailAddress>, and <xref:System.Net.Mail.MailMessage> classes.
 
 :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet10":::
@@ -167,28 +168,26 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- The `address` parameter can contain a display name and the associated email address if you enclose the address in angle brackets. For example:
+The `address` parameter can contain a display name and the associated email address if you enclose the address in angle brackets. For example:
 
- `"Tom Smith <tsmith@contoso.com>"`
+`"Tom Smith <tsmith@contoso.com>"`
 
- White space is permitted between the display name and the angle brackets.
+White space is permitted between the display name and the angle brackets.
 
- The following table shows the property values for a <xref:System.Net.Mail.MailAddress> object constructed using the preceding example address.
+The following table shows the property values for a <xref:System.Net.Mail.MailAddress> object constructed using the preceding example address.
 
-|Property|Value|
-|--------------|-----------|
-|<xref:System.Net.Mail.MailAddress.DisplayName%2A>|`"Tom Smith"`|
-|<xref:System.Net.Mail.MailAddress.Host%2A>|`"contoso.com"`|
-|<xref:System.Net.Mail.MailAddress.User%2A>|`"tsmith"`|
-|<xref:System.Net.Mail.MailAddress.Address%2A>|`"tsmith@contoso.com"`|
-
-
+| Property                                       | Value                  |
+| ---------------------------------------------- | ---------------------- |
+| <xref:System.Net.Mail.MailAddress.DisplayName> | `"Tom Smith"`          |
+| <xref:System.Net.Mail.MailAddress.Host>        | `"contoso.com"`        |
+| <xref:System.Net.Mail.MailAddress.User>        | `"tsmith"`             |
+| <xref:System.Net.Mail.MailAddress.Address>     | `"tsmith@contoso.com"` |
 
 ## Examples
- The following code example uses this constructor to create a <xref:System.Net.Mail.MailAddress> object for the <xref:System.Net.Mail.MailMessage.Bcc%2A> recipient of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet9":::
+The following code example uses this constructor to create a <xref:System.Net.Mail.MailAddress> object for the <xref:System.Net.Mail.MailMessage.Bcc> recipient of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet9":::
 
  ]]></format>
         </remarks>
@@ -256,19 +255,17 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- Leading and trailing white space in the display name is preserved.
+Leading and trailing white space in the display name is preserved.
 
- If `displayName` contains non-ASCII characters, the iso-8859-1 character set is used for the `displayName` encoding. Encoding non-ASCII characters is discussed in RFC 1522, which is available at [https://www.ietf.org/](https://www.ietf.org/).
+If `displayName` contains non-ASCII characters, the iso-8859-1 character set is used for the `displayName` encoding. Encoding non-ASCII characters is discussed in RFC 1522, which is available at [https://www.ietf.org/](https://www.ietf.org/).
 
- If `address` contains a display name, and `displayName` is not `null` and is not equal to <xref:System.String.Empty?displayProperty=nameWithType>, `displayName` overrides the value specified in `address`.
-
-
+If `address` contains a display name, and `displayName` is not `null` and is not equal to <xref:System.String.Empty?displayProperty=nameWithType>, `displayName` overrides the value specified in `address`.
 
 ## Examples
- The following code example uses this constructor to create <xref:System.Net.Mail.MailAddress> instances for the sender and recipient of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet9":::
+The following code example uses this constructor to create <xref:System.Net.Mail.MailAddress> instances for the sender and recipient of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet9":::
 
  ]]></format>
         </remarks>
@@ -336,22 +333,20 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- Leading and trailing white space in the display name is preserved.
+Leading and trailing white space in the display name is preserved.
 
- If `address` contains a display name, and `displayName` is not `null` and is not equal to <xref:System.String.Empty?displayProperty=nameWithType>, `displayName` overrides the value specified in `address`.
+If `address` contains a display name, and `displayName` is not `null` and is not equal to <xref:System.String.Empty?displayProperty=nameWithType>, `displayName` overrides the value specified in `address`.
 
- The <xref:System.Net.Mail.MailAddress.%23ctor%2A> method does not check if the `displayName` parameter is valid. This method removes surrounding quotes not displayed by the <xref:System.Net.Mail.MailAddress.DisplayName%2A> property. Quotes will be added before transmission, except where <xref:System.Text.Encoding.ASCII%2A> or <xref:System.Text.Encoding.Unicode%2A> is specified in the `displayNameEncoding` parameter. The encoding specified in the `displayNameEncoding` parameter will be applied to the <xref:System.Net.Mail.MailAddress.DisplayName%2A> property before transmission <xref:System.Text.Encoding.ASCII%2A> or <xref:System.Text.Encoding.Unicode%2A> is specified in the `displayNameEncoding` parameter. <xref:System.Text.Encoding.UTF8%2A> is the default encoding if none is specified.
+The <xref:System.Net.Mail.MailAddress.%23ctor(System.String,System.String,System.Text.Encoding)> constructor does not check if the `displayName` parameter is valid. This method removes surrounding quotes not displayed by the <xref:System.Net.Mail.MailAddress.DisplayName> property. Quotes will be added before transmission, except where <xref:System.Text.Encoding.ASCII> or <xref:System.Text.Encoding.Unicode> is specified in the `displayNameEncoding` parameter. The encoding specified in the `displayNameEncoding` parameter will be applied to the <xref:System.Net.Mail.MailAddress.DisplayName> property before transmission <xref:System.Text.Encoding.ASCII> or <xref:System.Text.Encoding.Unicode> is specified in the `displayNameEncoding` parameter. <xref:System.Text.Encoding.UTF8> is the default encoding if none is specified.
 
- For more information on supported mail address formats, see <xref:System.Net.Mail.MailAddress>.
-
-
+For more information on supported mail address formats, see <xref:System.Net.Mail.MailAddress>.
 
 ## Examples
- The following code example uses this constructor to create <xref:System.Net.Mail.MailAddress> instances for the sender of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/MailAddress/.ctor/mailasync.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net.Mail/MailAddress/.ctor/mailasync.vb" id="Snippet2":::
+The following code example uses this constructor to create <xref:System.Net.Mail.MailAddress> instances for the sender of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/MailAddress/.ctor/mailasync.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.Net.Mail/MailAddress/.ctor/mailasync.vb" id="Snippet2":::
 
  ]]></format>
         </remarks>
@@ -415,15 +410,13 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- The value returned by this property does not include the <xref:System.Net.Mail.MailAddress.DisplayName%2A> information.
-
-
+The value returned by this property does not include the <xref:System.Net.Mail.MailAddress.DisplayName> information.
 
 ## Examples
- The following code example displays the address for an email message recipient.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet10":::
+The following code example displays the address for an email message recipient.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet10":::
 
  ]]></format>
         </remarks>
@@ -475,17 +468,15 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- Display names that contain non-ASCII characters are returned in human-readable form. Use the <xref:System.Net.Mail.MailAddress.ToString%2A> method to get the encoded form of the <xref:System.Net.Mail.MailAddress.DisplayName%2A>.
+Display names that contain non-ASCII characters are returned in human-readable form. Use the <xref:System.Net.Mail.MailAddress.ToString> method to get the encoded form of the <xref:System.Net.Mail.MailAddress.DisplayName>.
 
- Some software programs that are used to read email display the <xref:System.Net.Mail.MailAddress.DisplayName%2A> property value instead of, or in addition to, the email address.
-
-
+Some software programs that are used to read email display the <xref:System.Net.Mail.MailAddress.DisplayName> property value instead of, or in addition to, the email address.
 
 ## Examples
- The following code example displays the <xref:System.Net.Mail.MailAddress.DisplayName%2A> for the recipient of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet9":::
+The following code example displays the <xref:System.Net.Mail.MailAddress.DisplayName> for the recipient of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet9":::
 
  ]]></format>
         </remarks>
@@ -585,8 +576,7 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- The <xref:System.Net.Mail.MailAddress.GetHashCode%2A> method returns a hash code of the mail address. This value can be used as a key in hash tables.
+The <xref:System.Net.Mail.MailAddress.GetHashCode> method returns a hash code of the mail address. This value can be used as a key in hash tables.
 
  ]]></format>
         </remarks>
@@ -638,15 +628,13 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- In a typical email address, the host string includes all information following the "`@`" sign. For example, in `"tsmith@contoso.com"`, the host is `"contoso.com"`.
-
-
+In a typical email address, the host string includes all information following the "`@`" sign. For example, in `"tsmith@contoso.com"`, the host is `"contoso.com"`.
 
 ## Examples
- The following code example displays the destination of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet4":::
+The following code example displays the destination of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet4":::
 
  ]]></format>
         </remarks>
@@ -693,19 +681,17 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- The string returned by this method is not necessarily identical to the string specified when the instance was created. If the <xref:System.Net.Mail.MailAddress.DisplayName%2A> property is not `null` and not equal to <xref:System.String.Empty?displayProperty=nameWithType> (""), <xref:System.Net.Mail.MailAddress.ToString%2A> returns a string composed using the following syntax:
+The string returned by this method is not necessarily identical to the string specified when the instance was created. If the <xref:System.Net.Mail.MailAddress.DisplayName> property is not `null` and not equal to <xref:System.String.Empty?displayProperty=nameWithType> (""), <xref:System.Net.Mail.MailAddress.ToString> returns a string composed using the following syntax:
 
- <xref:System.Net.Mail.MailAddress.DisplayName%2A> \<<xref:System.Net.Mail.MailAddress.User%2A>@<xref:System.Net.Mail.MailAddress.Host%2A>>
+<xref:System.Net.Mail.MailAddress.DisplayName> \<<xref:System.Net.Mail.MailAddress.User>@<xref:System.Net.Mail.MailAddress.Host>>
 
- If <xref:System.Net.Mail.MailAddress.DisplayName%2A> is `null` or is equal to <xref:System.String.Empty?displayProperty=nameWithType>, <xref:System.Net.Mail.MailAddress.ToString%2A> returns the value of the <xref:System.Net.Mail.MailAddress.Address%2A> property.
-
-
+If <xref:System.Net.Mail.MailAddress.DisplayName> is `null` or is equal to <xref:System.String.Empty?displayProperty=nameWithType>, <xref:System.Net.Mail.MailAddress.ToString> returns the value of the <xref:System.Net.Mail.MailAddress.Address> property.
 
 ## Examples
- The following code example displays the destination of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet7":::
+The following code example displays the destination of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet7":::
 
  ]]></format>
         </remarks>
@@ -916,15 +902,13 @@ The following code example demonstrates sending an email message by using the <x
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- In a typical email address, the user string includes all information preceding the "`@`" sign. For example, in `"tsmith@contoso.com"`, the user is `"tsmith"`.
-
-
+In a typical email address, the user string includes all information preceding the "`@`" sign. For example, in `"tsmith@contoso.com"`, the user is `"tsmith"`.
 
 ## Examples
- The following code example displays the destination of an email message.
 
- :::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet4":::
+The following code example displays the destination of an email message.
+
+:::code language="csharp" source="~/snippets/csharp/System.Net.Mail/Attachment/Overview/mail.cs" id="Snippet4":::
 
  ]]></format>
         </remarks>
