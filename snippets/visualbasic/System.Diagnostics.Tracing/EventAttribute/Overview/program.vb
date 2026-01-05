@@ -6,7 +6,7 @@ Enum MyColor
     Red
     Yellow
     Blue
-End Enum 'MyColor 
+End Enum 'MyColor
 <EventSource(Name:="MyCompany")> _
 Class MyCompanyEventSource
     Inherits EventSource
