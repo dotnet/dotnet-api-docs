@@ -2519,22 +2519,15 @@ The following example creates environment variables for the <xref:System.Environ
 This property returns the truncated result of <xref:System.Environment.TickCount64>. For version differences and information about update frequency, see the <xref:System.Environment.TickCount64#remarks> remarks.
 
 > [!IMPORTANT]
-> Because the value of the <xref:System.Environment.TickCount> property value is a 32-bit signed integer, if the system runs continuously, <xref:System.Environment.TickCount> increments from zero to <xref:System.Int32.MaxValue?displayProperty=nameWithType> for approximately 24.9 days, then jumps to <xref:System.Int32.MinValue?displayProperty=nameWithType>, which is a negative number, then increments back to zero during the next 24.9 days. You can work around this issue by calling the Windows [GetTickCount](/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount) function, which resets to zero after approximately 49.7 days, or by using the <xref:System.Environment.TickCount64> property, which returns a 64-bit integer.
+> Because the value of the <xref:System.Environment.TickCount> property value is a 32-bit signed integer, if the system runs continuously, <xref:System.Environment.TickCount> increments from zero to <xref:System.Int32.MaxValue?displayProperty=nameWithType> for approximately 24.9 days, then jumps to <xref:System.Int32.MinValue?displayProperty=nameWithType>, which is a negative number, then increments back to zero during the next 24.9 days. You can work around this issue by casting the result of <xref:System.Environment.TickCount> to `uint`. This works because `int` and `uint` are a two's complement representation on all platforms.
 
 <xref:System.Environment.TickCount> is different from the <xref:System.DateTime.Ticks?displayProperty=nameWithType> property, which is the number of 100-nanosecond intervals that have elapsed since 1/1/0001, 12:00am.
 
 Use the <xref:System.DateTime.Now?displayProperty=nameWithType> property to obtain the current local date and time.
 
-## Examples
-
-The following example demonstrates how to retrieve the positive range of values returned by the <xref:System.Environment.TickCount> property. The <xref:System.Environment.TickCount> property cycles between <xref:System.Int32.MinValue?displayProperty=nameWithType>, which is a negative number, and <xref:System.Int32.MaxValue?displayProperty=nameWithType> once every 49.8 days. This code sample removes the sign bit to yield a nonnegative number that cycles between zero and <xref:System.Int32.MaxValue> once every 24.9 days.
-
-:::code language="csharp" source="~/snippets/csharp/System/Environment/TickCount/tickcount.cs" id="Snippet1":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Environment/TickCount/tickcount.fs" id="Snippet1":::
-:::code language="vb" source="~/snippets/visualbasic/System/Environment/TickCount/tickcount.vb" id="Snippet1":::
-
  ]]></format>
         </remarks>
+        <related type="Article" href="https://learn.microsoft.com/dotnet/core/compatibility/core-libraries/11/environment-tickcount-windows-behavior">Environment.TickCount made consistent with Windows timeout behavior</related>
       </Docs>
     </Member>
     <Member MemberName="TickCount64">
@@ -2579,10 +2572,11 @@ The elapsed time excludes any non-awake time, such as time spent in sleep mode, 
 This value updates at the same frequency as the underlying interrupt timer for the system.
 
 > [!NOTE]
-> On Windows, in .NET 9 and earlier versions, including .NET Framework, the elapsed time does **not** exclude non-awake time. In addition, the value updates at a fixed cadence of 10-16ms (typically 15.5ms).
+> On Windows, in .NET 10 and earlier versions, including .NET Framework, the elapsed time **includes** non-awake time. In addition, the value updates at a fixed cadence of 10-16ms (typically 15.5ms).
 
  ]]></format>
         </remarks>
+        <related type="Article" href="https://learn.microsoft.com/dotnet/core/compatibility/core-libraries/11/environment-tickcount-windows-behavior">Environment.TickCount made consistent with Windows timeout behavior</related>
       </Docs>
     </Member>
     <Member MemberName="UserDomainName">
