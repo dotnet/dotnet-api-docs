@@ -5,7 +5,7 @@ Imports System.Globalization
 Public Class SamplesCalendar
 
     Public Shared Sub Main()
-
+        ' </snippet1>
         ' Create an instance of the calendar.
         Dim myCal As New JapaneseCalendar()
         Console.WriteLine(myCal.ToString())
@@ -44,7 +44,6 @@ Public Class SamplesCalendar
         'System.Globalization.JapaneseCalendar
         'MinSupportedDateTime: 10/23/0001 (in Gregorian, 10/23/1868)
         'MaxSupportedDateTime: 12/31/7981 (in Gregorian, 12/31/9999)
-
         ' </snippet1>
 
     End Sub
