@@ -5,7 +5,7 @@ Imports System.Globalization
 Public Class SamplesCalendar
 
     Public Shared Sub Main()
-        ' </snippet1>
+        ' <snippet1>
         ' Create an instance of the calendar.
         Dim myCal As New JapaneseCalendar()
         Console.WriteLine(myCal.ToString())
