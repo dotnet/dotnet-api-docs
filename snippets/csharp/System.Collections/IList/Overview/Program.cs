@@ -103,7 +103,7 @@ class SimpleList : IList
 
     public void Insert(int index, object value)
     {
-        if ((_count + 1 <= _contents.Length) && (index < Count) && (index >= 0))
+        if ((_count + 1 <= _contents.Length) && (index <= Count) && (index >= 0))
         {
             _count++;
 
