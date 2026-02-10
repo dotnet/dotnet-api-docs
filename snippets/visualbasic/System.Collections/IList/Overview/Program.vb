@@ -90,7 +90,7 @@ Public Class SimpleList
 
     Public Sub Insert(ByVal index As Integer, ByVal value As Object) Implements IList.Insert
 
-        If _count + 1 <= _contents.Length AndAlso index < Count AndAlso index >= 0 Then
+        If _count + 1 <= _contents.Length AndAlso index <= Count AndAlso index >= 0 Then
             _count += 1
 
             For i As Integer = Count - 1 To index Step -1
