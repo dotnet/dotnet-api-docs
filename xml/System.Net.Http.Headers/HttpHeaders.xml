@@ -596,7 +596,7 @@ This member is an explicit interface member implementation. It can be used only 
         <AssemblyVersion>4.2.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Docs>
-        <summary>Returns a value that indicates whether a new header and its values were added to  the <see cref="T:System.Net.Http.Headers.HttpHeaders" /> collection without validating the provided information.</summary>
+        <summary>Returns a value that indicates whether a new header and its values were added to the <see cref="T:System.Net.Http.Headers.HttpHeaders" /> collection without validating the header values.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="TryAddWithoutValidation">
@@ -649,7 +649,26 @@ This member is an explicit interface member implementation. It can be used only 
         <summary>Returns a value that indicates whether the specified header and its values were added to the <see cref="T:System.Net.Http.Headers.HttpHeaders" /> collection without validating the provided information.</summary>
         <returns>
           <see langword="true" /> if the specified header <paramref name="name" /> and <paramref name="values" /> could be added to the collection; otherwise <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method performs header name validation, returning `false` for invalid names. Header names are enforced to be valid HTTP tokens, where a token is defined as any set of ASCII letters, digits, or symbols from the ``"!#$%&'*+-.^_`|~"`` set, matching [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-collected-abnf)'s definition. Non-ASCII characters aren't allowed in a header name.
+
+This method doesn't perform any header value validation. Values added via this method are assumed to be trusted, and other application logic, such as <xref:System.Net.Http.HttpClient>, might misbehave if they're not well formed.
+
+Values added without validation might be observed when enumerating the collection or querying for the specific header name, even when the caller isn't using the <xref:System.Net.Http.Headers.HttpHeaders.NonValidated> view of the collection.
+
+> [!CAUTION]
+> This method must never be used with untrusted values, unless they were otherwise sufficiently validated.
+> 
+> What constitutes "sufficient" validation can vary by use case. At a minimum, prohibit newline characters for protocol correctness, for example, `if (value.ContainsAny('\r', '\n', '\0')) throw ...`. This validation should ensure that the server application sees values in the same way as the client application, with the server now being responsible for properly sanitizing its own inputs.
+> 
+> To guard against attacks such as request smuggling, callers are highly encouraged to validate that these values don't contain newline characters.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryAddWithoutValidation">
@@ -702,7 +721,26 @@ This member is an explicit interface member implementation. It can be used only 
         <summary>Returns a value that indicates whether the specified header and its value were added to the <see cref="T:System.Net.Http.Headers.HttpHeaders" /> collection without validating the provided information.</summary>
         <returns>
           <see langword="true" /> if the specified header <paramref name="name" /> and <paramref name="value" /> could be added to the collection; otherwise <see langword="false" />.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method performs header name validation, returning `false` for invalid names. Header names are enforced to be valid HTTP tokens, where a token is defined as any set of ASCII letters, digits, or symbols from the ``"!#$%&'*+-.^_`|~"`` set, matching [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-collected-abnf)'s definition. Non-ASCII characters aren't allowed in a header name.
+
+This method doesn't perform any header value validation. Values added via this method are assumed to be trusted, and other application logic, such as <xref:System.Net.Http.HttpClient>, might misbehave if they're not well formed.
+
+Values added without validation might be observed when enumerating the collection or querying for the specific header name, even when the caller isn't using the <xref:System.Net.Http.Headers.HttpHeaders.NonValidated> view of the collection.
+
+> [!CAUTION]
+> This method must never be used with untrusted values, unless they were otherwise sufficiently validated.
+> 
+> What constitutes "sufficient" validation can vary by use case. At a minimum, prohibit newline characters for protocol correctness, for example, `if (value.ContainsAny('\r', '\n', '\0')) throw ...`. This validation should ensure that the server application sees values in the same way as the client application, with the server now being responsible for properly sanitizing its own inputs.
+> 
+> To guard against attacks such as request smuggling, callers are highly encouraged to validate that these values don't contain newline characters.
+
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TryGetValues">
