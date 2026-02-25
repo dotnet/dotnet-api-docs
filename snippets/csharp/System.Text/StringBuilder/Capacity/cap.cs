@@ -4,6 +4,7 @@
 //                           StringBuilder.Equals
 
 //<snippet1>
+using System;
 using System.Text;
 
 StringBuilder sb1 = new("abc");
