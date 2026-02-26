@@ -53,7 +53,7 @@ End Class
 '       b1) sb1.Length = 3, sb1.Capacity = 50
 '       b2) sb2.Length = 3, sb2.Capacity = 16
 '       b3) sb1.ToString() = "abc", sb2.ToString() = "abc"
-'       b4) sb1 equals sb2: False
+'       b4) sb1 equals sb2: True (False on .NET Framework)
 '       
 '       Set the length of sb1 to zero.
 '       Set the capacity of sb2 to 51 characters.
