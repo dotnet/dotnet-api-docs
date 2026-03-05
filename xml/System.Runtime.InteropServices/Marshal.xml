@@ -4173,6 +4173,13 @@ The code retrieves a reference to an instance of Microsoft Word successfully. Ho
  GC.KeepAlive(callback); // Prevent collection — fnPtr does not root the delegate.
  ```
 
+A P/Invoke that marshals a delegate handles the <xref:System.GC.KeepAlive%2A> on the user's behalf:
+
+ ```csharp
+ var callback = new MyNativeCallback(MyManagedMethod);
+ NativeMethod(callback); // P/Invoke marshals the delegate and keeps it alive for the duration of the call.
+ ```
+
  If native code stores the function pointer beyond the duration of the call, root the delegate for its entire lifetime — for example, by storing it in a `static` field.
 
  This API is unsupported in environments that don't support dynamic entry-point allocation, such as `ProcessDynamicCodePolicy` on Windows, `execmem off` in SELinux, and WebAssembly.
