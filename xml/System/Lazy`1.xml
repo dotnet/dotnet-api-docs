@@ -97,7 +97,7 @@
 ## Remarks
  Use lazy initialization to defer the creation of a large or resource-intensive object, or the execution of a resource-intensive task, particularly when such creation or execution might not occur during the lifetime of the program.
 
- To prepare for lazy initialization, you create an instance of <xref:System.Lazy%601>. The type argument of the <xref:System.Lazy%601> object that you create specifies the type of the object that you want to initialize lazily. The constructor that you use to create the <xref:System.Lazy%601> object determines the characteristics of the initialization. Lazy initialization occurs the first time the <xref:System.Lazy%601.Value%2A?displayProperty=nameWithType> property is accessed.
+ To prepare for lazy initialization, you create an instance of <xref:System.Lazy%601>. The type argument of the <xref:System.Lazy%601> object that you create specifies the type of the object that you want to initialize lazily. The constructor that you use to create the <xref:System.Lazy%601> object determines the characteristics of the initialization. Lazy initialization occurs the first time the <xref:System.Lazy%601.Value?displayProperty=nameWithType> property is accessed.
 
  In most cases, choosing a constructor depends on your answers to two questions:
 
@@ -117,9 +117,9 @@
 
  You can use a lambda expression to specify the factory method. This keeps all the initialization code in one place. The lambda expression captures the context, including any arguments you pass to the lazily initialized object's constructor.
 
- **Exception caching** When you use factory methods, exceptions are cached. That is, if the factory method throws an exception the first time a thread tries to access the <xref:System.Lazy%601.Value%2A> property of the <xref:System.Lazy%601> object, the same exception is thrown on every subsequent attempt. This ensures that every call to the <xref:System.Lazy%601.Value%2A> property produces the same result and avoids subtle errors that might arise if different threads get different results. The <xref:System.Lazy%601> stands in for an actual `T` that otherwise would have been initialized at some earlier point, usually during startup. A failure at that earlier point is usually fatal. If there is a potential for a recoverable failure, we recommend that you build the retry logic into the initialization routine (in this case, the factory method), just as you would if you weren't using lazy initialization.
+ **Exception caching** When you use factory methods, exceptions are cached. That is, if the factory method throws an exception the first time a thread tries to access the <xref:System.Lazy%601.Value> property of the <xref:System.Lazy%601> object, the same exception is thrown on every subsequent attempt. This ensures that every call to the <xref:System.Lazy%601.Value> property produces the same result and avoids subtle errors that might arise if different threads get different results. The <xref:System.Lazy%601> stands in for an actual `T` that otherwise would have been initialized at some earlier point, usually during startup. A failure at that earlier point is usually fatal. If there is a potential for a recoverable failure, we recommend that you build the retry logic into the initialization routine (in this case, the factory method), just as you would if you weren't using lazy initialization.
 
- **Alternative to locking** In certain situations, you might want to avoid the overhead of the <xref:System.Lazy%601> object's default locking behavior. In rare situations, there might be a potential for deadlocks. In such cases, you can use the <xref:System.Lazy%601.%23ctor%28System.Threading.LazyThreadSafetyMode%29> or <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29> constructor, and specify <xref:System.Threading.LazyThreadSafetyMode.PublicationOnly?displayProperty=nameWithType>. This enables the <xref:System.Lazy%601> object to create a copy of the lazily initialized object on each of several threads if the threads call the <xref:System.Lazy%601.Value%2A> property simultaneously. The <xref:System.Lazy%601> object ensures that all threads use the same instance of the lazily initialized object and discards the instances that are not used. Thus, the cost of reducing the locking overhead is that your program might sometimes create and discard extra copies of an expensive object. In most cases, this is unlikely. The examples for the <xref:System.Lazy%601.%23ctor%28System.Threading.LazyThreadSafetyMode%29> and <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29> constructors demonstrate this behavior.
+ **Alternative to locking** In certain situations, you might want to avoid the overhead of the <xref:System.Lazy%601> object's default locking behavior. In rare situations, there might be a potential for deadlocks. In such cases, you can use the <xref:System.Lazy%601.%23ctor%28System.Threading.LazyThreadSafetyMode%29> or <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29> constructor, and specify <xref:System.Threading.LazyThreadSafetyMode.PublicationOnly?displayProperty=nameWithType>. This enables the <xref:System.Lazy%601> object to create a copy of the lazily initialized object on each of several threads if the threads call the <xref:System.Lazy%601.Value> property simultaneously. The <xref:System.Lazy%601> object ensures that all threads use the same instance of the lazily initialized object and discards the instances that are not used. Thus, the cost of reducing the locking overhead is that your program might sometimes create and discard extra copies of an expensive object. In most cases, this is unlikely. The examples for the <xref:System.Lazy%601.%23ctor%28System.Threading.LazyThreadSafetyMode%29> and <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29> constructors demonstrate this behavior.
 
 > [!IMPORTANT]
 >  When you specify <xref:System.Threading.LazyThreadSafetyMode.PublicationOnly?displayProperty=nameWithType>, exceptions are never cached, even if you specify a factory method.
@@ -162,7 +162,7 @@
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/Overview/lambda.fs" id="Snippetinitwithlambda":::
  :::code language="vb" source="~/snippets/visualbasic/System/LazyT/Overview/lambda.vb" id="Snippetinitwithlambda":::
 
- The example pauses, to indicate that an indeterminate period may elapse before lazy initialization occurs. When you press the **Enter** key, the example creates and starts three threads. The `ThreadProc` method that's used by all three threads calls the <xref:System.Lazy%601.Value%2A> property. The first time this happens, the `LargeObject` instance is created:
+ The example pauses, to indicate that an indeterminate period may elapse before lazy initialization occurs. When you press the **Enter** key, the example creates and starts three threads. The `ThreadProc` method that's used by all three threads calls the <xref:System.Lazy%601.Value> property. The first time this happens, the `LargeObject` instance is created:
 
  :::code language="csharp" source="~/snippets/csharp/System/LazyT/Overview/example.cs" id="Snippetvalueprop":::
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/Overview/example.fs" id="Snippetvalueprop":::
@@ -263,7 +263,7 @@
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example.fs" id="Snippetnewlazy":::
  :::code language="vb" source="~/snippets/visualbasic/System/LazyT/.ctor/example.vb" id="Snippetnewlazy":::
 
- The example creates and starts three threads that block on a <xref:System.Threading.ManualResetEvent> object, so that the example can release the threads all at once. The `ThreadProc` method that's used by all three threads calls the <xref:System.Lazy%601.Value%2A> property to get the `LargeObject` instance:
+ The example creates and starts three threads that block on a <xref:System.Threading.ManualResetEvent> object, so that the example can release the threads all at once. The `ThreadProc` method that's used by all three threads calls the <xref:System.Lazy%601.Value> property to get the `LargeObject` instance:
 
  :::code language="csharp" source="~/snippets/csharp/System/LazyT/.ctor/example.cs" id="Snippetvalueprop":::
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example.fs" id="Snippetvalueprop":::
@@ -344,7 +344,7 @@
 > [!NOTE]
 >  For code that demonstrates how to use this constructor in multithreaded scenarios (specifying `true` for `isThreadSafe`), see the example for the <xref:System.Lazy%601.%23ctor> constructor.
 
- The example defines a `LargeObject` class that will be initialized lazily. In the `Main` method, the example creates a <xref:System.Lazy%601> instance and then pauses. When you press the **Enter** key, the example accesses the <xref:System.Lazy%601.Value%2A> property of the <xref:System.Lazy%601> instance, which causes initialization to occur. The constructor of the `LargeObject` class displays a console message.
+ The example defines a `LargeObject` class that will be initialized lazily. In the `Main` method, the example creates a <xref:System.Lazy%601> instance and then pauses. When you press the **Enter** key, the example accesses the <xref:System.Lazy%601.Value> property of the <xref:System.Lazy%601> instance, which causes initialization to occur. The constructor of the `LargeObject` class displays a console message.
 
 > [!NOTE]
 >  For simplicity, this example uses a global instance of <xref:System.Lazy%601>, and all the methods are `static` (`Shared` in Visual Basic). These are not requirements for the use of lazy initialization.
@@ -423,7 +423,7 @@
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example2.fs" id="Snippetnewlazy":::
  :::code language="vb" source="~/snippets/visualbasic/System/LazyT/.ctor/example2.vb" id="Snippetnewlazy":::
 
- The example creates and starts three threads. The `ThreadProc` method that's used by all three threads calls the <xref:System.Lazy%601.Value%2A> property to get the `LargeObject` instance:
+ The example creates and starts three threads. The `ThreadProc` method that's used by all three threads calls the <xref:System.Lazy%601.Value> property to get the `LargeObject` instance:
 
  :::code language="csharp" source="~/snippets/csharp/System/LazyT/.ctor/example2.cs" id="Snippetvalueprop":::
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example2.fs" id="Snippetvalueprop":::
@@ -517,7 +517,7 @@
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example5.fs" id="Snippetnewlazy":::
  :::code language="vb" source="~/snippets/visualbasic/System/LazyT/.ctor/example5.vb" id="Snippetnewlazy":::
 
- The example creates and starts three threads that block on a <xref:System.Threading.ManualResetEvent> object, so that the example can release the threads all at once. In the `ThreadProc` method that's used by all three threads, calling the <xref:System.Lazy%601.Value%2A> property creates the `LargeObject` instance:
+ The example creates and starts three threads that block on a <xref:System.Threading.ManualResetEvent> object, so that the example can release the threads all at once. In the `ThreadProc` method that's used by all three threads, calling the <xref:System.Lazy%601.Value> property creates the `LargeObject` instance:
 
  :::code language="csharp" source="~/snippets/csharp/System/LazyT/.ctor/example5.cs" id="Snippetvalueprop":::
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example5.fs" id="Snippetvalueprop":::
@@ -662,7 +662,7 @@ An instance created with this constructor is usable by multiple threads concurre
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example3.fs" id="Snippetnewlazy":::
  :::code language="vb" source="~/snippets/visualbasic/System/LazyT/.ctor/example3.vb" id="Snippetnewlazy":::
 
- In the call to the constructor, the `isThreadSafe` parameter is `false`, so the <xref:System.Lazy%601> is not thread safe. Because it's not thread safe, the example calls the <xref:System.Lazy%601.Value%2A> property three times on the same thread:
+ In the call to the constructor, the `isThreadSafe` parameter is `false`, so the <xref:System.Lazy%601> is not thread safe. Because it's not thread safe, the example calls the <xref:System.Lazy%601.Value> property three times on the same thread:
 
  :::code language="csharp" source="~/snippets/csharp/System/LazyT/.ctor/example3.cs" id="Snippetvalueprop":::
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example3.fs" id="Snippetvalueprop":::
@@ -760,7 +760,7 @@ An instance created with this constructor is usable by multiple threads concurre
 
  The lazy initializer uses a function to perform the initialization. In this case, a function is required because there is no parameterless constructor for the `LargeObject` class.
 
- The example creates and starts three threads that block on a <xref:System.Threading.ManualResetEvent> object, so that the example can release the threads all at once. In the `ThreadProc` method that's used by all three threads, calling the <xref:System.Lazy%601.Value%2A> property creates the `LargeObject` instance:
+ The example creates and starts three threads that block on a <xref:System.Threading.ManualResetEvent> object, so that the example can release the threads all at once. In the `ThreadProc` method that's used by all three threads, calling the <xref:System.Lazy%601.Value> property creates the `LargeObject` instance:
 
  :::code language="csharp" source="~/snippets/csharp/System/LazyT/.ctor/example4.cs" id="Snippetvalueprop":::
  :::code language="fsharp" source="~/snippets/fsharp/System/LazyT/.ctor/example4.fs" id="Snippetvalueprop":::
@@ -856,11 +856,11 @@ An instance created with this constructor is usable by multiple threads concurre
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When lazy initialization occurs for a <xref:System.Lazy%601> instance, it may result in either a value being created or an exception being thrown. If an exception is thrown, subsequent behavior of the <xref:System.Lazy%601> instance depends on whether exception caching is in effect. If the <xref:System.Lazy%601> instance was created by using a constructor that does not specify an initialization function, then exception caching is not in effect. A subsequent attempt to initialize the <xref:System.Lazy%601> might succeed, and after successful initialization the <xref:System.Lazy%601.IsValueCreated%2A> property returns `true`. If the <xref:System.Lazy%601> instance was created with an initialization function (specified by the `valueFactory` parameter of the <xref:System.Lazy%601> constructor), then exception caching is controlled by the thread safety mode.
+ When lazy initialization occurs for a <xref:System.Lazy%601> instance, it may result in either a value being created or an exception being thrown. If an exception is thrown, subsequent behavior of the <xref:System.Lazy%601> instance depends on whether exception caching is in effect. If the <xref:System.Lazy%601> instance was created by using a constructor that does not specify an initialization function, then exception caching is not in effect. A subsequent attempt to initialize the <xref:System.Lazy%601> might succeed, and after successful initialization the <xref:System.Lazy%601.IsValueCreated> property returns `true`. If the <xref:System.Lazy%601> instance was created with an initialization function (specified by the `valueFactory` parameter of the <xref:System.Lazy%601> constructor), then exception caching is controlled by the thread safety mode.
 
-- If the mode is <xref:System.Threading.LazyThreadSafetyMode.ExecutionAndPublication?displayProperty=nameWithType> or <xref:System.Threading.LazyThreadSafetyMode.None?displayProperty=nameWithType>, there is no second chance to initialize the <xref:System.Lazy%601> instance. If an exception occurs and is unhandled in the initialization function, that exception is cached and rethrown on subsequent accesses of the <xref:System.Lazy%601.Value%2A?displayProperty=nameWithType> property. No value is created if an exception is thrown, so in such cases <xref:System.Lazy%601.IsValueCreated%2A> returns `false`.
+- If the mode is <xref:System.Threading.LazyThreadSafetyMode.ExecutionAndPublication?displayProperty=nameWithType> or <xref:System.Threading.LazyThreadSafetyMode.None?displayProperty=nameWithType>, there is no second chance to initialize the <xref:System.Lazy%601> instance. If an exception occurs and is unhandled in the initialization function, that exception is cached and rethrown on subsequent accesses of the <xref:System.Lazy%601.Value?displayProperty=nameWithType> property. No value is created if an exception is thrown, so in such cases <xref:System.Lazy%601.IsValueCreated%2A> returns `false`.
 
-- If the mode is <xref:System.Threading.LazyThreadSafetyMode.PublicationOnly?displayProperty=nameWithType>, the first thread that succeeds in running the initialization function (or the parameterless constructor) creates the value for the <xref:System.Lazy%601> instance. If the initialization function throws an exception on one thread, other threads can still try to initialize the <xref:System.Lazy%601> instance. Until the value is created, the <xref:System.Lazy%601.IsValueCreated%2A> property returns `false`.
+- If the mode is <xref:System.Threading.LazyThreadSafetyMode.PublicationOnly?displayProperty=nameWithType>, the first thread that succeeds in running the initialization function (or the parameterless constructor) creates the value for the <xref:System.Lazy%601> instance. If the initialization function throws an exception on one thread, other threads can still try to initialize the <xref:System.Lazy%601> instance. Until the value is created, the <xref:System.Lazy%601.IsValueCreated> property returns `false`.
 
  ]]></format>
         </remarks>
@@ -920,7 +920,7 @@ An instance created with this constructor is usable by multiple threads concurre
 ## Remarks
  Calling this method does not cause initialization.
 
- The <xref:System.Lazy%601.Value%2A?displayProperty=nameWithType> property can be `null` after lazy initialization if the factory method that was specified for the `valueFactory` parameter of the <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%29>, <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29>, or <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Boolean%29> constructor returns `null`.
+ The <xref:System.Lazy%601.Value?displayProperty=nameWithType> property can be `null` after lazy initialization if the factory method that was specified for the `valueFactory` parameter of the <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%29>, <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29>, or <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Boolean%29> constructor returns `null`.
 
  ]]></format>
         </remarks>
@@ -981,9 +981,9 @@ An instance created with this constructor is usable by multiple threads concurre
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the <xref:System.Lazy%601.IsValueCreated%2A?displayProperty=nameWithType> property is `false`, accessing the <xref:System.Lazy%601.Value%2A> property forces initialization.
+ If the <xref:System.Lazy%601.IsValueCreated?displayProperty=nameWithType> property is `false`, accessing the <xref:System.Lazy%601.Value> property forces initialization.
 
- In addition to the exceptions that are listed, the <xref:System.Lazy%601.Value%2A> property can throw any unhandled exception that is thrown by the factory method that was passed to the `valueFactory` parameter of the <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%29>, <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29>, or <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Boolean%29> constructor.
+ In addition to the exceptions that are listed, the <xref:System.Lazy%601.Value> property can throw any unhandled exception that is thrown by the factory method that was passed to the `valueFactory` parameter of the <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%29>, <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Threading.LazyThreadSafetyMode%29>, or <xref:System.Lazy%601.%23ctor%28System.Func%7B%600%7D%2CSystem.Boolean%29> constructor.
 
  ]]></format>
         </remarks>
