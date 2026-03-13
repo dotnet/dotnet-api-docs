@@ -21,7 +21,7 @@
 ## Remarks
  When present in the ASP.NET pipeline, the <xref:System.IdentityModel.Services.SessionAuthenticationModule> (SAM) processes session cookies in WS-Federation scenarios. It uses the cookie handler specified by the <xref:System.IdentityModel.Services.SessionAuthenticationModule.CookieHandler> property to read the raw session cookie from the HTTP request and write it to the HTTP response. It uses the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> that is configured for an application to deserialize the raw session cookie into <xref:System.IdentityModel.Tokens.SessionSecurityToken> objects. The session security token contains the claims (<xref:System.Security.Claims.Claim>) and principal (<xref:System.Security.Claims.ClaimsPrincipal>) associated with the entity for which the request is being served.
 
- The SAM adds its <xref:System.IdentityModel.Services.SessionAuthenticationModule.OnAuthenticateRequest%2A> event handler to the <xref:System.Web.HttpApplication.AuthenticateRequest?displayProperty=nameWithType> event in the ASP.NET pipeline. This handler intercepts sign-in requests, and, if there is a session cookie, deserializes it into a session token, and sets the <xref:System.Threading.Thread.CurrentPrincipal%2A?displayProperty=nameWithType> and <xref:System.Web.HttpContext.User%2A?displayProperty=nameWithType> properties to the claims principal contained in the session token. It invokes several of the other methods exposed by the SAM during this process.
+ The SAM adds its <xref:System.IdentityModel.Services.SessionAuthenticationModule.OnAuthenticateRequest%2A> event handler to the <xref:System.Web.HttpApplication.AuthenticateRequest?displayProperty=nameWithType> event in the ASP.NET pipeline. This handler intercepts sign-in requests, and, if there is a session cookie, deserializes it into a session token, and sets the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> and <xref:System.Web.HttpContext.User%2A?displayProperty=nameWithType> properties to the claims principal contained in the session token. It invokes several of the other methods exposed by the SAM during this process.
 
  The <xref:System.IdentityModel.Services.SessionAuthenticationModule.SignOut%2A> method can be invoked to sign the user out of a session (for example, in a SignOut.aspx.cs code-behind file).
 
@@ -72,7 +72,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IdentityModel.Services.SessionAuthenticationModule.IsReferenceMode> property is set to `false` and the <xref:System.IdentityModel.Services.SessionAuthenticationModule.CookieHandler> property is initialized to a default instance of the <xref:System.IdentityModel.Services.CookieHandlerElement.ChunkedCookieHandler%2A> class.
+ The <xref:System.IdentityModel.Services.SessionAuthenticationModule.IsReferenceMode> property is set to `false` and the <xref:System.IdentityModel.Services.SessionAuthenticationModule.CookieHandler> property is initialized to a default instance of the <xref:System.IdentityModel.Services.CookieHandlerElement.ChunkedCookieHandler> class.
 
  ]]></format>
         </remarks>
@@ -106,7 +106,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IdentityModel.Services.SessionAuthenticationModule.AuthenticateSessionSecurityToken%2A> method is called from the <xref:System.IdentityModel.Services.SessionAuthenticationModule.OnAuthenticateRequest%2A> method. It calls the <xref:System.IdentityModel.Services.SessionAuthenticationModule.SetPrincipalFromSessionToken%2A> method to validate the incoming token and update the <xref:System.Threading.Thread.CurrentPrincipal%2A?displayProperty=nameWithType> and the <xref:System.Web.HttpContext.User%2A?displayProperty=nameWithType> properties. If the `writeCookie` parameter is `true`, the <xref:System.IdentityModel.Services.SessionAuthenticationModule.WriteSessionTokenToCookie%2A> method is invoked to write the session token to a cookie.
+ The <xref:System.IdentityModel.Services.SessionAuthenticationModule.AuthenticateSessionSecurityToken%2A> method is called from the <xref:System.IdentityModel.Services.SessionAuthenticationModule.OnAuthenticateRequest%2A> method. It calls the <xref:System.IdentityModel.Services.SessionAuthenticationModule.SetPrincipalFromSessionToken%2A> method to validate the incoming token and update the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> and the <xref:System.Web.HttpContext.User%2A?displayProperty=nameWithType> properties. If the `writeCookie` parameter is `true`, the <xref:System.IdentityModel.Services.SessionAuthenticationModule.WriteSessionTokenToCookie%2A> method is invoked to write the session token to a cookie.
 
  ]]></format>
         </remarks>
@@ -677,7 +677,7 @@
 
  You can use this event to modify properties of the session token before it is passed further along the pipeline and is used to authenticate the entity making the request (user). One of the most common scenarios involves modifying the session expiration time (accessible through the <xref:System.IdentityModel.Tokens.SessionSecurityToken.ValidTo?displayProperty=nameWithType> property) to override the session expiration time set in configuration through the `lifetime` attribute of the [&lt;sessionTokenRequirement&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/sessiontokenrequirement) element. By modifying this property on each request, you can implement a sliding session; that is, a session in which the lifetime is extended each time the user accesses the site.
 
- In an event handler, you can access the token through the <xref:System.IdentityModel.Services.SessionSecurityTokenReceivedEventArgs.SessionToken?displayProperty=nameWithType> property. After modifying the token, you can ensure that it is written back to the cookie by setting the <xref:System.IdentityModel.Services.SessionSecurityTokenReceivedEventArgs.ReissueCookie%2A?displayProperty=nameWithType> to `true`. Finally, the <xref:System.IdentityModel.Services.SessionAuthenticationModule.SessionSecurityTokenReceived> event is a cancelable event, and you can set the <xref:System.ComponentModel.CancelEventArgs.Cancel> property of the <xref:System.IdentityModel.Services.SessionSecurityTokenReceivedEventArgs> to abort further processing of the request.
+ In an event handler, you can access the token through the <xref:System.IdentityModel.Services.SessionSecurityTokenReceivedEventArgs.SessionToken?displayProperty=nameWithType> property. After modifying the token, you can ensure that it is written back to the cookie by setting the <xref:System.IdentityModel.Services.SessionSecurityTokenReceivedEventArgs.ReissueCookie?displayProperty=nameWithType> to `true`. Finally, the <xref:System.IdentityModel.Services.SessionAuthenticationModule.SessionSecurityTokenReceived> event is a cancelable event, and you can set the <xref:System.ComponentModel.CancelEventArgs.Cancel> property of the <xref:System.IdentityModel.Services.SessionSecurityTokenReceivedEventArgs> to abort further processing of the request.
 
 
 
@@ -715,7 +715,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Invokes the <xref:System.IdentityModel.Services.SessionAuthenticationModule.ValidateSessionToken%2A> method and sets the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> property and the <xref:System.Web.HttpContext.User?displayProperty=nameWithType> property on <xref:System.Web.HttpContext.Current%2A?displayProperty=nameWithType> using the identities that are returned.
+ Invokes the <xref:System.IdentityModel.Services.SessionAuthenticationModule.ValidateSessionToken%2A> method and sets the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> property and the <xref:System.Web.HttpContext.User?displayProperty=nameWithType> property on <xref:System.Web.HttpContext.Current?displayProperty=nameWithType> using the identities that are returned.
 
  This method is called from the <xref:System.IdentityModel.Services.SessionAuthenticationModule.AuthenticateSessionSecurityToken%2A> method.
 
