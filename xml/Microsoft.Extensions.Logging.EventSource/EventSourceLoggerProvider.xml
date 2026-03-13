@@ -40,7 +40,16 @@
     <summary>
             The provider for the <see cref="T:Microsoft.Extensions.Logging.EventSource.EventSourceLogger" />.
             </summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <para>
+            This provider creates a new <see cref="T:Microsoft.Extensions.Logging.EventSource.EventSourceLogger" /> instance for each call to <see cref="M:Microsoft.Extensions.Logging.EventSource.EventSourceLoggerProvider.CreateLogger(System.String)" />
+            and does not cache logger instances. Callers are responsible for caching logger instances if needed to avoid creating
+            multiple loggers for the same category name.
+            </para>
+      <para>
+            The provider maintains a linked list of all created loggers to support dynamic configuration changes through EventSource/ETW infrastructure.
+            </para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -91,7 +100,11 @@
         <param name="categoryName">The category name for messages produced by the logger.</param>
         <summary>Creates a new <xref data-throw-if-not-resolved="true" uid="Microsoft.Extensions.Logging.ILogger" /> instance.</summary>
         <returns>The instance of <xref data-throw-if-not-resolved="true" uid="Microsoft.Extensions.Logging.ILogger"></xref> that was created.</returns>
-        <remarks>To be added.</remarks>
+        <remarks>
+            This method creates a new <see cref="T:Microsoft.Extensions.Logging.EventSource.EventSourceLogger" /> instance for each call and does not cache logger instances.
+            Callers should cache the returned logger if the same category name will be used multiple times to avoid creating
+            unnecessary logger instances.
+            </remarks>
         <inheritdoc />
       </Docs>
     </Member>
