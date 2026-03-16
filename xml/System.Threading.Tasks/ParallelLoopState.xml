@@ -62,23 +62,23 @@
 
 - Prevent any iterations with an index greater than the current index from executing by calling the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. This does not affect iterations that have already begun execution.
 
-- Determine whether an exception has occurred in any loop iteration by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsExceptional%2A> property.
+- Determine whether an exception has occurred in any loop iteration by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsExceptional> property.
 
-- Determine whether any iteration of the loop has called the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped%2A> property. You can use this property to return from iterations of the loop that started before the call to the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method but are still executing.
+- Determine whether any iteration of the loop has called the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped> property. You can use this property to return from iterations of the loop that started before the call to the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method but are still executing.
 
-- Determine whether any iteration of the loop has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> or <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method or has thrown an exception by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property.
+- Determine whether any iteration of the loop has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> or <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method or has thrown an exception by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property.
 
-- Exit from a long-running iteration whose index is greater than the index of an iteration in which Break was called by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property.
+- Exit from a long-running iteration whose index is greater than the index of an iteration in which Break was called by retrieving the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property.
 
 
 
 ## Examples
- The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. As the output from the example shows, no iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property value start after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method.
+ The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. As the output from the example shows, no iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property value start after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Parallel/For/break1.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/System.Threading.Tasks/Parallel/For/break1.vb" id="Snippet2":::
 
- Because iterations of the loop are still likely to be executing when the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If  the property value is `true`, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property and, if it is greater than the current iteration's index value, returns immediately.
+ Because iterations of the loop are still likely to be executing when the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If  the property value is `true`, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property and, if it is greater than the current iteration's index value, returns immediately.
 
  ]]></format>
     </remarks>
@@ -129,11 +129,11 @@
 ## Remarks
  <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> indicates that no iterations after the current iteration should be run. It effectively cancels any additional iterations of the loop. However, it does not stop any iterations that have already begun execution. For example, if <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> is called from the 100th iteration of a parallel loop iterating from 0 to 1,000, all iterations less than 100 should still be run, but the iterations from 101 through to 1000 that have not yet started are not executed.
 
- For long-running iterations that may already be executing, <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> sets the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property to the current iteration's index if the current index is less than the current value of <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A>. To stop iterations whose index is greater than the lowest break iteration from competing execution, you should do the following:
+ For long-running iterations that may already be executing, <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> sets the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property to the current iteration's index if the current index is less than the current value of <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A>. To stop iterations whose index is greater than the lowest break iteration from competing execution, you should do the following:
 
-1.  Check whether the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property is `true`.
+1.  Check whether the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property is `true`.
 
-2.  Exit from the iteration if its index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property value.
+2.  Exit from the iteration if its index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property value.
 
  The example provides an illustration.
 
@@ -142,12 +142,12 @@
 
 
 ## Examples
- The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. As the output from the example shows, no iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property value start after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method.
+ The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. As the output from the example shows, no iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property value start after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Parallel/For/break1.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/System.Threading.Tasks/Parallel/For/break1.vb" id="Snippet2":::
 
- Because iterations of the loop are still likely to be executing when the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If  the property value is `true`, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property and, if it is greater than the current iteration's index value, returns immediately.
+ Because iterations of the loop are still likely to be executing when the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If  the property value is `true`, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property and, if it is greater than the current iteration's index value, returns immediately.
 
  ]]></format>
         </remarks>
@@ -241,7 +241,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- For long-running iterations of the loop, you can retrieve the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped%2A> property to determine whether any iterations of the loop that began execution before the call to the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method are still executing. You can then use the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped%2A> property to determine whether they should return immediately or execute normally.
+ For long-running iterations of the loop, you can retrieve the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped> property to determine whether any iterations of the loop that began execution before the call to the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method are still executing. You can then use the value of the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped> property to determine whether they should return immediately or execute normally.
 
 
 
@@ -299,18 +299,18 @@
 ## Remarks
  It is possible for multiple iterations of a parallel loop to call the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If they do, this value is the smallest index of an iteration that called <xref:System.Threading.Tasks.ParallelLoopState.Break%2A>. If no iteration of the loop called <xref:System.Threading.Tasks.ParallelLoopState.Break%2A>, this property returns `null`. Note that the property value is unaffected by calls to the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method.
 
- In long-running iterations in which all iterations after the iteration that calls the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method need not run, the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property is used to terminate iterations that began execution before the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. To stop iterations whose index is greater than the lowest break iteration from competing execution, you should do the following:
+ In long-running iterations in which all iterations after the iteration that calls the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method need not run, the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property is used to terminate iterations that began execution before the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. To stop iterations whose index is greater than the lowest break iteration from competing execution, you should do the following:
 
-1.  Check whether the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property is `true`.
+1.  Check whether the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property is `true`.
 
-2.  Exit from the iteration if its index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property value.
+2.  Exit from the iteration if its index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property value.
 
  The example provides an illustration.
 
 
 
 ## Examples
- The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. This prevents iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property value from starting after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method, but it does not affect any iterations that have already begun executing. To prevent these from completing, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> method to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If so, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property and, if it is greater than the current iteration's index value, returns immediately.
+ The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. This prevents iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property value from starting after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method, but it does not affect any iterations that have already begun executing. To prevent these from completing, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> method to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If so, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property and, if it is greater than the current iteration's index value, returns immediately.
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Parallel/For/break1.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/System.Threading.Tasks/Parallel/For/break1.vb" id="Snippet2":::
@@ -366,7 +366,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property is set to `true` under any of the following conditions:
+ The <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property is set to `true` under any of the following conditions:
 
 - An iteration of the loop calls <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> or <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A>.
 
@@ -376,12 +376,12 @@
 
  When this property is `true`, the <xref:System.Threading.Tasks.Parallel> class will proactively attempt to prohibit additional iterations of the loop from starting execution. However, there may be cases where it is unable to prevent additional iterations from starting.
 
- It may also be the case that a long-running iteration has already begun execution. In such cases, iterations may explicitly check the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> property and cease execution if the property returns `true`.
+ It may also be the case that a long-running iteration has already begun execution. In such cases, iterations may explicitly check the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration> property and cease execution if the property returns `true`.
 
 
 
 ## Examples
- The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. This prevents iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property value from starting after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method, but it does not affect any iterations that have already begun executing. To prevent these from completing, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> method to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If so, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration%2A> property and, if it is greater than the current iteration's index value, returns immediately.
+ The following example executes up to 100 iterations of a loop in parallel. Each iteration pauses for a random interval from 1 to 1,000 milliseconds. A randomly generated value determines on which iteration of the loop the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method is called. This prevents iterations whose index is greater than the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property value from starting after the call to the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method, but it does not affect any iterations that have already begun executing. To prevent these from completing, each iteration calls the <xref:System.Threading.Tasks.ParallelLoopState.ShouldExitCurrentIteration%2A> method to check whether another iteration has called the <xref:System.Threading.Tasks.ParallelLoopState.Break%2A> method. If so, the iteration checks the value of the <xref:System.Threading.Tasks.ParallelLoopState.LowestBreakIteration> property and, if it is greater than the current iteration's index value, returns immediately.
 
  :::code language="csharp" source="~/snippets/csharp/System.Threading.Tasks/Parallel/For/break1.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/System.Threading.Tasks/Parallel/For/break1.vb" id="Snippet2":::
@@ -437,7 +437,7 @@
 ## Remarks
  Calling the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method indicates that any iterations of the loop that have not yet started need not be run. It effectively cancels any additional iterations of the loop. However, it does not stop any iterations that have already begun execution.
 
- Calling the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method causes the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped%2A> property to return `true` for any iteration of the loop that is still executing. This is particularly useful for long-running iterations, which can check the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped%2A> property and exit early if its value is `true`.
+ Calling the <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> method causes the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped> property to return `true` for any iteration of the loop that is still executing. This is particularly useful for long-running iterations, which can check the <xref:System.Threading.Tasks.ParallelLoopState.IsStopped> property and exit early if its value is `true`.
 
  <xref:System.Threading.Tasks.ParallelLoopState.Stop%2A> is typically employed in search-based algorithms, where once a result is found, no other iterations need be executed.
 

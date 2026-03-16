@@ -2798,7 +2798,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the type has a GUID in the metadata, it is returned. Otherwise, a GUID is automatically generated. You can use this method to programmatically determine the COM GUID for any managed type, including COM-invisible types. Class interfaces are the only exception because they do not correspond to a managed type. <xref:System.Runtime.InteropServices.Marshal.GenerateGuidForType%2A> provides the same functionality as the <xref:System.Type.GUID%2A?displayProperty=nameWithType> property.
+ If the type has a GUID in the metadata, it is returned. Otherwise, a GUID is automatically generated. You can use this method to programmatically determine the COM GUID for any managed type, including COM-invisible types. Class interfaces are the only exception because they do not correspond to a managed type. <xref:System.Runtime.InteropServices.Marshal.GenerateGuidForType%2A> provides the same functionality as the <xref:System.Type.GUID?displayProperty=nameWithType> property.
 
  ]]></format>
         </remarks>
@@ -4079,7 +4079,23 @@ The code retrieves a reference to an instance of Microsoft Word successfully. Ho
 ## Remarks
  The delegate `d` is converted to a function pointer that can be passed to unmanaged code using [the default platform calling convention](/dotnet/standard/native-interop/calling-conventions#platform-default-calling-convention). You can set the calling convention by applying the <xref:System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute> to the delegate.
 
- You must manually keep the delegate from being collected by the garbage collector from managed code. The garbage collector does not track references to unmanaged code.
+ You must manually keep the delegate from being collected by the garbage collector from managed code. The garbage collector does not track references to unmanaged code. Use <xref:System.GC.KeepAlive%2A> to prevent the delegate from being collected before the native call completes:
+
+ ```csharp
+ var callback = new MyNativeCallback(MyManagedMethod);
+ IntPtr fnPtr = Marshal.GetFunctionPointerForDelegate(callback);
+ NativeMethod(fnPtr);
+ GC.KeepAlive(callback); // Prevent collection — fnPtr does not root the delegate.
+ ```
+
+ A P/Invoke that marshals a delegate handles the <xref:System.GC.KeepAlive%2A> on the user's behalf:
+
+ ```csharp
+ var callback = new MyNativeCallback(MyManagedMethod);
+ NativeMethod(callback); // P/Invoke marshals the delegate and keeps it alive for the duration of the call.
+ ```
+
+ If native code stores the function pointer beyond the duration of the call, root the delegate for its entire lifetime — for example, by storing it in a `static` field.
 
  This API is unsupported in environments that don't support dynamic entry-point allocation, such as `ProcessDynamicCodePolicy` on Windows, `execmem off` in SELinux, and WebAssembly.
 
@@ -4155,7 +4171,23 @@ The code retrieves a reference to an instance of Microsoft Word successfully. Ho
 ## Remarks
  The delegate `d` is converted to a function pointer that can be passed to unmanaged code by using [the default platform calling convention](/dotnet/standard/native-interop/calling-conventions#platform-default-calling-convention). You can set the calling convention by applying the <xref:System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute> to the delegate.
 
- You must manually keep the delegate from being collected by the garbage collector from managed code. The garbage collector does not track references to unmanaged code.
+ You must manually keep the delegate from being collected by the garbage collector from managed code. The garbage collector does not track references to unmanaged code. Use <xref:System.GC.KeepAlive%2A> to prevent the delegate from being collected before the native call completes:
+
+ ```csharp
+ var callback = new MyNativeCallback(MyManagedMethod);
+ IntPtr fnPtr = Marshal.GetFunctionPointerForDelegate(callback);
+ NativeMethod(fnPtr);
+ GC.KeepAlive(callback); // Prevent collection — fnPtr does not root the delegate.
+ ```
+
+A P/Invoke that marshals a delegate handles the <xref:System.GC.KeepAlive%2A> on the user's behalf:
+
+ ```csharp
+ var callback = new MyNativeCallback(MyManagedMethod);
+ NativeMethod(callback); // P/Invoke marshals the delegate and keeps it alive for the duration of the call.
+ ```
+
+ If native code stores the function pointer beyond the duration of the call, root the delegate for its entire lifetime — for example, by storing it in a `static` field.
 
  This API is unsupported in environments that don't support dynamic entry-point allocation, such as `ProcessDynamicCodePolicy` on Windows, `execmem off` in SELinux, and WebAssembly.
 

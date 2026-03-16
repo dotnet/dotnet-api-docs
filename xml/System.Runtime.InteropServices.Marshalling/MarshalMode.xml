@@ -17,8 +17,17 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>Represents the different marshalling modes.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Represents the different marshalling modes used by <see cref="T:System.Runtime.InteropServices.Marshalling.CustomMarshallerAttribute" /> to indicate when a marshaller applies.</summary>
+    <remarks>
+      <para>Each member name follows the pattern <c>{CallDirection}{DataFlow}</c>:</para>
+      <list type="bullet">
+        <item>
+          <b>Call direction</b> (<c>ManagedToUnmanaged</c> or <c>UnmanagedToManaged</c>) indicates which side initiates the call. <c>ManagedToUnmanaged</c> applies to P/Invoke calls. <c>UnmanagedToManaged</c> applies to Reverse P/Invoke or COM scenarios where native code calls into managed code.</item>
+        <item>
+          <b>Data flow</b> (<c>In</c>, <c>Out</c>, or <c>Ref</c>) indicates how data moves relative to the call. <c>In</c> means data flows from caller to callee. <c>Out</c> means data flows from callee to caller, which includes both <c>out</c> parameters and return values. <c>Ref</c> means data flows in both directions.</item>
+      </list>
+      <para>For example, <c>ManagedToUnmanagedOut</c> applies when managed code calls unmanaged code (P/Invoke) and data flows back to the caller — this covers <c>out</c> parameters and return values. The marshaller for this mode converts from the unmanaged type to the managed type.</para>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Default">
@@ -163,7 +172,7 @@
       <MemberValue>3</MemberValue>
       <Docs>
         <summary>
-          <c>out</c> parameters in managed-to-unmanaged scenarios, like P/Invoke.</summary>
+          <c>out</c> parameters and return values in managed-to-unmanaged scenarios, like P/Invoke. The marshaller converts from the unmanaged type to the managed type.</summary>
       </Docs>
     </Member>
     <Member MemberName="ManagedToUnmanagedRef">
@@ -237,7 +246,7 @@
       <MemberValue>6</MemberValue>
       <Docs>
         <summary>
-          <c>out</c> parameters in unmanaged-to-managed scenarios, like Reverse P/Invoke.</summary>
+          <c>out</c> parameters and return values in unmanaged-to-managed scenarios, like Reverse P/Invoke. The marshaller converts from the managed type to the unmanaged type.</summary>
       </Docs>
     </Member>
     <Member MemberName="UnmanagedToManagedRef">

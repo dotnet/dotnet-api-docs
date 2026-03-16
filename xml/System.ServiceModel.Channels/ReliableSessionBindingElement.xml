@@ -200,7 +200,7 @@
 ## Remarks
  The destination that receives messages on a reliable channel groups the acknowledgments for these messages together into a single message to reduce network traffic and to increase information density on messages. Grouping scales better as traffic increases. It does not attempt to send an acknowledgment for every message it receives as soon as possible, but rather waits for an interval of time, groups together the acknowledgments that have arrived during that interval, and then sends them all together. The first message that is received is the exception; it is acknowledged as soon as it is delivered. Also, if reliable sessions are used with single HTTP connections, as is the case for example with the <xref:System.ServiceModel.WSHttpBinding> but not <xref:System.ServiceModel.WSDualHttpBinding>, then this setting is not used.
 
- The value that is set with the <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.AcknowledgementInterval%2A> property is a recommendation to the infrastructure and not a hard limit.
+ The value that is set with the <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.AcknowledgementInterval> property is a recommendation to the infrastructure and not a hard limit.
 
  ]]></format>
         </remarks>
@@ -579,7 +579,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Activity on a channel is defined as receiving an application or infrastructure message. The inactivity timeout parameter controls the maximum amount of time to keep an inactive session alive. If more than <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.InactivityTimeout%2A> time interval passes with no activity, the session is aborted by the infrastructure and the channel faults. The reliable session is torn down unilaterally.
+ Activity on a channel is defined as receiving an application or infrastructure message. The inactivity timeout parameter controls the maximum amount of time to keep an inactive session alive. If more than <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.InactivityTimeout> time interval passes with no activity, the session is aborted by the infrastructure and the channel faults. The reliable session is torn down unilaterally.
 
  If the sending application has no messages to send then the reliable session is normally not faulted because of inactivity; instead a keep-alive mechanism keeps the session active indefinitely. Note that the dispatcher can independently abort the reliable session if no application messages are sent or received. Thus, the inactivity timeout typically expires if network conditions are such that no messages are received or if there is a failure on the sender.
 
@@ -683,7 +683,7 @@
 ## Remarks
  A message is considered to be transferred if its delivery at the recipient has been acknowledged by the recipient.
 
- If an acknowledgment has not been received within a certain amount of time for a message that has been transmitted, the infrastructure automatically retransmits the message. The infrastructure tries to send the message for, at most, a <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.MaxRetryCount%2A> number of times. Not receiving an acknowledgment before this limit is reached is considered a fatal communication failure and causes the channel faulted event to be raised.
+ If an acknowledgment has not been received within a certain amount of time for a message that has been transmitted, the infrastructure automatically retransmits the message. The infrastructure tries to send the message for, at most, a <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.MaxRetryCount> number of times. Not receiving an acknowledgment before this limit is reached is considered a fatal communication failure and causes the channel faulted event to be raised.
 
  The infrastructure uses an exponential back-off algorithm to determine when to retransmit, based on a computed average round-trip time. The initial retry time is computed based on the measured roundtrip time of establishing the session. The retransmission algorithm doubles the delay with every attempt, which results in approximately 8.5 minutes passing between the first transmission attempt and the last retransmission attempt. The time for the first retransmission attempt is adjusted according to the calculated round-trip time and the resulting stretch of time that those attempts take varies accordingly. This allows the retransmission time to dynamically adapt to varying network conditions.
 
@@ -734,7 +734,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The value of the <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.MaxTransferWindowSize%2A> property can be set on both the sender and the receiver. This value is included in the binding policy of the WSDL, so if you use the [ServiceModel Metadata Utility Tool (Svcutil.exe)](/dotnet/framework/wcf/servicemodel-metadata-utility-tool-svcutil-exe) to construct your client, it has the same value. Otherwise this value is whatever you set it to be on the client.
+ The value of the <xref:System.ServiceModel.Channels.ReliableSessionBindingElement.MaxTransferWindowSize> property can be set on both the sender and the receiver. This value is included in the binding policy of the WSDL, so if you use the [ServiceModel Metadata Utility Tool (Svcutil.exe)](/dotnet/framework/wcf/servicemodel-metadata-utility-tool-svcutil-exe) to construct your client, it has the same value. Otherwise this value is whatever you set it to be on the client.
 
  When this limit is reached on the sender, additional calls to send are blocked. When this limit is reached on the receiver, new messages that arrive on the underlying channel are not accepted.
 

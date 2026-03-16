@@ -73,12 +73,12 @@
 
  You can use the <xref:System.ServiceProcess.ServiceController> class to do programmatically what the SCM does using a user interface. You can automate the tasks available in the console. If <xref:System.ServiceProcess.ServiceBase.CanStop%2A>, <xref:System.ServiceProcess.ServiceBase.CanShutdown%2A>, or <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue%2A> is `true` but you have not implemented a corresponding command-handling method (such as <xref:System.ServiceProcess.ServiceBase.OnStop%2A>) the system throws an exception and ignores the command.
 
- You do not have to implement <xref:System.ServiceProcess.ServiceBase.OnStart%2A>, <xref:System.ServiceProcess.ServiceBase.OnStop%2A>, or any other method in <xref:System.ServiceProcess.ServiceBase>. However, the service's behavior is described in <xref:System.ServiceProcess.ServiceBase.OnStart%2A>, so at minimum, this member should be overridden. The `main()` function of the executable registers the service in the executable with the Service Control Manager by calling the <xref:System.ServiceProcess.ServiceBase.Run%2A> method. The <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> property of the <xref:System.ServiceProcess.ServiceBase> object passed to the <xref:System.ServiceProcess.ServiceBase.Run%2A> method must match the <xref:System.ServiceProcess.ServiceInstaller.ServiceName%2A> property of the service installer for that service.
+ You do not have to implement <xref:System.ServiceProcess.ServiceBase.OnStart%2A>, <xref:System.ServiceProcess.ServiceBase.OnStop%2A>, or any other method in <xref:System.ServiceProcess.ServiceBase>. However, the service's behavior is described in <xref:System.ServiceProcess.ServiceBase.OnStart%2A>, so at minimum, this member should be overridden. The `main()` function of the executable registers the service in the executable with the Service Control Manager by calling the <xref:System.ServiceProcess.ServiceBase.Run%2A> method. The <xref:System.ServiceProcess.ServiceBase.ServiceName> property of the <xref:System.ServiceProcess.ServiceBase> object passed to the <xref:System.ServiceProcess.ServiceBase.Run%2A> method must match the <xref:System.ServiceProcess.ServiceInstaller.ServiceName> property of the service installer for that service.
 
- You can use `InstallUtil.exe` to install services on your system.
+ You can use the `sc create` command to install services that target modern .NET, or use `InstallUtil.exe` to install services that target .NET Framework.
 
 > [!NOTE]
->  You can specify a log other than the Application event log to receive notification of service calls, but neither the <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> nor the <xref:System.ServiceProcess.ServiceBase.EventLog%2A> property can write to a custom log. Set <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> to `false` if you do not want to use automatic logging.
+>  You can specify a log other than the Application event log to receive notification of service calls, but neither the <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> nor the <xref:System.ServiceProcess.ServiceBase.EventLog> property can write to a custom log. Set <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> to `false` if you do not want to use automatic logging.
 
  ]]></format>
     </remarks>
@@ -314,7 +314,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Set the value of the <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue%2A> property in the constructor for the service.
+ Set the value of the <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue> property in the constructor for the service.
 
  When a service is paused, it halts what it is doing. When you continue the service (either through the Service Control Manager or programmatically), <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> runs.
 
@@ -517,9 +517,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The constructor initializes the <xref:System.ServiceProcess.ServiceBase.EventLog%2A> property to an instance with the <xref:System.Diagnostics.EventLog.Source%2A?displayProperty=nameWithType> and <xref:System.Diagnostics.EventLog.Log%2A?displayProperty=nameWithType> properties set. The source is the <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> of the service, and the log is the computer's Application log. These values are set automatically and cannot be changed for automatic logging of service commands.
+ The constructor initializes the <xref:System.ServiceProcess.ServiceBase.EventLog> property to an instance with the <xref:System.Diagnostics.EventLog.Source%2A?displayProperty=nameWithType> and <xref:System.Diagnostics.EventLog.Log%2A?displayProperty=nameWithType> properties set. The source is the <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> of the service, and the log is the computer's Application log. These values are set automatically and cannot be changed for automatic logging of service commands.
 
- When <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> is `true`, Start, Stop, Pause, Continue, and custom commands are recorded automatically in the Application event log. You can use the <xref:System.ServiceProcess.ServiceBase.EventLog%2A> property to write additional messages to that log as well. The component calls <xref:System.Diagnostics.EventLog.WriteEntry%2A?displayProperty=nameWithType> using this <xref:System.ServiceProcess.ServiceBase.EventLog%2A> member.
+ When <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> is `true`, Start, Stop, Pause, Continue, and custom commands are recorded automatically in the Application event log. You can use the <xref:System.ServiceProcess.ServiceBase.EventLog> property to write additional messages to that log as well. The component calls <xref:System.Diagnostics.EventLog.WriteEntry%2A?displayProperty=nameWithType> using this <xref:System.ServiceProcess.ServiceBase.EventLog%2A> member.
 
  To report information to a custom event log rather than the Application log, set <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> to `false` and write instructions within the command-handling methods <xref:System.ServiceProcess.ServiceBase.OnContinue%2A>, <xref:System.ServiceProcess.ServiceBase.OnPause%2A>, or <xref:System.ServiceProcess.ServiceBase.OnStop%2A> to post to the appropriate log.
 
@@ -564,7 +564,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Set the <xref:System.ServiceProcess.ServiceBase.ExitCode%2A> property to a non-zero value before stopping the service to indicate an error to the Service Control Manager.
+ Set the <xref:System.ServiceProcess.ServiceBase.ExitCode> property to a non-zero value before stopping the service to indicate an error to the Service Control Manager.
 
  ]]></format>
         </remarks>
@@ -637,7 +637,7 @@
 ## Remarks
  Implement <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> to mirror your application's response to <xref:System.ServiceProcess.ServiceBase.OnPause%2A>. When you continue the service (either through the Services console or programmatically), the <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> processing runs, and the service becomes active again.
 
- <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue%2A> property is `true`.
+ <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue> property is `true`.
 
  If <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue%2A> is `false`, the SCM will not pass Pause or Continue requests to the service, so the <xref:System.ServiceProcess.ServiceBase.OnPause%2A> and <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> methods will not be called even if they are implemented. In the SCM, the `Pause` and `Continue` controls are disabled when <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue%2A> is `false`.
 
@@ -692,7 +692,7 @@
 
  The only values for a custom command that you can define in your application or use in <xref:System.ServiceProcess.ServiceBase.OnCustomCommand%2A> are those between 128 and 255. Integers below 128 correspond to system-reserved values.
 
- If the <xref:System.ServiceProcess.ServiceBase.AutoLog%2A> property is `true`, custom commands, like all other commands, write entries to the event log to report whether the method execution succeeded or failed.
+ If the <xref:System.ServiceProcess.ServiceBase.AutoLog> property is `true`, custom commands, like all other commands, write entries to the event log to report whether the method execution succeeded or failed.
 
  ]]></format>
         </remarks>
@@ -733,7 +733,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Use <xref:System.ServiceProcess.ServiceBase.OnPause%2A> to specify the processing that occurs when the service receives a Pause command. <xref:System.ServiceProcess.ServiceBase.OnPause%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue%2A> property is `true`.
+ Use <xref:System.ServiceProcess.ServiceBase.OnPause%2A> to specify the processing that occurs when the service receives a Pause command. <xref:System.ServiceProcess.ServiceBase.OnPause%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanPauseAndContinue> property is `true`.
 
  When you continue a paused service (either through the Services console or programmatically), the <xref:System.ServiceProcess.ServiceBase.OnContinue%2A> processing is run, and the service becomes active again.
 
@@ -791,7 +791,7 @@
 ## Remarks
  Use <xref:System.ServiceProcess.ServiceBase.OnPowerEvent%2A> to specify the processing that occurs when the system event indicated in the <xref:System.ServiceProcess.PowerBroadcastStatus> enumeration occurs--for example, when the computer is placed in suspended mode or indicates low battery power.
 
- <xref:System.ServiceProcess.ServiceBase.OnPowerEvent%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanHandlePowerEvent%2A> property is `true`.
+ <xref:System.ServiceProcess.ServiceBase.OnPowerEvent%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanHandlePowerEvent> property is `true`.
 
  ]]></format>
         </remarks>
@@ -835,7 +835,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- You must set the <xref:System.ServiceProcess.ServiceBase.CanHandleSessionChangeEvent%2A> property to `true` to enable the execution of this method.
+ You must set the <xref:System.ServiceProcess.ServiceBase.CanHandleSessionChangeEvent> property to `true` to enable the execution of this method.
 
  ]]></format>
         </remarks>
@@ -876,7 +876,7 @@
 
  This event occurs only when the operating system is shut down, not when the computer is turned off.
 
- <xref:System.ServiceProcess.ServiceBase.OnShutdown%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanShutdown%2A> property is `true`.
+ <xref:System.ServiceProcess.ServiceBase.OnShutdown%2A> is expected to be overridden when the <xref:System.ServiceProcess.ServiceBase.CanShutdown> property is `true`.
 
  ]]></format>
         </remarks>
@@ -1294,9 +1294,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> identifies the service to the Service Control Manager. The value of this property must be identical to the name recorded for the service in the <xref:System.ServiceProcess.ServiceInstaller.ServiceName%2A?displayProperty=nameWithType> property of the corresponding installer class. In code, the <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> of the service is usually set in the `main()` function of the executable.
+ The <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> identifies the service to the Service Control Manager. The value of this property must be identical to the name recorded for the service in the <xref:System.ServiceProcess.ServiceInstaller.ServiceName?displayProperty=nameWithType> property of the corresponding installer class. In code, the <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> of the service is usually set in the `main()` function of the executable.
 
- The <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> is also used to specify the <xref:System.Diagnostics.EventLog.Source%2A?displayProperty=nameWithType> associated with the <xref:System.ServiceProcess.ServiceBase.EventLog%2A> property. This <xref:System.ServiceProcess.ServiceBase.EventLog%2A> is an instance that writes service command information to the Application log.
+ The <xref:System.ServiceProcess.ServiceBase.ServiceName%2A> is also used to specify the <xref:System.Diagnostics.EventLog.Source%2A?displayProperty=nameWithType> associated with the <xref:System.ServiceProcess.ServiceBase.EventLog> property. This <xref:System.ServiceProcess.ServiceBase.EventLog%2A> is an instance that writes service command information to the Application log.
 
  The <xref:System.ServiceProcess.ServiceBase.ServiceName%2A>, which supplies the source string for the event log, must be set before the service writes to the event log. Trying to access the event log before the source name is set causes an exception to be thrown.
 

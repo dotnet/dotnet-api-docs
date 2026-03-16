@@ -24,35 +24,35 @@
   <Docs>
     <summary>Enumerates types of speech synthesis events.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
- Custom speech synthesis engines define the types of events submitted to the Speech platform synthesizer infrastructure with the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId>.  
-  
- Specification is performed by setting the <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.EventId%2A> property of <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instances passed to the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.AddEvents%2A> member of the class implementing the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interface passed to the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak%2A> method on a custom speech engine's implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>.  
-  
- The Speech platform infrastructure indicates the type of events it is currently handling through the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> passed to the speak implementation.  
-  
- The value of <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> is a bitmask, where the members of <xref:System.Speech.Synthesis.TtsEngine.TtsEventId> define the location of the bit corresponding to the event type. For example, WordBoundary has a value of five (5), meaning the fifth bit in the value returned by <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> indicates if the site supports the event type.  
-  
-   
-  
-## Examples  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Custom speech synthesis engines define the types of events submitted to the Speech platform synthesizer infrastructure with the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId>.
+
+ Specification is performed by setting the <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.EventId> property of <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instances passed to the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.AddEvents%2A> member of the class implementing the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interface passed to the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak%2A> method on a custom speech engine's implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>.
+
+ The Speech platform infrastructure indicates the type of events it is currently handling through the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> passed to the speak implementation.
+
+ The value of <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> is a bitmask, where the members of <xref:System.Speech.Synthesis.TtsEngine.TtsEventId> define the location of the bit corresponding to the event type. For example, WordBoundary has a value of five (5), meaning the fifth bit in the value returned by <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A> indicates if the site supports the event type.
+
+
+
+## Examples
  The following example is part of a custom speech synthesis implementation inheriting from <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>, and using the <xref:System.Speech.Synthesis.TtsEngine.TextFragment>, <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, <xref:System.Speech.Synthesis.TtsEngine.FragmentState>, and <xref:System.Speech.Synthesis.TtsEngine.TtsEventId> classes.
-  
+
  The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak%2A?displayProperty=nameWithType> includes the following steps:
-  
-1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.  
-  
-2.  If the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action%2A> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State%2A?displayProperty=nameWithType> instance is equal to
+
+1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
+
+2.  If the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State%2A?displayProperty=nameWithType> instance is equal to
 <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak?displayProperty=nameWithType>, the code does the following:
-  
+
     - Translates American English to British English in the text to be spoken.
-  
-    - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest%2A?displayProperty=nameWithType> property provided to the implementation supports the `WordBoundary` event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.  
-  
+
+    - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest?displayProperty=nameWithType> property provided to the implementation supports the `WordBoundary` event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
+
 3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
-  
+
 ```csharp
 private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
 private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };
@@ -65,7 +65,7 @@ internal struct UsVsUk
 override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite site)
 {
     TextFragment [] newFrags=new TextFragment[frags.Length];
-  
+
     for (int i=0;i<frags.Length;i++)
     {
         newFrags[i].State=frags[i].State;
@@ -107,8 +107,8 @@ override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite si
     _baseSynthesize.Speak(newFrags, wfx, site);
 
 }
-```  
-  
+```
+
  ]]></format>
     </remarks>
   </Docs>

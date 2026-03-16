@@ -26,9 +26,9 @@
 > [!NOTE]
 >  The \<securityTokenHandlers> configuration element can be used to specify a <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> that has the responsibility for securing the application's sessions. Developers should use caution when changing this configuration setting, as a misconfigured system could result in application compromise. For example, specifying a derived <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> and passing an empty Transforms (CookieTransform) collection to the base, would result in the users identity being serialized into a cookie that was not protected. This could allow an attacker to modify the identity and therefore change access privileges.
 
- If the session token is in reference mode, that is, its <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode%2A?displayProperty=nameWithType> property is `true`, the session token handler only serializes properties of the session token that are needed to regenerate its key in the <xref:System.IdentityModel.Tokens.SessionSecurityTokenCache>. In the default case, the <xref:System.IdentityModel.Tokens.SessionSecurityTokenCacheKey> class is used to represent cache keys, and the token handler writes the <xref:System.IdentityModel.Tokens.SessionSecurityToken.ContextId%2A?displayProperty=nameWithType> and <xref:System.IdentityModel.Tokens.SessionSecurityToken.KeyGeneration%2A?displayProperty=nameWithType> properties of the token. If the session token is not in reference mode, that is, the <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode%2A?displayProperty=nameWithType> property is `false`, then, in addition to the properties mentioned previously, the handler invokes the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method on a byte array serialized from the token and stores the resulting value in the cookie as well. For more details about how the token is serialized, see the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.WriteToken%28System.Xml.XmlWriter%2CSystem.IdentityModel.Tokens.SecurityToken%29?displayProperty=nameWithType> method.
+ If the session token is in reference mode, that is, its <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode?displayProperty=nameWithType> property is `true`, the session token handler only serializes properties of the session token that are needed to regenerate its key in the <xref:System.IdentityModel.Tokens.SessionSecurityTokenCache>. In the default case, the <xref:System.IdentityModel.Tokens.SessionSecurityTokenCacheKey> class is used to represent cache keys, and the token handler writes the <xref:System.IdentityModel.Tokens.SessionSecurityToken.ContextId?displayProperty=nameWithType> and <xref:System.IdentityModel.Tokens.SessionSecurityToken.KeyGeneration?displayProperty=nameWithType> properties of the token. If the session token is not in reference mode, that is, the <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode?displayProperty=nameWithType> property is `false`, then, in addition to the properties mentioned previously, the handler invokes the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method on a byte array serialized from the token and stores the resulting value in the cookie as well. For more details about how the token is serialized, see the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.WriteToken%28System.Xml.XmlWriter%2CSystem.IdentityModel.Tokens.SecurityToken%29?displayProperty=nameWithType> method.
 
- The <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms%2A> property gets the list of transforms that are applied to the session token in the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method. All transforms derive from the <xref:System.IdentityModel.CookieTransform> class. In the default case the <xref:System.IdentityModel.DeflateCookieTransform> and the <xref:System.IdentityModel.ProtectedDataCookieTransform> are applied. The <xref:System.IdentityModel.ProtectedDataCookieTransform> uses the Data Protection API (DPAPI) to protect the cookie material. DPAPI uses a key that is specific to the computer on which it is running in its protection algorithms. For this reason, the default session token handler is not usable in Web farm scenarios because, in such scenarios, tokens written on one computer may need to be read on another computer. You can use many strategies to circumvent this issue. For example, you can:
+ The <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms> property gets the list of transforms that are applied to the session token in the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method. All transforms derive from the <xref:System.IdentityModel.CookieTransform> class. In the default case the <xref:System.IdentityModel.DeflateCookieTransform> and the <xref:System.IdentityModel.ProtectedDataCookieTransform> are applied. The <xref:System.IdentityModel.ProtectedDataCookieTransform> uses the Data Protection API (DPAPI) to protect the cookie material. DPAPI uses a key that is specific to the computer on which it is running in its protection algorithms. For this reason, the default session token handler is not usable in Web farm scenarios because, in such scenarios, tokens written on one computer may need to be read on another computer. You can use many strategies to circumvent this issue. For example, you can:
 
 - Replace the default <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> with the <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler>. The <xref:System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler> enables you to specify signing and encryption keys under the ASP.NET `<machineKey>` element in the configuration file.
 
@@ -92,7 +92,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime%2A> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms%2A> properties are initialized to <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.DefaultLifetime> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.DefaultCookieTransforms>.
+ The <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms> properties are initialized to <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.DefaultLifetime> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.DefaultCookieTransforms>.
 
  ]]></format>
         </remarks>
@@ -120,7 +120,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime%2A> property is initialized to <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.DefaultLifetime>.
+ The <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime> property is initialized to <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.DefaultLifetime>.
 
  ]]></format>
         </remarks>
@@ -184,7 +184,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When encoding a cookie transforms are applied in the order in which they appear in the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms%2A> property. When decoding a cookie, they are applied in the reverse order.
+ When encoding a cookie transforms are applied in the order in which they appear in the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms> property. When decoding a cookie, they are applied in the reverse order.
 
  Called from the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.WriteToken%2A> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ReadToken%2A> methods to encode and decode the cookie material.
 
@@ -389,7 +389,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Creates and returns a session security token by using the following properties in the token descriptor: <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Subject%2A?displayProperty=nameWithType>, and <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Lifetime%2A?displayProperty=nameWithType>. If the <xref:System.IdentityModel.Tokens.SecurityTokenHandlerConfiguration.SaveBootstrapContext%2A?displayProperty=nameWithType> property is set `true` on the token handler configuration specified by the <xref:System.IdentityModel.Tokens.SecurityTokenHandler.Configuration%2A> property, the bootstrap context is created from the <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Token%2A?displayProperty=nameWithType> property and is saved in the session token.
+ Creates and returns a session security token by using the following properties in the token descriptor: <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Subject%2A?displayProperty=nameWithType>, and <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Lifetime%2A?displayProperty=nameWithType>. If the <xref:System.IdentityModel.Tokens.SecurityTokenHandlerConfiguration.SaveBootstrapContext?displayProperty=nameWithType> property is set `true` on the token handler configuration specified by the <xref:System.IdentityModel.Tokens.SecurityTokenHandler.Configuration> property, the bootstrap context is created from the <xref:System.IdentityModel.Tokens.SecurityTokenDescriptor.Token?displayProperty=nameWithType> property and is saved in the session token.
 
  ]]></format>
         </remarks>
@@ -517,7 +517,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Called by the configuration infrastructure to initialize the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> instance. Initializes the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime%2A> property from the `lifetime` attribute of the [&lt;sessionTokenRequirement&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/sessiontokenrequirement) element in the configuration file.
+ Called by the configuration infrastructure to initialize the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler> instance. Initializes the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime> property from the `lifetime` attribute of the [&lt;sessionTokenRequirement&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/sessiontokenrequirement) element in the configuration file.
 
  ]]></format>
         </remarks>
@@ -657,7 +657,7 @@
 
  The reader must be positioned at either a WS-Secure Conversation Feb2005 or a WS-Secure Conversation 1.3 `<wsc:SecurityContextToken>` element.
 
- If the token material is cached, it is read from the token cache, which is an instance of the <xref:System.IdentityModel.Tokens.SessionSecurityTokenCache> class. Otherwise, the token material is read from the child element of the `<wsc:SecurityContextToken>` element that is specified by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieElementName%2A> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieNamespace%2A> properties and the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method is invoked to decode the cookie.
+ If the token material is cached, it is read from the token cache, which is an instance of the <xref:System.IdentityModel.Tokens.SessionSecurityTokenCache> class. Otherwise, the token material is read from the child element of the `<wsc:SecurityContextToken>` element that is specified by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieElementName> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieNamespace> properties and the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method is invoked to decode the cookie.
 
  For more information about how session tokens are serialized into a `<SecurityContextToken` element, see the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.WriteToken%28System.Xml.XmlWriter%2CSystem.IdentityModel.Tokens.SecurityToken%29?displayProperty=nameWithType> method.
 
@@ -697,7 +697,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Sets the list of transforms returned by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms%2A> property. Transforms will be applied in the order in which they appear in the list when encoding a cookie and in the reverse order when decoding a cookie.
+ Sets the list of transforms returned by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.Transforms> property. Transforms will be applied in the order in which they appear in the list when encoding a cookie and in the reverse order when decoding a cookie.
 
 > [!WARNING]
 >  If the `transforms` parameter is `null`, an exception will be thrown from the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method when it is called to encode or decode the cookie.
@@ -728,7 +728,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- By default, if the [&lt;sessionTokenRequirement&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/sessiontokenrequirement) element is specified in the configuration file, the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime%2A> property is initialized to the value of the `lifetime` attribute by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.LoadCustomConfiguration%2A> method.
+ By default, if the [&lt;sessionTokenRequirement&gt;](/dotnet/framework/configure-apps/file-schema/windows-identity-foundation/sessiontokenrequirement) element is specified in the configuration file, the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.TokenLifetime> property is initialized to the value of the `lifetime` attribute by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.LoadCustomConfiguration%2A> method.
 
  ]]></format>
         </remarks>
@@ -810,7 +810,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The token is not valid if its <xref:System.IdentityModel.Tokens.SecurityToken.ValidFrom%2A> property is set to a value that occurs later than <xref:System.DateTime.UtcNow%2A>, or if its <xref:System.IdentityModel.Tokens.SecurityToken.ValidTo%2A> property is set to a value that occurs earlier than <xref:System.DateTime.UtcNow%2A>.
+ The token is not valid if its <xref:System.IdentityModel.Tokens.SecurityToken.ValidFrom> property is set to a value that occurs later than <xref:System.DateTime.UtcNow>, or if its <xref:System.IdentityModel.Tokens.SecurityToken.ValidTo> property is set to a value that occurs earlier than <xref:System.DateTime.UtcNow>.
 
  Called from the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ValidateToken%2A> methods to validate the session.
 
@@ -902,7 +902,7 @@
  Performs a check to make sure that the specified token is scoped for the specified endpoint ID and, if so, invokes the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ValidateToken%28System.IdentityModel.Tokens.SecurityToken%29?displayProperty=nameWithType> method; otherwise, throws a <xref:System.IdentityModel.Tokens.SecurityTokenException>.
 
 > [!IMPORTANT]
->  Session tokens that have an <xref:System.IdentityModel.Tokens.SessionSecurityToken.EndpointId%2A> property that is `null` or empty are considered to be globally scoped. This presents a potential security risk. For this reason you should make sure that the <xref:System.IdentityModel.Tokens.SessionSecurityToken.EndpointId%2A> property is set in your session tokens.
+>  Session tokens that have an <xref:System.IdentityModel.Tokens.SessionSecurityToken.EndpointId> property that is `null` or empty are considered to be globally scoped. This presents a potential security risk. For this reason you should make sure that the <xref:System.IdentityModel.Tokens.SessionSecurityToken.EndpointId> property is set in your session tokens.
 
  ]]></format>
         </remarks>
@@ -998,7 +998,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation serializes the specified token as either a WS-Secure Conversation Feb2005 or WS-Secure Conversation 1.3 `<wsc:SecurityContextToken>` element, depending on the value of the <xref:System.IdentityModel.Tokens.SessionSecurityToken.SecureConversationVersion%2A?displayProperty=nameWithType> property. The <xref:System.IdentityModel.Tokens.SessionSecurityToken.Id%2A?displayProperty=nameWithType> property is serialized as the `Id` attribute. The <xref:System.IdentityModel.Tokens.SessionSecurityToken.ContextId%2A?displayProperty=nameWithType> property is serialized as the `<Identifier>` child element. If not `null` the <xref:System.IdentityModel.Tokens.SessionSecurityToken.KeyGeneration%2A?displayProperty=nameWithType> property is serialized as an `<Instance>` element. Finally, if the <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode%2A?displayProperty=nameWithType> property is `false`, the entire token is serialized into binary array which is passed to the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method to be encoded. The encoded token is then written as a base64 encoded value to the element and namespace specified by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieElementName%2A> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieNamespace%2A> properties. If the <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode%2A?displayProperty=nameWithType> property is `true`, the token is not serialized.
+ The default implementation serializes the specified token as either a WS-Secure Conversation Feb2005 or WS-Secure Conversation 1.3 `<wsc:SecurityContextToken>` element, depending on the value of the <xref:System.IdentityModel.Tokens.SessionSecurityToken.SecureConversationVersion?displayProperty=nameWithType> property. The <xref:System.IdentityModel.Tokens.SessionSecurityToken.Id?displayProperty=nameWithType> property is serialized as the `Id` attribute. The <xref:System.IdentityModel.Tokens.SessionSecurityToken.ContextId?displayProperty=nameWithType> property is serialized as the `<Identifier>` child element. If not `null` the <xref:System.IdentityModel.Tokens.SessionSecurityToken.KeyGeneration?displayProperty=nameWithType> property is serialized as an `<Instance>` element. Finally, if the <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode?displayProperty=nameWithType> property is `false`, the entire token is serialized into binary array which is passed to the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.ApplyTransforms%2A> method to be encoded. The encoded token is then written as a base64 encoded value to the element and namespace specified by the <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieElementName> and <xref:System.IdentityModel.Tokens.SessionSecurityTokenHandler.CookieNamespace> properties. If the <xref:System.IdentityModel.Tokens.SessionSecurityToken.IsReferenceMode?displayProperty=nameWithType> property is `true`, the token is not serialized.
 
  ]]></format>
         </remarks>
