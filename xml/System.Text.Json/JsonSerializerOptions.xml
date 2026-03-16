@@ -231,7 +231,27 @@ similar to how <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoResolve
         <summary>Gets or sets a value that indicates whether JSON metadata properties can be specified after regular properties in a deserialized JSON object.</summary>
         <value>
           <see langword="true" /> if JSON metadata properties, such as \\$id and \\$type, aren't required to be specified at the very start of the deserialized JSON object; <see langword="false" /> if JSON metadata properties must be specified before regular properties.</value>
-        <remarks>If you enable this setting, it can result in over-buffering when deserializing large JSON payloads in the context of streaming deserialization.
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+By default, `System.Text.Json` requires that JSON metadata properties such as `$id`, `$type`, and `$ref` appear at the very start of a JSON object. Setting this property to `true` relaxes that requirement, allowing metadata to appear after regular properties. This is useful when consuming JSON from producers that don't guarantee metadata ordering.
+
+### Buffering
+
+When this property is enabled, the deserializer can no longer process object properties in a single forward pass. Because metadata properties appearing later in the object (for example, a `$type` discriminator) can change how all earlier properties should be interpreted, the deserializer must buffer the entire JSON object in memory before it can commit to a deserialization strategy. In streaming deserialization scenarios, this can significantly increase memory consumption, especially for large JSON payloads.
+
+### Backtracking
+
+With nested objects, the cost of out-of-order metadata is multiplicative. The deserializer may need to backtrack—re-read and re-process previously buffered data—once for each level of nesting depth in the incoming object graph. This means the worst-case deserialization time is **O(n × d)**, where *n* is the length of the JSON input and *d* is the depth of the object graph.
+
+The default <xref:System.Text.Json.JsonSerializerOptions.MaxDepth> value of `0` (which corresponds to an effective maximum depth of 64) bounds *d*, so this doesn't constitute an unbounded denial-of-service vector. However, the multiplicative cost can still be significant for large payloads at high nesting depths.
+
+> [!IMPORTANT]
+>  If you enable this property, especially when deserializing untrusted input, consider also setting <xref:System.Text.Json.JsonSerializerOptions.MaxDepth> to a lower value to limit the potential backtracking cost.
+
+          ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">This property is set after serialization or deserialization has occurred.</exception>
       </Docs>
