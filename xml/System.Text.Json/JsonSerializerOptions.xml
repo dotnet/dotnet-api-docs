@@ -238,13 +238,10 @@ similar to how <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoResolve
 
 By default, `System.Text.Json` requires that JSON metadata properties such as `$id`, `$type`, and `$ref` appear at the very start of a JSON object. Setting this property to `true` relaxes that requirement, allowing metadata to appear after regular properties. This is useful when consuming JSON from producers that don't guarantee metadata ordering.
 
-### Buffering
+However, there are performance implications when this property is enabled:
 
-When this property is enabled, the deserializer can no longer process object properties in a single forward pass. Because metadata properties appearing later in the object (for example, a `$type` discriminator) can change how all earlier properties should be interpreted, the deserializer must buffer the entire JSON object in memory before it can commit to a deserialization strategy. In streaming deserialization scenarios, this can significantly increase memory consumption, especially for large JSON payloads.
-
-### Backtracking
-
-With nested objects, the cost of out-of-order metadata is multiplicative. The deserializer may need to backtrack—re-read and re-process previously buffered data—once for each level of nesting depth in the incoming object graph. This means the worst-case deserialization time is **O(n × d)**, where *n* is the length of the JSON input and *d* is the depth of the object graph.
+- **Buffering**: When this property is enabled, the deserializer can no longer process object properties in a single forward pass. Because metadata properties appearing later in the object (for example, a `$type` discriminator) can change how all earlier properties should be interpreted, the deserializer must buffer the entire JSON object in memory before it can commit to a deserialization strategy. In streaming deserialization scenarios, this can significantly increase memory consumption, especially for large JSON payloads.
+- **Backtracking**: With nested objects, the cost of out-of-order metadata is multiplicative. The deserializer might need to backtrack (that is, reread and reprocess previously buffered data) once for each level of nesting depth in the incoming object graph. This means the worst-case deserialization time is **O(n × d)**, where *n* is the length of the JSON input and *d* is the depth of the object graph.
 
           ]]></format>
         </remarks>
