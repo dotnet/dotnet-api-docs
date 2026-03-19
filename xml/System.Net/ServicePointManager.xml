@@ -999,7 +999,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When you reduce the <xref:System.Net.ServicePointManager.MaxServicePoints> property below the number of <xref:System.Net.ServicePoint> objects currently in existence, the <xref:System.Net.ServicePointManager> deletes the <xref:System.Net.ServicePoint> objects with the longest idle times. If the number of <xref:System.Net.ServicePoint> objects with active connections is greater than the value of <xref:System.Net.ServicePointManager.MaxServicePoints%2A>, the <xref:System.Net.ServicePointManager> object deletes the <xref:System.Net.ServicePoint> objects as they become idle.
+ When you reduce the <xref:System.Net.ServicePointManager.MaxServicePoints> property below the number of <xref:System.Net.ServicePoint> objects currently in existence, the <xref:System.Net.ServicePointManager> deletes the <xref:System.Net.ServicePoint> objects with the longest idle times. If the number of <xref:System.Net.ServicePoint> objects with active connections is greater than the value of <xref:System.Net.ServicePointManager.MaxServicePoints%2A>, the <xref:System.Net.ServicePointManager> object deletes the <xref:System.Net.ServicePoint> objects as they become idle. If this limit is set and more distinct <xref:System.Net.ServicePoint> instances is requested, <xref:System.Net.ServicePointManager.FindServicePoint> will throw. As a result, <xref:System.Net.HttpWebRequest>s leading to new, distinct enpoints will fail.
 
 > [!NOTE]
 > This property is only implemented on .NET Framework.
@@ -1279,6 +1279,8 @@ Each callback returns a value that indicates whether the certificate is accepted
  The default settings when a TCP socket is initialized sets the keep-alive timeout to 2 hours and the keep-alive interval to 1 second. The `keepAliveTime` parameter specifies the timeout, in milliseconds, with no activity until the first keep-alive packet is sent. The `keepAliveInterval` parameter specifies the interval, in milliseconds, between when successive keep-alive packets are sent if no acknowledgement is received. The number of keep-alive probes cannot be changed and is set to 10.
 
  If a TCP connection is dropped as the result of keep-alives, a <xref:System.Net.Sockets.SocketError> of <xref:System.Net.Sockets.SocketError.NetworkReset> is returned to any calls in progress on the socket, and any subsequent calls will fail with a <xref:System.Net.Sockets.SocketError> of <xref:System.Net.Sockets.SocketError.NotConnected>.
+
+ This method is not thread-safe. Any <xref:System.Net.ServicePoint> created at the same time might see partially changed values for the TCP keep-alive.
 
 > [!NOTE]
 > Since .NET 9, <xref:System.Net.HttpWebRequest> uses <xref:System.Net.Http.SocketsHttpHandler.ConnectCallback?displayProperty=nameWithType> to set TCP keep alive options on the underlying socket to the values provided to this method.
