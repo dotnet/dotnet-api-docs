@@ -586,6 +586,9 @@ Implementations of this method can return an assembly loaded into any <xref:Syst
  > [!IMPORTANT]
  > To prevent recursive stack overflow, do not call this instance's <xref:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName(System.Reflection.AssemblyName)> method from this method.
 
+ > [!NOTE]
+ > If this method throws a <xref:System.IO.FileNotFoundException>, the resolution process continues. The <xref:System.Runtime.Loader.AssemblyLoadContext.Resolving> event and the <xref:System.AppDomain.AssemblyResolve> event are still fired. Any other exception stops the resolution process immediately.
+
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/core/dependency-loading/loading-managed">Managed assembly loading algorithm</related>
@@ -1107,6 +1110,9 @@ The OS handle returned by this method can be used with methods of the <xref:Syst
 
  > [!IMPORTANT]
  > If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
+
+ > [!NOTE]
+ > If an event handler throws a <xref:System.IO.FileNotFoundException>, the <xref:System.AppDomain.AssemblyResolve> event is still fired. This gives other extension points a chance to resolve the assembly. Any other exception stops the resolution process immediately and isn't propagated to other handlers.
 
  For more information about handling events, see [Handle and raise events](/dotnet/standard/events/).
 
