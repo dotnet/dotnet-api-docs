@@ -208,11 +208,13 @@ This timer is intended to be used only by a single consumer at a time: only one 
       <Docs>
         <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> for cancelling the asynchronous wait. If cancellation is requested, it affects only the single wait operation; the underlying timer continues firing.</param>
         <summary>Waits for the next tick of the timer, or for the timer to be stopped.</summary>
-        <returns>A task that will be completed due to the timer firing, <see cref="M:System.Threading.PeriodicTimer.Dispose" /> being called to stop the timer, or cancellation being requested.</returns>
+        <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1" /> that will be completed due to the timer firing, <see cref="M:System.Threading.PeriodicTimer.Dispose" /> being called to stop the timer, or cancellation being requested.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+
+The result of the returned <xref:System.Threading.Tasks.ValueTask%601> is `true` when it's completed due to the timer firing, and `false` when the timer is disposed. The returned <xref:System.Threading.Tasks.ValueTask%601> enters the Canceled state when cancellation is requested. If the <xref:System.Threading.CancellationToken> was already canceled when <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> was called, the returned <xref:System.Threading.Tasks.ValueTask%601> is created in the Canceled state.
 
 The <xref:System.Threading.PeriodicTimer> behaves like an auto-reset event, in that multiple ticks are coalesced into a single tick if they occur between calls to <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)>. Similarly, a call to <xref:System.Threading.PeriodicTimer.Dispose> will void any tick not yet consumed. <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync(System.Threading.CancellationToken)> may only be used by one consumer at a time, and may be used concurrently with a single call to <xref:System.Threading.PeriodicTimer.Dispose>.
 
