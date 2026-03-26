@@ -14,8 +14,6 @@ Some namespaces (notably `Microsoft.Extensions.*`, `System.CommandLine.*`, `Syst
   dotnet build snippets/csharp/System/String/Overview/Project.csproj
   ```
 
-- **All snippet projects** — The solution file `dotnet-api-docs.sln` references snippet projects and can be opened in Visual Studio.
-
 - There's no repo-wide `dotnet build` or test command. Validation happens through the OPS (Open Publishing System) build triggered on PRs.
 
 ## ECMAXML format
@@ -54,7 +52,7 @@ Detailed markdown content here.
 Key points:
 
 - Don't edit `<TypeSignature>`, `<MemberSignature>`, `<AssemblyInfo>`, `<TypeForwardingChain>`, or `<FrameworkAlternate>` attributes — these are auto-generated.
-- Editable content lives inside `<Docs>` elements: `<summary>`, `<remarks>`, `<param>`, `<returns>`, `<exception>`, `<example>`, and `<altmember>`.
+- Editable content lives inside `<Docs>` elements: `<summary>`, `<remarks>`, `<param>`, `<returns>`, `<exception>`, `<example>`, `<seealso>`, and `<altmember>`.
 - Longer content goes inside `<format type="text/markdown"><![CDATA[ ... ]]></format>` blocks, which support full Markdown.
 - Namespace-level docs are in files like `xml/ns-System.xml`.
 
@@ -75,7 +73,7 @@ Don't escape backticks or asterisks in xref DocIDs. Use literal `` ` `` and `*` 
 
 ## Code snippets
 
-Snippets are standalone compilable projects in `snippets/{language}/{Namespace}/{TypeOrFeature}/`.
+Snippets are standalone compilable projects in `snippets/{language}/{Namespace}/{Type}/`.
 
 ### Referencing snippets from XML
 
@@ -94,12 +92,12 @@ Inside a `<format>` CDATA block, reference snippets with:
   <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <OutputType>Library</OutputType>
-      <TargetFramework>net8.0</TargetFramework>
+      <TargetFramework>net10.0</TargetFramework>
     </PropertyGroup>
   </Project>
   ```
 
-- Use `OutputType` of `Exe` if the snippet has a `Main` method, or `Library` otherwise.
+- Use `OutputType` of `Exe` if the snippet has a `Main` method or uses top-level statements, or `Library` otherwise.
 - Add NuGet `<PackageReference>` entries if the snippet uses APIs outside the base runtime.
 - Snippet languages: `csharp`, `fsharp`, `visualbasic`. Each goes in its respective `snippets/` subdirectory.
 
