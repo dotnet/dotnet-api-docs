@@ -3,41 +3,29 @@ module isin.fs
 // Sample for String.IsInterned(String)
 open System
 open System.Text
-open System.Runtime.CompilerServices
 
-// In the .NET Framework 2.0 the following attribute declaration allows you to
-// avoid the use of the interning when you use NGEN.exe to compile an assembly
-// to the native image cache.
-[<assembly: CompilationRelaxations(CompilationRelaxations.NoStringInterning)>]
-do ()
+// Constructed strings are not automatically interned.
+let s1 = StringBuilder().Append("My").Append("Test").ToString()
+let s2 = StringBuilder().Append("My").Append("Test").ToString()
 
-let test sequence str =
-    printf $"%d{sequence}) The string, '"
-    let strInterned = String.IsInterned str
-    if isNull strInterned then
-        printfn $"{str}', is not interned."
-    else
-        printfn $"{strInterned}', is interned."
+// Neither string is in the intern pool yet.
+printfn $"Is s1 interned? {String.IsInterned(s1) <> null}"
+printfn $"Is s2 interned? {String.IsInterned(s2) <> null}"
 
-// String str1 is known at compile time, and is automatically interned.
-let str1 = "abcd"
+// Intern s1 explicitly.
+let i1 = String.Intern(s1)
 
-// Constructed string, str2, is not explicitly or automatically interned.
-let str2 = StringBuilder().Append("wx").Append("yz").ToString()
-printfn ""
-test 1 str1
-test 2 str2
+// Now s2 can be found in the intern pool.
+let i2 = String.IsInterned(s2)
 
+printfn $"Is s2 interned after interning s1? {i2 <> null}"
+printfn $"Are i1 and i2 the same reference? {Object.ReferenceEquals(i1, i2)}"
 
-//This example produces the following results:
-
-//1) The string, 'abcd', is interned.
-//2) The string, 'wxyz', is not interned.
-
-//If you use NGEN.exe to compile the assembly to the native image cache, this
-//example produces the following results:
-
-//1) The string, 'abcd', is not interned.
-//2) The string, 'wxyz', is not interned.
+// This example produces the following results:
+//
+// Is s1 interned? False
+// Is s2 interned? False
+// Is s2 interned after interning s1? True
+// Are i1 and i2 the same reference? True
 
 //</snippet1>

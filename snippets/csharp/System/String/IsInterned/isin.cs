@@ -2,46 +2,35 @@
 // Sample for String.IsInterned(String)
 using System;
 using System.Text;
-using System.Runtime.CompilerServices;
 
-// In the .NET Framework 2.0 the following attribute declaration allows you to
-// avoid the use of the interning when you use NGEN.exe to compile an assembly
-// to the native image cache.
-[assembly: CompilationRelaxations(CompilationRelaxations.NoStringInterning)]
 class Sample
 {
     public static void Main()
     {
-        // String str1 is known at compile time, and is automatically interned.
-        String str1 = "abcd";
+        // Constructed strings are not automatically interned.
+        string s1 = new StringBuilder().Append("My").Append("Test").ToString();
+        string s2 = new StringBuilder().Append("My").Append("Test").ToString();
 
-        // Constructed string, str2, is not explicitly or automatically interned.
-        String str2 = new StringBuilder().Append("wx").Append("yz").ToString();
-        Console.WriteLine();
-        Test(1, str1);
-        Test(2, str2);
-    }
+        // Neither string is in the intern pool yet.
+        Console.WriteLine($"Is s1 interned? {String.IsInterned(s1) != null}");
+        Console.WriteLine($"Is s2 interned? {String.IsInterned(s2) != null}");
 
-    public static void Test(int sequence, String str)
-    {
-        Console.Write("{0}) The string, '", sequence);
-        String strInterned = String.IsInterned(str);
-        if (strInterned == null)
-            Console.WriteLine("{0}', is not interned.", str);
-        else
-            Console.WriteLine("{0}', is interned.", strInterned);
+        // Intern s1 explicitly.
+        string i1 = String.Intern(s1);
+
+        // Now s2 can be found in the intern pool.
+        string i2 = String.IsInterned(s2);
+
+        Console.WriteLine($"Is s2 interned after interning s1? {i2 != null}");
+        Console.WriteLine($"Are i1 and i2 the same reference? {Object.ReferenceEquals(i1, i2)}");
     }
 }
 
-//This example produces the following results:
-
-//1) The string, 'abcd', is interned.
-//2) The string, 'wxyz', is not interned.
-
-//If you use NGEN.exe to compile the assembly to the native image cache, this
-//example produces the following results:
-
-//1) The string, 'abcd', is not interned.
-//2) The string, 'wxyz', is not interned.
+// This example produces the following results:
+//
+// Is s1 interned? False
+// Is s2 interned? False
+// Is s2 interned after interning s1? True
+// Are i1 and i2 the same reference? True
 
 //</snippet1>
