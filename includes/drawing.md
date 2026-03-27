@@ -9,4 +9,4 @@
 >
 > - In .NET 6 and later versions, the [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/) NuGet package is only supported on Windows operating systems. For more information, see [System.Drawing.Common only supported on Windows](/dotnet/core/compatibility/core-libraries/6.0/system-drawing-common-windows-only).
 >
-> If you can't use `System.Drawing` with your application, recommended alternatives include [ImageSharp](https://sixlabors.com/products/imagesharp), [SkiaSharp](https://github.com/mono/SkiaSharp), [Windows Imaging Components](/windows/desktop/wic/-wic-about-windows-imaging-codec), and [Microsoft.Maui.Graphics](https://github.com/dotnet/Microsoft.Maui.Graphics).
+> If you can't use `System.Drawing` with your application, recommended alternatives include [SkiaSharp](https://github.com/mono/SkiaSharp), [ImageSharp](https://sixlabors.com/products/imagesharp) (tiered license), [Aspose.Drawing](https://products.aspose.com/drawing/net/) (commercial license), [Windows Imaging Components](/windows/desktop/wic/-wic-about-windows-imaging-codec), and [Microsoft.Maui.Graphics](https://github.com/dotnet/Microsoft.Maui.Graphics).
