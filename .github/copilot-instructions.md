@@ -51,7 +51,7 @@ Detailed markdown content here.
 
 Key points:
 
-- Don't edit `<TypeSignature>`, `<MemberSignature>`, `<AssemblyInfo>`, `<TypeForwardingChain>`, or `<FrameworkAlternate>` attributes — these are auto-generated.
+- Don't edit the `<TypeSignature>`, `<MemberSignature>`, `<AssemblyInfo>`, `<TypeForwardingChain>`, or `<FrameworkAlternate>` elements (or their attributes/values) — they are auto-generated.
 - Editable content lives inside `<Docs>` elements: `<summary>`, `<remarks>`, `<param>`, `<returns>`, `<exception>`, `<example>`, `<seealso>`, and `<altmember>`.
 - Longer content goes inside `<format type="text/markdown"><![CDATA[ ... ]]></format>` blocks, which support full Markdown.
 - Namespace-level docs are in files like `xml/ns-System.xml`.
