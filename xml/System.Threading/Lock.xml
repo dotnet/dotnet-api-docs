@@ -24,17 +24,17 @@
 
 The <xref:System.Threading.Lock> class can be used to define regions of code that require mutually exclusive access between threads of a process, commonly called critical sections, to prevent concurrent accesses to a resource. A `Lock` can be entered and exited, where the region of code between the enter and exit is a critical section associated with the lock. A thread that enters a lock is said to hold or own the lock until it exits the lock. At most one thread can hold a lock at any given time. A thread can hold multiple locks. A thread can enter a lock multiple times before exiting it, such as recursively. A thread that can't enter a lock immediately can wait until the lock can be entered or until a specified timeout expires.
 
-When using the <xref:System.Threading.Lock.Enter%2A> or <xref:System.Threading.Lock.TryEnter%2A> methods to enter a lock:
-- Ensure that the thread exits the lock with <xref:System.Threading.Lock.Exit%2A> even in case of exceptions, such as in C# by using a `try/finally` block.
+When using the <xref:System.Threading.Lock.Enter*> or <xref:System.Threading.Lock.TryEnter*> methods to enter a lock:
+- Ensure that the thread exits the lock with <xref:System.Threading.Lock.Exit*> even in case of exceptions, such as in C# by using a `try/finally` block.
 - When the lock is being entered and exited in a C# `async` method, ensure that there is no `await` between the enter and exit. Locks are held by threads and the code following an `await` might run on a different thread.
 
-It is recommended to use the <xref:System.Threading.Lock.EnterScope%2A> method with a language construct that automatically disposes the returned <xref:System.Threading.Lock.Scope> such as the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
+It is recommended to use the <xref:System.Threading.Lock.EnterScope*> method with a language construct that automatically disposes the returned <xref:System.Threading.Lock.Scope> such as the C# `using` keyword, or to use the C# `lock` keyword, as these ensure that the lock is exited in exceptional cases. These patterns might also have performance benefits over using `Enter/TryEnter` and `Exit`. The following code fragment illustrates various patterns for entering and exiting a lock.
 
 :::code language="csharp" source="~/snippets/csharp/System.Threading/Lock/Overview/UsagePatterns.cs" id="Snippet1":::
 
 When using the C# `lock` keyword or similar to enter and exit a lock, the type of the expression must be precisely `System.Threading.Lock`. If the type of the expression is anything else, such as `Object` or a generic type like `T`, a different implementation that is not interchangeable can be used instead (such as <xref:System.Threading.Monitor>). For more information, see the relevant [compiler speclet](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-13.0/lock-object).
 
-<xref:System.Threading.Thread.Interrupt%2A> can interrupt threads that are waiting to enter a lock. On Windows STA threads, waits for locks allow message pumping that can run other code on the same thread during a wait. Some features of the waits can be overridden by a custom <xref:System.Threading.SynchronizationContext>.
+<xref:System.Threading.Thread.Interrupt*> can interrupt threads that are waiting to enter a lock. On Windows STA threads, waits for locks allow message pumping that can run other code on the same thread during a wait. Some features of the waits can be overridden by a custom <xref:System.Threading.SynchronizationContext>.
 
 > [!NOTE]
 > A thread that enters a lock, including multiple times such as recursively, must exit the lock the same number of times to fully exit the lock and allow other threads to enter the lock. If a thread exits while holding a `Lock`, the behavior of the `Lock` becomes undefined.
