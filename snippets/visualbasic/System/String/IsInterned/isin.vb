@@ -1,9 +1,10 @@
-﻿'<snippet1>
-' Sample for String.IsInterned(String)
+﻿' Sample for String.IsInterned(String)
 Imports System.Text
 
-Class Sample
-    Public Shared Sub Main()
+Module IsInExample
+    Public Sub Run()
+        '<snippet1>
+
         ' Constructed strings are not automatically interned.
         Dim s1 As String = New StringBuilder().Append("My").Append("Test").ToString()
         Dim s2 As String = New StringBuilder().Append("My").Append("Test").ToString()
@@ -20,14 +21,14 @@ Class Sample
 
         Console.WriteLine($"Is s2 interned after interning s1? {i2 IsNot Nothing}")
         Console.WriteLine($"Are i1 and i2 the same reference? {Object.ReferenceEquals(i1, i2)}")
+
+        ' This example produces the following results:
+        '
+        ' Is s1 interned? False
+        ' Is s2 interned? False
+        ' Is s2 interned after interning s1? True
+        ' Are i1 and i2 the same reference? True
+
+        '</snippet1>
     End Sub
-End Class
-
-' This example produces the following results:
-'
-' Is s1 interned? False
-' Is s2 interned? False
-' Is s2 interned after interning s1? True
-' Are i1 and i2 the same reference? True
-
-'</snippet1>
+End Module
