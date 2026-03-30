@@ -33,24 +33,24 @@
  <xref:System.Xaml.XamlMember> can use three methodologies for returning information about a XAML member: standard common language runtime (CLR) reflection; a reference-only reflection technique calling internal APIs that use optimized bit flags; or calling into virtual overrides of the `Lookup*` API that is provided by possible <xref:System.Xaml.XamlMember> subclasses. For most uses of .NET Framework XAML Services APIs and the <xref:System.Xaml.XamlMember> API, you use the default XAML schema context. The default XAML schema context for .NET Framework XAML Services uses CLR backing for the type system. This enables the XAML readers and XAML writers to work with any type or member that is defined in, or otherwise available to, the CLR and its reflection techniques.
 
 ## Lookup* APIs and XamlMember Derived Classes
- <xref:System.Xaml.XamlMember> defines several virtual members that derived classes might override. These members have names that always start with the string `Lookup`. The remainder of the API name then references the property that the virtual method influences. For example, a <xref:System.Xaml.XamlMember> derived class might override <xref:System.Xaml.XamlMember.LookupTargetType%2A> to influence what the base-defined property <xref:System.Xaml.XamlMember.TargetType> returns in a derived class. You can predict return values for such properties in <xref:System.Xaml.XamlMember> or existing derived classes by reading the documentation for the relevant `Lookup*` methods.
+ <xref:System.Xaml.XamlMember> defines several virtual members that derived classes might override. These members have names that always start with the string `Lookup`. The remainder of the API name then references the property that the virtual method influences. For example, a <xref:System.Xaml.XamlMember> derived class might override <xref:System.Xaml.XamlMember.LookupTargetType*> to influence what the base-defined property <xref:System.Xaml.XamlMember.TargetType> returns in a derived class. You can predict return values for such properties in <xref:System.Xaml.XamlMember> or existing derived classes by reading the documentation for the relevant `Lookup*` methods.
 
  The purpose of the `Lookup*` methods is to provide a XAML type system extension technique that incorporates the <xref:System.Xaml.XamlMember> base class. By deriving from <xref:System.Xaml.XamlMember> and overriding the `Lookup` virtual members, you can define the concept of a XAML member for a XAML schema in a XAML type system without being tied to the specifics of a backing type system or technology. You can also use a provided XAML schema context under this scheme and still return the results you want.
 
- As an example, consider the <xref:System.Xaml.XamlMember> property <xref:System.Xaml.XamlMember.IsWritePublic>. This property informs callers that operations such as using a <xref:System.Xaml.XamlWriter> for serialization can write a value for this member on a target object. In the default implementation, the determination of whether the member is writable is made by using reflection techniques against the backing CLR <xref:System.Type> and its members (the <xref:System.Reflection.MemberInfo>). Therefore, by default, the XAML type system depends on the CLR type system. However, you can remove this dependency for your XAML type system reporting of <xref:System.Xaml.XamlMember.IsWritePublic> by overriding the API <xref:System.Xaml.XamlMember.LookupIsWritePublic%2A>. Within your override, you can use other determinations, such as metadata that is specific to your technology, a primary lookup table that is optimized for a fixed XAML vocabulary, or a variety of other strategies for determining whether a XAML member is writable in your XAML vocabulary.
+ As an example, consider the <xref:System.Xaml.XamlMember> property <xref:System.Xaml.XamlMember.IsWritePublic>. This property informs callers that operations such as using a <xref:System.Xaml.XamlWriter> for serialization can write a value for this member on a target object. In the default implementation, the determination of whether the member is writable is made by using reflection techniques against the backing CLR <xref:System.Type> and its members (the <xref:System.Reflection.MemberInfo>). Therefore, by default, the XAML type system depends on the CLR type system. However, you can remove this dependency for your XAML type system reporting of <xref:System.Xaml.XamlMember.IsWritePublic> by overriding the API <xref:System.Xaml.XamlMember.LookupIsWritePublic*>. Within your override, you can use other determinations, such as metadata that is specific to your technology, a primary lookup table that is optimized for a fixed XAML vocabulary, or a variety of other strategies for determining whether a XAML member is writable in your XAML vocabulary.
 
 ## Constructing XamlMember Without XAML Schema Context
  Most constructors of <xref:System.Xaml.XamlMember> require a <xref:System.Xaml.XamlSchemaContext> as part of their initialization. The <xref:System.Xaml.XamlSchemaContext> is also necessary for many internal <xref:System.Xaml.XamlSchemaContext> operations, such as obtaining information that is being forwarded from the backing type. When you are working with the <xref:System.Xaml.XamlMember> API, you typically have a <xref:System.Xaml.XamlSchemaContext> that is available from a surrounding construct such as a <xref:System.Xaml.XamlWriter>. In this case, you can pass the <xref:System.Xaml.XamlSchemaContext> reference through to all XAML type system calls that require a XAML schema context.
 
- One specific constructor, <xref:System.Xaml.XamlMember.%23ctor%28System.String%2CSystem.Xaml.XamlType%2CSystem.Boolean%29>, does not require a <xref:System.Xaml.XamlSchemaContext>. However, a <xref:System.Xaml.XamlMember> that is constructed with the <xref:System.Xaml.XamlMember.%23ctor%28System.String%2CSystem.Xaml.XamlType%2CSystem.Boolean%29> signature returns `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
+ One specific constructor, <xref:System.Xaml.XamlMember.%23ctor(System.String,System.Xaml.XamlType,System.Boolean)>, does not require a <xref:System.Xaml.XamlSchemaContext>. However, a <xref:System.Xaml.XamlMember> that is constructed with the <xref:System.Xaml.XamlMember.%23ctor(System.String,System.Xaml.XamlType,System.Boolean)> signature returns `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
 
- For a load path that involves <xref:System.Xaml.XamlObjectWriter>, such a member cannot be written into an object graph. Using the .NET Framework XAML services implementation, the <xref:System.Xaml.XamlObjectWriter.WriteStartMember%2A?displayProperty=nameWithType> call throws a <xref:System.Xaml.XamlObjectWriterException> when the relevant <xref:System.Xaml.XamlMember> reports `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
+ For a load path that involves <xref:System.Xaml.XamlObjectWriter>, such a member cannot be written into an object graph. Using the .NET Framework XAML services implementation, the <xref:System.Xaml.XamlObjectWriter.WriteStartMember*?displayProperty=nameWithType> call throws a <xref:System.Xaml.XamlObjectWriterException> when the relevant <xref:System.Xaml.XamlMember> reports `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
 
  You should not construct a <xref:System.Xaml.XamlMember> that has a value of `true` for <xref:System.Xaml.XamlMember.IsUnknown> unless your implementation can handle the exceptions from <xref:System.Xaml.XamlObjectWriter>, or you have other ways to adjust the <xref:System.Xaml.XamlObjectWriter> behavior. For example, one or more of the following might be true of your implementation:
 
 - The XAML schema context is available later.
 - You use a member invoker pattern.
-- You deliberately override <xref:System.Xaml.XamlObjectWriter.WriteStartMember%2A?displayProperty=nameWithType> in a custom XAML writer.
+- You deliberately override <xref:System.Xaml.XamlObjectWriter.WriteStartMember*?displayProperty=nameWithType> in a custom XAML writer.
 
  ]]></format>
     </remarks>
@@ -312,9 +312,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- A <xref:System.Xaml.XamlMember> that is constructed with the <xref:System.Xaml.XamlMember.%23ctor%28System.String%2CSystem.Xaml.XamlType%2CSystem.Boolean%29> signature returns `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
+ A <xref:System.Xaml.XamlMember> that is constructed with the <xref:System.Xaml.XamlMember.%23ctor(System.String,System.Xaml.XamlType,System.Boolean)> signature returns `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
 
- For a load path that involves <xref:System.Xaml.XamlObjectWriter>, such a member cannot be written into an object graph. Using the .NET Framework XAML Services implementation, the <xref:System.Xaml.XamlObjectWriter.WriteStartMember%2A?displayProperty=nameWithType> call throws a <xref:System.Xaml.XamlObjectWriterException> when the relevant <xref:System.Xaml.XamlMember> reports `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
+ For a load path that involves <xref:System.Xaml.XamlObjectWriter>, such a member cannot be written into an object graph. Using the .NET Framework XAML Services implementation, the <xref:System.Xaml.XamlObjectWriter.WriteStartMember*?displayProperty=nameWithType> call throws a <xref:System.Xaml.XamlObjectWriterException> when the relevant <xref:System.Xaml.XamlMember> reports `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
 
  You should not construct a <xref:System.Xaml.XamlMember> with <xref:System.Xaml.XamlMember.IsUnknown> `true` unless your implementation can handle the exceptions from <xref:System.Xaml.XamlObjectWriter>, or you have other ways to adjust the <xref:System.Xaml.XamlObjectWriter> behavior. For example, one or more of the following might be true of your implementation:
 
@@ -322,7 +322,7 @@
 
 - You use a member invoker pattern.
 
-- You deliberately override <xref:System.Xaml.XamlObjectWriter.WriteStartMember%2A?displayProperty=nameWithType> in a custom XAML writer.
+- You deliberately override <xref:System.Xaml.XamlObjectWriter.WriteStartMember*?displayProperty=nameWithType> in a custom XAML writer.
 
  ]]></format>
         </remarks>
@@ -534,7 +534,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.DeferringLoader> invokes <xref:System.Xaml.XamlMember.LookupDeferringLoader%2A> or a specific override of that method. This behavior occurs in cases where the initial internal reflection logic has not already set the information.
+ Calling <xref:System.Xaml.XamlMember.DeferringLoader> invokes <xref:System.Xaml.XamlMember.LookupDeferringLoader*> or a specific override of that method. This behavior occurs in cases where the initial internal reflection logic has not already set the information.
 
  ]]></format>
         </remarks>
@@ -569,7 +569,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.DependsOn> invokes <xref:System.Xaml.XamlMember.LookupDependsOn%2A> or a specific override of that method. This behavior occurs in cases where the initial internal reflection logic has not already set the information.
+ Calling <xref:System.Xaml.XamlMember.DependsOn> invokes <xref:System.Xaml.XamlMember.LookupDependsOn*> or a specific override of that method. This behavior occurs in cases where the initial internal reflection logic has not already set the information.
 
  The `DependsOn` pattern can be applied to object model cases that deliberately contradict a general XAML rule. The general XAML rule is that members of a type that are not passed as initialization text (or by a factory method in XAML 2009) must be able to be assigned in any order. By applying a `DependsOn` pattern to a member, you can instruct XAML writers to always process the referenced member before this member. You can apply this pattern in situations where the value of the current member requires context or other information that is only available after the other member is set.
 
@@ -725,7 +725,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation returns the <xref:System.Xaml.XamlType.GetXamlNamespaces%2A?displayProperty=nameWithType> call result from the <xref:System.Xaml.XamlMember.DeclaringType> that is associated with this <xref:System.Xaml.XamlMember>.
+ The default implementation returns the <xref:System.Xaml.XamlType.GetXamlNamespaces*?displayProperty=nameWithType> call result from the <xref:System.Xaml.XamlMember.DeclaringType> that is associated with this <xref:System.Xaml.XamlMember>.
 
  ]]></format>
         </remarks>
@@ -762,11 +762,11 @@
 ## Remarks
  The `Invoker` pattern is an advanced XAML type system extension technique. The `Invoker` pattern provides a way to inject different schema type mapping behavior, while still using XAML type system definitions from .NET Framework XAML Services.
 
- If a <xref:System.Xaml.XamlMember.LookupInvoker%2A> override returns `null`, or if the default implementation returns `null` because it lacks the <xref:System.Xaml.XamlMember.UnderlyingMember> for this <xref:System.Xaml.XamlMember>, the <xref:System.Xaml.XamlMember.Invoker> property returns <xref:System.Xaml.Schema.XamlMemberInvoker.UnknownInvoker?displayProperty=nameWithType>.
+ If a <xref:System.Xaml.XamlMember.LookupInvoker*> override returns `null`, or if the default implementation returns `null` because it lacks the <xref:System.Xaml.XamlMember.UnderlyingMember> for this <xref:System.Xaml.XamlMember>, the <xref:System.Xaml.XamlMember.Invoker> property returns <xref:System.Xaml.Schema.XamlMemberInvoker.UnknownInvoker?displayProperty=nameWithType>.
 
  <xref:System.Xaml.Schema.XamlMemberInvoker.UnknownInvoker?displayProperty=nameWithType> is the default. This is true for most operations that use .NET Framework XAML Services and the default XAML schema context, and where no specific override `Invoker` patterns are passed for construction of XAML type system entities.
 
- Calling <xref:System.Xaml.XamlMember.Invoker> invokes <xref:System.Xaml.XamlMember.LookupInvoker%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.Invoker> invokes <xref:System.Xaml.XamlMember.LookupInvoker*> or a specific override of that method.
 
  ]]></format>
         </remarks>
@@ -808,9 +808,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.IsAmbient> invokes <xref:System.Xaml.XamlMember.LookupIsAmbient%2A> or a specific override of that method. This behavior occurs in implementations where the initial internal reflection logic has not already set the information.
+ Calling <xref:System.Xaml.XamlMember.IsAmbient> invokes <xref:System.Xaml.XamlMember.LookupIsAmbient*> or a specific override of that method. This behavior occurs in implementations where the initial internal reflection logic has not already set the information.
 
- Checking for ambient properties is are usually part of XAML processing logic to make sure that objects and values that rely on ambient usage for type qualification can function correctly. The .NET Framework XAML Services APIs and the default XAML schema context populates this value based on attribution with <xref:System.Windows.Markup.AmbientAttribute>. The default implementation of <xref:System.Xaml.XamlMember.LookupIsAmbient%2A> uses this existing <xref:System.Windows.Markup.AmbientAttribute> technique, and it returns `true` if <xref:System.Windows.Markup.AmbientAttribute> exists on a member declaration.
+ Checking for ambient properties is are usually part of XAML processing logic to make sure that objects and values that rely on ambient usage for type qualification can function correctly. The .NET Framework XAML Services APIs and the default XAML schema context populates this value based on attribution with <xref:System.Windows.Markup.AmbientAttribute>. The default implementation of <xref:System.Xaml.XamlMember.LookupIsAmbient*> uses this existing <xref:System.Windows.Markup.AmbientAttribute> technique, and it returns `true` if <xref:System.Windows.Markup.AmbientAttribute> exists on a member declaration.
 
  <xref:System.Windows.Markup.AmbientAttribute> is found on members of several WPF types, which include <xref:System.Windows.Application>, <xref:System.Windows.Setter>, and <xref:System.Windows.Style>. It is also found on the <xref:System.Windows.ResourceDictionary> type, which connotes that any member that uses <xref:System.Windows.ResourceDictionary> as its type should be considered ambient even if the member is not specifically attributed.
 
@@ -929,7 +929,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.IsEvent> invokes <xref:System.Xaml.XamlMember.LookupIsEvent%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.IsEvent> invokes <xref:System.Xaml.XamlMember.LookupIsEvent*> or a specific override of that method.
 
  ]]></format>
         </remarks>
@@ -1001,7 +1001,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.IsReadOnly> invokes <xref:System.Xaml.XamlMember.LookupIsReadOnly%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.IsReadOnly> invokes <xref:System.Xaml.XamlMember.LookupIsReadOnly*> or a specific override of that method.
 
  ]]></format>
         </remarks>
@@ -1039,10 +1039,10 @@
 ## Remarks
  The <xref:System.Xaml.XamlMember.IsReadPublic> value checks whether the <xref:System.Xaml.XamlMember.DeclaringType> is public. If <xref:System.Xaml.XamlMember.DeclaringType> is nonpublic, the `get` accessor is not callable in a practical way, and <xref:System.Xaml.XamlMember.IsReadPublic> returns `false`.
 
- Calling <xref:System.Xaml.XamlMember.IsReadPublic> invokes <xref:System.Xaml.XamlMember.LookupIsReadPublic%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.IsReadPublic> invokes <xref:System.Xaml.XamlMember.LookupIsReadPublic*> or a specific override of that method.
 
 > [!IMPORTANT]
-> The <xref:System.Xaml.XamlMember.LookupIsReadPublic%2A> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
+> The <xref:System.Xaml.XamlMember.LookupIsReadPublic*> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
 
  ]]></format>
         </remarks>
@@ -1078,13 +1078,13 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- A <xref:System.Xaml.XamlMember> that is constructed with the <xref:System.Xaml.XamlMember.%23ctor%28System.String%2CSystem.Xaml.XamlType%2CSystem.Boolean%29> signature returns `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
+ A <xref:System.Xaml.XamlMember> that is constructed with the <xref:System.Xaml.XamlMember.%23ctor(System.String,System.Xaml.XamlType,System.Boolean)> signature returns `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
 
- For a load path that involves <xref:System.Xaml.XamlObjectWriter>, a <xref:System.Xaml.XamlMember> with `true` for <xref:System.Xaml.XamlMember.IsUnknown> cannot be written into an object graph. Under the default implementations in .NET Framework XAML Services APIs, the <xref:System.Xaml.XamlObjectWriter.WriteStartMember%2A?displayProperty=nameWithType> call throws a <xref:System.Xaml.XamlObjectWriterException> when the relevant <xref:System.Xaml.XamlMember> reports `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
+ For a load path that involves <xref:System.Xaml.XamlObjectWriter>, a <xref:System.Xaml.XamlMember> with `true` for <xref:System.Xaml.XamlMember.IsUnknown> cannot be written into an object graph. Under the default implementations in .NET Framework XAML Services APIs, the <xref:System.Xaml.XamlObjectWriter.WriteStartMember*?displayProperty=nameWithType> call throws a <xref:System.Xaml.XamlObjectWriterException> when the relevant <xref:System.Xaml.XamlMember> reports `true` for <xref:System.Xaml.XamlMember.IsUnknown>.
 
  You should not construct a <xref:System.Xaml.XamlMember> that has a value of `true` for <xref:System.Xaml.XamlMember.IsUnknown> unless your implementation can handle the exceptions from <xref:System.Xaml.XamlObjectWriter>, or you have other ways to adjust the <xref:System.Xaml.XamlObjectWriter> behavior.
 
- Calling <xref:System.Xaml.XamlMember.IsUnknown> invokes <xref:System.Xaml.XamlMember.LookupIsUnknown%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.IsUnknown> invokes <xref:System.Xaml.XamlMember.LookupIsUnknown*> or a specific override of that method.
 
  ]]></format>
         </remarks>
@@ -1126,7 +1126,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.IsWriteOnly> invokes <xref:System.Xaml.XamlMember.LookupIsWriteOnly%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.IsWriteOnly> invokes <xref:System.Xaml.XamlMember.LookupIsWriteOnly*> or a specific override of that method.
 
  ]]></format>
         </remarks>
@@ -1164,10 +1164,10 @@
 ## Remarks
  The <xref:System.Xaml.XamlMember.IsWritePublic> value considers whether the <xref:System.Xaml.XamlMember.DeclaringType> is public as part of the determination. If <xref:System.Xaml.XamlMember.DeclaringType> is nonpublic, the `set` accessor is not callable in a practical way, and <xref:System.Xaml.XamlMember.IsWritePublic> returns `false`.
 
- Calling <xref:System.Xaml.XamlMember.IsWritePublic> invokes <xref:System.Xaml.XamlMember.LookupIsWritePublic%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.IsWritePublic> invokes <xref:System.Xaml.XamlMember.LookupIsWritePublic*> or a specific override of that method.
 
 > [!IMPORTANT]
-> The <xref:System.Xaml.XamlMember.LookupIsWritePublic%2A> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
+> The <xref:System.Xaml.XamlMember.LookupIsWritePublic*> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
 
  ]]></format>
         </remarks>
@@ -1203,7 +1203,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Override this method to provide the internal reflection with an alternative way to obtain CLR attribute values. In the absence of an override, the internal reflector uses typical CLR reflection logic such as calls to <xref:System.Reflection.CustomAttributeData.GetCustomAttributes%2A>.
+ Override this method to provide the internal reflection with an alternative way to obtain CLR attribute values. In the absence of an override, the internal reflector uses typical CLR reflection logic such as calls to <xref:System.Reflection.CustomAttributeData.GetCustomAttributes*>.
 
  The default implementation returns `null`.
 
@@ -1366,11 +1366,11 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- This method is invoked by internal calls that check for ambient XAML property information. Ambient property behavior is accounted for in the public API behavior of XAML readers and XAML writers. The internal calls that reference <xref:System.Xaml.XamlMember.LookupIsAmbient%2A> are usually part of XAML processing logic to make sure that objects and values that rely on ambient usage for type qualification can function correctly. The default .NET Framework XAML Services implementation uses CLR attributing to obtain this information from reflection over backing types. Specifically, the default implementation checks for <xref:System.Windows.Markup.AmbientAttribute> and returns `true` for <xref:System.Xaml.XamlMember.LookupIsAmbient%2A> if <xref:System.Windows.Markup.AmbientAttribute> exists on a member definition.
+ This method is invoked by internal calls that check for ambient XAML property information. Ambient property behavior is accounted for in the public API behavior of XAML readers and XAML writers. The internal calls that reference <xref:System.Xaml.XamlMember.LookupIsAmbient*> are usually part of XAML processing logic to make sure that objects and values that rely on ambient usage for type qualification can function correctly. The default .NET Framework XAML Services implementation uses CLR attributing to obtain this information from reflection over backing types. Specifically, the default implementation checks for <xref:System.Windows.Markup.AmbientAttribute> and returns `true` for <xref:System.Xaml.XamlMember.LookupIsAmbient*> if <xref:System.Windows.Markup.AmbientAttribute> exists on a member definition.
 
  Override this method if you are not using <xref:System.Windows.Markup.AmbientAttribute> for this purpose and intend to replace that technique for indicating ambient XAML properties with your own technique.
 
- Example APIs from WPF that attribute with <xref:System.Windows.Markup.AmbientAttribute> are <xref:System.Windows.Trigger.Property%2A?displayProperty=nameWithType> and <xref:System.Windows.Style.BasedOn%2A?displayProperty=nameWithType>.
+ Example APIs from WPF that attribute with <xref:System.Windows.Markup.AmbientAttribute> are <xref:System.Windows.Trigger.Property*?displayProperty=nameWithType> and <xref:System.Windows.Style.BasedOn*?displayProperty=nameWithType>.
 
  ]]></format>
         </remarks>
@@ -1490,12 +1490,12 @@
 ## Remarks
  The default implementation returns results based either on internal reflection or the negation of <xref:System.Xaml.XamlMember.IsWriteOnly>, processing in that order.
 
- <xref:System.Xaml.XamlMember.LookupIsReadPublic%2A> returns whether the member itself is public; it returns `true` for a public member on a nonpublic declaring type. Use <xref:System.Xaml.XamlMember.IsReadPublic> instead, if you also want to consider the visibility of the declaring type.
+ <xref:System.Xaml.XamlMember.LookupIsReadPublic*> returns whether the member itself is public; it returns `true` for a public member on a nonpublic declaring type. Use <xref:System.Xaml.XamlMember.IsReadPublic> instead, if you also want to consider the visibility of the declaring type.
 
  This method is invoked when a caller gets a value from <xref:System.Xaml.XamlMember.IsReadPublic>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis.
 
 > [!IMPORTANT]
-> The <xref:System.Xaml.XamlMember.LookupIsReadPublic%2A> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
+> The <xref:System.Xaml.XamlMember.LookupIsReadPublic*> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
 
  ]]></format>
         </remarks>
@@ -1618,7 +1618,7 @@
  This method is invoked when a caller gets a value from <xref:System.Xaml.XamlMember.IsWritePublic>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis.
 
 > [!IMPORTANT]
-> The <xref:System.Xaml.XamlMember.LookupIsWritePublic%2A> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
+> The <xref:System.Xaml.XamlMember.LookupIsWritePublic*> method is virtual and therefore, can be overridden. The override has the potential to change (maliciously or otherwise) the reported access information of a XAML member so that it no longer aligns in an expected way with the type system access information of its underlying CLR declaration. For any security-critical checks of access levels, use the underlying CLR type instead.
 
  ]]></format>
         </remarks>
@@ -1684,7 +1684,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation distinguishes between attachable and non-attachable members. For non-attachable members, <xref:System.Xaml.XamlMember.LookupTargetType%2A> always returns <xref:System.Xaml.XamlMember.DeclaringType>. For attachable members, <xref:System.Xaml.XamlMember.LookupTargetType%2A> returns a result based on examining the <xref:System.Xaml.XamlMember.UnderlyingMember> accessor parameter type and interprets that type based on XAML schema context.
+ The default implementation distinguishes between attachable and non-attachable members. For non-attachable members, <xref:System.Xaml.XamlMember.LookupTargetType*> always returns <xref:System.Xaml.XamlMember.DeclaringType>. For attachable members, <xref:System.Xaml.XamlMember.LookupTargetType*> returns a result based on examining the <xref:System.Xaml.XamlMember.UnderlyingMember> accessor parameter type and interprets that type based on XAML schema context.
 
  This method is invoked when a caller gets a value from <xref:System.Xaml.XamlMember.TargetType>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis.
 
@@ -1774,7 +1774,7 @@
 ## Remarks
  The default implementation uses the following logic and processing order:
 
-- If attributing exists at the member level (<xref:System.ComponentModel.TypeConverterAttribute>), the attribute information is used for a call to <xref:System.Xaml.XamlSchemaContext.GetValueConverter%2A> against the XAML schema context.
+- If attributing exists at the member level (<xref:System.ComponentModel.TypeConverterAttribute>), the attribute information is used for a call to <xref:System.Xaml.XamlSchemaContext.GetValueConverter*> against the XAML schema context.
 
 - If <xref:System.Xaml.XamlMember.Type> is valid, a type converter that is associated with the type is returned.
 
@@ -1817,9 +1817,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation interprets the <xref:System.Xaml.XamlMember.UnderlyingMember> property as <xref:System.Reflection.PropertyInfo> and returns the value of <xref:System.Reflection.PropertyInfo.GetGetMethod%2A?displayProperty=nameWithType> (with the parameter set to `true`), which means that the returned method can be nonpublic. This behavior can result in `null` for certain cases. including cases where no associated accessor exists or the member is not a property.
+ The default implementation interprets the <xref:System.Xaml.XamlMember.UnderlyingMember> property as <xref:System.Reflection.PropertyInfo> and returns the value of <xref:System.Reflection.PropertyInfo.GetGetMethod*?displayProperty=nameWithType> (with the parameter set to `true`), which means that the returned method can be nonpublic. This behavior can result in `null` for certain cases. including cases where no associated accessor exists or the member is not a property.
 
- This method is invoked when a caller gets a value from the <xref:System.Xaml.Schema.XamlMemberInvoker.UnderlyingGetter> property on an associated <xref:System.Xaml.Schema.XamlMemberInvoker>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis. Make sure to implement <xref:System.Xaml.XamlMember.LookupUnderlyingGetter%2A>, <xref:System.Xaml.XamlMember.LookupUnderlyingSetter%2A>, and <xref:System.Xaml.XamlMember.LookupUnderlyingMember%2A> so that they all return correlated results.
+ This method is invoked when a caller gets a value from the <xref:System.Xaml.Schema.XamlMemberInvoker.UnderlyingGetter> property on an associated <xref:System.Xaml.Schema.XamlMemberInvoker>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis. Make sure to implement <xref:System.Xaml.XamlMember.LookupUnderlyingGetter*>, <xref:System.Xaml.XamlMember.LookupUnderlyingSetter*>, and <xref:System.Xaml.XamlMember.LookupUnderlyingMember*> so that they all return correlated results.
 
  ]]></format>
         </remarks>
@@ -1859,7 +1859,7 @@
 
  If an underlying member was set during construction, you should not need to call this method.
 
- This method is invoked when a caller gets a value from <xref:System.Xaml.XamlMember.UnderlyingMember>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis. Make sure to implement <xref:System.Xaml.XamlMember.LookupUnderlyingGetter%2A>, <xref:System.Xaml.XamlMember.LookupUnderlyingSetter%2A>, and <xref:System.Xaml.XamlMember.LookupUnderlyingMember%2A> so that they all return correlated results.
+ This method is invoked when a caller gets a value from <xref:System.Xaml.XamlMember.UnderlyingMember>. Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis. Make sure to implement <xref:System.Xaml.XamlMember.LookupUnderlyingGetter*>, <xref:System.Xaml.XamlMember.LookupUnderlyingSetter*>, and <xref:System.Xaml.XamlMember.LookupUnderlyingMember*> so that they all return correlated results.
 
  ]]></format>
         </remarks>
@@ -1896,9 +1896,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The default implementation interprets <xref:System.Xaml.XamlMember.UnderlyingMember> as <xref:System.Reflection.PropertyInfo> and returns the value of <xref:System.Reflection.PropertyInfo.GetSetMethod%2A?displayProperty=nameWithType> (with the parameter set to `true`), which means that the returned method can be nonpublic. This can result in `null` for certain cases, including cases where there is no such accessor, or the member is not a property.
+ The default implementation interprets <xref:System.Xaml.XamlMember.UnderlyingMember> as <xref:System.Reflection.PropertyInfo> and returns the value of <xref:System.Reflection.PropertyInfo.GetSetMethod*?displayProperty=nameWithType> (with the parameter set to `true`), which means that the returned method can be nonpublic. This can result in `null` for certain cases, including cases where there is no such accessor, or the member is not a property.
 
- This method is invoked when a caller gets a value from <xref:System.Xaml.Schema.XamlMemberInvoker.UnderlyingSetter> on an associated <xref:System.Xaml.Schema.XamlMemberInvoker>.Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis. Make sure to implement <xref:System.Xaml.XamlMember.LookupUnderlyingGetter%2A>, <xref:System.Xaml.XamlMember.LookupUnderlyingSetter%2A>, and <xref:System.Xaml.XamlMember.LookupUnderlyingMember%2A> so that they all return correlated results.
+ This method is invoked when a caller gets a value from <xref:System.Xaml.Schema.XamlMemberInvoker.UnderlyingSetter> on an associated <xref:System.Xaml.Schema.XamlMemberInvoker>.Override this method if you want to report uniform results for an entire <xref:System.Xaml.XamlMember> derived class, or if you have specialized metadata available to determine this on a per-case basis. Make sure to implement <xref:System.Xaml.XamlMember.LookupUnderlyingGetter*>, <xref:System.Xaml.XamlMember.LookupUnderlyingSetter*>, and <xref:System.Xaml.XamlMember.LookupUnderlyingMember*> so that they all return correlated results.
 
  ]]></format>
         </remarks>
@@ -1936,7 +1936,7 @@
 ## Remarks
  The default implementation uses the following logic and processing order:
 
-- If attributing exists at the member level (<xref:System.Windows.Markup.ValueSerializerAttribute>), the attribute information is used for a call to <xref:System.Xaml.XamlSchemaContext.GetValueConverter%2A> against the XAML schema context.
+- If attributing exists at the member level (<xref:System.Windows.Markup.ValueSerializerAttribute>), the attribute information is used for a call to <xref:System.Xaml.XamlSchemaContext.GetValueConverter*> against the XAML schema context.
 
 - If <xref:System.Xaml.XamlMember.Type> is valid, a value converter that is associated with the type is returned.
 
@@ -2120,7 +2120,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Xaml.XamlMember.PreferredXamlNamespace> property provides the same value as calling <xref:System.Xaml.XamlMember.GetXamlNamespaces%2A> and then getting the first value string from the returned list. The preferred XAML namespace should be used when writing the member back to text or other representations that preserve XAML namespace information.
+ The <xref:System.Xaml.XamlMember.PreferredXamlNamespace> property provides the same value as calling <xref:System.Xaml.XamlMember.GetXamlNamespaces*> and then getting the first value string from the returned list. The preferred XAML namespace should be used when writing the member back to text or other representations that preserve XAML namespace information.
 
  ]]></format>
         </remarks>
@@ -2183,11 +2183,11 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The returned value is different for attachable and non-attachable members. For non-attachable members, <xref:System.Xaml.XamlMember.TargetType> returns <xref:System.Xaml.XamlMember.DeclaringType>. For attachable members, <xref:System.Xaml.XamlMember.LookupTargetType%2A> returns a result that is based on this logic:
+ The returned value is different for attachable and non-attachable members. For non-attachable members, <xref:System.Xaml.XamlMember.TargetType> returns <xref:System.Xaml.XamlMember.DeclaringType>. For attachable members, <xref:System.Xaml.XamlMember.LookupTargetType*> returns a result that is based on this logic:
 
 - If reflection cannot resolve a backing (<xref:System.Xaml.XamlMember.IsUnknown> `true`), this method returns an internal constant that represents a generic object type.
 
-- If the previous condition does not apply, <xref:System.Xaml.XamlMember.LookupTargetType%2A> is called. The default implementation returns a <xref:System.Xaml.XamlType> that is based on examining the methods that implement the `get` and `set` accessors. A class might override <xref:System.Xaml.XamlMember.LookupTargetType%2A> to use a different behavior such as other metadata forms that might report target types for attachable members.
+- If the previous condition does not apply, <xref:System.Xaml.XamlMember.LookupTargetType*> is called. The default implementation returns a <xref:System.Xaml.XamlType> that is based on examining the methods that implement the `get` and `set` accessors. A class might override <xref:System.Xaml.XamlMember.LookupTargetType*> to use a different behavior such as other metadata forms that might report target types for attachable members.
 
  ]]></format>
         </remarks>
@@ -2258,9 +2258,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.Type> invokes <xref:System.Xaml.XamlMember.LookupType%2A> or a specific override of that method. This occurs when the initial internal reflection logic has not already set the information.
+ Calling <xref:System.Xaml.XamlMember.Type> invokes <xref:System.Xaml.XamlMember.LookupType*> or a specific override of that method. This occurs when the initial internal reflection logic has not already set the information.
 
- In the default behavior (no <xref:System.Xaml.XamlMember.LookupType%2A> override), the returned <xref:System.Xaml.XamlType> can have different conceptual meanings. Which meaning applies depends on whether this <xref:System.Xaml.XamlMember> represents a property, method, or event, as the following list shows:
+ In the default behavior (no <xref:System.Xaml.XamlMember.LookupType*> override), the returned <xref:System.Xaml.XamlType> can have different conceptual meanings. Which meaning applies depends on whether this <xref:System.Xaml.XamlMember> represents a property, method, or event, as the following list shows:
 
 - For a property, the returned <xref:System.Xaml.XamlType> is the type that sets the property or is returned by the property.
 
@@ -2303,17 +2303,17 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.TypeConverter> invokes <xref:System.Xaml.XamlMember.LookupTypeConverter%2A> or a specific override of that method. This behavior occurs when the initial internal reflection logic has not already set the information.
+ Calling <xref:System.Xaml.XamlMember.TypeConverter> invokes <xref:System.Xaml.XamlMember.LookupTypeConverter*> or a specific override of that method. This behavior occurs when the initial internal reflection logic has not already set the information.
 
  Implementations that return a non-null property value for <xref:System.Xaml.XamlMember.TypeConverter> are not necessarily a working <xref:System.ComponentModel.TypeConverter>. The following is a list of possible non-null return values for <xref:System.Xaml.XamlMember.TypeConverter> and what these values represent:
 
 - The return value reports a type converter that is attributed specifically to that member or more generally to the target type of the converter. This behavior is typically what most XAML type systems and XAML processors look for in order to instantiate a type converter and invoke its methods.
 
-- The return value reports a built-in value converter. These converters exist for certain internal operations that are performed by a XAML writer. In particular, these built-in value converters convert the raw attribute string values to the XAML language-level primitives. For the .NET Framework XAML Services implementation, these built-in type conversions often forward to a type converter that is defined in the System assembly. For example, a conversion for an <xref:System.Int32> value has built-in forwarded conversion, and therefore, the <xref:System.Xaml.Schema.XamlValueConverter%601.ConverterType%2A> value references <xref:System.ComponentModel.Int32Converter>.
+- The return value reports a built-in value converter. These converters exist for certain internal operations that are performed by a XAML writer. In particular, these built-in value converters convert the raw attribute string values to the XAML language-level primitives. For the .NET Framework XAML Services implementation, these built-in type conversions often forward to a type converter that is defined in the System assembly. For example, a conversion for an <xref:System.Int32> value has built-in forwarded conversion, and therefore, the <xref:System.Xaml.Schema.XamlValueConverter`1.ConverterType*> value references <xref:System.ComponentModel.Int32Converter>.
 
-- The return value reports the special case of an unconstrained object model; that is, the <xref:System.Xaml.XamlMember> has a <xref:System.Xaml.XamlMember.Type> value of <xref:System.Object>. In this case, the <xref:System.Xaml.Schema.XamlValueConverter%601> reports that the <xref:System.Xaml.Schema.XamlValueConverter%601.Name%2A?displayProperty=nameWithType> is {`Object}`. However, <xref:System.Xaml.Schema.XamlValueConverter%601.ConverterInstance%2A> is `null` because no actual type or instance is available to perform this conversion. Instead, the object model behavior cannot be determined until run time, when the runtime of the specific technology determines the handling of its object graph.
+- The return value reports the special case of an unconstrained object model; that is, the <xref:System.Xaml.XamlMember> has a <xref:System.Xaml.XamlMember.Type> value of <xref:System.Object>. In this case, the <xref:System.Xaml.Schema.XamlValueConverter`1> reports that the <xref:System.Xaml.Schema.XamlValueConverter`1.Name*?displayProperty=nameWithType> is {`Object}`. However, <xref:System.Xaml.Schema.XamlValueConverter`1.ConverterInstance*> is `null` because no actual type or instance is available to perform this conversion. Instead, the object model behavior cannot be determined until run time, when the runtime of the specific technology determines the handling of its object graph.
 
- If you can access a working <xref:System.ComponentModel.TypeConverter> from <xref:System.Xaml.Schema.XamlValueConverter%601.ConverterInstance%2A>, you can invoke its conversion methods. However, many conversion methods rely on service context. If you do not have the same service context available that the type converter expects for its typical role of writing objects for object graphs, the converter methods can throw exceptions.
+ If you can access a working <xref:System.ComponentModel.TypeConverter> from <xref:System.Xaml.Schema.XamlValueConverter`1.ConverterInstance*>, you can invoke its conversion methods. However, many conversion methods rely on service context. If you do not have the same service context available that the type converter expects for its typical role of writing objects for object graphs, the converter methods can throw exceptions.
 
  ]]></format>
         </remarks>
@@ -2354,7 +2354,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.UnderlyingMember> invokes <xref:System.Xaml.XamlMember.LookupUnderlyingMember%2A> or a specific override of that method.
+ Calling <xref:System.Xaml.XamlMember.UnderlyingMember> invokes <xref:System.Xaml.XamlMember.LookupUnderlyingMember*> or a specific override of that method.
 
  ]]></format>
         </remarks>
@@ -2389,7 +2389,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling <xref:System.Xaml.XamlMember.ValueSerializer> invokes <xref:System.Xaml.XamlMember.LookupValueSerializer%2A> or a specific override of that method. This behavior occurs when the initial internal reflection logic has not already set the information.
+ Calling <xref:System.Xaml.XamlMember.ValueSerializer> invokes <xref:System.Xaml.XamlMember.LookupValueSerializer*> or a specific override of that method. This behavior occurs when the initial internal reflection logic has not already set the information.
 
  Not all cases that return a non-null property value for <xref:System.Xaml.XamlMember.ValueSerializer> are necessarily a working <xref:System.Windows.Markup.ValueSerializer>. See <xref:System.Xaml.XamlMember.TypeConverter>; the same considerations apply to <xref:System.Xaml.XamlMember.ValueSerializer>.
 
