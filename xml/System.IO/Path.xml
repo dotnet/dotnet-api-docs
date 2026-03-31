@@ -82,7 +82,7 @@
 
  A path can contain absolute or relative location information. Absolute paths fully specify a location: the file or directory can be uniquely identified regardless of the current location. Relative paths specify a partial location: the current location is used as the starting point when locating a file specified with a relative path. To determine the current directory, call <xref:System.IO.Directory.GetCurrentDirectory%2A?displayProperty=nameWithType>.
 
- .NET Core 1.1 and later versions and .NET Framework 4.6.2 and later versions also support access to file system objects that are device names, such as "\\\\?\\C:\\".
+This type also supports access to file system objects that are device names, such as "\\\\?\\C:\\". Device name support was added in .NET Framework 4.6.2.
 
 For more information on file path formats on Windows, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats).
 
@@ -90,9 +90,9 @@ For more information on file path formats on Windows, see [File path formats on 
 
  Some `Path` members do validate the contents of a specified path string, and throw an <xref:System.ArgumentException> if the string contains characters that are not valid in path strings, as defined in the characters returned from the <xref:System.IO.Path.GetInvalidPathChars%2A> method. For example, on Windows-based desktop platforms, invalid path characters might include quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\\b), null (\\0), and Unicode characters 16 through 18 and 20 through 25. This validation behavior varies between .NET versions:
 
- - On .NET Framework and .NET Core versions older than 2.1: All `Path` members that take a path as an argument throw an <xref:System.ArgumentException> if they detect invalid path characters.
+ - On .NET Framework: All `Path` members that take a path as an argument throw an <xref:System.ArgumentException> if they detect invalid path characters.
 
- - On .NET Core 2.1 and later versions: <xref:System.IO.Path.GetFullPath%2A> is the only member that throws an <xref:System.ArgumentException> if the string contains invalid path characters.
+ - On .NET: <xref:System.IO.Path.GetFullPath%2A> is the only member that throws an <xref:System.ArgumentException> if the string contains invalid path characters.
 
  The members of the `Path` class enable you to quickly and easily perform common operations such as determining whether a file name extension is part of a path, and combining two strings into one path name.
 
@@ -1815,7 +1815,7 @@ Possible patterns for the read-only character span returned by this method are a
 
 - "\\\\ComputerName\\SharedFolder" (Windows: a UNC path).
 
-- "\\\\?\\C:" (Windows: a DOS device path, supported in .NET Core 1.1 and later versions, and in .NET Framework 4.6.2 and later versions).
+- "\\\\?\\C:" (Windows: a DOS device path, supported in .NET versions and in .NET Framework 4.6.2 and later versions).
 
 For more information on file paths on Windows, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats). For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
 
@@ -1917,7 +1917,7 @@ Possible patterns for the string returned by this method are as follows:
 
 - "\\\\ComputerName\\SharedFolder" (Windows: a UNC path).
 
-- "\\\\?\\C:" (Windows: a DOS device path, supported in .NET Core 1.1 and later versions, and in .NET Framework 4.6.2 and later versions).
+- "\\\\?\\C:" (Windows: a DOS device path, supported in .NET versions and in .NET Framework 4.6.2 and later versions).
 
 For more information on file paths on Windows, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats). For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
 
@@ -2124,7 +2124,7 @@ Paths are resolved by calling the <xref:System.IO.Path.GetFullPath%2A> method be
 
 This method creates a temporary file with a *.tmp* file extension and returns the path to it. The temporary file is created within the user's temporary folder, which is the path returned by the <xref:System.IO.Path.GetTempPath%2A> method.
 
-On .NET 7 and earlier versions, when using this method on Windows, the <xref:System.IO.Path.GetTempFileName%2A> method raises an <xref:System.IO.IOException> if it's used to create more than 65535 files without deleting previous temporary files. This limitation does not exist on operating systems other than Windows. Starting in .NET 8, the limitation does not exist on *any* operating system.
+On .NET Framework, the <xref:System.IO.Path.GetTempFileName*> method raises an <xref:System.IO.IOException> if it's used to create more than 65535 files without deleting previous temporary files. This limitation does not exist on operating systems other than Windows. Starting in .NET 8, the limitation does not exist on *any* operating system.
 
  The <xref:System.IO.Path.GetTempFileName%2A> method will raise an <xref:System.IO.IOException> if no unique temporary file name is available. To resolve this error, delete all unneeded temporary files.
 
@@ -2218,7 +2218,7 @@ If the `TMPDIR` environment variable has been set, this method returns the value
 
 Otherwise, this method returns `/tmp/`.
 The `/tmp/` directory on Linux is commonly shared among all users (`1777` permissions); ensure this meets your application's security needs.
-            
+
 ---
 
 ## Examples
