@@ -481,7 +481,7 @@ Skipping zero-initialization using this API only has a material performance bene
 
  Use the <xref:System.GC.MaxGeneration> property to determine the maximum valid value of the `generation` parameter.
 
- To have the garbage collector consider all objects regardless of their generation, use the version of this method that takes no parameters. To have the garbage collector reclaim objects based on a <xref:System.GCCollectionMode> setting, use the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%29?displayProperty=nameWithType> method overload.
+ To have the garbage collector consider all objects regardless of their generation, use the version of this method that takes no parameters. To have the garbage collector reclaim objects based on a <xref:System.GCCollectionMode> setting, use the <xref:System.GC.Collect(System.Int32,System.GCCollectionMode)?displayProperty=nameWithType> method overload.
 
 
 
@@ -564,7 +564,7 @@ Skipping zero-initialization using this API only has a material performance bene
 
  To have the garbage collector consider all objects regardless of their generation, use the version of this method that takes no parameters.
 
- To have the garbage collector reclaim objects up to a specified generation of objects, use the <xref:System.GC.Collect%28System.Int32%29?displayProperty=nameWithType> method overload. When you specify the maximum generation, all objects are collected.
+ To have the garbage collector reclaim objects up to a specified generation of objects, use the <xref:System.GC.Collect(System.Int32)?displayProperty=nameWithType> method overload. When you specify the maximum generation, all objects are collected.
 
 
 
@@ -649,10 +649,10 @@ Skipping zero-initialization using this API only has a material performance bene
 
 |`mode`|`blocking` is `true`|`blocking` is `false`|
 |-|-|-|
-|<xref:System.GCCollectionMode.Forced> or <xref:System.GCCollectionMode.Default>|A blocking collection is performed as soon as possible. If a background collection is in progress and `generation` is 0 or 1, the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method immediately triggers a blocking collection and returns when the collection is finished. If a background collection is in progress and `generation` is 2, the method waits until the background collection is finished, triggers a blocking generation 2 collection, and then returns.|A collection is performed as soon as possible. The <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method requests a background collection, but this is not guaranteed; depending on the circumstances, a blocking collection may still be performed. If a background collection is already in progress, the method returns immediately.|
-|<xref:System.GCCollectionMode.Optimized>|A blocking collection may be performed, depending on the state of the garbage collector and the `generation` parameter. The garbage collector tries to provide optimal performance.|A collection may be performed, depending on the state of the garbage collector. The <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method requests a background collection, but this is not guaranteed; depending on the circumstances, a blocking collection may still be performed. The garbage collector tries to provide optimal performance. If a background collection is already in progress, the method returns immediately.|
+|<xref:System.GCCollectionMode.Forced> or <xref:System.GCCollectionMode.Default>|A blocking collection is performed as soon as possible. If a background collection is in progress and `generation` is 0 or 1, the <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)> method immediately triggers a blocking collection and returns when the collection is finished. If a background collection is in progress and `generation` is 2, the method waits until the background collection is finished, triggers a blocking generation 2 collection, and then returns.|A collection is performed as soon as possible. The <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)> method requests a background collection, but this is not guaranteed; depending on the circumstances, a blocking collection may still be performed. If a background collection is already in progress, the method returns immediately.|
+|<xref:System.GCCollectionMode.Optimized>|A blocking collection may be performed, depending on the state of the garbage collector and the `generation` parameter. The garbage collector tries to provide optimal performance.|A collection may be performed, depending on the state of the garbage collector. The <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)> method requests a background collection, but this is not guaranteed; depending on the circumstances, a blocking collection may still be performed. The garbage collector tries to provide optimal performance. If a background collection is already in progress, the method returns immediately.|
 
- If a call to the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method performs a full blocking garbage collection, you can also compact the large object heap by setting the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode?displayProperty=nameWithType> property to <xref:System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce?displayProperty=nameWithType> before calling the <xref:System.GC.Collect*> method.
+If a call to the <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)> method performs a full blocking garbage collection, you can also compact the large object heap by setting the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode?displayProperty=nameWithType> property to <xref:System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce?displayProperty=nameWithType> before calling the <xref:System.GC.Collect*> method.
 
  ]]></format>
         </remarks>
@@ -726,7 +726,7 @@ Skipping zero-initialization using this API only has a material performance bene
 
  If `compacting` is `true`, the runtime compacts the small object heap (SOH). The large object heap (LOH) is not compacted unless the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode?displayProperty=nameWithType> property is set to <xref:System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce?displayProperty=nameWithType>. Note that this includes all blocking garbage collections, not just full blocking garbage collections.
 
- You can call the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%2CSystem.Boolean%29> method to reduce the managed heap to the smallest size possible, as the following code fragment illustrates.
+ You can call the <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)> method to reduce the managed heap to the smallest size possible, as the following code fragment illustrates.
 
  :::code language="csharp" source="~/snippets/csharp/System/GC/Collect/collect4.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/System/GC/Collect/collect4.fs" id="Snippet1":::
@@ -1483,7 +1483,7 @@ The following example demonstrates the use of the <xref:System.GC.GetGeneration*
 
  For this implementation, the value returned by the <xref:System.GC.MaxGeneration> property is guaranteed to remain constant for the lifetime of an executing application.
 
- Use the <xref:System.GC.MaxGeneration> property to determine the maximum value you can specify when calling the <xref:System.GC.Collect%28System.Int32%29> method that takes a generation parameter.
+ Use the <xref:System.GC.MaxGeneration> property to determine the maximum value you can specify when calling the <xref:System.GC.Collect(System.Int32)> method that takes a generation parameter.
 
 
 ## Examples
@@ -2008,7 +2008,7 @@ If `obj` does not have a finalizer or the GC has already signaled the finalizer 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.GC.TryStartNoGCRegion%28System.Int64%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory. The garbage collector enters no GC region latency mode if it is able to allocate the required amount of memory, which in this case is actually 2 * `totalSize` bytes (it attempts to allocate `totalSize` bytes for the small object heap and `totalSize` bytes for the large object heap).
+ The <xref:System.GC.TryStartNoGCRegion(System.Int64)> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory. The garbage collector enters no GC region latency mode if it is able to allocate the required amount of memory, which in this case is actually 2 * `totalSize` bytes (it attempts to allocate `totalSize` bytes for the small object heap and `totalSize` bytes for the large object heap).
 
  `totalSize` must be large enough to handle all memory allocations that occur in the critical path. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.
 
@@ -2082,11 +2082,11 @@ If `obj` does not have a finalizer or the GC has already signaled the finalizer 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.GC.TryStartNoGCRegion%28System.Int64%2CSystem.Boolean%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory and the `disallowFullBlockingGC` argument is `false`, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory; otherwise, the allocation fails, and the method returns `false`. The garbage collector enters no GC region latency mode if it is able to allocate the required amount of memory, which in this case is actually 2 * `totalSize` (it attempts to allocate `totalSize` for the small object heap and `totalSize` for the large object heap).
+ The <xref:System.GC.TryStartNoGCRegion(System.Int64,System.Boolean)> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory and the `disallowFullBlockingGC` argument is `false`, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory; otherwise, the allocation fails, and the method returns `false`. The garbage collector enters no GC region latency mode if it is able to allocate the required amount of memory, which in this case is actually 2 * `totalSize` (it attempts to allocate `totalSize` for the small object heap and `totalSize` for the large object heap).
 
  `totalSize` must be large enough to handle all memory allocations that occur in the critical path. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.
 
- Setting `disallowFullBlockingGC` to `true` to prevent a full blocking garbage collection if not enough memory is initially available is most useful in load balancing scenarios: one system can call this method and report itself as ready to accept requests if it returns `true`, and have the load balancer redirect requests to other systems if it returns `false`. It can then do a full blocking garbage collection when it's not handling requests by calling the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%2CSystem.Boolean%29> method.
+ Setting `disallowFullBlockingGC` to `true` to prevent a full blocking garbage collection if not enough memory is initially available is most useful in load balancing scenarios: one system can call this method and report itself as ready to accept requests if it returns `true`, and have the load balancer redirect requests to other systems if it returns `false`. It can then do a full blocking garbage collection when it's not handling requests by calling the <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)> method.
 
 > [!IMPORTANT]
 >  You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion*> method, and you should only call the <xref:System.GC.EndNoGCRegion*> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion*> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion*> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion*> succeeded.
@@ -2157,7 +2157,7 @@ If `obj` does not have a finalizer or the GC has already signaled the finalizer 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.GC.TryStartNoGCRegion%28System.Int64%2CSystem.Int64%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory. The garbage collector enters no GC region latency mode if it is able to allocate `lohSize` for the LOH and `totalSize` - `lohSize` for the small object heap (SOH).
+ The <xref:System.GC.TryStartNoGCRegion(System.Int64,System.Int64)> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory. The garbage collector enters no GC region latency mode if it is able to allocate `lohSize` for the LOH and `totalSize` - `lohSize` for the small object heap (SOH).
 
  `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the LOH, and `totalSize` - `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the SOH. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.
 
@@ -2233,11 +2233,11 @@ If `obj` does not have a finalizer or the GC has already signaled the finalizer 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.GC.TryStartNoGCRegion%28System.Int64%2CSystem.Int64%2CSystem.Boolean%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory and the `disallowFullBlockingGC` argument is `false`, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory; otherwise, the allocation fails, and the method returns `false`. The garbage collector enters no GC region latency mode if it is able to allocate `lohSize` for the LOH and `totalSize` - `lohSize` for the small object heap (SOH).
+ The <xref:System.GC.TryStartNoGCRegion(System.Int64,System.Int64,System.Boolean)> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory and the `disallowFullBlockingGC` argument is `false`, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory; otherwise, the allocation fails, and the method returns `false`. The garbage collector enters no GC region latency mode if it is able to allocate `lohSize` for the LOH and `totalSize` - `lohSize` for the small object heap (SOH).
 
  `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the LOH, and `totalSize` - `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the SOH. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.
 
- Setting `disallowFullBlockingGC` to `true` to prevent a full blocking garbage collection if not enough memory is initially available is most useful in load balancing scenarios: one system can call this method and report itself as ready to accept requests if it returns `true`, and have the load balancer redirect requests to other systems if it returns `false`. It can then do a full blocking garbage collection when it's not handling requests by calling the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%2CSystem.Boolean%29> method.
+ Setting `disallowFullBlockingGC` to `true` to prevent a full blocking garbage collection if not enough memory is initially available is most useful in load balancing scenarios: one system can call this method and report itself as ready to accept requests if it returns `true`, and have the load balancer redirect requests to other systems if it returns `false`. It can then do a full blocking garbage collection when it's not handling requests by calling the <xref:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)> method.
 
 > [!IMPORTANT]
 >  You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion*> method, and you should only call the <xref:System.GC.EndNoGCRegion*> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion*> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion*> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion*> succeeded.
@@ -2317,7 +2317,7 @@ If `obj` does not have a finalizer or the GC has already signaled the finalizer 
 
  When the enumeration returns <xref:System.GCNotificationStatus.Succeeded>, you can do tasks such as preventing additional objects from being allocated and inducing a collection yourself with the <xref:System.GC.Collect*> method. Note that the notification does not guarantee that a full garbage collection will occur, only that conditions have reached the threshold that are favorable for a full garbage collection to occur.
 
- This method waits indefinitely for a garbage collection notification to be obtained. If you want to specify a time-out period for the method to return if the notification cannot be obtained, use the <xref:System.GC.WaitForFullGCApproach%28System.Int32%29?displayProperty=nameWithType> method overload. If you call this method without specifying a time-out, you can call the <xref:System.GC.CancelFullGCNotification*> method if you are waiting longer than preferred.
+ This method waits indefinitely for a garbage collection notification to be obtained. If you want to specify a time-out period for the method to return if the notification cannot be obtained, use the <xref:System.GC.WaitForFullGCApproach(System.Int32)?displayProperty=nameWithType> method overload. If you call this method without specifying a time-out, you can call the <xref:System.GC.CancelFullGCNotification*> method if you are waiting longer than preferred.
 
  You should follow this method with a call to the <xref:System.GC.WaitForFullGCComplete*> method to make sure that you have had a full garbage collection. Calling this method alone causes indeterminate results.
 
@@ -2502,7 +2502,7 @@ If `obj` does not have a finalizer or the GC has already signaled the finalizer 
 
  When the enumeration returns <xref:System.GCNotificationStatus.Succeeded>, you can do tasks such as resuming work and obtaining a collection count with the <xref:System.GC.CollectionCount(System.Int32)> method.
 
- This method waits indefinitely for a garbage collection notification to be obtained. If you want to specify a time-out period for the method to return if the notification cannot be obtained, use the <xref:System.GC.WaitForFullGCApproach%28System.Int32%29?displayProperty=nameWithType> method overload. If you call this method without specifying a time-out, you can call the <xref:System.GC.CancelFullGCNotification*> method if you are waiting longer than preferred.
+ This method waits indefinitely for a garbage collection notification to be obtained. If you want to specify a time-out period for the method to return if the notification cannot be obtained, use the <xref:System.GC.WaitForFullGCApproach(System.Int32)?displayProperty=nameWithType> method overload. If you call this method without specifying a time-out, you can call the <xref:System.GC.CancelFullGCNotification*> method if you are waiting longer than preferred.
 
  This method call should be preceded with a call to the <xref:System.GC.WaitForFullGCApproach*> method to make sure that you have had a full garbage collection. Calling this method alone can produce indeterminate results.
 
