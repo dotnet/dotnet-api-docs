@@ -73,7 +73,7 @@
 ## Remarks
  An encoding provider supplies encodings that are not otherwise available on a particular target platform.
 
- The .NET Framework supports a large number of character encodings and code pages. You can get a complete list of encodings available in the .NET Framework by calling the <xref:System.Text.Encoding.GetEncodings%2A?displayProperty=nameWithType> method. .NET Core, on the other hand, by default supports only the following encodings:
+ The .NET Framework supports a large number of character encodings and code pages. You can get a complete list of encodings available in the .NET Framework by calling the <xref:System.Text.Encoding.GetEncodings*?displayProperty=nameWithType> method. .NET Core, on the other hand, by default supports only the following encodings:
 
 - ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
 
@@ -85,7 +85,7 @@
 
 - UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode> property.
 
-- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor%28System.Boolean%2CSystem.Boolean%29?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor%28System.Boolean%2CSystem.Boolean%29?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
+- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor(System.Boolean,System.Boolean)?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor(System.Boolean,System.Boolean)?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
 
 - UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
 
@@ -93,15 +93,15 @@
 
  Starting with the .NET Framework 4.6, <xref:System.Text.EncodingProvider> is the base class that makes otherwise unavailable encodings available to the .NET Framework. This involves the following steps:
 
-1.  Define a subclass of <xref:System.Text.EncodingProvider> that overrides the two abstract <xref:System.Text.EncodingProvider.GetEncoding%2A> overloads, <xref:System.Text.EncodingProvider.GetEncoding%28System.Int32%29> and <xref:System.Text.EncodingProvider.GetEncoding%28System.String%29>. These overloads return the otherwise unsupported encoding by code page identifier and by name. Note that you can also choose to return a default encoding if the <xref:System.Text.EncodingProvider.GetEncoding%28System.Int32%29> method is called with an argument of 0.
+1.  Define a subclass of <xref:System.Text.EncodingProvider> that overrides the two abstract <xref:System.Text.EncodingProvider.GetEncoding*> overloads, <xref:System.Text.EncodingProvider.GetEncoding(System.Int32)> and <xref:System.Text.EncodingProvider.GetEncoding(System.String)>. These overloads return the otherwise unsupported encoding by code page identifier and by name. Note that you can also choose to return a default encoding if the <xref:System.Text.EncodingProvider.GetEncoding(System.Int32)> method is called with an argument of 0.
 
-2.  Optionally, you can override the virtual <xref:System.Text.EncodingProvider.GetEncoding%28System.Int32%2CSystem.Text.EncoderFallback%2CSystem.Text.DecoderFallback%29> and <xref:System.Text.EncodingProvider.GetEncoding%28System.String%2CSystem.Text.EncoderFallback%2CSystem.Text.DecoderFallback%29> methods. In most cases, this is not necessary, since the base class provides a default implementation.
+2.  Optionally, you can override the virtual <xref:System.Text.EncodingProvider.GetEncoding(System.Int32,System.Text.EncoderFallback,System.Text.DecoderFallback)> and <xref:System.Text.EncodingProvider.GetEncoding(System.String,System.Text.EncoderFallback,System.Text.DecoderFallback)> methods. In most cases, this is not necessary, since the base class provides a default implementation.
 
-3.  Pass the <xref:System.Text.EncodingProvider> instance to the <xref:System.Text.Encoding.RegisterProvider%2A?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
+3.  Pass the <xref:System.Text.EncodingProvider> instance to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
 
-4.  Call an <xref:System.Text.Encoding.GetEncoding%2A?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding%2A?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding%2A?displayProperty=nameWithType> to determine whether it can supply the requested encoding.
+4.  Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> to determine whether it can supply the requested encoding.
 
- The .NET Framework Class Library provides one static property, <xref:System.Text.CodePagesEncodingProvider.Instance%2A?displayProperty=nameWithType>, that returns an <xref:System.Text.EncodingProvider> object that makes the full set of encodings available on the desktop .NET Framework Class Library available to .NET Core applications. In addition, you can derive from the <xref:System.Text.EncodingProvider> class to make your own encodings available.
+ The .NET Framework Class Library provides one static property, <xref:System.Text.CodePagesEncodingProvider.Instance*?displayProperty=nameWithType>, that returns an <xref:System.Text.EncodingProvider> object that makes the full set of encodings available on the desktop .NET Framework Class Library available to .NET Core applications. In addition, you can derive from the <xref:System.Text.EncodingProvider> class to make your own encodings available.
 
  ]]></format>
     </remarks>
@@ -345,7 +345,7 @@ This method is called by the [Encoding.GetEncoding(String)](<xref:System.Text.En
 
 - Exception fallback. If the `encoderFallback` argument is an instance of <xref:System.Text.EncoderExceptionFallback>, or the `decoderExceptionFallback` argument is an instance of <xref:System.Text.DecoderExceptionFallback>, the encoding method throws an exception if characters cannot be encoded, and the decoding method throws an exception if a byte sequence cannot be decoded.
 
-- Replacement fallback. If the `encoderFallback` argument is an instance of <xref:System.Text.EncoderReplacementFallback>, or the `decoderExceptionFallback` argument is an instance of <xref:System.Text.DecoderReplacementFallback>, the encoding and decoding methods substitute a replacement string for characters that cannot be encoded and byte sequences cannot be decoded. If you instantiated the replacement fallback object by calling the parameterless constructor, the replacement character is a "?". If you call the <xref:System.Text.EncoderReplacementFallback.%23ctor%28System.String%29?displayProperty=nameWithType> or <xref:System.Text.DecoderReplacementFallback.%23ctor%28System.String%29?displayProperty=nameWithType> constructor, you can specify the replacement string.
+- Replacement fallback. If the `encoderFallback` argument is an instance of <xref:System.Text.EncoderReplacementFallback>, or the `decoderExceptionFallback` argument is an instance of <xref:System.Text.DecoderReplacementFallback>, the encoding and decoding methods substitute a replacement string for characters that cannot be encoded and byte sequences cannot be decoded. If you instantiated the replacement fallback object by calling the parameterless constructor, the replacement character is a "?". If you call the <xref:System.Text.EncoderReplacementFallback.%23ctor(System.String)?displayProperty=nameWithType> or <xref:System.Text.DecoderReplacementFallback.%23ctor(System.String)?displayProperty=nameWithType> constructor, you can specify the replacement string.
 
 - Best-fit fallback. You can derive from the <xref:System.Text.EncoderFallback> or <xref:System.Text.DecoderFallback> class to implement a best-fit replacement mechanism.
 
@@ -418,7 +418,7 @@ This method is called by the [Encoding.GetEncoding(String)](<xref:System.Text.En
 
 - Exception fallback. If the `encoderFallback` argument is an instance of <xref:System.Text.EncoderExceptionFallback>, or the `decoderExceptionFallback` argument is an instance of <xref:System.Text.DecoderExceptionFallback>, the encoding method throws an exception if characters cannot be encoded, and the decoding method throws an exception if a byte sequence cannot be decoded.
 
-- Replacement fallback. If the `encoderFallback` argument is an instance of <xref:System.Text.EncoderReplacementFallback>, or the `decoderExceptionFallback` argument is an instance of <xref:System.Text.DecoderReplacementFallback>, the encoding and decoding methods substitute a replacement string for characters that cannot be encoded and byte sequences cannot be decoded. If you instantiated the replacement fallback object by calling the parameterless constructor, the replacement character is a "?". If you call the <xref:System.Text.EncoderReplacementFallback.%23ctor%28System.String%29?displayProperty=nameWithType> or <xref:System.Text.DecoderReplacementFallback.%23ctor%28System.String%29?displayProperty=nameWithType> constructor, you can specify the replacement string.
+- Replacement fallback. If the `encoderFallback` argument is an instance of <xref:System.Text.EncoderReplacementFallback>, or the `decoderExceptionFallback` argument is an instance of <xref:System.Text.DecoderReplacementFallback>, the encoding and decoding methods substitute a replacement string for characters that cannot be encoded and byte sequences cannot be decoded. If you instantiated the replacement fallback object by calling the parameterless constructor, the replacement character is a "?". If you call the <xref:System.Text.EncoderReplacementFallback.%23ctor(System.String)?displayProperty=nameWithType> or <xref:System.Text.DecoderReplacementFallback.%23ctor(System.String)?displayProperty=nameWithType> constructor, you can specify the replacement string.
 
 - Best-fit fallback. You can derive from the <xref:System.Text.EncoderFallback> or <xref:System.Text.DecoderFallback> class to implement a best-fit replacement mechanism.
 
@@ -470,7 +470,7 @@ This method is called by the [Encoding.GetEncoding(String)](<xref:System.Text.En
 This method returns a list of encodings that are supported by the <xref:System.Text.EncodingProvider>, uniquely distinguished by code page.
 
 > [!NOTE]
-> Starting in .NET 5, the list of supported encodings returned by <xref:System.Text.Encoding.GetEncodings%2A> includes encodings made available by any <xref:System.Text.EncodingProvider> implementations that were registered by calls to the <xref:System.Text.Encoding.RegisterProvider%2A> method.
+> Starting in .NET 5, the list of supported encodings returned by <xref:System.Text.Encoding.GetEncodings*> includes encodings made available by any <xref:System.Text.EncodingProvider> implementations that were registered by calls to the <xref:System.Text.Encoding.RegisterProvider*> method.
 
  ]]></format>
         </remarks>

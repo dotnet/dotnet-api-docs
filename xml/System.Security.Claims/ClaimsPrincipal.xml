@@ -76,20 +76,20 @@
 
 - The application code itself can work directly with the claims contained in the current principal to drive extra authentication, authorization, and personalization tasks.
 
-- You can front your resources with a claims processing pipeline, which can deal with authentication requests and authorization policy even before execution reaches your code. For example, you can configure a web-based application or service with a custom claims authentication manager, an instance of a class that derives from the <xref:System.Security.Claims.ClaimsAuthenticationManager> class. When so configured, the request processing pipeline invokes the <xref:System.Security.Claims.ClaimsAuthenticationManager.Authenticate%2A> method on your claims authentication manager passing it a <xref:System.Security.Claims.ClaimsPrincipal> that represents the context of the incoming request. Your claims authentication manager can then perform authentication based on the values of the incoming claims. It can also filter, transform, or add claims to the incoming claim set. For example, it could be used to enrich the incoming claim set with new claims created from a local data source such as a local user profile
+- You can front your resources with a claims processing pipeline, which can deal with authentication requests and authorization policy even before execution reaches your code. For example, you can configure a web-based application or service with a custom claims authentication manager, an instance of a class that derives from the <xref:System.Security.Claims.ClaimsAuthenticationManager> class. When so configured, the request processing pipeline invokes the <xref:System.Security.Claims.ClaimsAuthenticationManager.Authenticate*> method on your claims authentication manager passing it a <xref:System.Security.Claims.ClaimsPrincipal> that represents the context of the incoming request. Your claims authentication manager can then perform authentication based on the values of the incoming claims. It can also filter, transform, or add claims to the incoming claim set. For example, it could be used to enrich the incoming claim set with new claims created from a local data source such as a local user profile
 
-- You can configure a web-based application with a custom claims authorization manager, an instance of a class that derives from the <xref:System.Security.Claims.ClaimsAuthorizationManager> class. When so configured, the request processing pipeline packages the incoming <xref:System.Security.Claims.ClaimsPrincipal> in an <xref:System.Security.Claims.AuthorizationContext> and invokes the <xref:System.Security.Claims.ClaimsAuthorizationManager.CheckAccess%2A> method on your claims authorization manager. Your claims authorization manager can then enforce authorization based on the incoming claims.
+- You can configure a web-based application with a custom claims authorization manager, an instance of a class that derives from the <xref:System.Security.Claims.ClaimsAuthorizationManager> class. When so configured, the request processing pipeline packages the incoming <xref:System.Security.Claims.ClaimsPrincipal> in an <xref:System.Security.Claims.AuthorizationContext> and invokes the <xref:System.Security.Claims.ClaimsAuthorizationManager.CheckAccess*> method on your claims authorization manager. Your claims authorization manager can then enforce authorization based on the incoming claims.
 
 - Inline claims-based code access checks can be performed by configuring your application with a custom claims authorization manager and using either the <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class to perform imperative access checks or the <xref:System.IdentityModel.Services.ClaimsPrincipalPermissionAttribute> to perform declarative access checks. Claims-based code access checks are performed inline, outside of the processing pipeline, and so are available to all applications as long as a claims authorization manager is configured.
 
- You can obtain a <xref:System.Security.Claims.ClaimsPrincipal> instance for the principal associated with a request, or the principal under which a thread is executing, in a [relying party (RP) application](/archive/msdn-magazine/2010/august/federated-identity-passive-authentication-for-asp-net-with-wif) by casting the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> property to <xref:System.Security.Claims.ClaimsPrincipal>. The claims associated with an <xref:System.Security.Claims.ClaimsPrincipal> object are available through its <xref:System.Security.Claims.ClaimsPrincipal.Claims> property. The <xref:System.Security.Claims.ClaimsPrincipal.Claims> property returns all of the claims contained by the identities associated with the principal. In the uncommon case in which the <xref:System.Security.Claims.ClaimsPrincipal> contains multiple <xref:System.Security.Claims.ClaimsIdentity> instances, you can use the <xref:System.Security.Claims.ClaimsPrincipal.Identities> property or you can access the primary identity by using the <xref:System.Security.Claims.ClaimsPrincipal.Identity> property. <xref:System.Security.Claims.ClaimsPrincipal> provides several methods through which these claims may be searched and fully supports Language Integrated Query (LINQ). Identities can be added to the principal by using the <xref:System.Security.Claims.ClaimsPrincipal.AddIdentities%2A> or <xref:System.Security.Claims.ClaimsPrincipal.AddIdentity%2A> methods.
+ You can obtain a <xref:System.Security.Claims.ClaimsPrincipal> instance for the principal associated with a request, or the principal under which a thread is executing, in a [relying party (RP) application](/archive/msdn-magazine/2010/august/federated-identity-passive-authentication-for-asp-net-with-wif) by casting the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> property to <xref:System.Security.Claims.ClaimsPrincipal>. The claims associated with an <xref:System.Security.Claims.ClaimsPrincipal> object are available through its <xref:System.Security.Claims.ClaimsPrincipal.Claims> property. The <xref:System.Security.Claims.ClaimsPrincipal.Claims> property returns all of the claims contained by the identities associated with the principal. In the uncommon case in which the <xref:System.Security.Claims.ClaimsPrincipal> contains multiple <xref:System.Security.Claims.ClaimsIdentity> instances, you can use the <xref:System.Security.Claims.ClaimsPrincipal.Identities> property or you can access the primary identity by using the <xref:System.Security.Claims.ClaimsPrincipal.Identity> property. <xref:System.Security.Claims.ClaimsPrincipal> provides several methods through which these claims may be searched and fully supports Language Integrated Query (LINQ). Identities can be added to the principal by using the <xref:System.Security.Claims.ClaimsPrincipal.AddIdentities*> or <xref:System.Security.Claims.ClaimsPrincipal.AddIdentity*> methods.
 
 > [!NOTE]
 >  To add identities to the <xref:System.Security.Claims.ClaimsPrincipal>, a caller must have full trust.
 
  By default, WIF prioritizes <xref:System.Security.Principal.WindowsIdentity> objects when selecting the primary identity to return through the <xref:System.Security.Claims.ClaimsPrincipal.Identity> property. You can modify this behavior by supplying a delegate through the <xref:System.Security.Claims.ClaimsPrincipal.PrimaryIdentitySelector> property to perform the selection. The <xref:System.Security.Claims.ClaimsPrincipal.ClaimsPrincipalSelector> property provides similar functionality for the <xref:System.Security.Claims.ClaimsPrincipal.Current> property.
 
- In the claim-based model, whether a principal is in a specified role is determined by the claims presented by its underlying identities. The <xref:System.Security.Claims.ClaimsPrincipal.IsInRole%2A> method essentially examines each identity associated with the principal to determine whether it possesses a claim with the specified role value. The type of the claim (represented by its <xref:System.Security.Claims.Claim.Type?displayProperty=nameWithType> property) used to determine which claims should be examined during role checks is specified on an identity through its <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType?displayProperty=nameWithType> property. Thus, the claims examined during role checks can be of a different type for different identities associated with the principal.
+ In the claim-based model, whether a principal is in a specified role is determined by the claims presented by its underlying identities. The <xref:System.Security.Claims.ClaimsPrincipal.IsInRole*> method essentially examines each identity associated with the principal to determine whether it possesses a claim with the specified role value. The type of the claim (represented by its <xref:System.Security.Claims.Claim.Type?displayProperty=nameWithType> property) used to determine which claims should be examined during role checks is specified on an identity through its <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType?displayProperty=nameWithType> property. Thus, the claims examined during role checks can be of a different type for different identities associated with the principal.
 
 ## Examples
  The following example extracts the claims presented by a user in an HTTP request and writes them to the HTTP response. The current user is read from the <xref:System.Web.HttpContext> as a <xref:System.Security.Claims.ClaimsPrincipal>. The claims are then read from it and then are written to the response.
@@ -161,7 +161,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- No identities are associated with the new instance. (The <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection is empty).
+ No identities are associated with the new instance. (The <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is empty).
 
           ]]></format>
         </remarks>
@@ -210,7 +210,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection is initialized with the specified identities.
+ The <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is initialized with the specified identities.
 
           ]]></format>
         </remarks>
@@ -261,7 +261,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Normally, the <xref:System.IO.BinaryReader> is constructed using the bytes from <xref:System.Security.Claims.ClaimsIdentity.WriteTo%2A> and initialized in the same way as the <xref:System.IO.BinaryWriter>.
+ Normally, the <xref:System.IO.BinaryReader> is constructed using the bytes from <xref:System.Security.Claims.ClaimsIdentity.WriteTo*> and initialized in the same way as the <xref:System.IO.BinaryWriter>.
 
           ]]></format>
         </remarks>
@@ -312,7 +312,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the specified identity is assignable from <xref:System.Security.Claims.ClaimsIdentity>, it is used to initialize the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection. Otherwise, a <xref:System.Security.Claims.ClaimsIdentity> is created using the specified identity and is used to initialize the collection.
+ If the specified identity is assignable from <xref:System.Security.Claims.ClaimsIdentity>, it is used to initialize the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection. Otherwise, a <xref:System.Security.Claims.ClaimsIdentity> is created using the specified identity and is used to initialize the collection.
 
           ]]></format>
         </remarks>
@@ -363,7 +363,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the specified principal is assignable from <xref:System.Security.Claims.ClaimsPrincipal>, all of its identities are added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection. If the specified principal is not assignable from <xref:System.Security.Claims.ClaimsPrincipal>, a new <xref:System.Security.Claims.ClaimsIdentity> is created from the <xref:System.Security.Principal.IIdentity> in its <xref:System.Security.Principal.IPrincipal.Identity?displayProperty=nameWithType> property and added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection.
+ If the specified principal is assignable from <xref:System.Security.Claims.ClaimsPrincipal>, all of its identities are added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection. If the specified principal is not assignable from <xref:System.Security.Claims.ClaimsPrincipal>, a new <xref:System.Security.Claims.ClaimsIdentity> is created from the <xref:System.Security.Principal.IIdentity> in its <xref:System.Security.Principal.IPrincipal.Identity?displayProperty=nameWithType> property and added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection.
 
           ]]></format>
         </remarks>
@@ -481,7 +481,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The identities are added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection.
+ The identities are added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection.
 
           ]]></format>
         </remarks>
@@ -541,7 +541,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The identity is added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection.
+ The identity is added to the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection.
 
           ]]></format>
         </remarks>
@@ -812,7 +812,7 @@ if (HttpContext.Current.User is ClaimsPrincipal principal)
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- By default, <xref:System.Threading.Thread.CurrentPrincipal%2A?displayProperty=nameWithType> is returned. You can change this behavior by setting the <xref:System.Security.Claims.ClaimsPrincipal.ClaimsPrincipalSelector> property to specify a delegate to be called to determine the current principal.
+ By default, <xref:System.Threading.Thread.CurrentPrincipal*?displayProperty=nameWithType> is returned. You can change this behavior by setting the <xref:System.Security.Claims.ClaimsPrincipal.ClaimsPrincipalSelector> property to specify a delegate to be called to determine the current principal.
 
           ]]></format>
         </remarks>
@@ -1293,7 +1293,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Does not check the <xref:System.Security.Claims.Claim.Issuer%2A> or <xref:System.Security.Claims.Claim.OriginalIssuer%2A> properties. The comparison is made using Ordinal, case sensitive on value; case in-sensitive on type.
+ Does not check the <xref:System.Security.Claims.Claim.Issuer*> or <xref:System.Security.Claims.Claim.OriginalIssuer*> properties. The comparison is made using Ordinal, case sensitive on value; case in-sensitive on type.
 
           ]]></format>
         </remarks>
@@ -1405,7 +1405,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- By default, the framework prioritizes identities of type <xref:System.Security.Principal.WindowsIdentity> when returning the identity. The first <xref:System.Security.Principal.WindowsIdentity> found in the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection is returned. If there is no <xref:System.Security.Principal.WindowsIdentity> in the collection, the first identity assignable from <xref:System.Security.Claims.ClaimsIdentity> is returned. If there is no <xref:System.Security.Claims.ClaimsIdentity>, `null` is returned. If the <xref:System.Security.Claims.ClaimsPrincipal.Identities%2A> collection is empty, an <xref:System.ArgumentNullException> is thrown.
+ By default, the framework prioritizes identities of type <xref:System.Security.Principal.WindowsIdentity> when returning the identity. The first <xref:System.Security.Principal.WindowsIdentity> found in the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is returned. If there is no <xref:System.Security.Principal.WindowsIdentity> in the collection, the first identity assignable from <xref:System.Security.Claims.ClaimsIdentity> is returned. If there is no <xref:System.Security.Claims.ClaimsIdentity>, `null` is returned. If the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is empty, an <xref:System.ArgumentNullException> is thrown.
 
  You can change the default behavior by setting the <xref:System.Security.Claims.ClaimsPrincipal.PrimaryIdentitySelector> property to specify a delegate to be called to determine the identity.
 
@@ -1465,7 +1465,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Security.Claims.ClaimsPrincipal.IsInRole%2A> method checks whether an identity that this claims principal possesses contains a claim of type <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType%2A?displayProperty=nameWithType> where the value of the claim is equal to the value specified by the `role` parameter.
+ The <xref:System.Security.Claims.ClaimsPrincipal.IsInRole*> method checks whether an identity that this claims principal possesses contains a claim of type <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType*?displayProperty=nameWithType> where the value of the claim is equal to the value specified by the `role` parameter.
 
 > [!NOTE]
 >  Each <xref:System.Security.Claims.ClaimsIdentity> has its own definition of the claim type that represents a role. This claim type can be accessed and set through the <xref:System.Security.Claims.ClaimsIdentity.RoleClaimType?displayProperty=nameWithType> property.
