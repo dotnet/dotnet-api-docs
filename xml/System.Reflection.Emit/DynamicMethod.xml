@@ -57,7 +57,7 @@
     <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-reflection-emit-dynamicmethod">Supplemental API remarks for DynamicMethod</see>.</remarks>
     <example>
       <format type="text/markdown"><![CDATA[
-The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method.
+The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method.
 
 :::code language="csharp" source="~/snippets/csharp/System.Reflection.Emit/DynamicMethod/Overview/source.cs" id="Snippet1":::
 :::code language="vb" source="~/snippets/visualbasic/System.Reflection.Emit/DynamicMethod/Overview/source.vb" id="Snippet1":::
@@ -151,7 +151,7 @@ The following code example creates a dynamic method that takes two parameters. T
 ## Remarks
  The dynamic method that is created by this constructor is associated with an anonymous assembly instead of an existing type or module. The anonymous assembly exists only to provide a sandbox environment for dynamic methods, that is, to isolate them from other code. This environment makes it safe for the dynamic method to be emitted and executed by partially trusted code.
 
- This constructor specifies that just-in-time (JIT) visibility checks will be enforced for the Microsoft intermediate language (MSIL) of the dynamic method. That is, the code in the dynamic method has access to public methods of public classes. Exceptions are thrown if the method tries to access types or members that are `private`, `protected`, or `internal` (`Friend` in Visual Basic). To create a dynamic method that has restricted ability to skip JIT visibility checks, use the <xref:System.Reflection.Emit.DynamicMethod.%23ctor%28System.String%2CSystem.Type%2CSystem.Type%5B%5D%2CSystem.Boolean%29> constructor.
+ This constructor specifies that just-in-time (JIT) visibility checks will be enforced for the Microsoft intermediate language (MSIL) of the dynamic method. That is, the code in the dynamic method has access to public methods of public classes. Exceptions are thrown if the method tries to access types or members that are `private`, `protected`, or `internal` (`Friend` in Visual Basic). To create a dynamic method that has restricted ability to skip JIT visibility checks, use the <xref:System.Reflection.Emit.DynamicMethod.%23ctor(System.String,System.Type,System.Type[],System.Boolean)> constructor.
 
  When an anonymously hosted dynamic method is constructed, the call stack of the emitting assembly is included. When the method is invoked, the permissions of the emitting assembly are used instead of the permissions of the actual caller. Thus, the dynamic method cannot execute at a higher level of privilege than that of the assembly that emitted it, even if it is passed to and executed by an assembly that has a higher trust level.
 
@@ -257,7 +257,7 @@ The following code example creates a dynamic method that takes two parameters. T
 - The call stack that emits the dynamic method is granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag. This is always true when the code is executed with full trust. For partially trusted code, it is true only if the host explicitly grants the permission.
 
     > [!IMPORTANT]
-    >  If the permission has not been granted, a security exception is thrown when <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> is called or when the dynamic method is invoked, not when this constructor is called. No special permissions are required to emit the dynamic method.
+    >  If the permission has not been granted, a security exception is thrown when <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> is called or when the dynamic method is invoked, not when this constructor is called. No special permissions are required to emit the dynamic method.
 
  For example, a dynamic method that is created with `restrictedSkipVisibility` set to `true` can access a private member of any assembly on the call stack if the call stack has been granted restricted member access. If the dynamic method is created with partially trusted code on the call stack, it cannot access a private member of a type in a .NET Framework assembly, because such assemblies are fully trusted.
 
@@ -363,7 +363,7 @@ The following code example creates a dynamic method that takes two parameters. T
  >  For backward compatibility, this constructor demands <xref:System.Security.Permissions.SecurityPermission> with the <xref:System.Security.Permissions.SecurityPermissionFlag.ControlEvidence?displayProperty=nameWithType> flag if the following conditions are both true: `m` is a module other than the calling module, and the demand for <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.MemberAccess?displayProperty=nameWithType> flag has failed. If the demand for <xref:System.Security.Permissions.SecurityPermission> succeeds, the operation is allowed.
 
 ## Examples
- The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke%28System.Object%2CSystem.Reflection.BindingFlags%2CSystem.Reflection.Binder%2CSystem.Object%5B%5D%2CSystem.Globalization.CultureInfo%29> method.
+ The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke(System.Object,System.Reflection.BindingFlags,System.Reflection.Binder,System.Object[],System.Globalization.CultureInfo)> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Reflection.Emit/DynamicMethod/.ctor/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Reflection.Emit/DynamicMethod/.ctor/source1.vb" id="Snippet1":::
@@ -477,10 +477,10 @@ The following code example creates a dynamic method that takes two parameters. T
 > [!NOTE]
 >  In general, changing the internal fields of classes is not good object-oriented coding practice.
 
- The example code creates an instance of `Example` and then creates two delegates. The first is of type `UseLikeStatic`, which has the same parameters as the dynamic method. The second is of type `UseLikeInstance`, which lacks the first parameter (of type `Example`). This delegate is created using the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%28System.Type%2CSystem.Object%29> method overload; the second parameter of that method overload is an instance of `Example`, in this case the instance just created, which is bound to the newly created delegate. Whenever that delegate is invoked, the dynamic method acts on the bound instance of `Example`.
+ The example code creates an instance of `Example` and then creates two delegates. The first is of type `UseLikeStatic`, which has the same parameters as the dynamic method. The second is of type `UseLikeInstance`, which lacks the first parameter (of type `Example`). This delegate is created using the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate(System.Type,System.Object)> method overload; the second parameter of that method overload is an instance of `Example`, in this case the instance just created, which is bound to the newly created delegate. Whenever that delegate is invoked, the dynamic method acts on the bound instance of `Example`.
 
 > [!NOTE]
-> This is an example of the relaxed rules for delegate binding introduced in .NET Framework 2.0, along with new overloads of the <xref:System.Delegate.CreateDelegate%2A?displayProperty=nameWithType> method. For more information, see the <xref:System.Delegate> class.
+> This is an example of the relaxed rules for delegate binding introduced in .NET Framework 2.0, along with new overloads of the <xref:System.Delegate.CreateDelegate*?displayProperty=nameWithType> method. For more information, see the <xref:System.Delegate> class.
 
  The `UseLikeStatic` delegate is invoked, passing in the instance of `Example` that is bound to the `UseLikeInstance` delegate. Then the `UseLikeInstance` delegate is invoked, so that both delegates act on the same instance of `Example`. The changes in the values of the internal field are displayed after each call. Finally, a `UseLikeInstance` delegate is bound to an instance of `DerivedFromExample`, and the delegate calls are repeated.
 
@@ -1121,14 +1121,14 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> method or the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method completes the dynamic method. Any further attempt to alter the dynamic method, such as modifying parameter definitions or emitting more Microsoft intermediate language (MSIL), is ignored; no exception is thrown.
+ Calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> method or the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method completes the dynamic method. Any further attempt to alter the dynamic method, such as modifying parameter definitions or emitting more Microsoft intermediate language (MSIL), is ignored; no exception is thrown.
 
- To create a method body for a dynamic method when you have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetDynamicILInfo%2A> method to obtain a <xref:System.Reflection.Emit.DynamicILInfo> object. If you do not have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetILGenerator%2A> method to obtain an <xref:System.Reflection.Emit.ILGenerator> object that can be used to generate the method body.
+ To create a method body for a dynamic method when you have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetDynamicILInfo*> method to obtain a <xref:System.Reflection.Emit.DynamicILInfo> object. If you do not have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetILGenerator*> method to obtain an <xref:System.Reflection.Emit.ILGenerator> object that can be used to generate the method body.
 
 
 
 ## Examples
- The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method.
+ The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Reflection.Emit/DynamicMethod/.ctor/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Reflection.Emit/DynamicMethod/.ctor/source1.vb" id="Snippet1":::
@@ -1216,9 +1216,9 @@ The following code example creates a dynamic method that takes two parameters. T
 
  This method overload requires `target` to be of the same type as the first parameter of the dynamic method, or to be assignable to that type (for example, a derived class).  The signature of `delegateType` has all the parameters of the dynamic method except the first. For example, if the dynamic method has the parameters <xref:System.String>, <xref:System.Int32>, and <xref:System.Byte>, then `delegateType` has the parameters <xref:System.Int32> and <xref:System.Byte>; `target` is of type <xref:System.String>.
 
- Calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> method or the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method completes the dynamic method. Any further attempt to alter the dynamic method, such as modifying parameter definitions or emitting more Microsoft intermediate language (MSIL), is ignored; no exception is thrown.
+ Calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> method or the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method completes the dynamic method. Any further attempt to alter the dynamic method, such as modifying parameter definitions or emitting more Microsoft intermediate language (MSIL), is ignored; no exception is thrown.
 
- To create a method body for a dynamic method when you have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetDynamicILInfo%2A> method to obtain a <xref:System.Reflection.Emit.DynamicILInfo> object. If you do not have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetILGenerator%2A> method to obtain an <xref:System.Reflection.Emit.ILGenerator> object that can be used to generate the method body.
+ To create a method body for a dynamic method when you have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetDynamicILInfo*> method to obtain a <xref:System.Reflection.Emit.DynamicILInfo> object. If you do not have your own MSIL generator, call the <xref:System.Reflection.Emit.DynamicMethod.GetILGenerator*> method to obtain an <xref:System.Reflection.Emit.ILGenerator> object that can be used to generate the method body.
 
 
 
@@ -1232,10 +1232,10 @@ The following code example creates a dynamic method that takes two parameters. T
 > [!NOTE]
 >  In general, changing the internal fields of classes is not good object-oriented coding practice.
 
- The example code creates an instance of `Example` and then creates two delegates. The first is of type `UseLikeStatic`, which has the same parameters as the dynamic method. The second is of type `UseLikeInstance`, which lacks the first parameter (of type `Example`). This delegate is created using the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%28System.Type%2CSystem.Object%29> method overload; the second parameter of that method overload is an instance of `Example`, in this case the instance just created, which is bound to the newly created delegate. Whenever that delegate is invoked, the dynamic method acts on the bound instance of `Example`.
+ The example code creates an instance of `Example` and then creates two delegates. The first is of type `UseLikeStatic`, which has the same parameters as the dynamic method. The second is of type `UseLikeInstance`, which lacks the first parameter (of type `Example`). This delegate is created using the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate(System.Type,System.Object)> method overload; the second parameter of that method overload is an instance of `Example`, in this case the instance just created, which is bound to the newly created delegate. Whenever that delegate is invoked, the dynamic method acts on the bound instance of `Example`.
 
 > [!NOTE]
-> This is an example of the relaxed rules for delegate binding introduced in .NET Framework 2.0, along with new overloads of the <xref:System.Delegate.CreateDelegate%2A?displayProperty=nameWithType> method. For more information, see the <xref:System.Delegate> class.
+> This is an example of the relaxed rules for delegate binding introduced in .NET Framework 2.0, along with new overloads of the <xref:System.Delegate.CreateDelegate*?displayProperty=nameWithType> method. For more information, see the <xref:System.Delegate> class.
 
  The `UseLikeStatic` delegate is invoked, passing in the instance of `Example` that is bound to the `UseLikeInstance` delegate. Then the `UseLikeInstance` delegate is invoked, so that both delegates act on the same instance of `Example`. The changes in the values of the internal field are displayed after each call. Finally, a `UseLikeInstance` delegate is bound to an instance of `DerivedFromExample`, and the delegate calls are repeated.
 
@@ -1365,9 +1365,9 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If `position` is 0, the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter%2A> method refers to the return value. Setting parameter information has no effect on the return value.
+ If `position` is 0, the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter*> method refers to the return value. Setting parameter information has no effect on the return value.
 
- If the dynamic method has already been completed, by calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> or <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method, the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter%2A> method has no effect. No exception is thrown.
+ If the dynamic method has already been completed, by calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> or <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method, the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter*> method has no effect. No exception is thrown.
 
 
 
@@ -1497,7 +1497,7 @@ The following code example creates a dynamic method that takes two parameters. T
  For dynamic methods, specifying `true` for `inherit` has no effect, because the method is not declared in a type.
 
 > [!NOTE]
->  Custom attributes are not currently supported on dynamic methods. The only attribute returned is <xref:System.Runtime.CompilerServices.MethodImplAttribute>; you can get the method implementation flags more easily using the <xref:System.Reflection.Emit.DynamicMethod.GetMethodImplementationFlags%2A> method.
+>  Custom attributes are not currently supported on dynamic methods. The only attribute returned is <xref:System.Runtime.CompilerServices.MethodImplAttribute>; you can get the method implementation flags more easily using the <xref:System.Reflection.Emit.DynamicMethod.GetMethodImplementationFlags*> method.
 
  ]]></format>
         </remarks>
@@ -1555,7 +1555,7 @@ The following code example creates a dynamic method that takes two parameters. T
  For dynamic methods, specifying `true` for `inherit` has no effect, because the method is not declared in a type.
 
 > [!NOTE]
->  Custom attributes are not currently supported on dynamic methods. The only attribute returned is <xref:System.Runtime.CompilerServices.MethodImplAttribute>; you can get the method implementation flags more easily using the <xref:System.Reflection.Emit.DynamicMethod.GetMethodImplementationFlags%2A> method.
+>  Custom attributes are not currently supported on dynamic methods. The only attribute returned is <xref:System.Runtime.CompilerServices.MethodImplAttribute>; you can get the method implementation flags more easily using the <xref:System.Reflection.Emit.DynamicMethod.GetMethodImplementationFlags*> method.
 
  ]]></format>
         </remarks>
@@ -1671,7 +1671,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- After a dynamic method has been completed, by calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> or <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method, any further attempt to add MSIL is ignored. No exception is thrown.
+ After a dynamic method has been completed, by calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> or <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method, any further attempt to add MSIL is ignored. No exception is thrown.
 
 > [!NOTE]
 >  There are restrictions on unverifiable code in dynamic methods, even in some full-trust scenarios. See the "Verification" section in Remarks for <xref:System.Reflection.Emit.DynamicMethod>.
@@ -1679,7 +1679,7 @@ The following code example creates a dynamic method that takes two parameters. T
 
 
 ## Examples
- The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method.
+ The following code example creates a dynamic method that takes two parameters. The example emits a simple function body that prints the first parameter to the console, and the example uses the second parameter as the return value of the method. The example completes the method by creating a delegate, invokes the delegate with different parameters, and finally invokes the dynamic method using the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Reflection.Emit/DynamicMethod/.ctor/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Reflection.Emit/DynamicMethod/.ctor/source1.vb" id="Snippet1":::
@@ -1741,7 +1741,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- After a dynamic method has been completed, by calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> or <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method, any further attempt to add MSIL is ignored. No exception is thrown.
+ After a dynamic method has been completed, by calling the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> or <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method, any further attempt to add MSIL is ignored. No exception is thrown.
 
 > [!NOTE]
 >  There are restrictions on unverifiable code in dynamic methods, even in some full-trust scenarios. See the "Verification" section in Remarks for <xref:System.Reflection.Emit.DynamicMethod>.
@@ -1850,7 +1850,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Reflection.ParameterInfo> objects returned by this method are for information only. Use the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter%2A> method to set or change the characteristics of the parameters.
+ The <xref:System.Reflection.ParameterInfo> objects returned by this method are for information only. Use the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter*> method to set or change the characteristics of the parameters.
 
 
 
@@ -1984,16 +1984,16 @@ The following code example creates a dynamic method that takes two parameters. T
 ## Remarks
  In addition to the listed exceptions, the calling code should be prepared to catch any exceptions thrown by the dynamic method.
 
- Executing a dynamic method with a delegate created by the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> method is more efficient than executing it with the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method.
+ Executing a dynamic method with a delegate created by the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> method is more efficient than executing it with the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method.
 
- Calling the <xref:System.Reflection.Emit.DynamicMethod.Invoke%2A> method or the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%2A> method completes the dynamic method. Any further attempt to alter the dynamic method, such as modifying parameter definitions or emitting more Microsoft intermediate language (MSIL), is ignored; no exception is thrown.
+ Calling the <xref:System.Reflection.Emit.DynamicMethod.Invoke*> method or the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> method completes the dynamic method. Any further attempt to alter the dynamic method, such as modifying parameter definitions or emitting more Microsoft intermediate language (MSIL), is ignored; no exception is thrown.
 
- All dynamic methods are static, so the `obj` parameter is always ignored. To treat a dynamic method as if it were an instance method, use the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate%28System.Type%2CSystem.Object%29> overload that takes an object instance.
+ All dynamic methods are static, so the `obj` parameter is always ignored. To treat a dynamic method as if it were an instance method, use the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate(System.Type,System.Object)> overload that takes an object instance.
 
  If the dynamic method has no parameters, the value of `parameters` should be `null`. Otherwise the number, type, and order of elements in the parameters array should be identical to the number, type, and order of parameters of the dynamic method.
 
 > [!NOTE]
->  This method overload is called by the <xref:System.Reflection.MethodBase.Invoke%28System.Object%2CSystem.Object%5B%5D%29> method overload inherited from the <xref:System.Reflection.MethodBase> class, so the preceding remarks apply to both overloads.
+>  This method overload is called by the <xref:System.Reflection.MethodBase.Invoke(System.Object,System.Object[])> method overload inherited from the <xref:System.Reflection.MethodBase> class, so the preceding remarks apply to both overloads.
 
  This method does not demand permissions directly, but invoking the dynamic method can result in security demands, depending on the method. For example, no demands are made for anonymously hosted dynamic methods that are created with the `restrictedSkipVisibility` parameter set to `false`. On the other hand, if you create a method with `restrictedSkipVisibility` set to `true` so it can access a hidden member of a target assembly, the method will cause a demand for the permissions of the target assembly plus <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.MemberAccess?displayProperty=nameWithType> flag.
 
@@ -2123,7 +2123,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical%2A>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical%2A>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent%2A> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
+ The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical*>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical*>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent*> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
 
 |Security level|IsSecurityCritical|IsSecuritySafeCritical|IsSecurityTransparent|
 |--------------------|------------------------|----------------------------|---------------------------|
@@ -2211,7 +2211,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical%2A>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical%2A>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent%2A> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
+ The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical*>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical*>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent*> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
 
 |Security level|IsSecurityCritical|IsSecuritySafeCritical|IsSecurityTransparent|
 |--------------------|------------------------|----------------------------|---------------------------|
@@ -2299,7 +2299,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical%2A>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical%2A>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent%2A> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
+ The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical*>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical*>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent*> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
 
 |Security level|IsSecurityCritical|IsSecuritySafeCritical|IsSecurityTransparent|
 |--------------------|------------------------|----------------------------|---------------------------|
@@ -2727,7 +2727,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Custom attributes are not supported on the return type of a dynamic method, so the array of custom attributes returned by the <xref:System.Reflection.ICustomAttributeProvider.GetCustomAttributes%2A> method is always empty.
+ Custom attributes are not supported on the return type of a dynamic method, so the array of custom attributes returned by the <xref:System.Reflection.ICustomAttributeProvider.GetCustomAttributes*> method is always empty.
 
 
 
@@ -2790,7 +2790,7 @@ The following code example creates a dynamic method that takes two parameters. T
 
 
 ## Examples
- The following code example displays the <xref:System.Reflection.Emit.DynamicMethod.ToString%2A> method of a dynamic method. This code example is part of a larger example provided for the <xref:System.Reflection.Emit.DynamicMethod> class.
+ The following code example displays the <xref:System.Reflection.Emit.DynamicMethod.ToString*> method of a dynamic method. This code example is part of a larger example provided for the <xref:System.Reflection.Emit.DynamicMethod> class.
 
  :::code language="csharp" source="~/snippets/csharp/System.Reflection.Emit/DynamicMethod/Overview/source.cs" id="Snippet32":::
  :::code language="vb" source="~/snippets/visualbasic/System.Reflection.Emit/DynamicMethod/Overview/source.vb" id="Snippet32":::
