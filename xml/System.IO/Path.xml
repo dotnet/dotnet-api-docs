@@ -80,26 +80,26 @@
 
  A path is a string that provides the location of a file or directory. A path does not necessarily point to a location on disk; for example, a path might map to a location in memory or on a device. The exact format of a path is determined by the current platform. For example, on some systems, a path can start with a drive or volume letter, while this element is not present in other systems. On some systems, file paths can contain extensions, which indicate the type of information stored in the file. The format of a file name extension is platform-dependent; for example, some systems limit extensions to three characters (such as FAT16 commonly used on smaller flash storage and older versions of ISO 9660 used on optical media), and others do not. The current platform also determines the set of characters used to separate the elements of a path, and the set of characters that cannot be used when specifying paths. Because of these differences, the fields of the `Path` class as well as the exact behavior of some members of the `Path` class are platform-dependent.
 
- A path can contain absolute or relative location information. Absolute paths fully specify a location: the file or directory can be uniquely identified regardless of the current location. Relative paths specify a partial location: the current location is used as the starting point when locating a file specified with a relative path. To determine the current directory, call <xref:System.IO.Directory.GetCurrentDirectory%2A?displayProperty=nameWithType>.
+ A path can contain absolute or relative location information. Absolute paths fully specify a location: the file or directory can be uniquely identified regardless of the current location. Relative paths specify a partial location: the current location is used as the starting point when locating a file specified with a relative path. To determine the current directory, call <xref:System.IO.Directory.GetCurrentDirectory*?displayProperty=nameWithType>.
 
 This type also supports access to file system objects that are device names, such as "\\\\?\\C:\\". Device name support was added in .NET Framework 4.6.2.
 
 For more information on file path formats on Windows, see [File path formats on Windows systems](/dotnet/standard/io/file-path-formats).
 
- Most members of the `Path` class do not interact with the file system and do not verify the existence of the file specified by a path string. `Path` class members that modify a path string, such as <xref:System.IO.Path.ChangeExtension%2A>, have no effect on names of files in the file system.
+ Most members of the `Path` class do not interact with the file system and do not verify the existence of the file specified by a path string. `Path` class members that modify a path string, such as <xref:System.IO.Path.ChangeExtension*>, have no effect on names of files in the file system.
 
- Some `Path` members do validate the contents of a specified path string, and throw an <xref:System.ArgumentException> if the string contains characters that are not valid in path strings, as defined in the characters returned from the <xref:System.IO.Path.GetInvalidPathChars%2A> method. For example, on Windows-based desktop platforms, invalid path characters might include quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\\b), null (\\0), and Unicode characters 16 through 18 and 20 through 25. This validation behavior varies between .NET versions:
+ Some `Path` members do validate the contents of a specified path string, and throw an <xref:System.ArgumentException> if the string contains characters that are not valid in path strings, as defined in the characters returned from the <xref:System.IO.Path.GetInvalidPathChars*> method. For example, on Windows-based desktop platforms, invalid path characters might include quote ("), less than (\<), greater than (>), pipe (&#124;), backspace (\\b), null (\\0), and Unicode characters 16 through 18 and 20 through 25. This validation behavior varies between .NET versions:
 
  - On .NET Framework: All `Path` members that take a path as an argument throw an <xref:System.ArgumentException> if they detect invalid path characters.
 
- - On .NET: <xref:System.IO.Path.GetFullPath%2A> is the only member that throws an <xref:System.ArgumentException> if the string contains invalid path characters.
+ - On .NET: <xref:System.IO.Path.GetFullPath*> is the only member that throws an <xref:System.ArgumentException> if the string contains invalid path characters.
 
  The members of the `Path` class enable you to quickly and easily perform common operations such as determining whether a file name extension is part of a path, and combining two strings into one path name.
 
  All members of the `Path` class are static and can therefore be called without having an instance of a path.
 
 > [!NOTE]
->  In members that accept a path as an input string, that path must be well-formed or an exception is raised. For example, if a path is fully qualified but begins with a space, the path is not trimmed in methods of the class. Therefore, the path is malformed and an exception is raised. Similarly, a path or a combination of paths cannot be fully qualified twice. For example, "c:\\temp c:\\windows" also raises an exception in most cases. Ensure that your paths are well-formed when using methods that accept a path string.
+> In members that accept a path as an input string, that path must be well-formed or an exception is raised. For example, if a path is fully qualified but begins with a space, the path is not trimmed in methods of the class. Therefore, the path is malformed and an exception is raised. Similarly, a path or a combination of paths cannot be fully qualified twice. For example, "c:\\temp c:\\windows" also raises an exception in most cases. Ensure that your paths are well-formed when using methods that accept a path string.
 
  In members that accept a path, the path can refer to a file or just a directory. The specified path can also refer to a relative path or a Universal Naming Convention (UNC) path for a server and share name. For example, all the following are acceptable paths:
 
@@ -111,7 +111,7 @@ For more information on file path formats on Windows, see [File path formats on 
 
 -   "\\\\\\\\MyServer\\\\MyShare" in C#, or "\\\\MyServer\\MyShare" in Visual Basic.
 
- Because all these operations are performed on strings, it is impossible to verify that the results are valid in all scenarios. For example, the <xref:System.IO.Path.GetExtension%2A> method parses a string that you pass to it and returns the extension from that string. However, this does not mean that a file with that extension exists on the disk.
+ Because all these operations are performed on strings, it is impossible to verify that the results are valid in all scenarios. For example, the <xref:System.IO.Path.GetExtension*> method parses a string that you pass to it and returns the extension from that string. However, this does not mean that a file with that extension exists on the disk.
 
  For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
 
@@ -300,10 +300,10 @@ The following example displays <xref:System.IO.Path> field values on Windows and
 
 ## Remarks
 
-This method is intended to concatenate individual strings into a single string that represents a file path. However, if an argument other than the first contains a rooted path, any previous path components are ignored, and the returned string begins with that rooted path component. As an alternative to the `Combine` method, consider using the <xref:System.IO.Path.Join%2A> or <xref:System.IO.Path.TryJoin%2A> methods (not available in .NET Framework).
+This method is intended to concatenate individual strings into a single string that represents a file path. However, if an argument other than the first contains a rooted path, any previous path components are ignored, and the returned string begins with that rooted path component. As an alternative to the `Combine` method, consider using the <xref:System.IO.Path.Join*> or <xref:System.IO.Path.TryJoin*> methods (not available in .NET Framework).
 
 > [!IMPORTANT]
-> This method assumes that the first argument is an absolute path and that the following argument or arguments are relative paths. If this is not the case, and particularly if any subsequent arguments are strings input by the user, call the <xref:System.IO.Path.Join%2A> or <xref:System.IO.Path.TryJoin%2A> method instead.
+> This method assumes that the first argument is an absolute path and that the following argument or arguments are relative paths. If this is not the case, and particularly if any subsequent arguments are strings input by the user, call the <xref:System.IO.Path.Join*> or <xref:System.IO.Path.TryJoin*> method instead.
 
  ]]></format>
         </remarks>
@@ -506,7 +506,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
 
  If `path2` does not include a root (for example, if `path2` does not start with a separator character or a drive specification), the result is a concatenation of the two paths, with an intervening separator character. If `path2` includes a root, `path2` is returned.
 
- The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \\file.txt "), the <xref:System.IO.Path.Combine%2A> method appends `path2` to `path1` instead of returning only `path2`.
+ The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \\file.txt "), the <xref:System.IO.Path.Combine*> method appends `path2` to `path1` instead of returning only `path2`.
 
  .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.
 
@@ -594,7 +594,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
 
  If `path2` does not include a root (for example, if `path2` does not start with a separator character or a drive specification), the result is a concatenation of the two paths, with an intervening separator character. If `path2` includes a root, `path2` is returned.
 
- The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \\file.txt "), the <xref:System.IO.Path.Combine%2A> method appends `path2` to `path1`.
+ The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \\file.txt "), the <xref:System.IO.Path.Combine*> method appends `path2` to `path1`.
 
  .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.
 
@@ -679,7 +679,7 @@ If any element in `paths` but the last one is not a drive and does not end with 
 
  If `path2` does not include a root (for example, if `path2` does not start with a separator character or a drive specification), the result is a concatenation of the two paths, with an intervening separator character. If `path2` includes a root, `path2` is returned.
 
- The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \\file.txt "), the <xref:System.IO.Path.Combine%2A> method appends `path2` to `path1`.
+ The parameters are not parsed if they have white space. Therefore, if `path2` includes white space (for example, " \\file.txt "), the <xref:System.IO.Path.Combine*> method appends `path2` to `path1`.
 
  .NET Framework and .NET Core versions older than 2.1: Not all invalid characters for directory and file names are interpreted as unacceptable by the `Combine` method, because you can use these characters for search wildcard characters. For example, while `Path.Combine("c:\\", "*.txt")` might be invalid if you were to create a file from it, it is valid as a search string. It is therefore successfully interpreted by the `Combine` method.
 
@@ -1053,7 +1053,7 @@ In most cases, the string returned by this method consists of all characters in 
 
 This method does not support paths using "file:".
 
-Because the returned path does not include the last directory separator character(s), passing the returned path back into the <xref:System.IO.Path.GetDirectoryName%2A> method truncates one folder level per subsequent call on the result path. For example, passing the path "C:\\Directory\\SubDirectory\\test.txt" into <xref:System.IO.Path.GetDirectoryName%2A> returns "C:\\Directory\\SubDirectory". Passing that path, "C:\\Directory\\SubDirectory", into <xref:System.IO.Path.GetDirectoryName%2A> returns "C:\\Directory".
+Because the returned path does not include the last directory separator character(s), passing the returned path back into the <xref:System.IO.Path.GetDirectoryName*> method truncates one folder level per subsequent call on the result path. For example, passing the path "C:\\Directory\\SubDirectory\\test.txt" into <xref:System.IO.Path.GetDirectoryName*> returns "C:\\Directory\\SubDirectory". Passing that path, "C:\\Directory\\SubDirectory", into <xref:System.IO.Path.GetDirectoryName*> returns "C:\\Directory".
 
 For a list of common I/O tasks, see [Common I/O tasks](/dotnet/standard/io/common-i-o-tasks).
 
@@ -1119,7 +1119,7 @@ Note: In <see href="https://learn.microsoft.com/previous-versions/br230232(v=vs.
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-This method obtains the extension of `path` by searching `path` for a period ("."), starting from the last character in the read-only span and continuing toward its first character. If a period is found before a <xref:System.IO.Path.DirectorySeparatorChar> or <xref:System.IO.Path.AltDirectorySeparatorChar> character, the returned read-only span contains the period and the characters after it; otherwise, <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType> is returned.
+This method obtains the extension of `path` by searching `path` for a period ("."), starting from the last character in the read-only span and continuing toward its first character. If a period is found before a <xref:System.IO.Path.DirectorySeparatorChar> or <xref:System.IO.Path.AltDirectorySeparatorChar> character, the returned read-only span contains the period and the characters after it; otherwise, <xref:System.ReadOnlySpan`1.Empty?displayProperty=nameWithType> is returned.
 
          ]]></format>
         </remarks>
@@ -1243,7 +1243,7 @@ This method obtains the extension of `path` by searching `path` for a period (.)
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-The returned read-only span contains the characters of the path that follow the last separator in `path`. If the last character in `path` is a volume or directory separator character, the method returns <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType>. If `path` contains no separator character, the method returns `path`.
+The returned read-only span contains the characters of the path that follow the last separator in `path`. If the last character in `path` is a volume or directory separator character, the method returns <xref:System.ReadOnlySpan`1.Empty?displayProperty=nameWithType>. If `path` contains no separator character, the method returns `path`.
 
          ]]></format>
         </remarks>
@@ -1513,7 +1513,7 @@ For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/commo
  The file or directory specified by `path` is not required to exist. For example, if *c:\\temp\\newdir* is the current directory, calling `GetFullPath` on a file name such as *test.txt* returns *c:\\temp\\newdir\\test.txt*. The file need not exist.
 
 > [!IMPORTANT]
-> If `path` is a relative path, this overload returns a fully qualified path that can be based on the current drive and current directory. The current drive and current directory can change at any time as an application executes. As a result, the path returned by this overload cannot be determined in advance. To return a deterministic path, call the <xref:System.IO.Path.GetFullPath(System.String,System.String)> overload. You can also call the <xref:System.IO.Path.IsPathFullyQualified%2A> method to determine whether a path is fully qualified or relative and therefore whether a call to `GetFullPath` is necessary.
+> If `path` is a relative path, this overload returns a fully qualified path that can be based on the current drive and current directory. The current drive and current directory can change at any time as an application executes. As a result, the path returned by this overload cannot be determined in advance. To return a deterministic path, call the <xref:System.IO.Path.GetFullPath(System.String,System.String)> overload. You can also call the <xref:System.IO.Path.IsPathFullyQualified*> method to determine whether a path is fully qualified or relative and therefore whether a call to `GetFullPath` is necessary.
 
  However, if `path` does exist, the caller must have permission to obtain path information for `path`. Note that unlike most members of the <xref:System.IO.Path> class, this method accesses the file system.
 
@@ -1677,7 +1677,7 @@ The following example defines a variable, `basePath`, to represent an applicatio
 
 
 ## Examples
- The following example demonstrates the <xref:System.IO.Path.GetInvalidFileNameChars%2A> method and the <xref:System.IO.Path.GetInvalidPathChars%2A> method to retrieve invalid characters.
+ The following example demonstrates the <xref:System.IO.Path.GetInvalidFileNameChars*> method and the <xref:System.IO.Path.GetInvalidPathChars*> method to retrieve invalid characters.
 
  :::code language="csharp" source="~/snippets/csharp/System.IO/Path/GetInvalidFileNameChars/example.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.IO/Path/GetInvalidFileNameChars/example.vb" id="Snippet1":::
@@ -1738,7 +1738,7 @@ The following example defines a variable, `basePath`, to represent an applicatio
  The array returned from this method is not guaranteed to contain the complete set of characters that are invalid in file and directory names. The full set of invalid characters can vary by file system. For example, on Windows-based desktop platforms, invalid path characters might include ASCII/Unicode characters 1 through 31, as well as pipe (&#124;) and null (\\0).
 
 ## Examples
- The following example demonstrates the <xref:System.IO.Path.GetInvalidFileNameChars%2A> method and the <xref:System.IO.Path.GetInvalidPathChars%2A> method to retrieve invalid characters.
+ The following example demonstrates the <xref:System.IO.Path.GetInvalidFileNameChars*> method and the <xref:System.IO.Path.GetInvalidPathChars*> method to retrieve invalid characters.
 
  :::code language="csharp" source="~/snippets/csharp/System.IO/Path/GetInvalidFileNameChars/example.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.IO/Path/GetInvalidFileNameChars/example.vb" id="Snippet1":::
@@ -1798,14 +1798,14 @@ Unlike the string overload, this method doesn't normalize directory separators.
 
 A `ReadOnlySpan<System.Char>` is "effectively empty" if:
 
-- In Windows, calling <xref:System.ReadOnlySpan%601.IsEmpty?displayProperty=nameWithType> on this span of characters returns `true`, or all its characters are spaces (' ').
-- In Unix, calling <xref:System.ReadOnlySpan%601.IsEmpty?displayProperty=nameWithType> on this span of characters returns `true`.
+- In Windows, calling <xref:System.ReadOnlySpan`1.IsEmpty?displayProperty=nameWithType> on this span of characters returns `true`, or all its characters are spaces (' ').
+- In Unix, calling <xref:System.ReadOnlySpan`1.IsEmpty?displayProperty=nameWithType> on this span of characters returns `true`.
 
 Possible patterns for the read-only character span returned by this method are as follows:
 
-- <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType> (`path` was <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType>.
+- <xref:System.ReadOnlySpan`1.Empty?displayProperty=nameWithType> (`path` was <xref:System.ReadOnlySpan`1.Empty?displayProperty=nameWithType>.
 
-- <xref:System.ReadOnlySpan%601.Empty?displayProperty=nameWithType> (`path` specified a relative path on the current drive or volume).
+- <xref:System.ReadOnlySpan`1.Empty?displayProperty=nameWithType> (`path` specified a relative path on the current drive or volume).
 
 - "/" (Unix: `path` specified an absolute path on the current drive).
 
@@ -1901,7 +1901,7 @@ This method will normalize directory separators.
 A string is "effectively empty" if:
 
 - In Windows, calling `IsEmpty` on this string returns `true`, or all its characters are spaces (' ').
-- In Unix, calling <xref:System.String.IsNullOrEmpty%2A> on this string returns `true`.
+- In Unix, calling <xref:System.String.IsNullOrEmpty*> on this string returns `true`.
 
 Possible patterns for the string returned by this method are as follows:
 
@@ -1990,11 +1990,11 @@ The following example demonstrates a use of the `GetPathRoot` method.
 
 ## Remarks
 
-Unlike <xref:System.IO.Path.GetTempFileName%2A>, <xref:System.IO.Path.GetRandomFileName%2A> does not create a file.
+Unlike <xref:System.IO.Path.GetTempFileName*>, <xref:System.IO.Path.GetRandomFileName*> does not create a file.
 
 
 ## Examples
- The following example show output from the <xref:System.IO.Path.GetRandomFileName%2A> method.
+ The following example show output from the <xref:System.IO.Path.GetRandomFileName*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.IO/Path/ChangeExtension/pathmembers20.cs" id="Snippet20":::
  :::code language="vb" source="~/snippets/visualbasic/System.IO/Path/ChangeExtension/pathmembers20.vb" id="Snippet20":::
@@ -2049,10 +2049,10 @@ Unlike <xref:System.IO.Path.GetTempFileName%2A>, <xref:System.IO.Path.GetRandomF
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-Paths are resolved by calling the <xref:System.IO.Path.GetFullPath%2A> method before calculating the difference. The method uses the default file path comparison for the current platform (<xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType> for Windows and macOS, <xref:System.StringComparison.Ordinal?displayProperty=nameWithType> for Linux).
+Paths are resolved by calling the <xref:System.IO.Path.GetFullPath*> method before calculating the difference. The method uses the default file path comparison for the current platform (<xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType> for Windows and macOS, <xref:System.StringComparison.Ordinal?displayProperty=nameWithType> for Linux).
 
 ## Examples
- The following code shows how to call the <xref:System.IO.Path.GetRelativePath%2A> method.
+ The following code shows how to call the <xref:System.IO.Path.GetRelativePath*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.IO/Path/GetRelativePath/GetRelativePath.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.IO/Path/GetRelativePath/GetRelativePath.vb" id="Snippet1":::
@@ -2122,11 +2122,11 @@ Paths are resolved by calling the <xref:System.IO.Path.GetFullPath%2A> method be
 
 ## Remarks
 
-This method creates a temporary file with a *.tmp* file extension and returns the path to it. The temporary file is created within the user's temporary folder, which is the path returned by the <xref:System.IO.Path.GetTempPath%2A> method.
+This method creates a temporary file with a *.tmp* file extension and returns the path to it. The temporary file is created within the user's temporary folder, which is the path returned by the <xref:System.IO.Path.GetTempPath*> method.
 
 On .NET Framework, the <xref:System.IO.Path.GetTempFileName*> method raises an <xref:System.IO.IOException> if it's used to create more than 65535 files without deleting previous temporary files. This limitation does not exist on operating systems other than Windows. Starting in .NET 8, the limitation does not exist on *any* operating system.
 
- The <xref:System.IO.Path.GetTempFileName%2A> method will raise an <xref:System.IO.IOException> if no unique temporary file name is available. To resolve this error, delete all unneeded temporary files.
+ The <xref:System.IO.Path.GetTempFileName*> method will raise an <xref:System.IO.IOException> if no unique temporary file name is available. To resolve this error, delete all unneeded temporary files.
 
  For a list of common I/O tasks, see [Common I/O Tasks](/dotnet/standard/io/common-i-o-tasks).
 
@@ -2222,7 +2222,7 @@ The `/tmp/` directory on Linux is commonly shared among all users (`1777` permis
 ---
 
 ## Examples
- The following code shows how to call the <xref:System.IO.Path.GetTempPath%2A> method.
+ The following code shows how to call the <xref:System.IO.Path.GetTempPath*> method.
 
 ```vb
 Dim result As String = Path.GetTempPath()
@@ -2464,7 +2464,7 @@ The array returned from this method is not guaranteed to contain the complete se
 
 The overloads of the `IsPathFullyQualified` method handle paths that use both the <xref:System.IO.Path.DirectorySeparatorChar> and the <xref:System.IO.Path.AltDirectorySeparatorChar> characters. It does not perform any validation on the path that is passed to it as an argument. As a result, URIs are interpreted as relative paths and return `false`.
 
-There is a difference between a fully qualified path (as indicated by the `IsPathFullyQualified` method) and a rooted path (as indicated by the <xref:System.IO.Path.IsPathRooted%2A> method). A *fully qualified path* or *absolute path* always defines an exact path from a particular drive or device to a target file or directory, and does not depend on the current drive or current directory. For example, on Windows systems, *C:/users/user1/documents/reports/2019/january/highlights.pdf* defines an absolute path from the root of the C: drive to the target file, *highlights.pdf*. A *rooted path* specifies either a starting drive or root directory, but depends on either the current directory (if it is rooted by a specified drive) or the current drive (if it is rooted by the root directory). The following example illustrates the difference between fully qualified paths and rooted paths.
+There is a difference between a fully qualified path (as indicated by the `IsPathFullyQualified` method) and a rooted path (as indicated by the <xref:System.IO.Path.IsPathRooted*> method). A *fully qualified path* or *absolute path* always defines an exact path from a particular drive or device to a target file or directory, and does not depend on the current drive or current directory. For example, on Windows systems, *C:/users/user1/documents/reports/2019/january/highlights.pdf* defines an absolute path from the root of the C: drive to the target file, *highlights.pdf*. A *rooted path* specifies either a starting drive or root directory, but depends on either the current directory (if it is rooted by a specified drive) or the current drive (if it is rooted by the root directory). The following example illustrates the difference between fully qualified paths and rooted paths.
 
 :::code language="csharp" source="~/snippets/csharp/System.IO/Path/IsPathRooted/Program.cs":::
 :::code language="vb" source="~/snippets/visualbasic/api/system.IO/Path/IsPathRooted/program.vb":::
@@ -2704,7 +2704,7 @@ Note that rooted paths can be either absolute (that is, fully qualified) or rela
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.IO.Path.IsPathRooted%2A> method returns `true` if the first character is a directory separator character such as "\\", or if the path starts with a drive letter and colon (:). For example, it returns `true` for `path` strings such as "\\\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns `false` for `path` strings such as "MyDir".
+ The <xref:System.IO.Path.IsPathRooted*> method returns `true` if the first character is a directory separator character such as "\\", or if the path starts with a drive letter and colon (:). For example, it returns `true` for `path` strings such as "\\\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns `false` for `path` strings such as "MyDir".
 
  This method does not verify that the path or file name exists.
 
@@ -2839,7 +2839,7 @@ If any of the paths in `paths`, except for the last one, ends in a path separato
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if any of the paths in `paths`, except for the first one, is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine%2A> method does.)
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if any of the paths in `paths`, except for the first one, is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine*> method does.)
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "temp", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
@@ -2900,7 +2900,7 @@ Not all invalid characters for directory and file names are interpreted as unacc
 
 ## Remarks
 
-This method simply concatenates `path` and `path2` and adds a directory separator character between the two path components if one is not already present at the end of `path1` or the beginning of `path2`. If the <xref:System.ReadOnlySpan%601.Length> of either `path1` or `path2` is zero, the method returns the other path. If the <xref:System.ReadOnlySpan%601.Length> of both `path1` and `path2` is zero, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
+This method simply concatenates `path` and `path2` and adds a directory separator character between the two path components if one is not already present at the end of `path1` or the beginning of `path2`. If the <xref:System.ReadOnlySpan`1.Length> of either `path1` or `path2` is zero, the method returns the other path. If the <xref:System.ReadOnlySpan`1.Length> of both `path1` and `path2` is zero, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
 
 If `path1` ends in a path separator character that is not appropriate for the target platform, the `Join` method preserves the original path separator character and appends the supported one. This issue arises in hard-coded paths that use the Windows backslash ("\\") character, which is not recognized as a path separator on Unix-based systems. To work around this issue, you can:
 
@@ -2908,13 +2908,13 @@ If `path1` ends in a path separator character that is not appropriate for the ta
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if `path2` is an absolute path, the `Join` method does not discard `path1` and return `path2` as the <xref:System.IO.Path.Combine%2A> method does.) The following example illustrates the difference in the paths returned by the two methods. If the source of `path2` is user input, the <xref:System.IO.Path.Combine%2A> method makes it possible for a user to access a file system resource (such as *C:/Users/User1/Documents/Financial/* in the case of the example) that the application did not intend to make accessible.
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if `path2` is an absolute path, the `Join` method does not discard `path1` and return `path2` as the <xref:System.IO.Path.Combine*> method does.) The following example illustrates the difference in the paths returned by the two methods. If the source of `path2` is user input, the <xref:System.IO.Path.Combine*> method makes it possible for a user to access a file system resource (such as *C:/Users/User1/Documents/Financial/* in the case of the example) that the application did not intend to make accessible.
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
 ## Examples
 
-The following example illustrates the difference in the paths returned by the <xref:System.IO.Path.Join(System.ReadOnlySpan%7BSystem.Char%7D,System.ReadOnlySpan%7BSystem.Char%7D)?displayProperty=nameWithType> and <xref:System.IO.Path.Combine(System.String,System.String)?displayProperty=nameWithType> methods. When the first string is an fully qualified path that includes a drive and root directory and the second is a relative path from the first path, the two methods produce identical results. In the second and third calls to the `ShowPathInformation` method, the strings returned by the two methods diverge. In the second method call, the first string argument is a drive, while the second is a rooted directory. The `Join` method concatenates the two strings and preserves duplicate path separators. The `Combine` method abandons the drive and returns a rooted directory on the current drive. If the application's current drive is C:\\ and the string is used to access a file or files in the directory, it would access C: instead of D:. Finally, because both arguments in the third call to `ShowPathInformation` are rooted, the `Join` method simply appends them to create a nonsensical file path, while the `Combine` method discards the first string and returns the second. Using this string for file access could give the application unintended access to sensitive files.
+The following example illustrates the difference in the paths returned by the <xref:System.IO.Path.Join(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})?displayProperty=nameWithType> and <xref:System.IO.Path.Combine(System.String,System.String)?displayProperty=nameWithType> methods. When the first string is an fully qualified path that includes a drive and root directory and the second is a relative path from the first path, the two methods produce identical results. In the second and third calls to the `ShowPathInformation` method, the strings returned by the two methods diverge. In the second method call, the first string argument is a drive, while the second is a rooted directory. The `Join` method concatenates the two strings and preserves duplicate path separators. The `Combine` method abandons the drive and returns a rooted directory on the current drive. If the application's current drive is C:\\ and the string is used to access a file or files in the directory, it would access C: instead of D:. Finally, because both arguments in the third call to `ShowPathInformation` are rooted, the `Join` method simply appends them to create a nonsensical file path, while the `Combine` method discards the first string and returns the second. Using this string for file access could give the application unintended access to sensitive files.
 
 :::code language="csharp" source="~/snippets/csharp/System.IO/Path/Combine/Program2.cs":::
 :::code language="vb" source="~/snippets/visualbasic/api/system.io/path/combine2/program.vb":::
@@ -2985,7 +2985,7 @@ If `path1` ends in a path separator character that is not appropriate for the ta
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if `path2` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine%2A> method does.)
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if `path2` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine*> method does.)
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "temp", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
@@ -3048,7 +3048,7 @@ Not all invalid characters for directory and file names are interpreted as unacc
 
 ## Remarks
 
-This method simply concatenates `path`, `path2`, and `path3` and adds a directory separator character between any of the path components if one is not already present. If the <xref:System.ReadOnlySpan%601.Length> of any of `path1`, `path2`, or `path3` arguments is zero, the method concatenates the remaining arguments. If the <xref:System.ReadOnlySpan%601.Length?displayProperty=nameWithType> of all components is zero, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
+This method simply concatenates `path`, `path2`, and `path3` and adds a directory separator character between any of the path components if one is not already present. If the <xref:System.ReadOnlySpan`1.Length> of any of `path1`, `path2`, or `path3` arguments is zero, the method concatenates the remaining arguments. If the <xref:System.ReadOnlySpan`1.Length?displayProperty=nameWithType> of all components is zero, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
 
 If `path1` or `path2` ends in a path separator character that is not appropriate for the target platform, the `Join` method preserves the original path separator character and appends the supported one. This issue arises in hard-coded paths that use the Windows backslash ("\\") character, which is not recognized as a path separator on Unix-based systems. To work around this issue, you can:
 
@@ -3056,13 +3056,13 @@ If `path1` or `path2` ends in a path separator character that is not appropriate
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if `path2` or `path3` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine%2A> method does.)
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if `path2` or `path3` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine*> method does.)
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "temp", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
 ## Examples
 
-The following example illustrates the difference in the paths returned by the <xref:System.IO.Path.Join(System.ReadOnlySpan%7BSystem.Char%7D,System.ReadOnlySpan%7BSystem.Char%7D,System.ReadOnlySpan%7BSystem.Char%7D)?displayProperty=nameWithType> and <xref:System.IO.Path.Combine(System.String,System.String,System.String)?displayProperty=nameWithType> methods. When the first string is a fully qualified path that includes a drive and root directory and the second is a relative path from the first path, the two methods produce identical results. In the second and third calls to the `ShowPathInformation` method, the strings returned by the two methods diverge. In the second method call, the first string argument is a drive, while the second is a rooted directory. The `Join` method concatenates the two strings and preserves duplicate path separators. A call to the <xref:System.IO.Path.GetFullPath%2A> method would eliminate the duplication. The `Combine` method abandons the drive and returns a rooted directory on the current drive. If the application's current drive is C:\\ and the string is used to access a file or files in the directory, it would access C: instead of D:. Finally, because the final argument in the third call to `ShowPathInformation` are rooted, the `Join` method simply appends it to the first two arguments to create a nonsensical file path, while the `Combine` method discards the first two strings and returns the third. Using this string for file access could give the application unintended access to sensitive files.
+The following example illustrates the difference in the paths returned by the <xref:System.IO.Path.Join(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})?displayProperty=nameWithType> and <xref:System.IO.Path.Combine(System.String,System.String,System.String)?displayProperty=nameWithType> methods. When the first string is a fully qualified path that includes a drive and root directory and the second is a relative path from the first path, the two methods produce identical results. In the second and third calls to the `ShowPathInformation` method, the strings returned by the two methods diverge. In the second method call, the first string argument is a drive, while the second is a rooted directory. The `Join` method concatenates the two strings and preserves duplicate path separators. A call to the <xref:System.IO.Path.GetFullPath*> method would eliminate the duplication. The `Combine` method abandons the drive and returns a rooted directory on the current drive. If the application's current drive is C:\\ and the string is used to access a file or files in the directory, it would access C: instead of D:. Finally, because the final argument in the third call to `ShowPathInformation` are rooted, the `Join` method simply appends it to the first two arguments to create a nonsensical file path, while the `Combine` method discards the first two strings and returns the third. Using this string for file access could give the application unintended access to sensitive files.
 
 :::code language="csharp" source="~/snippets/csharp/System.IO/Path/Combine/Program3.cs":::
 :::code language="vb" source="~/snippets/visualbasic/api/system.io/path/combine3/program.vb":::
@@ -3134,7 +3134,7 @@ If `path1` or `path2` ends in a path separator character that is not appropriate
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if `path2` or `path3` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine%2A> method does.)
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if `path2` or `path3` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine*> method does.)
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "temp", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
@@ -3198,7 +3198,7 @@ Not all invalid characters for directory and file names are interpreted as unacc
 
 ## Remarks
 
-This method simply concatenates `path`, `path2`, `path3` and `path4` and adds a directory separator character between any of the path components if one is not already present. If the <xref:System.ReadOnlySpan%601.Length> of any of `path1`, `path2`, `path3` or `path4` argument is zero, the method concatenates the remaining arguments. If the <xref:System.ReadOnlySpan%601.Length?displayProperty=nameWithType> of all components is zero, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
+This method simply concatenates `path`, `path2`, `path3` and `path4` and adds a directory separator character between any of the path components if one is not already present. If the <xref:System.ReadOnlySpan`1.Length> of any of `path1`, `path2`, `path3` or `path4` argument is zero, the method concatenates the remaining arguments. If the <xref:System.ReadOnlySpan`1.Length?displayProperty=nameWithType> of all components is zero, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
 
 If `path1` or `path2` or `path3` ends in a path separator character that is not appropriate for the target platform, the `Join` method preserves the original path separator character and appends the supported one. This issue arises in hard-coded paths that use the Windows backslash ("\\") character, which is not recognized as a path separator on Unix-based systems. To work around this issue, you can:
 
@@ -3206,7 +3206,7 @@ If `path1` or `path2` or `path3` ends in a path separator character that is not 
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if `path2` or `path3` or `path4` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine%2A> method does.)
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if `path2` or `path3` or `path4` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine*> method does.)
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "temp", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
@@ -3278,7 +3278,7 @@ If `path1` or `path2` or `path3` ends in a path separator character that is not 
 
 - Use a forward slash ("/") as the directory separator character. This character is returned by the <xref:System.IO.Path.DirectorySeparatorChar?displayProperty=nameWithType> property on Unix-based systems and by the <xref:System.IO.Path.AltDirectorySeparatorChar?displayProperty=nameWithType> property on Windows systems.
 
-Unlike the <xref:System.IO.Path.Combine%2A> method, the <xref:System.IO.Path.Join%2A> method does not attempt to root the returned path. (That is, if `path2` or `path3` or `path4` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine%2A> method does.)
+Unlike the <xref:System.IO.Path.Combine*> method, the <xref:System.IO.Path.Join*> method does not attempt to root the returned path. (That is, if `path2` or `path3` or `path4` is an absolute path, the `Join` method does not discard the previous paths as the <xref:System.IO.Path.Combine*> method does.)
 
 Not all invalid characters for directory and file names are interpreted as unacceptable by the `Join` method, because you can use these characters for search wildcard characters. For example, while `Path.Join("c:\\", "temp", "*.txt")` might be invalid when creating a file, it is valid as a search string. The `Join` method therefore successfully interprets it.
 
@@ -3442,7 +3442,7 @@ Not all invalid characters for directory and file names are interpreted as unacc
 
 ## Remarks
 
-The destination character span must be large enough to hold the concatenated path. You can then retrieve the concatenated path by calling the <xref:System.Span%601.Slice%2A?displayProperty=nameWithType> method, as the following example illustrates.
+The destination character span must be large enough to hold the concatenated path. You can then retrieve the concatenated path by calling the <xref:System.Span`1.Slice*?displayProperty=nameWithType> method, as the following example illustrates.
 
 :::code language="csharp" source="~/snippets/csharp/System.IO/Path/TryJoin/Program.cs":::
 
@@ -3502,7 +3502,7 @@ The destination character span must be large enough to hold the concatenated pat
 
 ## Remarks
 
-`destination` must be large enough to hold the concatenated path. You can then retrieve the concatenated path by calling the <xref:System.Span%601.Slice%2A?displayProperty=nameWithType> method, as the example illustrates.
+`destination` must be large enough to hold the concatenated path. You can then retrieve the concatenated path by calling the <xref:System.Span`1.Slice*?displayProperty=nameWithType> method, as the example illustrates.
 
          ]]></format>
         </remarks>
@@ -3563,7 +3563,7 @@ The destination character span must be large enough to hold the concatenated pat
 
 ## Remarks
 
-`destination` must be large enough to hold the concatenated path. You can then retrieve the concatenated path by calling the <xref:System.Span%601.Slice%2A?displayProperty=nameWithType> method, as the example illustrates.
+`destination` must be large enough to hold the concatenated path. You can then retrieve the concatenated path by calling the <xref:System.Span`1.Slice*?displayProperty=nameWithType> method, as the example illustrates.
 
          ]]></format>
         </remarks>
