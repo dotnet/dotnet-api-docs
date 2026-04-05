@@ -414,7 +414,52 @@
         <remarks>
           This method is comparable to the <see cref="M:System.Linq.Enumerable.GroupBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})" /> methods where each grouping is being aggregated into a single value as opposed to allocating a collection for each group.
         </remarks>
-      </Docs>
+        <example>
+          <para>
+            The following example demonstrates how to use AggregateBy with a seed selector to compute multiple values per key.
+          </para>
+          <code language="csharp">
+        class Employee
+        {
+            public string Name { get; set; }
+            public string Department { get; set; }
+            public decimal Salary { get; set; }
+        }
+
+        public static void AggregateBySeedSelectorExample()
+        {
+            Employee[] employees =
+            {
+                new Employee { Name = "Ali", Department = "HR", Salary = 45000 },
+                new Employee { Name = "Samer", Department = "Technology", Salary = 50000 },
+                new Employee { Name = "Hamed", Department = "Sales", Salary = 75000 },
+                new Employee { Name = "Lina", Department = "Technology", Salary = 65000 },
+                new Employee { Name = "Omar", Department = "HR", Salary = 40000 }
+            };
+
+            var result =
+                employees.AggregateBy(
+                    e => e.Department,
+                    dept => (Total: 0m, Count: 0),
+                    (acc, e) => (acc.Total + e.Salary, acc.Count + 1)
+                );
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"{item.Key}: Total={item.Value.Total}, Count={item.Value.Count}");
+            }
+        }
+
+        /*
+        This code produces the following output:
+
+        HR: Total=85000, Count=2
+        Technology: Total=115000, Count=2
+        Sales: Total=75000, Count=1
+        */
+          </code>
+        </example>
+        </Docs>
     </Member>
     <Member MemberName="AggregateBy&lt;TSource,TKey,TAccumulate&gt;">
       <MemberSignature Language="C#" Value="public static System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;TKey,TAccumulate&gt;&gt; AggregateBy&lt;TSource,TKey,TAccumulate&gt; (this System.Collections.Generic.IEnumerable&lt;TSource&gt; source, Func&lt;TSource,TKey&gt; keySelector, TAccumulate seed, Func&lt;TAccumulate,TSource,TAccumulate&gt; func, System.Collections.Generic.IEqualityComparer&lt;TKey&gt;? keyComparer = default);" />
@@ -491,6 +536,52 @@
         <remarks>
           This method is comparable to the <see cref="M:System.Linq.Enumerable.GroupBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})" /> methods where each grouping is being aggregated into a single value as opposed to allocating a collection for each group.
         </remarks>
+        <example>
+          <para>
+            The following example demonstrates how to use AggregateBy with a constant seed value to compute totals per key.
+          </para>
+          <code language="csharp">
+        class Employee
+        {
+            public string Name { get; set; }
+            public string Department { get; set; }
+            public decimal Salary { get; set; }
+        }
+
+        public static void AggregateBySeedExample()
+        {
+            Employee[] employees =
+            {
+                new Employee { Name = "Ali", Department = "HR", Salary = 45000 },
+                new Employee { Name = "Samer", Department = "Technology", Salary = 50000 },
+                new Employee { Name = "Hamed", Department = "Sales", Salary = 75000 },
+                new Employee { Name = "Lina", Department = "Technology", Salary = 65000 },
+                new Employee { Name = "Omar", Department = "HR", Salary = 40000 }
+            };
+
+            // Compute total salary per department using a constant seed
+            var totals =
+                employees.AggregateBy(
+                    e => e.Department,
+                    0m,
+                    (total, e) => total + e.Salary
+                );
+
+            foreach (var item in totals)
+            {
+                Console.WriteLine($"{item.Key}: {item.Value}");
+            }
+        }
+
+        /*
+        This code produces the following output:
+
+        HR: 85000
+        Technology: 115000
+        Sales: 75000
+        */
+        </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="All&lt;TSource&gt;">
