@@ -3204,5 +3204,85 @@ namespace SequenceExamples
 #endif
         }
         #endregion
+
+        #region AggregateBy
+        static class AggregateBy
+        {
+            // <Snippet205>
+            class Employee
+            {
+                public string Name { get; set; }
+                public string Department { get; set; }
+                public decimal Salary { get; set; }
+            }
+
+            public static void AggregateBySeedSelectorExample()
+            {
+                Employee[] employees =
+                {
+                    new Employee { Name = "Ali", Department = "HR", Salary = 45000 },
+                    new Employee { Name = "Samer", Department = "Technology", Salary = 50000 },
+                    new Employee { Name = "Hamed", Department = "Sales", Salary = 75000 },
+                    new Employee { Name = "Lina", Department = "Technology", Salary = 65000 },
+                    new Employee { Name = "Omar", Department = "HR", Salary = 40000 }
+                };
+
+                var result =
+                    employees.AggregateBy(
+                        e => e.Department,
+                        dept => (Total: 0m, Count: 0),
+                        (acc, e) => (acc.Total + e.Salary, acc.Count + 1)
+                    );
+
+                foreach (var item in result)
+                {
+                    Console.WriteLine($"{item.Key}: Total={item.Value.Total}, Count={item.Value.Count}");
+                }
+
+                /*
+                 This code produces the following output:
+
+                 HR: Total=85000, Count=2
+                 Technology: Total=115000, Count=2
+                 Sales: Total=75000, Count=1
+                */
+            }
+            // </Snippet205>
+
+            // <Snippet206>
+            public static void AggregateBySeedExample()
+            {
+                Employee[] employees =
+                {
+                    new Employee { Name = "Ali", Department = "HR", Salary = 45000 },
+                    new Employee { Name = "Samer", Department = "Technology", Salary = 50000 },
+                    new Employee { Name = "Hamed", Department = "Sales", Salary = 75000 },
+                    new Employee { Name = "Lina", Department = "Technology", Salary = 65000 },
+                    new Employee { Name = "Omar", Department = "HR", Salary = 40000 }
+                };
+
+                var totals =
+                    employees.AggregateBy(
+                        e => e.Department,
+                        0m,
+                        (total, e) => total + e.Salary
+                    );
+
+                foreach (var item in totals)
+                {
+                    Console.WriteLine($"{item.Key}: {item.Value}");
+                }
+
+                /*
+                 This code produces the following output:
+
+                 HR: 85000
+                 Technology: 115000
+                 Sales: 75000
+                */
+            }
+            // </Snippet206>
+        }
+        #endregion
     }
 }
