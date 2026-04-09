@@ -74,10 +74,17 @@
   </Attributes>
   <Docs>
     <summary>Represents a pseudo-random number generator, which is an algorithm that produces a sequence of numbers that meet certain statistical requirements for randomness.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-random">Supplemental API remarks for Random</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+> [!NOTE]
+> To generate a cryptographically secure random number, such as one that's suitable for creating a random password, use one of the static methods in the <xref:System.Security.Cryptography.RandomNumberGenerator> class.
+
+For more information about this API, see [Supplemental API remarks for Random](/dotnet/fundamentals/runtime-libraries/system-random).
+      ]]></format>
+    </remarks>
     <example>
       <format type="text/markdown"><![CDATA[
-The following example creates a single random number generator and calls its <xref:System.Random.NextBytes%2A>, <xref:System.Random.Next%2A>, and <xref:System.Random.NextDouble%2A> methods to generate sequences of random numbers within different ranges.
+The following example creates a single random number generator and calls its <xref:System.Random.NextBytes*>, <xref:System.Random.Next*>, and <xref:System.Random.NextDouble*> methods to generate sequences of random numbers within different ranges.
 
 :::code language="csharp" source="~/snippets/csharp/System/Random/Overview/Random2.cs" id="Snippet2":::
 :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random/fs/Random2.fs" id="Snippet2":::
@@ -155,11 +162,11 @@ The following example generates a random integer that it uses as an index to ret
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
-In .NET Framework, the default seed value is derived from the system clock, which has finite resolution. As a result, different <xref:System.Random> objects that are created in close succession by a call to the parameterless constructor have identical default seed values and, therefore, produce identical sets of random numbers. You can avoid this problem by using a single <xref:System.Random> object to generate all random numbers. You can also work around it by generating your own random seed value and passing it to the <xref:System.Random.%23ctor%28System.Int32%29> constructor. For more information, see the <xref:System.Random.%23ctor%28System.Int32%29> constructor.
+In .NET Framework, the default seed value is derived from the system clock, which has finite resolution. As a result, different <xref:System.Random> objects that are created in close succession by a call to the parameterless constructor have identical default seed values and, therefore, produce identical sets of random numbers. You can avoid this problem by using a single <xref:System.Random> object to generate all random numbers. You can also work around it by generating your own random seed value and passing it to the <xref:System.Random.%23ctor(System.Int32)> constructor. For more information, see the <xref:System.Random.%23ctor(System.Int32)> constructor.
 
 In .NET Core, the default seed value is produced by the thread-static, pseudo-random number generator, so the previously described limitation does not apply. Different <xref:System.Random> objects created in close succession produce different sets of random numbers in .NET Core.
 
- Call this constructor if you want your random number generator to generate a random sequence of numbers. To generate a fixed  sequence of random numbers that will be the same for different random number generators, call the <xref:System.Random.%23ctor%28System.Int32%29> constructor with a fixed seed value. This <xref:System.Random> constructor overload is frequently used when testing apps that use random numbers.
+ Call this constructor if you want your random number generator to generate a random sequence of numbers. To generate a fixed  sequence of random numbers that will be the same for different random number generators, call the <xref:System.Random.%23ctor(System.Int32)> constructor with a fixed seed value. This <xref:System.Random> constructor overload is frequently used when testing apps that use random numbers.
 
  Once you've instantiated the random number generator, you call individual <xref:System.Random> methods, such as <xref:System.Random.Next> or <xref:System.Random.NextDouble>, to generate random numbers.
 
@@ -167,7 +174,7 @@ In .NET Core, the default seed value is produced by the thread-static, pseudo-ra
 
 ## Examples
 
-The following example uses the parameterless constructor to instantiate three <xref:System.Random> objects and displays a sequence of five random integers for each. If it is run on .NET Framework, because the first two <xref:System.Random> objects are created in close succession, they are instantiated using identical seed values based on the system clock and, therefore, they produce an identical sequence of random numbers. On the other hand, the parameterless constructor of the third <xref:System.Random> object is called after a two-second delay caused by calling the <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType> method. Because this produces a different seed value for the third <xref:System.Random> object, it produces a different sequence of random numbers.
+The following example uses the parameterless constructor to instantiate three <xref:System.Random> objects and displays a sequence of five random integers for each. If it is run on .NET Framework, because the first two <xref:System.Random> objects are created in close succession, they are instantiated using identical seed values based on the system clock and, therefore, they produce an identical sequence of random numbers. On the other hand, the parameterless constructor of the third <xref:System.Random> object is called after a two-second delay caused by calling the <xref:System.Threading.Thread.Sleep*?displayProperty=nameWithType> method. Because this produces a different seed value for the third <xref:System.Random> object, it produces a different sequence of random numbers.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/.ctor/ctor1.cs" id="Snippet2":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Ctor/FS/ctor1.fs" id="Snippet2":::
@@ -228,7 +235,7 @@ The following example uses the parameterless constructor to instantiate three <x
 ## Remarks
  Providing an identical seed value to different <xref:System.Random> objects causes each instance to produce identical sequences of random numbers. This is often done when testing apps that rely on random number generators.
 
- If your application requires different random number sequences, invoke this constructor repeatedly with different seed values. One way to produce a unique seed value is to make it time-dependent. For example, derive the seed value from the system clock, as the <xref:System.Random.%23ctor> overload does. However, the system clock might not have sufficient resolution to provide different invocations of this constructor with a different seed value. On the .NET Framework, this results in random number generators that generate identical sequences of pseudo-random numbers, as illustrated by the first two <xref:System.Random> objects in the following example. To prevent this, apply an algorithm to differentiate the seed value in each invocation, or call the <xref:System.Threading.Thread.Sleep%2A?displayProperty=nameWithType> method to ensure that you provide each constructor with a different seed value.
+ If your application requires different random number sequences, invoke this constructor repeatedly with different seed values. One way to produce a unique seed value is to make it time-dependent. For example, derive the seed value from the system clock, as the <xref:System.Random.%23ctor> overload does. However, the system clock might not have sufficient resolution to provide different invocations of this constructor with a different seed value. On the .NET Framework, this results in random number generators that generate identical sequences of pseudo-random numbers, as illustrated by the first two <xref:System.Random> objects in the following example. To prevent this, apply an algorithm to differentiate the seed value in each invocation, or call the <xref:System.Threading.Thread.Sleep*?displayProperty=nameWithType> method to ensure that you provide each constructor with a different seed value.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/.ctor/ctor4.cs" id="Snippet4":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Ctor/FS/ctor4.fs" id="Snippet4":::
@@ -620,16 +627,16 @@ The following example uses the parameterless constructor to instantiate three <x
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- <xref:System.Random.Next%2A?displayProperty=nameWithType> generates a random number whose value ranges from 0 to less than <xref:System.Int32.MaxValue?displayProperty=nameWithType>. To generate a random number whose value ranges from 0 to some other positive number, use the <xref:System.Random.Next%28System.Int32%29?displayProperty=nameWithType> method overload. To generate a random number within a different range, use the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29?displayProperty=nameWithType> method overload.
+ <xref:System.Random.Next*?displayProperty=nameWithType> generates a random number whose value ranges from 0 to less than <xref:System.Int32.MaxValue?displayProperty=nameWithType>. To generate a random number whose value ranges from 0 to some other positive number, use the <xref:System.Random.Next(System.Int32)?displayProperty=nameWithType> method overload. To generate a random number within a different range, use the <xref:System.Random.Next(System.Int32,System.Int32)?displayProperty=nameWithType> method overload.
 
 ## Examples
- The following example makes repeated calls to the <xref:System.Random.Next%2A> method to generate 10 random numbers.
+ The following example makes repeated calls to the <xref:System.Random.Next*> method to generate 10 random numbers.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/Overview/next3.cs" id="Snippet5":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Next/FS/next3.fs" id="Snippet5":::
  :::code language="vb" source="~/snippets/visualbasic/System/Random/Overview/next3.vb" id="Snippet5":::
 
- The following example derives a class from <xref:System.Random> to generate a sequence of random numbers whose distribution differs from the uniform distribution generated by the <xref:System.Random.Sample%2A> method of the base class. It overrides the <xref:System.Random.Sample%2A> method to provide the distribution of random numbers, and overrides the <xref:System.Random.Next%2A?displayProperty=nameWithType> method to use series of random numbers.
+ The following example derives a class from <xref:System.Random> to generate a sequence of random numbers whose distribution differs from the uniform distribution generated by the <xref:System.Random.Sample*> method of the base class. It overrides the <xref:System.Random.Sample*> method to provide the distribution of random numbers, and overrides the <xref:System.Random.Next*?displayProperty=nameWithType> method to use series of random numbers.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/Next/sample.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System/Random/Next/sample.vb" id="Snippet1":::
@@ -695,12 +702,12 @@ The following example uses the parameterless constructor to instantiate three <x
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Random.Next%28System.Int32%29> overload returns random integers that range from 0 to `maxValue` - 1. However, if `maxValue` is 0, the method returns 0.
+ The <xref:System.Random.Next(System.Int32)> overload returns random integers that range from 0 to `maxValue` - 1. However, if `maxValue` is 0, the method returns 0.
 
 
 
 ## Examples
- The following example generates random integers with various overloads of the <xref:System.Random.Next%2A> method.
+ The following example generates random integers with various overloads of the <xref:System.Random.Next*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/Overview/next.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Next/FS/next.fs" id="Snippet1":::
@@ -774,14 +781,14 @@ The following example uses the parameterless constructor to instantiate three <x
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29> overload returns random integers that range from `minValue` to `maxValue` - 1. However, if `maxValue` equals `minValue`, the method returns `minValue`.
+ The <xref:System.Random.Next(System.Int32,System.Int32)> overload returns random integers that range from `minValue` to `maxValue` - 1. However, if `maxValue` equals `minValue`, the method returns `minValue`.
 
- Unlike the other overloads of the <xref:System.Random.Next%2A> method, which return only non-negative values, this method can return a negative random integer.
+ Unlike the other overloads of the <xref:System.Random.Next*> method, which return only non-negative values, this method can return a negative random integer.
 
 
 
 ## Examples
- The following example uses the <xref:System.Random.Next%28System.Int32%2CSystem.Int32%29?displayProperty=nameWithType> method to generate random integers with three distinct ranges. Note that the exact output from the example depends on the system-supplied seed value passed to the <xref:System.Random> class constructor.
+ The following example uses the <xref:System.Random.Next(System.Int32,System.Int32)?displayProperty=nameWithType> method to generate random integers with three distinct ranges. Note that the exact output from the example depends on the system-supplied seed value passed to the <xref:System.Random> class constructor.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/Overview/Next2.cs" id="Snippet2":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Next/FS/Next2.fs" id="Snippet2":::
@@ -857,13 +864,13 @@ The following example uses the parameterless constructor to instantiate three <x
 ## Remarks
  Each element of the array of bytes is set to a random number greater than or equal to 0, and less than or equal to <xref:System.Byte.MaxValue>.
 
- For example, to generate a cryptographically secured random number suitable for creating a random password, use a method such as <xref:System.Security.Cryptography.RNGCryptoServiceProvider.GetBytes%2A?displayProperty=nameWithType>.
+ For example, to generate a cryptographically secured random number suitable for creating a random password, use a method such as <xref:System.Security.Cryptography.RNGCryptoServiceProvider.GetBytes*?displayProperty=nameWithType>.
 
 
 
 ## Examples
 
- The following example demonstrates how to use the <xref:System.Random.NextBytes%2A> method to fill an array of bytes with random byte values.
+ The following example demonstrates how to use the <xref:System.Random.NextBytes*> method to fill an array of bytes with random byte values.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/NextBytes/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System/Random/NextBytes/source.vb" id="Snippet1":::
@@ -988,19 +995,19 @@ Each element of the span of bytes is set to a random number greater than or equa
 
  To retrieve random floating-point values within a range other than 0.0 and 1.0, see the "Retrieve floating-point values in a specified range" section of the <xref:System.Random> class topic.
 
- This method is the public version of the protected method, <xref:System.Random.Sample%2A>.
+ This method is the public version of the protected method, <xref:System.Random.Sample*>.
 
 
 
 ## Examples
 
- The following example uses the <xref:System.Random.NextDouble%2A> method to generate sequences of random doubles.
+ The following example uses the <xref:System.Random.NextDouble*> method to generate sequences of random doubles.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/.ctor/ctor.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Ctor/FS/ctor.fs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System/Random/.ctor/ctor.vb" id="Snippet1":::
 
- The following example calls the <xref:System.Random.NextDouble%2A> method to generate 100 random numbers and displays their frequency distribution.
+ The following example calls the <xref:System.Random.NextDouble*> method to generate 100 random numbers and displays their frequency distribution.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/NextDouble/nextdouble1.cs" id="Snippet2":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.random.nextdouble/fs/nextdouble1.fs" id="Snippet2":::
@@ -1222,15 +1229,15 @@ Each element of the span of bytes is set to a random number greater than or equa
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- To produce a different random distribution or a different random number generator principle, derive a class from the <xref:System.Random> class and override the <xref:System.Random.Sample%2A> method.
+ To produce a different random distribution or a different random number generator principle, derive a class from the <xref:System.Random> class and override the <xref:System.Random.Sample*> method.
 
 > [!IMPORTANT]
->  The <xref:System.Random.Sample%2A> method is `protected`, which means that it is accessible only within the <xref:System.Random> class and its derived classes. To generate a random number between 0 and 1 from a <xref:System.Random> instance, call the <xref:System.Random.NextDouble%2A> method.
+>  The <xref:System.Random.Sample*> method is `protected`, which means that it is accessible only within the <xref:System.Random> class and its derived classes. To generate a random number between 0 and 1 from a <xref:System.Random> instance, call the <xref:System.Random.NextDouble*> method.
 
 
 
 ## Examples
- The following example derives a class from <xref:System.Random> and overrides the <xref:System.Random.Sample%2A> method to generate a distribution of random numbers. This distribution is different than the uniform distribution generated by the <xref:System.Random.Sample%2A> method of the base class.
+ The following example derives a class from <xref:System.Random> and overrides the <xref:System.Random.Sample*> method to generate a distribution of random numbers. This distribution is different than the uniform distribution generated by the <xref:System.Random.Sample*> method of the base class.
 
  :::code language="csharp" source="~/snippets/csharp/System/Random/Next/sample.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.Random.Sample/FS/sample.fs" id="Snippet1":::
