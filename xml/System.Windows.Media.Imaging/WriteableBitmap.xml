@@ -35,19 +35,19 @@
 
  The UI thread writes content to the back buffer. The render thread reads content from the front buffer and copies it to video memory. Changes to the back buffer are tracked with changed rectangular regions.
 
- Call one of the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%2A> overloads to update and display content in the back buffer automatically.
+ Call one of the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels*> overloads to update and display content in the back buffer automatically.
 
  For greater control over updates, and for multi-threaded access to the back buffer, use the following workflow.
 
-1.  Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> method to reserve the back buffer for updates.
+1.  Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> method to reserve the back buffer for updates.
 
 2.  Obtain a pointer to the back buffer by accessing the <xref:System.Windows.Media.Imaging.WriteableBitmap.BackBuffer> property.
 
 3.  Write changes to the back buffer. Other threads may write changes to the back buffer when the <xref:System.Windows.Media.Imaging.WriteableBitmap> is locked.
 
-4.  Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect%2A> method to indicate areas that have changed.
+4.  Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect*> method to indicate areas that have changed.
 
-5.  Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> method to release the back buffer and allow presentation to the screen.
+5.  Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> method to release the back buffer and allow presentation to the screen.
 
  When updates are sent to the rendering thread, the rendering thread copies the changed rectangles from the back buffer to the front buffer. The rendering system controls this exchange to avoid deadlocks and redraw artifacts, such as "tearing".
 
@@ -108,7 +108,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Windows.Media.Imaging.WriteableBitmap.%23ctor%28System.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Double%2CSystem.Windows.Media.PixelFormat%2CSystem.Windows.Media.Imaging.BitmapPalette%29> constructor is preferred over using this constructor.
+ The <xref:System.Windows.Media.Imaging.WriteableBitmap.%23ctor(System.Int32,System.Int32,System.Double,System.Double,System.Windows.Media.PixelFormat,System.Windows.Media.Imaging.BitmapPalette)> constructor is preferred over using this constructor.
 
  If `source` does not use a natively supported bitmap format, format conversions are applied for each frame update, which reduces performance.
 
@@ -162,7 +162,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The preferred values for `pixelFormat` are <xref:System.Windows.Media.PixelFormats.Bgr32%2A> and <xref:System.Windows.Media.PixelFormats.Pbgra32%2A>. These formats are natively supported and do not require a format conversion. Other `pixelFormat` values require a format conversion for each frame update, which reduces performance.
+ The preferred values for `pixelFormat` are <xref:System.Windows.Media.PixelFormats.Bgr32*> and <xref:System.Windows.Media.PixelFormats.Pbgra32*>. These formats are natively supported and do not require a format conversion. Other `pixelFormat` values require a format conversion for each frame update, which reduces performance.
 
  ]]></format>
         </remarks>
@@ -207,16 +207,16 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect%2A> method to indicate changes your code has made to the back buffer.
+ Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect*> method to indicate changes your code has made to the back buffer.
 
  When you call this method multiple times, the changed areas are accumulated in a sufficient, but not necessarily minimal, representation. For efficiency, only the areas that are marked as dirty are guaranteed to be copied forward to the front buffer. However, any portion of the bitmap may be copied forward, so you must ensure that the entire back buffer is always valid.
 
- Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect%2A> method only between calls to the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> methods, as described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks.
+ Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect*> method only between calls to the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> methods, as described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks.
 
 
 
 ## Examples
- The following code example shows how to specify the area of the back buffer that changed by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect%2A> method.
+ The following code example shows how to specify the area of the back buffer that changed by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Media.Imaging/WriteableBitmap/Overview/Program.cs" id="Snippet2":::
 
@@ -269,12 +269,12 @@
 ## Remarks
  The back buffer contains the bitmap contents in the pixel format requested by the user.
 
- Update the back buffer only between calls to the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> methods. If you do not follow the Lock/Unlock workflow described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks, undefined behaviors, such as tearing, can occur.
+ Update the back buffer only between calls to the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> methods. If you do not follow the Lock/Unlock workflow described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks, undefined behaviors, such as tearing, can occur.
 
  The address of the back buffer does not change.
 
 ## Thread Safety
- You can pass the <xref:System.Windows.Media.Imaging.WriteableBitmap.BackBuffer%2A> pointer to external components and other threads for processing, but if you do, you must provide you own thread coordination. In particular, you must ensure that the UI thread specifies changed areas by calling the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect%2A> method, and that the UI thread unlocks the buffer by calling the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> method.
+ You can pass the <xref:System.Windows.Media.Imaging.WriteableBitmap.BackBuffer*> pointer to external components and other threads for processing, but if you do, you must provide you own thread coordination. In particular, you must ensure that the UI thread specifies changed areas by calling the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect*> method, and that the UI thread unlocks the buffer by calling the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> method.
 
  ]]></format>
         </remarks>
@@ -342,7 +342,7 @@
 ## Remarks
  This method is used to produce modifiable copies of frozen <xref:System.Windows.Freezable> objects (or any <xref:System.Windows.Freezable> object). For convenience, this method shadows the inherited version with a strongly typed implementation.
 
- For more information, see <xref:System.Windows.Freezable.Clone%2A?displayProperty=nameWithType>.
+ For more information, see <xref:System.Windows.Freezable.Clone*?displayProperty=nameWithType>.
 
  ]]></format>
         </remarks>
@@ -423,7 +423,7 @@
 ## Remarks
  This method is used to produce modifiable copies of frozen <xref:System.Windows.Freezable> objects (or any <xref:System.Windows.Freezable> object). For convenience, this method shadows the inherited version with a strongly typed implementation.
 
- For more information, see <xref:System.Windows.Freezable.CloneCurrentValue%2A?displayProperty=nameWithType>.
+ For more information, see <xref:System.Windows.Freezable.CloneCurrentValue*?displayProperty=nameWithType>.
 
  ]]></format>
         </remarks>
@@ -658,16 +658,16 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> method increments the lock count. When a <xref:System.Windows.Media.Imaging.WriteableBitmap> is locked, the rendering system does not send updates until the <xref:System.Windows.Media.Imaging.WriteableBitmap> is fully unlocked by calls to the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> method.
+ The <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> method increments the lock count. When a <xref:System.Windows.Media.Imaging.WriteableBitmap> is locked, the rendering system does not send updates until the <xref:System.Windows.Media.Imaging.WriteableBitmap> is fully unlocked by calls to the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> method.
 
- You can use the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> method to support multi-threaded implementations. In these scenarios, the UI thread locks the bitmap and exposes the back buffer to other threads. When the worker thread has finished a frame, the UI thread adds changed rectangles and unlocks the buffer.
+ You can use the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> method to support multi-threaded implementations. In these scenarios, the UI thread locks the bitmap and exposes the back buffer to other threads. When the worker thread has finished a frame, the UI thread adds changed rectangles and unlocks the buffer.
 
- The UI thread can block when the render thread acquires a lock on the back buffer to copy it forward to the front buffer. If the latency from this block is too long, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.TryLock%2A> method to wait for a short time and then unblock the UI thread to perform other tasks while the back buffer is locked.
+ The UI thread can block when the render thread acquires a lock on the back buffer to copy it forward to the front buffer. If the latency from this block is too long, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.TryLock*> method to wait for a short time and then unblock the UI thread to perform other tasks while the back buffer is locked.
 
 
 
 ## Examples
- The following code example shows how to reserve the back buffer by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> method.
+ The following code example shows how to reserve the back buffer by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Media.Imaging/WriteableBitmap/Overview/Program.cs" id="Snippet2":::
 
@@ -718,7 +718,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When a lock is acquired, the behavior of the <xref:System.Windows.Media.Imaging.WriteableBitmap.TryLock%2A> method is the same as the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> method.
+ When a lock is acquired, the behavior of the <xref:System.Windows.Media.Imaging.WriteableBitmap.TryLock*> method is the same as the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> method.
 
  ]]></format>
         </remarks>
@@ -764,12 +764,12 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> method decrements the lock count. When the lock count reaches 0, a render pass is requested if the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect%2A> method has been called.
+ The <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> method decrements the lock count. When the lock count reaches 0, a render pass is requested if the <xref:System.Windows.Media.Imaging.WriteableBitmap.AddDirtyRect*> method has been called.
 
 
 
 ## Examples
- The following code example shows how to release the back buffer by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> method.
+ The following code example shows how to release the back buffer by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Media.Imaging/WriteableBitmap/Overview/Program.cs" id="Snippet2":::
 
@@ -834,15 +834,15 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.Array%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> and <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.IntPtr%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> overloads are preferred over using this method.
+ The <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.Array,System.Int32,System.Int32,System.Int32)> and <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32)> overloads are preferred over using this method.
 
 > [!NOTE]
-> In partial trust, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.Array%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> overload.
+> In partial trust, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.Array,System.Int32,System.Int32,System.Int32)> overload.
 
 
 
 ## Examples
- The following code example shows how to update a pixel in the back buffer by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%2A> method.
+ The following code example shows how to update a pixel in the back buffer by using the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels*> method.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Media.Imaging/WriteableBitmap/Overview/Program.cs" id="Snippet3":::
 
@@ -906,10 +906,10 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.Array%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> and <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.IntPtr%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> overloads are preferred over using this method.
+ The <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.Array,System.Int32,System.Int32,System.Int32)> and <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.IntPtr,System.Int32,System.Int32,System.Int32,System.Int32)> overloads are preferred over using this method.
 
 > [!NOTE]
-> In partial trust, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.Array%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> overload.
+> In partial trust, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.Array,System.Int32,System.Int32,System.Int32)> overload.
 
  ]]></format>
         </remarks>
@@ -971,7 +971,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%2A> method to update the <xref:System.Windows.Media.Imaging.WriteableBitmap> automatically with the contents of `sourceBuffer`. Calling this method is the equivalent of using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> workflow described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks.
+ Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels*> method to update the <xref:System.Windows.Media.Imaging.WriteableBitmap> automatically with the contents of `sourceBuffer`. Calling this method is the equivalent of using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> workflow described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks.
 
 > [!NOTE]
 > Use this overload in partial trust.
@@ -1041,10 +1041,10 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%2A> method to update the <xref:System.Windows.Media.Imaging.WriteableBitmap> automatically with the contents of `sourceBuffer`. Calling this method is the equivalent of using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock%2A> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock%2A> workflow described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks.
+ Call the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels*> method to update the <xref:System.Windows.Media.Imaging.WriteableBitmap> automatically with the contents of `sourceBuffer`. Calling this method is the equivalent of using the <xref:System.Windows.Media.Imaging.WriteableBitmap.Lock*> and <xref:System.Windows.Media.Imaging.WriteableBitmap.Unlock*> workflow described in the <xref:System.Windows.Media.Imaging.WriteableBitmap> class remarks.
 
 > [!NOTE]
-> In partial trust, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels%28System.Windows.Int32Rect%2CSystem.Array%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29> overload.
+> In partial trust, use the <xref:System.Windows.Media.Imaging.WriteableBitmap.WritePixels(System.Windows.Int32Rect,System.Array,System.Int32,System.Int32,System.Int32)> overload.
 
  ]]></format>
         </remarks>
