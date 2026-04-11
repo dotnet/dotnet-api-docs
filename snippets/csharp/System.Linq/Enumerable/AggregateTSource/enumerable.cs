@@ -3245,13 +3245,13 @@ namespace SequenceExamples
             // <Snippet206>
             public static void AggregateBySeedExample()
             {
-                Employee[] employees =
+                (string Name, string Department, decimal Salary)[] employees =
                 {
-                    new Employee { Name = "Ali", Department = "HR", Salary = 45000 },
-                    new Employee { Name = "Samer", Department = "Technology", Salary = 50000 },
-                    new Employee { Name = "Hamed", Department = "Sales", Salary = 75000 },
-                    new Employee { Name = "Lina", Department = "Technology", Salary = 65000 },
-                    new Employee { Name = "Omar", Department = "HR", Salary = 40000 }
+                    ("Ali", "HR", 45000),
+                    ("Samer", "Technology", 50000),
+                    ("Hamed", "Sales", 75000),
+                    ("Lina", "Technology", 65000),
+                    ("Omar", "HR", 40000)
                 };
 
                 var totals =
