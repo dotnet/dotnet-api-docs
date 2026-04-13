@@ -177,7 +177,7 @@ Optionally specify `-Fault` to intentionally attempt to leak the handle by abort
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the `ownsHandle` parameter is `false`, <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> is never called; thus, it is not recommended to use this parameter value as your code may leak resources.
+ If the `ownsHandle` parameter is `false`, <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle*> is never called; thus, it is not recommended to use this parameter value as your code may leak resources.
 
  ]]></format>
         </remarks>
@@ -242,12 +242,12 @@ Optionally specify `-Fault` to intentionally attempt to leak the handle by abort
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling the <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method allows the resources to be freed. This might not happen immediately if other threads are using the same safe handle object, but will happen as soon as that is no longer the case. Although most classes that use the <xref:System.Runtime.InteropServices.SafeHandle> class do not need to provide a finalizer, this is sometimes necessary (for example, to flush out file buffers or to write some data back into memory). In this case, the class can provide a finalizer that is guaranteed to run before the <xref:System.Runtime.InteropServices.SafeHandle> critical finalizer runs.
+ Calling the <xref:System.Runtime.InteropServices.SafeHandle.Close*> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method allows the resources to be freed. This might not happen immediately if other threads are using the same safe handle object, but will happen as soon as that is no longer the case. Although most classes that use the <xref:System.Runtime.InteropServices.SafeHandle> class do not need to provide a finalizer, this is sometimes necessary (for example, to flush out file buffers or to write some data back into memory). In this case, the class can provide a finalizer that is guaranteed to run before the <xref:System.Runtime.InteropServices.SafeHandle> critical finalizer runs.
 
- Call the <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method when you are finished using the <xref:System.Runtime.InteropServices.SafeHandle> object.
+ Call the <xref:System.Runtime.InteropServices.SafeHandle.Close*> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method when you are finished using the <xref:System.Runtime.InteropServices.SafeHandle> object.
 
 > [!NOTE]
->  Always call <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> before you release your last reference to the <xref:System.Runtime.InteropServices.SafeHandle> object. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Runtime.InteropServices.SafeHandle> object's <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A> method.
+>  Always call <xref:System.Runtime.InteropServices.SafeHandle.Close*> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> before you release your last reference to the <xref:System.Runtime.InteropServices.SafeHandle> object. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Runtime.InteropServices.SafeHandle> object's <xref:System.Runtime.InteropServices.SafeHandle.Finalize*> method.
 
  ]]></format>
         </remarks>
@@ -318,7 +318,7 @@ Optionally specify `-Fault` to intentionally attempt to leak the handle by abort
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> method prevents the common language runtime from reclaiming memory used by a handle (which occurs when the runtime calls the <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> method). You can use this method to manually increment the reference count on a <xref:System.Runtime.InteropServices.SafeHandle> instance. <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> returns a Boolean value using a `ref` parameter (`success`) that indicates whether the reference count was incremented successfully. This allows your program logic to back out in case of failure. You should set `success` to `false` before calling <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>. If `success` is `true`, avoid resource leaks by matching the call to <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> with a corresponding call to <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A>.
+ The <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*> method prevents the common language runtime from reclaiming memory used by a handle (which occurs when the runtime calls the <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle*> method). You can use this method to manually increment the reference count on a <xref:System.Runtime.InteropServices.SafeHandle> instance. <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*> returns a Boolean value using a `ref` parameter (`success`) that indicates whether the reference count was incremented successfully. This allows your program logic to back out in case of failure. You should set `success` to `false` before calling <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*>. If `success` is `true`, avoid resource leaks by matching the call to <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*> with a corresponding call to <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease*>.
 
 If this call is successful, it will set the `ref bool success` parameter to `true` and return successfully.  If this call is unsuccessful, it will throw an exception and leave the `ref bool success` parameter unmodified.
 
@@ -393,7 +393,7 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
  You can use this method to retrieve the actual handle value from an instance of the <xref:System.Runtime.InteropServices.SafeHandle> derived class. This method is needed for backwards compatibility because many properties in the .NET Framework return `IntPtr` handle types. `IntPtr` handle types are platform-specific types used to represent a pointer or a handle.
 
 > [!CAUTION]
->  Using the <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> method can pose security risks because, if the handle has been marked as invalid with <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A>, <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> still returns the original, potentially stale handle value. The returned handle can also be recycled at any point. At best, this means the handle might suddenly stop working. At worst, if the handle or the resource that the handle represents is exposed to untrusted code, this can lead to a recycling security attack on the reused or returned handle. For example, an untrusted caller can query data on the handle just returned and receive information for an entirely unrelated resource. See the <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> and the <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> methods for more information about using the <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle%2A> method safely.
+>  Using the <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle*> method can pose security risks because, if the handle has been marked as invalid with <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid*>, <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle*> still returns the original, potentially stale handle value. The returned handle can also be recycled at any point. At best, this means the handle might suddenly stop working. At worst, if the handle or the resource that the handle represents is exposed to untrusted code, this can lead to a recycling security attack on the reused or returned handle. For example, an untrusted caller can query data on the handle just returned and receive information for an entirely unrelated resource. See the <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*> and the <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease*> methods for more information about using the <xref:System.Runtime.InteropServices.SafeHandle.DangerousGetHandle*> method safely.
 
  ]]></format>
         </remarks>
@@ -460,10 +460,10 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> method is the counterpart to <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>. You should always match a call to the <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> method with a successful call to <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A>.
+ The <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease*> method is the counterpart to <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*>. You should always match a call to the <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease*> method with a successful call to <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*>.
 
 > [!CAUTION]
->  In the same way that unmatched <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef%2A> calls can cause resource leaks, unmatched <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease%2A> calls can cause invalid handle states to become visible to other threads.
+>  In the same way that unmatched <xref:System.Runtime.InteropServices.SafeHandle.DangerousAddRef*> calls can cause resource leaks, unmatched <xref:System.Runtime.InteropServices.SafeHandle.DangerousRelease*> calls can cause invalid handle states to become visible to other threads.
 
  ]]></format>
         </remarks>
@@ -543,12 +543,12 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Calling the <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method allows the resources to be freed. This might not happen immediately if other threads are using the same instance of the safe handle, but will happen as soon as that is no longer the case. Although most classes using <xref:System.Runtime.InteropServices.SafeHandle> do not need to provide a finalizer, this is sometimes necessary (for example, to flush out file buffers or to write some data back into memory). In this case, they can provide a finalizer that is guaranteed to run before the <xref:System.Runtime.InteropServices.SafeHandle> critical finalizer runs.
+ Calling the <xref:System.Runtime.InteropServices.SafeHandle.Close*> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method allows the resources to be freed. This might not happen immediately if other threads are using the same instance of the safe handle, but will happen as soon as that is no longer the case. Although most classes using <xref:System.Runtime.InteropServices.SafeHandle> do not need to provide a finalizer, this is sometimes necessary (for example, to flush out file buffers or to write some data back into memory). In this case, they can provide a finalizer that is guaranteed to run before the <xref:System.Runtime.InteropServices.SafeHandle> critical finalizer runs.
 
- Call the <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method when you are finished using the <xref:System.Runtime.InteropServices.SafeHandle> object. The <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> method leaves the <xref:System.Runtime.InteropServices.SafeHandle> object in an unusable state.
+ Call the <xref:System.Runtime.InteropServices.SafeHandle.Close*> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method when you are finished using the <xref:System.Runtime.InteropServices.SafeHandle> object. The <xref:System.Runtime.InteropServices.SafeHandle.Close*> method leaves the <xref:System.Runtime.InteropServices.SafeHandle> object in an unusable state.
 
 > [!NOTE]
->  Always call the <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method before you release your last reference to the <xref:System.Runtime.InteropServices.SafeHandle> object. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Runtime.InteropServices.SafeHandle> object's <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A> method.
+>  Always call the <xref:System.Runtime.InteropServices.SafeHandle.Close*> or <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method before you release your last reference to the <xref:System.Runtime.InteropServices.SafeHandle> object. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Runtime.InteropServices.SafeHandle> object's <xref:System.Runtime.InteropServices.SafeHandle.Finalize*> method.
 
  ]]></format>
         </remarks>
@@ -619,7 +619,7 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- You should never explicitly call the <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method with the `disposing` parameter set to `false`.
+ You should never explicitly call the <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method with the `disposing` parameter set to `false`.
 
  ]]></format>
         </remarks>
@@ -682,7 +682,7 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.InteropServices.SafeHandle.Finalize%2A> method is the destructor for the <xref:System.Runtime.InteropServices.SafeHandle> class. Application code should not call this method directly.
+ The <xref:System.Runtime.InteropServices.SafeHandle.Finalize*> method is the destructor for the <xref:System.Runtime.InteropServices.SafeHandle> class. Application code should not call this method directly.
 
  ]]></format>
         </remarks>
@@ -807,11 +807,11 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> method returns a value indicating whether the <xref:System.Runtime.InteropServices.SafeHandle> object's handle is no longer associated with a native resource. This differs from the definition of the <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid> property, which computes whether a given handle is always considered invalid. The <xref:System.Runtime.InteropServices.SafeHandle.IsClosed%2A> method returns a `true` value in the following cases:
+ The <xref:System.Runtime.InteropServices.SafeHandle.IsClosed*> method returns a value indicating whether the <xref:System.Runtime.InteropServices.SafeHandle> object's handle is no longer associated with a native resource. This differs from the definition of the <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid> property, which computes whether a given handle is always considered invalid. The <xref:System.Runtime.InteropServices.SafeHandle.IsClosed*> method returns a `true` value in the following cases:
 
-- The <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> method was called.
+- The <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid*> method was called.
 
-- The <xref:System.Runtime.InteropServices.SafeHandle.Dispose%2A> method or <xref:System.Runtime.InteropServices.SafeHandle.Close%2A> method was called and there are no references to the <xref:System.Runtime.InteropServices.SafeHandle> object on other threads.
+- The <xref:System.Runtime.InteropServices.SafeHandle.Dispose*> method or <xref:System.Runtime.InteropServices.SafeHandle.Close*> method was called and there are no references to the <xref:System.Runtime.InteropServices.SafeHandle> object on other threads.
 
  ]]></format>
         </remarks>
@@ -949,11 +949,11 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> method is guaranteed to be called only once and only if the handle is valid as defined by the <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid> property. Implement this method in your <xref:System.Runtime.InteropServices.SafeHandle> derived classes to execute any code that is required to free the handle. Because one of the functions of <xref:System.Runtime.InteropServices.SafeHandle> is to guarantee prevention of resource leaks, the code in your implementation of <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> must never fail. The garbage collector calls <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> after normal finalizers have been run for objects that were garbage collected at the same time. The garbage collector guarantees the resources to invoke this method and that the method will not be interrupted while it is in progress.
+ The <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle*> method is guaranteed to be called only once and only if the handle is valid as defined by the <xref:System.Runtime.InteropServices.SafeHandle.IsInvalid> property. Implement this method in your <xref:System.Runtime.InteropServices.SafeHandle> derived classes to execute any code that is required to free the handle. Because one of the functions of <xref:System.Runtime.InteropServices.SafeHandle> is to guarantee prevention of resource leaks, the code in your implementation of <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle*> must never fail. The garbage collector calls <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle*> after normal finalizers have been run for objects that were garbage collected at the same time. The garbage collector guarantees the resources to invoke this method and that the method will not be interrupted while it is in progress.
 
  Additionally, for simple cleanup (for example, calling the Windows API `CloseHandle` on a file handle) you can check the return value for the single platform invoke call. For complex cleanup, you may have a lot of program logic and many method calls, some of which might fail. You must ensure that your program logic has fallback code for each of those cases.
 
- If <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle%2A> returns `false` for any reason, it generates a [releaseHandleFailed](/dotnet/framework/debug-trace-profile/releasehandlefailed-mda) Managed Debugging Assistant when running on .NET Framework.  This helps you detect cases where your attempt to release resources fails.
+ If <xref:System.Runtime.InteropServices.SafeHandle.ReleaseHandle*> returns `false` for any reason, it generates a [releaseHandleFailed](/dotnet/framework/debug-trace-profile/releasehandlefailed-mda) Managed Debugging Assistant when running on .NET Framework.  This helps you detect cases where your attempt to release resources fails.
 
 ## Examples
  The following code example releases the handle and is part of a larger example provided for the <xref:System.Runtime.InteropServices.SafeHandle> class.
@@ -1030,7 +1030,7 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Use the <xref:System.Runtime.InteropServices.SafeHandle.SetHandle%2A> method only if you need to support a pre-existing handle (for example, if the handle is returned in a structure) because the .NET Framework COM interop infrastructure does not support marshaling output handles in a structure.
+ Use the <xref:System.Runtime.InteropServices.SafeHandle.SetHandle*> method only if you need to support a pre-existing handle (for example, if the handle is returned in a structure) because the .NET Framework COM interop infrastructure does not support marshaling output handles in a structure.
 
  ]]></format>
         </remarks>
@@ -1097,9 +1097,9 @@ If this call is successful, it will set the `ref bool success` parameter to `tru
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Call the <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> method only when you know that your handle no longer references a resource. Doing so does not change the value of the <xref:System.Runtime.InteropServices.SafeHandle.handle> field; it only marks the handle as closed. The handle might then contain a potentially stale value. The effect of this call is that no attempt is made to free the resources.
+ Call the <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid*> method only when you know that your handle no longer references a resource. Doing so does not change the value of the <xref:System.Runtime.InteropServices.SafeHandle.handle> field; it only marks the handle as closed. The handle might then contain a potentially stale value. The effect of this call is that no attempt is made to free the resources.
 
- As with the <xref:System.Runtime.InteropServices.SafeHandle.SetHandle%2A> method, use <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid%2A> only if you need to support a pre-existing handle.
+ As with the <xref:System.Runtime.InteropServices.SafeHandle.SetHandle*> method, use <xref:System.Runtime.InteropServices.SafeHandle.SetHandleAsInvalid*> only if you need to support a pre-existing handle.
 
  ]]></format>
         </remarks>
