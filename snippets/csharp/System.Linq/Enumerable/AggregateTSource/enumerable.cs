@@ -3277,5 +3277,86 @@ namespace SequenceExamples
             // </Snippet206>
         }
         #endregion
+
+        #region UnionBy
+        static class UnionBy
+        {
+            // <Snippet207>
+            public static void UnionByKeySelectorExample()
+            {
+                (int ProductId, string Name, int Stock)[] localInventory =
+                {
+                    (101, "Laptop", 15),
+                    (102, "Mouse", 50),
+                    (103, "Keyboard", 20)
+                };
+
+                (int ProductId, string Name, int Stock)[] warehouseInventory =
+                {
+                    (102, "Mouse", 200),      // Duplicate ProductId (already in local)
+                    (104, "Monitor", 30),
+                    (101, "Laptop", 50)       // Duplicate ProductId (already in local)
+                };
+
+                var combinedInventoryProducts =
+                    localInventory.UnionBy(
+                        warehouseInventory,
+                        item => item.ProductId
+                    );
+
+                foreach (var item in combinedInventoryProducts)
+                {
+                    Console.WriteLine($"{item.ProductId}: {item.Name}");
+                }
+
+                /*
+                This code produces the following output:
+
+                101: Laptop
+                102: Mouse
+                103: Keyboard
+                104: Monitor
+                */
+            }
+            // </Snippet207>
+
+            // <Snippet208>
+            public static void UnionByComparerExample()
+            {
+                (string Email, string FullName)[] marketingList =
+                {
+                    ("Mahmoud.Doe@example.com", "Mahmoud Doe"),
+                    ("alice.smith@example.com", "Alice Smith")
+                };
+
+                (string Email, string FullName)[] salesList =
+                {
+                    ("ALICE.SMITH@EXAMPLE.COM", "Alice S."), // Duplicate email, different casing
+                    ("Sara.jones@example.com", "Sara Jones") // Fixed the capital J here
+                };
+
+                var combinedList =
+                    marketingList.UnionBy(
+                        salesList,
+                        contact => contact.Email,
+                        StringComparer.OrdinalIgnoreCase
+                    );
+
+                foreach (var contact in combinedList)
+                {
+                    Console.WriteLine($"{contact.FullName} ({contact.Email})");
+                }
+
+                /*
+                This code produces the following output:
+
+                Mahmoud Doe (Mahmoud.Doe@example.com)
+                Alice Smith (alice.smith@example.com)
+                Sara Jones (Sara.jones@example.com)
+                */
+            }
+            // </Snippet208>
+        }
+        #endregion
     }
 }
