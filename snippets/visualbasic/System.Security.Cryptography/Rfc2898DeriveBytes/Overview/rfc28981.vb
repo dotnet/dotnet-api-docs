@@ -28,7 +28,10 @@ Public Class rfc2898test
             'data1 can be a string or contents of a file.
             Dim data1 As String = "Some test data"
             '<SNIPPET3>
-            'The default iteration count is 1000 so the two methods use the same iteration count.
+            ' SECURITY NOTE: The iteration count should be as high as your
+            ' performance requirements allow. OWASP recommends at least 600,000
+            ' iterations for PBKDF2-HMAC-SHA1 in production. The low value here
+            ' is for illustration only.
             Dim myIterations As Integer = 1000
             '</SNIPPET6>		
             '<SNIPPET2>
