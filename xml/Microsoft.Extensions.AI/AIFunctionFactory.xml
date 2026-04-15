@@ -38,7 +38,19 @@
   </Attributes>
   <Docs>
     <summary>Provides factory methods for creating commonly-used implementations of <see cref="T:Microsoft.Extensions.AI.AIFunction" />.</summary>
-    <remarks>To be added.</remarks>
+    <remarks>
+      <para>
+            The <see cref="T:Microsoft.Extensions.AI.AIFunctionFactory" /> class creates <see cref="T:Microsoft.Extensions.AI.AIFunction" /> instances that wrap .NET methods
+            (specified as <see cref="T:System.Delegate" /> or <see cref="T:System.Reflection.MethodInfo" />). As part of this process, JSON schemas are
+            automatically derived for both the function's input parameters (exposed via <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.JsonSchema" />)
+            and, by default, the function's return type (exposed via <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.ReturnJsonSchema" />).
+            These schemas are produced using the <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.SerializerOptions" /> and
+            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.JsonSchemaCreateOptions" />, and enable AI services to understand and
+            interact with the function. Return value serialization and schema derivation behavior can be customized
+            via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" /> and <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ExcludeResultSchema" />,
+            respectively.
+            </para>
+    </remarks>
     <related type="Article" href="https://learn.microsoft.com/dotnet/ai/quickstarts/use-function-calling">Invoke .NET functions using an AI model.</related>
   </Docs>
   <Members>
@@ -129,7 +141,14 @@
             special-cased and are not serialized: the created function returns the original instance(s) directly to enable
             callers (such as an <c>IChatClient</c>) to perform type tests and implement specialized handling. If
             <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" /> is supplied, that delegate governs the behavior instead.
-            Handling of return values can be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
+            </para>
+          <para>
+            In addition to the parameter schema, a JSON schema is also derived from the method's return type and exposed via the
+            returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.ReturnJsonSchema" />. For methods returning
+            <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />, no return schema is produced (the property is <see langword="null" />).
+            For methods returning <see cref="T:System.Threading.Tasks.Task`1" /> or <see cref="T:System.Threading.Tasks.ValueTask`1" />, the schema is derived from the
+            unwrapped result type. Return schema generation can be excluded via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ExcludeResultSchema" />,
+            and its generation is governed by <paramref name="options" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.JsonSchemaCreateOptions" />.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -235,6 +254,14 @@
             However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or any type
             assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are returned directly without serialization.
             Handling of return values can be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
+            </para>
+          <para>
+            In addition to the parameter schema, a JSON schema is also derived from the method's return type and exposed via the
+            returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.ReturnJsonSchema" />. For methods returning
+            <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />, no return schema is produced (the property is <see langword="null" />).
+            For methods returning <see cref="T:System.Threading.Tasks.Task`1" /> or <see cref="T:System.Threading.Tasks.ValueTask`1" />, the schema is derived from the
+            unwrapped result type. Return schema generation can be excluded via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ExcludeResultSchema" />,
+            and its generation is governed by <paramref name="options" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.JsonSchemaCreateOptions" />.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -345,6 +372,14 @@
             any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are not serialized and are instead returned directly.
             Handling of return values can be overridden via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.MarshalResult" />.
             </para>
+          <para>
+            In addition to the parameter schema, a JSON schema is also derived from the method's return type and exposed via the
+            returned <see cref="T:Microsoft.Extensions.AI.AIFunction" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.ReturnJsonSchema" />. For methods returning
+            <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />, no return schema is produced (the property is <see langword="null" />).
+            For methods returning <see cref="T:System.Threading.Tasks.Task`1" /> or <see cref="T:System.Threading.Tasks.ValueTask`1" />, the schema is derived from the
+            unwrapped result type. Return schema generation can be excluded via <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ExcludeResultSchema" />,
+            and its generation is governed by <paramref name="options" />'s <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.JsonSchemaCreateOptions" />.
+            </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="method" /> represents an instance method but <paramref name="target" /> is null.</exception>
@@ -444,6 +479,11 @@
             or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a
             derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are not serialized;
             they are returned as-is to facilitate specialized handling.
+            </para>
+          <para>
+            A JSON schema is also derived from the method's return type and exposed via <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.ReturnJsonSchema" />.
+            For methods returning <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />, no return schema is produced.
+            For methods returning <see cref="T:System.Threading.Tasks.Task`1" /> or <see cref="T:System.Threading.Tasks.ValueTask`1" />, the schema is derived from the unwrapped result type.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -550,6 +590,11 @@
             or else using <see cref="P:Microsoft.Extensions.AI.AIJsonUtilities.DefaultOptions" />. However, return values whose declared type is <see cref="T:Microsoft.Extensions.AI.AIContent" />, a
             derived type of <see cref="T:Microsoft.Extensions.AI.AIContent" />, or any type assignable from <see cref="T:System.Collections.Generic.IEnumerable`1" /> are returned
             without serialization to enable specialized handling.
+            </para>
+          <para>
+            A JSON schema is also derived from the method's return type and exposed via <see cref="P:Microsoft.Extensions.AI.AIFunctionDeclaration.ReturnJsonSchema" />.
+            For methods returning <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />, no return schema is produced.
+            For methods returning <see cref="T:System.Threading.Tasks.Task`1" /> or <see cref="T:System.Threading.Tasks.ValueTask`1" />, the schema is derived from the unwrapped result type.
             </para>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
