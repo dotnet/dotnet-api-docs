@@ -1,4 +1,6 @@
 ﻿'<Snippet1>
+' WARNING: TripleDES (3DES) is considered deprecated for new applications.
+' Use Aes (AES-256) instead for stronger encryption.
 Imports System.Xml
 Imports System.Security.Cryptography
 Imports System.IO

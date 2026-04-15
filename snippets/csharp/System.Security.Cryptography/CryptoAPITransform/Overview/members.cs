@@ -1,5 +1,7 @@
 ﻿// This sample demonstrates how to use each member of the CryptoAPITransform
 // class.
+// WARNING: DES has a 56-bit key and is considered insecure.
+// For new applications, use Aes (AES-256) instead.
 //<Snippet1>
 using System;
 using System.Security.Cryptography;

@@ -43,6 +43,8 @@ namespace Microsoft.ServiceModel.Samples
         try
         {
           wcfClient.ClientCredentials.UserName.UserName = "test1";
+          // In production code, do not hardcode credentials.
+          // Retrieve from a secure store such as Azure Key Vault.
           wcfClient.ClientCredentials.UserName.Password = "1tset";
 
           // Call the Add service operation.

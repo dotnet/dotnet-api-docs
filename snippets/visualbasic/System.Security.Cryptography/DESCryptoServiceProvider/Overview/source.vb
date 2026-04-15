@@ -1,4 +1,6 @@
-﻿Imports System.IO
+﻿' WARNING: DES has a 56-bit key and is considered insecure.
+' For new applications, use Aes (AES-256) instead.
+Imports System.IO
 Imports System.Windows.Forms
 Imports System.Security.Cryptography
 

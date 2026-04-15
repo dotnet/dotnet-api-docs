@@ -3,6 +3,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 
+// WARNING: DES has a 56-bit key and is considered insecure.
+// For new applications, use Aes (AES-256) instead.
 public class Form1: Form
 {
 // <Snippet1>

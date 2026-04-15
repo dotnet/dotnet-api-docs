@@ -1,4 +1,6 @@
 ﻿// <SNIPPET1>
+// WARNING: DES has a 56-bit key and is considered insecure.
+// For new applications, use Aes (AES-256) instead.
 using System;
 using System.Security.Cryptography;
 using System.Text;
