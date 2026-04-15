@@ -83,6 +83,10 @@
             The metadata present in the schema document plays an important role in guiding AI function invocation.
             </para>
           <para>
+            When an <see cref="T:Microsoft.Extensions.AI.AIFunction" /> is created via <see cref="T:Microsoft.Extensions.AI.AIFunctionFactory" />, this schema is automatically derived from the
+            method's parameters using the configured <see cref="T:System.Text.Json.JsonSerializerOptions" /> and <see cref="T:Microsoft.Extensions.AI.AIJsonSchemaCreateOptions" />.
+            </para>
+          <para>
             When no schema is specified, consuming chat clients should assume the "{}" or "true" schema, indicating that any JSON input is admissible.
             </para>
         </remarks>
@@ -107,9 +111,19 @@
         <summary>Gets a JSON Schema describing the function's return value.</summary>
         <value>To be added.</value>
         <remarks>
-            A <see langword="null" /> typically reflects a function that doesn't specify a return schema
-            or a function that returns <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />.
-            </remarks>
+          <para>
+            When an <see cref="T:Microsoft.Extensions.AI.AIFunction" /> is created via <see cref="T:Microsoft.Extensions.AI.AIFunctionFactory" />, this schema is automatically derived from the
+            method's return type using the configured <see cref="T:System.Text.Json.JsonSerializerOptions" /> and <see cref="T:Microsoft.Extensions.AI.AIJsonSchemaCreateOptions" />.
+            For methods returning <see cref="T:System.Threading.Tasks.Task`1" /> or <see cref="T:System.Threading.Tasks.ValueTask`1" />, the schema is based on the
+            unwrapped result type. Return schema generation can be excluded by setting
+            <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ExcludeResultSchema" /> to <see langword="true" />.
+            </para>
+          <para>
+            A <see langword="null" /> value typically reflects a function that doesn't specify a return schema,
+            a function that returns <see cref="T:System.Void" />, <see cref="T:System.Threading.Tasks.Task" />, or <see cref="T:System.Threading.Tasks.ValueTask" />,
+            or a function for which <see cref="P:Microsoft.Extensions.AI.AIFunctionFactoryOptions.ExcludeResultSchema" /> was set to <see langword="true" />.
+            </para>
+        </remarks>
       </Docs>
     </Member>
   </Members>
