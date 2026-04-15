@@ -3286,17 +3286,17 @@ namespace SequenceExamples
             {
                 (int ProductId, string Name , decimal Price)[] localProducts =
                 {
-                                (101, "Laptop", 1000m),                 
-                                (102, "Mouse", 100m),
-                                (103, "Keyboard", 120m)
-                            };
+                    (101, "Laptop", 1000m),                 
+                    (102, "Mouse", 100m),
+                    (103, "Keyboard", 120m)
+                };
 
                 (int ProductId, string Name, decimal Price)[] warehouseProducts =
                 {
-                                (102, "Mouse", 120m),      // Duplicate ProductId (already in local)
-                                (104, "Monitor", 800m),
-                                (101, "Laptop", 1000m)     // Duplicate ProductId (already in local)
-                            };
+                    (102, "Mouse", 120m),      // Duplicate ProductId (already in local)
+                    (104, "Monitor", 800m),
+                    (101, "Laptop", 1000m)     // Duplicate ProductId (already in local)
+                };
                 var combinedProducts =
                     localProducts.UnionBy(
                         warehouseProducts,
@@ -3319,20 +3319,20 @@ namespace SequenceExamples
             }
             // </Snippet207>
 
-        // <Snippet208>
+            // <Snippet208>
             public static void UnionByComparerExample()
             {
                 (string Email, string FullName)[] marketingList =
                 {
-                                ("Mahmoud.Doe@example.com", "Mahmoud Doe"),
-                                ("alice.smith@example.com", "Alice Smith")
-                            };
+                    ("Mahmoud.Doe@example.com", "Mahmoud Doe"),
+                    ("alice.smith@example.com", "Alice Smith")
+                };
 
                 (string Email, string FullName)[] salesList =
                 {
-                                ("ALICE.SMITH@EXAMPLE.COM", "Alice S."), // Duplicate email, different casing
-                                ("Sara.jones@example.com", "Sara Jones")
-                            };
+                    ("ALICE.SMITH@EXAMPLE.COM", "Alice S."), // Duplicate email, different casing
+                    ("Sara.jones@example.com", "Sara Jones")
+                };
 
                 var combinedList =
                     marketingList.UnionBy(
