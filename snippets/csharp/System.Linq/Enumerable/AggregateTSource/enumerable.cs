@@ -3293,7 +3293,7 @@ namespace SequenceExamples
 
                 (int ProductId, string Name, decimal Price)[] warehouseProducts =
                 {
-                    (102, "Mouse", 120m),      // Duplicate ProductId (already in local)
+                    (102, "Mouse", 100m),      // Duplicate ProductId (already in local)
                     (104, "Monitor", 800m),
                     (101, "Laptop", 1000m)     // Duplicate ProductId (already in local)
                 };
