@@ -37,6 +37,8 @@ Class XmlReaderSettings_Examples
     ' Load URI with XmlResolver
     Shared Sub Settings_Resolver() 
         Dim UserName As String = "username"
+        ' In production code, do not hardcode credentials in source code.
+        ' Instead, retrieve them from a secure store such as Azure Key Vault.
         Dim SecurelyStoredPassword As String = "psswd"
         Dim Domain As String = "domain"
         

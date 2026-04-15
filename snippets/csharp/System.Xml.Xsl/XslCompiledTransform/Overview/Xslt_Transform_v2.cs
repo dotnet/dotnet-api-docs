@@ -64,6 +64,8 @@ writer.Close();
 // Transform with document function
 static void XslCompiledTransform_Transform4()  {
 	string UserName = "username";
+	// In production code, do not hardcode credentials in source code.
+	// Instead, retrieve them from a secure store such as Azure Key Vault.
 	string SecurelyStoredPassword = "psswd";
 	string Domain= "domain";
 

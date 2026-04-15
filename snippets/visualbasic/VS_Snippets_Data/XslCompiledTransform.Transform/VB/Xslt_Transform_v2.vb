@@ -70,6 +70,8 @@ End Sub
 ' Transform with document function
 Shared Sub XslCompiledTransform_Transform4() 
         Dim UserName As String = "username"
+        ' In production code, do not hardcode credentials in source code.
+        ' Instead, retrieve them from a secure store such as Azure Key Vault.
         Dim SecurelyStoredPassword As String = "psswd"
         Dim Domain As String = "domain"
         
