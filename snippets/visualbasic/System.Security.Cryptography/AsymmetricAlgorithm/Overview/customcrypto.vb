@@ -182,7 +182,7 @@ Namespace Contoso
         ' Retrieves the name of the signature alogrithm.
         '<Snippet7>
         ' This example uses the SHA1 algorithm.
-        ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+        ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
         Public Overrides ReadOnly Property SignatureAlgorithm() As String
             Get
                 Return "http://www.w3.org/2000/09/xmldsig#rsa-sha1"

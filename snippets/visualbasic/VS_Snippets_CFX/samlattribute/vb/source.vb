@@ -879,7 +879,7 @@ Namespace Microsoft.ServiceModel.Samples.Federation
 
 
             ' This example uses the SHA1 algorithm.
-            ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+            ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
             Public Class ComputedKeyAlgorithms
                 Public Const PSHA1 As String = "http://schemas.xmlsoap.org/ws/2005/02/trust/CK/PSHA1"
             End Class
@@ -1038,7 +1038,7 @@ Namespace Microsoft.ServiceModel.Samples.Federation
         '/ <returns>Array of bytes that contains key material.</returns>
         Public Shared Function ComputeCombinedKey(ByVal requestorEntropy() As Byte, ByVal issuerEntropy() As Byte, ByVal keySize As Integer) As Byte()
             ' This example uses the SHA1 algorithm.
-            ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+            ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
             Dim kha As KeyedHashAlgorithm = New HMACSHA1(requestorEntropy, True)
 
             Dim key(keySize / 8 - 1) As Byte ' Final key
@@ -1145,7 +1145,7 @@ Namespace Microsoft.ServiceModel.Samples.Federation
                 ' Write the wst:ComputeKey start tag.
                 writer.WriteStartElement(Constants.Trust.Elements.ComputedKey, Constants.Trust.NamespaceUri)
                 ' This example uses the SHA1 algorithm.
-                ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+                ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
                 writer.WriteValue(Constants.Trust.ComputedKeyAlgorithms.PSHA1)
                 writer.WriteEndElement() ' wst:ComputedKey
                 writer.WriteEndElement() ' wst:RequestedSecurityToken
@@ -1272,7 +1272,7 @@ Namespace Microsoft.ServiceModel.Samples.Federation
 
             ' Create a SigningCredentials instance from the key associated with the issuerToken.
             ' This example uses the SHA1 algorithm.
-            ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+            ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
             Dim signingCredentials As New SigningCredentials(issuerToken.SecurityKeys(0), SecurityAlgorithms.RsaSha1Signature, SecurityAlgorithms.Sha1Digest, issuerKeyIdentifier)
 
             ' Create a SamlAssertion from the list of SamlStatements previously created and the passed in

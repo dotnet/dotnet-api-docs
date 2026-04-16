@@ -26,7 +26,7 @@ Public Class Form1
         ' Create a new SHA1 provider.
         '<Snippet4>
         ' This example uses the SHA1 algorithm.
-        ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+        ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
         Dim SHA1alg As SHA1CryptoServiceProvider
         SHA1alg = CType( _
             cryptoConfig.CreateFromName("SHA1"), SHA1CryptoServiceProvider)
@@ -50,14 +50,14 @@ Public Class Form1
         '<Snippet3>
         ' (OID) from the string name of the SHA1 algorithm.
         ' This example uses the SHA1 algorithm.
-        ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+        ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
         Dim sha1Oid As String = cryptoConfig.MapNameToOID("SHA1")
         '</Snippet3>
 
         ' Encode the specified object identifier.
         '<Snippet6>
         ' This example uses the SHA1 algorithm.
-        ' Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+        ' Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
         Dim encodedMessage() As Byte = cryptoConfig.EncodeOID(sha1Oid)
         '</Snippet6>
 

@@ -922,7 +922,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
             public class ComputedKeyAlgorithms
             {
                 // This example uses the SHA1 algorithm.
-                // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+                // Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
                 public const string PSHA1 = "http://schemas.xmlsoap.org/ws/2005/02/trust/CK/PSHA1";
             }
         }
@@ -1067,7 +1067,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
         public static byte[] ComputeCombinedKey(byte[] requestorEntropy, byte[] issuerEntropy, int keySize)
         {
             // This example uses the SHA1 algorithm.
-            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+            // Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
             KeyedHashAlgorithm kha = new HMACSHA1(requestorEntropy, true);
 
             byte[] key = new byte[keySize / 8]; // Final key
@@ -1179,7 +1179,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
                 // Write the wst:ComputeKey start tag.
                 writer.WriteStartElement(Constants.Trust.Elements.ComputedKey, Constants.Trust.NamespaceUri);
                 // This example uses the SHA1 algorithm.
-                // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+                // Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
                 writer.WriteValue(Constants.Trust.ComputedKeyAlgorithms.PSHA1);
                 writer.WriteEndElement(); // wst:ComputedKey
                 writer.WriteEndElement(); // wst:RequestedSecurityToken
@@ -1311,7 +1311,7 @@ namespace Microsoft.ServiceModel.Samples.Federation
 
             // Create a SigningCredentials instance from the key associated with the issuerToken.
             // This example uses the SHA1 algorithm.
-            // Due to collision problems with SHA1, Microsoft recommends SHA256 or better.
+            // Due to collision problems with SHA1, Microsoft recommends using a NIST-approved hash function.
             SigningCredentials signingCredentials = new SigningCredentials(issuerToken.SecurityKeys[0],
                                                                            SecurityAlgorithms.RsaSha1Signature,
                                                                            SecurityAlgorithms.Sha1Digest,
