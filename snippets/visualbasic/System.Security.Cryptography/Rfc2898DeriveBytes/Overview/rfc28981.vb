@@ -29,9 +29,9 @@ Public Class rfc2898test
             Dim data1 As String = "Some test data"
             '<SNIPPET3>
             ' SECURITY NOTE: The iteration count should be as high as your
-            ' performance requirements allow. OWASP recommends at least 600,000
-            ' iterations for PBKDF2-HMAC-SHA1 in production. The low value here
-            ' is for illustration only.
+            ' performance requirements allow. NIST SP 800-132 recommends selecting
+            ' the highest iteration count tolerable for your system, with a minimum
+            ' of 600,000 iterations. The low value here is for illustration only.
             Dim myIterations As Integer = 1000
             '</SNIPPET6>		
             '<SNIPPET2>
