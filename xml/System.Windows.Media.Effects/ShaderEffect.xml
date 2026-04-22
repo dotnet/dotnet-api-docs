@@ -28,40 +28,38 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Derive from the <xref:System.Windows.Media.Effects.ShaderEffect> class to implement a custom effect based on a single pixel shader.
 
- The following steps show how to create a custom effect.
+Derive from the <xref:System.Windows.Media.Effects.ShaderEffect> class to implement a custom effect based on a single pixel shader.
 
-1.  Load a <xref:System.Windows.Media.Effects.PixelShader> from precompiled High Level Shading Language (HLSL) bytecode.
+The following steps show how to create a custom effect.
 
-2.  Define dependency properties that represent the parameters of the effect and the <xref:System.Windows.Media.Brush>-based surface inputs. Use one of the <xref:System.Windows.Media.Effects.ShaderEffect.RegisterPixelShaderSamplerProperty*> overloads to associate these inputs with register numbers that are referenced in the HLSL bytecode.
+1. Load a <xref:System.Windows.Media.Effects.PixelShader> from precompiled High Level Shading Language (HLSL) bytecode.
+1. Define dependency properties that represent the parameters of the effect and the <xref:System.Windows.Media.Brush>-based surface inputs. Use one of the <xref:System.Windows.Media.Effects.ShaderEffect.RegisterPixelShaderSamplerProperty*> overloads to associate these inputs with register numbers that are referenced in the HLSL bytecode.
 
- The number of samplers is limited to 4.
+The number of samplers is limited to 4.
 
- The following restrictions apply when using a PS 3.0 shader.
+The following restrictions apply when using a PS 3.0 shader.
 
 - When a PS 3.0 shader is assigned, the number of samplers increases to 8. Assign the PS 3.0 shader before other shaders to enable registering 8 samplers.
 
 - The full shader constant register limit of 224 for floats is used. For more information, see [ps_3_0](https://learn.microsoft.com/windows/win32/direct3dhlsl/dx9-graphics-reference-asm-ps-3-0).
 
-- The following data types are supported in PS 3.0 shaders only. An exception is thrown if these are used in lower shader versions.
+- The following data types are supported in PS 3.0 shaders only. An exception is thrown if they're used in lower shader versions:
 
-    -   `int` and types convertible to `int`: `uint`, `byte`, `sbyte`, `long`, `ulong`, `short`, `ushort`, `char`
-
-    -   `bool`
+  - `int` and types convertible to `int`: `uint`, `byte`, `sbyte`, `long`, `ulong`, `short`, `ushort`, `char`
+  - `bool`
 
 - If a valid PS 3.0 shader is loaded on a computer that does not have hardware support for PS 3.0, the shader is ignored. If the shader is invalid, no exception is thrown.
 
 - If a computer has more than one video card, the behavior is defined by the least capable video card. For example, if the computer has two video cards, one of which supports PS 3.0 and one of which does not, the behavior is the same as if the computer does not support PS 3.0.
 
-- If a computer supports rendering PS 3.0 in hardware, but an invalid PS 3.0 shader is assigned, the <xref:System.Windows.Media.Effects.PixelShader.InvalidPixelShaderEncountered> event is raised. An example of an invalid PS 3.0 shader is one compiled with the `ps_3_sw` flag. The <xref:System.Windows.Media.Effects.ShaderEffect> class accepts only PS 3.0 shaders that are compiled with the `ps_3_0` flag passed to fxc.exe. For more information, see [Effect-Compiler Tool](https://learn.microsoft.com/).
+- If a computer supports rendering PS 3.0 in hardware, but an invalid PS 3.0 shader is assigned, the <xref:System.Windows.Media.Effects.PixelShader.InvalidPixelShaderEncountered> event is raised. An example of an invalid PS 3.0 shader is one compiled with the `ps_3_sw` flag. The <xref:System.Windows.Media.Effects.ShaderEffect> class accepts only PS 3.0 shaders that are compiled with the `ps_3_0` flag passed to fxc.exe.
 
 > [!NOTE]
 > PS 2.0 shaders run when rendering in software. However, even if PS 3.0 is supported by the system's hardware, PS 3.0 shaders do not run during software rendering.
 
-
-
 ## Examples
+
  The following code example shows how to derive from the <xref:System.Windows.Media.Effects.ShaderEffect> class.
 
  [!code-csharp[System.Windows.Media.Effects.ShaderEffect#1](~/snippets/csharp/System.Windows/UIElement/Effect/ThresholdEffect.cs#1)]
