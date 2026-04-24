@@ -2,7 +2,6 @@
 Imports System.Data.Linq.Mapping
 
 Module Module1
-
     Sub Main()
 
     End Sub
@@ -10,7 +9,7 @@ Module Module1
 End Module
 
 ' <Snippet1>
-<Table(Name:="Customers")> _
+<Table(Name:="Customers")>
 Public Class Customer
     ' ...
 End Class
@@ -19,9 +18,9 @@ End Class
 Namespace ns
 
     ' <Snippet2>
-    <Table(Name:="Customers")> _
+    <Table(Name:="Customers")>
     Public Class Customer
-        <Column(Name:="CustomerID")> _
+        <Column(Name:="CustomerID")>
         Public CustomerID As String
         ' ...
     End Class
@@ -31,76 +30,72 @@ End Namespace
 
 Namespace ns2
 
-    'Public Class Order
-
-    'End Class
-
     ' <Snippet3>
-    <Table(Name:="Customers")> _
+    <Table(Name:="Customers")>
     Public Class Customer
-        <Column(IsPrimaryKey:=True)> _
-    Public CustomerID As String
+        <Column(IsPrimaryKey:=True)>
+        Public CustomerID As String
         ' ...
-        Private _Orders As EntitySet(Of Order)
-        <Association(Storage:="_Orders", OtherKey:="CustomerID")> _
+        Private _orders As EntitySet(Of Order)
+        <Association(Storage:="_Orders", OtherKey:="CustomerID")>
         Public Property Orders() As EntitySet(Of Order)
             Get
-                Return Me._Orders
+                Return _orders
             End Get
             Set(ByVal value As EntitySet(Of Order))
-                Me._Orders.Assign(value)
+                _orders.Assign(value)
             End Set
         End Property
     End Class
     ' </Snippet3>
 
     ' <Snippet4>
-    <Table()> _
-    <InheritanceMapping(Code:="C", Type:=GetType(Car))> _
-    <InheritanceMapping(Code:="T", Type:=GetType(Truck))> _
-    <InheritanceMapping(Code:="V", Type:=GetType(Vehicle), _
-        IsDefault:=True)> _
+    <Table()>
+    <InheritanceMapping(Code:="C", Type:=GetType(Car))>
+    <InheritanceMapping(Code:="T", Type:=GetType(Truck))>
+    <InheritanceMapping(Code:="V", Type:=GetType(Vehicle),
+        IsDefault:=True)>
     Public Class Vehicle
-        <Column(IsDiscriminator:=True)> _
-            Private DiscKey As String
-        <Column(IsPrimaryKey:=True)> _
-            Private VIN As String
-        <Column()> _
-            Private MfgPlant As String
+        <Column(IsDiscriminator:=True)>
+        Private _discKey As String
+        <Column(IsPrimaryKey:=True)>
+        Private _vIN As String
+        <Column()>
+        Private _mfgPlant As String
     End Class
 
     Public Class Car
         Inherits Vehicle
-        <Column()> _
-            Private TrimCode As Integer
-        <Column()> _
-            Private ModelName As String
+        <Column()>
+        Private _trimCode As Integer
+        <Column()>
+        Private _modelName As String
     End Class
 
     Public Class Truck
         Inherits Vehicle
-        <Column()> _
-            Private Tonnage As Integer
-        <Column()> _
-            Private Axles As Integer
+        <Column()>
+        Private _tonnage As Integer
+        <Column()>
+        Private _axles As Integer
     End Class
     ' </Snippet4>
 
     ' <Snippet5>
-    <Table(Name:="Orders")> _
+    <Table(Name:="Orders")>
     Public Class Order
-        <Column(IsPrimaryKey:=True)> _
+        <Column(IsPrimaryKey:=True)>
         Public OrderID As Integer
-        <Column()> _
+        <Column()>
         Public CustomerID As String
-        Private _Customer As EntityRef(Of Customer)
-        <Association(Storage:="Customer", ThisKey:="CustomerID")> _
+        Private _customer As EntityRef(Of Customer)
+        <Association(Storage:="Customer", ThisKey:="CustomerID")>
         Public Property Customer() As Customer
             Get
-                Return Me._Customer.Entity
+                Return _customer.Entity
             End Get
             Set(ByVal value As Customer)
-                Me._Customer.Entity = value
+                _customer.Entity = value
             End Set
         End Property
     End Class

@@ -22,15 +22,15 @@ namespace cs_maketables
     }
     // </Snippet1>
 
-// <Snippet2>
-[Table(Name="Customers")]
-public class customer
-{
-    [Column(Name="CustomerID")]
-    public string CustomerID;
-    // ...
-}
-// </Snippet2>
+    // <Snippet2>
+    [Table(Name = "Customers")]
+    public class customer
+    {
+        [Column(Name = "CustomerID")]
+        public string CustomerID;
+        // ...
+    }
+    // </Snippet2>
 }
 
 // <Snippet3>
