@@ -1193,9 +1193,11 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- A line is defined as a sequence of characters followed by a carriage return (0x000d), a line feed (0x000a), a carriage return followed by a line feed, <xref:System.Environment.NewLine*?displayProperty=nameWithType>, or the end-of-stream marker. The string that is returned does not contain the terminating carriage return or line feed. The return value is `null` if the end of the input stream has been reached.
+ A line is defined as a sequence of characters followed by a carriage return (0x000d), a line feed (0x000a), a carriage return followed by a line feed, <xref:System.Environment.NewLine*?displayProperty=nameWithType>, or the end of the reader's input. The string that is returned does not contain the terminating carriage return or line feed. The return value is `null` if the end of the input has been reached.
 
- If the method throws an <xref:System.OutOfMemoryException> exception, the reader's position in the underlying <xref:System.IO.Stream> is advanced by the number of characters the method was able to read, but the characters that were already read into the internal <xref:System.IO.TextReader.ReadLine*> buffer are discarded. Because the position of the reader in the stream cannot be changed, the characters that were already read are unrecoverable and can be accessed only by reinitializing the <xref:System.IO.TextReader> object. If the initial position within the stream is unknown or the stream does not support seeking, the underlying <xref:System.IO.Stream> also needs to be reinitialized.
+ If the input ends with a newline sequence, no additional empty line is returned. For example, input containing `"line1\nline2\n"` produces the same two lines (`"line1"` and `"line2"`) as input containing `"line1\nline2"`.
+
+ If the method throws an <xref:System.OutOfMemoryException> exception, the reader's position in its underlying source is advanced by the number of characters the method was able to read, but the characters that were already read into the internal <xref:System.IO.TextReader.ReadLine*> buffer are discarded. Because the reader's position in the underlying source cannot be reset, the characters that were already read are unrecoverable and can be accessed only by reinitializing the <xref:System.IO.TextReader> object. If the initial position within the underlying source is unknown or the source does not support repositioning, the underlying source also needs to be reinitialized.
 
  To avoid such a situation and produce robust code you should use the <xref:System.IO.TextReader.Read*> method and store the read characters in a preallocated buffer.
 
