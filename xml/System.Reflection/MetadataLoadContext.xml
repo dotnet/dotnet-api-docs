@@ -83,7 +83,7 @@ For more information and examples, see [How to: Inspect assembly contents using 
       </Docs>
     </Member>
     <Member MemberName="CoreAssembly">
-      <MemberSignature Language="C#" Value="public System.Reflection.Assembly? CoreAssembly { get; }" />
+      <MemberSignature Language="C#" Value="public System.Reflection.Assembly CoreAssembly { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Reflection.Assembly CoreAssembly" />
       <MemberSignature Language="DocId" Value="P:System.Reflection.MetadataLoadContext.CoreAssembly" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property CoreAssembly As Assembly" />
@@ -94,12 +94,6 @@ For more information and examples, see [How to: Inspect assembly contents using 
         <AssemblyName>System.Reflection.MetadataLoadContext</AssemblyName>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="net-10.0-pp;net-11.0-pp">
-          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Reflection.Assembly</ReturnType>
       </ReturnValue>
@@ -113,10 +107,10 @@ For more information and examples, see [How to: Inspect assembly contents using 
 
 The core assembly is treated differently than other assemblies because references to these well-known types do not include the assembly reference, unlike normal types.
 
-Typically, this assembly is named "mscorlib" or "netstandard". If the core assembly cannot be found, the value will be `null`, and many other reflection methods, including those that parse method signatures, will throw an exception.
+Typically, this assembly is named "System.Runtime", "mscorlib", or "netstandard".
 
-The `CoreAssembly` is determined by passing the `coreAssemblyName` parameter passed to the <xref:System.Reflection.MetadataAssemblyResolver> constructor
-to the <xref:System.Reflection.MetadataAssemblyResolver.Resolve*?displayProperty=nameWithType> method.
+The `CoreAssembly` is determined by passing the `coreAssemblyName` parameter to the <xref:System.Reflection.MetadataLoadContext> constructor,
+which in turn passes it to the <xref:System.Reflection.MetadataAssemblyResolver.Resolve*?displayProperty=nameWithType> method.
 
 If no `coreAssemblyName` argument was specified in the constructor of <xref:System.Reflection.MetadataLoadContext>, then default values are used, including "mscorlib", "System.Runtime" and "netstandard".
 
@@ -124,35 +118,7 @@ The designated core assembly does not need to contain the core types directly. I
 
 Note that <xref:System.Runtime> is not an ideal core assembly because it excludes some of the interop-related pseudo-custom attribute types such as <xref:System.Runtime.InteropServices.DllImportAttribute>. However, it can serve if you have no interest in those attributes. The CustomAttributes API will skip those attributes if the core assembly does not include the necessary types.
 
-The core assembly is not loaded until necessary. The following APIs do not trigger the search for the core assembly:
-
-* <xref:System.Reflection.MetadataLoadContext.LoadFromStream*?displayProperty=nameWithType>
-* <xref:System.Reflection.MetadataLoadContext.LoadFromAssemblyPath*?displayProperty=nameWithType>
-* <xref:System.Reflection.MetadataLoadContext.LoadFromByteArray*?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.GetName*?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.FullName?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.GetReferencedAssemblies*?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.GetTypes*?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.DefinedTypes?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.GetExportedTypes*?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.GetForwardedTypes*?displayProperty=nameWithType>
-* <xref:System.Reflection.Assembly.GetType(System.String,System.Boolean,System.Boolean)?displayProperty=nameWithType>
-* <xref:System.Type.Name?displayProperty=nameWithType>
-* <xref:System.Type.FullName?displayProperty=nameWithType>
-* <xref:System.Type.AssemblyQualifiedName?displayProperty=nameWithType>
-
-If a core assembly cannot be found or if the core assembly is missing types, this will affect the behavior of the <xref:System.Reflection.MetadataLoadContext> as follows:
-
-* APIs that need to parse signatures or typespecs and return the results as <xref:System.Type> objects will throw an exception. For example:
-
-  * <xref:System.Reflection.MethodInfo.ReturnType?displayProperty=nameWithType>
-  * <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>
-  * <xref:System.Type.BaseType?displayProperty=nameWithType>
-  * <xref:System.Type.GetInterfaces*?displayProperty=nameWithType>
-
-* APIs that need to compare types to well-known core types will not throw an exception, and the comparison will evaluate to `false`. For example, if you do not specify a core assembly, <xref:System.Type.IsPrimitive> will return `false` for everything, even types named <xref:System.Int32>. Similarly, <xref:System.Type.GetTypeCode*?displayProperty=nameWithType> will return <xref:System.TypeCode.Object> for everything.
-
-* If a metadata entity sets flags that surface as a pseudo-custom attribute, and the core assembly does not contain the pseudo-custom attribute type, the necessary constructor or any of the parameter types of the constructor, the <xref:System.Reflection.MetadataLoadContext> will not throw. It will omit the pseudo-custom attribute from the list of returned attributes.
+If a core assembly cannot be found, the constructor of <xref:System.Reflection.MetadataLoadContext> throws an exception.
           ]]></format>
         </remarks>
       </Docs>
