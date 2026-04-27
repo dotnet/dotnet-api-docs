@@ -41,7 +41,6 @@
     <Assembly Name="System.IO.Compression.Brotli" Version="11.0.0.0" />
     <Assembly Name="System.IO.Compression" Version="11.0.0.0" />
     <Assembly Name="System.IO.Compression.ZipFile" Version="11.0.0.0" />
-    <Assembly Name="System.IO.Compression.Zstandard" Version="11.0.0.0" />
     <Assembly Name="System.IO" Version="11.0.0.0" />
     <Assembly Name="System.IO.FileSystem.AccessControl" Version="11.0.0.0" />
     <Assembly Name="System.IO.FileSystem" Version="11.0.0.0" />
@@ -1343,9 +1342,11 @@
     <Type Name="Microsoft.Win32.SafeHandles.SafeFileHandle" Id="T:Microsoft.Win32.SafeHandles.SafeFileHandle">
       <Member Id="M:Microsoft.Win32.SafeHandles.SafeFileHandle.#ctor" />
       <Member Id="M:Microsoft.Win32.SafeHandles.SafeFileHandle.#ctor(System.IntPtr,System.Boolean)" />
+      <Member Id="M:Microsoft.Win32.SafeHandles.SafeFileHandle.CreateAnonymousPipe(Microsoft.Win32.SafeHandles.SafeFileHandle@,Microsoft.Win32.SafeHandles.SafeFileHandle@,System.Boolean,System.Boolean)" />
       <Member Id="M:Microsoft.Win32.SafeHandles.SafeFileHandle.ReleaseHandle" />
       <Member Id="P:Microsoft.Win32.SafeHandles.SafeFileHandle.IsAsync" />
       <Member Id="P:Microsoft.Win32.SafeHandles.SafeFileHandle.IsInvalid" />
+      <Member Id="P:Microsoft.Win32.SafeHandles.SafeFileHandle.Type" />
     </Type>
     <Type Name="Microsoft.Win32.SafeHandles.SafeHandleMinusOneIsInvalid" Id="T:Microsoft.Win32.SafeHandles.SafeHandleMinusOneIsInvalid">
       <Member Id="M:Microsoft.Win32.SafeHandles.SafeHandleMinusOneIsInvalid.#ctor(System.Boolean)" />
@@ -7521,9 +7522,12 @@
       <Member Id="M:System.Type.MakeArrayType" />
       <Member Id="M:System.Type.MakeArrayType(System.Int32)" />
       <Member Id="M:System.Type.MakeByRefType" />
+      <Member Id="M:System.Type.MakeFunctionPointerSignatureType(System.Type,System.Type[],System.Boolean,System.Type[])" />
+      <Member Id="M:System.Type.MakeFunctionPointerType(System.Type[],System.Boolean)" />
       <Member Id="M:System.Type.MakeGenericMethodParameter(System.Int32)" />
       <Member Id="M:System.Type.MakeGenericSignatureType(System.Type,System.Type[])" />
       <Member Id="M:System.Type.MakeGenericType(System.Type[])" />
+      <Member Id="M:System.Type.MakeModifiedSignatureType(System.Type,System.Type[],System.Type[])" />
       <Member Id="M:System.Type.MakePointerType" />
       <Member Id="M:System.Type.op_Equality(System.Type,System.Type)" />
       <Member Id="M:System.Type.op_Inequality(System.Type,System.Type)" />
@@ -19340,6 +19344,9 @@
       <Member Id="P:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute.Message" />
       <Member Id="P:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute.Url" />
     </Type>
+    <Type Name="System.Diagnostics.CodeAnalysis.RequiresUnsafeAttribute" Id="T:System.Diagnostics.CodeAnalysis.RequiresUnsafeAttribute">
+      <Member Id="M:System.Diagnostics.CodeAnalysis.RequiresUnsafeAttribute.#ctor" />
+    </Type>
     <Type Name="System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute" Id="T:System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute">
       <Member Id="M:System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute.#ctor" />
     </Type>
@@ -20071,6 +20078,7 @@
       <Member Id="M:System.Drawing.Color.FromArgb(System.Int32,System.Drawing.Color)" />
       <Member Id="M:System.Drawing.Color.FromArgb(System.Int32,System.Int32,System.Int32)" />
       <Member Id="M:System.Drawing.Color.FromArgb(System.Int32,System.Int32,System.Int32,System.Int32)" />
+      <Member Id="M:System.Drawing.Color.FromArgb(System.Numerics.Colors.Argb{System.Byte})" />
       <Member Id="M:System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor)" />
       <Member Id="M:System.Drawing.Color.FromName(System.String)" />
       <Member Id="M:System.Drawing.Color.GetBrightness" />
@@ -20078,8 +20086,11 @@
       <Member Id="M:System.Drawing.Color.GetHue" />
       <Member Id="M:System.Drawing.Color.GetSaturation" />
       <Member Id="M:System.Drawing.Color.op_Equality(System.Drawing.Color,System.Drawing.Color)" />
+      <Member Id="M:System.Drawing.Color.op_Explicit(System.Drawing.Color@)~System.Numerics.Colors.Argb{System.Byte}" />
+      <Member Id="M:System.Drawing.Color.op_Implicit(System.Numerics.Colors.Argb{System.Byte})~System.Drawing.Color" />
       <Member Id="M:System.Drawing.Color.op_Inequality(System.Drawing.Color,System.Drawing.Color)" />
       <Member Id="M:System.Drawing.Color.ToArgb" />
+      <Member Id="M:System.Drawing.Color.ToArgbValue" />
       <Member Id="M:System.Drawing.Color.ToKnownColor" />
       <Member Id="M:System.Drawing.Color.ToString" />
       <Member Id="P:System.Drawing.Color.A" />
@@ -21119,6 +21130,47 @@
       <Member Id="F:System.Formats.Asn1.UniversalTagNumber.VideotexString" />
       <Member Id="F:System.Formats.Asn1.UniversalTagNumber.VisibleString" />
     </Type>
+    <Type Name="System.Formats.Asn1.ValueAsnReader" Id="T:System.Formats.Asn1.ValueAsnReader">
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.#ctor(System.ReadOnlySpan{System.Byte},System.Formats.Asn1.AsnEncodingRules,System.Formats.Asn1.AsnReaderOptions)" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.PeekContentBytes" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.PeekEncodedValue" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.PeekTag" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadBitString(System.Int32@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadBoolean(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadCharacterString(System.Formats.Asn1.UniversalTagNumber,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadEncodedValue" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadEnumeratedBytes(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadEnumeratedValue(System.Type,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadEnumeratedValue``1(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadGeneralizedTime(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadInteger(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadIntegerBytes(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadNamedBitList(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadNamedBitListValue(System.Type,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadNamedBitListValue``1(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadNull(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadObjectIdentifier(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadOctetString(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadSequence(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadSetOf(System.Boolean,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadSetOf(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadUtcTime(System.Int32,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ReadUtcTime(System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.ThrowIfNotEmpty" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadBitString(System.Span{System.Byte},System.Int32@,System.Int32@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadCharacterString(System.Span{System.Char},System.Formats.Asn1.UniversalTagNumber,System.Int32@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadCharacterStringBytes(System.Span{System.Byte},System.Formats.Asn1.Asn1Tag,System.Int32@)" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadInt32(System.Int32@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadInt64(System.Int64@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadOctetString(System.Span{System.Byte},System.Int32@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadPrimitiveBitString(System.Int32@,System.ReadOnlySpan{System.Byte}@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadPrimitiveCharacterStringBytes(System.Formats.Asn1.Asn1Tag,System.ReadOnlySpan{System.Byte}@)" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadPrimitiveOctetString(System.ReadOnlySpan{System.Byte}@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadUInt32(System.UInt32@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="M:System.Formats.Asn1.ValueAsnReader.TryReadUInt64(System.UInt64@,System.Nullable{System.Formats.Asn1.Asn1Tag})" />
+      <Member Id="P:System.Formats.Asn1.ValueAsnReader.HasData" />
+      <Member Id="P:System.Formats.Asn1.ValueAsnReader.RuleSet" />
+    </Type>
   </Namespace>
   <Namespace Name="System.Formats.Tar">
     <Type Name="System.Formats.Tar.GnuTarEntry" Id="T:System.Formats.Tar.GnuTarEntry">
@@ -21187,19 +21239,36 @@
       <Member Id="F:System.Formats.Tar.TarEntryType.TapeVolume" />
       <Member Id="F:System.Formats.Tar.TarEntryType.V7RegularFile" />
     </Type>
+    <Type Name="System.Formats.Tar.TarExtractOptions" Id="T:System.Formats.Tar.TarExtractOptions">
+      <Member Id="M:System.Formats.Tar.TarExtractOptions.#ctor" />
+      <Member Id="P:System.Formats.Tar.TarExtractOptions.HardLinkMode" />
+      <Member Id="P:System.Formats.Tar.TarExtractOptions.OverwriteFiles" />
+    </Type>
     <Type Name="System.Formats.Tar.TarFile" Id="T:System.Formats.Tar.TarFile">
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectory(System.String,System.IO.Stream,System.Boolean)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectory(System.String,System.IO.Stream,System.Boolean,System.Formats.Tar.TarEntryFormat)" />
+      <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectory(System.String,System.IO.Stream,System.Boolean,System.Formats.Tar.TarWriterOptions)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectory(System.String,System.String,System.Boolean)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectory(System.String,System.String,System.Boolean,System.Formats.Tar.TarEntryFormat)" />
+      <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectory(System.String,System.String,System.Boolean,System.Formats.Tar.TarWriterOptions)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectoryAsync(System.String,System.IO.Stream,System.Boolean,System.Formats.Tar.TarEntryFormat,System.Threading.CancellationToken)" />
+      <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectoryAsync(System.String,System.IO.Stream,System.Boolean,System.Formats.Tar.TarWriterOptions,System.Threading.CancellationToken)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectoryAsync(System.String,System.IO.Stream,System.Boolean,System.Threading.CancellationToken)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectoryAsync(System.String,System.String,System.Boolean,System.Formats.Tar.TarEntryFormat,System.Threading.CancellationToken)" />
+      <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectoryAsync(System.String,System.String,System.Boolean,System.Formats.Tar.TarWriterOptions,System.Threading.CancellationToken)" />
       <Member Id="M:System.Formats.Tar.TarFile.CreateFromDirectoryAsync(System.String,System.String,System.Boolean,System.Threading.CancellationToken)" />
       <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Boolean)" />
+      <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Formats.Tar.TarExtractOptions)" />
       <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectory(System.String,System.String,System.Boolean)" />
+      <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectory(System.String,System.String,System.Formats.Tar.TarExtractOptions)" />
       <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectoryAsync(System.IO.Stream,System.String,System.Boolean,System.Threading.CancellationToken)" />
+      <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectoryAsync(System.IO.Stream,System.String,System.Formats.Tar.TarExtractOptions,System.Threading.CancellationToken)" />
       <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectoryAsync(System.String,System.String,System.Boolean,System.Threading.CancellationToken)" />
+      <Member Id="M:System.Formats.Tar.TarFile.ExtractToDirectoryAsync(System.String,System.String,System.Formats.Tar.TarExtractOptions,System.Threading.CancellationToken)" />
+    </Type>
+    <Type Name="System.Formats.Tar.TarHardLinkMode" Id="T:System.Formats.Tar.TarHardLinkMode">
+      <Member Id="F:System.Formats.Tar.TarHardLinkMode.CopyContents" />
+      <Member Id="F:System.Formats.Tar.TarHardLinkMode.PreserveLink" />
     </Type>
     <Type Name="System.Formats.Tar.TarReader" Id="T:System.Formats.Tar.TarReader">
       <Member Id="M:System.Formats.Tar.TarReader.#ctor(System.IO.Stream,System.Boolean)" />
@@ -21212,6 +21281,7 @@
       <Member Id="M:System.Formats.Tar.TarWriter.#ctor(System.IO.Stream)" />
       <Member Id="M:System.Formats.Tar.TarWriter.#ctor(System.IO.Stream,System.Boolean)" />
       <Member Id="M:System.Formats.Tar.TarWriter.#ctor(System.IO.Stream,System.Formats.Tar.TarEntryFormat,System.Boolean)" />
+      <Member Id="M:System.Formats.Tar.TarWriter.#ctor(System.IO.Stream,System.Formats.Tar.TarWriterOptions,System.Boolean)" />
       <Member Id="M:System.Formats.Tar.TarWriter.Dispose" />
       <Member Id="M:System.Formats.Tar.TarWriter.DisposeAsync" />
       <Member Id="M:System.Formats.Tar.TarWriter.WriteEntry(System.Formats.Tar.TarEntry)" />
@@ -21219,6 +21289,11 @@
       <Member Id="M:System.Formats.Tar.TarWriter.WriteEntryAsync(System.Formats.Tar.TarEntry,System.Threading.CancellationToken)" />
       <Member Id="M:System.Formats.Tar.TarWriter.WriteEntryAsync(System.String,System.String,System.Threading.CancellationToken)" />
       <Member Id="P:System.Formats.Tar.TarWriter.Format" />
+    </Type>
+    <Type Name="System.Formats.Tar.TarWriterOptions" Id="T:System.Formats.Tar.TarWriterOptions">
+      <Member Id="M:System.Formats.Tar.TarWriterOptions.#ctor" />
+      <Member Id="P:System.Formats.Tar.TarWriterOptions.Format" />
+      <Member Id="P:System.Formats.Tar.TarWriterOptions.HardLinkMode" />
     </Type>
     <Type Name="System.Formats.Tar.UstarTarEntry" Id="T:System.Formats.Tar.UstarTarEntry">
       <Member Id="M:System.Formats.Tar.UstarTarEntry.#ctor(System.Formats.Tar.TarEntry)" />
@@ -22454,6 +22529,16 @@
       <Member Id="F:System.IO.FileAttributes.SparseFile" />
       <Member Id="F:System.IO.FileAttributes.System" />
       <Member Id="F:System.IO.FileAttributes.Temporary" />
+    </Type>
+    <Type Name="System.IO.FileHandleType" Id="T:System.IO.FileHandleType">
+      <Member Id="F:System.IO.FileHandleType.BlockDevice" />
+      <Member Id="F:System.IO.FileHandleType.CharacterDevice" />
+      <Member Id="F:System.IO.FileHandleType.Directory" />
+      <Member Id="F:System.IO.FileHandleType.Pipe" />
+      <Member Id="F:System.IO.FileHandleType.RegularFile" />
+      <Member Id="F:System.IO.FileHandleType.Socket" />
+      <Member Id="F:System.IO.FileHandleType.SymbolicLink" />
+      <Member Id="F:System.IO.FileHandleType.Unknown" />
     </Type>
     <Type Name="System.IO.FileInfo" Id="T:System.IO.FileInfo">
       <Member Id="M:System.IO.FileInfo.#ctor(System.String)" />
@@ -32650,6 +32735,48 @@
       <Member Id="P:System.Numerics.Vector4.Zero" />
     </Type>
   </Namespace>
+  <Namespace Name="System.Numerics.Colors">
+    <Type Name="System.Numerics.Colors.Argb" Id="T:System.Numerics.Colors.Argb">
+      <Member Id="M:System.Numerics.Colors.Argb.CreateBigEndian(System.UInt32)" />
+      <Member Id="M:System.Numerics.Colors.Argb.CreateLittleEndian(System.UInt32)" />
+      <Member Id="M:System.Numerics.Colors.Argb.ToUInt32BigEndian(System.Numerics.Colors.Argb{System.Byte})" />
+      <Member Id="M:System.Numerics.Colors.Argb.ToUInt32LittleEndian(System.Numerics.Colors.Argb{System.Byte})" />
+    </Type>
+    <Type Name="System.Numerics.Colors.Argb`1" Id="T:System.Numerics.Colors.Argb`1">
+      <Member Id="M:System.Numerics.Colors.Argb`1.#ctor(`0,`0,`0,`0)" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.#ctor(System.ReadOnlySpan{`0})" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.CopyTo(System.Span{`0})" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.Equals(System.Numerics.Colors.Argb{`0})" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.Equals(System.Object)" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.GetHashCode" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.ToRgba" />
+      <Member Id="M:System.Numerics.Colors.Argb`1.ToString" />
+      <Member Id="P:System.Numerics.Colors.Argb`1.A" />
+      <Member Id="P:System.Numerics.Colors.Argb`1.B" />
+      <Member Id="P:System.Numerics.Colors.Argb`1.G" />
+      <Member Id="P:System.Numerics.Colors.Argb`1.R" />
+    </Type>
+    <Type Name="System.Numerics.Colors.Rgba" Id="T:System.Numerics.Colors.Rgba">
+      <Member Id="M:System.Numerics.Colors.Rgba.CreateBigEndian(System.UInt32)" />
+      <Member Id="M:System.Numerics.Colors.Rgba.CreateLittleEndian(System.UInt32)" />
+      <Member Id="M:System.Numerics.Colors.Rgba.ToUInt32BigEndian(System.Numerics.Colors.Rgba{System.Byte})" />
+      <Member Id="M:System.Numerics.Colors.Rgba.ToUInt32LittleEndian(System.Numerics.Colors.Rgba{System.Byte})" />
+    </Type>
+    <Type Name="System.Numerics.Colors.Rgba`1" Id="T:System.Numerics.Colors.Rgba`1">
+      <Member Id="M:System.Numerics.Colors.Rgba`1.#ctor(`0,`0,`0,`0)" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.#ctor(System.ReadOnlySpan{`0})" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.CopyTo(System.Span{`0})" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.Equals(System.Numerics.Colors.Rgba{`0})" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.Equals(System.Object)" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.GetHashCode" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.ToArgb" />
+      <Member Id="M:System.Numerics.Colors.Rgba`1.ToString" />
+      <Member Id="P:System.Numerics.Colors.Rgba`1.A" />
+      <Member Id="P:System.Numerics.Colors.Rgba`1.B" />
+      <Member Id="P:System.Numerics.Colors.Rgba`1.G" />
+      <Member Id="P:System.Numerics.Colors.Rgba`1.R" />
+    </Type>
+  </Namespace>
   <Namespace Name="System.Reflection">
     <Type Name="System.Reflection.AmbiguousMatchException" Id="T:System.Reflection.AmbiguousMatchException">
       <Member Id="M:System.Reflection.AmbiguousMatchException.#ctor" />
@@ -34221,6 +34348,7 @@
       <Member Id="M:System.Reflection.Emit.ILGenerator.EmitCall(System.Reflection.Emit.OpCode,System.Reflection.MethodInfo,System.Type[])" />
       <Member Id="M:System.Reflection.Emit.ILGenerator.EmitCalli(System.Reflection.Emit.OpCode,System.Reflection.CallingConventions,System.Type,System.Type[],System.Type[])" />
       <Member Id="M:System.Reflection.Emit.ILGenerator.EmitCalli(System.Reflection.Emit.OpCode,System.Runtime.InteropServices.CallingConvention,System.Type,System.Type[])" />
+      <Member Id="M:System.Reflection.Emit.ILGenerator.EmitCalli(System.Type)" />
       <Member Id="M:System.Reflection.Emit.ILGenerator.EmitWriteLine(System.Reflection.Emit.LocalBuilder)" />
       <Member Id="M:System.Reflection.Emit.ILGenerator.EmitWriteLine(System.Reflection.FieldInfo)" />
       <Member Id="M:System.Reflection.Emit.ILGenerator.EmitWriteLine(System.String)" />
@@ -38481,6 +38609,10 @@
       <Member Id="F:System.Runtime.CompilerServices.LoadHint.Default" />
       <Member Id="F:System.Runtime.CompilerServices.LoadHint.Sometimes" />
     </Type>
+    <Type Name="System.Runtime.CompilerServices.MemorySafetyRulesAttribute" Id="T:System.Runtime.CompilerServices.MemorySafetyRulesAttribute">
+      <Member Id="M:System.Runtime.CompilerServices.MemorySafetyRulesAttribute.#ctor(System.Int32)" />
+      <Member Id="P:System.Runtime.CompilerServices.MemorySafetyRulesAttribute.Version" />
+    </Type>
     <Type Name="System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute" Id="T:System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute">
       <Member Id="M:System.Runtime.CompilerServices.MetadataUpdateDeletedAttribute.#ctor" />
     </Type>
@@ -38632,6 +38764,7 @@
       <Member Id="M:System.Runtime.CompilerServices.RuntimeFeature.IsSupported(System.String)" />
       <Member Id="P:System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeCompiled" />
       <Member Id="P:System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported" />
+      <Member Id="P:System.Runtime.CompilerServices.RuntimeFeature.IsMultithreadingSupported" />
     </Type>
     <Type Name="System.Runtime.CompilerServices.RuntimeHelpers" Id="T:System.Runtime.CompilerServices.RuntimeHelpers">
       <Member Id="M:System.Runtime.CompilerServices.RuntimeHelpers.AllocateTypeAssociatedMemory(System.Type,System.Int32)" />
@@ -40737,6 +40870,7 @@
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.ArraySegment{System.Byte})" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.ArraySegment{System.Double})" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.ArraySegment{System.Int32})" />
+      <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.ArraySegment{System.Single})" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Boolean)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Byte)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Byte[])" />
@@ -40767,9 +40901,11 @@
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Runtime.InteropServices.JavaScript.JSObject)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Runtime.InteropServices.JavaScript.JSObject[])" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Single)" />
+      <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Single[])" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Span{System.Byte})" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Span{System.Double})" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Span{System.Int32})" />
+      <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Span{System.Single})" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.String)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.String[])" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToJS(System.Threading.Tasks.Task)" />
@@ -40788,6 +40924,7 @@
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.ArraySegment{System.Byte}@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.ArraySegment{System.Double}@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.ArraySegment{System.Int32}@)" />
+      <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.ArraySegment{System.Single}@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Boolean@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Byte@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Byte[]@)" />
@@ -40818,9 +40955,11 @@
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Runtime.InteropServices.JavaScript.JSObject@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Runtime.InteropServices.JavaScript.JSObject[]@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Single@)" />
+      <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Single[]@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Span{System.Byte}@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Span{System.Double}@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Span{System.Int32}@)" />
+      <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Span{System.Single}@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.String@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.String[]@)" />
       <Member Id="M:System.Runtime.InteropServices.JavaScript.JSMarshalerArgument.ToManaged(System.Threading.Tasks.Task@)" />
@@ -44717,39 +44856,23 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt16ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt16ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt16ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtend(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32WithByteOffsetsZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtend(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.Int32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve.GatherVectorUInt32ZeroExtendFirstFaulting(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
@@ -45676,25 +45799,25 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddRoundedHighNarrowingOdd(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddRoundedHighNarrowingOdd(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.SByte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.UInt16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.Byte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.Int16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt16})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.Int32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturate(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateRotateComplex(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16},System.Byte)" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateRotateComplex(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32},System.Byte)" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateRotateComplex(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64},System.Byte)" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateRotateComplex(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte},System.Byte)" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithSignedAddend(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.SByte})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithSignedAddend(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.Int16})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithSignedAddend(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.Int32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithSignedAddend(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithUnsignedAddend(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.UInt16})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithUnsignedAddend(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.UInt32})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithUnsignedAddend(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
-      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddSaturateWithUnsignedAddend(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.Byte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddWideningEven(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddWideningEven(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.AddWideningEven(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.SByte})" />
@@ -45758,6 +45881,12 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ConvertToSingleEvenRoundToOdd(System.Numerics.Vector{System.Double})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ConvertToSingleOdd(System.Numerics.Vector{System.Single},System.Numerics.Vector{System.Double})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ConvertToSingleOddRoundToOdd(System.Numerics.Vector{System.Single},System.Numerics.Vector{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.CountMatchingElements(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.CountMatchingElements(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.CountMatchingElements(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.CountMatchingElements(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.CountMatchingElementsIn128BitSegments(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.CountMatchingElementsIn128BitSegments(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.DotProductRotateComplex(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte},System.Byte)" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.DotProductRotateComplex(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16},System.Byte)" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.DotProductRotateComplexBySelectedIndex(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte},System.Byte,System.Byte)" />
@@ -45786,6 +45915,84 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.FusedSubtractHalving(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.FusedSubtractHalving(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.FusedSubtractHalving(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.Int32},System.Byte*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Byte*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Byte*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.UInt32},System.Byte*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Byte*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Byte*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorByteZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16SignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16SignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16SignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16SignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16SignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16SignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.Int32},System.Int16*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.UInt32},System.Int16*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt16WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32SignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32SignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32SignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32SignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32SignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32SignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorInt32WithByteOffsetsSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Int32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.Double},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.Int32},System.SByte*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.SByte*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.Int64},System.SByte*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.UInt32},System.SByte*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.SByte*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorSByteSignExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.SByte*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.Int32},System.UInt16*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.UInt32},System.UInt16*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16ZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16ZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16ZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16ZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16ZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt16ZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32WithByteOffsetsZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32ZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32ZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32ZeroExtendNonTemporal(System.Numerics.Vector{System.Int64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32ZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32ZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorUInt32ZeroExtendNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Int32},System.Int32*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Single},System.Single*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.GatherVectorWithByteOffsetsNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.InterleavingXorEvenOdd(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.InterleavingXorEvenOdd(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.InterleavingXorEvenOdd(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32})" />
@@ -45804,6 +46011,10 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.InterleavingXorOddEven(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Log2(System.Numerics.Vector{System.Double})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Log2(System.Numerics.Vector{System.Single})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Match(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Match(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Match(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Match(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.MaxNumberPairwise(System.Numerics.Vector{System.Double},System.Numerics.Vector{System.Double})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.MaxNumberPairwise(System.Numerics.Vector{System.Single},System.Numerics.Vector{System.Single})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.MaxPairwise(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
@@ -45992,6 +46203,10 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NegateSaturate(System.Numerics.Vector{System.Int32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NegateSaturate(System.Numerics.Vector{System.Int64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NegateSaturate(System.Numerics.Vector{System.SByte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NoMatch(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NoMatch(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NoMatch(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.NoMatch(System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt16},System.Numerics.Vector{System.UInt16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.PolynomialMultiply(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.PolynomialMultiply(System.Numerics.Vector{System.SByte},System.Numerics.Vector{System.SByte})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.PolynomialMultiplyWideningEven(System.Numerics.Vector{System.Byte},System.Numerics.Vector{System.Byte})" />
@@ -46000,6 +46215,54 @@
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.PolynomialMultiplyWideningOdd(System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ReciprocalEstimate(System.Numerics.Vector{System.UInt32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ReciprocalSqrtEstimate(System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int32},System.Int16*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.Int32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int16*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt32},System.UInt16*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter16BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt16*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Int32*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter32BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt32*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int32},System.SByte*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.Int32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.SByte*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.Int64},System.SByte*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt32},System.Byte*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.Byte*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.Scatter8BitWithByteOffsetsNarrowingNonTemporal(System.Numerics.Vector{System.UInt64},System.Byte*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.Double},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Double},System.Double*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Int32},System.Int32*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.Int32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Int64},System.Int64*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.Int64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.Single},System.Single*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.Single})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.UInt32},System.UInt32*,System.Numerics.Vector{System.UInt32},System.Numerics.Vector{System.UInt32})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.UInt64})" />
+      <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ScatterWithByteOffsetsNonTemporal(System.Numerics.Vector{System.UInt64},System.UInt64*,System.Numerics.Vector{System.UInt64},System.Numerics.Vector{System.UInt64})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ShiftArithmeticRounded(System.Numerics.Vector{System.Int16},System.Numerics.Vector{System.Int16})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ShiftArithmeticRounded(System.Numerics.Vector{System.Int32},System.Numerics.Vector{System.Int32})" />
       <Member Id="M:System.Runtime.Intrinsics.Arm.Sve2.ShiftArithmeticRounded(System.Numerics.Vector{System.Int64},System.Numerics.Vector{System.Int64})" />
@@ -46294,6 +46557,8 @@
       <Member Id="M:System.Runtime.Intrinsics.Vector128.As``2(System.Runtime.Intrinsics.Vector128{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector128.AsByte``1(System.Runtime.Intrinsics.Vector128{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector128.AsDouble``1(System.Runtime.Intrinsics.Vector128{``0})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector128.Asin(System.Runtime.Intrinsics.Vector128{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector128.Asin(System.Runtime.Intrinsics.Vector128{System.Single})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector128.AsInt16``1(System.Runtime.Intrinsics.Vector128{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector128.AsInt32``1(System.Runtime.Intrinsics.Vector128{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector128.AsInt64``1(System.Runtime.Intrinsics.Vector128{``0})" />
@@ -46678,6 +46943,8 @@
       <Member Id="M:System.Runtime.Intrinsics.Vector256.As``2(System.Runtime.Intrinsics.Vector256{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector256.AsByte``1(System.Runtime.Intrinsics.Vector256{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector256.AsDouble``1(System.Runtime.Intrinsics.Vector256{``0})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector256.Asin(System.Runtime.Intrinsics.Vector256{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector256.Asin(System.Runtime.Intrinsics.Vector256{System.Single})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector256.AsInt16``1(System.Runtime.Intrinsics.Vector256{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector256.AsInt32``1(System.Runtime.Intrinsics.Vector256{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector256.AsInt64``1(System.Runtime.Intrinsics.Vector256{``0})" />
@@ -47051,6 +47318,8 @@
       <Member Id="M:System.Runtime.Intrinsics.Vector512.As``2(System.Runtime.Intrinsics.Vector512{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector512.AsByte``1(System.Runtime.Intrinsics.Vector512{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector512.AsDouble``1(System.Runtime.Intrinsics.Vector512{``0})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector512.Asin(System.Runtime.Intrinsics.Vector512{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector512.Asin(System.Runtime.Intrinsics.Vector512{System.Single})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector512.AsInt16``1(System.Runtime.Intrinsics.Vector512{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector512.AsInt32``1(System.Runtime.Intrinsics.Vector512{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector512.AsInt64``1(System.Runtime.Intrinsics.Vector512{``0})" />
@@ -47423,6 +47692,8 @@
       <Member Id="M:System.Runtime.Intrinsics.Vector64.As``2(System.Runtime.Intrinsics.Vector64{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector64.AsByte``1(System.Runtime.Intrinsics.Vector64{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector64.AsDouble``1(System.Runtime.Intrinsics.Vector64{``0})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector64.Asin(System.Runtime.Intrinsics.Vector64{System.Double})" />
+      <Member Id="M:System.Runtime.Intrinsics.Vector64.Asin(System.Runtime.Intrinsics.Vector64{System.Single})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector64.AsInt16``1(System.Runtime.Intrinsics.Vector64{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector64.AsInt32``1(System.Runtime.Intrinsics.Vector64{``0})" />
       <Member Id="M:System.Runtime.Intrinsics.Vector64.AsInt64``1(System.Runtime.Intrinsics.Vector64{``0})" />
@@ -49747,6 +50018,19 @@
     </Type>
     <Type Name="System.Runtime.Intrinsics.X86.Avx2/X64" Id="T:System.Runtime.Intrinsics.X86.Avx2.X64">
       <Member Id="P:System.Runtime.Intrinsics.X86.Avx2.X64.IsSupported" />
+    </Type>
+    <Type Name="System.Runtime.Intrinsics.X86.Avx512Bmm" Id="T:System.Runtime.Intrinsics.X86.Avx512Bmm">
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.BitMultiplyMatrix16x16WithOrReduction(System.Runtime.Intrinsics.Vector256{System.UInt16},System.Runtime.Intrinsics.Vector256{System.UInt16},System.Runtime.Intrinsics.Vector256{System.UInt16})" />
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.BitMultiplyMatrix16x16WithOrReduction(System.Runtime.Intrinsics.Vector512{System.UInt16},System.Runtime.Intrinsics.Vector512{System.UInt16},System.Runtime.Intrinsics.Vector512{System.UInt16})" />
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.BitMultiplyMatrix16x16WithXorReduction(System.Runtime.Intrinsics.Vector256{System.UInt16},System.Runtime.Intrinsics.Vector256{System.UInt16},System.Runtime.Intrinsics.Vector256{System.UInt16})" />
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.BitMultiplyMatrix16x16WithXorReduction(System.Runtime.Intrinsics.Vector512{System.UInt16},System.Runtime.Intrinsics.Vector512{System.UInt16},System.Runtime.Intrinsics.Vector512{System.UInt16})" />
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.ReverseBits(System.Runtime.Intrinsics.Vector128{System.Byte})" />
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.ReverseBits(System.Runtime.Intrinsics.Vector256{System.Byte})" />
+      <Member Id="M:System.Runtime.Intrinsics.X86.Avx512Bmm.ReverseBits(System.Runtime.Intrinsics.Vector512{System.Byte})" />
+      <Member Id="P:System.Runtime.Intrinsics.X86.Avx512Bmm.IsSupported" />
+    </Type>
+    <Type Name="System.Runtime.Intrinsics.X86.Avx512Bmm/X64" Id="T:System.Runtime.Intrinsics.X86.Avx512Bmm.X64">
+      <Member Id="P:System.Runtime.Intrinsics.X86.Avx512Bmm.X64.IsSupported" />
     </Type>
     <Type Name="System.Runtime.Intrinsics.X86.Avx512BW" Id="T:System.Runtime.Intrinsics.X86.Avx512BW">
       <Member Id="M:System.Runtime.Intrinsics.X86.Avx512BW.Abs(System.Runtime.Intrinsics.Vector512{System.Int16})" />
@@ -58819,6 +59103,7 @@
       <Member Id="P:System.Text.Json.JsonNamingPolicy.CamelCase" />
       <Member Id="P:System.Text.Json.JsonNamingPolicy.KebabCaseLower" />
       <Member Id="P:System.Text.Json.JsonNamingPolicy.KebabCaseUpper" />
+      <Member Id="P:System.Text.Json.JsonNamingPolicy.PascalCase" />
       <Member Id="P:System.Text.Json.JsonNamingPolicy.SnakeCaseLower" />
       <Member Id="P:System.Text.Json.JsonNamingPolicy.SnakeCaseUpper" />
     </Type>
@@ -59504,6 +59789,7 @@
       <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.CamelCase" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.KebabCaseLower" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.KebabCaseUpper" />
+      <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.PascalCase" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.SnakeCaseLower" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.SnakeCaseUpper" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownNamingPolicy.Unspecified" />
@@ -59512,6 +59798,11 @@
       <Member Id="F:System.Text.Json.Serialization.JsonKnownReferenceHandler.IgnoreCycles" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownReferenceHandler.Preserve" />
       <Member Id="F:System.Text.Json.Serialization.JsonKnownReferenceHandler.Unspecified" />
+    </Type>
+    <Type Name="System.Text.Json.Serialization.JsonNamingPolicyAttribute" Id="T:System.Text.Json.Serialization.JsonNamingPolicyAttribute">
+      <Member Id="M:System.Text.Json.Serialization.JsonNamingPolicyAttribute.#ctor(System.Text.Json.JsonNamingPolicy)" />
+      <Member Id="M:System.Text.Json.Serialization.JsonNamingPolicyAttribute.#ctor(System.Text.Json.Serialization.JsonKnownNamingPolicy)" />
+      <Member Id="P:System.Text.Json.Serialization.JsonNamingPolicyAttribute.NamingPolicy" />
     </Type>
     <Type Name="System.Text.Json.Serialization.JsonNumberEnumConverter`1" Id="T:System.Text.Json.Serialization.JsonNumberEnumConverter`1">
       <Member Id="M:System.Text.Json.Serialization.JsonNumberEnumConverter`1.#ctor" />
@@ -60116,6 +60407,7 @@
       <Member Id="P:System.Text.RegularExpressions.RegexMatchTimeoutException.Pattern" />
     </Type>
     <Type Name="System.Text.RegularExpressions.RegexOptions" Id="T:System.Text.RegularExpressions.RegexOptions">
+      <Member Id="F:System.Text.RegularExpressions.RegexOptions.AnyNewLine" />
       <Member Id="F:System.Text.RegularExpressions.RegexOptions.Compiled" />
       <Member Id="F:System.Text.RegularExpressions.RegexOptions.CultureInvariant" />
       <Member Id="F:System.Text.RegularExpressions.RegexOptions.ECMAScript" />

@@ -44,8 +44,10 @@
             </summary>
     <remarks>
       <para>Polling occurs every 4 seconds.</para>
-      <para>This change token does not raise any change callbacks. Callers should watch for <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.HasChanged" /> to turn
-            from <see langword="false" /> to <see langword="true" /> and dispose the token after this happens.</para>
+      <para>By default, this change token does not raise change callbacks. Callers should watch for <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.HasChanged" /> to turn
+            from <see langword="false" /> to <see langword="true" />.
+            When <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.ActiveChangeCallbacks" /> is <see langword="true" />, callbacks registered via
+            <see cref="M:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.RegisterChangeCallback(System.Action{System.Object},System.Object)" /> will be invoked when the file changes.</para>
     </remarks>
   </Docs>
   <Members>
@@ -67,7 +69,7 @@
       <Docs>
         <param name="fileInfo">The <see cref="T:System.IO.FileInfo" /> to poll.</param>
         <summary>
-            Initializes a new instance of <see cref="T:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken" /> that polls the specified file for changes as
+            Initializes a new instance of the <see cref="T:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken" /> class that polls the specified file for changes as
             determined by <see cref="P:System.IO.FileSystemInfo.LastWriteTimeUtc" />.
             </summary>
         <remarks>To be added.</remarks>
@@ -90,7 +92,8 @@
       </ReturnValue>
       <Docs>
         <summary>
-            Gets a value that's always <see langword="false" />.
+            Gets a value that indicates whether this token will proactively raise callbacks. If <see langword="false" />, the token
+            consumer must poll <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.HasChanged" /> to detect changes.
             </summary>
         <value>
           <see langword="true" /> if the token will proactively raise callbacks; <see langword="false" /> otherwise.</value>
@@ -164,10 +167,11 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="callback">This parameter is ignored.</param>
-        <param name="state">This parameter is ignored.</param>
+        <param name="callback">The callback to invoke. This parameter is ignored when <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.ActiveChangeCallbacks" /> is <see langword="false" />.</param>
+        <param name="state">The state to pass to <paramref name="callback" />. This parameter is ignored when <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.ActiveChangeCallbacks" /> is <see langword="false" />.</param>
         <summary>
-            Does not actually register callbacks.
+            Registers a callback that will be invoked when the token changes, if <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.ActiveChangeCallbacks" /> is <see langword="true" />.
+            If <see cref="P:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken.ActiveChangeCallbacks" /> is <see langword="false" />, no callback is registered and an empty disposable is returned.
             </summary>
         <returns>A disposable object that no-ops when disposed.</returns>
         <remarks>To be added.</remarks>
