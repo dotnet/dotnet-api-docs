@@ -303,7 +303,6 @@
  Avoid using this constructor overload. The default stack size used by the <xref:System.Threading.Thread.%23ctor(System.Threading.ParameterizedThreadStart)> constructor overload is the recommended stack size for threads. If a thread has memory problems, the most likely cause is programming error, such as infinite recursion.
 
 > [!IMPORTANT]
-> Beginning with the .NET Framework 4, only fully trusted code can set `maxStackSize` to a value that is greater than the default stack size (1 megabyte). If a larger value is specified for `maxStackSize` when code is running with partial trust, `maxStackSize` is ignored and the default stack size is used. No exception is thrown. Code at any trust level can set `maxStackSize` to a value that is less than the default stack size.
 
 > [!NOTE]
 > If you are developing a fully trusted library that will be used by partially trusted code, and you need to start a thread that requires a large stack, you must assert full trust before creating the thread, or the default stack size will be used. Do not do this unless you fully control the code that runs on the thread.
@@ -313,7 +312,6 @@
 > [!NOTE]
 > On versions of Microsoft Windows prior to Windows XP and Windows Server 2003, `maxStackSize` is ignored, and the stack size specified in the executable header is used.
 
- If you specify a very small stack size, you might need to disable stack-overflow probing. When the stack is severely constrained, the probing can itself cause a stack overflow. To disable stack overflow probing, add the following to your application configuration file in a .NET Framework app.
 
 ```xml
 <configuration>
@@ -386,7 +384,6 @@
  Avoid using this constructor overload. The default stack size used by the <xref:System.Threading.Thread.%23ctor(System.Threading.ThreadStart)> constructor overload is the recommended stack size for threads. If a thread has memory problems, the most likely cause is programming error, such as infinite recursion.
 
 > [!IMPORTANT]
-> Beginning with the .NET Framework 4, only fully trusted code can set `maxStackSize` to a value that is greater than the default stack size (1 megabyte). If a larger value is specified for `maxStackSize` when code is running with partial trust, `maxStackSize` is ignored and the default stack size is used. No exception is thrown. Code at any trust level can set `maxStackSize` to a value that is less than the default stack size.
 
 > [!NOTE]
 > If you are developing a fully trusted library that will be used by partially trusted code, and you need to start a thread that requires a large stack, you must assert full trust before creating the thread, or the default stack size will be used. Do not do this unless you fully control the code that runs on the thread.
@@ -396,7 +393,6 @@
 > [!NOTE]
 > On versions of Microsoft Windows prior to Windows XP and Windows Server 2003, `maxStackSize` is ignored, and the stack size specified in the executable header is used.
 
- If you specify a very small stack size, you might need to disable stack-overflow probing. When the stack is severely constrained, the probing can itself cause a stack overflow. To disable stack overflow probing, add the following to your application configuration file in a .NET Framework app.
 
 ```xml
 <configuration>
@@ -669,7 +665,7 @@ This method is obsolete. On .NET 5 and later versions, calling this method produ
 ## Remarks
 
 > [!IMPORTANT]
-> The .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  The slot is allocated on all threads.
 
@@ -749,7 +745,7 @@ This method is obsolete. On .NET 5 and later versions, calling this method produ
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread expires. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -1101,8 +1097,6 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
 > [!IMPORTANT]
 > The <xref:System.Threading.Thread.CurrentCulture> property doesn't work reliably when used with any thread other than the current thread. In .NET Framework, reading the property is reliable, although setting it for a thread other than the current thread is not. On .NET Core, an <xref:System.InvalidOperationException> is thrown if a thread attempts to read or write the <xref:System.Threading.Thread.CurrentCulture> property on a different thread.
 > We recommend that you use the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property to retrieve and set the current culture.
-
- Beginning with the .NET Framework 4, you can set the <xref:System.Threading.Thread.CurrentCulture> property to a neutral culture. This is because the behavior of the <xref:System.Globalization.CultureInfo> class has changed: When it represents a neutral culture, its property values (in particular, the <xref:System.Globalization.CultureInfo.Calendar*>, <xref:System.Globalization.CultureInfo.CompareInfo*>, <xref:System.Globalization.CultureInfo.DateTimeFormat*>, <xref:System.Globalization.CultureInfo.NumberFormat*>, and <xref:System.Globalization.CultureInfo.TextInfo*> properties) now reflect the specific culture that is associated with the neutral culture. In earlier versions of the .NET Framework, the <xref:System.Threading.Thread.CurrentCulture> property threw a <xref:System.NotSupportedException> exception when a neutral culture was assigned.
 
 ## Examples
  The following example shows the threading statement that allows the user interface of a Windows Forms application to display in the culture that is set in Control Panel. Additional code is needed.
@@ -1719,7 +1713,7 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  After any thread calls `FreeNamedDataSlot`, any other thread that calls <xref:System.Threading.Thread.GetNamedDataSlot*> with the same name will allocate a new slot associated with the name. Subsequent calls to `GetNamedDataSlot` by any thread will return the new slot. However, any thread that still has a <xref:System.LocalDataStoreSlot?displayProperty=nameWithType> returned by an earlier call to `GetNamedDataSlot` can continue to use the old slot.
 
@@ -1984,7 +1978,7 @@ The value is not guaranteed to be a zero-based processor number.
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread expires. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -2241,7 +2235,7 @@ The value is not guaranteed to be a zero-based processor number.
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread expires. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -2942,14 +2936,12 @@ The value is not guaranteed to be a zero-based processor number.
 
 ## Remarks
 
-In .NET Framework, this property is write-once, and because the default value of a thread's <xref:System.Threading.Thread.Name> property is `null`, you can determine whether a name has already been explicitly assigned to the thread by comparing it with `null`.
 
 The string assigned to the <xref:System.Threading.Thread.Name> property can include any Unicode character.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">.NET Framework only: A set operation was requested, but the <see langword="Name" /> property has already been set.</exception>
-      </Docs>
+        </Docs>
     </Member>
     <Member MemberName="Priority">
       <MemberSignature Language="C#" Value="public System.Threading.ThreadPriority Priority { get; set; }" />
@@ -3384,7 +3376,7 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
 ## Remarks
 
 > [!IMPORTANT]
-> The .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread procedure ends and the <xref:System.Threading.Thread> object has been reclaimed by garbage collection. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -3629,11 +3621,11 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Threading.Thread.SpinWait*> method is useful for implementing locks. Classes in the .NET Framework, such as <xref:System.Threading.Monitor> and <xref:System.Threading.ReaderWriterLock>, use this method internally. <xref:System.Threading.Thread.SpinWait*> essentially puts the processor into a very tight loop, with the loop count specified by the `iterations` parameter. The duration of the wait therefore depends on the speed of the processor.
+ The <xref:System.Threading.Thread.SpinWait*> method is useful for implementing locks. Classes in .NET, such as <xref:System.Threading.Monitor> and <xref:System.Threading.ReaderWriterLock>, use this method internally. <xref:System.Threading.Thread.SpinWait*> essentially puts the processor into a very tight loop, with the loop count specified by the `iterations` parameter. The duration of the wait therefore depends on the speed of the processor.
 
  Contrast this with the <xref:System.Threading.Thread.Sleep*> method. A thread that calls <xref:System.Threading.Thread.Sleep*> yields the rest of its current slice of processor time, even if the specified interval is zero. Specifying a non-zero interval for <xref:System.Threading.Thread.Sleep*> removes the thread from consideration by the thread scheduler until the time interval has elapsed.
 
- <xref:System.Threading.Thread.SpinWait*> is not generally useful for ordinary applications. In most cases, you should use the synchronization classes provided by the .NET Framework; for example, call <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> or a statement that wraps <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> (`lock` in C# or `SyncLock` in Visual Basic).
+ <xref:System.Threading.Thread.SpinWait*> is not generally useful for ordinary applications. In most cases, you should use the synchronization classes provided by .NET; for example, call <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> or a statement that wraps <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> (`lock` in C# or `SyncLock` in Visual Basic).
 
 > [!CAUTION]
 > In the rare case where it is advantageous to avoid a context switch, such as when you know that a state change is imminent, make a call to the <xref:System.Threading.Thread.SpinWait*> method in your loop. The code <xref:System.Threading.Thread.SpinWait*> executes is designed to prevent problems that can occur on computers with multiple processors. For example, on computers with multiple Intel processors employing Hyper-Threading technology, <xref:System.Threading.Thread.SpinWait*> prevents processor starvation in certain situations.
