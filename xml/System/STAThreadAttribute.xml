@@ -68,22 +68,22 @@
 
  COM threading models only apply to applications that use COM interop. The COM threading model can be set to single-threaded apartment or multithreaded apartment. The application thread is only initialized for COM interop if the thread actually makes a call to a COM component. If COM interop is not used, then the thread is not initialized, and the <xref:System.STAThreadAttribute> attribute, if it is present, has no effect.
 
-|Language|COM apartment model|
-|--------------|-------------------------|
-|C#|Multithreaded apartment|
-|C++|Multithreaded apartment|
-|Visual Basic|Single-threaded apartment|
+The default threading model for COM interop depends on the language in which you are developing your application, as the following table shows.
+
+| Language     | COM apartment model       |
+|--------------|---------------------------|
+| C#           | Multithreaded apartment   |
+| C++          | Multithreaded apartment   |
+| Visual Basic | Single-threaded apartment |
 
  To change these defaults, you use the <xref:System.STAThreadAttribute> attribute to set the threading model for the application, or call the <xref:System.Threading.Thread.SetApartmentState*?displayProperty=nameWithType> or <xref:System.Threading.Thread.TrySetApartmentState*?displayProperty=nameWithType> method before starting the thread to set the threading model for a particular thread. In C++, you can also use the [/CLRTHREADATTRIBUTE](/cpp/build/reference/clrthreadattribute-set-clr-thread-attribute) linker option to specify the apartment model.
 
  ASP.NET applications should set the `ASPCompat` attribute of the `@ Page` directive to `true` to force the page to be serviced by the STA thread pool.
 
- Here are some of the cases in which you'll want to use the <xref:System.STAThreadAttribute> attribute to explicitly set the threading model to single-threaded apartment:
+ Here are some scenarios where you should use the <xref:System.STAThreadAttribute> attribute to explicitly set the threading model to single-threaded apartment:
 
 - You're developing a Windows Forms app. Windows Forms apps must be single-threaded if they communicate with Windows system components such as the Clipboard or Windows common dialog boxes, or if they use system features such as drag-and-drop functionality. The Windows Forms Application template for C# automatically adds the <xref:System.STAThreadAttribute> attribute to C# projects. Because the single-threaded apartment model is the default for Visual Basic, there is no need for the attribute.
-
 - You're developing a C# app that calls a Visual Basic library, which, in turn, relies on COM interop. Because the single-threaded apartment model is the default for Visual Basic, you should change your app's threading model to single-threaded by using the <xref:System.STAThreadAttribute> attribute.
-
 - Your application makes calls to COM components that use the single-threaded apartment model.
 
  ]]></format>
