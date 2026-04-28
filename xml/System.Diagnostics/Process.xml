@@ -122,7 +122,6 @@ On macOS, the following properties return 0:
 > This class contains a link demand and an inheritance demand at the class level that applies to all members. A <xref:System.Security.SecurityException> is thrown when either the immediate caller or the derived class does not have full-trust permission.
 
 ## .NET Core Notes
- In .NET Framework, the <xref:System.Diagnostics.Process> class by default uses <xref:System.Console> encodings, which are typically code-page encodings, for the input, output, and error streams. For example code, on systems whose culture is English (United States), code page 437 is the default encoding for the <xref:System.Console> class. However, .NET Core may make only a limited subset of these encodings available. If this is the case, it uses <xref:System.Text.Encoding.UTF8*?displayProperty=nameWithType> as the default encoding.
 
  If a <xref:System.Diagnostics.Process> object depends on specific code page encodings, you can still make them available by doing the following *before* you call any <xref:System.Diagnostics.Process> methods:
 
@@ -2490,15 +2489,6 @@ You cannot cause processes on remote computers to exit. You can only view inform
 
  The process is terminating.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to call <see cref="M:System.Diagnostics.Process.Kill" /> for a process that is running on a remote computer. The method is available only for processes running on the local computer.</exception>
-        <exception cref="T:System.InvalidOperationException">.NET Framework only: The process has already exited.
-
--or-
-
-There is no process associated with this <see cref="T:System.Diagnostics.Process" /> object.
-
--or-
-
-The calling process is a member of the associated process's descendant tree.</exception>
         <exception cref="T:System.AggregateException">Not all processes in the associated process's descendant tree could be terminated.</exception>
         <altmember cref="M:System.Environment.Exit(System.Int32)" />
         <altmember cref="M:System.Diagnostics.Process.CloseMainWindow" />
@@ -6118,7 +6108,7 @@ The file specified in the <paramref name="fileName" /> could not be found.
 
  You can change the parameters specified in the <xref:System.Diagnostics.Process.StartInfo> property up to the time that you call the <xref:System.Diagnostics.Process.Start*> method on the process. After you start the process, changing the <xref:System.Diagnostics.Process.StartInfo*> values does not affect or restart the associated process. If you call the <xref:System.Diagnostics.Process.Start(System.Diagnostics.ProcessStartInfo)> method with the <xref:System.Diagnostics.ProcessStartInfo.UserName*?displayProperty=nameWithType> and <xref:System.Diagnostics.ProcessStartInfo.Password*?displayProperty=nameWithType> properties set, the unmanaged `CreateProcessWithLogonW` function is called, which starts the process in a new window even if the <xref:System.Diagnostics.ProcessStartInfo.CreateNoWindow> property value is `true` or the <xref:System.Diagnostics.ProcessStartInfo.WindowStyle> property value is <xref:System.Diagnostics.ProcessWindowStyle.Hidden>.
 
- You should only access the <xref:System.Diagnostics.Process.StartInfo> property on a <xref:System.Diagnostics.Process> object returned by the <xref:System.Diagnostics.Process.Start*> method. For example, you should not access the <xref:System.Diagnostics.Process.StartInfo> property on a <xref:System.Diagnostics.Process> object returned by <xref:System.Diagnostics.Process.GetProcesses*>. Otherwise, on .NET Core the <xref:System.Diagnostics.Process.StartInfo> property will throw an <xref:System.InvalidOperationException> and on .NET Framework it will return a dummy <xref:System.Diagnostics.ProcessStartInfo> object.
+ You should only access the <xref:System.Diagnostics.Process.StartInfo> property on a <xref:System.Diagnostics.Process> object returned by the <xref:System.Diagnostics.Process.Start*> method. For example, you should not access the <xref:System.Diagnostics.Process.StartInfo> property on a <xref:System.Diagnostics.Process> object returned by <xref:System.Diagnostics.Process.GetProcesses*>. Otherwise, the <xref:System.Diagnostics.Process.StartInfo> property will throw an <xref:System.InvalidOperationException>.
 
  When the process is started, the file name is the file that populates the (read-only) <xref:System.Diagnostics.Process.MainModule> property. If you want to retrieve the executable file that is associated with the process after the process has started, use the <xref:System.Diagnostics.Process.MainModule> property. If you want to set the executable file of a <xref:System.Diagnostics.Process> instance for which an associated process has not been started, use the <xref:System.Diagnostics.Process.StartInfo> property's <xref:System.Diagnostics.ProcessStartInfo.FileName*> member. Because the members of the <xref:System.Diagnostics.Process.StartInfo> property are arguments that are passed to the <xref:System.Diagnostics.Process.Start*> method of a process, changing the <xref:System.Diagnostics.ProcessStartInfo.FileName> property after the associated process has started will not reset the <xref:System.Diagnostics.Process.MainModule> property. These properties are used only to initialize the associated process.
 
@@ -6788,8 +6778,6 @@ The file specified in the <paramref name="fileName" /> could not be found.
 
  This method instructs the <xref:System.Diagnostics.Process> component to wait an infinite amount of time for the process and event handlers to exit. This can cause an application to stop responding. For example, if you call <xref:System.Diagnostics.Process.CloseMainWindow*> for a process that has a user interface, the request to the operating system to terminate the associated process might not be handled if the process is written to never enter its message loop.
 
-> [!NOTE]
->  In the .NET Framework 3.5 and earlier versions, the <xref:System.Diagnostics.Process.WaitForExit> overload waited for <xref:System.Int32.MaxValue> milliseconds (approximately 24 days), not indefinitely. Also, previous versions did not wait for the event handlers to exit if the full <xref:System.Int32.MaxValue> time was reached.
 
  This overload ensures that all processing has been completed, including the handling of asynchronous events for redirected standard output. You should use this overload after a call to the <xref:System.Diagnostics.Process.WaitForExit(System.Int32)> overload when standard output has been redirected to asynchronous event handlers.
 
@@ -6876,10 +6864,8 @@ The file specified in the <paramref name="fileName" /> could not be found.
 
  This method instructs the <xref:System.Diagnostics.Process> component to wait a finite amount of time for the process to exit. If the associated process does not exit by the end of the interval because the request to terminate is denied, `false` is returned to the calling procedure. You can specify <xref:System.Threading.Timeout.Infinite?displayProperty=nameWithType> for `milliseconds`, and <xref:System.Diagnostics.Process.WaitForExit(System.Int32)?displayProperty=nameWithType> will behave the same as the <xref:System.Diagnostics.Process.WaitForExit> overload. If you pass 0 (zero) to the method, it returns `true` only if the process has already exited; otherwise, it immediately returns `false`.
 
-> [!NOTE]
->  In the .NET Framework 3.5 and earlier versions, if `milliseconds` was -1, the <xref:System.Diagnostics.Process.WaitForExit(System.Int32)> overload waited for <xref:System.Int32.MaxValue> milliseconds (approximately 24 days), not indefinitely.
 
- When standard output has been redirected to asynchronous event handlers, it is possible that output processing will not have completed when this method returns. To ensure that asynchronous event handling has been completed, call the <xref:System.Diagnostics.Process.WaitForExit> overload that takes no parameter after receiving a `true` from this overload. To help ensure that the <xref:System.Diagnostics.Process.Exited> event is handled correctly in Windows Forms applications, set the <xref:System.Diagnostics.Process.SynchronizingObject> property.
+ When standard output has been redirectedto asynchronous event handlers, it is possible that output processing will not have completed when this method returns. To ensure that asynchronous event handling has been completed, call the <xref:System.Diagnostics.Process.WaitForExit> overload that takes no parameter after receiving a `true` from this overload. To help ensure that the <xref:System.Diagnostics.Process.Exited> event is handled correctly in Windows Forms applications, set the <xref:System.Diagnostics.Process.SynchronizingObject> property.
 
  When an associated process exits (is shut down by the operating system through a normal or abnormal termination), the system stores administrative information about the process and returns to the component that had called <xref:System.Diagnostics.Process.WaitForExit(System.Int32)>. The <xref:System.Diagnostics.Process> component can then access the information, which includes the <xref:System.Diagnostics.Process.ExitTime*>, by using the <xref:System.Diagnostics.Process.Handle*> to the exited process.
 
