@@ -1,4 +1,6 @@
 ﻿' <SNIPPET1>
+' WARNING: DES has a 56-bit key and is considered insecure.
+' For new applications, use a NIST-approved symmetric encryption algorithm instead.
 Imports System.Security.Cryptography
 Imports System.Text
 Imports System.IO

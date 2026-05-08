@@ -28,7 +28,10 @@ Public Class rfc2898test
             'data1 can be a string or contents of a file.
             Dim data1 As String = "Some test data"
             '<SNIPPET3>
-            'The default iteration count is 1000 so the two methods use the same iteration count.
+            ' SECURITY NOTE: The iteration count should be as high as your
+            ' performance requirements allow. NIST SP 800-132 recommends selecting
+            ' the highest iteration count tolerable for your system, with a minimum
+            ' of 600,000 iterations. The low value here is for illustration only.
             Dim myIterations As Integer = 1000
             '</SNIPPET6>		
             '<SNIPPET2>

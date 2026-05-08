@@ -2,6 +2,9 @@
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
+// WARNING: ICertificatePolicy is obsolete. Use ServerCertificateValidationCallback instead.
+// Never bypass certificate validation in production code. Doing so exposes
+// the application to man-in-the-middle attacks.
 // <Snippet1>
  public  enum    CertificateProblem  : long
  {

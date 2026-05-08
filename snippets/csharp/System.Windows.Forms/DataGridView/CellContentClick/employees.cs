@@ -276,6 +276,9 @@ public class Employees : Form
 
         string employeeId = DataGridView1.Rows[buttonClick.RowIndex]
             .Cells[ColumnName.EmployeeId.ToString()].Value.ToString();
+        // WARNING: This example uses string concatenation for simplicity.
+        // In production code, always use parameterized queries to prevent
+        // SQL injection attacks.
         DataGridView2.DataSource = Populate("SELECT * FROM Orders WHERE EmployeeId = " + employeeId);
     }
 

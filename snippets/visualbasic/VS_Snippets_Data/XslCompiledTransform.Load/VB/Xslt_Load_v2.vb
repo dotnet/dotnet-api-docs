@@ -62,6 +62,8 @@ End Sub
 Shared Sub XslCompiledTransform_Load4() 
         
         Dim UserName As String = "username"
+        ' In production code, do not hardcode credentials in source code.
+        ' Instead, retrieve them from a secure store such as Azure Key Vault.
         Dim SecurelyStoredPassword As String = "psswd"
         Dim Domain As String = "domain"
         
@@ -120,6 +122,8 @@ End Sub
 Shared Sub XslCompiledTransform_Load8() 
         
         Dim UserName As String = "username"
+        ' In production code, do not hardcode credentials in source code.
+        ' Instead, retrieve them from a secure store such as Azure Key Vault.
         Dim SecurelyStoredPassword As String = "psswd"
         Dim Domain As String = "domain"
         
@@ -179,6 +183,8 @@ End Sub
 Shared Sub Cache() 
         
         Dim UserName As String = "username"
+        ' In production code, do not hardcode credentials in source code.
+        ' Instead, retrieve them from a secure store such as Azure Key Vault.
         Dim SecurelyStoredPassword As String = "psswd"
         Dim Domain As String = "domain"
         

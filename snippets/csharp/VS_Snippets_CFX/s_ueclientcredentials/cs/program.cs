@@ -138,6 +138,8 @@ namespace Microsoft.Security.Samples
            // Configure the proxy with
            // (username,password).
            calcClient.ClientCredentials.UserName.UserName = "username";
+           // In production code, do not hardcode credentials.
+           // Retrieve from a secure store such as Azure Key Vault.
            calcClient.ClientCredentials.UserName.Password = "changethispassword";
 // </snippet4>
 

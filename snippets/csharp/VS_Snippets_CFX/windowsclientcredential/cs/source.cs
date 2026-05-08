@@ -58,6 +58,8 @@ namespace Example
             using (CalculatorClient client = new CalculatorClient())
             {
                 client.ClientCredentials.Windows.ClientCredential.UserName = "test";
+                // In production code, do not hardcode credentials.
+                // Retrieve from a secure store such as Azure Key Vault.
                 client.ClientCredentials.Windows.ClientCredential.Password = "password";
             }
         }
