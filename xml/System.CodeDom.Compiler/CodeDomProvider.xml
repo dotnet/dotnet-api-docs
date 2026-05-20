@@ -48,16 +48,7 @@
 
  A <xref:System.CodeDom.Compiler.CodeDomProvider> implementation typically provides code generation and/or code compilation interfaces for generating code and managing compilation for a single programming language. Several languages are supported by <xref:System.CodeDom.Compiler.CodeDomProvider> implementations that ship with the Windows SDK. These languages include C#, Visual Basic, C++, and JScript. Developers or compiler vendors can implement the <xref:System.CodeDom.Compiler.ICodeGenerator> and <xref:System.CodeDom.Compiler.ICodeCompiler> interfaces and provide a <xref:System.CodeDom.Compiler.CodeDomProvider> that extends CodeDOM support to other programming languages.
 
- The [&lt;system.codedom&gt; Element](/dotnet/framework/configure-apps/file-schema/compiler/system-codedom-element) in the machine configuration file (Machine.config) provides a mechanism for developers and compiler vendors to add configuration settings for additional <xref:System.CodeDom.Compiler.CodeDomProvider> implementations.
-
  The <xref:System.CodeDom.Compiler.CodeDomProvider> class provides static methods to discover and enumerate the <xref:System.CodeDom.Compiler.CodeDomProvider> implementations on a computer. The <xref:System.CodeDom.Compiler.CodeDomProvider.GetAllCompilerInfo*> method returns the settings for all <xref:System.CodeDom.Compiler.CodeDomProvider> implementations on a computer. The <xref:System.CodeDom.Compiler.CodeDomProvider.GetCompilerInfo*> method returns the settings for a specific <xref:System.CodeDom.Compiler.CodeDomProvider> implementation, based on the programming language name. The <xref:System.CodeDom.Compiler.CodeDomProvider.CreateProvider*> method returns an instance of a <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for a specific language.
-
- For more details on language provider settings in the configuration file, see [Compiler and Language Provider Settings Schema](/dotnet/framework/configure-apps/file-schema/compiler/).
-
-> [!NOTE]
->  This class makes a link demand and an inheritance demand at the class level. A <xref:System.Security.SecurityException> is thrown if either the immediate caller or the derived class does not have full trust permission.
-
-
 
 ## Examples
  The following example program can generate and compile source code based on a CodeDOM model of a program that prints "Hello World" using the <xref:System.Console> class. A Windows Forms user interface is provided. The user can select the target programming language from several selections: C#, Visual Basic, and JScript.
@@ -68,12 +59,11 @@
  ]]></format>
     </remarks>
     <block subset="none" type="overrides">
-      <para>In .NET Framework 1.0 and 1.1, code providers consist of implementations of <see cref="T:System.CodeDom.Compiler.CodeDomProvider" />, <see cref="T:System.CodeDom.Compiler.ICodeGenerator" />, <see cref="T:System.CodeDom.Compiler.ICodeParser" />, and <see cref="T:System.CodeDom.Compiler.ICodeCompiler" />. Starting in .NET Framework 2.0, the <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator" />, <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateParser" />, and <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> methods are obsolete, and the methods of <see cref="T:System.CodeDom.Compiler.ICodeGenerator" /> and <see cref="T:System.CodeDom.Compiler.ICodeCompiler" /> are directly available in the <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> class. You should override those methods in your code provider implementation and not call the base methods.</para>
+      <para>The <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator" />, <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateParser" />, and <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> methods are obsolete, and the methods of <see cref="T:System.CodeDom.Compiler.ICodeGenerator" /> and <see cref="T:System.CodeDom.Compiler.ICodeCompiler" /> are directly available in the <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> class. You should override those methods in your code provider implementation and not call the base methods.</para>
     </block>
     <altmember cref="T:System.CodeDom.Compiler.CompilerInfo" />
     <altmember cref="T:Microsoft.CSharp.CSharpCodeProvider" />
     <altmember cref="T:Microsoft.VisualBasic.VBCodeProvider" />
-    <related type="Article" href="/dotnet/framework/configure-apps/file-schema/compiler/">Compiler and Language Provider Settings Schema</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -151,27 +141,8 @@
         <param name="compilationUnits">An array of type <see cref="T:System.CodeDom.CodeCompileUnit" /> that indicates the code to compile.</param>
         <summary>Compiles an assembly based on the <see cref="N:System.CodeDom" /> trees contained in the specified array of <see cref="T:System.CodeDom.CodeCompileUnit" /> objects, using the specified compiler settings.</summary>
         <returns>A <see cref="T:System.CodeDom.Compiler.CompilerResults" /> object that indicates the results of the compilation.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-> [!IMPORTANT]
-> On .NET Core and .NET 5+, calls to the `CodeDomProvider.CompileAssemblyFromDom` method throw a <xref:System.PlatformNotSupportedException>. Compile code is not supported.
-
-> [!NOTE]
-> In .NET Framework 2.0 and later versions, this method can be called directly on the code provider even if it's not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeCompiler> implementation is called by the base class.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.NotImplementedException">Neither this method nor the <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> method is overridden in a derived class.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <block subset="none" type="overrides">
-          <para>If you override this method, you must not call the corresponding method of the base class. The base-class method creates a generator in the derived class using the obsolete <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> method for compatibility with preexisting providers that use code compilers. The base-class method then calls the equivalent method in the <see cref="T:System.CodeDom.Compiler.ICodeCompiler" /> implementation to perform this function. You will get a <see cref="T:System.NotImplementedException" /> if you call the base-class method from a code provider that does not use a code compiler.</para>
-        </block>
-        <altmember cref="T:System.CodeDom.Compiler.CompilerParameters" />
-        <altmember cref="T:System.CodeDom.CodeCompileUnit" />
-        <altmember cref="T:System.CodeDom.Compiler.CompilerResults" />
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="CompileAssemblyFromFile">
@@ -218,26 +189,8 @@
         <param name="fileNames">An array of the names of the files to compile.</param>
         <summary>Compiles an assembly from the source code contained in the specified files, using the specified compiler settings.</summary>
         <returns>A <see cref="T:System.CodeDom.Compiler.CompilerResults" /> object that indicates the results of compilation.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-> [!IMPORTANT]
-> On .NET Core and .NET 5+, calls to the `CodeDomProvider.CompileAssemblyFromFile` method throw a <xref:System.PlatformNotSupportedException>. Compile from file is not supported.
-
-> [!NOTE]
-> In .NET Framework 2.0 and later versions, this method can be called directly on the code provider even if it's not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeCompiler> implementation is called by the base class.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.NotImplementedException">Neither this method nor the <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> method is overridden in a derived class.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <block subset="none" type="overrides">
-          <para>If you override this method, you must not call the corresponding method of the base class. The base-class method creates a generator in the derived class using the obsolete <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> method for compatibility with preexisting providers that use code compilers. The base-class method then calls the equivalent method in the <see cref="T:System.CodeDom.Compiler.ICodeCompiler" /> implementation to perform this function. You will get a <see cref="T:System.NotImplementedException" /> if you call the base-class method from a code provider that does not use a code compiler.</para>
-        </block>
-        <altmember cref="T:System.CodeDom.Compiler.CompilerParameters" />
-        <altmember cref="T:System.CodeDom.Compiler.CompilerResults" />
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="CompileAssemblyFromSource">
@@ -284,26 +237,8 @@
         <param name="sources">An array of source code strings to compile.</param>
         <summary>Compiles an assembly from the specified array of strings containing source code, using the specified compiler settings.</summary>
         <returns>A <see cref="T:System.CodeDom.Compiler.CompilerResults" /> object that indicates the results of compilation.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-> [!IMPORTANT]
-> On .NET Core and .NET 5+, calls to the `CodeDomProvider.CompileAssemblyFromSource` method throw a <xref:System.PlatformNotSupportedException>. Compile source code is not supported.
-
-> [!NOTE]
-> In .NET Framework 2.0 and later versions, this method can be called directly on the code provider even if it's not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeCompiler> implementation is called by the base class.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.NotImplementedException">Neither this method nor the <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> method is overridden in a derived class.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <block subset="none" type="overrides">
-          <para>If you override this method, you must not call the corresponding method of the base class. The base-class method creates a generator in the derived class using the obsolete <see cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateCompiler" /> method for compatibility with preexisting providers that use code compilers. The base-class method then calls the equivalent method in the <see cref="T:System.CodeDom.Compiler.ICodeCompiler" /> implementation to perform this function. You will get a <see cref="T:System.NotImplementedException" /> if you call the base-class method from a code provider that does not use a code compiler.</para>
-        </block>
-        <altmember cref="T:System.CodeDom.Compiler.CompilerParameters" />
-        <altmember cref="T:System.CodeDom.Compiler.CompilerResults" />
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateCompiler">
@@ -404,7 +339,7 @@
  <xref:System.CodeDom.Compiler.CodeDomProvider.CreateEscapedIdentifier*> tests whether the identifier conflicts with any reserved or language keywords, and if so, returns an equivalent name with language-specific escape code formatting. This is referred to an escaped identifier. The escaped identifier contains the same `value` but has escape-code formatting added to differentiate the identifier from the keyword. Two implementation examples are preceding the `value` with "@" or bracketing the `value` with "[" and "]".
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -684,13 +619,11 @@
 
  The <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedLanguage*> method checks whether at least one provider implementation supports a specific language. You can validate a language name using <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedLanguage*> before passing it to <xref:System.CodeDom.Compiler.CodeDomProvider.CreateProvider*>. If you pass an unsupported language name to <xref:System.CodeDom.Compiler.CodeDomProvider.CreateProvider*> a <xref:System.Configuration.ConfigurationException?displayProperty=nameWithType> is thrown.
 
- The <xref:System.CodeDom.Compiler.CodeDomProvider.GetAllCompilerInfo*> method can be used to determine all <xref:System.CodeDom.Compiler.CodeDomProvider> implementations on a computer, including additional implementations provided by developers and compiler vendors that are identified in the [&lt;system.codedom&gt; Element](/dotnet/framework/configure-apps/file-schema/compiler/system-codedom-element) in the machine configuration file (Machine.config).
+ The <xref:System.CodeDom.Compiler.CodeDomProvider.GetAllCompilerInfo*> method can be used to determine all <xref:System.CodeDom.Compiler.CodeDomProvider> implementations on a computer.
 
  The <xref:System.CodeDom.Compiler.CodeDomProvider.CreateProvider*> method returns an instance of a <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for a specific language.
 
  Language names are case-insensitive.
-
-
 
 ## Examples
  The following code example determines the <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for an input language and displays the configured settings for the language provider. This code example is part of a larger example provided for the <xref:System.CodeDom.Compiler.CompilerInfo> class.
@@ -808,7 +741,7 @@
  <xref:System.CodeDom.Compiler.CodeDomProvider.CreateValidIdentifier*> tests whether the identifier conflicts with reserved or language keywords, and if so, attempts to return a valid identifier name that does not conflict. Usually the returned identifier is only slightly modified to differentiate the identifier from the keyword; for example, the name might be preceded by the underscore ("_") character.
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -912,7 +845,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
 
 
@@ -977,7 +910,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1094,7 +1027,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1151,7 +1084,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1208,7 +1141,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1269,7 +1202,6 @@
         </remarks>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <altmember cref="T:System.CodeDom.Compiler.CompilerInfo" />
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/compiler/">Compiler and Language Provider Settings Schema</related>
       </Docs>
     </Member>
     <Member MemberName="GetCompilerInfo">
@@ -1311,15 +1243,12 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The [&lt;system.codedom&gt; Element](/dotnet/framework/configure-apps/file-schema/compiler/system-codedom-element) in the machine configuration file contains the language provider and compiler configuration settings for each <xref:System.CodeDom.Compiler.CodeDomProvider> implementation on the computer. For information about machine configuration files, see the Machine Configuration Files section in [Configuring Apps](/dotnet/framework/configure-apps/). The <xref:System.CodeDom.Compiler.CodeDomProvider.GetCompilerInfo*> method searches each provider configuration element for the specified language name. The returned <xref:System.CodeDom.Compiler.CompilerInfo> instance contains the configured language provider and compiler settings.
 
  The <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedLanguage*> method checks whether at least one provider implementation supports a specific language. You can validate a language name using <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedLanguage*> before passing it to <xref:System.CodeDom.Compiler.CodeDomProvider.GetCompilerInfo*>. This prevents throwing a <xref:System.Configuration.ConfigurationException?displayProperty=nameWithType> when you access the <xref:System.CodeDom.Compiler.CompilerInfo> instance for an unsupported language name.
 
  If more than one provider implementation is configured for the input language name, <xref:System.CodeDom.Compiler.CodeDomProvider.GetCompilerInfo*> returns the settings from the last matching provider configuration element.
 
  Language names are case-insensitive.
-
-
 
 ## Examples
  The following code example determines the <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for an input language and displays the configured settings for the language provider. This code example is part of a larger example provided for the <xref:System.CodeDom.Compiler.CompilerInfo> class.
@@ -1334,7 +1263,6 @@
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <altmember cref="T:System.CodeDom.Compiler.CompilerInfo" />
         <altmember cref="M:System.CodeDom.Compiler.CodeDomProvider.IsDefinedLanguage(System.String)" />
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/compiler/">Compiler and Language Provider Settings Schema</related>
       </Docs>
     </Member>
     <Member MemberName="GetConverter">
@@ -1419,34 +1347,12 @@
         <param name="extension">A file name extension.</param>
         <summary>Returns a language name associated with the specified file name extension, as configured in the <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> compiler configuration section.</summary>
         <returns>A language name associated with the file name extension, as configured in the <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> compiler configuration settings.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The [&lt;system.codedom&gt; Element](/dotnet/framework/configure-apps/file-schema/compiler/system-codedom-element) in the machine configuration file (Machine.config) contains the language provider and compiler configuration settings for each <xref:System.CodeDom.Compiler.CodeDomProvider> implementation on the computer. The <xref:System.CodeDom.Compiler.CodeDomProvider.GetLanguageFromExtension*> method searches each provider configuration element for the specified file name extension.
-
- The <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedExtension*> method checks whether at least one provider implementation supports a specific file name extension. You can validate a file name extension using <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedExtension*> before passing it to <xref:System.CodeDom.Compiler.CodeDomProvider.GetLanguageFromExtension*>. This prevents <xref:System.CodeDom.Compiler.CodeDomProvider.GetLanguageFromExtension*> from throwing a <xref:System.Configuration.ConfigurationException?displayProperty=nameWithType> for an unsupported file name extension.
-
- If a provider implementation supports the input file name extension, and there are multiple supported languages configured for that provider, then <xref:System.CodeDom.Compiler.CodeDomProvider.GetLanguageFromExtension*> returns the first language name for that provider. If more than one provider implementation is configured for the input file name extension, <xref:System.CodeDom.Compiler.CodeDomProvider.GetLanguageFromExtension*> returns the language name from the last matching provider configuration element.
-
- Language names and file name extensions are case-insensitive.
-
-
-
-## Examples
- The following code example determines the <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for an input file name extension and displays the configured settings for the language provider. This code example is part of a larger example provided for the <xref:System.CodeDom.Compiler.CompilerInfo> class.
-
- :::code language="csharp" source="~/snippets/csharp/System.CodeDom.Compiler/CodeDomProvider/CreateProvider/source.cs" id="Snippet5":::
- :::code language="vb" source="~/snippets/visualbasic/System.CodeDom.Compiler/CodeDomProvider/CreateProvider/source.vb" id="Snippet5":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.Configuration.ConfigurationException">The <paramref name="extension" /> does not have a configured language provider on this computer.</exception>
         <exception cref="T:System.Configuration.ConfigurationErrorsException">The <paramref name="extension" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <altmember cref="M:System.CodeDom.Compiler.CodeDomProvider.IsDefinedExtension(System.String)" />
         <altmember cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateProvider(System.String)" />
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/compiler/">Compiler and Language Provider Settings Schema</related>
       </Docs>
     </Member>
     <Member MemberName="GetTypeOutput">
@@ -1490,7 +1396,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1536,29 +1442,11 @@
         <summary>Tests whether a file name extension has an associated <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> implementation configured on the computer.</summary>
         <returns>
           <see langword="true" /> if a <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> implementation is configured for the specified file name extension; otherwise, <see langword="false" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The [&lt;system.codedom&gt; Element](/dotnet/framework/configure-apps/file-schema/compiler/system-codedom-element) in the machine configuration file (Machine.config) contains the language provider and compiler configuration settings for each <xref:System.CodeDom.Compiler.CodeDomProvider> implementation on the computer. The <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedExtension*> method searches the provider configuration elements for the specified file name extension.
-
- File name extensions are case-insensitive.
-
-
-
-## Examples
- The following code example determines the <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for an input file name extension and displays the configured settings for the language provider. This code example is part of a larger example provided for the <xref:System.CodeDom.Compiler.CompilerInfo> class.
-
- :::code language="csharp" source="~/snippets/csharp/System.CodeDom.Compiler/CodeDomProvider/CreateProvider/source.cs" id="Snippet5":::
- :::code language="vb" source="~/snippets/visualbasic/System.CodeDom.Compiler/CodeDomProvider/CreateProvider/source.vb" id="Snippet5":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="extension" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <altmember cref="M:System.CodeDom.Compiler.CodeDomProvider.GetLanguageFromExtension(System.String)" />
         <altmember cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateProvider(System.String)" />
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/compiler/">Compiler and Language Provider Settings Schema</related>
       </Docs>
     </Member>
     <Member MemberName="IsDefinedLanguage">
@@ -1597,28 +1485,10 @@
         <summary>Tests whether a language has a <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> implementation configured on the computer.</summary>
         <returns>
           <see langword="true" /> if a <see cref="T:System.CodeDom.Compiler.CodeDomProvider" /> implementation is configured for the specified language; otherwise, <see langword="false" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The [&lt;system.codedom&gt; Element](/dotnet/framework/configure-apps/file-schema/compiler/system-codedom-element) in the machine configuration file (Machine.config) contains the language provider and compiler configuration settings for each <xref:System.CodeDom.Compiler.CodeDomProvider> implementation on the computer. The <xref:System.CodeDom.Compiler.CodeDomProvider.IsDefinedLanguage*> method searches the provider configuration elements for the specified language name.
-
- Language names are case-insensitive.
-
-
-
-## Examples
- The following code example determines the <xref:System.CodeDom.Compiler.CodeDomProvider> implementation for an input language and displays the configured settings for the language provider. This code example is part of a larger example provided for the <xref:System.CodeDom.Compiler.CompilerInfo> class.
-
- :::code language="csharp" source="~/snippets/csharp/System.CodeDom.Compiler/CodeDomProvider/CreateProvider/source.cs" id="Snippet6":::
- :::code language="vb" source="~/snippets/visualbasic/System.CodeDom.Compiler/CodeDomProvider/CreateProvider/source.vb" id="Snippet6":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="language" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
         <altmember cref="M:System.CodeDom.Compiler.CodeDomProvider.CreateProvider(System.String)" />
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/compiler/">Compiler and Language Provider Settings Schema</related>
       </Docs>
     </Member>
     <Member MemberName="IsValidIdentifier">
@@ -1664,7 +1534,7 @@
  This method tests whether an identifier is valid. The <xref:System.CodeDom.Compiler.CodeDomProvider.IsValidIdentifier*> method is provider specific. Identifiers that are valid for one provider might not be valid for other providers. If `value` contains characters outside of the ASCII character range, check the identifier for all the languages that might be used to compile the code.
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1752,7 +1622,7 @@
 ## Remarks
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeParser> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateParser*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeParser> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeParser> implementation is called by the base class.
 
  ]]></format>
         </remarks>
@@ -1807,7 +1677,7 @@
  This method can be called with a number of <xref:System.CodeDom.Compiler.GeneratorSupport> flags at once to test for a set of capabilities by joining a set of appropriate capability flags together with a binary `OR` operator (&#124;).
 
 > [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, this method is provided by the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation that is returned by the <xref:System.CodeDom.Compiler.CodeDomProvider.CreateGenerator*> method of the provider. In version 2.0, this method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
+> This method can be called directly on the code provider even if it is not overridden by the code provider. If the code provider does not override this method, the <xref:System.CodeDom.Compiler.ICodeGenerator> implementation is called by the base class.
 
  ]]></format>
         </remarks>
