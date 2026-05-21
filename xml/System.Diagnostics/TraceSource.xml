@@ -57,40 +57,6 @@
 ## Remarks
  The <xref:System.Diagnostics.TraceSource> class is used by applications to produce traces that can be associated with the application. <xref:System.Diagnostics.TraceSource> provides tracing methods that allow you to easily trace events, trace data, and issue informational traces.
 
-In .NET Framework apps, trace output from <xref:System.Diagnostics.TraceSource> can be controlled by configuration file settings. The configuration file is located in the folder with the application executable and has the name of the application with the .config extension added. For example, the name of the configuration file for TraceSourceSample.exe is TraceSourceSample.exe.config. The configuration file can be used to specify where the trace information is to be sent and what levels of activity are to be traced. The following example shows the contents of a sample .NET Framework application configuration file.
-
-```xml
-<configuration>
-  <system.diagnostics>
-    <sources>
-      <source name="TraceTest" switchName="SourceSwitch"
-        switchType="System.Diagnostics.SourceSwitch" >
-        <listeners>
-          <add name="console" />
-          <remove name ="Default" />
-        </listeners>
-      </source>
-    </sources>
-    <switches>
-      <!-- You can set the level at which tracing is to occur -->
-      <add name="SourceSwitch" value="Warning" />
-        <!-- You can turn tracing off -->
-        <!--add name="SourceSwitch" value="Off" -->
-    </switches>
-    <sharedListeners>
-      <add name="console"
-        type="System.Diagnostics.ConsoleTraceListener"
-        initializeData="false"/>
-    </sharedListeners>
-    <trace autoflush="true" indentsize="4">
-      <listeners>
-        <add name="console" />
-      </listeners>
-    </trace>
-  </system.diagnostics>
-</configuration>
-```
-
  The <xref:System.Diagnostics.TraceSource> class is identified by the name of a source, typically the name of the application.  The trace messages coming from a particular component can be initiated by a particular trace source, allowing all messages coming from that component to be easily identified.
 
  <xref:System.Diagnostics.TraceSource> defines tracing methods but does not actually provide any specific mechanism for generating and storing tracing data. The tracing data is produced by trace listeners, which are plug-ins that can be loaded by trace sources.
@@ -100,29 +66,16 @@ In .NET Framework apps, trace output from <xref:System.Diagnostics.TraceSource> 
 
  You can customize the tracing output's target by adding or removing <xref:System.Diagnostics.TraceListener> instances to or from the collection stored in the <xref:System.Diagnostics.TraceSource.Listeners?displayProperty=nameWithType> property. By default, trace output is produced using an instance of the <xref:System.Diagnostics.DefaultTraceListener> class.
 
-The preceding .NET Framework app configuration file example demonstrates removing the <xref:System.Diagnostics.DefaultTraceListener> and adding a <xref:System.Diagnostics.ConsoleTraceListener> to produce the trace output for the trace source. For more information, see [\<listeners>](/dotnet/framework/configure-apps/file-schema/trace-debug/listeners-element-for-source) and [\<sharedListeners>](/dotnet/framework/configure-apps/file-schema/trace-debug/sharedlisteners-element).
-
 > [!NOTE]
->  Adding a trace listener to the <xref:System.Diagnostics.TraceSource.Listeners*> collection can cause an exception to be thrown while tracing, if a resource used by the trace listener is not available. The conditions and the exception thrown depend on the trace listener and cannot be enumerated in this topic. It may be useful to place calls to the <xref:System.Diagnostics.TraceSource> methods in `try`/`catch` blocks to detect and handle any exceptions from trace listeners.
+>  Adding a trace listener to the <xref:System.Diagnostics.TraceSource.Listeners*> collection can cause an exception to be thrown while tracing, if a resource used by the trace listener is not available. The conditions and the exception thrown depend on the trace listener. It might be useful to place calls to the <xref:System.Diagnostics.TraceSource> methods in `try`/`catch` blocks to detect and handle any exceptions from trace listeners.
 
- The <xref:System.Diagnostics.SourceSwitch> class provides the means to dynamically control the tracing output. For .NET Framework apps, the preceding configuration file example shows how you can turn off tracing from a trace source and control the level at which tracing occurs. You can modify the value of the source switch without recompiling your application. For information on using the configuration file to set a switch, see <xref:System.Diagnostics.Switch> and [How to: Create, Initialize and Configure Trace Switches](/dotnet/framework/debug-trace-profile/how-to-create-initialize-and-configure-trace-switches).
-
-> [!NOTE]
->  If you modify a configuration file while an application is executing, the application must be stopped and restarted or the <xref:System.Diagnostics.Trace.Refresh*> method must be called before the new settings take effect.
+ The <xref:System.Diagnostics.SourceSwitch> class provides the means to dynamically control the tracing output.
 
  The <xref:System.Diagnostics.TraceEventType> enumeration is used to define the event type of the trace message. Trace filters use the <xref:System.Diagnostics.TraceEventType> to determine if a trace listener should produce the trace message.
 
  The trace listeners can optionally have an additional layer of filtering through a trace filter. If a trace listener has an associated filter, the listener calls the <xref:System.Diagnostics.TraceFilter.ShouldTrace*> method on that filter to determine whether or not to produce the trace information.
 
- The trace listeners use the values of the <xref:System.Diagnostics.Trace> class properties <xref:System.Diagnostics.Trace.Indent*>, <xref:System.Diagnostics.Trace.IndentSize*>, and <xref:System.Diagnostics.Trace.AutoFlush*> to format trace output. In .NET Framework apps, you can use configuration file attributes to set the <xref:System.Diagnostics.Trace.Indent*>, <xref:System.Diagnostics.Trace.IndentSize*>, and <xref:System.Diagnostics.Trace.AutoFlush*> properties. The following example sets the <xref:System.Diagnostics.Trace.AutoFlush> property to `false` and the <xref:System.Diagnostics.Trace.IndentSize> property to 3.
-
-```xml
-<configuration>
-  <system.diagnostics>
-    <trace autoflush="false" indentsize="3" />
-  </system.diagnostics>
-</configuration>
-```
+ The trace listeners use the values of the <xref:System.Diagnostics.Trace.Indent>, <xref:System.Diagnostics.Trace.IndentSize>, and <xref:System.Diagnostics.Trace.AutoFlush> properties to format trace output.
 
 ## Examples
  The following code example shows the use of the <xref:System.Diagnostics.TraceSource> class to forward traces to listeners.  The example also demonstrates switch and filter usage.
@@ -133,7 +86,6 @@ The preceding .NET Framework app configuration file example demonstrates removin
  ]]></format>
     </remarks>
     <threadsafe>This type is thread safe.</threadsafe>
-    <related type="Article" href="/dotnet/framework/configure-apps/file-schema/trace-debug/">Trace and Debug Settings Schema</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -671,19 +623,6 @@ The preceding .NET Framework app configuration file example demonstrates removin
 
 ## Remarks
  The name is set by the `name` parameter passed to the constructor.
-
-You can refer to the trace source by using the `name` attribute in the configuration file of a .NET Framework app. The following XML element shows how to refer to a trace source in the configuration file of a .NET Framework app.
-
-```xml
-<configuration>
-  <system.diagnostics>
-    <sources>
-      <source name="TraceTest">
-      </source>
-    </sources>
-  </system.diagnostics>
-</configuration>
-```
 
 ## Examples
  The following code sample shows how to name a trace source in the constructor call. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.
