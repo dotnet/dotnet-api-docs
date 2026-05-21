@@ -337,18 +337,12 @@
  A <xref:System.Configuration.ConfigurationSection> implementation can optionally specify a separate file in which the configuration settings for that section are defined. This can be useful in multiple ways:
 
 - Using include files can result in a more logical and modular structure for configuration files.
-
 - File-access security and permissions can be used to restrict access to sections of configuration settings.
-
 - Settings in an include file that are not used during application initialization can be modified and reloaded without requiring an application restart.
 
  The following example shows how this attribute is used in a configuration file to specify that the `pages` section is defined in an external include file:
 
  `<pages configSource="pages.config"/>`
-
- If any of the settings in a configuration include file require the application to restart when they are modified, set the <xref:System.Configuration.SectionInformation.RestartOnExternalChanges> property to `true`.
-
- In ASP.NET applications, at run time you can assign to the <xref:System.Configuration.SectionInformation.ConfigSource> property the name of an alternative configuration file. In that case, the contents of the file are overwritten by the default connection string information that is contained in the Web.config file. This occurs also when the alternative file does not exist and it is created at run time. If the Web.config file does not contain any connection string information, an empty  section is added to the alternative file.
 
  ]]></format>
         </remarks>
@@ -1223,53 +1217,9 @@ The following example shows how to get the <xref:System.Configuration.SectionInf
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When <xref:System.Configuration.SectionInformation.RequirePermission*> is set to `true`, the `GetSection` methods are restricted by the trust level setting of the application. This means that methods or properties that allow access to configuration section handlers are restricted by the trust level set for the Web application.
 
 > [!NOTE]
->  Because high and full trust are the only levels that allow access to files outside the current application domain, an application can use configuration section handlers only at these trust levels.
-
- When <xref:System.Configuration.SectionInformation.RequirePermission*> is set to `false`, the access to the configuration data is not restricted by the application's trust level settings.
-
-> [!NOTE]
->  The appropriate file ACL (Access Control List) permissions are still required, regardless of the <xref:System.Configuration.SectionInformation.RequirePermission*> setting. ACL permissions determine who can access the configuration file.
-
-
-
-## Examples
- The following example shows two possible trust levels for a Web application when the <xref:System.Configuration.SectionInformation.RequirePermission> property of the `appSettings` section is `true`.
-
-```xml
-<system.web>
-   // With the following trust value
-   // the code below works.
-  <trust level="Full" />
-</system.web>
-
-<system.web>
-  // With the following trust value
-  // the code below does not work.
-  <trust level="Medium" />
-</system.web>
-```
-
- The following example shows code that runs without errors when the trust level is set to full. Otherwise, the code results in an error.
-
-```csharp
-AppSettingsSection apSection =
-  ConfigurationManager.GetSection("appSettings") as AppSettingsSection;
-
-NameValueCollection apSectionCollection =
-  ConfigurationManager.AppSettings;
-```
-
-```vb
-Dim apSection As AppSettingsSection = _
-  TryCast(ConfigurationManager.GetSection("appSettings"),
-    AppSettingsSection)
-
-  Dim apSectionCollection As NameValueCollection = _
-    ConfigurationManager.AppSettings
-```
+> The appropriate file ACL (Access Control List) permissions are still required, regardless of the <xref:System.Configuration.SectionInformation.RequirePermission*> setting. ACL permissions determine who can access the configuration file.
 
  ]]></format>
         </remarks>
