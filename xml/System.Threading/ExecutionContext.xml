@@ -67,17 +67,9 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Threading.ExecutionContext> class provides a single container for all information relevant to a logical thread of execution. In .NET Framework, this includes security context, call context, and synchronization context. In .NET Core, the security context and call context are not supported, however, the impersonation context and culture would typically flow with the execution context. Also in .NET Core, the synchronization context does not flow with the execution context, whereas in .NET Framework it may in some cases. For more information, see [ExecutionContext vs SynchronizationContext](https://devblogs.microsoft.com/pfxteam/executioncontext-vs-synchronizationcontext/).
+ The <xref:System.Threading.ExecutionContext> class provides a single container for all information relevant to a logical thread of execution. It includes impersonation context and culture, but excludes security context, call context, and synchronization context. For more information, see [ExecutionContext vs SynchronizationContext](https://devblogs.microsoft.com/pfxteam/executioncontext-vs-synchronizationcontext/).
 
  The <xref:System.Threading.ExecutionContext> class provides the functionality for user code to capture and transfer this context across user-defined asynchronous points. The common language runtime ensures that the <xref:System.Threading.ExecutionContext> is consistently transferred across runtime-defined asynchronous points within the managed process.
-
- - The following is applicable to .NET Framework only. -
-
- An execution context is the managed equivalent of a COM apartment. Within an application domain, the entire execution context must be transferred whenever a thread is transferred. This situation occurs during transfers made by the <xref:System.Threading.Thread.Start*?displayProperty=nameWithType> method, most thread pool operations, and Windows Forms thread marshaling through the Windows message pump. It does not occur in unsafe thread pool operations (such as the <xref:System.Threading.ThreadPool.UnsafeQueueUserWorkItem*> method), which do not transfer the compressed stack. Wherever the compressed stack flows, the managed principal, synchronization, locale, and user context also flow. The <xref:System.Threading.ExecutionContext> class provides the <xref:System.Threading.ExecutionContext.Capture*> and <xref:System.Threading.ExecutionContext.CreateCopy*> methods to get the execution context and the <xref:System.Threading.ExecutionContext.Run*> method to set the execution context for the current thread.
-
- An <xref:System.Threading.ExecutionContext> that is associated with a thread cannot be set on another thread. Attempting to do so will result in an exception being thrown. To propagate the <xref:System.Threading.ExecutionContext> from one thread to another, make a copy of the <xref:System.Threading.ExecutionContext>.
-
- Internally, the <xref:System.Threading.ExecutionContext> stores all data that is associated with the <xref:System.Runtime.Remoting.Messaging.LogicalCallContext>. This allows the <xref:System.Runtime.Remoting.Messaging.LogicalCallContext> data to be propagated when the <xref:System.Threading.ExecutionContext> is copied and transferred.
 
  ]]></format>
     </remarks>
@@ -296,16 +288,7 @@
         <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object to be populated with serialization information.</param>
         <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> structure representing the destination context of the serialization.</param>
         <summary>Sets the specified <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object with the logical context information needed to recreate an instance of the current execution context.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- .NET Framework only: <xref:System.Threading.ExecutionContext.GetObjectData*> sets a <xref:System.Runtime.Serialization.SerializationInfo> with the logical call context information. During deserialization, the execution context object is reconstituted from the <xref:System.Runtime.Serialization.SerializationInfo> transmitted over the stream.
-
- For more information, see <xref:System.Runtime.Serialization.SerializationInfo>.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="info" /> is <see langword="null" />.</exception>
         <altmember cref="T:System.Runtime.Serialization.SerializationInfo" />

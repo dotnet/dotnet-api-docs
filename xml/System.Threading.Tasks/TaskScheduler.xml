@@ -348,7 +348,7 @@ The following example creates a custom task scheduler that limits the number of 
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- A class derived from <xref:System.Threading.Tasks.TaskScheduler> implements this method in order to support integration with debuggers. This method will only be invoked by the .NET Framework when the debugger requests access to the data. The enumerable returned will be traversed by debugging utilities to access the tasks currently queued to this scheduler, enabling the debugger to provide a representation of this information in the user interface.
+ A class derived from <xref:System.Threading.Tasks.TaskScheduler> implements this method in order to support integration with debuggers. This method will only be invoked when the debugger requests access to the data. The enumerable returned will be traversed by debugging utilities to access the tasks currently queued to this scheduler, enabling the debugger to provide a representation of this information in the user interface.
 
  It is important to note that, when this method is called, all other threads in the process will be frozen. Therefore, it's important to avoid synchronization with other threads that may lead to blocking. If synchronization is necessary, and you are unable to acquire the lock in this method, then you should throw an exception so that the debugger does not block. The following example shows one possible approach in C#:
 
@@ -551,7 +551,7 @@ protected override IEnumerable<Task> GetScheduledTasks()
 
  A typical implementation would store the task in an internal data structure, which would be serviced by threads that would execute those tasks at some time in the future.
 
- This method is only meant to be called by the .NET Framework and should not be called directly by the derived class. This is necessary for maintaining the consistency of the system.
+ This method is only meant to be called by the .NET runtime and should not be called directly by the derived class. This is necessary for maintaining the consistency of the system.
 
  ]]></format>
         </remarks>
@@ -685,7 +685,7 @@ protected override IEnumerable<Task> GetScheduledTasks()
 ## Remarks
  Scheduler implementations are provided with <xref:System.Threading.Tasks.Task> instances to be executed through either the <xref:System.Threading.Tasks.TaskScheduler.QueueTask*> method or the <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline*> method. When the scheduler deems it appropriate to run the provided task, <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTask*> should be used to do so. TryExecuteTask handles all aspects of executing a task, including action invocation, exception handling, state management, and lifecycle control.
 
- <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTask*> must only be used for tasks provided to this scheduler by the .NET Framework infrastructure. It should not be used to execute arbitrary tasks obtained through custom mechanisms.
+ <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTask*> must only be used for tasks provided to this scheduler by the .NET runtime. It should not be used to execute arbitrary tasks obtained through custom mechanisms.
 
  ]]></format>
         </remarks>
@@ -823,20 +823,11 @@ protected override IEnumerable<Task> GetScheduledTasks()
 
 This event provides a mechanism to prevent exception escalation policy (which, by default, terminates the process) from triggering.
 
-To make it easier for developers to write asynchronous code based on tasks, unobserved exceptions raise the <xref:System.Threading.Tasks.TaskScheduler.UnobservedTaskException> exception, but the process does not terminate by default. Instead, the exception is handled by the runtime after the event is raised, regardless of whether an event handler observes the exception. This behavior can be configured. You can use the [`<ThrowUnobservedTaskExceptions>`](/dotnet/framework/configure-apps/file-schema/runtime/throwunobservedtaskexceptions-element) configuration element to terminate the process instead:
-
-```xml
-<configuration>
-   <runtime>
-      <ThrowUnobservedTaskExceptions enabled="true"/>
-   </runtime>
-</configuration>
-```
+To make it easier for developers to write asynchronous code based on tasks, unobserved exceptions raise the <xref:System.Threading.Tasks.TaskScheduler.UnobservedTaskException> exception, but the process does not terminate by default. Instead, the exception is handled by the runtime after the event is raised, regardless of whether an event handler observes the exception.
 
  ]]></format>
         </remarks>
         <related type="Article" href="/dotnet/standard/parallel-programming/task-parallel-library-tpl">Task Parallel Library (TPL)</related>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/runtime/throwunobservedtaskexceptions-element">&lt;ThrowUnobservedTaskExceptions&gt; Element</related>
       </Docs>
     </Member>
   </Members>

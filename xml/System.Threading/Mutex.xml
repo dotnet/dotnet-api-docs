@@ -68,13 +68,13 @@
 
 - The time-out interval specified in the call to a <xref:System.Threading.WaitHandle.WaitOne*> method that has a `millisecondsTimeout` or `timeout` parameter has elapsed. When this happens, the <xref:System.Threading.WaitHandle.WaitOne*> method returns `false`, and the calling thread makes no further attempt to acquire ownership of the mutex. In this case, you should structure your code so that access to the resource that is protected by the mutex is denied to the calling thread. Because the thread never acquired ownership of the mutex, it must not call the <xref:System.Threading.Mutex.ReleaseMutex*> method. The second example in the Examples section illustrates this pattern.
 
- The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it. By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity. A mutex can also be passed across application domain boundaries.
+ The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it. By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity.
 
  The thread that owns a mutex can request the same mutex in repeated calls to <xref:System.Threading.WaitHandle.WaitOne*> without blocking its execution. However, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex*> method the same number of times to release ownership of the mutex.
 
  Because the <xref:System.Threading.Mutex> class inherits from <xref:System.Threading.WaitHandle>, you can also call the static <xref:System.Threading.WaitHandle.WaitAll*?displayProperty=nameWithType> and <xref:System.Threading.WaitHandle.WaitAny*?displayProperty=nameWithType> methods to synchronize access to a protected resource.
 
- If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled, and the next waiting thread gets ownership. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex. Before version 2.0 of the .NET Framework, no exception was thrown.
+ If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled, and the next waiting thread gets ownership. An <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex.
 
 > [!CAUTION]
 >  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
@@ -92,7 +92,6 @@
 > By default, a named mutex is not restricted to the user that created it. Other users may be able to open and use the mutex, including interfering with the mutex by entering the mutex and not exiting it. On Unix-like operating systems, the file system is used in the implementation of named mutexes, and other users may be able to interfere with named mutexes in more significant ways. On Windows, to restrict access to specific users, you can use a constructor overload or <xref:System.Threading.MutexAcl> and pass in a <xref:System.Security.AccessControl.MutexSecurity> when creating the named mutex. On Unix-like operating systems, currently there is no way to restrict access to a named mutex. Avoid using named mutexes without access restrictions on systems that might have untrusted users running code.
 
 [!INCLUDE[backslash-mutex-note](~/includes/backslash-mutex.md)]
-
 
 ## Examples
  This example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. Because each calling thread is blocked until it acquires ownership of the mutex, it must call the <xref:System.Threading.Mutex.ReleaseMutex*> method to release ownership of the mutex.
@@ -335,8 +334,6 @@ There was some other error. The `HResult` property might provide more informatio
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
         <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
-        <exception cref="T:System.ArgumentException">
-          .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <related type="Article" href="/dotnet/standard/threading/managed-threading-basics">Managed Threading</related>
         <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
@@ -497,8 +494,6 @@ There was some other error. The `HResult` property might provide more informatio
         <exception cref="T:System.IO.DirectoryNotFoundException">Windows only: <paramref name="name" /> specified an unknown namespace. See <see href="https://learn.microsoft.com/windows/win32/sync/object-names">Object Names</see> for more information.</exception>
         <exception cref="T:System.IO.PathTooLongException">The <paramref name="name" /> is too long. Length restrictions might depend on the operating system or configuration.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name.</exception>
-        <exception cref="T:System.ArgumentException">
-          .NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
         <related type="Article" href="/dotnet/standard/threading/managed-threading-basics">Managed Threading</related>
         <related type="Article" href="/dotnet/standard/threading/mutexes">Mutexes</related>
       </Docs>
@@ -726,11 +721,7 @@ An object with the specified <paramref name="name" /> exists, but the specified 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is an empty string.
-
--or-
-
-.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+          <paramref name="name" /> is an empty string.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.Threading.WaitHandleCannotBeOpenedException">A synchronization object with the provided <paramref name="name" /> cannot be created. A synchronization object of a different type might have the same name. In some cases, this exception may be thrown for invalid names.</exception>
@@ -857,14 +848,12 @@ There was some other error. The `HResult` property might provide more informatio
 
  A thread that owns a mutex can specify the same mutex in repeated wait function calls without blocking its execution. The number of calls is kept by the common language runtime. The thread must call <xref:System.Threading.Mutex.ReleaseMutex*> the same number of times to release ownership of the mutex.
 
- If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled and the next waiting thread gets ownership. If no one owns the mutex, the state of the mutex is signaled. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex. Prior to version 2.0 of the .NET Framework, no exception was thrown.
+ If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled and the next waiting thread gets ownership. If no one owns the mutex, the state of the mutex is signaled. An <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex.
 
 > [!CAUTION]
 >  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
 
  In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).
-
-
 
 ## Examples
  The following example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially. The <xref:System.Threading.Mutex.ReleaseMutex*> method is used to release the mutex when it is no longer needed.
@@ -975,11 +964,7 @@ There was some other error. The `HResult` property might provide more informatio
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="name" /> is an empty string.
-
--or-
-
-.NET Framework only: <paramref name="name" /> is longer than MAX_PATH (260 characters).</exception>
+          <paramref name="name" /> is an empty string.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.IOException">

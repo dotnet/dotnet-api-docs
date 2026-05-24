@@ -253,9 +253,7 @@
       </Parameters>
       <Docs>
         <param name="start">A <see cref="T:System.Threading.ParameterizedThreadStart" /> delegate that represents the methods to be invoked when this thread begins executing.</param>
-        <param name="maxStackSize">The maximum stack size, in bytes, to be used by the thread, or 0 to use the default maximum stack size specified in the header for the executable.
-
- Important   For partially trusted code, <paramref name="maxStackSize" /> is ignored if it is greater than the default stack size. No exception is thrown.</param>
+        <param name="maxStackSize">The maximum stack size, in bytes, to be used by the thread, or 0 to use the default maximum stack size specified in the header for the executable.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Thread" /> class, specifying a delegate that allows an object to be passed to the thread when the thread is started and specifying the maximum stack size for the thread.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -263,26 +261,7 @@
 ## Remarks
  Avoid using this constructor overload. The default stack size used by the <xref:System.Threading.Thread.%23ctor(System.Threading.ParameterizedThreadStart)> constructor overload is the recommended stack size for threads. If a thread has memory problems, the most likely cause is programming error, such as infinite recursion.
 
-> [!IMPORTANT]
-> Beginning with the .NET Framework 4, only fully trusted code can set `maxStackSize` to a value that is greater than the default stack size (1 megabyte). If a larger value is specified for `maxStackSize` when code is running with partial trust, `maxStackSize` is ignored and the default stack size is used. No exception is thrown. Code at any trust level can set `maxStackSize` to a value that is less than the default stack size.
-
-> [!NOTE]
-> If you are developing a fully trusted library that will be used by partially trusted code, and you need to start a thread that requires a large stack, you must assert full trust before creating the thread, or the default stack size will be used. Do not do this unless you fully control the code that runs on the thread.
-
  If `maxStackSize` is less than the minimum stack size, the minimum stack size is used. If `maxStackSize` is not a multiple of the page size, it is rounded to the next larger multiple of the page size.
-
-> [!NOTE]
-> On versions of Microsoft Windows prior to Windows XP and Windows Server 2003, `maxStackSize` is ignored, and the stack size specified in the executable header is used.
-
- If you specify a very small stack size, you might need to disable stack-overflow probing. When the stack is severely constrained, the probing can itself cause a stack overflow. To disable stack overflow probing, add the following to your application configuration file in a .NET Framework app.
-
-```xml
-<configuration>
-  <runtime>
-    <disableStackOverflowProbing enabled="true"/>
-  </runtime>
-</configuration>
-```
 
  ]]></format>
         </remarks>
@@ -330,9 +309,7 @@
       </Parameters>
       <Docs>
         <param name="start">A <see cref="T:System.Threading.ThreadStart" /> delegate that represents the methods to be invoked when this thread begins executing.</param>
-        <param name="maxStackSize">The maximum stack size, in bytes, to be used by the thread, or 0 to use the default maximum stack size specified in the header for the executable.
-
- Important   For partially trusted code, <paramref name="maxStackSize" /> is ignored if it is greater than the default stack size. No exception is thrown.</param>
+        <param name="maxStackSize">The maximum stack size, in bytes, to be used by the thread, or 0 to use the default maximum stack size specified in the header for the executable.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Threading.Thread" /> class, specifying the maximum stack size for the thread.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
@@ -340,26 +317,7 @@
 ## Remarks
  Avoid using this constructor overload. The default stack size used by the <xref:System.Threading.Thread.%23ctor(System.Threading.ThreadStart)> constructor overload is the recommended stack size for threads. If a thread has memory problems, the most likely cause is programming error, such as infinite recursion.
 
-> [!IMPORTANT]
-> Beginning with the .NET Framework 4, only fully trusted code can set `maxStackSize` to a value that is greater than the default stack size (1 megabyte). If a larger value is specified for `maxStackSize` when code is running with partial trust, `maxStackSize` is ignored and the default stack size is used. No exception is thrown. Code at any trust level can set `maxStackSize` to a value that is less than the default stack size.
-
-> [!NOTE]
-> If you are developing a fully trusted library that will be used by partially trusted code, and you need to start a thread that requires a large stack, you must assert full trust before creating the thread, or the default stack size will be used. Do not do this unless you fully control the code that runs on the thread.
-
- If `maxStackSize` is less than the minimum stack size, the minimum stack size is used. If `maxStackSize` is not a multiple of the page size, it is rounded to the next larger multiple of the page size. For example, if you are using the .NET Framework version 2.0 on Windows Vista, 256KB (262,144 bytes) is the minimum stack size, and the page size is 64KB (65,536 bytes).
-
-> [!NOTE]
-> On versions of Microsoft Windows prior to Windows XP and Windows Server 2003, `maxStackSize` is ignored, and the stack size specified in the executable header is used.
-
- If you specify a very small stack size, you might need to disable stack-overflow probing. When the stack is severely constrained, the probing can itself cause a stack overflow. To disable stack overflow probing, add the following to your application configuration file in a .NET Framework app.
-
-```xml
-<configuration>
-  <runtime>
-    <disableStackOverflowProbing enabled="true"/>
-  </runtime>
-</configuration>
-```
+ If `maxStackSize` is less than the minimum stack size, the minimum stack size is used. If `maxStackSize` is not a multiple of the page size, it is rounded to the next larger multiple of the page size.
 
  ]]></format>
         </remarks>
@@ -434,44 +392,8 @@
       <Parameters />
       <Docs>
         <summary>Raises a <see cref="T:System.Threading.ThreadAbortException" /> in the thread on which it is invoked, to begin the process of terminating the thread. Calling this method usually terminates the thread.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-This method is obsolete. On .NET 5 and later versions, calling this method produces a compile-time warning. This method throws a <xref:System.PlatformNotSupportedException> at run time on .NET 5 and later and .NET Core.
-
- When this method is invoked on a thread, the system throws a <xref:System.Threading.ThreadAbortException> in the thread to abort it. `ThreadAbortException` is a special exception that can be caught by application code, but is re-thrown at the end of the `catch` block unless <xref:System.Threading.Thread.ResetAbort*> is called. `ResetAbort` cancels the request to abort, and prevents the `ThreadAbortException` from terminating the thread. Unexecuted `finally` blocks are executed before the thread is aborted.
-
-> [!NOTE]
-> When a thread calls `Abort` on itself, the effect is similar to throwing an exception; the <xref:System.Threading.ThreadAbortException> happens immediately, and the result is predictable. However, if one thread calls `Abort` on another thread, the abort interrupts whatever code is running. There is also a chance that a static constructor could be aborted. In rare cases, this might prevent instances of that class from being created in that application domain.
-
- The thread is not guaranteed to abort immediately, or at all. This situation can occur if a thread does an unbounded amount of computation in the `finally` blocks that are called as part of the abort procedure, thereby indefinitely delaying the abort. To wait until a thread has aborted, you can call the <xref:System.Threading.Thread.Join*> method on the thread after calling the <xref:System.Threading.Thread.Abort*> method, but there is no guarantee the wait will end.
-
-> [!NOTE]
-> The thread that calls <xref:System.Threading.Thread.Abort*> might block if the thread that is being aborted is in a protected region of code, such as a `catch` block, `finally` block, or constrained execution region. If the thread that calls <xref:System.Threading.Thread.Abort*> holds a lock that the aborted thread requires, a deadlock can occur.
-
- If `Abort` is called on a thread that has not been started, the thread will abort when <xref:System.Threading.Thread.Start*> is called. If `Abort` is called on a thread that is blocked or is sleeping, the thread is interrupted and then aborted.
-
- If `Abort` is called on a thread that has been suspended, a <xref:System.Threading.ThreadStateException> is thrown in the thread that called <xref:System.Threading.Thread.Abort*>, and <xref:System.Threading.ThreadState.AbortRequested> is added to the <xref:System.Threading.Thread.ThreadState> property of the thread being aborted. A <xref:System.Threading.ThreadAbortException> is not thrown in the suspended thread until <xref:System.Threading.Thread.Resume*> is called.
-
- If `Abort` is called on a managed thread while it is executing unmanaged code, a `ThreadAbortException` is not thrown until the thread returns to managed code.
-
- If two calls to `Abort` come at the same time, it is possible for one call to set the state information and the other call to execute the `Abort`. However, an application cannot detect this situation.
-
- After `Abort` is invoked on a thread, the state of the thread includes <xref:System.Threading.ThreadState.AbortRequested>. After the thread has terminated as a result of a successful call to `Abort`, the state of the thread is changed to <xref:System.Threading.ThreadState.Stopped>. With sufficient permissions, a thread that is the target of an `Abort` can cancel the abort using the `ResetAbort` method. For an example that demonstrates calling the `ResetAbort` method, see the `ThreadAbortException` class.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <exception cref="T:System.Threading.ThreadStateException">The thread that is being aborted is currently suspended.</exception>
-        <altmember cref="T:System.Threading.ThreadAbortException" />
-        <altmember cref="F:System.Threading.ThreadState.Aborted" />
-        <altmember cref="F:System.Threading.ThreadState.AbortRequested" />
-        <related type="Article" href="/dotnet/standard/threading/threads-and-threading">Threads and Threading</related>
-        <related type="Article" href="/dotnet/standard/threading/using-threads-and-threading">Using threads and threading</related>
-        <related type="Article" href="/dotnet/standard/threading/destroying-threads">Destroying threads</related>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="Abort">
@@ -523,51 +445,8 @@ This method is obsolete. On .NET 5 and later versions, calling this method produ
       <Docs>
         <param name="stateInfo">An object that contains application-specific information, such as state, which can be used by the thread being aborted.</param>
         <summary>Raises a <see cref="T:System.Threading.ThreadAbortException" /> in the thread on which it is invoked, to begin the process of terminating the thread while also providing exception information about the thread termination. Calling this method usually terminates the thread.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-This method is obsolete. On .NET 5 and later versions, calling this method produces a compile-time warning. This method throws a <xref:System.PlatformNotSupportedException> at run time on .NET 5 and later and .NET Core.
-
- When this method is invoked on a thread, the system throws a <xref:System.Threading.ThreadAbortException> in the thread to abort it. `ThreadAbortException` is a special exception that can be caught by application code, but is re-thrown at the end of the `catch` block unless <xref:System.Threading.Thread.ResetAbort*> is called. `ResetAbort` cancels the request to abort, and prevents the `ThreadAbortException` from terminating the thread. Unexecuted `finally` blocks are executed before the thread is aborted.
-
-> [!NOTE]
-> When a thread calls `Abort` on itself, the effect is similar to throwing an exception; the <xref:System.Threading.ThreadAbortException> happens immediately, and the result is predictable. However, if one thread calls `Abort` on another thread, the abort interrupts whatever code is running. There is a chance that a static constructor could be aborted. In rare cases, this might prevent instances of that class from being created in that application domain.
-
- The thread is not guaranteed to abort immediately, or at all. This situation can occur if a thread does an unbounded amount of computation in the `finally` blocks that are called as part of the abort procedure, thereby indefinitely delaying the abort. To wait until a thread has aborted, you can call the <xref:System.Threading.Thread.Join*> method on the thread after calling the <xref:System.Threading.Thread.Abort*> method, but there is no guarantee that the wait will end.
-
-> [!NOTE]
-> The thread that calls <xref:System.Threading.Thread.Abort*> might block if the thread that is being aborted is in a protected region of code, such as a `catch` block, `finally` block, or constrained execution region. If the thread that calls <xref:System.Threading.Thread.Abort*> holds a lock that the aborted thread requires, a deadlock can occur.
-
- If `Abort` is called on a thread that has not been started, the thread will abort when <xref:System.Threading.Thread.Start*> is called. If `Abort` is called on a thread that is blocked or is sleeping, the thread is interrupted and then aborted.
-
- If `Abort` is called on a thread that has been suspended, a <xref:System.Threading.ThreadStateException> is thrown in the thread that called <xref:System.Threading.Thread.Abort*>, and <xref:System.Threading.ThreadState.AbortRequested> is added to the <xref:System.Threading.Thread.ThreadState> property of the thread being aborted. A <xref:System.Threading.ThreadAbortException> is not thrown in the suspended thread until <xref:System.Threading.Thread.Resume*> is called.
-
- If `Abort` is called on a managed thread while it is executing unmanaged code, a `ThreadAbortException` is not thrown until the thread returns to managed code.
-
- If two calls to `Abort` come at the same time, it is possible for one call to set the state information and the other call to execute the `Abort`. However, an application cannot detect this situation.
-
- After `Abort` is invoked on a thread, the state of the thread includes <xref:System.Threading.ThreadState.AbortRequested>. After the thread has terminated as a result of a successful call to `Abort`, the state of the thread is changed to <xref:System.Threading.ThreadState.Stopped>. With sufficient permissions, a thread that is the target of an `Abort` can cancel the abort using the `ResetAbort` method. For an example that demonstrates calling the `ResetAbort` method, see the `ThreadAbortException` class.
-
-## Examples
- The following code example shows how to pass information to a thread that is being aborted.
-
- :::code language="csharp" source="~/snippets/csharp/System.Threading/Thread/Abort/source.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System.Threading/Thread/Abort/source.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Threading/Thread/Abort/source.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <exception cref="T:System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <exception cref="T:System.Threading.ThreadStateException">The thread that is being aborted is currently suspended.</exception>
-        <altmember cref="T:System.Threading.ThreadAbortException" />
-        <altmember cref="F:System.Threading.ThreadState.Aborted" />
-        <altmember cref="F:System.Threading.ThreadState.AbortRequested" />
-        <related type="Article" href="/dotnet/standard/threading/threads-and-threading">Threads and Threading</related>
-        <related type="Article" href="/dotnet/standard/threading/using-threads-and-threading">Using threads and threading</related>
-        <related type="Article" href="/dotnet/standard/threading/destroying-threads">Destroying threads</related>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="AllocateDataSlot">
@@ -616,7 +495,7 @@ This method is obsolete. On .NET 5 and later versions, calling this method produ
 ## Remarks
 
 > [!IMPORTANT]
-> The .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  The slot is allocated on all threads.
 
@@ -696,7 +575,7 @@ This method is obsolete. On .NET 5 and later versions, calling this method produ
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread expires. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -840,12 +719,12 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Notifies a host that execution is about to enter a region of code in which the effects of a thread abort or unhandled exception might jeopardize other tasks in the application domain.</summary>
+        <summary>Notifies a host that execution is about to enter a region of code in which the effects of a thread abort or unhandled exception might jeopardize other tasks.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Hosts of the common language runtime (CLR), such as Microsoft SQL Server 2005, can establish different policies for failures in critical and non-critical regions of code. A critical region is one in which the effects of a thread abort or an unhandled exception might not be limited to the current task. By contrast, an abort or failure in a non-critical region of code affects only the task in which the error occurs.
+ Hosts of the common language runtime (CLR), such as SQL Server, can establish different policies for failures in critical and non-critical regions of code. A critical region is one in which the effects of a thread abort or an unhandled exception might not be limited to the current task. By contrast, an abort or failure in a non-critical region of code affects only the task in which the error occurs.
 
  For example, consider a task that attempts to allocate memory while holding a lock. If the memory allocation fails, aborting the current task is not sufficient to ensure stability of the <xref:System.AppDomain>, because there can be other tasks in the domain waiting for the same lock. If the current task is terminated, other tasks could be deadlocked.
 
@@ -969,13 +848,12 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Globalization.CultureInfo> object that is returned by this property, together with its associated objects, determine the default format for dates, times, numbers, currency values, the sorting order of text, casing conventions, and string comparisons. See the <xref:System.Globalization.CultureInfo> class to learn about culture names and identifiers, the differences between invariant, neutral, and specific cultures, and the way culture information affects threads and application domains. See the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property to learn how a thread's default culture is determined, and how users set culture information for their computers.
+ The <xref:System.Globalization.CultureInfo> object that is returned by this property, together with its associated objects, determine the default format for dates, times, numbers, currency values, the sorting order of text, casing conventions, and string comparisons. See the <xref:System.Globalization.CultureInfo> class to learn about culture names and identifiers, the differences between invariant, neutral, and specific cultures, and the way culture information affects threads. See the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property to learn how a thread's default culture is determined, and how users set culture information for their computers.
 
 > [!IMPORTANT]
-> The <xref:System.Threading.Thread.CurrentCulture> property doesn't work reliably when used with any thread other than the current thread. In .NET Framework, reading the property is reliable, although setting it for a thread other than the current thread is not. On .NET Core, an <xref:System.InvalidOperationException> is thrown if a thread attempts to read or write the <xref:System.Threading.Thread.CurrentCulture> property on a different thread.
-> We recommend that you use the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property to retrieve and set the current culture.
+> The <xref:System.Threading.Thread.CurrentCulture> property doesn't work reliably when used with any thread other than the current thread. An <xref:System.InvalidOperationException> is thrown if a thread attempts to read or write the <xref:System.Threading.Thread.CurrentCulture> property on a different thread. We recommend that you use the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property to retrieve and set the current culture.
 
- Beginning with the .NET Framework 4, you can set the <xref:System.Threading.Thread.CurrentCulture> property to a neutral culture. This is because the behavior of the <xref:System.Globalization.CultureInfo> class has changed: When it represents a neutral culture, its property values (in particular, the <xref:System.Globalization.CultureInfo.Calendar*>, <xref:System.Globalization.CultureInfo.CompareInfo*>, <xref:System.Globalization.CultureInfo.DateTimeFormat*>, <xref:System.Globalization.CultureInfo.NumberFormat*>, and <xref:System.Globalization.CultureInfo.TextInfo*> properties) now reflect the specific culture that is associated with the neutral culture. In earlier versions of the .NET Framework, the <xref:System.Threading.Thread.CurrentCulture> property threw a <xref:System.NotSupportedException> exception when a neutral culture was assigned.
+You can set the <xref:System.Threading.Thread.CurrentCulture> property to a neutral culture. When the <xref:System.Globalization.CultureInfo> class represents a neutral culture, its property values (in particular, the <xref:System.Globalization.CultureInfo.Calendar*>, <xref:System.Globalization.CultureInfo.CompareInfo*>, <xref:System.Globalization.CultureInfo.DateTimeFormat*>, <xref:System.Globalization.CultureInfo.NumberFormat*>, and <xref:System.Globalization.CultureInfo.TextInfo*> properties) reflect the specific culture that's associated with the neutral culture.
 
 ## Examples
  The following example shows the threading statement that allows the user interface of a Windows Forms application to display in the culture that is set in Control Panel. Additional code is needed.
@@ -987,7 +865,7 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The property is set to <see langword="null" />.</exception>
-        <exception cref="T:System.InvalidOperationException">.NET Core and .NET 5+ only: Reading or writing the culture of a thread from another thread is not supported.</exception>
+        <exception cref="T:System.InvalidOperationException">Reading or writing the culture of a thread from another thread is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="CurrentPrincipal">
@@ -1152,10 +1030,10 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The UI culture specifies the resources an application needs to support user input and output, and by default is the same as the operating system culture. See the <xref:System.Globalization.CultureInfo> class to learn about culture names and identifiers, the differences between invariant, neutral, and specific cultures, and the way culture information affects threads and application domains. See the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property to learn how a thread's default UI culture is determined.
+ The UI culture specifies the resources an application needs to support user input and output, and by default is the same as the operating system culture. See the <xref:System.Globalization.CultureInfo> class to learn about culture names and identifiers, the differences between invariant, neutral, and specific cultures, and the way culture information affects threads. See the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property to learn how a thread's default UI culture is determined.
 
 > [!IMPORTANT]
-> The <xref:System.Threading.Thread.CurrentUICulture> property doesn't work reliably when used with any thread other than the current thread. In .NET Framework, reading the property is reliable, although setting it for a thread other than the current thread is not. On .NET Core, an <xref:System.InvalidOperationException> is thrown if a thread attempts to read or write the <xref:System.Threading.Thread.CurrentUICulture> property on a different thread.
+> The <xref:System.Threading.Thread.CurrentUICulture> property doesn't work reliably when used with any thread other than the current thread. An <xref:System.InvalidOperationException> is thrown if a thread attempts to read or write the <xref:System.Threading.Thread.CurrentUICulture> property on a different thread.
 > We recommend that you use the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property to retrieve and set the current culture.
 
  The <xref:System.Globalization.CultureInfo> returned by this property can be a neutral culture. Neutral cultures should not be used with formatting methods such as <xref:System.String.Format(System.IFormatProvider,System.String,System.Object[])?displayProperty=nameWithType>, <xref:System.DateTime.ToString(System.String,System.IFormatProvider)?displayProperty=nameWithType>, and <xref:System.Convert.ToString(System.Char,System.IFormatProvider)?displayProperty=nameWithType>. Use the <xref:System.Globalization.CultureInfo.CreateSpecificCulture*?displayProperty=nameWithType> method to get a specific culture, or use the <xref:System.Threading.Thread.CurrentCulture> property.
@@ -1177,7 +1055,7 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
         </remarks>
         <exception cref="T:System.ArgumentNullException">The property is set to <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The property is set to a culture name that cannot be used to locate a resource file. Resource filenames must include only letters, numbers, hyphens or underscores.</exception>
-        <exception cref="T:System.InvalidOperationException">.NET Core and .NET 5+ only: Reading or writing the culture of a thread from another thread is not supported.</exception>
+        <exception cref="T:System.InvalidOperationException">Reading or writing the culture of a thread from another thread is not supported.</exception>
       </Docs>
     </Member>
     <Member MemberName="DisableComObjectEagerCleanup">
@@ -1508,7 +1386,7 @@ You can specify the COM threading model for a C++ application using the [/CLRTHR
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  After any thread calls `FreeNamedDataSlot`, any other thread that calls <xref:System.Threading.Thread.GetNamedDataSlot*> with the same name will allocate a new slot associated with the name. Subsequent calls to `GetNamedDataSlot` by any thread will return the new slot. However, any thread that still has a <xref:System.LocalDataStoreSlot?displayProperty=nameWithType> returned by an earlier call to `GetNamedDataSlot` can continue to use the old slot.
 
@@ -1763,7 +1641,7 @@ The value is not guaranteed to be a zero-based processor number.
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread expires. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -1836,18 +1714,7 @@ The value is not guaranteed to be a zero-based processor number.
       <Docs>
         <summary>Returns the current domain in which the current thread is running.</summary>
         <returns>An <see cref="T:System.AppDomain" /> representing the current application domain of the running thread.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Examples
- The following code example shows how to retrieve the name and ID of the `AppDomain` in which the thread is running.
-
- :::code language="csharp" source="~/snippets/csharp/System.Threading/Thread/GetDomain/source.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System.Threading/Thread/GetDomain/source.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Threading/Thread/GetDomain/source.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetDomainID">
@@ -1890,18 +1757,7 @@ The value is not guaranteed to be a zero-based processor number.
       <Docs>
         <summary>Returns a unique application domain identifier.</summary>
         <returns>A 32-bit signed integer uniquely identifying the application domain.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Examples
- The following code example shows how to retrieve the name and ID of the `AppDomain` in which the thread is running.
-
- :::code language="csharp" source="~/snippets/csharp/System.Threading/Thread/GetDomain/source.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System.Threading/Thread/GetDomain/source.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Threading/Thread/GetDomain/source.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetHashCode">
@@ -2002,7 +1858,7 @@ The value is not guaranteed to be a zero-based processor number.
 ## Remarks
 
 > [!IMPORTANT]
-> .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread expires. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -2643,13 +2499,10 @@ The value is not guaranteed to be a zero-based processor number.
 
 ## Remarks
 
-In .NET Framework, this property is write-once, and because the default value of a thread's <xref:System.Threading.Thread.Name> property is `null`, you can determine whether a name has already been explicitly assigned to the thread by comparing it with `null`.
-
 The string assigned to the <xref:System.Threading.Thread.Name> property can include any Unicode character.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">.NET Framework only: A set operation was requested, but the <see langword="Name" /> property has already been set.</exception>
       </Docs>
     </Member>
     <Member MemberName="Priority">
@@ -2769,24 +2622,8 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
       <Parameters />
       <Docs>
         <summary>Cancels an <see cref="M:System.Threading.Thread.Abort(System.Object)" /> requested for the current thread.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This method can only be called by code with the proper permissions.
-
- When a call is made to `Abort` to terminate a thread, the system throws a <xref:System.Threading.ThreadAbortException>. `ThreadAbortException` is a special exception that can be caught by application code, but is rethrown at the end of the catch block unless `ResetAbort` is called. `ResetAbort` cancels the request to abort, and prevents the `ThreadAbortException` from terminating the thread.
-
- See <xref:System.Threading.ThreadAbortException> for an example that demonstrates calling the `ResetAbort` method.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <exception cref="T:System.Threading.ThreadStateException">
-          <see langword="Abort" /> was not invoked on the current thread.</exception>
-        <exception cref="T:System.Security.SecurityException">The caller does not have the required security permission for the current thread.</exception>
-        <related type="Article" href="/dotnet/standard/threading/destroying-threads">Destroying threads</related>
-        <altmember cref="T:System.Threading.ThreadState" />
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="Resume">
@@ -2842,21 +2679,8 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
       <Parameters />
       <Docs>
         <summary>Resumes a thread that has been suspended.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-> [!CAUTION]
-> Do not use the <xref:System.Threading.Thread.Suspend*> and <xref:System.Threading.Thread.Resume*> methods to synchronize the activities of threads. You have no way of knowing what code a thread is executing when you suspend it. If you suspend a thread while it holds locks during a security permission evaluation, other threads in the <xref:System.AppDomain> might be blocked. If you suspend a thread while it is executing a class constructor, other threads in the <xref:System.AppDomain> that attempt to use that class are blocked. Deadlocks can occur very easily.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <exception cref="T:System.Threading.ThreadStateException">The thread has not been started, is dead, or is not in the suspended state.</exception>
-        <exception cref="T:System.Security.SecurityException">The caller does not have the appropriate <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
-        <related type="Article" href="/dotnet/standard/threading/pausing-and-resuming-threads">Pausing and interrupting threads</related>
-        <altmember cref="T:System.Threading.ThreadState" />
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="SetApartmentState">
@@ -2928,7 +2752,7 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases on macOS and Linux.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">On macOS and Linux: In all cases.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="state" /> is not a valid apartment state.</exception>
         <exception cref="T:System.Threading.ThreadStateException">The thread has already been started.</exception>
@@ -3059,7 +2883,7 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
 ## Remarks
 
 > [!IMPORTANT]
-> The .NET Framework provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
+> .NET provides two mechanisms for using thread local storage (TLS): thread-relative static fields (that is, fields that are marked with the <xref:System.ThreadStaticAttribute> attribute) and data slots. Thread-relative static fields provide much better performance than data slots, and enable compile-time type checking. For more information about using TLS, see [Thread Local Storage: Thread-Relative Static Fields and Data Slots](/dotnet/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots).
 
  Threads use a local store memory mechanism to store thread-specific data. The common language runtime allocates a multi-slot data store array to each process when it is created. The thread can allocate a data slot in the data store, store and retrieve a data value in the slot, and free the slot for reuse after the thread procedure ends and the <xref:System.Threading.Thread> object has been reclaimed by garbage collection. Data slots are unique per thread. No other thread (not even a child thread) can get that data.
 
@@ -3288,11 +3112,11 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Threading.Thread.SpinWait*> method is useful for implementing locks. Classes in the .NET Framework, such as <xref:System.Threading.Monitor> and <xref:System.Threading.ReaderWriterLock>, use this method internally. <xref:System.Threading.Thread.SpinWait*> essentially puts the processor into a very tight loop, with the loop count specified by the `iterations` parameter. The duration of the wait therefore depends on the speed of the processor.
+ The <xref:System.Threading.Thread.SpinWait*> method is useful for implementing locks. Classes such as <xref:System.Threading.Monitor> and <xref:System.Threading.ReaderWriterLock> use this method internally. <xref:System.Threading.Thread.SpinWait*> essentially puts the processor into a very tight loop, with the loop count specified by the `iterations` parameter. The duration of the wait therefore depends on the speed of the processor.
 
  Contrast this with the <xref:System.Threading.Thread.Sleep*> method. A thread that calls <xref:System.Threading.Thread.Sleep*> yields the rest of its current slice of processor time, even if the specified interval is zero. Specifying a non-zero interval for <xref:System.Threading.Thread.Sleep*> removes the thread from consideration by the thread scheduler until the time interval has elapsed.
 
- <xref:System.Threading.Thread.SpinWait*> is not generally useful for ordinary applications. In most cases, you should use the synchronization classes provided by the .NET Framework; for example, call <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> or a statement that wraps <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> (`lock` in C# or `SyncLock` in Visual Basic).
+ <xref:System.Threading.Thread.SpinWait*> is not generally useful for ordinary applications. In most cases, you should use the synchronization classes provided by .NET; for example, call <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> or a statement that wraps <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> (`lock` in C# or `SyncLock` in Visual Basic).
 
 > [!CAUTION]
 > In the rare case where it is advantageous to avoid a context switch, such as when you know that a state change is imminent, make a call to the <xref:System.Threading.Thread.SpinWait*> method in your loop. The code <xref:System.Threading.Thread.SpinWait*> executes is designed to prevent problems that can occur on computers with multiple processors. For example, on computers with multiple Intel processors employing Hyper-Threading technology, <xref:System.Threading.Thread.SpinWait*> prevents processor starvation in certain situations.
@@ -3512,24 +3336,8 @@ The string assigned to the <xref:System.Threading.Thread.Name> property can incl
       <Parameters />
       <Docs>
         <summary>Either suspends the thread, or if the thread is already suspended, has no effect.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- If the thread is already suspended, this method has no effect.
-
-> [!CAUTION]
-> Do not use the <xref:System.Threading.Thread.Suspend*> and <xref:System.Threading.Thread.Resume*> methods to synchronize the activities of threads. You have no way of knowing what code a thread is executing when you suspend it. If you suspend a thread while it holds locks during a security permission evaluation, other threads in the <xref:System.AppDomain> might be blocked. If you suspend a thread while it is executing a class constructor, other threads in the <xref:System.AppDomain> that attempt to use that class are blocked. Deadlocks can occur very easily.
-
-When you call the `Suspend` method on a thread, the system notes that a thread suspension has been requested and allows the thread to execute until it reaches a safe point before actually suspending the thread. A safe point for a thread is a point in its execution at which garbage collection can be performed. Once a safe point is reached, the runtime guarantees that the suspended thread will not make any further progress in managed code. A thread executing outside managed code is always safe for garbage collection, and its execution continues until it attempts to resume execution of managed code.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <exception cref="T:System.Threading.ThreadStateException">The thread has not been started or is dead.</exception>
-        <exception cref="T:System.Security.SecurityException">The caller does not have the appropriate <see cref="T:System.Security.Permissions.SecurityPermission" />.</exception>
-        <related type="Article" href="/dotnet/standard/threading/pausing-and-resuming-threads">Pausing and interrupting threads</related>
-        <altmember cref="T:System.Threading.ThreadState" />
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="ThreadState">
@@ -3657,7 +3465,7 @@ When you call the `Suspend` method on a thread, the system notes that a thread s
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases on macOS and Linux.</exception>
+        <exception cref="T:System.PlatformNotSupportedException">On macOS and Linux: In all cases.</exception>
         <exception cref="T:System.ArgumentException">
           <paramref name="state" /> is not a valid apartment state.</exception>
         <exception cref="T:System.Threading.ThreadStateException">The thread was started and has terminated, or the call is not being made from the thread's context while the thread is running.</exception>
