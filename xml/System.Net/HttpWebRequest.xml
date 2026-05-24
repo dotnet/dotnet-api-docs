@@ -68,124 +68,22 @@
 
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest> class provides support for the properties and methods defined in <xref:System.Net.WebRequest> and for additional properties and methods that enable the user to interact directly with servers using HTTP.
-
- Do not use the <xref:System.Net.HttpWebRequest.%23ctor*> constructor. Use the <xref:System.Net.WebRequest.Create*?displayProperty=nameWithType> method to initialize new <xref:System.Net.HttpWebRequest> objects. If the scheme for the Uniform Resource Identifier (URI) is `http://` or `https://`, <xref:System.Net.WebRequest.Create*> returns an <xref:System.Net.HttpWebRequest> object.
-
- The <xref:System.Net.HttpWebRequest.GetResponse*> method makes a synchronous request to the resource specified in the <xref:System.Net.HttpWebRequest.RequestUri> property and returns an <xref:System.Net.HttpWebResponse> that contains the response object. The response data can be received by using the stream returned by <xref:System.Net.HttpWebResponse.GetResponseStream*>. If the response object or the response stream is closed, remaining data will be forfeited. The remaining data will be drained and the socket will be re-used for subsequent requests when closing the response object or stream if the following conditions hold: it's a keep-alive or pipelined request, only a small amount of data needs to be received, or the remaining data is received in a small time interval. If none of the mentioned conditions hold or the drain time is exceeded, the socket will be closed. For keep-alive or pipelined connections, we strongly recommend that the application reads the streams until EOF. This ensures that the socket will be re-used for subsequent requests resulting in better performance and less resources used.
-
- When you want to send data to the resource, the <xref:System.Net.HttpWebRequest.GetRequestStream*> method returns a <xref:System.IO.Stream> object to use to send data. The <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> and <xref:System.Net.HttpWebRequest.EndGetRequestStream*> methods provide asynchronous access to the send data stream.
-
- For client authentication with <xref:System.Net.HttpWebRequest>, the client certificate must be installed in the My certificate store of the current user.
-
- The <xref:System.Net.HttpWebRequest> class throws a <xref:System.Net.WebException> when errors occur while accessing a resource. The <xref:System.Net.WebException.Status?displayProperty=nameWithType> property contains a <xref:System.Net.WebExceptionStatus> value that indicates the source of the error. When <xref:System.Net.WebException.Status*?displayProperty=nameWithType> is <xref:System.Net.WebExceptionStatus.ProtocolError?displayProperty=nameWithType>, the <xref:System.Net.WebException.Response> property contains the <xref:System.Net.HttpWebResponse> received from the resource.
-
- <xref:System.Net.HttpWebRequest> exposes common HTTP header values sent to the Internet resource as properties, set by methods, or set by the system; the following table contains a complete list. You can set other headers in the <xref:System.Net.HttpWebRequest.Headers> property as name/value pairs. Note that servers and caches may change or add headers during the request.
-
- The following table lists the HTTP headers that are set either by properties or methods or the system.
-
-|Header|Set by|
-|------------|------------|
-|`Accept`|Set by the <xref:System.Net.HttpWebRequest.Accept> property.|
-|`Connection`|Set by the <xref:System.Net.HttpWebRequest.Connection> property, <xref:System.Net.HttpWebRequest.KeepAlive> property.|
-|`Content-Length`|Set by the <xref:System.Net.HttpWebRequest.ContentLength> property.|
-|`Content-Type`|Set by the <xref:System.Net.HttpWebRequest.ContentType> property.|
-|`Expect`|Set by the <xref:System.Net.HttpWebRequest.Expect> property.|
-|`Date`|Set by the system to current date.|
-|`Host`|Set by the system to current host information.|
-|`If-Modified-Since`|Set by the <xref:System.Net.HttpWebRequest.IfModifiedSince> property.|
-|`Range`|Set by the <xref:System.Net.HttpWebRequest.AddRange*> method.|
-|`Referer`|Set by the <xref:System.Net.HttpWebRequest.Referer> property.|
-|`Transfer-Encoding`|Set by the <xref:System.Net.HttpWebRequest.TransferEncoding> property (the <xref:System.Net.HttpWebRequest.SendChunked> property must be `true`).|
-|`User-Agent`|Set by the <xref:System.Net.HttpWebRequest.UserAgent> property.|
-
-> [!NOTE]
->  <xref:System.Net.HttpWebRequest> is registered automatically. You do not need to call the <xref:System.Net.WebRequest.RegisterPrefix*> method to register <xref:System.Net.HttpWebRequest?displayProperty=nameWithType> before using URIs beginning with `http://` or `https://`.
-
- The local computer or application config file may specify that a default proxy be used. If the <xref:System.Net.HttpWebRequest.Proxy> property is specified, then the proxy settings from the <xref:System.Net.HttpWebRequest.Proxy> property override the local computer or application config file and the <xref:System.Net.HttpWebRequest> instance will use the proxy settings specified. If no proxy is specified in a config file and the <xref:System.Net.HttpWebRequest.Proxy> property is unspecified, the <xref:System.Net.HttpWebRequest> class uses the proxy settings inherited from Internet options on the local computer. If there are no proxy settings in Internet options, the request is sent directly to the server.
-
-> [!NOTE]
-> The Framework caches SSL sessions as they are created and attempts to reuse a cached session for a new request, if possible. When attempting to reuse an SSL session, the Framework uses the first element of <xref:System.Net.HttpWebRequest.ClientCertificates*> (if there is one), or tries to reuse an anonymous sessions if <xref:System.Net.HttpWebRequest.ClientCertificates*> is empty.
-
-> [!NOTE]
-> For security reasons, cookies are disabled by default. If you want to use cookies, use the <xref:System.Net.HttpWebRequest.CookieContainer> property to enable cookies.
-
-For apps that use TLS/SSL through APIs such as HttpClient, HttpWebRequest, FTPClient, SmtpClient, and SsStream, .NET blocks insecure cipher and hashing algorithms for connections by default. You might need to opt out of this behavior to maintain interoperability with existing SSL3 services OR TLS w/ RC4 services. [Cannot connect to a server by using the ServicePointManager or SslStream APIs after upgrade to the .NET Framework 4.6](https://support.microsoft.com/kb/3069494) explains how to modify your code to disable this behavior, if necessary.
-
-## Examples
- The following code example creates an <xref:System.Net.HttpWebRequest> for the URI `http://www.contoso.com/`.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Overview/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Overview/source.vb" id="Snippet1":::
-
  ]]></format>
     </remarks>
-    <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
-    <related type="Article" href="/dotnet/framework/network-programming/changes-to-ntlm-authentication-for-httpwebrequest-in-version-3-5-sp1">Changes to NTLM authentication for HTTPWebRequest in Version 3.5 SP1</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
-      <AssemblyInfo>
-        <AssemblyName>System</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
-        <summary>Initializes a new instance of the <see cref="T:System.Net.HttpWebRequest" /> class. These constructors are obsolete; see the Remarks section for details. </summary>
+        <summary>Initializes a new instance of the <see cref="T:System.Net.HttpWebRequest" /> class. These constructors are obsolete.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
-Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not be used. Call the <xref:System.Net.WebRequest.CreateHttp*?displayProperty=nameWithType> method to initialize new <xref:System.Net.HttpWebRequest> objects.
-
-      ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </MemberGroup>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public HttpWebRequest ();" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-      <MemberSignature Language="DocId" Value="M:System.Net.HttpWebRequest.#ctor" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New ()" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; HttpWebRequest();" FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
-      <MemberType>Constructor</MemberType>
-      <AssemblyInfo>
-        <AssemblyName>System</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Net.Requests</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>netstandard</AssemblyName>
-      </AssemblyInfo>
-      <AssemblyInfo>
-        <AssemblyName>System.Net</AssemblyName>
-      </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
-          <AttributeName>System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8">
-          <AttributeName>System.Obsolete("This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.", true)</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
-          <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
-          <AttributeName Language="C#">[System.Obsolete("This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.", true)]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Obsolete("This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.", true)&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
-      <Parameters />
-      <Docs>
-        <summary>Initializes a new instance of the <see cref="T:System.Net.HttpWebRequest" /> class. This constructor is obsolete. </summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected HttpWebRequest (System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext);" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(class System.Runtime.Serialization.SerializationInfo serializationInfo, valuetype System.Runtime.Serialization.StreamingContext streamingContext) cil managed" />
@@ -249,16 +147,7 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <param name="serializationInfo">A <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object that contains the information required to serialize the new <see cref="T:System.Net.HttpWebRequest" /> object.</param>
         <param name="streamingContext">A <see cref="T:System.Runtime.Serialization.StreamingContext" /> object that contains the source and destination of the serialized stream associated with the new <see cref="T:System.Net.HttpWebRequest" /> object.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Net.HttpWebRequest" /> class from the specified instances of the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> and <see cref="T:System.Runtime.Serialization.StreamingContext" /> classes. This constructor is obsolete. </summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
- An application must run in full trust mode when using serialization.
-
- ]]></format>
-        </remarks>
-        <related type="Article" href="/dotnet/standard/serialization/xml-and-soap-serialization">XML and SOAP Serialization</related>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Abort">
@@ -304,25 +193,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Abort*> method cancels a request to a resource. After a request is canceled, calling the <xref:System.Net.HttpWebRequest.GetResponse*>, <xref:System.Net.HttpWebRequest.BeginGetResponse*>, <xref:System.Net.HttpWebRequest.EndGetResponse*>, <xref:System.Net.HttpWebRequest.GetRequestStream*>, <xref:System.Net.HttpWebRequest.BeginGetRequestStream*>, or <xref:System.Net.HttpWebRequest.EndGetRequestStream*> method causes a <xref:System.Net.WebException> with the <xref:System.Net.WebException.Status> property set to <xref:System.Net.WebExceptionStatus.RequestCanceled>.
-
- The <xref:System.Net.HttpWebRequest.Abort*> method will synchronously execute the callback specified to the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> or <xref:System.Net.HttpWebRequest.BeginGetResponse*> methods if the <xref:System.Net.HttpWebRequest.Abort*> method is called while either of these operations are outstanding. This can lead to potential deadlock issues.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing](/dotnet/framework/network-programming/network-tracing).
-
-
-
-## Examples
- In the case of asynchronous requests, it is the responsibility of the client application to implement its own time-out mechanism. The following code example shows how to do this.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Abort/begingetresponse.cs" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -370,24 +243,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- To clear the `Accept` HTTP header, set the <xref:System.Net.HttpWebRequest.Accept> property to `null`.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.Accept> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Accept/httpwebrequest_accept.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Accept/httpwebrequest_accept.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -402,16 +260,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </MemberGroup>
@@ -460,43 +311,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a byte range header to the request.
-
- If `range` is positive, the `range` parameter specifies the starting point of the range. The server should start sending data from the `range` parameter specified to the end of the data in the HTTP entity.
-
- If `range` is negative, the `range` parameter specifies the ending point of the range. The server should start sending data from the start of the data in the HTTP entity to the `range` parameter specified.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- An example of a Range header in an HTTP protocol request that requests the server send the first 100 bytes (from the start to byte position 99) would be the following:
-
- `Range: bytes=0-99\r\n\r\n`
-
- For this example, the `range` parameter would be -99.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
-## Examples
- The following code example adds a range header to the request.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/AddRange/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Misc/system.net.httpwebrequest.addrange/vb/source.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="range" /> is invalid.</exception>
@@ -547,37 +364,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a byte range header to the request.
-
- If `range` is positive, the `range` parameter specifies the starting point of the range. The server should start sending data from the `range` parameter specified to the end of the data in the HTTP entity.
-
- If `range` is negative, the `range` parameter specifies the ending point of the range. The server should start sending data from the start of the data in the HTTP entity to the `range` parameter specified.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- An example of a Range header in an HTTP protocol request that requests the server send the first 100 bytes (from the start to byte position 99) would be the following:
-
- `Range: bytes=0-99\r\n\r\n`
-
- For this example, the `range` parameter would be -99.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="range" /> is invalid.</exception>
@@ -632,39 +421,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a byte range header to the request.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- An example of a Range header in an HTTP protocol request that requests the first 100 bytes would be would be the following:
-
- `Range: bytes=0-99\r\n\r\n`
-
- For this example, the `from` parameter would be specified as 0 and the `to` parameter would be specified as 99. The range specifier is automatically set as "bytes" by this method.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
-## Examples
- The following code example adds a range header to the request.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/AddRange/source1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Misc/system.net.httpwebrequest.addrange2/vb/source.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="from" /> is greater than <paramref name="to" />
@@ -721,33 +480,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a byte range header to the request.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- An example of a Range header in an HTTP protocol request that requests the first 100 bytes would be would be the following:
-
- `Range: bytes=0-99\r\n\r\n`
-
- For this example, the `from` parameter would be specified as 0 and the `to` parameter would be specified as 99. The range specifier is automatically set as "bytes" by this method.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">
           <paramref name="from" /> is greater than <paramref name="to" />
@@ -806,39 +541,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a Range header to the request.
-
- If `range` is positive, the `range` parameter specifies the starting point of the range. The server should start sending data from the `range` parameter specified to the end of the data in the HTTP entity.
-
- If `range` is negative, the `range` parameter specifies the ending point of the range. The server should start sending data from the start of the data in the HTTP entity to the `range` parameter specified.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- The `rangeSpecifier` parameter would normally be specified as a "bytes", since this is the only range specifier recognized by most HTTP servers. Setting the `rangeSpecifier` parameter to some other string allows support for custom range specifiers other than bytes (the byte-range specifier defined in RFC 2616 by the IETF).
-
- An example of a Range header in an HTTP protocol request that requests the first 100 bytes would be would be the following:
-
- `Range: bytes=-99\r\n\r\n`
-
- For this example, the `rangeSpecifier` parameter would be specified as "bytes" and the `range` parameter would be -99.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header in the response. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="rangeSpecifier" /> is <see langword="null" />.</exception>
@@ -893,39 +598,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a Range header to the request.
-
- If `range` is positive, the `range` parameter specifies the starting point of the range. The server should start sending data from the `range` parameter specified to the end of the data in the HTTP entity.
-
- If `range` is negative, the `range` parameter specifies the ending point of the range. The server should start sending data from the start of the data in the HTTP entity to the `range` parameter specified.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- The `rangeSpecifier` parameter would normally be specified as a "bytes", since this is the only range specifier recognized by most HTTP servers. Setting the `rangeSpecifier` parameter to some other string allows support for custom range specifiers other than bytes (the byte-range specifier defined in RFC 2616 by the IETF).
-
- An example of a Range header in an HTTP protocol request that requests the first 100 bytes would be would be the following:
-
- `Range: bytes=-99\r\n\r\n`
-
- For this example, the `rangeSpecifier` parameter would be specified as "bytes" and the `range` parameter would be -99.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header in the response. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="rangeSpecifier" /> is <see langword="null" />.</exception>
@@ -984,37 +659,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a Range header to the request.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- The `rangeSpecifier` parameter would normally be specified as a "bytes", since this is the only range specifier recognized by most HTTP servers. Setting the `rangeSpecifier` parameter to some other string allows support for custom range specifiers other than bytes (the byte-range specifier defined in RFC 2616 by the IETF).
-
- An example of a Range header in an HTTP protocol request that requests the first 100 bytes would be would be the following:
-
- `Range: bytes=0-99\r\n\r\n`
-
- For this example, the `rangeSpecifier` parameter would be specified as a "bytes", the `from` parameter would be 0, and the `to` parameter would be 99.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header in the response. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- The string specified in the Accept-Ranges header is the range-specifier that would be by specified in the `rangeSpecifier` parameter for this method.
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="rangeSpecifier" /> is <see langword="null" />.</exception>
@@ -1077,37 +724,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.AddRange*?displayProperty=nameWithType> method adds a Range header to the request.
-
- Since all HTTP entities are represented in HTTP messages as sequences of bytes, the concept of a byte range is meaningful for any HTTP entity. However, not all clients and servers need to support byte-range operations.
-
- The Range header on a request allows a client to request that it only wants to receive some part of the specified range of bytes in an HTTP entity. Servers are not required to support Range header requests.
-
- The `rangeSpecifier` parameter would normally be specified as a "bytes", since this is the only range specifier recognized by most HTTP servers. Setting the `rangeSpecifier` parameter to some other string allows support for custom range specifiers other than bytes (the byte-range specifier defined in RFC 2616 by the IETF).
-
- An example of a Range header in an HTTP protocol request that requests the first 100 bytes would be would be the following:
-
- `Range: bytes=0-99\r\n\r\n`
-
- For this example, the `rangeSpecifier` parameter would be specified as a "bytes", the `from` parameter would be 0, and the `to` parameter would be 99.
-
- A HTTP server indicates support for Range headers with the Accept-Ranges header in the response. An example of the Accept-Ranges header from a server that supports byte-ranges would be as follows:
-
- `Accept-Ranges: bytes\r\n\r\n`
-
- The string specified in the Accept-Ranges header is the range-specifier that would be by specified in the `rangeSpecifier` parameter for this method.
-
- If an Accept-Ranges header is not received in the header of the response from the server, then the server does not support Range headers. An example of the Accept-Ranges header from a server that does not support ranges, but recognizes the Accept-Ranges header, would be as follows:
-
- `Accept-Ranges: none\r\n\r\n`
-
- When receiving the response from a range request, only the HTTP headers associated with the entire request are parsed and made available via properties on the <xref:System.Net.HttpWebResponse> class. Headers associated with each range are returned in the response.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="rangeSpecifier" /> is <see langword="null" />.</exception>
@@ -1171,23 +790,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Address> property is set to the URI after any redirections that happen during the request are complete.
-
- The URI of the original request is kept in the <xref:System.Net.HttpWebRequest.RequestUri> property.
-
-
-
-## Examples
- The following code example checks to see if the <xref:System.Net.HttpWebRequest> object `req` was redirected to another location to fulfill the request, and sets the value of the `hasChanged` variable to `true` if the request was redirected; otherwise `hasChanged` is set to `false`.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Address/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Address/source.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1234,25 +839,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- Set <xref:System.Net.HttpWebRequest.AllowAutoRedirect*> to `true` if you want the request to automatically follow HTTP redirection headers to the new location of the resource. The maximum number of redirections to follow is set by the <xref:System.Net.HttpWebRequest.MaximumAutomaticRedirections> property.
-
- If <xref:System.Net.HttpWebRequest.AllowAutoRedirect*> is set to `false`, all responses with an HTTP status code from 300 to 399 is returned to the application.
-
- The Authorization header is cleared on auto-redirects and <xref:System.Net.HttpWebRequest> automatically tries to re-authenticate to the redirected location. In practice, this means that an application can't put custom authentication information into the Authorization header if it is possible to encounter redirection. Instead, the application must implement and register a custom authentication module. The <xref:System.Net.AuthenticationManager?displayProperty=nameWithType> and related class are used to implement a custom authentication module. The <xref:System.Net.AuthenticationManager.Register*?displayProperty=nameWithType> method registers a custom authentication module.
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.AllowAutoRedirect> property to allow the request to follow redirection responses.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/AllowAutoRedirect/httpwebrequest_allowautoredirect.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/AllowAutoRedirect/httpwebrequest_allowautoredirect.vb" id="Snippet2":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1341,19 +930,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- When <xref:System.Net.HttpWebRequest.AllowWriteStreamBuffering*> is `true`, the data is buffered in memory so it is ready to be resent in the event of redirections or authentication requests.
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.AllowWriteStreamBuffering> property to disable data buffering.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/AllowWriteStreamBuffering/httpwebrequest_allowwritestreambuffering.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/AllowWriteStreamBuffering/httpwebrequest_allowwritestreambuffering.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <block subset="none" type="overrides">
           <para>Setting <see cref="P:System.Net.HttpWebRequest.AllowWriteStreamBuffering" /> to <see langword="true" /> might cause performance problems when uploading large datasets because the data buffer could use all available memory.</para>
@@ -1458,31 +1037,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method starts an asynchronous request for a stream used to send data for the <xref:System.Net.HttpWebRequest>. The asynchronous callback method uses the <xref:System.Net.HttpWebRequest.EndGetRequestStream*> method to return the actual stream.
-
- The <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method requires some synchronous setup tasks to complete (DNS resolution, proxy detection, and TCP socket connection, for example) before this method becomes asynchronous. As a result, this method should never be called on a user interface (UI) thread because it might take considerable time (up to several minutes depending on network settings) to complete the initial synchronous setup tasks before an exception for an error is thrown or the method succeeds.
-
- To learn more about the thread pool, see [The managed thread pool](/dotnet/standard/threading/the-managed-thread-pool).
-
-> [!NOTE]
-> Your application cannot mix synchronous and asynchronous methods for a particular request. If you call the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method, you must use the <xref:System.Net.HttpWebRequest.BeginGetResponse*> method to retrieve the response.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method to make an asynchronous request for a stream instance.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/BeginGetRequestStream/httpwebrequest_begingetrequeststream.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/BeginGetRequestStream/httpwebrequest_begingetrequeststream.vb" id="Snippet2":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.Net.ProtocolViolationException">The <see cref="P:System.Net.HttpWebRequest.Method" /> property is GET or HEAD.
 
@@ -1502,7 +1059,6 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <exception cref="T:System.Net.WebException">
           <see cref="M:System.Net.HttpWebRequest.Abort" /> was previously called.</exception>
         <exception cref="T:System.ObjectDisposedException">In a .NET Compact Framework application, a request stream with zero content length was not obtained and closed correctly.</exception>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
       </Docs>
     </Member>
     <Member MemberName="BeginGetResponse">
@@ -1561,37 +1117,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.BeginGetResponse*> method starts an asynchronous request for a response from the Internet resource. The asynchronous callback method uses the <xref:System.Net.HttpWebRequest.EndGetResponse*> method to return the actual <xref:System.Net.WebResponse>.
-
- A <xref:System.Net.ProtocolViolationException> is thrown in several cases when the properties set on the <xref:System.Net.HttpWebRequest> class are conflicting. This exception occurs if an application sets the <xref:System.Net.HttpWebRequest.ContentLength> property and the <xref:System.Net.HttpWebRequest.SendChunked> property to `true`, and then sends an HTTP GET request. This exception occurs if an application tries to send chunked to a server that only supports HTTP 1.0 protocol, where this is not supported. This exception occurs if an application tries to send data without setting the <xref:System.Net.HttpWebRequest.ContentLength> property or the <xref:System.Net.HttpWebRequest.SendChunked*> is `false` when buffering is disabled and on a keepalive connection (the <xref:System.Net.HttpWebRequest.KeepAlive> property is `true`)`.`
-
- If a <xref:System.Net.WebException> is thrown, use the <xref:System.Net.WebException.Response*> and <xref:System.Net.WebException.Status*> properties of the exception to determine the response from the server.
-
- The <xref:System.Net.HttpWebRequest.BeginGetResponse*> method requires some synchronous setup tasks to complete (DNS resolution, proxy detection, and TCP socket connection, for example) before this method becomes asynchronous. As a result, this method should never be called on a user interface (UI) thread because it might take considerable time (up to several minutes depending on network settings) to complete the initial synchronous setup tasks before an exception for an error is thrown or the method succeeds.
-
- To learn more about the thread pool, see [The managed thread pool](/dotnet/standard/threading/the-managed-thread-pool).
-
-> [!NOTE]
-> Your application cannot mix synchronous and asynchronous methods for a particular request. If you call the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method, you must use the <xref:System.Net.HttpWebRequest.BeginGetResponse*> method to retrieve the response.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.BeginGetResponse*> method to make an asynchronous request for an Internet resource.
-
-> [!NOTE]
-> In the case of asynchronous requests, it is the responsibility of the client application to implement its own time-out mechanism. The following code example shows how to do it.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Abort/begingetresponse.cs" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The stream is already in use by a previous call to <see cref="M:System.Net.HttpWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)" />
 
@@ -1618,7 +1146,6 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
  The <see cref="P:System.Net.HttpWebRequest.ContentLength" /> is greater than zero, but the application does not write all of the promised data.</exception>
         <exception cref="T:System.Net.WebException">
           <see cref="M:System.Net.HttpWebRequest.Abort" /> was previously called.</exception>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
       </Docs>
     </Member>
     <Member MemberName="ClientCertificates">
@@ -1669,21 +1196,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- An application can add a certificate to a collection, but might not have access rights to it. To use a certificate contained in the collection, the application must have the same access rights as the entity that issued the certificate.
-
-> [!NOTE]
-> The Framework caches SSL sessions as they are created and attempts to reuse a cached session for a new request, if possible. When attempting to reuse an SSL session, the Framework uses the first element of <xref:System.Net.HttpWebRequest.ClientCertificates*> (if there is one), or tries to reuse an anonymous sessions if <xref:System.Net.HttpWebRequest.ClientCertificates*> is empty.
-
-> [!NOTE]
-> For performance reasons, you shouldn't add a client certificate to a <xref:System.Net.HttpWebRequest> unless you know the server will ask for it.
->
-> For a code example illustrating how to enumerate the certificates in the client certificate store, see the <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection> class.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The value specified for a set operation is <see langword="null" />.</exception>
       </Docs>
@@ -1731,28 +1246,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The request sends the <xref:System.Net.HttpWebRequest.Connection> property to the Internet resource as the `Connection` HTTP header. If the value of the <xref:System.Net.HttpWebRequest.KeepAlive> property is `true`, the value "Keep-alive" is appended to the end of the `Connection` header.
-
- To clear the `Connection` HTTP header, set the <xref:System.Net.HttpWebRequest.Connection> property to `null`.
-
- Changing the <xref:System.Net.HttpWebRequest.Connection> property after the request has been started by calling the <xref:System.Net.HttpWebRequest.GetRequestStream*>, <xref:System.Net.HttpWebRequest.BeginGetRequestStream*>, <xref:System.Net.HttpWebRequest.GetResponse*>, or <xref:System.Net.HttpWebRequest.BeginGetResponse*> method throws an <xref:System.InvalidOperationException>.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.Connection> property to set the value of the Connection HTTP Header.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Connection/httpwebrequest_connection.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Connection/httpwebrequest_connection.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The value of <see cref="P:System.Net.HttpWebRequest.Connection" /> is set to Keep-alive or Close.</exception>
       </Docs>
@@ -1800,13 +1296,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.ConnectionGroupName> property enables you to associate a request with a connection group. This is useful when your application makes requests to one server for different users, such as a web site that retrieves customer information from a database server.
-
- ]]></format>
+]]></format>
         </remarks>
         <block subset="none" type="overrides">
           <para>Each connection group creates additional connections for a server. This may result in exceeding the number of connections set by the <see cref="P:System.Net.ServicePoint.ConnectionLimit" /> property for that server.</para>
@@ -1857,28 +1349,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.ContentLength> property contains the value to send as the `Content-length` HTTP header with the request.
-
- Any value other than -1 in the <xref:System.Net.HttpWebRequest.ContentLength> property indicates that the request uploads data and that only methods that upload data are allowed to be set in the <xref:System.Net.HttpWebRequest.Method> property.
-
- After the <xref:System.Net.HttpWebRequest.ContentLength> property is set to a value, that number of bytes must be written to the request stream that is returned by calling the <xref:System.Net.HttpWebRequest.GetRequestStream*> method or both the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> and the <xref:System.Net.HttpWebRequest.EndGetRequestStream*> methods.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.ContentLength> property to the length of the string being posted.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.cs" id="Snippet4":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.vb" id="Snippet4":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request has been started by calling the <see cref="M:System.Net.HttpWebRequest.GetRequestStream" />, <see cref="M:System.Net.HttpWebRequest.BeginGetRequestStream(System.AsyncCallback,System.Object)" />, <see cref="M:System.Net.HttpWebRequest.GetResponse" />, or <see cref="M:System.Net.HttpWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)" /> method.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">The new <see cref="P:System.Net.HttpWebRequest.ContentLength" /> value is less than 0.</exception>
@@ -1928,26 +1401,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.ContentType> property contains the media type of the request. Values assigned to the <xref:System.Net.HttpWebRequest.ContentType> property replace any existing contents when the request sends the `Content-type` HTTP header.
-
- To clear the `Content-type` HTTP header, set the <xref:System.Net.HttpWebRequest.ContentType> property to `null`.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection> . If <xref:System.Net.WebHeaderCollection> is set, the property value is lost.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.ContentType> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -1994,15 +1450,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.ContinueDelegate> property specifies the callback method to call when the client receives a 100-Continue response.
-
- When the <xref:System.Net.HttpWebRequest.ContinueDelegate> property is set, the client calls the delegate whenever protocol responses of type <xref:System.Net.HttpStatusCode.Continue?displayProperty=nameWithType> (100) are received. This is useful if you want the client to display the status of the data being received from the Internet resource.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -2047,13 +1497,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- If the 100-Continue response is received before the timeout expires, the entity body can be sent.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -2101,26 +1547,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.CookieContainer> property provides an instance of the <xref:System.Net.CookieContainer> class that contains the cookies associated with this request.
-
- <xref:System.Net.HttpWebRequest.CookieContainer*> is `null` by default. You must assign a <xref:System.Net.CookieContainer> object to the property to have cookies returned in the <xref:System.Net.HttpWebResponse.Cookies> property of the <xref:System.Net.HttpWebResponse> returned by the <xref:System.Net.HttpWebRequest.GetResponse*> method.
-
-> [!NOTE]
-> For security reasons, cookies are disabled by default. If you want to use cookies, use the <xref:System.Net.HttpWebRequest.CookieContainer> property to enable cookies.
-
-
-
-## Examples
- The following code example sends a request to a URL and displays the cookies returned in the response.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/Cookie/Overview/cookiessnippets.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/Cookie/Overview/cookiessnippets.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <altmember cref="T:System.Net.CookieContainer" />
       </Docs>
@@ -2169,32 +1598,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Credentials> property contains authentication information to identify the maker of the request. The <xref:System.Net.HttpWebRequest.Credentials> property can be either a <xref:System.Net.NetworkCredential>, in which case the user, password, and domain information contained in the <xref:System.Net.NetworkCredential> object is used to authenticate the request, or it can be a <xref:System.Net.CredentialCache>, in which case the Uniform Resource Identifier (URI) of the request is used to determine the user, password, and domain information to use to authenticate the request.
-
- In most client scenarios, you should use the <xref:System.Net.CredentialCache.DefaultCredentials> property, which contains the credentials of the currently logged on user. To do this, set the <xref:System.Net.WebClient.UseDefaultCredentials> property to `true` instead of setting this property.
-
- If the <xref:System.Net.HttpWebRequest> class is being used in a middle-tier application, such as an ASP.NET application, the credentials in the <xref:System.Net.CredentialCache.DefaultCredentials> property belong to the account running the ASP page (the server-side credentials). Typically, you would set this property to the credentials of the client on whose behalf the request is made.
-
-> [!NOTE]
-> The NTLM authentication scheme cannot be used to impersonate another user. Kerberos must be specially configured to support impersonation.
-
- To restrict HttpWebRequest to one or more authentication methods, use the <xref:System.Net.CredentialCache> class and bind your credentials to one or more authentication schemes
-
- Supported authentication schemes include Digest, Negotiate, Kerberos, NTLM, and Basic.
-
- For security reasons, when automatically following redirects, store the credentials that you want to be included in the redirect in a <xref:System.Net.CredentialCache> and assign it to this property. This property will automatically be set to `null` upon redirection if it contains anything except a <xref:System.Net.CredentialCache>. Having this property value be automatically set to `null` under those conditions prevents credentials from being sent to any unintended destination.
-
-## Examples
- The following code example sets the credentials for a request.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Credentials/httpwebrequest1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Credentials/httpwebrequest1.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -2238,26 +1644,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- If the Date header is `null`, then the return value will be set to <xref:System.DateTime.MinValue?displayProperty=nameWithType>.
-
- The <xref:System.Net.HttpWebRequest.Date> property is a standard <xref:System.DateTime?displayProperty=nameWithType> object and can contain a <xref:System.DateTimeKind?displayProperty=nameWithType> field of <xref:System.DateTimeKind.Local?displayProperty=nameWithType>, <xref:System.DateTimeKind.Utc?displayProperty=nameWithType>, or <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType>. Any kind of time can be set when using the <xref:System.Net.HttpWebRequest.Date> property. If <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType> is set or retrieved, the <xref:System.Net.HttpWebRequest.Date> property is assumed to be <xref:System.DateTimeKind.Local?displayProperty=nameWithType> (local time).
-
- The classes in the <xref:System.Net> namespace always write it out the <xref:System.Net.HttpWebRequest.Date> property on the wire during transmission in standard form using GMT (Utc) format.
-
- If the <xref:System.Net.HttpWebRequest.Date> property is set to <xref:System.DateTime.MinValue?displayProperty=nameWithType>, then the `Date` HTTP header is removed from the <xref:System.Net.HttpWebRequest.Headers> property and the <xref:System.Net.WebHeaderCollection>.
-
- If the <xref:System.Net.HttpWebRequest.Date> property is <xref:System.DateTime.MinValue?displayProperty=nameWithType>, this indicates that the `Date` HTTP header is not included in the <xref:System.Net.HttpWebRequest.Headers> property and the <xref:System.Net.WebHeaderCollection>.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
- If the <xref:System.Net.HttpWebRequest.Date*> is set and an attempt is made to send a <xref:System.Net.HttpWebRequest> with no body, then a <xref:System.Net.ProtocolViolationException?displayProperty=nameWithType> will be thrown by the <xref:System.Net.HttpWebRequest.BeginGetResponse*>, <xref:System.Net.HttpWebRequest.GetResponse*>, and <xref:System.Net.HttpWebRequest.EndGetResponse*> methods.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -2302,23 +1691,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- Setting this property registers the specified policy for the HTTP and HTTPS schemes. This policy is used for this request if:
-
- There is no <xref:System.Net.WebRequest.CachePolicy?displayProperty=nameWithType> property specified for this request.
-
--or-
-
- The machine and application configuration files do not specify a cache policy that is applicable to the Uniform Resource Identifier (URI) used to create this request.
-
- The cache policy determines whether the requested resource can be taken from a cache instead of sending the request to the resource host computer.
-
- A copy of a resource is only added to the cache if the response stream for the resource is retrieved and read to the end of the stream. So another request for the same resource could use a cached copy, depending on the cache policy level for this request.
-
- ]]></format>
+]]></format>
         </remarks>
         <altmember cref="T:System.Net.Cache.RequestCachePolicy" />
         <altmember cref="T:System.Net.Cache.HttpRequestCacheLevel" />
@@ -2410,15 +1785,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The length of the response header received the response status line and any extra control characters that are received as part of HTTP protocol. A value of 0 means that all requests fail.
-
- This value can also be changed in the configuration file. The impact of this property can be overridden by setting the <xref:System.Net.HttpWebRequest.MaximumResponseHeadersLength> property on an instance of the <xref:System.Net.HttpWebRequest> class.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">The value is less than zero.</exception>
       </Docs>
@@ -2480,26 +1849,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.EndGetRequestStream*> method completes an asynchronous request for a stream that was started by the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method. After the <xref:System.IO.Stream> object has been returned, you can send data with the <xref:System.Net.HttpWebRequest> by using the <xref:System.IO.Stream.Write*?displayProperty=nameWithType> method.
-
-> [!NOTE]
->  - You must set the value of the <xref:System.Net.HttpWebRequest.ContentLength> property before writing data to the stream.
->  - You must call the <xref:System.IO.Stream.Close*?displayProperty=nameWithType> method to close the stream and release the connection for reuse. Failure to close the stream causes your application to run out of connections.
->  - This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.EndGetRequestStream*> method to end an asynchronous request for a stream instance.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/BeginGetRequestStream/httpwebrequest_begingetrequeststream.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/BeginGetRequestStream/httpwebrequest_begingetrequeststream.vb" id="Snippet2":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="asyncResult" /> is <see langword="null" />.</exception>
@@ -2570,20 +1922,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.EndGetRequestStream*> method completes an asynchronous request for a stream that was started by the <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method and outputs the <xref:System.Net.TransportContext> associated with the stream. After the <xref:System.IO.Stream> object has been returned, you can send data with the <xref:System.Net.HttpWebRequest> by using the <xref:System.IO.Stream.Write*?displayProperty=nameWithType> method.
-
- Some applications that use integrated Windows authentication with extended protection may need to be able to query the transport layer used by <xref:System.Net.HttpWebRequest> in order to retrieve the channel binding token (CBT) from the underlying TLS channel. The <xref:System.Net.HttpWebRequest.GetRequestStream*> method provides access to this information for HTTP methods which have a request body (`POST` and `PUT` requests). This is only needed if the application is implementing its own authentication and needs access to the CBT.
-
-> [!NOTE]
->  - If you need to set the value of the <xref:System.Net.HttpWebRequest.ContentLength> property before writing data to the stream.
->  - You must call the <xref:System.IO.Stream.Close*?displayProperty=nameWithType> method to close the stream and release the connection for reuse. Failure to close the stream causes your application to run out of connections.
->  - This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
           <paramref name="asyncResult" /> was not returned by the current instance from a call to <see cref="M:System.Net.HttpWebRequest.BeginGetRequestStream(System.AsyncCallback,System.Object)" />.</exception>
@@ -2651,26 +1992,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.EndGetResponse*> method completes an asynchronous request for an Internet resource that was started by calling the <xref:System.Net.HttpWebRequest.BeginGetResponse*> method.
-
-> [!CAUTION]
-> You must call the <xref:System.Net.HttpWebResponse.Close*> method to close the stream and release the connection. Failure to do so may cause your application to run out of connections.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.EndGetResponse*> method to end an asynchronous request for an Internet resource.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Abort/begingetresponse.cs" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="asyncResult" /> is <see langword="null" />.</exception>
@@ -2732,7 +2056,6 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>The value for this property is stored in <see cref="T:System.Net.WebHeaderCollection" />. If WebHeaderCollection is set, the property value is lost.</remarks>
         <exception cref="T:System.ArgumentException">
           <see langword="Expect" /> is set to a string that contains "100-continue" as a substring.</exception>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
       </Docs>
     </Member>
     <Member MemberName="GetObjectData">
@@ -2856,31 +2179,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.GetRequestStream*> method returns a stream to use to send data for the <xref:System.Net.HttpWebRequest>. After the <xref:System.IO.Stream> object has been returned, you can send data with the <xref:System.Net.HttpWebRequest> by using the <xref:System.IO.Stream.Write*?displayProperty=nameWithType> method.
-
- If an application needs to set the value of the <xref:System.Net.HttpWebRequest.ContentLength> property, then this must be done before retrieving the stream.
-
- You must call the <xref:System.IO.Stream.Close*?displayProperty=nameWithType> method to close the stream and release the connection for reuse. Failure to close the stream causes your application to run out of connections.
-
-> [!NOTE]
-> Your application cannot mix synchronous and asynchronous methods for a particular request. If you call the <xref:System.Net.HttpWebRequest.GetRequestStream*> method, you must use the <xref:System.Net.HttpWebRequest.GetResponse*> method to retrieve the response.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.GetRequestStream*> method to return a stream instance.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.cs" id="Snippet4":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.vb" id="Snippet4":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.Net.ProtocolViolationException">The <see cref="P:System.Net.HttpWebRequest.Method" /> property is GET or HEAD.
 
@@ -2904,7 +2205,6 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
 
  An error occurred while processing the request.</exception>
         <exception cref="T:System.ObjectDisposedException">In a .NET Compact Framework application, a request stream with zero content length was not obtained and closed correctly.</exception>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
       </Docs>
     </Member>
     <Member MemberName="GetRequestStream">
@@ -2960,25 +2260,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.GetRequestStream*> method returns a stream to use to send data for the <xref:System.Net.HttpWebRequest> and outputs the <xref:System.Net.TransportContext> associated with the stream. After the <xref:System.IO.Stream> object has been returned, you can send data with the <xref:System.Net.HttpWebRequest> by using the <xref:System.IO.Stream.Write*?displayProperty=nameWithType> method.
-
- Some applications that use integrated Windows authentication with extended protection may need to be able to query the transport layer used by <xref:System.Net.HttpWebRequest> in order to retrieve the channel binding token (CBT) from the underlying TLS channel. The <xref:System.Net.HttpWebRequest.GetRequestStream*> method provides access to this information for HTTP methods which have a request body (`POST` and `PUT` requests). This is only needed if the application is implementing its own authentication and needs access to the CBT.
-
- If an application needs to set the value of the <xref:System.Net.HttpWebRequest.ContentLength> property, then this must be done before retrieving the stream.
-
- You must call the <xref:System.IO.Stream.Close*?displayProperty=nameWithType> method to close the stream and release the connection for reuse. Failure to close the stream causes your application to run out of connections.
-
-> [!NOTE]
-> Your application cannot mix synchronous and asynchronous methods for a particular request. If you call the <xref:System.Net.HttpWebRequest.GetRequestStream*> method, you must use the <xref:System.Net.HttpWebRequest.GetResponse*> method to retrieve the response.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.Exception">The <see cref="M:System.Net.HttpWebRequest.GetRequestStream" /> method was unable to obtain the <see cref="T:System.IO.Stream" />.</exception>
         <exception cref="T:System.InvalidOperationException">The <see cref="M:System.Net.HttpWebRequest.GetRequestStream" /> method is called more than once.
@@ -3052,43 +2336,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.GetResponse*> method returns a <xref:System.Net.WebResponse> object that contains the response from the Internet resource. The actual instance returned is an <xref:System.Net.HttpWebResponse>, and can be typecast to that class to access HTTP-specific properties.
-
- A <xref:System.Net.ProtocolViolationException> is thrown in several cases when the properties set on the <xref:System.Net.HttpWebRequest> class are conflicting. This exception occurs if an application sets the <xref:System.Net.HttpWebRequest.ContentLength> property and the <xref:System.Net.HttpWebRequest.SendChunked> property to `true`, and then sends an HTTP GET request. This exception occurs if an application tries to send chunked to a server that only supports HTTP 1.0 protocol, where this is not supported. This exception occurs if an application tries to send data without setting the <xref:System.Net.HttpWebRequest.ContentLength> property or the <xref:System.Net.HttpWebRequest.SendChunked*> is `false` when buffering is disabled and on a keepalive connection (the <xref:System.Net.HttpWebRequest.KeepAlive> property is `true`)`.`
-
-> [!CAUTION]
-> You must call the <xref:System.Net.HttpWebResponse.Close*> method to close the stream and release the connection. Failure to do so may cause your application to run out of connections.
-
- When using the POST method, you must get the request stream, write the data to be posted, and close the stream. This method blocks waiting for content to post; if there is no time-out set and you do not provide content, the calling thread blocks indefinitely.
-
-> [!NOTE]
-> Multiple calls to <xref:System.Net.HttpWebRequest.GetResponse*> return the same response object; the request is not reissued.
-
-> [!NOTE]
-> Your application cannot mix synchronous and asynchronous methods for a particular request. If you call the <xref:System.Net.HttpWebRequest.GetRequestStream*> method, you must use the <xref:System.Net.HttpWebRequest.GetResponse*> method to retrieve the response.
-
-> [!NOTE]
-> If a <xref:System.Net.WebException> is thrown, use the <xref:System.Net.WebException.Response*> and <xref:System.Net.WebException.Status*> properties of the exception to determine the response from the server.
-
-> [!NOTE]
-> This member outputs trace information when you enable network tracing in your application. For more information, see [Network Tracing in the .NET Framework](/dotnet/framework/network-programming/network-tracing).
-
-> [!NOTE]
-> For security reasons, cookies are disabled by default. If you wish to use cookies, use the <xref:System.Net.HttpWebRequest.CookieContainer> property to enable cookies.
-
-
-
-## Examples
- The following code example gets the response for a request.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Credentials/httpwebrequest1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Credentials/httpwebrequest1.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The stream is already in use by a previous call to <see cref="M:System.Net.HttpWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)" />.
 
@@ -3121,7 +2371,6 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
 
  An error occurred while processing the request.</exception>
         <altmember cref="P:System.Net.HttpWebRequest.Timeout" />
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
       </Docs>
     </Member>
     <Member MemberName="HaveResponse">
@@ -3227,42 +2476,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Headers*> collection contains the protocol headers associated with the request. The following table lists the HTTP headers that are not stored in the <xref:System.Net.HttpWebRequest.Headers*> collection but are either set by the system or set by properties or methods.
-
-|Header|Set by|
-|------------|------------|
-|Accept|Set by the <xref:System.Net.HttpWebRequest.Accept> property.|
-|Connection|Set by the <xref:System.Net.HttpWebRequest.Connection> property and <xref:System.Net.HttpWebRequest.KeepAlive> property.|
-|Content-Length|Set by the <xref:System.Net.HttpWebRequest.ContentLength> property.|
-|Content-Type|Set by the <xref:System.Net.HttpWebRequest.ContentType> property.|
-|Expect|Set by the <xref:System.Net.HttpWebRequest.Expect> property.|
-|Date|Set by the <xref:System.Net.HttpWebRequest.Date> property.|
-|Host|Set by the <xref:System.Net.HttpWebRequest.Host> property.|
-|If-Modified-Since|Set by the <xref:System.Net.HttpWebRequest.IfModifiedSince> property.|
-|Range|Set by the <xref:System.Net.HttpWebRequest.AddRange*> method.|
-|Referer|Set by the <xref:System.Net.HttpWebRequest.Referer> property.|
-|Transfer-Encoding|Set by the <xref:System.Net.HttpWebRequest.TransferEncoding> property (the <xref:System.Net.HttpWebRequest.SendChunked> property must be true).|
-|User-Agent|Set by the <xref:System.Net.HttpWebRequest.UserAgent> property.|
-
- The <xref:System.Net.WebHeaderCollection.Add*> method throws an <xref:System.ArgumentException> if you try to set one of these protected headers.
-
- Changing the <xref:System.Net.HttpWebRequest.Headers> property after the request has been started by calling <xref:System.Net.HttpWebRequest.GetRequestStream*>, <xref:System.Net.HttpWebRequest.BeginGetRequestStream*>, <xref:System.Net.HttpWebRequest.GetResponse*>, or <xref:System.Net.HttpWebRequest.BeginGetResponse*> method throws an <xref:System.InvalidOperationException>.
-
- You should not assume that the header values will remain unchanged, because Web servers and caches may change or add headers to a Web request.
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.Headers> property to print the HTTP header name/value pairs to the console.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Headers/httpwebrequest_headers.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Headers/httpwebrequest_headers.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request has been started by calling the <see cref="M:System.Net.HttpWebRequest.GetRequestStream" />, <see cref="M:System.Net.HttpWebRequest.BeginGetRequestStream(System.AsyncCallback,System.Object)" />, <see cref="M:System.Net.HttpWebRequest.GetResponse" />, or <see cref="M:System.Net.HttpWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)" /> method.</exception>
       </Docs>
@@ -3313,21 +2529,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Host> property can be used to set the Host header value to use in an HTTP request independent from the request URI. The <xref:System.Net.HttpWebRequest.Host> property can consist of a hostname and an optional port number. A Host header without port information implies the default port for the service requested (port 80 for an HTTP URL, for example).
-
- The format for specifying a host and port must follow the rules in section 14.23 of RFC2616 published by the IETF. An example complying with these requirements that specifies a port of 8080 would be the following value for the <xref:System.Net.HttpWebRequest.Host> property:
-
- `www.contoso.com:8080`
-
- Using the <xref:System.Net.HttpWebRequest.Host> property to explicitly specify a custom Host header value also affects areas caching, cookies, and authentication. When an application provides credentials for a specific URI prefix, the applications needs to make sure to use the URI containing the value of the Host header, not the target server in the URI. The key used when caching resources, uses the Host header value rather than the request URI. Cookies are stored in a <xref:System.Net.CookieContainer> and logically grouped by the server domain name. If the application specifies a Host header, then this value will be used as domain.
-
- If the <xref:System.Net.HttpWebRequest.Host> property is not set, then the Host header value to use in an HTTP request is based on the request URI.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">The Host header cannot be set to <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">The Host header cannot be set to an invalid value.</exception>
@@ -3376,34 +2580,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- If the `If-Modified-Since` header is `null`, then the return value will be set to <xref:System.DateTime.MinValue?displayProperty=nameWithType>.
-
- The <xref:System.Net.HttpWebRequest.IfModifiedSince> property is a standard <xref:System.DateTime?displayProperty=nameWithType> object and can contain a <xref:System.DateTimeKind?displayProperty=nameWithType> field of <xref:System.DateTimeKind.Local?displayProperty=nameWithType>, <xref:System.DateTimeKind.Utc?displayProperty=nameWithType>, or <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType>. Any kind of time can be set when using the <xref:System.Net.HttpWebRequest.IfModifiedSince> property. If <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType> is set or retrieved, the <xref:System.Net.HttpWebRequest.IfModifiedSince> property is assumed to be <xref:System.DateTimeKind.Local?displayProperty=nameWithType> (local time).
-
- The classes in the <xref:System.Net> namespace always write it out the <xref:System.Net.HttpWebRequest.IfModifiedSince> property on the wire during transmission in standard form using GMT (Utc) format.
-
- If the <xref:System.Net.HttpWebRequest.IfModifiedSince> property is set to <xref:System.DateTime.MinValue?displayProperty=nameWithType>, then the `If-Modified-Since` HTTP header is removed from the <xref:System.Net.HttpWebRequest.Headers> property and the <xref:System.Net.WebHeaderCollection>.
-
- If the <xref:System.Net.HttpWebRequest.IfModifiedSince> property is <xref:System.DateTime.MinValue?displayProperty=nameWithType>, this indicates that the `If-Modified-Since` HTTP header is not included in the <xref:System.Net.HttpWebRequest.Headers> property and the <xref:System.Net.WebHeaderCollection>.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
- If the <xref:System.Net.HttpWebRequest.IfModifiedSince> property is set and 304 (Not Modified) status code is returned, then a <xref:System.Net.WebException?displayProperty=nameWithType> will be thrown by the <xref:System.Net.HttpWebRequest.BeginGetResponse*>, <xref:System.Net.HttpWebRequest.GetResponse*>, and <xref:System.Net.HttpWebRequest.EndGetResponse*> methods.
-
-
-
-## Examples
- The following code example checks the <xref:System.Net.HttpWebRequest.IfModifiedSince> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/IfModifiedSince/httpwebrequest_ifmodifiedsince.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/IfModifiedSince/httpwebrequest_ifmodifiedsince.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -3450,24 +2629,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- Set this property to `true` to send a `Connection` HTTP header with the value Keep-alive. An application uses <xref:System.Net.HttpWebRequest.KeepAlive*> to indicate a preference for persistent connections. When the <xref:System.Net.HttpWebRequest.KeepAlive> property is `true`, the application makes persistent connections to the servers that support them.
-
-> [!NOTE]
-> When using HTTP/1.1, Keep-Alive is on by default. Setting <xref:System.Net.HttpWebRequest.KeepAlive*> to `false` may result in sending a `Connection: Close` header to the server.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.KeepAlive> property to `false` to avoid establishing a persistent connection with the Internet resource.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Connection/httpwebrequest_connection.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Connection/httpwebrequest_connection.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -3513,21 +2677,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.MaximumAutomaticRedirections> property sets the maximum number of redirections for the request to follow if the <xref:System.Net.HttpWebRequest.AllowAutoRedirect> property is `true`.
-
-
-
-## Examples
- The following code example sets the value of this property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Credentials/httpwebrequest1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Credentials/httpwebrequest1.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The value is set to 0 or less.</exception>
       </Docs>
@@ -3574,25 +2726,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The length of the response header includes the response status line and any extra control characters that are received as part of HTTP protocol. A value of 0 means that all requests fail.
-
- If the <xref:System.Net.HttpWebRequest.MaximumResponseHeadersLength> property is not explicitly set, it defaults to the value of the <xref:System.Net.HttpWebRequest.DefaultMaximumResponseHeadersLength> property.
-
- If the length of the response header received exceeds the value of the <xref:System.Net.HttpWebRequest.MaximumResponseHeadersLength> property, the <xref:System.Net.HttpWebRequest.EndGetResponse*> or <xref:System.Net.HttpWebRequest.GetResponse*> methods will throw a <xref:System.Net.WebException> with the <xref:System.Net.WebException.Status> property set to <xref:System.Net.WebExceptionStatus.MessageLengthLimitExceeded>.
-
-
-
-## Examples
- The following code example sets the value of this property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Credentials/httpwebrequest1.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Credentials/httpwebrequest1.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The property is set after the request has already been submitted.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">The value is less than 0.</exception>
@@ -3641,13 +2777,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The value of the <xref:System.Net.HttpWebRequest.MediaType> property affects the <xref:System.Net.HttpWebResponse.CharacterSet> property. When you set the <xref:System.Net.HttpWebRequest.MediaType*> in the request, the corresponding media type is chosen from the list of character sets returned in the response `Content-type` HTTP header.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -3700,23 +2832,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Method> property can be set to any of the HTTP 1.1 protocol verbs: GET, HEAD, POST, PUT, DELETE, TRACE, or OPTIONS.
-
- If the <xref:System.Net.HttpWebRequest.ContentLength> property is set to any value other than -1, the <xref:System.Net.HttpWebRequest.Method> property must be set to a protocol property that uploads data.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.Method> property to POST.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.cs" id="Snippet4":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/ContentLength/httpwebrequest_contentlength.vb" id="Snippet4":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">No method is supplied.
 
@@ -3768,23 +2886,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- An application uses the <xref:System.Net.HttpWebRequest.Pipelined> property to indicate a preference for pipelined connections. When <xref:System.Net.HttpWebRequest.Pipelined*> is `true`, an application makes pipelined connections to the servers that support them.
-
- Pipelined connections are made only when the <xref:System.Net.HttpWebRequest.KeepAlive> property is also `true`.
-
-
-
-## Examples
- The following code example prints the value of the <xref:System.Net.HttpWebRequest.Pipelined> property to the console.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Pipelined/httpwebrequest_pipelined.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Pipelined/httpwebrequest_pipelined.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -3831,73 +2935,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- After a client request to a specific <xref:System.Uri> is successfully authenticated, if <xref:System.Net.HttpWebRequest.PreAuthenticate*> is `true` and credentials are supplied, the Authorization header is sent with each request to any <xref:System.Uri> that matches the specific <xref:System.Uri> up to the last forward slash. So if the client request successfully authenticated to a specific <xref:System.Uri> that contains the following:
-
- `http://www.contoso.com/firstpath/`
-
- Then the Authorization header for preauthentication is sent with each request to any of the following <xref:System.Uri> instances:
-
- `http://www.contoso.com/firstpath/`
-
- `http://www.contoso.com/firstpath/default`
-
- `http://www.contoso.com/firstpath/default.html`
-
- `http://www.contoso.com/firstpath/sample.html`
-
- However, the Authorization header is not sent with requests to any of the following <xref:System.Uri> instances:
-
- `http://www.contoso.com/`
-
- `http://www.contoso.com/firstpath`
-
- `http://www.contoso.com/secondpath/`
-
- `http://www.contoso.com/firstpath/thirdpath/`
-
- If the client request to a specific <xref:System.Uri> is not successfully authenticated, the request uses standard authentication procedures.
-
- With the exception of the first request, the <xref:System.Net.WebRequest.PreAuthenticate> property indicates whether to send authentication information with subsequent requests to a <xref:System.Uri> that matches the specific <xref:System.Uri> up to the last forward slash without waiting to be challenged by the server.
-
- The following dialog between client and server illustrates the effect of this property. The dialog assumes that basic authentication is in use.
-
- <xref:System.Net.HttpWebRequest.PreAuthenticate*> is `false`:
-
- Client: GET someUrl
-
- Server: 401 WWW-Authenticate Basic
-
- Client: GET with Authorization headers
-
- Server: 200 OK
-
- Client: GET someUrl
-
- Server: 401 WWW-Authenticate Basic
-
- Client: GET with Authorization headers
-
- Server: 200 OK
-
- <xref:System.Net.HttpWebRequest.PreAuthenticate*> is `true`:
-
- Client: GET someUrl
-
- Server: 401 WWW-Authenticate Basic
-
- Client: GET with Authorization headers
-
- Server: 200 OK
-
- Client: GET someUrl with Authorization headers
-
- If the authentication scheme does not support preauthentication, the value of this property is ignored.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -3949,24 +2989,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest> class supports only versions 1.0 and 1.1 of HTTP. Setting <xref:System.Net.HttpWebRequest.ProtocolVersion*> to a different version throws an exception.
-
-> [!NOTE]
-> To set the HTTP version of the current request, use the <xref:System.Net.HttpVersion.Version10> and <xref:System.Net.HttpVersion.Version11> fields of the <xref:System.Net.HttpVersion> class.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.ProtocolVersion> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/ProtocolVersion/httpwebrequest_protocolversion.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/ProtocolVersion/httpwebrequest_protocolversion.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The HTTP version is set to a value other than 1.0 or 1.1.</exception>
       </Docs>
@@ -4014,39 +3039,14 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.Proxy> property identifies the <xref:System.Net.WebProxy> object to use to process requests to Internet resources. To specify that no proxy should be used, set the <xref:System.Net.HttpWebRequest.Proxy> property to the proxy instance returned by the <xref:System.Net.GlobalProxySelection.GetEmptyWebProxy*?displayProperty=nameWithType> method.
-
- The local computer or application config file may specify that a default proxy be used. If the <xref:System.Net.HttpWebRequest.Proxy> property is specified, then the proxy settings from the <xref:System.Net.HttpWebRequest.Proxy> property override the local computer or application config file and the <xref:System.Net.HttpWebRequest> instance will use the proxy settings specified. If no proxy is specified in a config file and the <xref:System.Net.HttpWebRequest.Proxy> property is unspecified, the <xref:System.Net.HttpWebRequest> class uses the proxy settings inherited from Internet options on the local computer. If there are no proxy settings in Internet options, the request is sent directly to the server.
-
- The <xref:System.Net.HttpWebRequest> class supports local proxy bypass. The class considers a destination to be local if any of the following conditions are met:
-
-- The destination contains a flat name (no dots in the URL).
-
-- The destination contains a loopback address (<xref:System.Net.IPAddress.Loopback> or <xref:System.Net.IPAddress.IPv6Loopback>) or the destination contains an <xref:System.Net.IPAddress> assigned to the local computer.
-
-- The domain suffix of the destination matches the local computer's domain suffix (<xref:System.Net.NetworkInformation.IPGlobalProperties.DomainName*>).
-
- Changing the <xref:System.Net.HttpWebRequest.Proxy> property after the request has been started by calling the <xref:System.Net.HttpWebRequest.GetRequestStream*>, <xref:System.Net.HttpWebRequest.BeginGetRequestStream*>, <xref:System.Net.HttpWebRequest.GetResponse*>, or <xref:System.Net.HttpWebRequest.BeginGetResponse*> method throws an <xref:System.InvalidOperationException>. For information on the proxy element see [\&lt;defaultProxy\&gt; Element (Network Settings)](/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings).
-
-
-
-## Examples
- The following code example uses the <xref:System.Net.HttpWebRequest.Proxy*> method to get the proxy information for the request.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Proxy/httpwebrequest_proxy.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Proxy/httpwebrequest_proxy.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <see cref="P:System.Net.HttpWebRequest.Proxy" /> is set to <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The request has been started by calling <see cref="M:System.Net.HttpWebRequest.GetRequestStream" />, <see cref="M:System.Net.HttpWebRequest.BeginGetRequestStream(System.AsyncCallback,System.Object)" />, <see cref="M:System.Net.HttpWebRequest.GetResponse" />, or <see cref="M:System.Net.HttpWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)" />.</exception>
         <exception cref="T:System.Security.SecurityException">The caller does not have permission for the requested operation.</exception>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/network/defaultproxy-element-network-settings">DefaultProxy Element (Network Settings)</related>
         <related type="Article" href="/dotnet/framework/network-programming/configuring-internet-applications">Configuring Internet Applications</related>
         <related type="Article" href="/dotnet/framework/network-programming/proxy-configuration">Proxy Configuration</related>
         <related type="Article" href="/dotnet/framework/network-programming/automatic-proxy-detection">Automatic Proxy Detection</related>
@@ -4094,24 +3094,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.HttpWebRequest.ReadWriteTimeout> property is used when writing to the stream returned by the <xref:System.Net.HttpWebRequest.GetRequestStream*> method or reading from the stream returned by the <xref:System.Net.HttpWebResponse.GetResponseStream*> method.
-
- Specifically, the <xref:System.Net.HttpWebRequest.ReadWriteTimeout> property controls the time-out for the <xref:System.IO.Stream.Read*> method, which is used to read the stream returned by the <xref:System.Net.HttpWebResponse.GetResponseStream*> method, and for the <xref:System.IO.Stream.Write*> method, which is used to write to the stream returned by the <xref:System.Net.HttpWebRequest.GetRequestStream*> method.
-
- To specify the amount of time to wait for the request to complete, use the <xref:System.Net.HttpWebRequest.Timeout> property.
-
-
-
-## Examples
- The following code example shows how to set the <xref:System.Net.HttpWebRequest.ReadWriteTimeout> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Overview/source.cs" id="Snippet2":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request has already been sent.</exception>
         <exception cref="T:System.ArgumentOutOfRangeException">The value specified for a set operation is less than or equal to zero and is not equal to <see cref="F:System.Threading.Timeout.Infinite" /></exception>
@@ -4161,24 +3146,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- To clear the `Referer` HTTP header, set the <xref:System.Net.HttpWebRequest.Referer> property to `null`.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.Referer> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Referer/httpwebrequest_referer.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Referer/httpwebrequest_referer.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -4231,23 +3201,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Uri> object passed to <xref:System.Net.HttpWebRequest> by the call to <xref:System.Net.WebRequest.Create*?displayProperty=nameWithType>.
-
- Following a redirection header does not change the <xref:System.Net.HttpWebRequest.RequestUri> property. To get the actual URI that responded to the request, examine the <xref:System.Net.HttpWebRequest.Address> property.
-
-
-
-## Examples
- The following code example checks to see if the <xref:System.Net.HttpWebRequest> object `req` was redirected to another location to fulfill the request, and sets the value of the `hasChanged` variable to `true` if the request was redirected; otherwise, `hasChanged` is set to `false`.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Address/source.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Address/source.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -4294,23 +3250,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- When <xref:System.Net.HttpWebRequest.SendChunked*> is `true`, the request sends data to the Internet resource in segments. The Internet resource must support receiving chunked data.
-
- Changing the <xref:System.Net.HttpWebRequest.SendChunked> property after the request has been started by calling the <xref:System.Net.HttpWebRequest.GetRequestStream*>, <xref:System.Net.HttpWebRequest.BeginGetRequestStream*>, <xref:System.Net.HttpWebRequest.GetResponse*>, or <xref:System.Net.HttpWebRequest.BeginGetResponse*> method throws an <xref:System.InvalidOperationException>.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.SendChunked> property to `true` so that data can be sent in segments to the Internet resource.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/SendChunked/httpwebrequest_sendchunked.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/SendChunked/httpwebrequest_sendchunked.vb" id="Snippet2":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The request has been started by calling the <see cref="M:System.Net.HttpWebRequest.GetRequestStream" />, <see cref="M:System.Net.HttpWebRequest.BeginGetRequestStream(System.AsyncCallback,System.Object)" />, <see cref="M:System.Net.HttpWebRequest.GetResponse" />, or <see cref="M:System.Net.HttpWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)" /> method.</exception>
       </Docs>
@@ -4356,13 +3298,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The default is that no callback function is set and the <xref:System.Net.HttpWebRequest.ServerCertificateValidationCallback> property is `null`.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -4414,19 +3352,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The <xref:System.Net.ServicePoint.Address?displayProperty=nameWithType> property may be different from <xref:System.Net.HttpWebRequest.Address*?displayProperty=nameWithType> if the request is redirected.
-
-
-
-## Examples
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/ServicePoint/servicepoint.cs" id="Snippet6":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/ServicePoint/servicepoint.vb" id="Snippet6":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -4587,32 +3515,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- <xref:System.Net.HttpWebRequest.Timeout*> is the number of milliseconds that a subsequent synchronous request made with the <xref:System.Net.HttpWebRequest.GetResponse*> method waits for a response, and the <xref:System.Net.HttpWebRequest.GetRequestStream*> method waits for a stream. The <xref:System.Net.HttpWebRequest.Timeout*> applies to the entire request and response, not individually to the <xref:System.Net.HttpWebRequest.GetRequestStream*> and <xref:System.Net.HttpWebRequest.GetResponse*> method calls. If the resource is not returned within the time-out period, the request throws a <xref:System.Net.WebException> with the <xref:System.Net.WebException.Status> property set to <xref:System.Net.WebExceptionStatus.Timeout?displayProperty=nameWithType>.
-
- The <xref:System.Net.HttpWebRequest.Timeout> property must be set before the <xref:System.Net.HttpWebRequest.GetRequestStream*> or <xref:System.Net.HttpWebRequest.GetResponse*> method is called. Changing the <xref:System.Net.HttpWebRequest.Timeout> property after calling the <xref:System.Net.HttpWebRequest.GetRequestStream*> or <xref:System.Net.HttpWebRequest.GetResponse*> method has no effect
-
- The <xref:System.Net.HttpWebRequest.Timeout> property has no effect on asynchronous requests made with the <xref:System.Net.HttpWebRequest.BeginGetResponse*> or <xref:System.Net.HttpWebRequest.BeginGetRequestStream*> method.
-
-> [!CAUTION]
-> In the case of asynchronous requests, the client application implements its own time-out mechanism. Refer to the example in the <xref:System.Net.HttpWebRequest.BeginGetResponse*> method.
-
- To specify the amount of time to wait before a read or write operation times out, use the <xref:System.Net.HttpWebRequest.ReadWriteTimeout> property.
-
- A Domain Name System (DNS) query may take up to 15 seconds to return or time out. If your request contains a host name that requires resolution and you set <xref:System.Net.FileWebRequest.Timeout*> to a value less than 15 seconds, it may take 15 seconds or more before a <xref:System.Net.WebException> is thrown to indicate a timeout on your request.
-
-
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.Timeout> property of the <xref:System.Net.HttpWebRequest> object.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/Timeout/httpwebrequest_timeout.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/Timeout/httpwebrequest_timeout.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.ArgumentOutOfRangeException">The value specified is less than zero and is not <see cref="F:System.Threading.Timeout.Infinite" />.</exception>
         <altmember cref="P:System.Net.HttpWebRequest.ReadWriteTimeout" />
@@ -4661,18 +3566,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- Before you can set the <xref:System.Net.HttpWebRequest.TransferEncoding> property, you must first set the <xref:System.Net.HttpWebRequest.SendChunked> property to `true`. Clearing <xref:System.Net.HttpWebRequest.TransferEncoding*> by setting it to `null` has no effect on the value of <xref:System.Net.HttpWebRequest.SendChunked*>.
-
- Values assigned to the <xref:System.Net.HttpWebRequest.TransferEncoding> property replace any existing contents.
-
-> [!NOTE]
-> The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If WebHeaderCollection is set, the property value is lost.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">
           <see cref="P:System.Net.HttpWebRequest.TransferEncoding" /> is set when <see cref="P:System.Net.HttpWebRequest.SendChunked" /> is <see langword="false" />.</exception>
@@ -4723,31 +3619,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- The default value for this property is `false`, which causes the current connection to be closed after a request is completed. Your application must go through the authentication sequence every time it issues a new request.
-
- If this property is set to `true`, the connection used to retrieve the response remains open after the authentication has been performed. In this case, other requests that have this property set to `true` may use the connection without re-authenticating. In other words, if a connection has been authenticated for user A, user B may reuse A's connection; user B's request is fulfilled based on the credentials of user A.
-
-> [!CAUTION]
-> Because it is possible for an application to use the connection without being authenticated, you need to be sure that there is no administrative vulnerability in your system when setting this property to `true`. If your application sends requests for multiple users (impersonates multiple user accounts) and relies on authentication to protect resources, do not set this property to `true` unless you use connection groups as described below.
-
- You may want to consider enabling this mechanism if your are having performance problems and your application is running on a Web server with integrated Windows authentication.
-
- Enabling this setting opens the system to security risks. If you set the <xref:System.Net.HttpWebRequest.UnsafeAuthenticatedConnectionSharing> property to `true` be sure to take the following precautions:
-
-- Use the <xref:System.Net.HttpWebRequest.ConnectionGroupName> property to manage connections for different users. This avoids the potential use of the connection by non-authenticated applications. For example, user A should have a unique connection group name that is different from user B. This provides a layer of isolation for each user account.
-
-- Run your application in a protected environment to help avoid possible connection exploits.
-
- If you control the back-end server, as an alternative you might consider turning off authentication persistence. This increases performance to a lesser degree, but it is safer.
-
-> [!NOTE]
-> If both <xref:System.Net.WebRequest.PreAuthenticate*> and <xref:System.Net.HttpWebRequest.UnsafeAuthenticatedConnectionSharing*> are set to `true`, each request is sent using a connection from the unsafe pool, but with an Authorization header.
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>
@@ -4794,13 +3668,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
- Set this property to `true` when requests made by this <xref:System.Net.HttpWebRequest> object should, if requested by the server, be authenticated using the credentials of the currently logged on user. For client applications, this is the desired behavior in most scenarios. For middle-tier applications, such as ASP.NET applications, instead of using this property, you would typically set the <xref:System.Net.HttpWebRequest.Credentials> property to the credentials of the client on whose behalf the request is made.
-
- ]]></format>
+]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">You attempted to set this property after the request was sent.</exception>
       </Docs>
@@ -4848,19 +3718,9 @@ Both <xref:System.Net.HttpWebRequest> constructors are obsolete and should not b
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
-
 [!INCLUDE [obsolete-notice](~/includes/web-request-obsolete.md)]
 
-The value for this property is stored in <xref:System.Net.WebHeaderCollection>. If `WebHeaderCollection` is set, the property value is lost.
-
-## Examples
- The following code example sets the <xref:System.Net.HttpWebRequest.UserAgent> property.
-
- :::code language="csharp" source="~/snippets/csharp/System.Net/HttpWebRequest/UserAgent/httpwebrequest_useragent.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Net/HttpWebRequest/UserAgent/httpwebrequest_useragent.vb" id="Snippet1":::
-
- ]]></format>
+]]></format>
         </remarks>
       </Docs>
     </Member>

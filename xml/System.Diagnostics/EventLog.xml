@@ -54,15 +54,13 @@
  <xref:System.Diagnostics.EventLog> lets you access or customize Windows event logs, which record information about important software or hardware events. Using <xref:System.Diagnostics.EventLog>, you can read from existing logs, write entries to logs, create or delete event sources, delete logs, and respond to log entries. You can also create new logs when creating an event source.
 
 > [!IMPORTANT]
->  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
+> This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
 
  In addition to providing access to individual event logs and their entries, the <xref:System.Diagnostics.EventLog> class lets you access the collection of all event logs. You can use the `static` members of <xref:System.Diagnostics.EventLog> to delete logs, get log lists, create or delete a source, or determine if a computer already contains a particular source.
 
  There are three default event logs: Application, System, and Security. A Security log is read-only. Other applications and services you install, such as Active Directory, might have additional event logs.
 
- There are security considerations when using the <xref:System.Diagnostics.EventLog> class. <xref:System.Diagnostics.EventLog> requires <xref:System.Diagnostics.EventLogPermission> permissions for specific actions. We recommend that <xref:System.Diagnostics.EventLogPermission> not be granted to partially trusted code.  You should never pass any event log object, including <xref:System.Diagnostics.EventLogEntryCollection> and <xref:System.Diagnostics.EventLogEntry> objects, to less trusted code. For example, creating an <xref:System.Diagnostics.EventLog> object, writing an entry, and then passing the <xref:System.Diagnostics.EventLog> object to partially trusted code can create a security issue, because the ability to read and write to the event log allows code to perform actions such as issuing event log messages in the name of another application.
-
- Starting with Windows Vista, User Account Control (UAC) determines the credentials of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To run the code that accesses the Security log, you must first elevate your credentials from standard user to administrator. You can do this when you start an application by opening the shortcut menu for the application (if you're using a mouse, right-click the application icon) and indicating that you want to run as an administrator.
+On Windows, User Account Control (UAC) determines the credentials of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To run the code that accesses the Security log, you must first elevate your credentials from standard user to administrator. You can do this when you start an application by opening the shortcut menu for the application (if you're using a mouse, right-click the application icon) and indicating that you want to run as an administrator.
 
  You can use <xref:System.Diagnostics.EventLog> to create custom event logs that you can view through the server's Event Viewer. Use the <xref:System.Diagnostics.EventLog.RegisterDisplayName*> method to display a localized name for your event log in the Event Viewer. Use the <xref:System.Diagnostics.EventLog.ModifyOverflowPolicy*> method to configure the behavior of your event log when it reaches its maximum log size.
 
@@ -72,15 +70,15 @@
 
  If the event source for the event log associated with the <xref:System.Diagnostics.EventLog> instance doesn't exist, a new event source is created. To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative credentials.
 
- This requirement is because all event logs, including Security logs, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the Security log; therefore, a <xref:System.Security.SecurityException> is thrown.
+ This requirement is because all event logs, including Security logs, must be searched to determine whether the event source is unique. Users don't have permission to access the Security log; therefore, a <xref:System.Security.SecurityException> is thrown.
 
 > [!IMPORTANT]
->  Creating or deleting an event source requires synchronization of the underlying code by using a named mutex. If a highly privileged application locks the named mutex, trying to create or delete an event source causes the application to stop responding until the lock is released. To help prevent this problem, never grant <xref:System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode> permission to untrusted code. In addition, <xref:System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode> permission potentially allows other permissions to be bypassed and should only be granted to highly trusted code.
+> Creating or deleting an event source requires synchronization of the underlying code by using a named mutex. If a highly privileged application locks the named mutex, trying to create or delete an event source causes the application to stop responding until the lock is released. To help prevent this problem, never grant <xref:System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode> permission to untrusted code. In addition, <xref:System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode> permission potentially allows other permissions to be bypassed and should only be granted to highly trusted code.
 
  Applications and services should write to the Application log or to a custom log. Device drivers should write to the System log. If you do not explicitly set the <xref:System.Diagnostics.EventLog.Log> property, the event log defaults to the Application log.
 
 > [!NOTE]
->  There is nothing to protect an application from writing as any registered source.  If an application is granted <xref:System.Diagnostics.EventLogPermissionAccess.Write> permission, it can write events for any valid source registered on the computer.
+> There is nothing to protect an application from writing as any registered source. If an application is granted <xref:System.Diagnostics.EventLogPermissionAccess.Write> permission, it can write events for any valid source registered on the computer.
 
  Use the <xref:System.Diagnostics.EventLog.WriteEvent*> and <xref:System.Diagnostics.EventLog.WriteEntry*> methods to write events to an event log. You must specify an event source to write events; you must create and configure the event source before writing the first entry with the source.
 
@@ -95,17 +93,13 @@
  When writing events, you must at least specify either a message string or the resource identifier for a message string. Other event properties are optional. Examples of optional event settings include the following:
 
 - You can set the <xref:System.Diagnostics.EventLogEntryType> to specify the icon that the Event Viewer displays for the entry.
-
 - You can specify a category identifier for the event, if your application uses categories for filtering the events.
-
 - You can attach binary data to your event entry if you want to associate additional information with a given event.
 
 > [!IMPORTANT]
->  Event logging consumes disk space, processor time, and other system resources. It is important to log only essential information. We recommend that you place event log calls in an error path, rather than in the main code path, so they don't adversely affect performance.
+> Event logging consumes disk space, processor time, and other system resources. It is important to log only essential information. We recommend that you place event log calls in an error path, rather than in the main code path, so they don't adversely affect performance.
 
  For a list of initial property values for an instance of <xref:System.Diagnostics.EventLog>, see the <xref:System.Diagnostics.EventLog.%23ctor*> constructor.
-
-
 
 ## Examples
  The following example creates the event source `MySource` if it doesn't already exist, and writes an entry to the event log `MyNewLog`.
@@ -167,7 +161,7 @@
  Before calling <xref:System.Diagnostics.EventLog.WriteEntry*>, specify the <xref:System.Diagnostics.EventLog.Source> property of the <xref:System.Diagnostics.EventLog> instance. If you are only reading <xref:System.Diagnostics.EventLog.Entries*> from the log, you can alternatively specify only the <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*> properties.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
 
  The following table shows initial property values for an instance of <xref:System.Diagnostics.EventLog>.
 
@@ -235,7 +229,7 @@
  This overload sets the <xref:System.Diagnostics.EventLog.Log> property to the `logName` parameter. Before calling <xref:System.Diagnostics.EventLog.WriteEntry*>, specify the <xref:System.Diagnostics.EventLog.Source> property of the <xref:System.Diagnostics.EventLog> instance. If you are only reading <xref:System.Diagnostics.EventLog.Entries*> from the log, you can alternatively specify only the <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*> properties.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed. This overload of the constructor specifies the <xref:System.Diagnostics.EventLog.Log> property, but you can change this before reading the <xref:System.Diagnostics.EventLog.Entries> property.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed. This overload of the constructor specifies the <xref:System.Diagnostics.EventLog.Log> property, but you can change this before reading the <xref:System.Diagnostics.EventLog.Entries> property.
 
  If the source you specify in the <xref:System.Diagnostics.EventLog.Source> property is unique from other sources on the computer, a subsequent call to <xref:System.Diagnostics.EventLog.WriteEntry*> creates a log with the specified name, if it does not already exist.
 
@@ -309,7 +303,7 @@
  This overload sets the <xref:System.Diagnostics.EventLog.Log> property to the `logName` parameter and the <xref:System.Diagnostics.EventLog.MachineName> property to the `machineName` parameter. Before calling <xref:System.Diagnostics.EventLog.WriteEntry*>, specify the <xref:System.Diagnostics.EventLog.Source> property of the <xref:System.Diagnostics.EventLog>. If you are only reading <xref:System.Diagnostics.EventLog.Entries*> from the log, you can alternatively specify only the <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*> properties.
 
 > [!NOTE]
->  This overload of the constructor specifies the <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*> properties, but you can change either before reading the <xref:System.Diagnostics.EventLog.Entries> property.
+> This overload of the constructor specifies the <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*> properties, but you can change either before reading the <xref:System.Diagnostics.EventLog.Entries> property.
 
  The following table shows initial property values for an instance of <xref:System.Diagnostics.EventLog>.
 
@@ -513,7 +507,7 @@
  The following example clears an event log.
 
 > [!CAUTION]
->  Because Application, System, Security, and other non-custom logs can contain crucial information; be sure to specify a custom log before executing this example code. This example deletes the custom log `myNewLog`.
+> Because Application, System, Security, and other non-custom logs can contain crucial information; be sure to specify a custom log before executing this example code. This example deletes the custom log `myNewLog`.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/Clear/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Diagnostics/EventLog/Clear/source.vb" id="Snippet1":::
@@ -628,11 +622,11 @@
  The <xref:System.Diagnostics.EventLog.CreateEventSource*> method uses the input `sourceData` <xref:System.Diagnostics.EventSourceCreationData.Source*>, <xref:System.Diagnostics.EventSourceCreationData.LogName*> and <xref:System.Diagnostics.EventSourceCreationData.MachineName*> properties to create registry values on the target computer for the new source and its associated event log. A new source name cannot match an existing source name or an existing event log name on the target computer. If the <xref:System.Diagnostics.EventSourceCreationData.LogName> property is not set, the source is registered for the Application event log. If the <xref:System.Diagnostics.EventSourceCreationData.MachineName*> is not set, the source is registered on the local computer.
 
 > [!NOTE]
->  To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
+> To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
 >
->  The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
+> The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
 >
->  Starting with Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> Starting with Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
  Use <xref:System.Diagnostics.EventLog.WriteEvent*> and <xref:System.Diagnostics.EventLog.WriteEntry*> to write events to an event log. You must specify an event source to write events; you must create and configure the event source before writing the first entry with the source.
 
@@ -651,7 +645,7 @@
  To change the configuration details of an existing source, you must delete the source and then create it with the new configuration. If other applications or components use the existing source, create a new source with the updated configuration rather than deleting the existing source.
 
 > [!NOTE]
->  If a source is configured for an event log, and you reconfigure it for another event log, you must restart the computer for the changes to take effect.
+> If a source is configured for an event log, and you reconfigure it for another event log, you must restart the computer for the changes to take effect.
 
 
 
@@ -864,16 +858,16 @@ SVC_UPDATE.EXE
  If `logName` is `null` or an empty string ("") when you call <xref:System.Diagnostics.EventLog.CreateEventSource*>, the log defaults to the Application log. If the log does not exist on the local computer, the system creates a custom log and registers your application as a <xref:System.Diagnostics.EventLog.Source*> for that log.
 
 > [!NOTE]
->  To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
+> To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
 >
->  The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
+> The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
 >
->  In Windows Vista and later, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> In Windows Vista and later, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
  You only need to create an event source if you are writing to the event log. Before writing an entry to an event log, you must register the event source with the event log as a valid source of events. When you write a log entry, the system uses the <xref:System.Diagnostics.EventLog.Source*> to find the appropriate log in which to place your entry. If you are reading the event log, you can either specify the <xref:System.Diagnostics.EventLog.Source*>, or a <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*>.
 
 > [!NOTE]
->  You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log on the local computer. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*> when reading from a log, the local computer (".") is assumed.
+> You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log on the local computer. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*> when reading from a log, the local computer (".") is assumed.
 
  Use <xref:System.Diagnostics.EventLog.WriteEvent*> and <xref:System.Diagnostics.EventLog.WriteEntry*> to write events to an event log. You must specify an event source to write events; you must create and configure the event source before writing the first entry with the source.
 
@@ -890,7 +884,7 @@ SVC_UPDATE.EXE
  To change the configuration details of an existing source, you must delete the source and then create it with the new configuration. If other applications or components use the existing source, create a new source with the updated configuration rather than deleting the existing source.
 
 > [!NOTE]
->  If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
+> If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
 
 
 
@@ -972,8 +966,8 @@ SVC_UPDATE.EXE
           <AttributeName Language="F#">[&lt;System.Obsolete("EventLog.CreateEventSource has been deprecated. Use System.Diagnostics.EventLog.CreateEventSource(EventSourceCreationData sourceData) instead.")&gt;]</AttributeName>
         </Attribute>
         <Attribute FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0">
-          <AttributeName Language="C#">[System.Obsolete("This method has been deprecated.  Please use System.Diagnostics.EventLog.CreateEventSource(EventSourceCreationData sourceData) instead.  https://go.microsoft.com/fwlink/?linkid=14202")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Obsolete("This method has been deprecated.  Please use System.Diagnostics.EventLog.CreateEventSource(EventSourceCreationData sourceData) instead.  https://go.microsoft.com/fwlink/?linkid=14202")&gt;]</AttributeName>
+          <AttributeName Language="C#">[System.Obsolete("This method has been deprecated. Please use System.Diagnostics.EventLog.CreateEventSource(EventSourceCreationData sourceData) instead. https://go.microsoft.com/fwlink/?linkid=14202")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("This method has been deprecated. Please use System.Diagnostics.EventLog.CreateEventSource(EventSourceCreationData sourceData) instead. https://go.microsoft.com/fwlink/?linkid=14202")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1000,11 +994,11 @@ SVC_UPDATE.EXE
  You only need to create an event source if you are writing to the event log. Before writing an entry to an event log, you must register the event source with the event log as a valid source of events. When you write a log entry, the system uses the <xref:System.Diagnostics.EventLog.Source*> to find the appropriate log in which to place your entry. If you are reading the event log, you can either specify the <xref:System.Diagnostics.EventLog.Source*>, or a <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*>.
 
 > [!NOTE]
->  To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
+> To create an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
 >
->  The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. In Windows Vista and later, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
+> The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. In Windows Vista and later, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
 >
->  In Windows Vista and later, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> In Windows Vista and later, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
  Use <xref:System.Diagnostics.EventLog.WriteEvent*> and <xref:System.Diagnostics.EventLog.WriteEntry*> to write events to an event log. You must specify an event source to write events; you must create and configure the event source before writing the first entry with the source.
 
@@ -1122,7 +1116,7 @@ SVC_UPDATE.EXE
  The <xref:System.Diagnostics.EventLog.Delete*> method first deletes the file that holds the contents of the log. It then accesses the registry and removes all the event sources registered for that log. If you recreate the log at a later point, you should register the event sources again, if they are to be reused. If you do not register the event sources and other users write to an event source without specifying a log name, the event source will be created in the Application event log. Therefore, applications that previously were able to write entries to the log you deleted and recreated will write to the Application log instead, because it now contains the event source.
 
 > [!NOTE]
->  Recreating an event log can be a difficult process. Avoid deleting any of the system-created event logs, such as the Application log.
+> Recreating an event log can be a difficult process. Avoid deleting any of the system-created event logs, such as the Application log.
 
  Deleting a log through a call to <xref:System.Diagnostics.EventLog.Delete*> automatically deletes the sources registered to that log. This can make other applications using that log inoperative.
 
@@ -1132,7 +1126,7 @@ SVC_UPDATE.EXE
  The following example deletes a log from the local computer. The example determines the log from its source.
 
 > [!NOTE]
->  More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
+> More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/Delete/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Diagnostics/EventLog/Delete/source1.vb" id="Snippet1":::
@@ -1205,7 +1199,7 @@ SVC_UPDATE.EXE
  This method first deletes the file that holds the contents of the log. It then accesses the registry and removes all the event sources registered for that log. If you recreate the log at a later point, you should register the event sources again, if they are to be reused. If you do not register the event sources and other users write to an event source without specifying a log name, the event source will be created in the Application event log. Therefore, applications that previously were able to write entries to the log you deleted and recreated will write to the Application log instead, because it now contains the event source.
 
 > [!NOTE]
->  Recreating an event log can be a difficult process. Avoid deleting any of the system-created event logs, such as the Application log.
+> Recreating an event log can be a difficult process. Avoid deleting any of the system-created event logs, such as the Application log.
 
  Deleting a log through a call to <xref:System.Diagnostics.EventLog.Delete*> automatically deletes the sources registered to that log. This can make other applications using that log inoperative.
 
@@ -1215,7 +1209,7 @@ SVC_UPDATE.EXE
  The following example deletes a log from the specified computer. The example determines the log from its source.
 
 > [!NOTE]
->  More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
+> More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/Delete/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Diagnostics/EventLog/Delete/source.vb" id="Snippet1":::
@@ -1302,7 +1296,7 @@ SVC_UPDATE.EXE
  Deleting a log through a call to <xref:System.Diagnostics.EventLog.Delete*> automatically deletes the sources registered to that log. This can make other applications using that log inoperative.
 
 > [!NOTE]
->  If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
+> If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
 
 
 
@@ -1310,7 +1304,7 @@ SVC_UPDATE.EXE
  The following example deletes a source from the local computer. The example determines the log from its source, and then deletes the log.
 
 > [!NOTE]
->  More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
+> More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/Delete/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Diagnostics/EventLog/Delete/source1.vb" id="Snippet1":::
@@ -1379,7 +1373,7 @@ SVC_UPDATE.EXE
  Deleting a log through a call to <xref:System.Diagnostics.EventLog.Delete*> automatically deletes the sources registered to that log. This can make other applications using that log inoperative.
 
 > [!NOTE]
->  If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
+> If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
 
 
 
@@ -1387,7 +1381,7 @@ SVC_UPDATE.EXE
  The following example deletes a source from the specified computer. The example determines the log from its source, and then deletes the log.
 
 > [!NOTE]
->  More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
+> More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/Delete/source.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Diagnostics/EventLog/Delete/source.vb" id="Snippet1":::
@@ -1517,7 +1511,7 @@ SVC_UPDATE.EXE
  The <xref:System.Diagnostics.EventLog.EnableRaisingEvents> property determines whether the <xref:System.Diagnostics.EventLog> raises events when entries are written to the log. When the property is `true`, components that receive the <xref:System.Diagnostics.EventLog.EntryWritten> event will receive notification any time an entry is written to the log that is specified in the <xref:System.Diagnostics.EventLog.Log> property. If <xref:System.Diagnostics.EventLog.EnableRaisingEvents*> is `false`, no events are raised.
 
 > [!NOTE]
->  You can receive event notifications only when entries are written on the local computer. You cannot receive notifications for entries written on remote computers.
+> You can receive event notifications only when entries are written on the local computer. You cannot receive notifications for entries written on remote computers.
 
 
 
@@ -1634,7 +1628,7 @@ SVC_UPDATE.EXE
  An important distinction between reading and writing log entries is that it is not necessary to explicitly call a read method. After the <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*> are specified, the <xref:System.Diagnostics.EventLog.Entries> property is automatically populated. If you change the value of the <xref:System.Diagnostics.EventLog.Log*> or <xref:System.Diagnostics.EventLog.MachineName> property, the <xref:System.Diagnostics.EventLog.Entries> property is repopulated the next time you read it.
 
 > [!NOTE]
->  You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer, ".", is assumed.
+> You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer, ".", is assumed.
 
 
 
@@ -2060,12 +2054,12 @@ SVC_UPDATE.EXE
  Three log files exist by default on the server: Application, System, and Security. Applications and services use the Application log file. Device drivers use the System log file. The system generates success and failure audit events in the Security log when auditing is turned on. If you have other applications installed, like Active Directory on Windows servers, there might be other default log files. In addition, you can create custom log files on a local or remote computer. Custom logs help organize your entries in a more detailed way than is allowed when your components write events to the default Application log.
 
 > [!NOTE]
->  Log names are limited to eight characters. According to the system, MyLogSample1 and MyLogSample2 are the same log.
+> Log names are limited to eight characters. According to the system, MyLogSample1 and MyLogSample2 are the same log.
 
  If you write to an event log, it is not enough to specify the <xref:System.Diagnostics.EventLog.Log> property. You must associate a <xref:System.Diagnostics.EventLog.Source> property with your event log resource to connect it to a particular log. It is not necessary to specify a <xref:System.Diagnostics.EventLog.Source*> when only reading from a log, but an event source must be associated with the event log resource in the server's registry. You can specify only the <xref:System.Diagnostics.EventLog.Log*> name and <xref:System.Diagnostics.EventLog.MachineName*> (server computer name) to read from it.
 
 > [!NOTE]
->  You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
+> You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
 
  If the <xref:System.Diagnostics.EventLog.Source> property has not been specified, a call to <xref:System.Diagnostics.EventLog.Log*> returns an empty string if <xref:System.Diagnostics.EventLog.Log*> has not been explicitly set (by setting the <xref:System.Diagnostics.EventLog.Log> property, or through the constructor). If the <xref:System.Diagnostics.EventLog.Source*> has been specified, <xref:System.Diagnostics.EventLog.Log*> returns the name of the log to which that source was registered.
 
@@ -2078,7 +2072,7 @@ SVC_UPDATE.EXE
  If the <xref:System.Diagnostics.EventLog.Log*> value changes, the event log is closed and all event handles are released.
 
 > [!CAUTION]
->  If you set the <xref:System.Diagnostics.EventLog.Log> property to the name of a log that does not exist, the system attaches the <xref:System.Diagnostics.EventLog> to the Application log, but does not warn you that it is using a log other than the one you specified.
+> If you set the <xref:System.Diagnostics.EventLog.Log> property to the name of a log that does not exist, the system attaches the <xref:System.Diagnostics.EventLog> to the Application log, but does not warn you that it is using a log other than the one you specified.
 
 
 
@@ -2148,9 +2142,9 @@ SVC_UPDATE.EXE
 ## Remarks
 
 > [!NOTE]
->  In Windows Vista and later, users do not have permission to access the security log. If you are running Windows Vista or later as a user, you will get a <xref:System.Security.SecurityException> when you attempt to access the display name for an event in the security log.
+> In Windows Vista and later, users do not have permission to access the security log. If you are running Windows Vista or later as a user, you will get a <xref:System.Security.SecurityException> when you attempt to access the display name for an event in the security log.
 >
->  In Windows Vista and later, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> In Windows Vista and later, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses the security log, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
 
 
@@ -2218,7 +2212,7 @@ SVC_UPDATE.EXE
  The following example deletes a source from the local computer. The example determines the log from its source, and then deletes the log.
 
 > [!NOTE]
->  More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
+> More than one source might write to an event log. Before deleting a custom log, make sure there are no other sources writing to that log.
 
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/Delete/source1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Diagnostics/EventLog/Delete/source1.vb" id="Snippet1":::
@@ -2284,7 +2278,7 @@ SVC_UPDATE.EXE
  If you write to an event log, you must associate a <xref:System.Diagnostics.EventLog.Source*> with your event log object to connect it to a particular log. It is not necessary to specify the <xref:System.Diagnostics.EventLog.Source> property when only reading from a log. You can specify only the <xref:System.Diagnostics.EventLog.Log*> name and <xref:System.Diagnostics.EventLog.MachineName*> (server computer name).
 
 > [!NOTE]
->  You need not specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
+> You need not specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
 
  A source can only be registered to one log at a time. If the <xref:System.Diagnostics.EventLog.Source> property was set for an instance of <xref:System.Diagnostics.EventLog>, you cannot change the <xref:System.Diagnostics.EventLog.MachineName> property for that <xref:System.Diagnostics.EventLog> without changing the value of <xref:System.Diagnostics.EventLog.Source*> or calling <xref:System.Diagnostics.EventLog.DeleteEventSource*> first. If you change the <xref:System.Diagnostics.EventLog.MachineName> property, the <xref:System.Diagnostics.EventLog> closes all handles and reattaches to the log and source on the new computer.
 
@@ -2359,7 +2353,7 @@ SVC_UPDATE.EXE
  The <xref:System.Diagnostics.EventLog.MaximumKilobytes> property represents the size limit of the event log file. When the event log reaches the size limit, the configured <xref:System.Diagnostics.EventLog.OverflowAction*> value determines whether new entries are discarded, or whether new entries overwrite older entries.
 
 > [!NOTE]
->  This property represents a configuration setting for the event log represented by this instance. When the event log reaches its maximum size, this property specifies how the operating system handles new entries written by all event sources registered for the event log.
+> This property represents a configuration setting for the event log represented by this instance. When the event log reaches its maximum size, this property specifies how the operating system handles new entries written by all event sources registered for the event log.
 
 
 
@@ -2568,7 +2562,7 @@ SVC_UPDATE.EXE
  Use the <xref:System.Diagnostics.EventLog.OverflowAction> property value to examine the configured overflow behavior for an event log at its maximum size. Use the <xref:System.Diagnostics.EventLog.ModifyOverflowPolicy*> method to change the overflow behavior for an event log.
 
 > [!NOTE]
->  The overflow behavior takes effect only when an event log reaches its maximum file size. The overflow behavior does not affect writing a new entry to a log that can accommodate additional event log entries.
+> The overflow behavior takes effect only when an event log reaches its maximum file size. The overflow behavior does not affect writing a new entry to a log that can accommodate additional event log entries.
 
 
 
@@ -2633,7 +2627,7 @@ SVC_UPDATE.EXE
  If the Event Viewer cannot load the localized string from the resource file, or if no display name was registered for the event log, then the Event Viewer displays the event log name defined in <xref:System.Diagnostics.EventLog.Log*>.
 
 > [!NOTE]
->  You do not need to register a display name for the pre-defined event logs. The operating system registers the localized display names for the Application, System, and Security event logs.
+> You do not need to register a display name for the pre-defined event logs. The operating system registers the localized display names for the Application, System, and Security event logs.
 
 
 
@@ -2823,7 +2817,7 @@ SVC_UPDATE.EXE
  You only need to specify an event source if you are writing to an event log. Before writing an entry to an event log, you must register the event source with the event log as a valid source of events. When you write a log entry, the system uses the <xref:System.Diagnostics.EventLog.Source> property to find the appropriate log in which to place your entry. If you are reading the event log, you can either specify the <xref:System.Diagnostics.EventLog.Source*>, or a <xref:System.Diagnostics.EventLog.Log*> and <xref:System.Diagnostics.EventLog.MachineName*>.
 
 > [!NOTE]
->  You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log on the local computer. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
+> You are not required to specify the <xref:System.Diagnostics.EventLog.MachineName*> if you are connecting to a log on the local computer. If you do not specify the <xref:System.Diagnostics.EventLog.MachineName*>, the local computer (".") is assumed.
 
  Use <xref:System.Diagnostics.EventLog.WriteEvent*> and <xref:System.Diagnostics.EventLog.WriteEntry*> to write events to an event log. You must specify an event source to write events; you must create and configure the event source before writing the first entry with the source.
 
@@ -2840,7 +2834,7 @@ SVC_UPDATE.EXE
  To change the configuration details of an existing source, you must delete the source and then create it with the new configuration. If other applications or components use the existing source, create a new source with the updated configuration rather than deleting the existing source.
 
 > [!NOTE]
->  If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
+> If a source has already been mapped to a log and you remap it to a new log, you must restart the computer for the changes to take effect.
 
 
 
@@ -2923,14 +2917,14 @@ SVC_UPDATE.EXE
  Because this method accesses the registry, you must have the appropriate registry permissions on the local computer; otherwise, a <xref:System.Security.SecurityException> will be thrown.
 
 > [!NOTE]
->  To search for an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
+> To search for an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
 >
->  The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
+> The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
 >
->  Starting with Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> Starting with Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
 > [!NOTE]
->  A service that is executing under the <xref:System.ServiceProcess.ServiceAccount.LocalSystem> account does not have the privileges required to execute this method. The solution is to check whether the event source exists in the <xref:System.ServiceProcess.ServiceInstaller>, and if it does not exist, to create the source in the installer.
+> A service that is executing under the <xref:System.ServiceProcess.ServiceAccount.LocalSystem> account does not have the privileges required to execute this method. The solution is to check whether the event source exists in the <xref:System.ServiceProcess.ServiceInstaller>, and if it does not exist, to create the source in the installer.
 
  Because you cannot give a new source the name of an existing source on the same computer, use this method before attempting to call <xref:System.Diagnostics.EventLog.CreateEventSource*> to ensure that a source with the name specified by `source` does not already exist on the local computer. The `source` parameter is not case-sensitive.
 
@@ -3012,14 +3006,14 @@ SVC_UPDATE.EXE
  Because this method accesses the registry, you must have the appropriate registry permissions on the given server; otherwise, a <xref:System.Security.SecurityException> will be thrown.
 
 > [!NOTE]
->  To search for an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
+> To search for an event source in Windows Vista and later or Windows Server 2003, you must have administrative privileges.
 >
->  The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
+> The reason for this requirement is that all event logs, including security, must be searched to determine whether the event source is unique. Starting with Windows Vista, users do not have permission to access the security log; therefore, a <xref:System.Security.SecurityException> is thrown.
 >
->  Starting with Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> Starting with Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
 > [!NOTE]
->  A service that is executing under the <xref:System.ServiceProcess.ServiceAccount.LocalSystem> account does not have the privileges required to execute this method. The solution is to check whether the event source exists in the <xref:System.ServiceProcess.ServiceInstaller>, and if it does not exist, to create the source in the installer.
+> A service that is executing under the <xref:System.ServiceProcess.ServiceAccount.LocalSystem> account does not have the privileges required to execute this method. The solution is to check whether the event source exists in the <xref:System.ServiceProcess.ServiceInstaller>, and if it does not exist, to create the source in the installer.
 
  Because you cannot give a new source the name of an existing source on the same computer, use this method before attempting to call <xref:System.Diagnostics.EventLog.CreateEventSource*> to ensure that a source with the name specified by `source` does not already exist on the computer. The `source` and `machineName` parameters are not case sensitive.
 
@@ -3161,7 +3155,7 @@ SVC_UPDATE.EXE
  Use this method to write an information entry to the event log associated with this <xref:System.Diagnostics.EventLog> instance. If you want to specify any other <xref:System.Diagnostics.EventLogEntryType>, use a different overload of <xref:System.Diagnostics.EventLog.WriteEntry*>.
 
 > [!NOTE]
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
  You must set the <xref:System.Diagnostics.EventLog.Source> property on your <xref:System.Diagnostics.EventLog> component before you can write entries to the log. You must create and configure the event source before writing the first entry with the source.
 
@@ -3170,24 +3164,19 @@ SVC_UPDATE.EXE
  If the source specified in the <xref:System.Diagnostics.EventLog.Source> property of this <xref:System.Diagnostics.EventLog> instance is not registered on the computer that your component is writing to, <xref:System.Diagnostics.EventLog.WriteEntry*> calls <xref:System.Diagnostics.EventLog.CreateEventSource*> and registers the source.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
 
  If the system needs to register the <xref:System.Diagnostics.EventLog.Source*> through a call to <xref:System.Diagnostics.EventLog.WriteEntry*> and the <xref:System.Diagnostics.EventLog.Log> property has not been set on your <xref:System.Diagnostics.EventLog> instance, the log defaults to the Application log.
 
 > [!NOTE]
->  Many of the exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
+> Many of the exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
 
  The source must be configured either for writing localized entries or for writing direct strings. The <xref:System.Diagnostics.EventLog.WriteEntry*> method writes the given string directly to the event log; it does not use a localizable message resource file. Use the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write events using a localized message resource file.
 
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If you write an entry to a remote computer, the value of the message (the text string) might not be what you expect if the remote computer is not running the .NET Framework.
-
-> [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
-
-
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 
 ## Examples
  The following example creates the source `MySource` if it does not already exist, and writes an entry to the event log `MyNewLog`.
@@ -3277,19 +3266,16 @@ SVC_UPDATE.EXE
  If the source specified in the <xref:System.Diagnostics.EventLog.Source> property of this <xref:System.Diagnostics.EventLog> instance is not registered on the computer that your component is writing to, <xref:System.Diagnostics.EventLog.WriteEntry*> calls <xref:System.Diagnostics.EventLog.CreateEventSource*> and registers the source.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
 
  If the system needs to register the <xref:System.Diagnostics.EventLog.Source*> through a call to <xref:System.Diagnostics.EventLog.WriteEntry*> and the <xref:System.Diagnostics.EventLog.Log> property has not been set on your <xref:System.Diagnostics.EventLog> instance, the log defaults to the Application log.
 
 > [!NOTE]
->  Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
+> Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
 
  The source must be configured either for writing localized entries or for writing direct strings. The <xref:System.Diagnostics.EventLog.WriteEntry*> method writes the given string directly to the event log; it does not use a localizable message resource file. Use the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write events using a localized message resource file.
 
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
-
-> [!NOTE]
->  If you write an entry to a remote computer, the value of the message (the text string) might not be what you expect if the remote computer is not running the .NET Framework.
 
 > [!NOTE]
 > If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
@@ -3471,7 +3457,7 @@ SVC_UPDATE.EXE
  Use this method to write an entry with an application-defined `eventID` to the event log. The `eventID` together with the source uniquely identify an event. Each application can define its own numbered events and the description strings to which they map. Event viewers display these string values to help the user understand what went wrong and suggest what actions to take.
 
 > [!NOTE]
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
  In addition to the event identifier, you can specify an <xref:System.Diagnostics.EventLogEntryType> for the event being written to the event log. The `type` is indicated by an icon and text in the Type column in the Event Viewer for a log. This parameter indicates whether the event type is error, warning, information, success audit, or failure audit.
 
@@ -3482,24 +3468,19 @@ SVC_UPDATE.EXE
  If the source specified in the <xref:System.Diagnostics.EventLog.Source> property of this <xref:System.Diagnostics.EventLog> instance is not registered on the computer that your component is writing to, <xref:System.Diagnostics.EventLog.WriteEntry*> calls <xref:System.Diagnostics.EventLog.CreateEventSource*> and registers the source.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
 
  If the system needs to register the <xref:System.Diagnostics.EventLog.Source*> through a call to <xref:System.Diagnostics.EventLog.WriteEntry*> and the <xref:System.Diagnostics.EventLog.Log> property has not been set on your <xref:System.Diagnostics.EventLog> instance, the log defaults to the Application log.
 
 > [!NOTE]
->  Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
+> Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
 
  The source must be configured either for writing localized entries or for writing direct strings. The <xref:System.Diagnostics.EventLog.WriteEntry*> method writes the given string directly to the event log; it does not use a localizable message resource file. Use the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write events using a localized message resource file.
 
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If you write an entry to a remote computer, the value of the message (the text string) might not be what you expect if the remote computer is not running the .NET Framework.
-
-> [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
-
-
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 
 ## Examples
  :::code language="csharp" source="~/snippets/csharp/System.Diagnostics/EventLog/WriteEntry/eventlog_writeentry_1_3.cs" id="Snippet3":::
@@ -3594,7 +3575,7 @@ SVC_UPDATE.EXE
  Use this method to write an entry of a specified <xref:System.Diagnostics.EventLogEntryType> to the event log, using a source already registered as an event source for the appropriate log. The `type` is indicated by an icon and text in the Type column in the Event Viewer for a log.
 
 > [!NOTE]
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
  You must create and configure the event source before writing the first entry with the source. Create the new event source during the installation of your application. This allows time for the operating system to refresh its list of registered event sources and their configuration. If the operating system has not refreshed its list of event sources, and you attempt to write an event with the new source, the write operation will fail. You can configure a new source using an <xref:System.Diagnostics.EventLogInstaller>, or using the <xref:System.Diagnostics.EventLog.CreateEventSource*> method. You must have administrative rights on the computer to create a new event source.
 
@@ -3603,7 +3584,7 @@ SVC_UPDATE.EXE
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 
 
 
@@ -3689,10 +3670,10 @@ SVC_UPDATE.EXE
  Use this method to write an entry with an application-defined `category` to the event log. The Event Viewer uses the category to filter events written by an event source. The Event Viewer can display the category as a numeric value, or it can use the category as a resource identifier to display a localized category string.
 
 > [!NOTE]
->  The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 appears as 65,526, a -1 as 65,535.
+> The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 appears as 65,526, a -1 as 65,535.
 
 > [!NOTE]
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
  To display localized category strings in the Event Viewer, you must use an event source configured with a category resource file, and set the `category` to a resource identifier in the category resource file. If the event source does not have a configured category resource file, or the specified `category` does not index a string in the category resource file, then the Event Viewer displays the numeric category value for that entry. Configure the category resource file, along with the number of category strings in the resource file, using the <xref:System.Diagnostics.EventLogInstaller> or the <xref:System.Diagnostics.EventSourceCreationData> class.
 
@@ -3707,22 +3688,19 @@ SVC_UPDATE.EXE
  If the source specified in the <xref:System.Diagnostics.EventLog.Source> property of this <xref:System.Diagnostics.EventLog> instance is not registered on the computer that your component is writing to, <xref:System.Diagnostics.EventLog.WriteEntry*> calls <xref:System.Diagnostics.EventLog.CreateEventSource*> and registers the source.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
 
  If the system needs to register the <xref:System.Diagnostics.EventLog.Source*> through a call to <xref:System.Diagnostics.EventLog.WriteEntry*> and the <xref:System.Diagnostics.EventLog.Log> property has not been set on your <xref:System.Diagnostics.EventLog> instance, the log defaults to the Application log.
 
 > [!NOTE]
->  Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
+> Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
 
  The source must be configured either for writing localized entries or for writing direct strings. The <xref:System.Diagnostics.EventLog.WriteEntry*> method writes the given string directly to the event log; it does not use a localizable message resource file. Use the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write events using a localized message resource file.
 
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If you write an entry to a remote computer, the value of the message (the text string) might not be what you expect if the remote computer is not running the .NET Framework.
-
-> [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 
 
 
@@ -3821,7 +3799,7 @@ SVC_UPDATE.EXE
  Use this method to write an entry with an application-defined `eventID` to the event log, using a source already registered as an event source for the appropriate log. The `eventID`, along with the source, uniquely identify an event. Each application can define its own numbered events and the description strings to which they map. Event viewers present these strings to the user to help the user understand what went wrong and suggest what actions to take.
 
 > [!NOTE]
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
  In addition to the event identifier, this overload of <xref:System.Diagnostics.EventLog.WriteEntry*> lets you specify an <xref:System.Diagnostics.EventLogEntryType> for the event being written to the event log. The `type` is indicated by an icon and text in the Type column in the Event Viewer for a log. This parameter indicates whether the event type is error, warning, information, success audit, or failure audit.
 
@@ -3832,7 +3810,7 @@ SVC_UPDATE.EXE
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 
 
 
@@ -3924,10 +3902,10 @@ SVC_UPDATE.EXE
  In addition to the binary data, you can specify an application-defined category and an application-defined event identifier. The Event Viewer uses the category to filter events written by an event source. The Event Viewer can display the category as a numeric value, or it can use the category as a resource identifier to display a localized category string.
 
 > [!NOTE]
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
 > [!NOTE]
->  The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 appears as 65,526, a -1 as 65,535.
+> The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 appears as 65,526, a -1 as 65,535.
 
  To display localized category strings in the Event Viewer, you must use an event source configured with a category resource file, and set the `category` to a resource identifier in the category resource file. If the event source does not have a configured category resource file, or the specified `category` does not index a string in the category resource file, then the Event Viewer displays the numeric category value for that entry. Configure the category resource file, along with the number of category strings in the resource file, using the <xref:System.Diagnostics.EventLogInstaller> or the <xref:System.Diagnostics.EventSourceCreationData> class.
 
@@ -3942,22 +3920,19 @@ SVC_UPDATE.EXE
  If the source specified in the <xref:System.Diagnostics.EventLog.Source> property of this <xref:System.Diagnostics.EventLog> instance is not registered on the computer that your component is writing to, <xref:System.Diagnostics.EventLog.WriteEntry*> calls <xref:System.Diagnostics.EventLog.CreateEventSource*> and registers the source.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.CreateEventSource*> or <xref:System.Diagnostics.EventLog.WriteEntry*>, the local computer (".") is assumed.
 
  If the system needs to register the <xref:System.Diagnostics.EventLog.Source*> through a call to <xref:System.Diagnostics.EventLog.WriteEntry*> and the <xref:System.Diagnostics.EventLog.Log> property has not been set on your <xref:System.Diagnostics.EventLog> instance, the log defaults to the Application log.
 
 > [!NOTE]
->  Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
+> Many exceptions listed above are generated by errors raised during the process of registering the <xref:System.Diagnostics.EventLog.Source*>.
 
  The source must be configured either for writing localized entries or for writing direct strings. The <xref:System.Diagnostics.EventLog.WriteEntry*> method writes the given string directly to the event log; it does not use a localizable message resource file. Use the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write events using a localized message resource file.
 
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If you write an entry to a remote computer, the value of the message (the text string) might not be what you expect if the remote computer is not running the .NET Framework.
-
-> [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 
 
 
@@ -4058,7 +4033,7 @@ SVC_UPDATE.EXE
  Use this method to write an entry with an application-defined `category` to the event log, using a source that is already registered as an event source for the appropriate log. The Event Viewer uses the category to filter events written by an event source. The Event Viewer can display the category as a numeric value, or it can use the category as a resource identifier to display a localized category string.
 
 > [!NOTE]
->  The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 appears as 65,526, a -1 as 65,535.
+> The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 appears as 65,526, a -1 as 65,535.
 
  To display localized category strings in the Event Viewer, you must use an event source configured with a category resource file, and set the `category` to a resource identifier in the category resource file. If the event source does not have a configured category resource file, or the specified `category` does not index a string in the category resource file, then the Event Viewer displays the numeric category value for that entry. Configure the category resource file, along with the number of category strings in the resource file, using the <xref:System.Diagnostics.EventLogInstaller> or the <xref:System.Diagnostics.EventSourceCreationData> class.
 
@@ -4073,9 +4048,9 @@ SVC_UPDATE.EXE
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 >
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
 
 
@@ -4180,7 +4155,7 @@ SVC_UPDATE.EXE
  In addition to the binary data, you can specify an application-defined category and an application-defined event identifier. The Event Viewer uses the category to filter events written by an event source. The Event Viewer can display the category as a numeric value, or it can use the category as a resource identifier to display a localized category string.
 
 > [!NOTE]
->  The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 will appear as 65,526, a -1 as 65,535.
+> The `category` parameter should be a positive value. Negative category values appear as a complementary positive number in the Event Viewer. For example, a -10 will appear as 65,526, a -1 as 65,535.
 
  To display localized category strings in the Event Viewer, you must use an event source configured with a category resource file, and set the `category` to a resource identifier in the category resource file. If the event source does not have a configured category resource file, or the specified `category` does not index a string in the category resource file, then the Event Viewer displays the numeric category value for that entry. Configure the category resource file, along with the number of category strings in the resource file, using the <xref:System.Diagnostics.EventLogInstaller> or the <xref:System.Diagnostics.EventSourceCreationData> class.
 
@@ -4195,9 +4170,9 @@ SVC_UPDATE.EXE
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
+> If the `message` parameter contains a NUL character, the message in the event log is terminated at the NUL character.
 >
->  The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
 
 
@@ -4541,16 +4516,14 @@ SVC_UPDATE.EXE
  You must create and configure the event source before writing the first entry with the source. Create the new event source during the installation of your application. This allows time for the operating system to refresh its list of registered event sources and their configuration. If the operating system has not refreshed its list of event sources, and you attempt to write an event with the new source, the write operation will fail. You can configure a new source using an <xref:System.Diagnostics.EventLogInstaller>, or using the <xref:System.Diagnostics.EventLog.CreateEventSource*> method. You must have administrative rights on the computer to create a new event source.
 
 > [!NOTE]
->  If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.WriteEvent*>, the local computer (".") is assumed.
+> If you do not specify a <xref:System.Diagnostics.EventLog.MachineName*> for your <xref:System.Diagnostics.EventLog> instance before you call <xref:System.Diagnostics.EventLog.WriteEvent*>, the local computer (".") is assumed.
 
  The source must be configured either for writing localized entries or for writing direct strings. Use the <xref:System.Diagnostics.EventLog.WriteEntry*> method if your application writes string values directly to the event log.
 
  If your application writes entries using both resource identifiers and string values, you must register two separate sources. For example, configure one source with resource files, and then use that source in the <xref:System.Diagnostics.EventLog.WriteEvent*> method to write entries using resource identifiers to the event log. Then create a different source without resource files, and use that source in the <xref:System.Diagnostics.EventLog.WriteEntry*> method to write strings directly to the event log using that source.
 
 > [!NOTE]
->  If you write an entry to a remote computer, the value of the `message` string might not be what you expect if the remote computer is not running the .NET Framework. Also, the `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
-
-
+> The `message` string cannot contain %*n*, where *n* is an integer value (for example, %1), because the event viewer treats it as an insertion string. Because an Internet Protocol, version 6 (IPv6) address can contain this character sequence, you cannot log an event message that contains an IPv6 address.
 
 ## Examples
  The following example writes two audit entries to the event log `myNewLog`. The example creates a new event source and a new event log if they do not exist on the local computer. The event message text is specified using a resource identifier in a resource file.

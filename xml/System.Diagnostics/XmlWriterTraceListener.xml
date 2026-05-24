@@ -39,28 +39,7 @@
 
 ## Remarks
 
-> [!NOTE]
->  You must have unmanaged code permission to create an instance of the <xref:System.Diagnostics.XmlWriterTraceListener> class.
-
  The <xref:System.Diagnostics.XmlWriterTraceListener> class converts tracing and debugging information into an XML-encoded text stream. The description of the XML output is shown in the tables that follow. You can use the [Service Trace Viewer Tool (SvcTraceViewer.exe)](https://learn.microsoft.com/dotnet/framework/wcf/service-trace-viewer-tool-svctraceviewer-exe) to display the XML output.
-
-You can create an <xref:System.Diagnostics.XmlWriterTraceListener> in your code. Alternatively, for .NET Framework apps, you can enable or disable an <xref:System.Diagnostics.XmlWriterTraceListener> through the application configuration file and then use the configured <xref:System.Diagnostics.XmlWriterTraceListener> in your application. To configure an <xref:System.Diagnostics.XmlWriterTraceListener>, edit the configuration file that corresponds to the name of your application. In this file, you can add or remove a listener, set the properties for a listener, or remove listeners. The configuration file should be formatted like the following example.
-
-```xml
-<configuration>
-  <system.diagnostics>
-    <trace autoflush="false" indentsize="4">
-      <listeners>
-        <add name="xmlListener"
-          type="System.Diagnostics.XmlWriterTraceListener"
-          initializeData="xmlOutput.xml"
-          traceOutputOptions="ProcessId, DateTime" />
-        <remove name="Default" />
-      </listeners>
-    </trace>
-  </system.diagnostics>
-</configuration>
-```
 
  The <xref:System.Diagnostics.XmlWriterTraceListener> class inherits the <xref:System.Diagnostics.TraceListener.Filter> property from the base class <xref:System.Diagnostics.TraceListener>. The <xref:System.Diagnostics.TraceListener.Filter> property allows an additional level of trace output filtering at the listener. If there is a filter present, the `Trace` methods of the trace listener call the <xref:System.Diagnostics.TraceFilter.ShouldTrace*> method of the filter to determine whether to emit the trace.
 
@@ -72,8 +51,8 @@ You can create an <xref:System.Diagnostics.XmlWriterTraceListener> in your code.
 
  The following table describes the elements and attributes of the XML output.
 
-|Element|Attributes|Output|Notes|
-|-------------|----------------|------------|-----------|
+| Element | Attributes | Output | Notes |
+|---------|------------|--------|-------|
 |`CallStack`|None|Depends on the presence of the <xref:System.Diagnostics.TraceOptions.Callstack> flag in the <xref:System.Diagnostics.TraceListener.TraceOutputOptions> property.|Special characters such as > or < are replaced with escape sequences. See the escaped character translation table that follows.|
 |`Computer`|None|Always present.|The value of the <xref:System.Environment.MachineName> property.|
 |`Correlation`|`ActivityID`|Always present|If not specified, the default is an empty GUID.|
@@ -94,15 +73,15 @@ You can create an <xref:System.Diagnostics.XmlWriterTraceListener> in your code.
 
  The following table shows the characters that are escaped in the XML output. Escaping occurs in all the elements and attributes with the exception of the `DataItem` element, which is not escaped if the object passed to the `data` parameter of the <xref:System.Diagnostics.XmlWriterTraceListener.TraceData*> method is an <xref:System.Xml.XPath.XPathNavigator> object. If an <xref:System.Xml.XPath.XPathNavigator> is used for the data object, the <xref:System.Xml.XPath.XPathNavigator.MoveToRoot*> method is called and the entire root node is traced as unescaped data.
 
-|Escaped character|Value|
-|-----------------------|-----------|
-|&|&amp;|
-|\<|&lt;|
-|>|&gt;|
-|"|&quot;|
-|\|&apos;|
-|0xD|&\#xD;|
-|0xA|&\#xA;|
+| Escaped character | Value  |
+|-------------------|--------|
+| &                 | &amp;  |
+| \<                | &lt;   |
+| >                 | &gt;   |
+| "                 | &quot; |
+| \                 | &apos; |
+| 0xD               | &\#xD; |
+| 0xA               | &\#xA; |
 
 ## Examples
  The following code example shows the use of the <xref:System.Diagnostics.XmlWriterTraceListener> class to write both escaped and non-escaped data to file logs.

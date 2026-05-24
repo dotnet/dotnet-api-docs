@@ -43,14 +43,7 @@
 ## Remarks
  The <xref:System.Diagnostics.PerformanceCounter> component can be used for both reading existing predefined or custom counters and publishing (writing) performance data to custom counters.
 
- There are numerous predefined counters listed in the Windows Performance Monitor's **Add Counters** dialog box. To learn about the .NET Framework performance counters, see [Performance Counters](/dotnet/framework/debug-trace-profile/performance-counters).
-
- This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
-
-> [!IMPORTANT]
-> In versions 1.0 and 1.1 of .NET Framework, this class requires immediate callers to be fully trusted. Starting with .NET Framework version 2.0, this class requires <xref:System.Diagnostics.PerformanceCounterPermission> for specific actions. It is strongly recommended that <xref:System.Diagnostics.PerformanceCounterPermission> not be granted to semi-trusted code. The ability to read and write performance counters allows code to perform actions such as enumerating executing processes and obtaining information about them.
->
-> In addition, passing a <xref:System.Diagnostics.PerformanceCounter> object to less-trusted code can create a security issue. Never pass performance counter objects, such as a <xref:System.Diagnostics.PerformanceCounterCategory> or <xref:System.Diagnostics.PerformanceCounter>, to less trusted code.
+ There are numerous predefined counters listed in the Windows Performance Monitor's **Add Counters** dialog box. To learn about the .NET performance counters, see [Performance Counters](/dotnet/framework/debug-trace-profile/performance-counters).
 
  To read from a performance counter, create an instance of the <xref:System.Diagnostics.PerformanceCounter> class, set the <xref:System.Diagnostics.PerformanceCounter.CategoryName*>, <xref:System.Diagnostics.PerformanceCounter.CounterName*>, and, optionally, the <xref:System.Diagnostics.PerformanceCounter.InstanceName*> or <xref:System.Diagnostics.PerformanceCounter.MachineName*> properties, and then call the <xref:System.Diagnostics.PerformanceCounter.NextValue*> method to take a performance counter reading.
 
@@ -70,7 +63,7 @@
  To obtain performance data for counters that required an initial or previous value for performing the necessary calculation, call the <xref:System.Diagnostics.PerformanceCounter.NextValue*> method twice and use the information returned as your application requires.
 
 > [!NOTE]
-> Performance counter categories installed with .NET use separate shared memory, with each performance counter category having its own memory. You can specify the size of separate shared memory by creating a DWORD named FileMappingSize in the registry key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\\*\<category name>*\Performance. The FileMappingSize value is set to the shared memory size of the category. The default size is 131072 decimal. If the FileMappingSize value is not present, the `fileMappingSize` attribute value for the `performanceCounters` element specified in the Machine.config file is used, causing additional overhead for configuration file processing. You can realize a performance improvement for application startup by setting the file mapping size in the registry. For more information about the file mapping size, see [&lt;performanceCounters&gt;](/dotnet/framework/configure-apps/file-schema/trace-debug/performancecounters-element).
+> Performance counter categories installed with .NET use separate shared memory, with each performance counter category having its own memory. You can specify the size of separate shared memory by creating a DWORD named FileMappingSize in the registry key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\\*\<category name>*\Performance. The FileMappingSize value is set to the shared memory size of the category. The default size is 131072 decimal.
 
 ## Examples
  The following code example demonstrates the use of the <xref:System.Diagnostics.PerformanceCounter> class to create and use an <xref:System.Diagnostics.PerformanceCounterType.AverageCount64> counter type. The example creates categories, sets up counters, collects data from the counters, and calls the <xref:System.Diagnostics.CounterSampleCalculator> class to interpret the performance counter data. The intermediate and final results are displayed in the console window. For additional examples of other performance counter types, see the <xref:System.Diagnostics.PerformanceCounterType> enumeration.
@@ -193,10 +186,6 @@
 
 > [!NOTE]
 >  To read performance counters from a non-interactive logon session in Windows Vista and later, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
  ]]></format>
         </remarks>
@@ -278,10 +267,6 @@
 
 > [!NOTE]
 >  To read performance counters from a non-interactive logon session in Windows Vista and later, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
 
 ## Examples
  The following code example creates an instance of the <xref:System.Diagnostics.PerformanceCounter> class. The example passes in category names, counter names, and a flag value indicating that the counter is not read-only. This code example is part of a larger example for the <xref:System.Diagnostics.PerformanceCounter> class.
@@ -303,7 +288,7 @@
 
  -or-
 
- The category specified is not a .NET Framework custom category (if <paramref name="readOnly" /> is <see langword="false" />).
+ The category specified is not a .NET custom category (if <paramref name="readOnly" /> is <see langword="false" />).
 
  -or-
 
@@ -369,11 +354,7 @@
  To create a performance category instance, specify an `instanceName` on the <xref:System.Diagnostics.PerformanceCounter.%23ctor*> constructor. If the category instance specified by `instanceName` already exists the new object will reference the existing category instance.
 
 > [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
  ]]></format>
         </remarks>
@@ -462,11 +443,7 @@
  To create a performance category instance, specify an `instanceName` on the <xref:System.Diagnostics.PerformanceCounter.%23ctor*> constructor. If the category instance specified by `instanceName` already exists the new object will reference the existing category instance.
 
 > [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
  ]]></format>
         </remarks>
@@ -487,7 +464,7 @@
 
  -or-
 
- The category specified is not a .NET Framework custom category (if <paramref name="readOnly" /> is <see langword="false" />).
+ The category specified is not a .NET custom category (if <paramref name="readOnly" /> is <see langword="false" />).
 
  -or-
 
@@ -560,11 +537,7 @@
  To create a performance category instance, specify an `instanceName` on the <xref:System.Diagnostics.PerformanceCounter.%23ctor*> constructor. If the category instance specified by `instanceName` already exists the new object will reference the existing category instance.
 
 > [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
 > [!NOTE]
 >  In Windows Vista, when the remote computer is a member of a workgroup, you may need to disable UAC so that the local user account is not filtered and can be elevated to an administrator account. For security reasons, disabling UAC should be a last resort. For information on disabling UAC, see [User Account Control and WMI](/windows/win32/wmisdk/user-account-control-and-wmi).
@@ -823,14 +796,7 @@
  When you create a new counter, use the <xref:System.Diagnostics.PerformanceCounter.CounterHelp*> text to describe what the counter monitors do so the user can determine whether to add the counter to the System Monitor's display.
 
 > [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
-
-> [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
  ]]></format>
         </remarks>
@@ -940,14 +906,7 @@
  When you create a counter whose type requires the use of a corresponding base counter, you must declare the counter and the base in the <xref:System.Diagnostics.CounterCreationDataCollection> you pass into the <xref:System.Diagnostics.PerformanceCounterCategory.Create*?displayProperty=nameWithType> method.
 
 > [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
-
-> [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
  ]]></format>
         </remarks>
@@ -1001,9 +960,6 @@
 
 > [!NOTE]
 >  The <xref:System.Diagnostics.PerformanceCounter.Increment*>, <xref:System.Diagnostics.PerformanceCounter.IncrementBy*>, and <xref:System.Diagnostics.PerformanceCounter.Decrement*> methods use interlocks to update the counter value. This helps keep the counter value accurate in multithreaded or multiprocess scenarios, but also results in a performance penalty. If you do not need the accuracy that interlocked operations provide, you can update the <xref:System.Diagnostics.PerformanceCounter.RawValue> property directly for up to a 5 times performance improvement.  However, in multithreaded scenarios, some updates to the counter value might be ignored, resulting in inaccurate data.
-
-> [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
 
  ]]></format>
         </remarks>
@@ -1193,9 +1149,6 @@
 > [!NOTE]
 >  The <xref:System.Diagnostics.PerformanceCounter.Increment*>, <xref:System.Diagnostics.PerformanceCounter.IncrementBy*>, and <xref:System.Diagnostics.PerformanceCounter.Decrement*> methods use interlocks to update the counter value. This helps keep the counter value accurate in multithreaded or multiprocess scenarios, but also results in a performance penalty. If you do not need the accuracy that interlocked operations provide, you can update the <xref:System.Diagnostics.PerformanceCounter.RawValue> property directly for up to a 5 times performance improvement.  However, in multithreaded scenarios, some updates to the counter value might be ignored, resulting in inaccurate data.
 
-> [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
-
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The counter is read-only, so the application cannot increment it.
@@ -1256,9 +1209,6 @@
 > [!NOTE]
 >  The <xref:System.Diagnostics.PerformanceCounter.Increment*>, <xref:System.Diagnostics.PerformanceCounter.IncrementBy*>, and <xref:System.Diagnostics.PerformanceCounter.Decrement*> methods use interlocks to update the counter value. This helps keep the counter value accurate in multithreaded or multiprocess scenarios, but also results in a performance penalty. If you do not need the accuracy that interlocked operations provide, you can update the <xref:System.Diagnostics.PerformanceCounter.RawValue> property directly for up to a 5 times performance improvement.  However, in multithreaded scenarios, some updates to the counter value might be ignored, resulting in inaccurate data.
 
-> [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
-
 
 
 ## Examples
@@ -1317,10 +1267,9 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If the performance counter category is created with the .NET Framework version 1.0 or 1.1, it uses global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
 
 > [!NOTE]
->  If the value of the <xref:System.Diagnostics.PerformanceCounter.CounterType> property is <xref:System.Diagnostics.PerformanceCounterCategoryType.SingleInstance>, the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> value for the performance counter must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>.
+> If the value of the <xref:System.Diagnostics.PerformanceCounter.CounterType> property is <xref:System.Diagnostics.PerformanceCounterCategoryType.SingleInstance>, the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> value for the performance counter must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>.
 
  ]]></format>
         </remarks>
@@ -1489,14 +1438,7 @@
  This method is generally used for counters that contain uncalculated values.
 
 > [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
-
-> [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
 
 
@@ -1622,14 +1564,7 @@
 >  The <xref:System.Diagnostics.PerformanceCounter.Increment*>, <xref:System.Diagnostics.PerformanceCounter.IncrementBy*>, and <xref:System.Diagnostics.PerformanceCounter.Decrement*> methods use interlocks to update the counter value. This helps keep the counter value accurate in multithreaded or multiprocess scenarios, but also results in a performance penalty. If you do not need the accuracy that interlocked operations provide, you can update the <xref:System.Diagnostics.PerformanceCounter.RawValue> property directly for up to a 5 times performance improvement.  However, in multithreaded scenarios, some updates to the counter value might be ignored, resulting in inaccurate data.
 
 > [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
-
-> [!NOTE]
->  To read performance counters in Windows Vista, Windows XP Professional x64 Edition, or Windows Server 2003, you must either be a member of the Performance Monitor Users group or have administrative privileges.
->
->  To avoid having to elevate your privileges to access performance counters in Windows Vista, add yourself to the Performance Monitor Users group.
->
->  In Windows Vista, User Account Control (UAC) determines the privileges of a user. If you are a member of the Built-in Administrators group, you are assigned two run-time access tokens: a standard user access token and an administrator access token. By default, you are in the standard user role. To execute the code that accesses performance counters, you must first elevate your privileges from standard user to administrator. You can do this when you start an application by right-clicking the application icon and indicating that you want to run as an administrator.
+> To read performance counters in Windows, you must either be a member of the Performance Monitor Users group or have administrative privileges.
 
 
 
@@ -1686,7 +1621,7 @@
       <Docs>
         <summary>Gets or sets a value indicating whether this <see cref="T:System.Diagnostics.PerformanceCounter" /> instance is in read-only mode.</summary>
         <value>
-          <see langword="true" />, if the <see cref="T:System.Diagnostics.PerformanceCounter" /> instance is in read-only mode (even if the counter itself is a custom .NET Framework counter); <see langword="false" /> if it is in read/write mode. The default is the value set by the constructor.</value>
+          <see langword="true" />, if the <see cref="T:System.Diagnostics.PerformanceCounter" /> instance is in read-only mode (even if the counter itself is a custom .NET counter); <see langword="false" /> if it is in read/write mode. The default is the value set by the constructor.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -1739,9 +1674,6 @@
 >  To avoid a possible race condition when the performance counter shared memory is released, it is recommended that the <xref:System.Diagnostics.PerformanceCounter.RemoveInstance*> method be called from the <xref:System.AppDomain.DomainUnload> event handler.
 
  To create a performance category instance, specify an `instanceName` on the <xref:System.Diagnostics.PerformanceCounter.%23ctor*> constructor. If the category instance specified by `instanceName` already exists the new object will reference the existing category instance.
-
-> [!NOTE]
->  If the value for the <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime> property is <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Process> and the performance counter category was created with .NET Framework version 1.0 or 1.1, an <xref:System.InvalidOperationException> is thrown. Performance counter categories created with earlier versions use global shared memory, and the value for <xref:System.Diagnostics.PerformanceCounter.InstanceLifetime*> must be <xref:System.Diagnostics.PerformanceCounterInstanceLifetime.Global>. If the category is not used by applications running on versions 1.0 or 1.1 of the .NET Framework, delete and recreate the category.
 
  ]]></format>
         </remarks>

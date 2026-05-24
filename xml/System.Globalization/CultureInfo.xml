@@ -169,13 +169,10 @@ Predefined culture identifiers for cultures available on Windows system are list
  For example, suppose that Arabic (Saudi Arabia) is the current Windows culture and the user has changed the calendar from Hijri to Gregorian.
 
 - With `CultureInfo("0x0401")` (culture name ar-SA), <xref:System.Globalization.CultureInfo.Calendar*> is set to <xref:System.Globalization.GregorianCalendar> (which is the user setting) and <xref:System.Globalization.CultureInfo.UseUserOverride*> is set to `true`.
-
 - With `CultureInfo("0x041E")` (culture name th-TH), <xref:System.Globalization.CultureInfo.Calendar*> is set to <xref:System.Globalization.ThaiBuddhistCalendar> (which is the default calendar for th-TH) and <xref:System.Globalization.CultureInfo.UseUserOverride*> is set to `true`.
 
- For cultures that use the euro, .NET Framework and Windows XP set the default currency as euro. However, older versions of Windows do not. Therefore, if the user of an older version of Windows has not changed the currency setting through the regional and language options portion of Control Panel, the currency might be incorrect. To use the .NET Framework default setting for the currency, the application should use a <xref:System.Globalization.CultureInfo> constructor overload that accepts a `useUserOverride` parameter and set it to `false`.
-
 > [!NOTE]
-> For backwards compatibility, a culture constructed using a `culture` parameter of 0x0004 or 0x7c04 will have a <xref:System.Globalization.CultureInfo.Name> property of `zh-CHS` or `zh-CHT`, respectively. You should instead prefer to construct the culture using the current standard culture names of `zh-Hans` or `zh-Hant`, unless you have a reason for using the older names.
+> For backwards compatibility, a culture constructed using a `culture` parameter of 0x0004 or 0x7c04 has a <xref:System.Globalization.CultureInfo.Name> property of `zh-CHS` or `zh-CHT`, respectively. You should instead prefer to construct the culture using the current standard culture names of `zh-Hans` or `zh-Hant`, unless you have a reason for using the older names.
 
 > [!NOTE]
 > LCIDs are being deprecated, and implementers are strongly encouraged to use newer versions of APIs that support BCP 47 locale names instead. Each LCID can be represented by a BCP 47 locale name, but the reverse is not true. The LCID range is restricted and unable to uniquely identify all the possible combinations of language and region.
@@ -187,8 +184,8 @@ Predefined culture identifiers for cultures available on Windows system are list
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="culture" /> is not a valid culture identifier. See the Notes to Callers section for more information.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="culture" /> is not a valid culture identifier. Starting with .NET Framework 4, this constructor throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="culture" /> from the operating system; if the operating system does not support that culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="culture" /> from the operating system; if the operating system does not support that culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.LCID" />
         <altmember cref="P:System.Globalization.CultureInfo.UseUserOverride" />
@@ -273,8 +270,8 @@ The <xref:System.Globalization.CultureInfo.LCID> property of the new <xref:Syste
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="name" /> is not a valid culture name. For more information, see the Notes to Callers section.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="name" /> is not a valid culture name. Starting with .NET Framework 4, this constructor throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.LCID" />
         <altmember cref="P:System.Globalization.CultureInfo.UseUserOverride" />
@@ -347,17 +344,12 @@ Predefined culture identifiers available on Windows systems are listed in the **
 
  The value of the `useUserOverride` parameter becomes the value of the <xref:System.Globalization.CultureInfo.UseUserOverride> property.
 
- For example, suppose that Arabic (Saudi Arabia) is the current culture of Windows and the user has changed the calendar from Hijri to Gregorian.
+For example, suppose that Arabic (Saudi Arabia) is the current culture of Windows and the user has changed the calendar from Hijri to Gregorian.
 
 - With `CultureInfo("0x0401", true)` (culture name ar-SA), <xref:System.Globalization.CultureInfo.Calendar*> is set to <xref:System.Globalization.GregorianCalendar> (which is the user setting) and <xref:System.Globalization.CultureInfo.UseUserOverride*> is set to `true`.
-
 - With `CultureInfo("0x0401", false)` (culture name ar-SA), <xref:System.Globalization.CultureInfo.Calendar*> is set to <xref:System.Globalization.HijriCalendar> (which is the default calendar for ar-SA) and <xref:System.Globalization.CultureInfo.UseUserOverride*> is set to `false`.
-
 - With `CultureInfo("0x041E", true)` (culture name th-TH), <xref:System.Globalization.CultureInfo.Calendar*> is set to <xref:System.Globalization.ThaiBuddhistCalendar> (which is the default calendar for th-TH) and <xref:System.Globalization.CultureInfo.UseUserOverride*> is set to `true`.
-
 - With `CultureInfo("0x041E", false)` (culture name th-TH), <xref:System.Globalization.CultureInfo.Calendar*> is set to <xref:System.Globalization.ThaiBuddhistCalendar> (which is the default calendar for th-TH) and <xref:System.Globalization.CultureInfo.UseUserOverride*> is set to `false`.
-
- For cultures that use the euro, the .NET Framework and Windows XP set the default currency as euro. However, older versions of Windows do not. Therefore, if the user of an older version of Windows has not changed the currency setting through the regional and language options portion of Control Panel, the currency might be incorrect. To use the .NET Framework default setting for the currency, the application should set the `useUserOverride` parameter to `false`.
 
 > [!NOTE]
 > For backwards compatibility, a culture constructed using a `culture` parameter of 0x0004 or 0x7c04 will have a <xref:System.Globalization.CultureInfo.Name> property of zh-CHS or zh-CHT, respectively. You should instead prefer to construct the culture using the current standard culture names of `zh-Hans` or zh-Hant, unless you have a reason for using the older names.
@@ -372,8 +364,8 @@ Predefined culture identifiers available on Windows systems are listed in the **
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="culture" /> is not a valid culture identifier. See the Notes to Callers section for more information.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="culture" /> is not a valid culture identifier. Starting with .NET Framework 4, this constructor throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="culture" /> from the operating system; if the operating system does not support that culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="culture" /> from the operating system; if the operating system does not support that culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.LCID" />
         <altmember cref="P:System.Globalization.CultureInfo.UseUserOverride" />
@@ -455,8 +447,6 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
 
  The <xref:System.Globalization.CultureInfo.LCID> property of the new <xref:System.Globalization.CultureInfo> is set to the culture identifier associated with the specified name.
 
- For cultures that use the euro, the .NET Framework and Windows XP set the default currency as euro. However, older versions of Windows do not do this. Therefore, if the user of an older version of Windows has not changed the currency setting through the regional and language options portion of Control Panel, the currency might be incorrect. To use the .NET Framework default setting for the currency, the application should set the `useUserOverride` parameter to `false`.
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -464,8 +454,8 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="name" /> is not a valid culture name. See the Notes to Callers section for more information.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="name" /> is not a valid culture name. Starting with .NET Framework 4, this constructor throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.LCID" />
         <altmember cref="P:System.Globalization.CultureInfo.UseUserOverride" />
@@ -814,13 +804,14 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
 
  -or-
 
- The culture specified by <paramref name="name" /> does not have a specific culture associated with it.</exception>
+ The culture specified by <paramref name="name" /> does not have a specific culture associated with it.
+
+ -or-
+
+ The app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.
+ </exception>
         <exception cref="T:System.NullReferenceException">
           <paramref name="name" /> is null.</exception>
-        <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="name" /> is not a valid culture name. Starting with .NET Framework 4, this method throws a <see cref="T:System.Globalization.CultureNotFoundException" />.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
-        </block>
         <altmember cref="Overload:System.Globalization.CultureInfo.#ctor" />
         <altmember cref="P:System.Globalization.CultureInfo.Parent" />
       </Docs>
@@ -1126,32 +1117,31 @@ You might choose to override some of the values associated with the current cult
         <ReturnType>System.Globalization.CultureInfo</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the default culture for threads in the current application domain.</summary>
-        <value>The default culture for threads in the current application domain, or <see langword="null" /> if the current system culture is the default thread culture in the application domain.</value>
+        <summary>Gets or sets the default culture for threads.</summary>
+        <value>The default culture for threads, or <see langword="null" /> if the current system culture is the default thread culture.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- In the .NET Framework 4 and previous versions, by default, the culture of all threads is set to the Windows system culture. For applications whose current culture differs from the default system culture, this behavior is often undesirable. In the .NET Framework 4.5, the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property enables an application to define the default culture of all threads in an application domain.
+
+The <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property enables an application to define the default culture of all threads.
 
 > [!IMPORTANT]
-> If you have not explicitly set the culture of any existing threads executing in an application domain, setting the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property also changes the culture of these threads. However, if these threads execute in another application domain, their culture is defined by the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property in that application domain or, if no default value is defined, by the default system culture. Because of this, we recommend that you always explicitly set the culture of your main application thread, and not rely on the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property to define the culture of the main application thread.
+> If you have not explicitly set the culture of any existing threads, setting the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property also changes the culture of these threads. You should always explicitly set the culture of your main application thread, and not rely on the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property to define the culture of the main application thread.
 
- Unless it is set explicitly, the value of the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property is `null`, and the culture of threads in an application domain that have not been assigned an explicit culture is defined by the default Windows system culture.
+ Unless it is set explicitly, the value of the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> property is `null`, and the culture of threads that have not been assigned an explicit culture is defined by the default Windows system culture.
 
- For more information about cultures, threads, and application domains, see the "Culture and threads" and "Culture and application domains" sections in the <xref:System.Globalization.CultureInfo> reference page.
-
-
+ For more information about cultures and threads, see the "Culture and threads" section in the <xref:System.Globalization.CultureInfo> reference page.
 
 ## Examples
- The following example illustrates the default behavior of the .NET Framework in defining the current culture of a new thread. At startup, the example sets the current culture and the current UI culture to French (France) on all systems except those on which the default system culture is already French (France). If the default system culture is already French (France), the code sets the current culture and the current UI culture to English (United States). It then calls the `DisplayRandomNumbers` routine, which generates three random numbers and displays them as currency values. Next, it creates a new thread, which also executes the `DisplayRandomNumbers` routine.
+ The following example illustrates the default behavior of .NET in defining the current culture of a new thread. At startup, the example sets the current culture and the current UI culture to French (France) on all systems except those on which the default system culture is already French (France). If the default system culture is already French (France), the code sets the current culture and the current UI culture to English (United States). It then calls the `DisplayRandomNumbers` routine, which generates three random numbers and displays them as currency values. Next, it creates a new thread, which also executes the `DisplayRandomNumbers` routine.
 
  :::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/DefaultThreadCurrentCulture/defaultculture1.cs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System.Globalization/CultureInfo/DefaultThreadCurrentCulture/defaultculture1.vb" id="Snippet1":::
 
  As the output from the example shows, when the example is run on a computer whose system culture is English (United States), the main thread displays its currency values using the formatting conventions of the French (France) culture. However, because the worker thread's culture is derived from the current Windows system culture rather than the application's current culture, the work thread displays its currency values using the formatting conventions of the English (United States) culture.
 
- The following example uses the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture*> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture*> properties  to define the current culture and current UI culture of a new application thread. At startup, the example sets the current culture and the current UI culture to French (France) on all systems except those on which the default system culture is already French (France). If the default system culture is already French (France), it sets the current culture and the current UI culture to English (United States). It then calls the `DisplayRandomNumbers` routine, which generates three random numbers and displays them as currency values. Next, it creates a new thread, which also executes the `DisplayRandomNumbers` routine.
+ The following example uses the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> properties  to define the current culture and current UI culture of a new application thread. At startup, the example sets the current culture and the current UI culture to French (France) on all systems except those on which the default system culture is already French (France). If the default system culture is already French (France), it sets the current culture and the current UI culture to English (United States). It then calls the `DisplayRandomNumbers` routine, which generates three random numbers and displays them as currency values. Next, it creates a new thread, which also executes the `DisplayRandomNumbers` routine.
 
  :::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/DefaultThreadCurrentCulture/defaultculture2.cs" id="Snippet2":::
  :::code language="vb" source="~/snippets/visualbasic/System.Globalization/CultureInfo/DefaultThreadCurrentCulture/defaultculture2.vb" id="Snippet2":::
@@ -1211,20 +1201,21 @@ You might choose to override some of the values associated with the current cult
         <ReturnType>System.Globalization.CultureInfo</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets or sets the default UI culture for threads in the current application domain.</summary>
-        <value>The default UI culture for threads in the current application domain, or <see langword="null" /> if the current system UI culture is the default thread UI culture in the application domain.</value>
+        <summary>Gets or sets the default UI culture for threads.</summary>
+        <value>The default UI culture for threads, or <see langword="null" /> if the current system UI culture is the default thread UI culture.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- In the .NET Framework 4 and previous versions, by default, the UI culture of all threads is set to the Windows system culture. For applications whose current UI culture differs from the default system culture, this behavior is often undesirable. In .NET Framework 4.5+, the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property lets you define the default UI culture of all threads in an application domain.
+
+The <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property lets you define the default UI culture of all threads.
 
 > [!IMPORTANT]
-> If you have not explicitly set the UI culture of any existing threads executing in an application domain, setting the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property also changes the culture of these threads. However, if these threads execute in another application domain, their culture is defined by the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property in that application domain or, if no default value is defined, by the default system culture. Because of this, we recommend that you always explicitly set the culture of your main application thread and do not rely on the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property to define the culture of the main application thread.
+> If you have not explicitly set the UI culture of any existing threads, setting the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property also changes the culture of these threads. You should always explicitly set the culture of your main application thread, and not rely on the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property to define the culture of the main application thread.
 
- Unless it is set explicitly, the value of the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property is `null`, and the current culture of all threads in an application domain that have not been assigned an explicit culture is defined by the default Windows system culture.
+ Unless it is set explicitly, the value of the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> property is `null`, and the current culture of all threads that have not been assigned an explicit culture is defined by the default Windows system culture.
 
- For more information about cultures, threads, and application domains, see the "Culture and threads" and "Culture and application domains" sections of <xref:System.Globalization.CultureInfo>.
+ For more information about cultures and threads, see the "Culture and threads" section of <xref:System.Globalization.CultureInfo>.
 
 ## Examples
  The following example illustrates the default behavior of .NET in defining the current culture of a new thread. It uses English and Russian language resources. The following text file named GreetingStrings.txt contains the English language resources:
@@ -1420,10 +1411,6 @@ csc /resource:GreetingStrings.resources Example1.cs
 
 ## Remarks
  For example, the <xref:System.Globalization.CultureInfo.EnglishName*> for the specific culture name en-US is "English (United States)".
-
- The value of this property is the same, regardless of the language version of the .NET Framework.
-
-
 
 ## Examples
  The following code example displays several properties of the neutral cultures.
@@ -1739,8 +1726,8 @@ csc /resource:GreetingStrings.resources Example1.cs
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="culture" /> specifies a culture that is not supported. See the Notes to Caller section for more information.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="culture" /> is not a valid culture identifier. Starting with .NET Framework 4, this method throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="culture" /> from the operating system; if the operating system does not support that culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" />.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="culture" /> from the operating system; if the operating system does not support that culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" />.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.LCID" />
         <altmember cref="M:System.Globalization.CultureInfo.ClearCachedData" />
@@ -1811,8 +1798,8 @@ For a list of predefined culture names on Windows systems, see the **Language ta
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="name" /> specifies a culture that is not supported. See the Notes to Callers section for more information.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="name" /> is not a valid culture name. Starting with .NET Framework 4, this method throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" />.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" />.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.Name" />
       </Docs>
@@ -1931,8 +1918,8 @@ Setting `predefinedOnly` to `true` will ensure a culture is created only if the 
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="name" /> or <paramref name="altName" /> specifies a culture that is not supported. See the Notes to Callers section for more information.</exception>
         <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="name" /> or <paramref name="altName" /> is not a valid culture name. Starting with .NET Framework 4, this method throws a <see cref="T:System.Globalization.CultureNotFoundException" />. Starting with apps that run under .NET Framework 4 or later on Windows 7 or later, the method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
-          <para>On .NET 6 and later versions, a <see cref="T:System.Globalization.CultureNotFoundException" /> is thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
+          <para>This method attempts to retrieve a <see cref="T:System.Globalization.CultureInfo" /> object whose identifier is <paramref name="name" /> from the operating system; if the operating system does not support that culture, and if <paramref name="name" /> is not the name of a supplementary or replacement culture, the method throws a <see cref="T:System.Globalization.CultureNotFoundException" /> exception.</para>
+          <para>A <see cref="T:System.Globalization.CultureNotFoundException" /> is also thrown if the app is running in an environment where globalization-invariant mode is enabled, for example, some Docker containers, and a culture other than the invariant culture is specified.</para>
         </block>
         <altmember cref="P:System.Globalization.CultureInfo.Name" />
         <altmember cref="M:System.Globalization.CultureInfo.ClearCachedData" />
@@ -2005,9 +1992,6 @@ Setting `predefinedOnly` to `true` will ensure a culture is created only if the 
           <paramref name="name" /> is null.</exception>
         <exception cref="T:System.Globalization.CultureNotFoundException">
           <paramref name="name" /> does not correspond to a supported culture.</exception>
-        <block subset="none" type="usage">
-          <para>.NET Framework 3.5 and earlier versions throw an <see cref="T:System.ArgumentException" /> if <paramref name="name" /> does not correspond to the name of a supported culture. Starting with .NET Framework 4, this method throws a <see cref="T:System.Globalization.CultureNotFoundException" />.</para>
-        </block>
         <altmember cref="P:System.Globalization.CultureInfo.TextInfo" />
         <altmember cref="M:System.Globalization.CultureInfo.ClearCachedData" />
       </Docs>
@@ -2764,14 +2748,7 @@ For a list of predefined culture names and identifiers that the <xref:System.Glo
       <Docs>
         <summary>Gets the culture name, consisting of the language, the country/region, and the optional script, that the culture is set to display.</summary>
         <value>The culture name, consisting of the full name of the language, the full name of the country/region, and the optional script. The format is discussed in the description of the <see cref="T:System.Globalization.CultureInfo" /> class.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The value of this property is the same, regardless of the language version of the .NET Framework.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Globalization.CultureInfo.Name" />
         <altmember cref="P:System.Globalization.CultureInfo.DisplayName" />
         <altmember cref="P:System.Globalization.CultureInfo.EnglishName" />
