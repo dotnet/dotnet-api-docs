@@ -9,8 +9,7 @@ proc.StartInfo.RedirectStandardOutput <- true
 proc.Start() |> ignore
 
 // Synchronously read the standard output of the spawned process.
-let reader = proc.StandardOutput
-let output = reader.ReadToEnd()
+let output = proc.StandardOutput.ReadToEnd()
 
 // Write the redirected output to this application's window.
 printfn $"{output}"

@@ -9,7 +9,6 @@
 
 Imports System.Diagnostics
 Imports System.ComponentModel
-Imports System.IO
 
 Namespace Process_StandardError
 
@@ -37,9 +36,8 @@ Namespace Process_StandardError
                 myProcess.StartInfo = myProcessStartInfo
                 myProcess.Start()
 
-                Dim myStreamReader As StreamReader = myProcess.StandardError
                 ' Read the standard error of net.exe and write it on to console.
-                Console.WriteLine(myStreamReader.ReadLine())
+                Console.WriteLine(myProcess.StandardError.ReadLine())
             End Using
             ' </Snippet1>
         End Sub
