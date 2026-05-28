@@ -69,30 +69,24 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Starting with the .NET Framework 4, the .NET Framework uses a unified model for cooperative cancellation of asynchronous or long-running synchronous operations that involves two objects:
+
+.NET uses a unified model for cooperative cancellation of asynchronous or long-running synchronous operations that involves two objects:
 
 - A <xref:System.Threading.CancellationTokenSource> object, which provides a cancellation token through its <xref:System.Threading.CancellationTokenSource.Token> property and sends a cancellation message by calling its <xref:System.Threading.CancellationTokenSource.Cancel*> or <xref:System.Threading.CancellationTokenSource.CancelAfter*> method.
-
 - A <xref:System.Threading.CancellationToken> object, which indicates whether cancellation is requested.
 
- The general pattern for implementing the cooperative cancellation model is:
+The general pattern for implementing the cooperative cancellation model is:
 
 - Instantiate a <xref:System.Threading.CancellationTokenSource> object, which manages and sends cancellation notification to the individual cancellation tokens.
-
 - Pass the token returned by the <xref:System.Threading.CancellationTokenSource.Token?displayProperty=nameWithType> property to each task or thread that listens for cancellation.
-
 - Call the <xref:System.Threading.CancellationToken.IsCancellationRequested*?displayProperty=nameWithType> method from operations that receive the cancellation token. Provide a mechanism for each task or thread to respond to a cancellation request. Whether you choose to cancel an operation, and exactly how you do it, depends on your application logic.
-
 - Call the <xref:System.Threading.CancellationTokenSource.Cancel*?displayProperty=nameWithType> method to provide notification of cancellation. This sets the <xref:System.Threading.CancellationToken.IsCancellationRequested?displayProperty=nameWithType> property on every copy of the cancellation token to `true`.
-
 - Call the <xref:System.Threading.CancellationTokenSource.Dispose*> method when you are finished with the <xref:System.Threading.CancellationTokenSource> object.
 
  For more information, see [Cancellation in Managed Threads](/dotnet/standard/threading/cancellation-in-managed-threads).
 
 > [!IMPORTANT]
->  This type implements the <xref:System.IDisposable> interface. When you have finished using an instance of the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`finally` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
-
-
+>  This type implements the <xref:System.IDisposable> interface. When you have finished using an instance of the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`finally` block. To dispose of it indirectly, use a language construct such as `using` in C#.
 
 ## Examples
  The following example uses a random number generator to emulate a data collection application that reads 10 integral values from eleven different instruments. A value of zero indicates that the measurement has failed for one instrument, in which case the operation should be cancelled and no overall mean should be computed.

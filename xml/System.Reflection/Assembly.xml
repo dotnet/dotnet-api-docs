@@ -85,33 +85,24 @@
 ## Remarks
  Use the <xref:System.Reflection.Assembly> class to load assemblies, to explore the metadata and constituent parts of assemblies, to discover the types contained in assemblies, and to create instances of those types.
 
- To get an array of <xref:System.Reflection.Assembly> objects representing the assemblies currently loaded into an application domain (for example, the default application domain of a simple project), use the <xref:System.AppDomain.GetAssemblies*?displayProperty=nameWithType> method.
+ To get an array of <xref:System.Reflection.Assembly> objects representing the assemblies that are currently loaded, use the <xref:System.AppDomain.GetAssemblies*?displayProperty=nameWithType> method.
 
- To load assemblies dynamically, the <xref:System.Reflection.Assembly> class provides the following static methods (`Shared` methods in Visual Basic). Assemblies are loaded into the application domain where the load operation occurs.
+ To load assemblies dynamically, the <xref:System.Reflection.Assembly> class provides the following static methods.
 
 - The recommended way to load assemblies is to use the <xref:System.AppDomain.Load*> method, which identifies the assembly to be loaded by its display name (for example, "System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"). The search for the assembly follows the rules described in [How the Runtime Locates Assemblies](/dotnet/framework/deployment/how-the-runtime-locates-assemblies).
-
 - The <xref:System.Reflection.Assembly.ReflectionOnlyLoad*> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom*> methods enable you to load an assembly for reflection, but not for execution. For example, an assembly that targets a 64-bit platform can be examined by code that is running on a 32-bit platform.
-
 - The <xref:System.Reflection.Assembly.LoadFile*> and <xref:System.Reflection.Assembly.LoadFrom*> methods are provided for rare scenarios in which an assembly must be identified by path.
 
- To get an <xref:System.Reflection.Assembly> object for the currently executing assembly, use the <xref:System.Reflection.Assembly.GetExecutingAssembly*> method.
+To get an <xref:System.Reflection.Assembly> object for the currently executing assembly, use the <xref:System.Reflection.Assembly.GetExecutingAssembly*> method.
 
- Many members of the <xref:System.Reflection.Assembly> class provide information about an assembly. For example:
+Many members of the <xref:System.Reflection.Assembly> class provide information about an assembly. For example:
 
 - The <xref:System.Reflection.Assembly.GetName*> method returns an <xref:System.Reflection.AssemblyName> object that provides access to the parts of the assembly display name.
-
 - The <xref:System.Reflection.Assembly.GetCustomAttributes*> method lists the attributes applied to the assembly.
-
 - The <xref:System.Reflection.Assembly.GetFiles*> method provides access to the files in the assembly manifest.
-
 - The <xref:System.Reflection.Assembly.GetManifestResourceNames*> method provides the names of the resources in the assembly manifest.
 
  The <xref:System.Reflection.Assembly.GetTypes*> method lists all the types in the assembly. The <xref:System.Reflection.Assembly.GetExportedTypes*> method lists the types that are visible to callers outside the assembly. The <xref:System.Reflection.Assembly.GetType*> method can be used to search for a particular type in the assembly. The <xref:System.Reflection.Assembly.CreateInstance*> method can be used to search for and create instances of types in the assembly.
-
- For more information on assemblies, see the "Application Domains and Assemblies" section in the [Application Domains](/dotnet/framework/app-domains/application-domains) topic.
-
-
 
 ## Examples
  The following code example shows how to obtain the currently executing assembly, create an instance of a type contained in that assembly, and invoke one of the type's methods with late binding. For this purpose, the code example defines a class named `Example`, with a method named `SampleMethod`. The constructor of the class accepts an integer, which is used to compute the return value of the method.
@@ -126,7 +117,6 @@
     <threadsafe>This type is thread safe.</threadsafe>
     <altmember cref="T:System.AppDomain" />
     <altmember cref="T:System.Reflection.AssemblyName" />
-    <related type="Article" href="/dotnet/framework/app-domains/application-domains">Application Domains</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -255,7 +245,7 @@ In .NET 5 and later versions, for bundled assemblies, this property throws an ex
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.NotImplementedException">.NET Core and .NET 5+ only: In all cases.</exception>
+        <exception cref="T:System.NotImplementedException">In all cases.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateInstance">
@@ -1055,10 +1045,6 @@ In .NET 5 and later versions, for bundled assemblies, this property throws an ex
 > [!NOTE]
 >  Writing your own code to parse display names is not recommended. Instead, pass the display name to the <xref:System.Reflection.AssemblyName.%23ctor*> constructor, which parses it and populates the appropriate fields of the new <xref:System.Reflection.AssemblyName>.
 
- In the .NET Framework version 2.0, processor architecture is added to assembly identity, and can be specified as part of assembly name strings. However, it is not included in the string returned by the <xref:System.Reflection.Assembly.FullName> property, for compatibility reasons. See <xref:System.Reflection.AssemblyName.ProcessorArchitecture*?displayProperty=nameWithType>.
-
-
-
 ## Examples
  The following example retrieves the display name of the currently executing assembly, and the display name of the assembly that contains the <xref:System.Int32> type (`int` in C#, `Integer` in Visual Basic).
 
@@ -1490,8 +1476,6 @@ In .NET 5 and later versions, for bundled assemblies, this property throws an ex
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
-
- **.NET Framework only:** In the default application domain, this method returns the process executable. In other application domains, this method returns the first executable that was executed by <xref:System.AppDomain.ExecuteAssembly*>.
 
  The <xref:System.Reflection.Assembly.GetEntryAssembly*> method can return `null` when a managed assembly has been loaded from an unmanaged application. For example, if an unmanaged application creates an instance of a COM component written in C#, a call to the <xref:System.Reflection.Assembly.GetEntryAssembly*> method from the C# component returns null, because the entry point for the process was unmanaged code rather than a managed assembly.
 
@@ -3043,7 +3027,7 @@ In .NET 5 and later versions, for bundled assemblies, this method throws an exce
 ## Remarks
  This method only searches the current assembly instance. The `name` parameter includes the namespace but not the assembly. To search other assemblies for a type, use the <xref:System.Type.GetType(System.String)?displayProperty=nameWithType> method overload, which can optionally include an assembly display name as part of the type name.
 
- In .NET Core/.NET 5+, if there are assembly-qualified generic type parameters in the type name string, those assembly references will be loaded by the <xref:System.Runtime.Loader.AssemblyLoadContext> of the method that called Assembly.GetType, or by the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set.
+If there are assembly-qualified generic type parameters in the type name string, those assembly references will be loaded by the <xref:System.Runtime.Loader.AssemblyLoadContext> of the method that called Assembly.GetType, or by the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set.
 
 > [!NOTE]
 >  If the type has been forwarded to another assembly, it is still returned by this method. For information on type forwarding, see [Type Forwarding in the Common Language Runtime](/dotnet/standard/assembly/type-forwarding).
@@ -3147,7 +3131,7 @@ In .NET 5 and later versions, for bundled assemblies, this method throws an exce
 ## Remarks
  This method only searches the current assembly instance. The `name` parameter includes the namespace but not the assembly. To search other assemblies for a type, use the <xref:System.Type.GetType(System.String)?displayProperty=nameWithType> method overload, which can optionally include an assembly display name as part of the type name.
 
- In .NET Core/.NET 5+, if there are assembly-qualified generic type parameters in the type name string, those assembly references will be loaded by the <xref:System.Runtime.Loader.AssemblyLoadContext> of the method that called Assembly.GetType, or by the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set.
+If there are assembly-qualified generic type parameters in the type name string, those assembly references will be loaded by the <xref:System.Runtime.Loader.AssemblyLoadContext> of the method that called Assembly.GetType, or by the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set.
 
 > [!NOTE]
 >  If the type has been forwarded to another assembly, it is still returned by this method. For information on type forwarding, see [Type Forwarding in the Common Language Runtime](/dotnet/standard/assembly/type-forwarding).
@@ -3256,7 +3240,7 @@ In .NET 5 and later versions, for bundled assemblies, this method throws an exce
 ## Remarks
  This method only searches the current assembly instance. The `name` parameter includes the namespace but not the assembly. To search other assemblies for a type, use the <xref:System.Type.GetType(System.String)?displayProperty=nameWithType> method overload, which can optionally include an assembly display name as part of the type name.
 
- In .NET Core/.NET 5+, if there are assembly-qualified generic type parameters in the type name string, those assembly references will be loaded by the <xref:System.Runtime.Loader.AssemblyLoadContext> of the method that called Assembly.GetType, or by the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set.
+If there are assembly-qualified generic type parameters in the type name string, those assembly references will be loaded by the <xref:System.Runtime.Loader.AssemblyLoadContext> of the method that called Assembly.GetType, or by the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set.
 
 > [!NOTE]
 >  If the type has been forwarded to another assembly, it is still returned by this method. For information on type forwarding, see [Type Forwarding in the Common Language Runtime](/dotnet/standard/assembly/type-forwarding).
@@ -3408,19 +3392,8 @@ In .NET 5 and later versions, for bundled assemblies, this method throws an exce
       </ReturnValue>
       <Docs>
         <summary>Gets a value indicating whether the assembly was loaded from the global assembly cache (.NET Framework only).</summary>
-        <value>
-          .NET Framework only: <see langword="true" /> if the assembly was loaded from the global assembly cache; otherwise, <see langword="false" />.
-
-          .NET Core and .NET 5 and later: <see langword="false" /> in all cases.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-This property is marked obsolete starting in .NET 5, and generates a compile-time warning.
-
- ]]></format>
-        </remarks>
+        <value><see langword="false" /> in all cases.</value>
+        <remarks>This property is marked obsolete starting in .NET 5, and generates a compile-time warning.</remarks>
       </Docs>
     </Member>
     <Member MemberName="HostContext">
@@ -3514,9 +3487,8 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- For example, the value for the .NET Framework version 1.1 would be v1.1.4322. The binary files for that version would be located in the path %windir%\Microsoft.NET\Framework\v1.1.4322.
 
- By default, <xref:System.Reflection.Assembly.ImageRuntimeVersion*> is set to the version of the CLR used to build the assembly. However, it might have been set to another value at compile time.
+By default, <xref:System.Reflection.Assembly.ImageRuntimeVersion*> is set to the version of the CLR used to build the assembly. However, it might have been set to another value at compile time.
 
  ]]></format>
         </remarks>
@@ -3555,14 +3527,8 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
         <summary>Gets a value that indicates whether this assembly is held in a collectible <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />.</summary>
         <value>
           <see langword="true" /> if this assembly is held in a collectible <see cref="T:System.Runtime.Loader.AssemblyLoadContext" />; otherwise, <see langword="false" />.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- For more information, see [How to use and debug assembly unloadability in .NET Core](/dotnet/standard/assembly/unloadability).
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
+        <related type="Article" href="/dotnet/standard/assembly/unloadability" title="How to use and debug assembly unloadability" />
       </Docs>
     </Member>
     <Member MemberName="IsDefined">
@@ -3684,7 +3650,7 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
 ## Remarks
  Dynamic assemblies are represented by the derived class <xref:System.Reflection.Emit.AssemblyBuilder>.
 
- When a dynamic assembly is saved to disk, the saved assembly is not dynamic. If the saved assembly is loaded into another application domain or process, the <xref:System.Reflection.Assembly.IsDynamic> property returns `false`.
+ When a dynamic assembly is saved to disk, the saved assembly is not dynamic. If the saved assembly is loaded into another process, the <xref:System.Reflection.Assembly.IsDynamic> property returns `false`.
 
  ]]></format>
         </remarks>
@@ -3729,11 +3695,7 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
       </ReturnValue>
       <Docs>
         <summary>Gets a value that indicates whether the current assembly is loaded with full trust.</summary>
-        <value>
-          .NET Framework only: <see langword="true" /> if the current assembly is loaded with full trust; otherwise, <see langword="false" />.
-
-          .NET Core and .NET 5+: <see langword="true" /> in all cases.
-        </value>
+        <value><see langword="true" /> in all cases.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -3806,8 +3768,6 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
 
  This method overload always creates a new <xref:System.Reflection.Assembly> object in its own isolated load context.
 
- **.NET Framework only:** The trust level of an assembly that is loaded by using this method is the same as the trust level of the calling assembly. To load an assembly from a byte array with the trust level of the application domain, use the <xref:System.Reflection.Assembly.Load(System.Byte[],System.Byte[],System.Security.SecurityContextSource)> method overload. For more information about the use of evidence with overloads of the <xref:System.Reflection.Assembly.Load*> method that take byte arrays, see the <xref:System.Reflection.Assembly.Load(System.Byte[],System.Byte[],System.Security.Policy.Evidence)> method overload.
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentNullException">
@@ -3871,16 +3831,7 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
 
 ## Remarks
 
- In .NET Core/.NET 5+, the target assembly will be loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext> or into the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm).
-
-> [!NOTE]
-> **.NET Framework only:** For information about loading assemblies from remote locations, see [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element).
-
-> [!NOTE]
-> **.NET Framework only:** Do not use an <xref:System.Reflection.AssemblyName> with only the <xref:System.Reflection.AssemblyName.CodeBase> property set. The <xref:System.Reflection.AssemblyName.CodeBase> property does not supply any elements of the assembly identity (such as name or version), so loading does not occur according to load-by-identity rules, as you would expect from the <xref:System.Reflection.Assembly.Load*> method. Instead, the assembly is loaded using load-from rules. For information about the disadvantages of using the load-from context, see the <xref:System.Reflection.Assembly.LoadFrom*?displayProperty=nameWithType> method overload or [Best Practices for Assembly Loading](/dotnet/framework/deployment/best-practices-for-assembly-loading).
-
-> [!NOTE]
-> **.NET Framework only:** If both the <xref:System.Reflection.AssemblyName.Name?displayProperty=nameWithType> property and the <xref:System.Reflection.AssemblyName.CodeBase?displayProperty=nameWithType> property are set, the first attempt to load the assembly uses the display name (including version, culture, and so on, as returned by the <xref:System.Reflection.Assembly.FullName?displayProperty=nameWithType> property). If the file is not found, <xref:System.Reflection.AssemblyName.CodeBase*> is used to search for the assembly. If the assembly is found using <xref:System.Reflection.AssemblyName.CodeBase*>, the display name is matched against the assembly. If the match fails, a <xref:System.IO.FileLoadException> is thrown.
+The target assembly will be loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext> or into the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm).
 
 ## Examples
  The following example instantiates an <xref:System.Reflection.AssemblyName> object and uses it to load the `sysglobal.dll` assembly. The example then displays the full name of the assembly's public types.
@@ -3894,12 +3845,7 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
           <paramref name="assemblyRef" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
           <paramref name="assemblyRef" /> is not found.</exception>
-        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.
-
--or-
-
-.NET Framework only: <paramref name="assemblyRef" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.
-        </exception>
+        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyRef" /> is not a valid assembly for the currently loaded runtime.
         </exception>
@@ -3958,18 +3904,11 @@ This property is marked obsolete starting in .NET 5, and generates a compile-tim
 
 ## Remarks
 
- In .NET Core/.NET 5+, the target assembly will be loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext> or into the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm).
+The target assembly will be loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext> or into the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> context if it's set. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm).
 
-To load the correct assembly, it's recommended to call the `Load` method by passing the long form of the assembly name. The long form of an assembly name consists of its simple name (such as "System" for the System.dll assembly) along with its version, culture, public key token, and optionally its processor architecture. It corresponds to the assembly's <xref:System.Reflection.Assembly.FullName> property. The following example illustrates the use of a long name to load the System.dll assembly for .NET Framework 4:
-
- :::code language="csharp" source="~/snippets/csharp/System.Reflection/Assembly/Load/load11.cs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System.Reflection/Assembly/Load/load11.vb" id="Snippet1":::
+To load the correct assembly, it's recommended to call the `Load` method by passing the long form of the assembly name. The long form of an assembly name consists of its simple name (such as "System" for the System.dll assembly) along with its version, culture, public key token, and optionally its processor architecture. It corresponds to the assembly's <xref:System.Reflection.Assembly.FullName> property.
 
  <xref:System.IO.FileLoadException> is thrown if `assemblyString` specifies the full assembly name, and the first assembly that matches the simple name has a different version, culture, or public key token. The loader does not continue probing for other assemblies that match the simple name.
-
- In the .NET Framework version 2.0, processor architecture is added to assembly identity, and can be specified as part of assembly name strings. For example, "ProcessorArchitecture=msil". However, the recommended way to specify an assembly name is to create an <xref:System.Reflection.AssemblyName> object and pass it to an appropriate overload of the <xref:System.Reflection.Assembly.Load*> method. See <xref:System.Reflection.AssemblyName.ProcessorArchitecture*?displayProperty=nameWithType>.
-
-
 
 ## Examples
  The following example loads an assembly given its fully qualified name, and lists all the types contained in the specified assembly. For information about how to obtain the fully qualified assembly name, see [Assembly Names](/dotnet/standard/assembly/names).
@@ -4061,11 +4000,9 @@ To load the correct assembly, it's recommended to call the `Load` method by pass
 
 ## Remarks
 
-In .NET Core/5+, the target assembly is loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext>. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm").
+The target assembly is loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext>. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm).
 
  This method overload always creates a new <xref:System.Reflection.Assembly> object in its own isolated load context.
-
- **.NET Framework only:** The trust level of an assembly that is loaded by using this method is the same as the trust level of the calling assembly. To load an assembly from a byte array with the trust level of the application domain, use the <xref:System.Reflection.Assembly.Load(System.Byte[],System.Byte[],System.Security.SecurityContextSource)> method overload. For more information about the use of evidence with overloads of the <xref:System.Reflection.Assembly.Load*> method that take byte arrays, see the <xref:System.Reflection.Assembly.Load(System.Byte[],System.Byte[],System.Security.Policy.Evidence)> method overload.
 
  ]]></format>
         </remarks>
@@ -4143,23 +4080,13 @@ In .NET Core/5+, the target assembly is loaded into the current <xref:System.Run
 
 ## Remarks
 
- This API is present in .NET Core for compatibility, but it's recommended to use <xref:System.Runtime.Loader.AssemblyLoadContext> overloads instead.
-
-The assembly is loaded into a new AssemblyLoadContext created for this purpose. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm").
-
- Use the <xref:System.Reflection.Assembly.LoadFile*> method to load and examine assemblies that have the same identity, but are located in different paths. <xref:System.Reflection.Assembly.LoadFile*> does not load files into the load-from  context, and does not resolve dependencies using the load path, as the <xref:System.Reflection.Assembly.LoadFrom*> method does. <xref:System.Reflection.Assembly.LoadFile*> is useful in this limited scenario because <xref:System.Reflection.Assembly.LoadFrom*> cannot be used to load assemblies that have the same identities but different paths; it will load only the first such assembly.
-
- **.NET Framework only:** See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
+This API is present in .NET for compatibility, but it's recommended to use <xref:System.Runtime.Loader.AssemblyLoadContext> overloads instead.
 
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">The <paramref name="path" /> argument is not an absolute path.</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="path" /> parameter is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.
-
--or-
-
-.NET Framework only: <paramref name="path" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
+        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.</exception>
         <exception cref="T:System.IO.FileNotFoundException">The <paramref name="path" /> parameter is an empty string ("") or does not exist.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="path" /> is not a valid assembly for the currently loaded runtime.
@@ -4174,15 +4101,7 @@ The assembly is loaded into a new AssemblyLoadContext created for this purpose. 
       </AssemblyInfo>
       <Docs>
         <summary>Loads an assembly.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-**.NET Framework only:** See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
-
-       ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
       </Docs>
     </MemberGroup>
     <Member MemberName="LoadFrom">
@@ -4242,50 +4161,7 @@ The assembly is loaded into a new AssemblyLoadContext created for this purpose. 
 
 ## Remarks
 
- This API is present in .NET Core for compatibility, but it is recommended to use <xref:System.Runtime.Loader.AssemblyLoadContext> overloads instead.
-
-The assembly is loaded into the default AssemblyLoadContext. For more information on assembly loading, see [Managed assembly loading algorithm](/dotnet/core/dependency-loading/loading-managed#algorithm").
-
- The `assemblyFile` parameter must refer to a URI without escape characters. This method supplies escape characters for all invalid characters in the URI.
-
-> [!NOTE]
-> .NET Framework only: File transfer protocol (FTP) is not supported. If the URI supplied for `assemblyFile` is an FTP address, the assembly is not loaded. No exception is thrown.
-
- `assemblyFile` may be absolute or relative to the current directory.
-
- **.NET Framework only:** Assemblies can be loaded into one of three contexts, or can be loaded without context:
-
-- The load context contains assemblies found by probing: in the GAC, in a host assembly store if the runtime is hosted, or in the <xref:System.AppDomainSetup.ApplicationBase*> and <xref:System.AppDomainSetup.PrivateBinPath*> of the application domain. Most overloads of the <xref:System.Reflection.Assembly.Load*> method load assemblies into this context.
-
-- The load-from context contains assemblies for which the user provided a path not included in the directories searched by probing. It also allows dependencies on that path to be found and loaded because the path information is maintained by the context. <xref:System.Reflection.Assembly.LoadFrom*>, <xref:System.AppDomain.CreateInstanceFrom*>, and <xref:System.AppDomain.ExecuteAssembly*> are examples of methods that load by path.
-
-    See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
-
-- The reflection-only context contains assemblies loaded with the <xref:System.Reflection.Assembly.ReflectionOnlyLoad*> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom*> methods; code in these contexts cannot be executed.
-
-- If the user generated or found the assembly, it is not in any context. This applies to assemblies loaded using overloads of the <xref:System.Reflection.Assembly.Load*> method that specify a byte array containing an assembly, and to transient dynamic assemblies created with reflection emit and not saved to disk.
-
- The <xref:System.Reflection.Assembly.LoadFrom*> method has the following disadvantages. Consider using <xref:System.Reflection.Assembly.Load*> instead.
-
-- If an assembly with the same identity is already loaded in the load-from context, <xref:System.Reflection.Assembly.LoadFrom*> returns the loaded assembly even if a different path was specified.
-
-- An assembly can be loaded in the load-from context even though an assembly with the same identity exists in the load context. Interoperability between the two assemblies will not work, leading to errors such as <xref:System.InvalidCastException>, <xref:System.MissingMethodException>, or other unexpected behavior.
-
-- Calling <xref:System.Reflection.Assembly.LoadFrom*> with a location that's in the probing path will load the assembly in the load context and not in the load-from context.
-
-- If an assembly file whose identity is goverened by a binding redirect policy is passed to <xref:System.Reflection.Assembly.LoadFrom*>, the policy will be applied and the assembly will be loaded from the probing path in the load context.
-
-- If an assembly is loaded in the load-from context, and later an assembly in the load context attempts to load the same assembly by display name, the load attempt fails. This can occur when an assembly is deserialized.
-
--   <xref:System.Reflection.Assembly.LoadFrom*> demands <xref:System.Security.Permissions.FileIOPermissionAccess.Read?displayProperty=nameWithType> and <xref:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery?displayProperty=nameWithType>, or <xref:System.Net.WebPermission>, on the specified path.
-
-- If a native image exists for `assemblyFile`, it is not used. The assembly cannot be loaded as domain neutral.
-
-## Examples
- The following example loads an assembly given its file name or path.
-
- :::code language="csharp" source="~/snippets/csharp/System.Reflection/Assembly/CodeBase/assembly.cs" id="Snippet11":::
- :::code language="vb" source="~/snippets/visualbasic/System.Reflection/Assembly/CodeBase/assembly.vb" id="Snippet11":::
+This API is present in .NET for compatibility, but it is recommended to use <xref:System.Runtime.Loader.AssemblyLoadContext> overloads instead.
 
  ]]></format>
         </remarks>
@@ -4293,11 +4169,7 @@ The assembly is loaded into the default AssemblyLoadContext. For more informatio
           <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
         <exception cref="T:System.IO.FileNotFoundException">
           <paramref name="assemblyFile" /> is not found, or the module you are trying to load does not specify a filename extension.</exception>
-        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.
-
--or-
-
-.NET Framework only: <paramref name="assemblyFile" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
+        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.</exception>
         <exception cref="T:System.BadImageFormatException">
           <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime; for example, a 32-bit assembly in a 64-bit process.
         </exception>
@@ -4377,61 +4249,11 @@ The assembly is loaded into the default AssemblyLoadContext. For more informatio
 
 ## Remarks
 
- This API is not supported in .NET Core/.NET 5+. This method throws <xref:System.NotSupportedException> when called. Use <xref:System.Reflection.Assembly.LoadFrom(System.String)> instead.
-
- The `assemblyFile` parameter must refer to a URI without escape characters. This method supplies escape characters for all invalid characters in the URI.
-
-> [!NOTE]
->  File transfer protocol (FTP) is not supported. If the URI supplied for `assemblyFile` is an FTP address, the assembly is not loaded. No exception is thrown.
-
- `assemblyFile` can be absolute or relative to the current directory.
-
- Assemblies can be loaded into one of three contexts, or can be loaded without context:
-
-- The load context contains assemblies found by probing: in the global assembly cache, in a host assembly store if the runtime is hosted, or in the <xref:System.AppDomainSetup.ApplicationBase*> and <xref:System.AppDomainSetup.PrivateBinPath*> of the application domain. Most overloads of the <xref:System.Reflection.Assembly.Load*> method load assemblies into this context.
-
-- The load-from context contains assemblies for which the user provided a path that is not included in probing. <xref:System.Reflection.Assembly.LoadFrom*>, <xref:System.AppDomain.CreateInstanceFrom*>, and <xref:System.AppDomain.ExecuteAssembly*> are examples of methods that load by path.
-
-    See [`<loadFromRemoteSources>`](/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element) for loading assemblies from remote locations.
-
-- The reflection-only context contains assemblies loaded with the <xref:System.Reflection.Assembly.ReflectionOnlyLoad*> and <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom*> methods; code in these contexts cannot be executed.
-
-- If the user generated or found the assembly, it is not in any context. This applies to assemblies loaded using overloads of the <xref:System.Reflection.Assembly.Load*> method that specify a byte array containing an assembly, and to transient dynamic assemblies created with reflection emit and not saved to disk.
-
- The load-from context allows an assembly to be loaded from a path that is not included in probing, and yet allows dependencies on that path to be found and loaded because the path information is maintained by the context.
-
- The <xref:System.Reflection.Assembly.LoadFrom*> method has the following disadvantages. Consider using <xref:System.Reflection.Assembly.Load*> instead.
-
-- If an assembly with the same identity is already loaded, <xref:System.Reflection.Assembly.LoadFrom*> returns the loaded assembly even if a different path was specified.
-
-- If an assembly is loaded with <xref:System.Reflection.Assembly.LoadFrom*>, and later an assembly in the load context attempts to load the same assembly by display name, the load attempt fails. This can occur when an assembly is deserialized.
-
-- If an assembly is loaded with <xref:System.Reflection.Assembly.LoadFrom*>, and the probing path includes an assembly with the same identity but a different location, an <xref:System.InvalidCastException>, <xref:System.MissingMethodException>, or other unexpected behavior can occur.
-
--   <xref:System.Reflection.Assembly.LoadFrom*> demands <xref:System.Security.Permissions.FileIOPermissionAccess.Read?displayProperty=nameWithType> and <xref:System.Security.Permissions.FileIOPermissionAccess.PathDiscovery?displayProperty=nameWithType>, or <xref:System.Net.WebPermission>, on the specified path.
-
-- If a native image exists for `assemblyFile`, it is not used. The assembly cannot be loaded as domain-neutral.
-
- The assembly is loaded with the evidence that the loader supplies.
+This API is not supported. This method throws <xref:System.NotSupportedException> when called. Use <xref:System.Reflection.Assembly.LoadFrom(System.String)> instead.
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.NotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">
-          <paramref name="assemblyFile" /> is not found, or the module you are trying to load does not specify a file name extension.</exception>
-        <exception cref="T:System.IO.FileLoadException">A file that was found could not be loaded.
-
--or-
-
-<paramref name="assemblyFile" /> specifies a location that is disabled based on <see href="https://learn.microsoft.com/dotnet/framework/configure-apps/file-schema/runtime/loadfromremotesources-element">&lt;loadFromRemoteSources&gt;</see>.</exception>
-        <exception cref="T:System.BadImageFormatException">
-          <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime; for example, a 32-bit assembly in a 64-bit process.
-        </exception>
-        <exception cref="T:System.Security.SecurityException">A codebase that does not start with "file://" was specified without the required <see cref="T:System.Net.WebPermission" />.</exception>
-        <exception cref="T:System.ArgumentException">The <paramref name="assemblyFile" /> parameter is an empty string ("").</exception>
-        <exception cref="T:System.IO.PathTooLongException">The assembly name exceeds the system-defined maximum length.</exception>
+        <exception cref="T:System.NotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <MemberGroup MemberName="LoadModule">
@@ -4684,22 +4506,7 @@ The assembly is loaded into the default AssemblyLoadContext. For more informatio
         <param name="partialName">The display name of the assembly.</param>
         <summary>Loads an assembly from the application directory or from the global assembly cache using a partial name.</summary>
         <returns>The loaded assembly. If <paramref name="partialName" /> is not found, this method returns <see langword="null" />.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-> [!IMPORTANT]
->  The <xref:System.Reflection.Assembly.LoadWithPartialName(System.String)> method is obsolete and has been retained for backward compatibility. The non-obsolete alternative is <xref:System.Reflection.Assembly.Load(System.String)?displayProperty=nameWithType>.
-
- Applications that load assemblies with this method will be affected by upgrades of those assemblies. Therefore, do not use this method; redesign the application to use the <xref:System.Reflection.Assembly.Load(System.String)> method overload or the <xref:System.Reflection.Assembly.LoadFrom(System.String)> method overload.
-
- In .NET Core/5+, the target assembly is loaded into the current <xref:System.Runtime.Loader.AssemblyLoadContext> or the <xref:System.Runtime.Loader.AssemblyLoadContext.CurrentContextualReflectionContext*?displayProperty=nameWithType> if it's set.
-
- This method first calls <xref:System.Reflection.Assembly.Load*>. If the assembly is not found, this method returns the assembly from the global assembly cache that has the same simple name, and the highest version number.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="partialName" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.BadImageFormatException">
           The assembly is not a valid assembly for the currently loaded runtime.
@@ -4756,9 +4563,7 @@ The assembly is loaded into the default AssemblyLoadContext. For more informatio
 
 ## Remarks
 
-In .NET 5 and later versions, for bundled assemblies, the value returned is an empty string.
-
-.NET Framework only: If the loaded file was [shadow-copied](/dotnet/framework/app-domains/shadow-copy-assemblies), the location is that of the file after being shadow-copied. To get the location before the file has been shadow-copied, use the <xref:System.Reflection.Assembly.CodeBase> property.
+For bundled assemblies, the value returned is an empty string.
 
 ## Examples
  The following example displays the location of the loaded file that contains the manifest.
@@ -5143,26 +4948,10 @@ In .NET 5 and later versions, for bundled assemblies, the value returned is an e
       </Parameters>
       <Docs>
         <param name="rawAssembly">A byte array that is a COFF-based image containing an emitted assembly.</param>
-        <summary>Loads the assembly from a common object file format (COFF)-based image containing an emitted assembly. The assembly is loaded into the reflection-only context of the caller's application domain.</summary>
+        <summary>Loads the assembly from a common object file format (COFF)-based image containing an emitted assembly. The assembly is loaded into the reflection-only context of the application domain.</summary>
         <returns>The loaded assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- You cannot execute code from an assembly loaded into the reflection-only context. To execute code, the assembly must be loaded into the execution context as well, using the <xref:System.Reflection.Assembly.Load*> method.
-
- The reflection-only context is no different from other contexts. Assemblies that are loaded into the context can be unloaded only by unloading the application domain.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="rawAssembly" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.BadImageFormatException">
-          <paramref name="rawAssembly" /> is not a valid assembly for the currently loaded runtime.
-        </exception>
-        <exception cref="T:System.IO.FileLoadException">
-          <paramref name="rawAssembly" /> cannot be loaded.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReflectionOnlyLoad">
@@ -5220,30 +5009,8 @@ In .NET 5 and later versions, for bundled assemblies, the value returned is an e
         <param name="assemblyString">The display name of the assembly, as returned by the <see cref="P:System.Reflection.AssemblyName.FullName" /> property.</param>
         <summary>Loads an assembly into the reflection-only context, given its display name.</summary>
         <returns>The loaded assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Dependencies are not automatically loaded into the reflection-only context.
-
- You cannot execute code from an assembly loaded into the reflection-only context. To execute code, the assembly must be loaded into the execution context as well, using the <xref:System.Reflection.Assembly.Load*> method.
-
- The reflection-only context is no different from other contexts. Assemblies that are loaded into the context can be unloaded only by unloading the application domain.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="assemblyString" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="assemblyString" /> is an empty string ("").</exception>
-        <exception cref="T:System.IO.FileNotFoundException">
-          <paramref name="assemblyString" /> is not found.</exception>
-        <exception cref="T:System.IO.FileLoadException">
-          <paramref name="assemblyString" /> is found, but cannot be loaded.</exception>
-        <exception cref="T:System.BadImageFormatException">
-          <paramref name="assemblyString" /> is not a valid assembly for the currently loaded runtime.
-        </exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="ReflectionOnlyLoadFrom">
@@ -5301,36 +5068,8 @@ In .NET 5 and later versions, for bundled assemblies, the value returned is an e
         <param name="assemblyFile">The path of the file that contains the manifest of the assembly.</param>
         <summary>Loads an assembly into the reflection-only context, given its path.</summary>
         <returns>The loaded assembly.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- Dependencies are not automatically loaded into the reflection-only context. To automatically load dependencies, handle the <xref:System.AppDomain.ReflectionOnlyAssemblyResolve> event and load the dependency in the event handler.
-
- You cannot execute code from an assembly that has been loaded into the reflection-only context. To execute the code, load the assembly with the <xref:System.Reflection.Assembly.LoadFile*> method.
-
- The `assemblyFile` parameter must refer to a URI without escape characters. This method supplies escape characters for all invalid characters in the URI.
-
- The path specified for `assemblyFile` is relative to the current directory.
-
- The reflection-only context is no different from other contexts. Assemblies that are loaded into the context can be unloaded only by unloading the application domain.
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="assemblyFile" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.IO.FileNotFoundException">
-          <paramref name="assemblyFile" /> is not found, or the module you are trying to load does not specify a file name extension.</exception>
-        <exception cref="T:System.IO.FileLoadException">
-          <paramref name="assemblyFile" /> is found, but could not be loaded.</exception>
-        <exception cref="T:System.BadImageFormatException">
-          <paramref name="assemblyFile" /> is not a valid assembly for the currently loaded runtime.
-        </exception>
-        <exception cref="T:System.Security.SecurityException">A codebase that does not start with "file://" was specified without the required <see cref="T:System.Net.WebPermission" />.</exception>
-        <exception cref="T:System.IO.PathTooLongException">The assembly name exceeds the system-defined maximum length.</exception>
-        <exception cref="T:System.ArgumentException">
-          <paramref name="assemblyFile" /> is an empty string ("").</exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
       </Docs>
     </Member>
     <Member MemberName="SecurityRuleSet">
@@ -5373,16 +5112,7 @@ In .NET 5 and later versions, for bundled assemblies, the value returned is an e
       <Docs>
         <summary>Gets a value that indicates which set of security rules the common language runtime (CLR) enforces for this assembly.</summary>
         <value>The security rule set that the CLR enforces for this assembly.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- **.NET Framework only:** By default, assemblies that you compile with the .NET Framework 4 have [level 2](/dotnet/framework/misc/security-transparent-code-level-2) transparency, although you can explicitly make them [level 1](/dotnet/framework/misc/security-transparent-code-level-1) instead. Assemblies that were compiled with earlier versions of the .NET Framework have level 1 transparency. See [Security Changes](/dotnet/framework/security/security-changes).
-
- ]]></format>
-        </remarks>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code">Security-Transparent Code</related>
-        <related type="Article" href="/dotnet/framework/security/security-changes">Security Changes in the .NET Framework 4</related>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SetEntryAssembly">
@@ -5638,15 +5368,7 @@ In .NET 5 and later versions, for bundled assemblies, the value returned is an e
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- Use this method to load a local assembly that the operating system has flagged as having been loaded from the Web (for example, a temporary file that was downloaded from the Internet or intranet). Before the .NET Framework 4, such assemblies were automatically loaded into a sandboxed application domain. Starting with the .NET Framework 4, they are loaded with full trust.
-
- As an alternative to using this method, you can apply the [&lt;NetFx40_LegacySecurityPolicy&gt; Element](/dotnet/framework/configure-apps/file-schema/runtime/netfx40-legacysecuritypolicy-element) in your application configuration file. This causes the common language runtime to revert to the security policy of the .NET Framework 3.5.
-
-> [!CAUTION]
->  If you use either of these solutions, you must be certain that it is safe to load `assemblyFile` with full trust.
-
- For a discussion of load contexts, including the load-from context, see the <xref:System.Reflection.Assembly.LoadFrom(System.String)> method overload.
+Use this method to load a local assembly that the operating system has flagged as having been loaded from the Web (for example, a temporary file that was downloaded from the Internet or intranet).
 
  ]]></format>
         </remarks>

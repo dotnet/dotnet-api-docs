@@ -61,7 +61,6 @@ The following code example creates a dynamic method that takes two parameters. T
     </example>
     <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
     <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
-    <related type="Article" href="/dotnet/framework/reflection-and-codedom/walkthrough-emitting-code-in-partial-trust-scenarios">Walkthrough: Emitting Code in Partial Trust Scenarios</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -145,7 +144,7 @@ The following code example creates a dynamic method that takes two parameters. T
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The dynamic method that is created by this constructor is associated with an anonymous assembly instead of an existing type or module. The anonymous assembly exists only to provide a sandbox environment for dynamic methods, that is, to isolate them from other code. This environment makes it safe for the dynamic method to be emitted and executed by partially trusted code.
+ The dynamic method that is created by this constructor is associated with an anonymous assembly instead of an existing type or module. The anonymous assembly exists only to provide a sandbox environment for dynamic methods, that is, to isolate them from other code.
 
  This constructor specifies that just-in-time (JIT) visibility checks will be enforced for the Microsoft intermediate language (MSIL) of the dynamic method. That is, the code in the dynamic method has access to public methods of public classes. Exceptions are thrown if the method tries to access types or members that are `private`, `protected`, or `internal` (`Friend` in Visual Basic). To create a dynamic method that has restricted ability to skip JIT visibility checks, use the <xref:System.Reflection.Emit.DynamicMethod.%23ctor(System.String,System.Type,System.Type[],System.Boolean)> constructor.
 
@@ -153,19 +152,13 @@ The following code example creates a dynamic method that takes two parameters. T
 
  This constructor specifies the method attributes <xref:System.Reflection.MethodAttributes.Public?displayProperty=nameWithType> and <xref:System.Reflection.MethodAttributes.Static?displayProperty=nameWithType>, and the calling convention <xref:System.Reflection.CallingConventions.Standard?displayProperty=nameWithType>.
 
-> [!NOTE]
->  This constructor was introduced in the .NET Framework 3.5 or later.
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">An element of <paramref name="parameterTypes" /> is <see langword="null" /> or <see cref="T:System.Void" />.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">.NET Framework and .NET Core versions older than 2.1:
-          <paramref name="returnType" /> is a type for which <see cref="P:System.Type.IsByRef" /> returns <see langword="true" />.</exception>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/walkthrough-emitting-code-in-partial-trust-scenarios">Walkthrough: Emitting Code in Partial Trust Scenarios</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -236,13 +229,13 @@ The following code example creates a dynamic method that takes two parameters. T
         <param name="returnType">A <see cref="T:System.Type" /> object that specifies the return type of the dynamic method, or <see langword="null" /> if the method has no return type.</param>
         <param name="parameterTypes">An array of <see cref="T:System.Type" /> objects specifying the types of the parameters of the dynamic method, or <see langword="null" /> if the method has no parameters.</param>
         <param name="restrictedSkipVisibility">
-          <see langword="true" /> to skip JIT visibility checks on types and members accessed by the MSIL of the dynamic method, with this restriction: the trust level of the assemblies that contain those types and members must be equal to or less than the trust level of the call stack that emits the dynamic method; otherwise, <see langword="false" />.</param>
+          <see langword="true" /> to skip JIT visibility checks on types and members accessed by the MSIL of the dynamic method; otherwise, <see langword="false" />.</param>
         <summary>Initializes an anonymously hosted dynamic method, specifying the method name, return type, parameter types, and whether just-in-time (JIT) visibility checks should be skipped for types and members accessed by the Microsoft intermediate language (MSIL) of the dynamic method.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The dynamic method that is created by this constructor is associated with an anonymous assembly instead of an existing type or module. The anonymous assembly exists only to provide a sandbox environment for dynamic methods, that is, to isolate them from other code. This environment makes it safe for the dynamic method to be emitted and executed by partially trusted code.
+ The dynamic method that is created by this constructor is associated with an anonymous assembly instead of an existing type or module. The anonymous assembly exists only to provide a sandbox environment for dynamic methods, that is, to isolate them from other code.
 
  Anonymously hosted dynamic methods do not have automatic access to any types or members that are `private`, `protected`, or `internal` (`Friend` in Visual Basic). This is different from dynamic methods that are associated with an existing type or module, which have access to hidden members in their associated scope.
 
@@ -250,12 +243,9 @@ The following code example creates a dynamic method that takes two parameters. T
 
 - The target members belong to an assembly that has a level of trust equal to or lower than the call stack that emits the dynamic method.
 
-- The call stack that emits the dynamic method is granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag. This is always true when the code is executed with full trust. For partially trusted code, it is true only if the host explicitly grants the permission.
+- The call stack that emits the dynamic method is granted <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.RestrictedMemberAccess?displayProperty=nameWithType> flag. This is always true when the code is executed with full trust.
 
-    > [!IMPORTANT]
-    >  If the permission has not been granted, a security exception is thrown when <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate*> is called or when the dynamic method is invoked, not when this constructor is called. No special permissions are required to emit the dynamic method.
-
- For example, a dynamic method that is created with `restrictedSkipVisibility` set to `true` can access a private member of any assembly on the call stack if the call stack has been granted restricted member access. If the dynamic method is created with partially trusted code on the call stack, it cannot access a private member of a type in a .NET Framework assembly, because such assemblies are fully trusted.
+ For example, a dynamic method that is created with `restrictedSkipVisibility` set to `true` can access a private member of any assembly on the call stack if the call stack has been granted restricted member access. If the dynamic method is created with partially trusted code on the call stack, it cannot access a private member of a type in a .NET assembly, because such assemblies are fully trusted.
 
  If `restrictedSkipVisibility` is `false`, JIT visibility checks are enforced. The code in the dynamic method has access to public methods of public classes, and exceptions are thrown if it tries to access types or members that are `private`, `protected`, or `internal`.
 
@@ -263,19 +253,13 @@ The following code example creates a dynamic method that takes two parameters. T
 
  This constructor specifies the method attributes <xref:System.Reflection.MethodAttributes.Public?displayProperty=nameWithType> and <xref:System.Reflection.MethodAttributes.Static?displayProperty=nameWithType>, and the calling convention <xref:System.Reflection.CallingConventions.Standard?displayProperty=nameWithType>.
 
-> [!NOTE]
->  This constructor was introduced in the .NET Framework 3.5 or later.
-
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">An element of <paramref name="parameterTypes" /> is <see langword="null" /> or <see cref="T:System.Void" />.</exception>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="name" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">.NET Framework and .NET Core versions older than 2.1:
-          <paramref name="returnType" /> is a type for which <see cref="P:System.Type.IsByRef" /> returns <see langword="true" />.</exception>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/walkthrough-emitting-code-in-partial-trust-scenarios">Walkthrough: Emitting Code in Partial Trust Scenarios</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -377,8 +361,6 @@ The following code example creates a dynamic method that takes two parameters. T
  -or-
 
  <paramref name="m" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">.NET Framework and .NET Core versions older than 2.1:
-          <paramref name="returnType" /> is a type for which <see cref="P:System.Type.IsByRef" /> returns <see langword="true" />.</exception>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
       </Docs>
@@ -475,9 +457,6 @@ The following code example creates a dynamic method that takes two parameters. T
 
  The example code creates an instance of `Example` and then creates two delegates. The first is of type `UseLikeStatic`, which has the same parameters as the dynamic method. The second is of type `UseLikeInstance`, which lacks the first parameter (of type `Example`). This delegate is created using the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate(System.Type,System.Object)> method overload; the second parameter of that method overload is an instance of `Example`, in this case the instance just created, which is bound to the newly created delegate. Whenever that delegate is invoked, the dynamic method acts on the bound instance of `Example`.
 
-> [!NOTE]
-> This is an example of the relaxed rules for delegate binding introduced in .NET Framework 2.0, along with new overloads of the <xref:System.Delegate.CreateDelegate*?displayProperty=nameWithType> method. For more information, see the <xref:System.Delegate> class.
-
  The `UseLikeStatic` delegate is invoked, passing in the instance of `Example` that is bound to the `UseLikeInstance` delegate. Then the `UseLikeInstance` delegate is invoked, so that both delegates act on the same instance of `Example`. The changes in the values of the internal field are displayed after each call. Finally, a `UseLikeInstance` delegate is bound to an instance of `DerivedFromExample`, and the delegate calls are repeated.
 
  :::code language="csharp" source="~/snippets/csharp/System.Reflection.Emit/DynamicMethod/.ctor/source.cs" id="Snippet1":::
@@ -496,8 +475,6 @@ The following code example creates a dynamic method that takes two parameters. T
  -or-
 
  <paramref name="owner" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">.NET Framework and .NET Core versions older than 2.1:
-          <paramref name="returnType" /> is a type for which <see cref="P:System.Type.IsByRef" /> returns <see langword="true" />.</exception>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
       </Docs>
@@ -598,8 +575,6 @@ The following code example creates a dynamic method that takes two parameters. T
  -or-
 
  <paramref name="m" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">.NET Framework and .NET Core versions older than 2.1:
-          <paramref name="returnType" /> is a type for which <see cref="P:System.Type.IsByRef" /> returns <see langword="true" />.</exception>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
       </Docs>
@@ -700,8 +675,6 @@ The following code example creates a dynamic method that takes two parameters. T
  -or-
 
  <paramref name="owner" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.NotSupportedException">.NET Framework and .NET Core versions older than 2.1:
-          <paramref name="returnType" /> is a type for which <see cref="P:System.Type.IsByRef" /> returns <see langword="true" />.</exception>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/how-to-define-and-execute-dynamic-methods">How to: Define and Execute Dynamic Methods</related>
         <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
       </Docs>
@@ -1211,9 +1184,6 @@ The following code example creates a dynamic method that takes two parameters. T
 >  In general, changing the internal fields of classes is not good object-oriented coding practice.
 
  The example code creates an instance of `Example` and then creates two delegates. The first is of type `UseLikeStatic`, which has the same parameters as the dynamic method. The second is of type `UseLikeInstance`, which lacks the first parameter (of type `Example`). This delegate is created using the <xref:System.Reflection.Emit.DynamicMethod.CreateDelegate(System.Type,System.Object)> method overload; the second parameter of that method overload is an instance of `Example`, in this case the instance just created, which is bound to the newly created delegate. Whenever that delegate is invoked, the dynamic method acts on the bound instance of `Example`.
-
-> [!NOTE]
-> This is an example of the relaxed rules for delegate binding introduced in .NET Framework 2.0, along with new overloads of the <xref:System.Delegate.CreateDelegate*?displayProperty=nameWithType> method. For more information, see the <xref:System.Delegate> class.
 
  The `UseLikeStatic` delegate is invoked, passing in the instance of `Example` that is bound to the `UseLikeInstance` delegate. Then the `UseLikeInstance` delegate is invoked, so that both delegates act on the same instance of `Example`. The changes in the values of the internal field are displayed after each call. Finally, a `UseLikeInstance` delegate is bound to an instance of `DerivedFromExample`, and the delegate calls are repeated.
 
@@ -1823,8 +1793,6 @@ The following code example creates a dynamic method that takes two parameters. T
 ## Remarks
  The <xref:System.Reflection.ParameterInfo> objects returned by this method are for information only. Use the <xref:System.Reflection.Emit.DynamicMethod.DefineParameter*> method to set or change the characteristics of the parameters.
 
-
-
 ## Examples
  The following code example displays the parameters of a dynamic method. This code example is part of a larger example provided for the <xref:System.Reflection.Emit.DynamicMethod> class.
 
@@ -1880,8 +1848,6 @@ The following code example creates a dynamic method that takes two parameters. T
 
 ## Remarks
  If this property is set to `true`, the emitted Microsoft intermediate language (MSIL) includes initialization of local variables. If it is set to `false`, local variables are not initialized and the generated code is unverifiable.
-
-
 
 ## Examples
  The following code example displays the <xref:System.Reflection.Emit.DynamicMethod.InitLocals> property of a dynamic method. This code example is part of a larger example provided for the <xref:System.Reflection.Emit.DynamicMethod> class.
@@ -1958,7 +1924,7 @@ The following code example creates a dynamic method that takes two parameters. T
  If the dynamic method has no parameters, the value of `parameters` should be `null`. Otherwise the number, type, and order of elements in the parameters array should be identical to the number, type, and order of parameters of the dynamic method.
 
 > [!NOTE]
->  This method overload is called by the <xref:System.Reflection.MethodBase.Invoke(System.Object,System.Object[])> method overload inherited from the <xref:System.Reflection.MethodBase> class, so the preceding remarks apply to both overloads.
+> This method overload is called by the <xref:System.Reflection.MethodBase.Invoke(System.Object,System.Object[])> method overload inherited from the <xref:System.Reflection.MethodBase> class, so the preceding remarks apply to both overloads.
 
  This method does not demand permissions directly, but invoking the dynamic method can result in security demands, depending on the method. For example, no demands are made for anonymously hosted dynamic methods that are created with the `restrictedSkipVisibility` parameter set to `false`. On the other hand, if you create a method with `restrictedSkipVisibility` set to `true` so it can access a hidden member of a target assembly, the method will cause a demand for the permissions of the target assembly plus <xref:System.Security.Permissions.ReflectionPermission> with the <xref:System.Security.Permissions.ReflectionPermissionFlag.MemberAccess?displayProperty=nameWithType> flag.
 
@@ -2084,46 +2050,31 @@ The following code example creates a dynamic method that takes two parameters. T
 ## Remarks
  The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical*>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical*>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent*> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
 
-|Security level|IsSecurityCritical|IsSecuritySafeCritical|IsSecurityTransparent|
-|--------------------|------------------------|----------------------------|---------------------------|
-|Critical|`true`|`false`|`false`|
-|Safe critical|`true`|`true`|`false`|
-|Transparent|`false`|`false`|`true`|
+| Security level | IsSecurityCritical | IsSecuritySafeCritical | IsSecurityTransparent |
+|----------------|--------------------|------------------------|-----------------------|
+| Critical       | `true`             | `false`                | `false`               |
+| Safe critical  | `true`             | `true`                 | `false`               |
+| Transparent    | `false`            | `false`                | `true`                |
 
  Using these properties is much simpler than examining the security annotations of an assembly and its types, checking the current trust level, and attempting to duplicate the runtime's rules.
 
  The transparency of a dynamic method depends on the module it is associated with. If the dynamic method is associated with a type rather than a module, its transparency depends on the module that contains the type. Dynamic methods do not have security annotations, so they are assigned the default transparency for the associated module.
 
 - Anonymously hosted dynamic methods are always transparent, because the system-provided module that contains them is transparent.
-
 - The transparency of a dynamic method that is associated with a trusted assembly (that is, a strong-named assembly that is installed in the global assembly cache) is described in the following table.
 
-    |Assembly annotation|Level 1 transparency|Level 2 transparency|
-    |-------------------------|--------------------------|--------------------------|
-    |Fully transparent|Transparent|Transparent|
-    |Fully critical|Critical|Critical|
-    |Mixed transparency|Transparent|Transparent|
-    |Security-agnostic|Safe-critical|Critical|
+  | Assembly annotation | Level 1 transparency | Level 2 transparency |
+  |---------------------|----------------------|----------------------|
+  | Fully transparent   | Transparent          | Transparent          |
+  | Fully critical      | Critical             | Critical             |
+  | Mixed transparency  | Transparent          | Transparent          |
+  | Security-agnostic   | Safe-critical        | Critical             |
 
-     For example, if you associate a dynamic method with a type that is in mscorlib.dll, which has level 2 mixed transparency, the dynamic method is transparent and cannot execute critical code. For information about transparency levels, see [Security-Transparent Code, Level 1](/dotnet/framework/misc/security-transparent-code-level-1) and [Security-Transparent Code, Level 2](/dotnet/framework/misc/security-transparent-code-level-2).
-
-    > [!NOTE]
-    >  Associating a dynamic method with a module in a trusted level 1 assembly that is security-agnostic, such as System.dll, does not permit elevation of trust. If the grant set of the code that calls the dynamic method does not include the grant set of System.dll (that is, full trust), <xref:System.Security.SecurityException> is thrown when the dynamic method is called.
-
-- The transparency of a dynamic method that is associated with a partially trusted assembly depends on how the assembly is loaded. If the assembly is loaded with partial trust (for example, into a sandboxed application domain), the runtime ignores the security annotations of the assembly. The assembly and all its types and members, including dynamic methods, are treated as transparent. The runtime pays attention to security annotations only if the partial-trust assembly is loaded with full trust (for example, into the default application domain of a desktop application). In that case, the runtime assigns the dynamic method the default transparency for methods according to the assembly's annotations.
-
- For more information about reflection emit and transparency, see [Security Issues in Reflection Emit](/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit). For information about transparency, see [Security Changes](/dotnet/framework/security/security-changes).
+  For example, if you associate a dynamic method with a type that is in mscorlib.dll, which has level 2 mixed transparency, the dynamic method is transparent and cannot execute critical code.
 
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The dynamic method doesn't have a method body.</exception>
-        <altmember cref="P:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical" />
-        <altmember cref="P:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent" />
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection">Security Considerations for Reflection</related>
-        <related type="Article" href="/dotnet/framework/security/security-changes">Security Changes in the .NET Framework Version 4.0</related>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code-level-1">Security-Transparent Code, Level 1</related>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code-level-2">Security-Transparent Code, Level 2</related>
       </Docs>
     </Member>
     <Member MemberName="IsSecuritySafeCritical">
@@ -2166,46 +2117,29 @@ The following code example creates a dynamic method that takes two parameters. T
 ## Remarks
  The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical*>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical*>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent*> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
 
-|Security level|IsSecurityCritical|IsSecuritySafeCritical|IsSecurityTransparent|
-|--------------------|------------------------|----------------------------|---------------------------|
-|Critical|`true`|`false`|`false`|
-|Safe critical|`true`|`true`|`false`|
-|Transparent|`false`|`false`|`true`|
+| Security level | IsSecurityCritical | IsSecuritySafeCritical | IsSecurityTransparent |
+|----------------|--------------------|------------------------|-----------------------|
+| Critical       | `true`             | `false`                | `false`               |
+| Safe critical  | `true`             | `true`                 | `false`               |
+| Transparent    | `false`            | `false`                | `true`                |
 
  Using these properties is much simpler than examining the security annotations of an assembly and its types, checking the current trust level, and attempting to duplicate the runtime's rules.
 
  The transparency of a dynamic method depends on the module it is associated with. If the dynamic method is associated with a type rather than a module, its transparency depends on the module that contains the type. Dynamic methods do not have security annotations, so they are assigned the default transparency for the associated module.
 
 - Anonymously hosted dynamic methods are always transparent, because the system-provided module that contains them is transparent.
-
 - The transparency of a dynamic method that is associated with a trusted assembly (that is, a strong-named assembly that is installed in the global assembly cache) is described in the following table.
 
-    |Assembly annotation|Level 1 transparency|Level 2 transparency|
-    |-------------------------|--------------------------|--------------------------|
-    |Fully transparent|Transparent|Transparent|
-    |Fully critical|Critical|Critical|
-    |Mixed transparency|Transparent|Transparent|
-    |Security-agnostic|Safe-critical|Critical|
-
-     For example, if you associate a dynamic method with a type that is in mscorlib.dll, which has level 2 mixed transparency, the dynamic method is transparent and cannot execute critical code. For information about transparency levels, see [Security-Transparent Code, Level 1](/dotnet/framework/misc/security-transparent-code-level-1) and [Security-Transparent Code, Level 2](/dotnet/framework/misc/security-transparent-code-level-2).
-
-    > [!NOTE]
-    >  Associating a dynamic method with a module in a trusted level 1 assembly that is security-agnostic, such as System.dll, does not permit elevation of trust. If the grant set of the code that calls the dynamic method does not include the grant set of System.dll (that is, full trust), <xref:System.Security.SecurityException> is thrown when the dynamic method is called.
-
-- The transparency of a dynamic method that is associated with a partially trusted assembly depends on how the assembly is loaded. If the assembly is loaded with partial trust (for example, into a sandboxed application domain), the runtime ignores the security annotations of the assembly. The assembly and all its types and members, including dynamic methods, are treated as transparent. The runtime pays attention to security annotations only if the partial-trust assembly is loaded with full trust (for example, into the default application domain of a desktop application). In that case, the runtime assigns the dynamic method the default transparency for methods according to the assembly's annotations.
-
- For more information about reflection emit and transparency, see [Security Issues in Reflection Emit](/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit). For information about transparency, see [Security Changes](/dotnet/framework/security/security-changes).
+  | Assembly annotation | Level 1 transparency | Level 2 transparency |
+  |---------------------|----------------------|----------------------|
+  | Fully transparent   | Transparent          | Transparent          |
+  | Fully critical      | Critical             | Critical             |
+  | Mixed transparency  | Transparent          | Transparent          |
+  | Security-agnostic   | Safe-critical        | Critical             |
 
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The dynamic method doesn't have a method body.</exception>
-        <altmember cref="P:System.Reflection.Emit.DynamicMethod.IsSecurityCritical" />
-        <altmember cref="P:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent" />
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection">Security Considerations for Reflection</related>
-        <related type="Article" href="/dotnet/framework/security/security-changes">Security Changes in the .NET Framework Version 4.0</related>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code-level-1">Security-Transparent Code, Level 1</related>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code-level-2">Security-Transparent Code, Level 2</related>
       </Docs>
     </Member>
     <Member MemberName="IsSecurityTransparent">
@@ -2248,46 +2182,29 @@ The following code example creates a dynamic method that takes two parameters. T
 ## Remarks
  The <xref:System.Reflection.Emit.DynamicMethod.IsSecurityCritical*>, <xref:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical*>, and <xref:System.Reflection.Emit.DynamicMethod.IsSecurityTransparent*> properties report the transparency level of the dynamic method as determined by the common language runtime (CLR). The combinations of these properties are shown in the following table:
 
-|Security level|IsSecurityCritical|IsSecuritySafeCritical|IsSecurityTransparent|
-|--------------------|------------------------|----------------------------|---------------------------|
-|Critical|`true`|`false`|`false`|
-|Safe critical|`true`|`true`|`false`|
-|Transparent|`false`|`false`|`true`|
+| Security level | IsSecurityCritical | IsSecuritySafeCritical | IsSecurityTransparent |
+|----------------|--------------------|------------------------|-----------------------|
+| Critical       | `true`             | `false`                | `false`               |
+| Safe critical  | `true`             | `true`                 | `false`               |
+| Transparent    | `false`            | `false`                | `true`                |
 
  Using these properties is much simpler than examining the security annotations of an assembly and its types, checking the current trust level, and attempting to duplicate the runtime's rules.
 
  The transparency of a dynamic method depends on the module it is associated with. If the dynamic method is associated with a type rather than a module, its transparency depends on the module that contains the type. Dynamic methods do not have security annotations, so they are assigned the default transparency for the associated module.
 
 - Anonymously hosted dynamic methods are always transparent, because the system-provided module that contains them is transparent.
-
 - The transparency of a dynamic method that is associated with a trusted assembly (that is, a strong-named assembly that is installed in the global assembly cache) is described in the following table.
 
-    |Assembly annotation|Level 1 transparency|Level 2 transparency|
-    |-------------------------|--------------------------|--------------------------|
-    |Fully transparent|Transparent|Transparent|
-    |Fully critical|Critical|Critical|
-    |Mixed transparency|Transparent|Transparent|
-    |Security-agnostic|Safe-critical|Critical|
-
-     For example, if you associate a dynamic method with a type that is in mscorlib.dll, which has level 2 mixed transparency, the dynamic method is transparent and cannot execute critical code. For information about transparency levels, see [Security-Transparent Code, Level 1](/dotnet/framework/misc/security-transparent-code-level-1) and [Security-Transparent Code, Level 2](/dotnet/framework/misc/security-transparent-code-level-2).
-
-    > [!NOTE]
-    >  Associating a dynamic method with a module in a trusted level 1 assembly that is security-agnostic, such as System.dll, does not permit elevation of trust. If the grant set of the code that calls the dynamic method does not include the grant set of System.dll (that is, full trust), <xref:System.Security.SecurityException> is thrown when the dynamic method is called.
-
-- The transparency of a dynamic method that is associated with a partially trusted assembly depends on how the assembly is loaded. If the assembly is loaded with partial trust (for example, into a sandboxed application domain), the runtime ignores the security annotations of the assembly. The assembly and all its types and members, including dynamic methods, are treated as transparent. The runtime pays attention to security annotations only if the partial-trust assembly is loaded with full trust (for example, into the default application domain of a desktop application). In that case, the runtime assigns the dynamic method the default transparency for methods according to the assembly's annotations.
-
- For more information about reflection emit and transparency, see [Security Issues in Reflection Emit](/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit). For information about transparency, see [Security Changes](/dotnet/framework/security/security-changes).
+  | Assembly annotation | Level 1 transparency | Level 2 transparency |
+  |---------------------|----------------------|----------------------|
+  | Fully transparent   | Transparent          | Transparent          |
+  | Fully critical      | Critical             | Critical             |
+  | Mixed transparency  | Transparent          | Transparent          |
+  | Security-agnostic   | Safe-critical        | Critical             |
 
  ]]></format>
         </remarks>
         <exception cref="T:System.InvalidOperationException">The dynamic method doesn't have a method body.</exception>
-        <altmember cref="P:System.Reflection.Emit.DynamicMethod.IsSecurityCritical" />
-        <altmember cref="P:System.Reflection.Emit.DynamicMethod.IsSecuritySafeCritical" />
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-issues-in-reflection-emit">Security Issues in Reflection Emit</related>
-        <related type="Article" href="/dotnet/framework/reflection-and-codedom/security-considerations-for-reflection">Security Considerations for Reflection</related>
-        <related type="Article" href="/dotnet/framework/security/security-changes">Security Changes in the .NET Framework Version 4.0</related>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code-level-1">Security-Transparent Code, Level 1</related>
-        <related type="Article" href="/dotnet/framework/misc/security-transparent-code-level-2">Security-Transparent Code, Level 2</related>
       </Docs>
     </Member>
     <Member MemberName="MethodHandle">
