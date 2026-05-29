@@ -38,27 +38,27 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Improves the startup performance of application domains in applications that require the just-in-time (JIT) compiler by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations.</summary>
+    <summary>Improves the startup performance of applications that require the just-in-time (JIT) compiler by performing background compilation of methods that are likely to be executed, based on profiles created during previous compilations.</summary>
     <remarks>
-      <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
-  
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
 > [!NOTE]
 >
 > - Profile optimization requires a multicore computer. The methods are ignored on other computers.
 > - This API reduces startup time. These improvements are complementary to [dynamic profile-guided optimization (Dynamic PGO)](/dotnet/core/whats-new/dotnet-6#profile-guided-optimization), which improves runtime optimization based on observed execution patterns.
-  
- Each time you initiate profile optimization in an application domain, the profile that was created during the previous use is read. The information in the profile is used to guide background compilation by identifying the methods that are most likely to be executed during startup. On multicore computers, this increases the chances that a method is already compiled by the time it is needed so that the main application thread does not have to call the JIT compiler.  
-  
- The profile file is overwritten on each use, so it always contains the most recent information about which methods are used during startup.  
-  
- Optimization profiles are not restricted to application domain startup. They can be used for any activity that requires heavy use of the JIT compiler. You can maintain multiple profiles for an application domain so that each such activity has its own profile.  
-  
- To use optimization profiles in an application domain, you must call the <xref:System.Runtime.ProfileOptimization.SetProfileRoot*> method and specify the folder where profiles are stored. The folder must already exist. To begin using a profile, call the <xref:System.Runtime.ProfileOptimization.StartProfile*> method and specify the file name of the profile. If the file was not recorded previously, it's created on first use. There is no performance benefit the first time a profile is created.  
-  
- Profile optimization does not change the order in which methods are executed. Methods are not executed on the background thread; if a method is compiled but never called, it is simply not used. If a profile file is corrupt or cannot be written to the specified folder (for example, because the folder does not exist), program execution continues without optimization profiling.  
-  
+
+ Each time you initiate profile optimization, the profile that was created during the previous use is read. The information in the profile is used to guide background compilation by identifying the methods that are most likely to be executed during startup. On multicore computers, this increases the chances that a method is already compiled by the time it is needed so that the main application thread does not have to call the JIT compiler.
+
+ The profile file is overwritten on each use, so it always contains the most recent information about which methods are used during startup.
+
+ Optimization profiles are not restricted to application startup. They can be used for any activity that requires heavy use of the JIT compiler. You can maintain multiple profiles so that each such activity has its own profile.
+
+ To use optimization profiles, you must call the <xref:System.Runtime.ProfileOptimization.SetProfileRoot*> method and specify the folder where profiles are stored. The folder must already exist. To begin using a profile, call the <xref:System.Runtime.ProfileOptimization.StartProfile*> method and specify the file name of the profile. If the file was not recorded previously, it's created on first use. There is no performance benefit the first time a profile is created.
+
+ Profile optimization does not change the order in which methods are executed. Methods are not executed on the background thread; if a method is compiled but never called, it is simply not used. If a profile file is corrupt or cannot be written to the specified folder (for example, because the folder does not exist), program execution continues without optimization profiling.
+
  ]]></format>
     </remarks>
   </Docs>
@@ -97,13 +97,13 @@
         <Parameter Name="directoryPath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="directoryPath">The full path to the folder where profile files are stored for the current application domain.</param>
-        <summary>Enables optimization profiling for the current application domain, and sets the folder where the optimization profile files are stored. On a single-core computer, the method is ignored.</summary>
+        <param name="directoryPath">The full path to the folder where profile files are stored.</param>
+        <summary>Enables optimization profiling and sets the folder where the optimization profile files are stored. On a single-core computer, the method is ignored.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- You must call this method before you call the <xref:System.Runtime.ProfileOptimization.StartProfile*> method for the first time in the current application domain. If you call <xref:System.Runtime.ProfileOptimization.SetProfileRoot*> more than once in the same application domain, all calls after the first are ignored.
+ You must call this method before you call the <xref:System.Runtime.ProfileOptimization.StartProfile*> method for the first time. If you call <xref:System.Runtime.ProfileOptimization.SetProfileRoot*> more than once, all calls after the first are ignored.
 
  The specified folder must already exist. If it does not exist, calling this method does not create it, and no profiling occurs.
 
@@ -162,7 +162,7 @@
 
  Calling this method stops any previous recording in progress. Calling this method with a null profile file name stops any recording in progress and does not start a new recording.
 
- If the <xref:System.Runtime.ProfileOptimization.SetProfileRoot*> method has not been called for the current application domain, or if the computer does not have multiple cores, the <xref:System.Runtime.ProfileOptimization.StartProfile*> method has no effect.
+ If the <xref:System.Runtime.ProfileOptimization.SetProfileRoot*> method has not been called, or if the computer does not have multiple cores, the <xref:System.Runtime.ProfileOptimization.StartProfile*> method has no effect.
 
  ]]></format>
         </remarks>
