@@ -364,15 +364,10 @@
 
  Calling the <xref:System.Environment.Exit*> method differs from using your programming language's `return` statement in the following ways:
 
--   <xref:System.Environment.Exit*> always terminates an application. Using the `return` statement may terminate an application only if it is used in the application entry point, such as in the `Main` method.
-
--   <xref:System.Environment.Exit*> terminates an application immediately, even if other threads are running. If the `return` statement is called in the application entry point, it causes an application to terminate only after all foreground threads have terminated.
-
--   <xref:System.Environment.Exit*> requires the caller to have permission to call unmanaged code. The `return` statement does not.
-
+- <xref:System.Environment.Exit*> always terminates an application. Using the `return` statement may terminate an application only if it is used in the application entry point, such as in the `Main` method.
+- <xref:System.Environment.Exit*> terminates an application immediately, even if other threads are running. If the `return` statement is called in the application entry point, it causes an application to terminate only after all foreground threads have terminated.
+- <xref:System.Environment.Exit*> requires the caller to have permission to call unmanaged code. The `return` statement does not.
 - If <xref:System.Environment.Exit*> is called from a `try` or `catch` block, the code in any `finally` block does not execute. If the `return` statement is used, the code in the `finally` block does execute.
-
-- If <xref:System.Environment.Exit*> is called when code in a [constrained execution region](/dotnet/framework/performance/constrained-execution-regions) (CER) is running, the CER will not complete execution. If the `return` statement is used, the CER completes execution.
 
  ]]></format>
         </remarks>
@@ -433,7 +428,7 @@
  Use a non-zero number to indicate an error. In your application, you can define your own error codes in an enumeration, and return the appropriate error code based on the scenario. For example, return a value of 1 to indicate that the required file is not present and a value of 2 to indicate that the file is in the wrong format. For a list of exit codes used by the Windows operating system, see [System Error Codes](/windows/win32/debug/system-error-codes) in the Windows documentation.
 
 ## Examples
- The following is a simple app named Double.exe that doubles an integer value passed to it as a command-line argument. The value assigns error codes to the <xref:System.Environment.ExitCode> property to indicate error conditions. Note that you must add a reference to the System.Numerics.dll assembly to successfully compile the example.
+ The following is a simple app named Double.exe that doubles an integer value passed to it as a command-line argument. The value assigns error codes to the <xref:System.Environment.ExitCode> property to indicate error conditions.
 
  :::code language="csharp" source="~/snippets/csharp/System/Environment/ExitCode/double.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/System/Environment/ExitCode/double.fs" id="Snippet1":::
@@ -1427,11 +1422,10 @@ The following example creates environment variables for the <xref:System.Environ
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- **.NET Framework only**: When the CLR unloads an application domain, it runs the finalizers on all objects that have a finalizer method in that application domain. When the CLR shuts down, it starts the finalizer thread on all objects that have a finalizer method. The <xref:System.Environment.HasShutdownStarted> property returns `true` only after the finalizer thread has been started. When the property returns `true`, you can determine whether an application domain is being unloaded or the CLR itself is shutting down by calling the <xref:System.AppDomain.IsFinalizingForUnload*?displayProperty=nameWithType> method. This method returns `true` if finalizers are called because the application domain is unloading or `false` if the CLR is shutting down.
 
- The <xref:System.Environment.HasShutdownStarted> property returns `false` if the finalizer thread has not been started.
+The <xref:System.Environment.HasShutdownStarted> property returns `false` if the finalizer thread has not been started.
 
- By using this property, you can determine whether to access static variables in your finalization code. If either an application domain or the CLR is shutting down, you cannot reliably access any object that has a finalization method and that is referenced by a static field. This is because these objects may have already been finalized.
+By using this property, you can determine whether to access static variables in your finalization code. If either an application domain or the CLR is shutting down, you cannot reliably access any object that has a finalization method and that is referenced by a static field. This is because these objects may have already been finalized.
 
  ]]></format>
         </remarks>
@@ -1667,7 +1661,7 @@ The following example creates environment variables for the <xref:System.Environ
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The property value of <xref:System.Environment.NewLine*> is a constant customized specifically for the current platform and implementation of the .NET Framework. For more information about the escape characters in the property value, see [Character Escapes](/dotnet/standard/base-types/character-escapes-in-regular-expressions).
+ The property value of <xref:System.Environment.NewLine*> is a constant customized specifically for the current platform and implementation of .NET. For more information about the escape characters in the property value, see [Character Escapes](/dotnet/standard/base-types/character-escapes-in-regular-expressions).
 
  The functionality provided by <xref:System.Environment.NewLine*> is often what is meant by the terms newline, line feed, line break, carriage return, CRLF, and end of line.
 
@@ -2441,7 +2435,7 @@ The elapsed time excludes any non-awake time, such as time spent in sleep mode, 
 This value updates at the same frequency as the underlying interrupt timer for the system.
 
 > [!NOTE]
-> On Windows, in .NET 10 and earlier versions, including .NET Framework, the elapsed time **includes** non-awake time. In addition, the value updates at a fixed cadence of 10-16ms (typically 15.5ms).
+> On Windows, in .NET 10 and earlier versions, the elapsed time **includes** non-awake time. In addition, the value updates at a fixed cadence of 10-16ms (typically 15.5ms).
 
  ]]></format>
         </remarks>
@@ -2678,14 +2672,8 @@ This value updates at the same frequency as the underlying interrupt timer for t
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
-  For .NET Core 3.x and .NET 5+, the <xref:System.Environment.Version?displayProperty=nameWithType> property returns the .NET runtime version number.
 
-  For .NET Framework versions 4, 4.5, 4.5.1, and 4.5.2, the <xref:System.Environment.Version?displayProperty=nameWithType> property returns a <xref:System.Version> object whose string representation has the form `4.0.30319.xxxxx`. For .NET Framework 4.6 and later versions, it has the form `4.0.30319.42000`.
-
-> [!WARNING]
-> For the .NET Framework 4.5 and later, we do not recommend using the <xref:System.Environment.Version> property to detect the version of the runtime; instead, you can determine the version of the common language runtime by querying the registry. For more information, see [How to: Determine Which .NET Framework Versions Are Installed](/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed).
-
- For more information about the version of the common language runtime that is installed with each version of the .NET Framework, see [Versions and Dependencies](/dotnet/framework/migration-guide/versions-and-dependencies).
+The <xref:System.Environment.Version?displayProperty=nameWithType> property returns the .NET runtime version number.
 
 ## Examples
  The following example displays the version of the common language runtime.

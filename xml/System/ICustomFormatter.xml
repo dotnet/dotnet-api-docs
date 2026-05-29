@@ -53,15 +53,13 @@
 ## Remarks
  The <xref:System.ICustomFormatter> interface includes a single method, <xref:System.ICustomFormatter.Format*?displayProperty=nameWithType>. When this interface is implemented by a reference or value type, the <xref:System.ICustomFormatter.Format*> method returns a custom-formatted string representation of an object's value.
 
- Typically, the <xref:System.ICustomFormatter> interface is implemented with the <xref:System.IFormatProvider> interface to customize the behavior of two .NET Framework composite string formatting methods that include an <xref:System.IFormatProvider> parameter. Specifically, the <xref:System.ICustomFormatter> interface can provide custom formatting of the value of an object passed to the <xref:System.String.Format(System.IFormatProvider,System.String,System.Object%5B%5D)?displayProperty=nameWithType> and <xref:System.Text.StringBuilder.AppendFormat(System.IFormatProvider,System.String,System.Object%5B%5D)?displayProperty=nameWithType> methods.
+ Typically, the <xref:System.ICustomFormatter> interface is implemented with the <xref:System.IFormatProvider> interface to customize the behavior of two .NET composite string formatting methods that include an <xref:System.IFormatProvider> parameter. Specifically, the <xref:System.ICustomFormatter> interface can provide custom formatting of the value of an object passed to the <xref:System.String.Format(System.IFormatProvider,System.String,System.Object%5B%5D)?displayProperty=nameWithType> and <xref:System.Text.StringBuilder.AppendFormat(System.IFormatProvider,System.String,System.Object%5B%5D)?displayProperty=nameWithType> methods.
 
  Providing a custom representation of an object's value requires that you do the following:
 
-1.  Define a class that implements the <xref:System.ICustomFormatter> interface and its single member, the <xref:System.ICustomFormatter.Format*> method.
-
-2.  Define a class that implements the <xref:System.IFormatProvider> interface and its single member, the <xref:System.IFormatProvider.GetFormat*> method. The <xref:System.IFormatProvider.GetFormat*> method returns an instance of your <xref:System.ICustomFormatter> implementation. Often, a single class implements both <xref:System.ICustomFormatter> and <xref:System.IFormatProvider>. In that case, the class's `GetFormat` implementation just returns an instance of itself.
-
-3.  Pass the <xref:System.IFormatProvider> implementation as the `provider` argument of the <xref:System.String.Format(System.IFormatProvider,System.String,System.Object%5B%5D)?displayProperty=nameWithType> method or a comparable method.
+1. Define a class that implements the <xref:System.ICustomFormatter> interface and its single member, the <xref:System.ICustomFormatter.Format*> method.
+2. Define a class that implements the <xref:System.IFormatProvider> interface and its single member, the <xref:System.IFormatProvider.GetFormat*> method. The <xref:System.IFormatProvider.GetFormat*> method returns an instance of your <xref:System.ICustomFormatter> implementation. Often, a single class implements both <xref:System.ICustomFormatter> and <xref:System.IFormatProvider>. In that case, the class's `GetFormat` implementation just returns an instance of itself.
+3. Pass the <xref:System.IFormatProvider> implementation as the `provider` argument of the <xref:System.String.Format(System.IFormatProvider,System.String,System.Object%5B%5D)?displayProperty=nameWithType> method or a comparable method.
 
  The .NET library method will then use your custom formatting instead of its own.
 
@@ -182,13 +180,11 @@
 
  The `formatProvider` parameter is the <xref:System.IFormatProvider> implementation that provides formatting for `arg`. Typically, it is an instance of your <xref:System.ICustomFormatter> implementation. If `formatProvider` is `null`, ignore that parameter.
 
- Your implementation of the <xref:System.ICustomFormatter.Format*> method must include the following functionality so the .NET Framework can provide formatting you do not support. If your format method does not support a format, determine whether the object being formatted implements the <xref:System.IFormattable> interface. If it does, invoke the <xref:System.IFormattable.ToString*?displayProperty=nameWithType> method of that interface. Otherwise, invoke the default <xref:System.Object.ToString*?displayProperty=nameWithType> method of the underlying object. The following code illustrates this pattern.
+ Your implementation of the <xref:System.ICustomFormatter.Format*> method must include the following functionality so .NET can provide formatting you do not support. If your format method does not support a format, determine whether the object being formatted implements the <xref:System.IFormattable> interface. If it does, invoke the <xref:System.IFormattable.ToString*?displayProperty=nameWithType> method of that interface. Otherwise, invoke the default <xref:System.Object.ToString*?displayProperty=nameWithType> method of the underlying object. The following code illustrates this pattern.
 
  :::code language="csharp" source="~/snippets/csharp/System/ICustomFormatter/Overview/myformatter.cs" id="Snippet3":::
  :::code language="fsharp" source="~/snippets/fsharp/System/ICustomFormatter/Overview/myformatter.fs" id="Snippet3":::
  :::code language="vb" source="~/snippets/visualbasic/System/ICustomFormatter/Overview/myformatter.vb" id="Snippet3":::
-
-
 
 ## Examples
  The following example implements <xref:System.ICustomFormatter> to allow binary, octal, and hexadecimal formatting of integral values. Its <xref:System.ICustomFormatter.Format*?displayProperty=nameWithType> implementation determines whether the format parameter is one of the three supported format strings ("B" for binary, "O" for octal, and "H" for hexadecimal) and formats the `arg` parameter appropriately. Otherwise, if `arg` is not `null`, it calls the `arg` parameter's <xref:System.IFormattable.ToString*?displayProperty=nameWithType> implementation, if one exists, or its parameterless `ToString` method, if one does not. If `arg` is `null`, the method returns <xref:System.String.Empty?displayProperty=nameWithType>.
