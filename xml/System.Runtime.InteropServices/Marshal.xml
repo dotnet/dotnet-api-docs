@@ -286,13 +286,11 @@
 
 ## Remarks
 > [!IMPORTANT]
-> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. When targeting .NET 6 or later, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory. When targeting .NET Framework, use <xref:System.Runtime.InteropServices.Marshal.AllocCoTaskMem*> on all platforms to allocate native memory.
+> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. On .NET 6 and later, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory.
 
  <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal*> is one of two memory allocation methods in the <xref:System.Runtime.InteropServices.Marshal> class. (<xref:System.Runtime.InteropServices.Marshal.AllocCoTaskMem*?displayProperty=nameWithType> is the other.) This method exposes the Win32 [LocalAlloc](https://learn.microsoft.com/windows/win32/api/winbase/nf-winbase-localalloc) function from Kernel32.dll.
 
  When <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal*> calls `LocalAlloc`, it passes a `LMEM_FIXED` flag, which causes the allocated memory to be locked in place. Also, the allocated memory is not zero-filled.
-
-
 
 ## Examples
  The following example demonstrates calling the <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal*> method. This code example is part of a larger example provided for the <xref:System.Runtime.InteropServices.Marshal> class.
@@ -364,7 +362,7 @@
 
 ## Remarks
 > [!IMPORTANT]
-> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. When targeting .NET 6 or later, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory. When targeting .NET Framework, use <xref:System.Runtime.InteropServices.Marshal.AllocCoTaskMem*> on all platforms to allocate native memory.
+> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. On .NET 6 and later versions, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory.
 
  <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal*> is one of two memory allocation methods in the <xref:System.Runtime.InteropServices.Marshal> class. (<xref:System.Runtime.InteropServices.Marshal.AllocCoTaskMem*?displayProperty=nameWithType> is the other.) This method exposes the Win32 [LocalAlloc](https://learn.microsoft.com/windows/win32/api/winbase/nf-winbase-localalloc) function from Kernel32.dll.
 
@@ -2600,7 +2598,7 @@
 
 ## Remarks
 > [!IMPORTANT]
-> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. When targeting .NET 6 or later, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory. When targeting .NET Framework, use <xref:System.Runtime.InteropServices.Marshal.AllocCoTaskMem*> on all platforms to allocate native memory.
+> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. On .NET 6 and later versions, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory.
 
  You can use <xref:System.Runtime.InteropServices.Marshal.FreeHGlobal*> to free any memory from the global heap allocated by <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal*>, <xref:System.Runtime.InteropServices.Marshal.ReAllocHGlobal*>, or any equivalent unmanaged API method. If the `hglobal` parameter is <xref:System.IntPtr.Zero?displayProperty=nameWithType> the method does nothing.
 
@@ -3496,7 +3494,7 @@
 
  The current [IErrorInfo](/windows/win32/api/oaidl/nn-oaidl-ierrorinfo) interface is used to construct the exception.
 
- For the mapping from each HRESULT to its comparable exception class in the .NET Framework, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
+ For the mapping from each HRESULT to its comparable exception class in .NET, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
 
  ]]></format>
         </remarks>
@@ -3565,7 +3563,7 @@
 
  Use this method overload if you have custom error information that you have to supply in the conversion.
 
- For the mapping from each HRESULT to its comparable exception class in the .NET Framework, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
+ For the mapping from each HRESULT to its comparable exception class in .NET, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
 
  ]]></format>
         </remarks>
@@ -4357,9 +4355,9 @@ On Windows systems, <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Err
 
 You can use this method to obtain error codes only if you apply the <xref:System.Runtime.InteropServices.DllImportAttribute?displayProperty=nameWithType> to the method signature and set the <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType> field to `true`. The process for this varies depending upon the source language used: C# and C++ are `false` by default, but the `Declare` statement in Visual Basic is `true`.
 
-There is a difference in the behavior of the `GetLastWin32Error` method on .NET Core and .NET Framework when <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType> is `true`. On .NET Framework, the `GetLastWin32Error` method can retain error information from one P/Invoke call to the next. On .NET Core, error information is cleared before P/Invoke call, and the `GetLastWin32Error` represents only error information from the last method call.
+Error information is cleared before P/Invoke call, and the `GetLastWin32Error` represents only error information from the last method call.
 
-On .NET 6 and later versions, this method is functionally equivalent to <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*>, which is named to better reflect the intent of the API and its cross-platform nature. <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*> should be preferred over <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error*>.
+This method is functionally equivalent to <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*>, which is named to better reflect the intent of the API and its cross-platform nature. On .NET 6 and later versions, prefer <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*> over <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error*>.
 
 ## Examples
  The following example calls the `GetLastWin32Error` method. The example first demonstrates calling the method with no error present and then demonstrates calling the method with an error present.
@@ -8242,7 +8240,7 @@ On .NET 6 and later versions, this method is functionally equivalent to <xref:Sy
 
 ## Remarks
 > [!IMPORTANT]
-> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. When targeting .NET 6 or later, use the <xref:System.Runtime.InteropServices.NativeMemory> class on all platforms to allocate native memory. When targeting .NET Framework, use <xref:System.Runtime.InteropServices.Marshal.AllocCoTaskMem*> on all platforms to allocate native memory.
+> This native memory allocator is a legacy API that should be used exclusively when called for by specific Win32 APIs on the Windows platform. For .NET 6 and later, use the <xref:System.Runtime.InteropServices.NativeMemory> class instead to allocate native memory. On earlier targets where <xref:System.Runtime.InteropServices.NativeMemory> is unavailable, continue to use the appropriate <xref:System.Runtime.InteropServices.Marshal> allocation APIs.
 
  <xref:System.Runtime.InteropServices.Marshal.ReAllocHGlobal*> is one of two memory reallocation API methods in the <xref:System.Runtime.InteropServices.Marshal> class. (<xref:System.Runtime.InteropServices.Marshal.ReAllocCoTaskMem*?displayProperty=nameWithType> is the other.)
 
@@ -8401,13 +8399,13 @@ On .NET 6 and later versions, this method is functionally equivalent to <xref:Sy
 
  The RCW has a reference count that is incremented every time a COM interface pointer is mapped to it. The <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> method decrements the reference count of an RCW. When the reference count reaches zero, the runtime releases all its references on the unmanaged COM object, and throws a <xref:System.NullReferenceException?displayProperty=nameWithType> if you attempt to use the object further. If the same COM interface is passed more than one time from unmanaged to managed code, the reference count on the wrapper is incremented every time, and calling <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> returns the number of remaining references.
 
- This method enables you to force an RCW reference count release so that it occurs precisely when you want it to. However, improper use of <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> may cause your application to fail, or may cause an access violation.
+ This method enables you to force an RCW reference count release so that it occurs precisely when you want it to. However, improper use of <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> might cause your application to fail, or might cause an access violation.
 
- Consider a scenario in which managed code in an application domain is holding onto an RCW that represents a COM component. If you call the <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> method on the RCW, the managed code will be unable to access the RCW and will raise an <xref:System.Runtime.InteropServices.InvalidComObjectException> exception.
+ Consider a scenario in which managed code is holding onto an RCW that represents a COM component. If you call the <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> method on the RCW, the managed code will be unable to access the RCW and will raise an <xref:System.Runtime.InteropServices.InvalidComObjectException> exception.
 
- A more serious error may occur if a call to the RCW is executing when the RCW is released. In this case, there is a good chance that the thread making the call will cause an access violation. However, process memory may become corrupted, and the process may continue to run until it fails for reasons that are very difficult to debug.
+ A more serious error can occur if a call to the RCW is executing when the RCW is released. In this case, there is a good chance that the thread making the call will cause an access violation. However, process memory can become corrupted, and the process might continue to run until it fails for reasons that are very difficult to debug.
 
- This risk is compounded when the COM component that is being used is a singleton, for the following reason: The CLR activates COM components by calling the COM [CoCreateInstance](https://learn.microsoft.com/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance) function, which returns the same interface pointer every time it is called for singleton COM components. Thus, separate and independent pieces of managed code in an application domain can be using the same RCW for a singleton COM component, and if either one calls the <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> method on the COM component, the other will be broken.
+ This risk is compounded when the COM component that is being used is a singleton, for the following reason: The CLR activates COM components by calling the COM [CoCreateInstance](https://learn.microsoft.com/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance) function, which returns the same interface pointer every time it is called for singleton COM components. Thus, separate and independent pieces of managed code can be using the same RCW for a singleton COM component, and if either one calls the <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> method on the COM component, the other will be broken.
 
  Therefore, use the <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> only if it is absolutely required. If you want to call this method to ensure that a COM component is released at a determined time, consider using the <xref:System.Runtime.InteropServices.Marshal.FinalReleaseComObject*> method instead. <xref:System.Runtime.InteropServices.Marshal.FinalReleaseComObject*> will release the underlying COM component regardless of how many times it has re-entered the CLR. The internal reference count of the RCW is incremented by one every time the COM component re-enters the CLR. Therefore, you could call the <xref:System.Runtime.InteropServices.Marshal.ReleaseComObject*> method in a loop until the value returned is zero. This achieves the same result as the <xref:System.Runtime.InteropServices.Marshal.FinalReleaseComObject*> method.
 
@@ -9830,11 +9828,7 @@ The system error is based on the current operating system&mdash;that is, `errno`
  ]]></format>
         </remarks>
         <exception cref="T:System.ArgumentException">
-          <paramref name="structure" /> is a reference type that is not a formatted class.
-
- -or-
-
- <paramref name="structure" /> is an instance of a generic type (in the .NET Framework 4.5 and earlier versions only). </exception>
+          <paramref name="structure" /> is a reference type that is not a formatted class.</exception>
         <altmember cref="M:System.Runtime.InteropServices.Marshal.DestroyStructure(System.IntPtr,System.Type)" />
         <altmember cref="T:System.Runtime.InteropServices.GCHandle" />
       </Docs>
@@ -10131,7 +10125,7 @@ The system error is based on the current operating system&mdash;that is, `errno`
 
  Some failure HRESULTs map to defined exceptions, whereas others do not. If the HRESULT maps to a defined exception, <xref:System.Runtime.InteropServices.Marshal.ThrowExceptionForHR*> creates an instance of the exception and throws it. Otherwise, it creates an instance of <xref:System.Runtime.InteropServices.COMException>, initializes the error code field with the HRESULT, and throws that exception. When <xref:System.Runtime.InteropServices.Marshal.ThrowExceptionForHR*> is invoked, it attempts to retrieve extra information regarding the error by using the unmanaged [GetErrorInfo](/windows/win32/api/oleauto/nf-oleauto-geterrorinfo) function.
 
- For the mapping from each HRESULT to its comparable exception class in the .NET Framework, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
+ For the mapping from each HRESULT to its comparable exception class in .NET, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
 
  Occasionally, <xref:System.Runtime.InteropServices.Marshal.ThrowExceptionForHR*> might return an exception from a previous COM call. In this case, you can use the following workaround and pass `IntPtr(-1)` as the second parameter (`errorInfo`):
 
@@ -10208,7 +10202,7 @@ public static void ThrowExceptionForHR(interrorCode,IntPtrerrorInfo)
 
  Some failure HRESULTs map to defined exceptions, whereas others do not. If the HRESULT maps to a defined exception, <xref:System.Runtime.InteropServices.Marshal.ThrowExceptionForHR*> creates an instance of the exception and throws it. Otherwise, it creates an instance of <xref:System.Runtime.InteropServices.COMException?displayProperty=nameWithType>, initializes the error code field with the HRESULT, and throws that exception. The `errorInfo` parameter is used to retrieve extra information regarding the error.
 
- For the mapping from each HRESULT to its comparable exception class in the .NET Framework, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
+ For the mapping from each HRESULT to its comparable exception class in .NET, see [How to: Map HRESULTs and Exceptions](/dotnet/framework/interop/how-to-map-hresults-and-exceptions).
 
  ]]></format>
         </remarks>

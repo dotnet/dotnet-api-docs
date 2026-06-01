@@ -131,19 +131,10 @@ For additional information about using the platform invoke service to access fun
         <Parameter Name="dllName" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="dllName">The name of the DLL that contains the unmanaged method. In .NET Framework, this can include an assembly display name, if the DLL is included in an assembly.</param>
+        <param name="dllName">The name of the DLL that contains the unmanaged method.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.DllImportAttribute" /> class with the name of the DLL containing the method to import.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
-
-## Remarks
- **.NET Framework only:** If an unmanaged DLL file is included in an assembly, for example, by using the linker or the `/linkresource` compiler option, you can specify the assembly display name as part of `dllName`. For example, if an unmanaged DLL named `unmanaged.dll` is included in a managed assembly named `MyAssembly`, the attribute might be specified as shown in the following code.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_System/system.runtime.interopservices.dllimportattribute/cpp/source.cpp" id="Snippet2":::
- :::code language="csharp" source="~/snippets/csharp/System.Runtime.InteropServices/DllImportAttribute/.ctor/source.cs" id="Snippet2":::
- :::code language="vb" source="~/snippets/visualbasic/System.Runtime.InteropServices/DllImportAttribute/.ctor/source.vb" id="Snippet2":::
-
-
 
 ## Examples
  The following code example shows how to use the <xref:System.Runtime.InteropServices.DllImportAttribute> attribute to import the Win32 `MessageBox` function.  The code example then calls the imported method.
@@ -593,13 +584,9 @@ For additional information about using the platform invoke service to access fun
  `true` to indicate that the callee will set an error via `SetLastError` on Windows or `errno` on other platforms; otherwise, `false`. The default is `false`.
 
  If this field is set to `true`, the runtime marshaler calls `GetLastError` or `errno` and caches the value returned to prevent it from being overwritten by other API calls.
- You can retrieve the error code by calling <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*> on .NET 6.0 and above
- or <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error*> on .NET 5 and below or .NET Framework.
+ On .NET 6 and later, you can retrieve the error code by calling <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*>. On earlier .NET versions, call <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error*>.
 
- On .NET, the error information is cleared (set to `0`) before invoking the callee when this field is set to `true`. On .NET Framework, the error information is not cleared.
- This means that error information returned by <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*> and <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error*>
- on .NET represents only the error information from the last p/invoke with <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType>
- set to `true`. On .NET Framework, the error information can persist from one p/invoke to the next.
+The error information is cleared (set to `0`) before invoking the callee when this field is set to `true`. This means that error information returned by <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError*> and <xref:System.Runtime.InteropServices.Marshal.GetLastWin32Error*> represents only the error information from the last p/invoke with <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType> set to `true`.
 
 ## Examples
  In some cases, Visual Basic developers use the <xref:System.Runtime.InteropServices.DllImportAttribute>, instead of using the `Declare` statement, to define a DLL function in managed code. Setting the <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError> field is one of those cases.
