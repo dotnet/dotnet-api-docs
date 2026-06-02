@@ -28,7 +28,7 @@ Public Class rfc2898test
             'data1 can be a string or contents of a file.
             Dim data1 As String = "Some test data"
             '<SNIPPET3>
-            'The default iteration count is 1000 so the two methods use the same iteration count.
+            'The legacy default iteration count is 1000 so the two methods use the same iteration count.
             Dim myIterations As Integer = 1000
             '</SNIPPET6>		
             '<SNIPPET2>
