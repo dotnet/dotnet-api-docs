@@ -76,7 +76,7 @@ Consider the following when using the <xref:System.Xml.XmlReaderSettings> class.
 
 - <xref:System.Xml.XmlReaderSettings> objects can contain sensitive information such as user credentials. You should be careful when caching <xref:System.Xml.XmlReaderSettings> objects, or when passing the <xref:System.Xml.XmlReaderSettings> object from one component to another.
 
-- DTD processing is disabled by default. If you enable DTD processing, you need to be aware of including DTDs from untrusted sources and possible denial of service attacks. Use the <xref:System.Xml.XmlSecureResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access.
+- DTD processing is disabled by default. If you enable DTD processing, you need to be aware of including DTDs from untrusted sources and possible denial of service attacks. Use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access.
 
 - Do not accept supporting components, such as <xref:System.Xml.NameTable>, <xref:System.Xml.XmlNamespaceManager>, and <xref:System.Xml.XmlResolver> objects, from an untrusted source.
 
@@ -1185,7 +1185,7 @@ There is an error in XML document (MaxCharactersInDocument, ).
 
  When set to `true`, the <xref:System.Xml.XmlReader> throws an <xref:System.Xml.XmlException> when any DTD content is encountered. Do not enable DTD processing if you are concerned about Denial of Service issues or if you are dealing with untrusted sources.
 
- If you have DTD processing enabled, you can use the <xref:System.Xml.XmlSecureResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your application so that the XML processing is memory and time constrained. For example, configure time-out limits in your ASP.NET application.
+ If you have DTD processing enabled, you can use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your application so that the XML processing is memory and time constrained. For example, configure time-out limits in your ASP.NET application.
 
  This property is obsolete. Use <xref:System.Xml.XmlTextReader.DtdProcessing> instead. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd> to its default value `true` set <xref:System.Xml.XmlTextReader.DtdProcessing> to `Prohibit`. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd> to `false` set <xref:System.Xml.XmlTextReader.DtdProcessing> to `Parse`.
 
@@ -1607,17 +1607,11 @@ The output is as follows:
 > [!IMPORTANT]
 > Because the <xref:System.Xml.XmlReaderSettings.XmlResolver> can contain sensitive information such as user credentials, you should be careful when caching <xref:System.Xml.XmlReaderSettings> objects, or when passing the <xref:System.Xml.XmlReaderSettings> object from one component to another.
 >
-> An <xref:System.Xml.XmlSecureResolver> can be used to access external documents. The <xref:System.Xml.XmlSecureResolver> class helps to secure another implementation of <xref:System.Xml.XmlResolver> by wrapping the <xref:System.Xml.XmlResolver> object and restricting the resources that the underlying <xref:System.Xml.XmlResolver> has access to.
+> Use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict access to external documents.
 >
 > The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object are not set by default. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver> object is `null`, schema locations are not resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.
 >
 > Schemas added during validation add new types and can change the validation outcome of the document being validated. As a result, external schemas should only be resolved from trusted sources.
-
-## Examples
- The following example creates an <xref:System.Xml.XmlReader> that uses an <xref:System.Xml.XmlSecureResolver> with default credentials.
-
- :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlParserContext/Overview/XmlReader_Create.cs" id="Snippet10":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlReader.Create/VB/XmlReader_Create.vb" id="Snippet10":::
 
  ]]></format>
         </remarks>

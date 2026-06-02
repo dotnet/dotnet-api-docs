@@ -315,12 +315,9 @@ Consider the following when working with the <xref:System.Xml.XmlReader> class:
 
 - Do not enable DTD processing if you're concerned about denial of service issues or if you're dealing with untrusted sources. DTD processing is disabled by default for <xref:System.Xml.XmlReader> objects created by the <xref:System.Xml.XmlReader.Create*> method.
 
-  If you have DTD processing enabled, you can use the <xref:System.Xml.XmlSecureResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your app so that the XML processing is memory and time constrained. For example, you can configure time-out limits in your ASP.NET app.
-
 - XML data can include references to external resources such as a schema file. By default, external resources are resolved by using an <xref:System.Xml.XmlUrlResolver> object with no user credentials. You can secure this further by doing one of the following:
 
-  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver?displayProperty=nameWithType> property to an <xref:System.Xml.XmlSecureResolver> object.
-
+  - Use <xref:System.Xml.XmlResolver.ThrowingResolver> when attempting to forbid XML external entity resolution.
   - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver?displayProperty=nameWithType> property to `null`.
 
 - The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object aren't set by default. This helps to protect the <xref:System.Xml.XmlReader> against schema-based attacks when it is processing XML data from an untrusted source. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver> property is set to `null`, schema locations aren't resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.
@@ -795,7 +792,7 @@ In synchronous mode, the <xref:System.Xml.XmlReader.Create*> method reads the fi
 
 By default, the <xref:System.Xml.XmlReader> uses an <xref:System.Xml.XmlUrlResolver> object with no user credentials to open resources. This means that, by default, the XML reader can access any location that doesn't require credentials. Use the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to control access to resources:
 
-- Set <xref:System.Xml.XmlReaderSettings.XmlResolver> to an <xref:System.Xml.XmlSecureResolver> object to restrict the resources that the XML reader can access, or...
+- Use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict the resources that the XML reader can access, or...
 - Set <xref:System.Xml.XmlReaderSettings.XmlResolver> to `null` to prevent the XML reader from opening any external resources.
 
 ## Examples
@@ -1117,10 +1114,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.>
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1198,10 +1192,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1277,11 +1268,9 @@ This example chains readers to add DTD and XML schema validation.
  This means that the <xref:System.Xml.XmlReader> can access any locations that does not require authentication. If the external resource is located on a network resource that requires authentication, use the <xref:System.Xml.XmlReaderSettings.XmlResolver?displayProperty=nameWithType> property to specify an <xref:System.Xml.XmlResolver> with the necessary credentials.
 
 > [!IMPORTANT]
-> You can restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
+> You can restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
-
-
 
 ## Examples
  The following example creates an <xref:System.Xml.XmlReader> object that supports document type definition (DTD) validation.
@@ -1368,10 +1357,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1473,10 +1459,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1567,10 +1550,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1657,10 +1637,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1749,10 +1726,7 @@ This example chains readers to add DTD and XML schema validation.
 > [!IMPORTANT]
 > You can use one of the following methods to control which resources the <xref:System.Xml.XmlReader> can access:
 >
->  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
->
->  -or-
->
+>  - Restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 >  - Do not allow the <xref:System.Xml.XmlReader> to open any external resources by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to `null`.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
@@ -1846,7 +1820,7 @@ This example chains readers to add DTD and XML schema validation.
  This means that the <xref:System.Xml.XmlReader> can access any locations that does not require authentication. If the external resource is located on a network resource that requires authentication, use the <xref:System.Xml.XmlReaderSettings.XmlResolver?displayProperty=nameWithType> property to specify an <xref:System.Xml.XmlResolver> with the necessary credentials.
 
 > [!IMPORTANT]
-> You can restrict the resources that the <xref:System.Xml.XmlReader> can access by setting the <xref:System.Xml.XmlReaderSettings.XmlResolver> property to an <xref:System.Xml.XmlSecureResolver> object.
+> You can restrict the resources that the <xref:System.Xml.XmlReader> can access by using <xref:System.Xml.XmlResolver.ThrowingResolver>.
 
  The created <xref:System.Xml.XmlReader> object expands entity references and performs XML normalization of new line characters.
 
