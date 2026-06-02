@@ -144,45 +144,15 @@ Web addresses are typically expressed using URIs that consist of a very restrict
 
 The specifications for URIs are documented in RFC 2396, RFC 2732, RFC 3986, and RFC 3987 published by the Internet Engineering Task Force (IETF).
 
-Identifiers that facilitate the need to identify resources using languages other than English and allow non-ASCII characters (characters in the Unicode/ISO 10646 character set) are known as International Resource Identifiers (IRIs). The specifications for IRIs are documented in RFC 3987 published by IETF. Using IRIs allows a URL to contain Unicode characters.
+Identifiers that facilitate the need to identify resources using languages other than English and allow non-ASCII characters (characters in the Unicode/ISO 10646 character set) are known as International Resource Identifiers (IRIs). The specifications for IRIs are documented in RFC 3987 published by IETF. Using IRIs allows a URL to contain Unicode characters. Normalization and character checking are done according to the latest IRI rules in RFC 3986 and RFC 3987.
 
-In .NET Framework 4.5 and later versions, IRI is always enabled and can't be changed using a configuration option. You can set a configuration option in the *machine.config* or in the *app.config* file to specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name. For example:
-
-```xml
-<configuration>
-  <uri>
-    <idn enabled="All" />
-  </uri>
-</configuration>
-```
-
-Enabling IDN converts all Unicode labels in a domain name to their Punycode equivalents. Punycode names contain only ASCII characters and always start with the xn-- prefix. The reason for this is to support existing DNS servers on the Internet, since most DNS servers only support ASCII characters (see RFC 3940).
-
-Enabling IDN affects the value of the <xref:System.Uri.DnsSafeHost?displayProperty=nameWithType> property. Enabling IDN can also change the behavior of the <xref:System.Uri.Equals*>, <xref:System.Uri.OriginalString>, <xref:System.Uri.GetComponents*>, and <xref:System.Uri.IsWellFormedOriginalString*> methods.
-
-There are three possible values for IDN depending on the DNS servers that are used:
-
-- idn enabled = All
-
-  Converts any Unicode domain names to their Punycode equivalents (IDN names).
-
-- idn enabled = AllExceptIntranet
-
-  Converts all Unicode domain names not on the local Intranet to use the Punycode equivalents (IDN names). In this case, to handle international names on the local Intranet, the DNS servers that are used for the Intranet should support Unicode name resolution.
-
-- idn enabled = None
-
-  No Unicode domain names are converted to use Punycode. This is the default value.
-
-Normalization and character checking are done according to the latest IRI rules in RFC 3986 and RFC 3987.
-
-IRI and IDN processing in the <xref:System.Uri> class can also be controlled using the <xref:System.Configuration.IriParsingElement?displayProperty=nameWithType>, <xref:System.Configuration.IdnElement?displayProperty=nameWithType>, and <xref:System.Configuration.UriSection?displayProperty=nameWithType> configuration setting classes. The <xref:System.Configuration.IriParsingElement?displayProperty=nameWithType> setting enables or disables IRI processing in the <xref:System.Uri> class. The <xref:System.Configuration.IdnElement?displayProperty=nameWithType> setting enables or disables IDN processing in the <xref:System.Uri> class.
+IRI and IDN processing in the <xref:System.Uri> class can be controlled using the <xref:System.Configuration.IriParsingElement?displayProperty=nameWithType>, <xref:System.Configuration.IdnElement?displayProperty=nameWithType>, and <xref:System.Configuration.UriSection?displayProperty=nameWithType> configuration setting classes. The <xref:System.Configuration.IriParsingElement?displayProperty=nameWithType> setting enables or disables IRI processing in the <xref:System.Uri> class. The <xref:System.Configuration.IdnElement?displayProperty=nameWithType> setting enables or disables IDN processing in the <xref:System.Uri> class.
 
 The configuration setting for the <xref:System.Configuration.IriParsingElement?displayProperty=nameWithType> and <xref:System.Configuration.IdnElement?displayProperty=nameWithType> are read once when the first <xref:System.Uri?displayProperty=nameWithType> class is constructed. Changes to configuration settings after that time are ignored.
 
 The <xref:System.GenericUriParser?displayProperty=nameWithType> class has also been extended to allow creating a customizable parser that supports IRI and IDN. The behavior of a <xref:System.GenericUriParser?displayProperty=nameWithType> object is specified by passing a bitwise combination of the values available in the <xref:System.GenericUriParserOptions?displayProperty=nameWithType> enumeration to the <xref:System.GenericUriParser?displayProperty=nameWithType> constructor. The <xref:System.GenericUriParserOptions.IriParsing?displayProperty=nameWithType> type indicates the parser supports the parsing rules specified in RFC 3987 for International Resource Identifiers (IRI).
 
-The <xref:System.GenericUriParserOptions.Idn?displayProperty=nameWithType> type indicates that the parser supports Internationalized Domain Name (IDN) parsing of host names. In .NET 5 and later versions (including .NET Core) and .NET Framework 4.5+, IDN is always used. In previous versions, a configuration option determines whether IDN is used.
+The <xref:System.GenericUriParserOptions.Idn?displayProperty=nameWithType> type indicates that the parser supports Internationalized Domain Name (IDN) parsing of host names. In .NET (Core) and .NET Framework 4.5+, IDN is always used. In previous versions, a configuration option determines whether IDN is used.
 
 ## Implicit file path support
 

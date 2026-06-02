@@ -82,25 +82,11 @@ You instantiate the random number generator by providing a seed value (a startin
 - The <xref:System.Random.%23ctor(System.Int32)> constructor uses an explicit seed value that you supply.
 - The <xref:System.Random.%23ctor> constructor uses the default seed value. This is the most common way of instantiating the random number generator.
 
-In .NET Framework, the default seed value is time-dependent. In .NET Core, the default seed value is produced by the thread-static, pseudo-random number generator.
+The default seed value is produced by the thread-static, pseudo-random number generator.
 
-If the same seed is used for separate <xref:System.Random> objects, they will generate the same series of random numbers. This can be useful for creating a test suite that processes random values, or for replaying games that derive their data from random numbers. However, note that <xref:System.Random> objects in processes running under different versions of .NET Framework might return differentseries of random numbers even if they're instantiated with identical seed values.
+If the same seed is used for separate <xref:System.Random> objects, they will generate the same series of random numbers. This can be useful for creating a test suite that processes random values, or for replaying games that derive their data from random numbers.
 
-To produce different sequences of random numbers, you can make the seed value time-dependent, thereby producing a different series with each new instance of <xref:System.Random>. The parameterized <xref:System.Random.%23ctor(System.Int32)> constructor can take an <xref:System.Int32> value based on the number of ticks in the current time, whereas the parameterless <xref:System.Random.%23ctor> constructor uses the system clock to generate its seed value. However, on .NET Framework only, because the clock has finite resolution, using the parameterless constructor to create different <xref:System.Random> objects in close succession creates random number generators that produce identical sequences of random numbers. The following example illustrates how two <xref:System.Random> objects that are instantiated in close succession in a .NET Framework application generate an identical series of random numbers. On most Windows systems, <xref:System.Random> objects created within 15 milliseconds of one another are likely to have identical seed values.
-
-:::code language="csharp" source="~/snippets/csharp/System/Random/Overview/Random1.cs" id="Snippet1":::
-:::code language="fsharp" source="~/snippets/fsharp/System/Random/Overview/Random1.fs" id="Snippet1":::
-:::code language="vb" source="~/snippets/visualbasic/System/Random/Overview/Random1.vb" id="Snippet1":::
-
-To avoid this problem, create a single <xref:System.Random> object instead of multiple objects. Note that the `Random` class in .NET Core does not have this limitation.
-
-## Avoid multiple instantiations
-
-On .NET Framework, initializing two random number generators in a tight loop or in rapid succession creates two random number generators that can produce identical sequences of random numbers. In most cases, this is not the developer's intent and can lead to performance issues, because instantiating and initializing a random number generator is a relatively expensive process.
-
-Both to improve performance and to avoid inadvertently creating separate random number generators that generate identical numeric sequences, we recommend that you create one <xref:System.Random> object to generate many random numbers over time, instead of creating new <xref:System.Random> objects to generate one random number.
-
-However, the <xref:System.Random> class isn't thread safe. If you call <xref:System.Random> methods from multiple threads, follow the guidelines discussed in the next section.
+To produce different sequences of random numbers, you can make the seed value time-dependent, thereby producing a different series with each new instance of <xref:System.Random>. The parameterized <xref:System.Random.%23ctor(System.Int32)> constructor can take an <xref:System.Int32> value based on the number of ticks in the current time, whereas the parameterless <xref:System.Random.%23ctor> constructor uses the system clock to generate its seed value.
 
 ## Thread safety
 
@@ -185,10 +171,6 @@ Providing different seed values to instances of the <xref:System.Random> class c
 :::code language="fsharp" source="~/snippets/fsharp/System/Random/Overview/unique.fs" id="Snippet13":::
 :::code language="vb" source="~/snippets/visualbasic/System/Random/Overview/unique.vb" id="Snippet13":::
 
-However, because of its finite resolution, the system clock doesn't detect time differences that are less than approximately 15 milliseconds. Therefore, if your code calls the <xref:System.Random.%23ctor> overload on .NET Framework to instantiate two <xref:System.Random> objects in succession, you might inadvertently be providing the objects with identical seed values. (The <xref:System.Random> class in .NET Core does not have this limitation.) To see this in the previous example, comment out the <xref:System.Threading.Thread.Sleep*?displayProperty=nameWithType> method call, and compile and run the example again.
-
-To prevent this from happening, we recommend that you instantiate a single <xref:System.Random> object rather than multiple ones. However, since <xref:System.Random> isn't thread safe, you must use some synchronization device if you access a <xref:System.Random> instance from multiple threads; for more information, see the [Thread safety](#thread-safety) section. Alternately, you can use a delay mechanism, such as the <xref:System.Threading.Thread.Sleep*> method used in the previous example, to ensure that the instantiations occur more than 15 millisecond apart.
-
 ## Retrieve integers in a specified range
 
 You can retrieve integers in a specified range by calling the <xref:System.Random.Next(System.Int32,System.Int32)> method, which lets you specify both the lower and the upper bound of the numbers you'd like the random number generator to return. The upper bound is an exclusive, not an inclusive, value. That is, it isn't included in the range of values returned by the method. The following example uses this method to generate random integers between -10 and 10. Note that it specifies 11, which is one greater than the desired value, as the value of the `maxValue` argument in the method call.
@@ -224,7 +206,7 @@ To generate random floating-point numbers whose lower bound is 0 but upper bound
 To generate random floating-point numbers between two arbitrary values, like the <xref:System.Random.Next(System.Int32,System.Int32)> method does for integers, use the following formula:
 
 ```csharp
-Random.NextDouble() * (maxValue - minValue) + minValue
+Random.NextDouble() * (maxValue - minValue) + minValue
 ```
 
 The following example generates 1 million random numbers that range from 10.0 to 11.0, and displays their distribution.
