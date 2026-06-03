@@ -16,6 +16,7 @@ public class Example1
       Console.WriteLine("This is version {0} of {1}.", ver, thisAssemName.Name);    
    }
 }
+
 // The example displays the following output:
 //        This is version 2.0.1.0 of Example1.
 // </Snippet6>
