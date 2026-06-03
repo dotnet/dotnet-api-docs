@@ -16,7 +16,8 @@ Module Example13
         Console.WriteLine()
     End Sub
 End Module
-' The example displays thIe following output:
+
+' The example displays the following output:
 '    1 2
 '    Unhandled Exception: System.InvalidOperationException: Nullable object must have a value.
 '       at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)

@@ -15,7 +15,7 @@ let instantiateByNarrowingConversion () =
         let number1 = int lNumber
         printfn $"{number1}"
     with :? OverflowException ->
-        printfn "{lNumber} is out of range of an Int32."
+        printfn $"{lNumber} is out of range of an Int32."
 
     let dbl2 = 35901.997
     try
@@ -45,7 +45,7 @@ let parse () =
         printfn $"{number1}"
     with
     | :? OverflowException ->
-        printfn "'{string1}' is out of range of a 32-bit integer."
+        printfn $"'{string1}' is out of range of a 32-bit integer."
     | :? FormatException ->
         printfn $"The format of '{string1}' is invalid."
 
@@ -53,7 +53,7 @@ let parse () =
     try
         let number2 = Int32.Parse(string2, System.Globalization.NumberStyles.HexNumber)
         printfn $"{number2}"
-    with 
+    with
     | :? OverflowException ->
         printfn $"'{string2}' is out of range of a 32-bit integer."
     | :? FormatException ->
@@ -81,4 +81,3 @@ printfn "----"
 parse ()
 printfn "----"
 instantiateByWideningConversion ()
-   

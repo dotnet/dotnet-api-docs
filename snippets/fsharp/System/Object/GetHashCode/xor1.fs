@@ -11,7 +11,7 @@ type Point(x: int, y: int) =
         match obj with
         | :? Point as p ->
             x = p.X && y = p.Y
-        | _ -> 
+        | _ ->
             false
 
     override _.GetHashCode() =
@@ -21,7 +21,8 @@ let pt = Point(5, 8)
 printfn $"{pt.GetHashCode()}"
 
 let pt2 = Point(8, 5)
-printfn $"{pt.GetHashCode()}"
+printfn $"{pt2.GetHashCode()}"
+
 // The example displays the following output:
 //       13
 //       13

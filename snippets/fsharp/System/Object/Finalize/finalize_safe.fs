@@ -35,7 +35,7 @@ type FileAssociationInfo(fileExtension: string) =
     let mutable args = ""
     let mutable hAppIdHandle = Unchecked.defaultof<SafeRegistryHandle>
     let mutable hExtHandle = Unchecked.defaultof<SafeRegistryHandle>
-    let openCmd = 
+    let openCmd =
         let mutable lpType = 0u
         let mutable hExtension = 0n
         // Get the file extension value.
@@ -75,7 +75,7 @@ type FileAssociationInfo(fileExtension: string) =
             raise (Win32Exception retVal)
 
         // Determine the number of characters without the terminating null.
-        let exePath = 
+        let exePath =
             exePath.Substring(0, int exePathLength / 2 - 1)
             // Remove any environment strings.
             |> Environment.ExpandEnvironmentVariables
@@ -98,9 +98,9 @@ type FileAssociationInfo(fileExtension: string) =
                 raise (InvalidOperationException "Cannot write to registry key.")
             if not (File.Exists value) then
                 raise (FileNotFoundException $"'{value}' does not exist")
-            
+
             let cmd = value + " %1"
-            let retVal = RegSetValueEx(hAppIdHandle.DangerousGetHandle(), String.Empty, 0, REG_SZ, value, value.Length + 1)
+            let retVal = RegSetValueEx(hAppIdHandle.DangerousGetHandle(), String.Empty, 0, REG_SZ, cmd, cmd.Length + 1)
             if retVal <> ERROR_SUCCESS then
                 raise (Win32Exception retVal)
 
@@ -109,7 +109,7 @@ type FileAssociationInfo(fileExtension: string) =
         GC.SuppressFinalize this
 
     member _.Dispose(disposing) =
-        // Ordinarily, we release unmanaged resources here
+        // Ordinarily, you release unmanaged resources here,
         // but all are wrapped by safe handles.
 
         // Release disposable objects.

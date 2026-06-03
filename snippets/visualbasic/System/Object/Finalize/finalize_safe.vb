@@ -14,7 +14,7 @@ Public Class FileAssociationInfo : Implements IDisposable
     Private hExtHandle, hAppIdHandle As SafeRegistryHandle
 
    ' Windows API calls.
-   Private Declare Unicode Function RegOpenKeyEx Lib"advapi32.dll" _
+   Private Declare Unicode Function RegOpenKeyEx Lib "advapi32.dll" _
                    Alias "RegOpenKeyExW" (hKey As IntPtr, lpSubKey As String, _
                    ulOptions As Integer, samDesired As Integer, _
                    ByRef phkResult As IntPtr) As Integer
@@ -128,8 +128,7 @@ Public Class FileAssociationInfo : Implements IDisposable
            Throw New FileNotFoundException(message)
         End If
         Dim cmd As String = value + " %1"
-        Dim retVal As Integer = RegSetValueEx(hAppIdHandle.DangerousGetHandle(), String.Empty, 0,
-                                              REG_SZ, value, value.Length + 1)
+        Dim retVal As Integer = RegSetValueEx(hAppIdHandle.DangerousGetHandle(), String.Empty, 0, REG_SZ, cmd, cmd.Length + 1)
         If retVal <> ERROR_SUCCESS Then
            Throw New Win32Exception(retVal)
         End If
@@ -143,7 +142,7 @@ Public Class FileAssociationInfo : Implements IDisposable
    End Sub
 
    Protected Sub Dispose(disposing As Boolean)
-      ' Ordinarily, we release unmanaged resources here
+      ' Ordinarily, you release unmanaged resources here,
       ' but all are wrapped by safe handles.
 
       ' Release disposable objects.
