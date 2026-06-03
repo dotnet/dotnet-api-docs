@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example8
+public class QAExample27
 {
     public static void Main()
     {

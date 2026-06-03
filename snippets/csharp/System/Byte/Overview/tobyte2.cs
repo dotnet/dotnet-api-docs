@@ -1,7 +1,7 @@
 ﻿// <Snippet11>
 using System;
 
-public class Example
+public class Example2
 {
    public static void Main()
    {
@@ -32,6 +32,7 @@ public class Example
       }
    }
 }
+
 // The example displays the following output:
 //    Base 2:
 //       '-1' is invalid in base 2.

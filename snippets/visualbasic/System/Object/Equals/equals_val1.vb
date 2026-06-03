@@ -2,7 +2,7 @@
 Option Strict On
 
 ' <Snippet3>
-Module Example2
+Module ValExample1
     Public Sub Main()
         Dim value1 As Byte = 12
         Dim value2 As Integer = 12

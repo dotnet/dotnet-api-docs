@@ -49,19 +49,20 @@ Class Point
     Public Overrides Function GetHashCode() As Integer 
         Return Tuple.Create(x, y).GetHashCode()
     End Function 
-End Class  
+End Class
 
-Class Example
-    Public Shared Sub Main() 
+Class Example3
+    Public Shared Sub Main()
         Dim r1 As New Rectangle(0, 0, 100, 200)
         Dim r2 As New Rectangle(0, 0, 100, 200)
         Dim r3 As New Rectangle(0, 0, 150, 200)
-        
+
         Console.WriteLine("{0} = {1}: {2}", r1, r2, r1.Equals(r2))
         Console.WriteLine("{0} = {1}: {2}", r1, r3, r1.Equals(r3))
         Console.WriteLine("{0} = {1}: {2}", r2, r3, r2.Equals(r3))
-    End Sub 
-End Class 
+    End Sub
+End Class
+
 ' The example displays the following output:
 '    Rectangle(0, 0, 100, 200) = Rectangle(0, 0, 100, 200): True
 '    Rectangle(0, 0, 100, 200) = Rectangle(0, 0, 150, 200): False

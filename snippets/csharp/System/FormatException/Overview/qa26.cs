@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example7
+public class QAExample26
 {
     public static void Main()
     {
@@ -15,9 +15,9 @@ public class Example7
         }
         // The example displays output like the following:
         //       $1,603.00     1.603E+003      1603.0000      1,603.000       16.03 %
-        //    
+        //
         //       $1,794.68     1.795E+003      1794.6824      1,794.682       17.95 %
-        //    
+        //
         //      $15,436.14     1.544E+004     15436.1400     15,436.140      154.36 %
         // </Snippet26>
     }

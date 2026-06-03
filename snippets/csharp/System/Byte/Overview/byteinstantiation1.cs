@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-public class Example2
+public class BIExample1
 {
     public static void Main()
     {

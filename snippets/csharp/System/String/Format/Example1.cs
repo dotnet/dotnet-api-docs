@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example
+public class Example1
 {
    public static void Main()
    {
@@ -11,10 +11,10 @@ public class Example
       {
          string formatString = String.Format("{0,10:G}: {0,10:X}", value);
          Console.WriteLine(formatString);
-      }   
+      }
       // The example displays the following output:
       //       Decimal         Hex
-      //    
+      //
       //        -32768:       8000
       //           -27:       FFE5
       //             0:          0

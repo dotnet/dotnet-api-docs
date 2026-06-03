@@ -1,6 +1,6 @@
 using System;
 
-public class Example
+public class Example3
 {
    public static void Main()
    {
@@ -11,10 +11,10 @@ public class Example
          try {
             TimeSpan interval = TimeSpan.Parse(value);
             Console.WriteLine($"{value} --> {interval}");
-         }   
+         }
          catch (FormatException) {
             Console.WriteLine($"{value}: Bad Format");
-         }   
+         }
          catch (OverflowException) {
             Console.WriteLine($"{value}: Overflow");
          }
@@ -22,7 +22,7 @@ public class Example
 
       // Output from .NET Framework 3.5 and earlier versions:
       //       000000006 --> 6.00:00:00
-      //       12.12:12:12.12345678: Bad Format      
+      //       12.12:12:12.12345678: Bad Format
       // Output from .NET Framework 4 and later versions or .NET Core:
       //       000000006: Overflow
       //       12.12:12:12.12345678: Overflow

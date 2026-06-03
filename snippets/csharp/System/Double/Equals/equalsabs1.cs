@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example
+public class AbsExample
 {
     // <Snippet1>
     public static void Main()

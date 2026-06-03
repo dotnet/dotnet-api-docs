@@ -1,8 +1,8 @@
 ﻿' Visual Basic .NET Document
 Option Strict On
 
-Module Example
-   Public Sub Main()
+Module Example2
+   Public Sub Main2()
       ' <Snippet3>
       Dim value As String = "000000006"
       Dim interval As TimeSpan

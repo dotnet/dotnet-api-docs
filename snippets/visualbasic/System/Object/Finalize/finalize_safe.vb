@@ -6,14 +6,12 @@ Imports Microsoft.Win32.SafeHandles
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports System.Text
 
 Public Class FileAssociationInfo : Implements IDisposable
    ' Private variables.
    Private ext As String
-   Private openCmd As String
-   Private args As String
-   Private hExtHandle, hAppIdHandle As SafeRegistryHandle
+    Private openCmd As String
+    Private hExtHandle, hAppIdHandle As SafeRegistryHandle
 
    ' Windows API calls.
    Private Declare Unicode Function RegOpenKeyEx Lib"advapi32.dll" _
@@ -42,10 +40,10 @@ Public Class FileAssociationInfo : Implements IDisposable
    Private Const KEY_SET_VALUE As Integer = &h2
 
    Private REG_SZ As UInteger = 1
+    Private args As String
+    Private Const MAX_PATH As Integer = 260
 
-   Private Const MAX_PATH As Integer  = 260
-
-   Public Sub New(fileExtension As String)
+    Public Sub New(fileExtension As String)
       Dim retVal As Integer = 0
       Dim lpType As UInteger = 0
 
@@ -158,10 +156,10 @@ End Class
 ' </Snippet2>
 
 Module Example
-   Public Sub Main()
-      Dim fa As New FileAssociationInfo(".txt")
-      Console.WriteLine("{0} files are handled by '{1}'", fa.Extension, fa.Open)
-      fa.Dispose()
-   End Sub
+    Public Sub Main1()
+        Dim fa As New FileAssociationInfo(".txt")
+        Console.WriteLine("{0} files are handled by '{1}'", fa.Extension, fa.Open)
+        fa.Dispose()
+    End Sub
 End Module
 

@@ -1,4 +1,4 @@
-// <Snippet2>
+﻿// <Snippet2>
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,7 +9,7 @@ public struct ByteString
     public int Sign;
 }
 
-public class Example1
+public class BSExample1
 {
     public static void Main()
     {

@@ -57,7 +57,7 @@ Class Point3D : Inherits Point1
     End Function
 End Class
 
-Module Example1
+Module Example2
     Public Sub Main()
         Dim point2D As New Point1(5, 5)
         Dim point3Da As New Point3D(5, 5, 2)

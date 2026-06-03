@@ -2,9 +2,8 @@
 Option Strict On
 
 ' <Snippet21>
-Imports System.Collections.Generic
 
-Module Example5
+Module Example5a
     Public Sub Main()
         Dim rnd As New Random()
         Dim numbers(3) As Integer

@@ -1,6 +1,6 @@
 using System;
 
-public class Example
+public class Example3
 {
    public static void Main()
    {
@@ -11,7 +11,7 @@ public class Example
          Console.WriteLine($"{value} --> {interval}");
       else
          Console.WriteLine($"Unable to parse '{value}'");
-         
+
       // Output from .NET Framework 3.5 and earlier versions:
       //       000000006 --> 6.00:00:00
       // Output from .NET Framework 4:

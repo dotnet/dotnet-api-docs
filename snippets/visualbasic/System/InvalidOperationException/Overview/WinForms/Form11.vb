@@ -1,7 +1,4 @@
-﻿Imports System.Collections.Generic
-Imports System.Threading.Tasks
-
-Public Class Form11
+﻿Public Class Form11
 
     Dim lines As New List(Of String)()
 

@@ -1,7 +1,4 @@
-﻿Imports System.Threading
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
-
-Public Class Form1
+﻿Public Class Form1
     ' <Snippet2>
     Dim lines As New List(Of String)()
     Private Async Sub threadExampleBtn_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -26,7 +23,7 @@ Public Class Form1
 
         ' Report completion.
         lines.Add(String.Format("Some work completed in {0} ms on UI thread.", milliseconds))
-        textBox1.Lines = lines.ToArray()
+        TextBox1.Lines = lines.ToArray()
     End Sub
     ' </Snippet2>
 End Class

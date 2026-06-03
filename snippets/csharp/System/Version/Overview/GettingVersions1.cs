@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 
 [assembly: CLSCompliant(true)]
@@ -6,7 +6,7 @@ public class Class1
 {
     public static void Main()
     {
-        Example1 ex1 = new Example1();
+        VersionsExample1 ex1 = new();
 
         GetOsVersion();
         Console.WriteLine();
@@ -14,7 +14,7 @@ public class Class1
         Console.WriteLine();
         GetSpecificAssemblyVersion();
         Console.WriteLine();
-        Example1.GetExecutingAssemblyVersion();
+        VersionsExample1.GetExecutingAssemblyVersion();
         Console.WriteLine();
         GetApplicationVersion();
     }
@@ -25,7 +25,7 @@ public class Class1
         // Get the operating system version.
         OperatingSystem os = Environment.OSVersion;
         Version ver = os.Version;
-        Console.WriteLine($"Operating System: {os.VersionString} ({ver.ToString()})");
+        Console.WriteLine($"Operating System: {os.VersionString} ({ver})");
         // </Snippet1>
     }
 
@@ -34,7 +34,7 @@ public class Class1
         // <Snippet2>
         // Get the common language runtime version.
         Version ver = Environment.Version;
-        Console.WriteLine($"CLR Version {ver.ToString()}");
+        Console.WriteLine($"CLR Version {ver}");
         // </Snippet2>
     }
 
@@ -58,7 +58,7 @@ public class Class1
     }
 }
 
-public class Example1
+public class VersionsExample1
 {
     public static void GetExecutingAssemblyVersion()
     {
