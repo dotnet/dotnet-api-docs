@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet11>
 Module Example3
-    Public Sub Main()
+    Public Sub Run()
         Dim value1 As Double = 0.333333333333333
         Dim value2 As Double = 1 / 3
         Dim precision As Integer = 7

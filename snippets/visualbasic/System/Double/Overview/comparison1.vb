@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet9>
 Module Example1
-    Public Sub Main()
+    Public Sub Run()
         Dim value1 As Double = 0.333333333333333
         Dim value2 As Double = 1 / 3
         Console.WriteLine("{0} = {1}: {2}", value1, value2, value1.Equals(value2))

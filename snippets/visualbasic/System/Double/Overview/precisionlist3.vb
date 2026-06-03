@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet6>
 Module Example11
-    Public Sub Main()
+    Public Sub Run()
         Dim values() As Double = {10.0, 2.88, 2.88, 2.88, 9.0}
         Dim result As Double = 27.64
         Dim total As Double

@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet12>
 Module Example4
-    Public Sub Main()
+    Public Sub Run()
         Dim one1 As Double = 0.1 * 10
         Dim one2 As Double = 0
         For ctr As Integer = 1 To 10

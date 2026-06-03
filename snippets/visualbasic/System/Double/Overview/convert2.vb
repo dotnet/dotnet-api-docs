@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet21>
 Module Example6
-    Public Sub Main()
+    Public Sub Run()
         Dim values() As Double = {Double.MinValue, -67890.1234, -12345.6789,
                                  12345.6789, 67890.1234, Double.MaxValue,
                                  Double.NaN, Double.PositiveInfinity,

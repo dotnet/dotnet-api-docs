@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet2>
 Module Example8
-    Public Sub Main()
+    Public Sub Run()
         Dim value1 As Double = 4.565E+153
         Dim value2 As Double = 6.9375E+172
         Dim result As Double = value1 * value2

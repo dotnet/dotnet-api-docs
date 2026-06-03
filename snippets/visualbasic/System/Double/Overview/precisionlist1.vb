@@ -3,7 +3,7 @@ Option Strict On
 
 ' <Snippet5>
 Module Example10
-    Public Sub Main()
+    Public Sub Run()
         Dim value1 As Double = 1 / 3
         Dim sValue2 As Single = 1 / 3
         Dim value2 As Double = CDbl(sValue2)

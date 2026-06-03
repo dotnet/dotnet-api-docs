@@ -2,7 +2,7 @@
 
 Namespace Snippets
     Class Launcher
-        Public Overloads Shared Sub Main()
+        Public Overloads Shared Sub Run()
             Dim t1 As Temperature = Temperature.Parse("20'F", NumberStyles.Float, Nothing)
             Console.WriteLine(t1.ToString("F", Nothing))
 

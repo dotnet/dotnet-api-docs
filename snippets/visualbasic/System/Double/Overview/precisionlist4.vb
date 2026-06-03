@@ -5,7 +5,7 @@ Option Strict On
 Imports System.IO
 
 Module Example12
-    Public Sub Main()
+    Public Sub Run()
         Dim sw As New StreamWriter(".\Doubles.dat")
         Dim values() As Double = {2.2 / 1.01, 1.0 / 3, Math.PI}
         For ctr As Integer = 0 To values.Length - 1

@@ -3,7 +3,7 @@
 
 ' <Snippet20>
 Module Example5
-    Public Sub Main()
+    Public Sub Run()
         Dim values() As Object = {Byte.MinValue, Byte.MaxValue, Decimal.MinValue,
                                  Decimal.MaxValue, Int16.MinValue, Int16.MaxValue,
                                  Int32.MinValue, Int32.MaxValue, Int64.MinValue,

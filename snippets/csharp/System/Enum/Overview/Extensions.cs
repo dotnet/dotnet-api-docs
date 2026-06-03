@@ -30,7 +30,7 @@ class Example8
         Console.WriteLine($"{g2} {(g2.Passing() ? "is" : "is not")} a passing grade.");
     }
 }
-// The exmaple displays the following output:
+// The example displays the following output:
 //       D is a passing grade.
 //       F is not a passing grade.
 //
