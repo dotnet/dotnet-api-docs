@@ -26,7 +26,7 @@ public class Example
 //       C:\Program Files\
 // </Snippet2>
 
-public class FileUtilities
+public class FileUtilities1
 {
    internal static string AppendDirectorySeparator(string dir)
    {

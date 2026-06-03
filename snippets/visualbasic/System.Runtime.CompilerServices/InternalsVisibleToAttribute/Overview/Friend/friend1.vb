@@ -17,8 +17,8 @@ Imports System.IO
 Module Example
    Public Sub Main()
       Dim dir As String = "C:\Program Files"
-      dir = FileUtilities.AppendDirectorySeparator(dir)
-      Console.WriteLine(dir)
+        dir = FileUtilities1.AppendDirectorySeparator(dir)
+        Console.WriteLine(dir)
    End Sub
 End Module
 ' The example displays the following output:
@@ -26,12 +26,12 @@ End Module
 ' </Snippet2>
 
 
-Public Class FileUtilities
-   Friend Shared Function AppendDirectorySeparator(dir As String) As String
-      If Not dir.Trim().EndsWith(Path.DirectorySeparatorChar) Then
-         Return dir.Trim() + Path.DirectorySeparatorChar
-      Else
-         Return dir
-      End If   
-   End Function
+Public Class FileUtilities1
+    Friend Shared Function AppendDirectorySeparator(dir As String) As String
+        If Not dir.Trim().EndsWith(Path.DirectorySeparatorChar) Then
+            Return dir.Trim() + Path.DirectorySeparatorChar
+        Else
+            Return dir
+        End If
+    End Function
 End Class

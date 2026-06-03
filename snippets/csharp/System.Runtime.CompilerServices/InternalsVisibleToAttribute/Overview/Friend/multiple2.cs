@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
           
 namespace Utilities
 {
-   public class StringUtilities
+   public class StringUtilities1
    {
       internal static string ToTitleCase(string value)
       {
