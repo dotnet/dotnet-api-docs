@@ -1,7 +1,7 @@
 ﻿// <Snippet8>
 using System;
 
-public class Example
+public class FormattableExample2
 {
    public static void Main()
    {

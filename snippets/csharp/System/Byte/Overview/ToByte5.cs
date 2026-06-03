@@ -1,7 +1,7 @@
 ﻿// <Snippet15>
 using System;
 
-public class Example
+public class Example5
 {
    public static void Main()
    {

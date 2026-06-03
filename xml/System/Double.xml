@@ -289,7 +289,203 @@
   </Attributes>
   <Docs>
     <summary>Represents a double-precision floating-point number.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-double">Supplemental API remarks for Double</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+The <xref:System.Double> value type represents a double-precision 64-bit number with values ranging from negative 1.79769313486232e308 to positive 1.79769313486232e308, as well as positive or negative zero, <xref:System.Double.PositiveInfinity>, <xref:System.Double.NegativeInfinity>, and not a number (<xref:System.Double.NaN>). It's intended to represent values that are extremely large (such as distances between planets or galaxies) or extremely small (such as the molecular mass of a substance in kilograms) and that often are imprecise (such as the distance from earth to another solar system). The <xref:System.Double> type complies with the IEC 60559:1989 (IEEE 754) standard for binary floating-point arithmetic.
+
+## Floating-point representation and precision
+
+The <xref:System.Double> data type stores double-precision floating-point values in a 64-bit binary format, as shown in the following table:
+
+| Part                              | Bits  |
+|-----------------------------------|-------|
+| Significand or mantissa           | 0-51  |
+| Exponent                          | 52-62 |
+| Sign (0 = Positive, 1 = Negative) | 63    |
+
+Just as decimal fractions are unable to precisely represent some fractional values (such as 1/3 or <xref:System.Math.PI?displayProperty=nameWithType>), binary fractions are unable to represent some fractional values. For example, 1/10, which is represented precisely by .1 as a decimal fraction, is represented by .001100110011 as a binary fraction, with the pattern "0011" repeating to infinity. In this case, the floating-point value provides an imprecise representation of the number that it represents. Performing additional mathematical operations on the original floating-point value often tends to increase its lack of precision. For example, if you compare the result of multiplying .1 by 10 and adding .1 to .1 nine times, you see that addition, because it has involved eight more operations, has produced the less precise result. (Prior to .NET 10, this disparity is apparent only if you display the two <xref:System.Double> values by using the "R" [standard numeric format string](/dotnet/standard/base-types/standard-numeric-format-strings), which displays up to all 17 digits of precision supported by the <xref:System.Double> type.)
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/representation1.cs" id="Snippet3":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/representation1.fs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/representation1.vb" id="Snippet3":::
+
+Because some numbers can't be represented exactly as fractional binary values, floating-point numbers can only approximate real numbers.
+
+All floating-point numbers also have a limited number of significant digits, which also determines how accurately a floating-point value approximates a real number. A <xref:System.Double> value has up to 15 decimal digits of precision, although a maximum of 17 digits is maintained internally. This means that some floating-point operations might lack the precision to change a floating point value. The following example provides an illustration. It defines a very large floating-point value, and then adds the product of <xref:System.Double.Epsilon?displayProperty=nameWithType> and one quadrillion to it. The product, however, is too small to modify the original floating-point value. Its least significant digit is thousandths, whereas the most significant digit in the product is 10<sup>-309</sup>.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/representation2.cs" id="Snippet4":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/representation2.fs" id="Snippet4":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/representation2.vb" id="Snippet4":::
+
+The limited precision of a floating-point number has several consequences:
+
+- Two floating-point numbers that appear equal for a particular precision might not compare equal, because their least significant digits are different. In the following example, a series of numbers are added together, and their total is compared with their expected total.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/precisionlist3.cs" id="Snippet6":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/precisionlist3.fs" id="Snippet6":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/precisionlist3.vb" id="Snippet6":::
+
+  The two values are unequal because of a loss of precision during the addition operations. In this case, the issue can be resolved by calling the <xref:System.Math.Round(System.Double,System.Int32)?displayProperty=nameWithType> method to round the <xref:System.Double> values to the desired precision before performing the comparison.
+
+- A mathematical or comparison operation that uses a floating-point number might not yield the same result if a decimal number is used, because the binary floating-point number might not equal the decimal number. A previous example illustrated this by displaying the result of multiplying .1 by 10 and adding .1 times.
+
+  When accuracy in numeric operations with fractional values is important, you can use the <xref:System.Decimal> type rather than the <xref:System.Double> type. When accuracy in numeric operations with integral values beyond the range of the <xref:System.Int128> <xref:System.UInt128> types is important, use the <xref:System.Numerics.BigInteger> type.
+
+- <xref:System.Single> values have less precision than <xref:System.Double> values. A <xref:System.Single> value that's converted to a seemingly equivalent <xref:System.Double> often does not equal the <xref:System.Double> value because of differences in precision. In the following example, the result of identical division operations is assigned to a <xref:System.Double> and a <xref:System.Single> value. After the <xref:System.Single> value is cast to a <xref:System.Double>, a comparison of the two values shows that they are unequal.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/precisionlist1.cs" id="Snippet5":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/precisionlist1.fs" id="Snippet5":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/precisionlist1.vb" id="Snippet5":::
+
+  To avoid this problem, use either the <xref:System.Double> in place of the <xref:System.Single> data type, or use the <xref:System.Math.Round*> method so that both values have the same precision.
+
+In addition, the result of arithmetic and assignment operations with <xref:System.Double> values might differ slightly by platform because of the loss of precision of the <xref:System.Double> type. For example, the result of assigning a literal <xref:System.Double> value might differ in the 32-bit and 64-bit versions of .NET. The following example illustrates this difference when the literal value -4.42330604244772E-305 and a variable whose value is -4.42330604244772E-305 are assigned to a <xref:System.Double> variable. Note that the result of the <xref:System.Double.Parse(System.String)> method in this case does not suffer from a loss of precision.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/precision1.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/precision1.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/precision1.vb" id="Snippet1":::
+
+## Test for equality
+
+To be considered equal, two <xref:System.Double> values must represent identical values. However, because of differences in precision between values, or because of a loss of precision by one or both values, floating-point values that are expected to be identical often turn out to be unequal because of differences in their least significant digits. As a result, calls to the <xref:System.Double.Equals*> method to determine whether two values are equal, or calls to the <xref:System.Double.CompareTo*> method to determine the relationship between two <xref:System.Double> values, often yield unexpected results. This is evident in the following example, where two apparently equal <xref:System.Double> values turn out to be unequal because the first has 15 digits of precision, while the second has 17.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/comparison1.cs" id="Snippet9":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/comparison1.fs" id="Snippet9":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/comparison1.vb" id="Snippet9":::
+
+In cases where a loss of precision is likely to affect the result of a comparison, you can adopt any of the following alternatives to calling the <xref:System.Double.Equals*> or <xref:System.Double.CompareTo*> method:
+
+- Call the <xref:System.Math.Round*?displayProperty=nameWithType> method to ensure that both values have the same precision. The following example modifies a previous example to use this approach so that two fractional values are equivalent.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/comparison3.cs" id="Snippet11":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/comparison3.fs" id="Snippet11":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/comparison3.vb" id="Snippet11":::
+
+  The problem of precision still applies to rounding of midpoint values. For more information, see the <xref:System.Math.Round(System.Double,System.Int32,System.MidpointRounding)?displayProperty=nameWithType> method.
+
+- Test for approximate equality rather than equality. This requires that you define either an absolute amount by which the two values can differ but still be equal, or that you define a relative amount by which the smaller value can diverge from the larger value.
+
+  > [!WARNING]
+  > <xref:System.Double.Epsilon?displayProperty=nameWithType> is sometimes used as an absolute measure of the distance between two <xref:System.Double> values when testing for equality. However, <xref:System.Double.Epsilon?displayProperty=nameWithType> measures the smallest possible value that can be added to, or subtracted from, a <xref:System.Double> whose value is zero. For most positive and negative <xref:System.Double> values, the value of <xref:System.Double.Epsilon?displayProperty=nameWithType> is too small to be detected. Therefore, except for values that are zero, we do not recommend its use in tests for equality.
+
+  The following example uses the latter approach to define an `IsApproximatelyEqual` method that tests the relative difference between two values. The method divides by `Math.Max(value1, value2)` so the comparison is relative to the larger (by magnitude) of the two values, which places the result in the correct order of magnitude. If `Math.Max` returns zero (which happens when one value is zero and the other is negative), the method falls back to `Math.Min(value1, value2)` to use the non-zero value as the divisor. It also contrasts the result of calls to the `IsApproximatelyEqual` method and the <xref:System.Double.Equals(System.Double)> method.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/comparison4.cs" id="Snippet12":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/comparison4.fs" id="Snippet12":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/comparison4.vb" id="Snippet12":::
+
+## Floating-point values and exceptions
+
+Unlike operations with integral types, which throw a <xref:System.DivideByZeroException> for division by zero or an <xref:System.OverflowException> for overflow in a [checked context](/dotnet/csharp/language-reference/statements/checked-and-unchecked), operations with floating-point values don't throw exceptions. Instead, in exceptional situations, the result of a floating-point operation is zero, positive infinity, negative infinity, or not a number (NaN):
+
+- If the result of a floating-point operation is too small for the destination format, the result is zero. This can occur when two very small numbers are multiplied, as the following example shows.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/exceptional1.cs" id="Snippet1":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/exceptional1.fs" id="Snippet1":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/exceptional1.vb" id="Snippet1":::
+
+- If the magnitude of the result of a floating-point operation exceeds the range of the destination format, the result of the operation is <xref:System.Double.PositiveInfinity> or <xref:System.Double.NegativeInfinity>, as appropriate for the sign of the result. The result of an operation that overflows <xref:System.Double.MaxValue?displayProperty=nameWithType> is <xref:System.Double.PositiveInfinity>, and the result of an operation that overflows <xref:System.Double.MinValue?displayProperty=nameWithType> is <xref:System.Double.NegativeInfinity>, as the following example shows.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/exceptional2.cs" id="Snippet2":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/exceptional2.fs" id="Snippet2":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/exceptional2.vb" id="Snippet2":::
+
+  <xref:System.Double.PositiveInfinity> also results from a division by zero with a positive dividend, and <xref:System.Double.NegativeInfinity> results from a division by zero with a negative dividend.
+
+- If a floating-point operation is invalid, the result of the operation is <xref:System.Double.NaN>. For example, <xref:System.Double.NaN> results from the following operations:
+
+  - Division by zero with a dividend of zero. Note that other cases of division by zero result in either <xref:System.Double.PositiveInfinity> or <xref:System.Double.NegativeInfinity>.
+
+  - Any floating-point operation with an invalid input. For example, calling the <xref:System.Math.Sqrt*?displayProperty=nameWithType> method with a negative value returns <xref:System.Double.NaN>, as does calling the <xref:System.Math.Acos*?displayProperty=nameWithType> method with a value that is greater than one or less than negative one.
+
+  - Any operation with an argument whose value is <xref:System.Double.NaN?displayProperty=nameWithType>.
+
+## Type conversions
+
+The <xref:System.Double> structure does not define any explicit or implicit conversion operators; instead, conversions are implemented by the compiler.
+
+The conversion of the value of any primitive numeric type to a <xref:System.Double> is a widening conversion and therefore does not require an explicit cast operator or call to a conversion method unless a compiler explicitly requires it. For example, the C# compiler requires a casting operator for conversions from <xref:System.Decimal> to <xref:System.Double>, while the Visual Basic compiler does not. The following example converts the minimum or maximum value of other primitive numeric types to a <xref:System.Double>.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/convert1.cs" id="Snippet20":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/convert1.fs" id="Snippet20":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/convert1.vb" id="Snippet20":::
+
+In addition, the <xref:System.Single> values <xref:System.Single.NaN?displayProperty=nameWithType>, <xref:System.Single.PositiveInfinity?displayProperty=nameWithType>, and <xref:System.Single.NegativeInfinity?displayProperty=nameWithType> convert to <xref:System.Double.NaN?displayProperty=nameWithType>, <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>, and <xref:System.Double.NegativeInfinity?displayProperty=nameWithType>, respectively.
+
+Note that the conversion of the value of some numeric types to a <xref:System.Double> value can involve a loss of precision. As the example illustrates, a loss of precision is possible when converting <xref:System.Decimal>, <xref:System.Int64>, and <xref:System.UInt64> values to <xref:System.Double> values.
+
+The conversion of a <xref:System.Double> value to a value of any other primitive numeric data type is a narrowing conversion and requires a cast operator (in C#), a conversion method (in Visual Basic), or a call to a <xref:System.Convert> method. Values that are outside the range of the target data type, which are defined by the target type's `MinValue` and `MaxValue` properties, behave as shown in the following table.
+
+|Target type|Result|
+|-----------------|------------|
+|Any integral type|An <xref:System.OverflowException> exception if the conversion occurs in a checked context.<br /><br />If the conversion occurs in an unchecked context (the default in C#), the conversion operation succeeds but the value overflows.|
+|<xref:System.Decimal>|An <xref:System.OverflowException> exception.|
+|<xref:System.Single>|<xref:System.Single.NegativeInfinity?displayProperty=nameWithType> for negative values.<br /><br /><xref:System.Single.PositiveInfinity?displayProperty=nameWithType> for positive values.|
+
+In addition, <xref:System.Double.NaN?displayProperty=nameWithType>, <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>, and <xref:System.Double.NegativeInfinity?displayProperty=nameWithType> throw an <xref:System.OverflowException> for conversions to integers in a checked context, but these values overflow when converted to integers in an unchecked context. For conversions to <xref:System.Decimal>, they always throw an <xref:System.OverflowException>. For conversions to <xref:System.Single>, they convert to <xref:System.Single.NaN?displayProperty=nameWithType>, <xref:System.Single.PositiveInfinity?displayProperty=nameWithType>, and <xref:System.Single.NegativeInfinity?displayProperty=nameWithType>, respectively.
+
+A loss of precision might result from converting a <xref:System.Double> value to another numeric type. In the case of converting to any of the integral types, as the output from the example shows, the fractional component is lost when the <xref:System.Double> value is either rounded (as in Visual Basic) or truncated (as in C#). For conversions to <xref:System.Decimal> and <xref:System.Single> values, the <xref:System.Double> value might not have a precise representation in the target data type.
+
+The following example converts a number of <xref:System.Double> values to several other numeric types. The conversions occur in a checked context in Visual Basic (the default), in C# (because of the [checked](/dotnet/csharp/language-reference/keywords/checked) keyword), and in F# (because of the [Checked](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-core-operators-checked.html) module). The output from the example shows the result for conversions in both a checked an unchecked context. You can perform conversions in an unchecked context in Visual Basic by compiling with the `/removeintchecks+` compiler switch, in C# by commenting out the `checked` statement, and in F# by commenting out the `open Checked` statement.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/convert2.cs" id="Snippet21":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/convert2.fs" id="Snippet21":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/convert2.vb" id="Snippet21":::
+
+For more information on the conversion of numeric types, see [Type Conversion in .NET](/dotnet/standard/base-types/type-conversion) and [Type Conversion Tables](/dotnet/standard/base-types/conversion-tables).
+
+## Floating-point functionality
+
+The <xref:System.Double> structure and related types provide methods to perform operations in the following areas:
+
+- **Comparison of values**. You can call the <xref:System.Double.Equals*> method to determine whether two <xref:System.Double> values are equal, or the <xref:System.Double.CompareTo*> method to determine the relationship between two values.
+
+  The <xref:System.Double> structure also supports a complete set of comparison operators. For example, you can test for equality or inequality, or determine whether one value is greater than or equal to another. If one of the operands is a numeric type other than a <xref:System.Double>, it is converted to a <xref:System.Double> before performing the comparison.
+
+  > [!WARNING]
+  > Because of differences in precision, two <xref:System.Double> values that you expect to be equal might turn out to be unequal, which affects the result of the comparison. For information about comparing two <xref:System.Double> values, see the [Test for equality](#test-for-equality) section.
+
+  You can also call the <xref:System.Double.IsNaN*>, <xref:System.Double.IsInfinity*>, <xref:System.Double.IsPositiveInfinity*>, and <xref:System.Double.IsNegativeInfinity*> methods to test for these special values.
+
+- **Mathematical operations**. Common arithmetic operations, such as addition, subtraction, multiplication, and division, are implemented by language compilers and Common Intermediate Language (CIL) instructions, rather than by <xref:System.Double> methods. If one of the operands in a mathematical operation is a numeric type other than a <xref:System.Double>, it's converted to a <xref:System.Double> before performing the operation. The result of the operation is also a <xref:System.Double> value.
+
+  Other mathematical operations can be performed by calling `static` (`Shared` in Visual Basic) methods in the <xref:System.Math?displayProperty=nameWithType> class. It includes additional methods commonly used for arithmetic (such as <xref:System.Math.Abs*?displayProperty=nameWithType>, <xref:System.Math.Sign*?displayProperty=nameWithType>, and <xref:System.Math.Sqrt*?displayProperty=nameWithType>), geometry (such as <xref:System.Math.Cos*?displayProperty=nameWithType> and <xref:System.Math.Sin*?displayProperty=nameWithType>), and calculus (such as <xref:System.Math.Log*?displayProperty=nameWithType>).
+
+  You can also manipulate the individual bits in a <xref:System.Double> value. The <xref:System.BitConverter.DoubleToInt64Bits*?displayProperty=nameWithType> method preserves a <xref:System.Double> value's bit pattern in a 64-bit integer. The <xref:System.BitConverter.GetBytes(System.Double)?displayProperty=nameWithType> method returns its bit pattern in a byte array.
+
+- **Rounding**. Rounding is often used as a technique for reducing the impact of differences between values caused by problems of floating-point representation and precision. You can round a <xref:System.Double> value by calling the <xref:System.Math.Round*?displayProperty=nameWithType> method.
+
+- **Formatting**. You can convert a <xref:System.Double> value to its string representation by calling the <xref:System.Double.ToString*> method or by using the composite formatting feature. For information about how format strings control the string representation of floating-point values, see [Standard Numeric Format Strings](/dotnet/standard/base-types/standard-numeric-format-strings) and [Custom Numeric Format Strings](/dotnet/standard/base-types/custom-numeric-format-strings).
+
+- **Parsing strings**. You can convert the string representation of a floating-point value to a <xref:System.Double> value by calling either the <xref:System.Double.Parse*> or <xref:System.Double.TryParse*> method. If the parse operation fails, the <xref:System.Double.Parse*> method throws an exception, whereas the <xref:System.Double.TryParse*> method returns `false`.
+
+- **Type conversion**. The <xref:System.Double> structure provides an explicit interface implementation for the <xref:System.IConvertible> interface, which supports conversion between any two standard .NET data types. Language compilers also support the implicit conversion of values of all other standard numeric types to <xref:System.Double> values. Conversion of a value of any standard numeric type to a <xref:System.Double> is a widening conversion and does not require the user of a casting operator or conversion method,
+
+  However, conversion of <xref:System.Int64> and <xref:System.Single> values can involve a loss of precision. The following table lists the differences in precision for each of these types:
+
+  | Type                 | Maximum precision | Internal precision |
+  |----------------------|-------------------|--------------------|
+  | <xref:System.Double> | 15                | 17                 |
+  | <xref:System.Int64>  | 19 decimal digits | 19 decimal digits  |
+  | <xref:System.Single> | 7 decimal digits  | 9 decimal digits   |
+
+  The problem of precision most frequently affects <xref:System.Single> values that are converted to <xref:System.Double> values. In the following example, two values produced by identical division operations are unequal because one of the values is a single-precision floating point value converted to a <xref:System.Double>.
+
+  :::code language="csharp" source="~/snippets/csharp/System/Double/Overview/representation1.cs" id="Snippet3":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/representation1.fs" id="Snippet3":::
+  :::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/representation1.vb" id="Snippet3":::
+
+## Examples
+
+The following code example illustrates the use of <xref:System.Double>:
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Overview/source.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Overview/source.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Overview/source.vb" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
     <threadsafe>All members of this type are thread safe. Members that appear to modify instance state actually return a new instance initialized with the new value. As with any other type, reading and writing to a shared variable that contains an instance of this type must be protected by a lock to guarantee thread safety.</threadsafe>
     <altmember cref="T:System.Decimal" />
     <altmember cref="T:System.Single" />
@@ -1095,7 +1291,47 @@ This computes `arctan(x) / π` in the interval `[-0.5, +0.5]`.
  </term><description> This instance is greater than <paramref name="value" />, or this instance is a number and <paramref name="value" /> is not a number (<see cref="F:System.Double.NaN" />).
 
  </description></item></list></returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-double-compareto">Double.CompareTo</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## <xref:System.Double.CompareTo(System.Double)> method
+
+Values must be identical to be considered equal. Particularly when floating-point values depend on multiple mathematical operations, it is common for them to lose precision and for their values to be nearly identical except for their least significant digits. Because of this, the return value of the <xref:System.Double.CompareTo*> method at times may seem surprising. For example, multiplication by a particular value followed by division by the same value should produce the original value. In the following example, however, the computed value turns out to be greater than the original value. Showing all significant digits of the two values by using the "R" [standard numeric format string](/dotnet/standard/base-types/standard-numeric-format-strings) indicates that the computed value differs from the original value in its least significant digits. For information on handling such comparisons, see the Remarks section of the <xref:System.Double.Equals(System.Double)> method.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/CompareTo/compareto2.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/CompareTo/compareto2.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/CompareTo/compareto2.vb" id="Snippet1":::
+
+This method implements the <xref:System.IComparable`1?displayProperty=nameWithType> interface and performs slightly better than the <xref:System.Double.CompareTo*?displayProperty=nameWithType> method because it does not have to convert the `value` parameter to an object.
+
+Note that, although an object whose value is <xref:System.Double.NaN> is not considered equal to another object whose value is <xref:System.Double.NaN> (even itself), the <xref:System.IComparable`1> interface requires that `A.CompareTo(A)` return zero.
+
+## <xref:System.Double.CompareTo(System.Object)> method
+
+The `value` parameter must be `null` or an instance of `Double`; otherwise, an exception is thrown. Any instance of <xref:System.Double>, regardless of its value, is considered greater than `null`.
+
+Values must be identical to be considered equal. Particularly when floating-point values depend on multiple mathematical operations, it is common for them to lose precision and for their values to be nearly identical except for their least significant digits. Because of this, the return value of the <xref:System.Double.CompareTo*> method at times may seem surprising. For example, multiplication by a particular value followed by division by the same value should produce the original value. In the following example, however, the computed value turns out to be greater than the original value. Showing all significant digits of the two values by using the "R" [standard numeric format string](/dotnet/standard/base-types/standard-numeric-format-strings) indicates that the computed value differs from the original value in its least significant digits. For information on handling such comparisons, see the Remarks section of the <xref:System.Double.Equals(System.Double)> method.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/CompareTo/compareto3.cs" id="Snippet2":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/CompareTo/compareto3.fs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/CompareTo/compareto3.vb" id="Snippet2":::
+
+This method is implemented to support the <xref:System.IComparable> interface. Note that, although a <xref:System.Double.NaN> is not considered to be equal to another <xref:System.Double.NaN> (even itself), the <xref:System.IComparable> interface requires that `A.CompareTo(A)` return zero.
+
+## Widening conversions
+
+Depending on your programming language, it might be possible to code a <xref:System.Double.CompareTo*> method where the parameter type has fewer bits (is narrower) than the instance type. This is possible because some programming languages perform an implicit widening conversion that represents the parameter as a type with as many bits as the instance.
+
+For example, suppose the instance type is <xref:System.Double> and the parameter type is <xref:System.Int32>. The Microsoft C# compiler generates instructions to represent the value of the parameter as a <xref:System.Double> object, then generates a <xref:System.Double.CompareTo(System.Double)?displayProperty=nameWithType> method that compares the values of the instance and the widened representation of the parameter.
+
+Consult your programming language's documentation to determine if its compiler performs implicit widening conversions of numeric types. For more information, see the [Type Conversion Tables](/dotnet/standard/base-types/conversion-tables) topic.
+
+## Precision in comparisons
+
+The precision of floating-point numbers beyond the documented precision is specific to the implementation and version of .NET. Consequently, a comparison of two particular numbers might change between versions of .NET because the precision of the numbers' internal representation might change.
+
+ ]]></format>
+        </remarks>
         <example>
           <format type="text/markdown"><![CDATA[
 The following code example demonstrates generic and nongeneric versions of the <xref:System.Double.CompareTo*> method for several value and reference types.
@@ -1168,7 +1404,47 @@ The following code example demonstrates generic and nongeneric versions of the <
  </term><description> This instance is equal to <paramref name="value" />, or this instance and <paramref name="value" /> are both <see langword="Double.NaN" />, <see cref="F:System.Double.PositiveInfinity" />, or <see cref="F:System.Double.NegativeInfinity" /></description></item><item><term> A positive integer
 
  </term><description> This instance is greater than <paramref name="value" />, OR this instance is a number and <paramref name="value" /> is not a number (<see cref="F:System.Double.NaN" />), OR <paramref name="value" /> is <see langword="null" />.</description></item></list></returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-double-compareto">Double.CompareTo</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## <xref:System.Double.CompareTo(System.Double)> method
+
+Values must be identical to be considered equal. Particularly when floating-point values depend on multiple mathematical operations, it is common for them to lose precision and for their values to be nearly identical except for their least significant digits. Because of this, the return value of the <xref:System.Double.CompareTo*> method at times may seem surprising. For example, multiplication by a particular value followed by division by the same value should produce the original value. In the following example, however, the computed value turns out to be greater than the original value. Showing all significant digits of the two values by using the "R" [standard numeric format string](/dotnet/standard/base-types/standard-numeric-format-strings) indicates that the computed value differs from the original value in its least significant digits. For information on handling such comparisons, see the Remarks section of the <xref:System.Double.Equals(System.Double)> method.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/CompareTo/compareto2.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/CompareTo/compareto2.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/CompareTo/compareto2.vb" id="Snippet1":::
+
+This method implements the <xref:System.IComparable`1?displayProperty=nameWithType> interface and performs slightly better than the <xref:System.Double.CompareTo*?displayProperty=nameWithType> method because it does not have to convert the `value` parameter to an object.
+
+Note that, although an object whose value is <xref:System.Double.NaN> is not considered equal to another object whose value is <xref:System.Double.NaN> (even itself), the <xref:System.IComparable`1> interface requires that `A.CompareTo(A)` return zero.
+
+## <xref:System.Double.CompareTo(System.Object)> method
+
+The `value` parameter must be `null` or an instance of `Double`; otherwise, an exception is thrown. Any instance of <xref:System.Double>, regardless of its value, is considered greater than `null`.
+
+Values must be identical to be considered equal. Particularly when floating-point values depend on multiple mathematical operations, it is common for them to lose precision and for their values to be nearly identical except for their least significant digits. Because of this, the return value of the <xref:System.Double.CompareTo*> method at times may seem surprising. For example, multiplication by a particular value followed by division by the same value should produce the original value. In the following example, however, the computed value turns out to be greater than the original value. Showing all significant digits of the two values by using the "R" [standard numeric format string](/dotnet/standard/base-types/standard-numeric-format-strings) indicates that the computed value differs from the original value in its least significant digits. For information on handling such comparisons, see the Remarks section of the <xref:System.Double.Equals(System.Double)> method.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/CompareTo/compareto3.cs" id="Snippet2":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/CompareTo/compareto3.fs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/CompareTo/compareto3.vb" id="Snippet2":::
+
+This method is implemented to support the <xref:System.IComparable> interface. Note that, although a <xref:System.Double.NaN> is not considered to be equal to another <xref:System.Double.NaN> (even itself), the <xref:System.IComparable> interface requires that `A.CompareTo(A)` return zero.
+
+## Widening conversions
+
+Depending on your programming language, it might be possible to code a <xref:System.Double.CompareTo*> method where the parameter type has fewer bits (is narrower) than the instance type. This is possible because some programming languages perform an implicit widening conversion that represents the parameter as a type with as many bits as the instance.
+
+For example, suppose the instance type is <xref:System.Double> and the parameter type is <xref:System.Int32>. The Microsoft C# compiler generates instructions to represent the value of the parameter as a <xref:System.Double> object, then generates a <xref:System.Double.CompareTo(System.Double)?displayProperty=nameWithType> method that compares the values of the instance and the widened representation of the parameter.
+
+Consult your programming language's documentation to determine if its compiler performs implicit widening conversions of numeric types. For more information, see the [Type Conversion Tables](/dotnet/standard/base-types/conversion-tables) topic.
+
+## Precision in comparisons
+
+The precision of floating-point numbers beyond the documented precision is specific to the implementation and version of .NET. Consequently, a comparison of two particular numbers might change between versions of .NET because the precision of the numbers' internal representation might change.
+
+ ]]></format>
+        </remarks>
         <example>
           <format type="text/markdown"><![CDATA[
 The following code example illustrates the use of `CompareTo` in the context of `Double`.
@@ -1704,7 +1980,36 @@ Euler's number is approximately 2.7182818284590452354.
       <MemberValue>4.94065645841247E-324</MemberValue>
       <Docs>
         <summary>Represents the smallest positive <see cref="T:System.Double" /> value that is greater than zero. This field is constant.</summary>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-double-epsilon">Supplemental API remarks for Double.Epsilon</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The value of the <xref:System.Double.Epsilon> property reflects the smallest positive <xref:System.Double> value that is significant in numeric operations or comparisons when the value of the <xref:System.Double> instance is zero. For example, the following code shows that zero and <xref:System.Double.Epsilon> are considered to be unequal values, whereas zero and half the value of <xref:System.Double.Epsilon> are considered to be equal.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Epsilon/epsilon.cs" id="Snippet5":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Epsilon/epsilon.fs" id="Snippet5":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Epsilon/epsilon.vb" id="Snippet5":::
+
+More precisely, the floating point format consists of a sign, a 52-bit mantissa or significand, and an 11-bit exponent. As the following example shows, zero has an exponent of -1022 and a mantissa of 0. <xref:System.Double.Epsilon> has an exponent of -1022 and a mantissa of 1. This means that <xref:System.Double.Epsilon> is the smallest positive <xref:System.Double> value greater than zero and represents the smallest possible value and the smallest possible increment for a <xref:System.Double> whose exponent is -1022.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Epsilon/epsilon1.cs" id="Snippet6":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Epsilon/epsilon1.fs" id="Snippet6":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Epsilon/epsilon1.vb" id="Snippet6":::
+
+However, the <xref:System.Double.Epsilon> property is not a general measure of precision of the <xref:System.Double> type; it applies only to <xref:System.Double> instances that have a value of zero or an exponent of -1022.
+
+> [!NOTE]
+> The value of the <xref:System.Double.Epsilon> property is not equivalent to machine epsilon, which represents the upper bound of the relative error due to rounding in floating-point arithmetic.
+
+The value of this constant is 4.94065645841247e-324.
+
+Two apparently equivalent floating-point numbers might not compare equal because of differences in their least significant digits. For example, the C# expression, `(double)1/3 == (double)0.33333`, does not compare equal because the division operation on the left side has maximum precision while the constant on the right side is precise only to the specified digits. If you create a custom algorithm that determines whether two floating-point numbers can be considered equal, we do not recommend that you base your algorithm on the value of the <xref:System.Double.Epsilon> constant to establish the acceptable absolute margin of difference for the two values to be considered equal.  (Typically, that margin of difference is many times greater than <xref:System.Double.Epsilon>.) For information about comparing two double-precision floating-point values, see <xref:System.Double> and <xref:System.Double.Equals(System.Double)>.
+
+## Platform notes
+
+On ARM systems, the value of the <xref:System.Double.Epsilon> constant is too small to be detected, so it equates to zero. You can define an alternative epsilon value that equals 2.2250738585072014E-308 instead.
+
+ ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="Equals">
@@ -1767,7 +2072,55 @@ Euler's number is approximately 2.7182818284590452354.
         <summary>Returns a value indicating whether this instance and a specified <see cref="T:System.Double" /> object represent the same value.</summary>
         <returns>
           <see langword="true" /> if <paramref name="obj" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-double-equals">Supplemental API remarks for Double.Equals</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Double.Equals(System.Double)?displayProperty=nameWithType> method implements the <xref:System.IEquatable`1?displayProperty=nameWithType> interface, and performs slightly better than <xref:System.Double.Equals(System.Object)?displayProperty=nameWithType> because it doesn't have to convert the `obj` parameter to an object.
+
+## Widening conversions
+
+Depending on your programming language, it might be possible to code a <xref:System.Double.Equals*> method where the parameter type has fewer bits (is narrower) than the instance type. This is possible because some programming languages perform an implicit widening conversion that represents the parameter as a type with as many bits as the instance.
+
+For example, suppose the instance type is <xref:System.Double> and the parameter type is <xref:System.Int32>. The Microsoft C# compiler generates instructions to represent the value of the parameter as a <xref:System.Double> object, then generates a <xref:System.Double.Equals(System.Double)?displayProperty=nameWithType> method that compares the values of the instance and the widened representation of the parameter.
+
+Consult your programming language's documentation to determine if its compiler performs implicit widening conversions of numeric types. For more information, see the [Type Conversion Tables](/dotnet/standard/base-types/conversion-tables) topic.
+
+## Precision in comparisons
+
+The <xref:System.Double.Equals*> method should be used with caution, because two apparently equivalent values can be unequal due to the differing precision of the two values. The following example reports that the <xref:System.Double> value .333333 and the <xref:System.Double> value returned by dividing 1 by 3 are unequal.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Epsilon/Equals_25051.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Epsilon/Equals_25051.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Epsilon/Equals_25051.vb" id="Snippet1":::
+
+Rather than comparing for equality, one technique involves defining an acceptable relative margin of difference between two values (such as .001% of one of the values). If the absolute value of the difference between the two values is less than or equal to that margin, the difference is likely to be due to differences in precision and, therefore, the values are likely to be equal. The following example uses this technique to compare .33333 and 1/3, the two <xref:System.Double> values that the previous code example found to be unequal. In this case, the values are equal.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Epsilon/Equals_25051.cs" id="Snippet2":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Epsilon/Equals_25051.fs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Epsilon/Equals_25051.vb" id="Snippet2":::
+
+> [!NOTE]
+> Because <xref:System.Double.Epsilon> defines the minimum expression of a positive value whose range is near zero, the margin of difference between two similar values must be greater than <xref:System.Double.Epsilon>. Typically, it is many times greater than <xref:System.Double.Epsilon>. Because of this, we recommend that you **don't** use <xref:System.Double.Epsilon> when comparing <xref:System.Double> values for equality.
+
+A second technique involves comparing the difference between two floating-point numbers with some absolute value. If the difference is less than or equal to that absolute value, the numbers are equal. If it's greater, the numbers are not equal. One alternative is to arbitrarily select an absolute value. That's problematic, however, because an acceptable margin of difference depends on the magnitude of the <xref:System.Double> values. A second alternative takes advantage of a design feature of the floating-point format: The difference between the integer representation of two floating-point values indicates the number of possible floating-point values that separates them. For example, the difference between 0.0 and <xref:System.Double.Epsilon> is 1, because <xref:System.Double.Epsilon> is the smallest representable value when working with a <xref:System.Double> whose value is zero. The following example uses this technique to compare .33333 and 1/3, which are the two <xref:System.Double> values that the previous code example with the <xref:System.Double.Equals(System.Double)> method found to be unequal. The example uses the <xref:System.BitConverter.DoubleToInt64Bits*?displayProperty=nameWithType> method to convert a double-precision floating-point value to its integer representation. The example declares the values as equal if there are no possible floating-point values between their integer representations.
+
+:::code language="csharp" source="~/snippets/csharp/System/Double/Equals/equalsabs1.cs" id="Snippet1":::
+:::code language="fsharp" source="~/snippets/fsharp/System/Double/Equals/equalsabs1.fs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System/Double/Equals/equalsabs1.vb" id="Snippet1":::
+
+> [!NOTE]
+> For some values, you might consider them equal even when there *is* a possible floating-point value between the integer representations. For example, consider the double values `0.39` and `1.69 - 1.3` (which is calculated as `0.3899999999999999`). On a little-endian computer, the integer representations of these values are `4600697235336603894` and `4600697235336603892`, respectively. The difference between the integer values is `2`, meaning there *is* a possible floating-point value between `0.39` and `1.69 - 1.3`.
+
+### Version differences
+
+The precision of floating-point numbers beyond the documented precision is specific to the implementation and version of .NET. Consequently, a comparison of two particular numbers might change between versions of .NET because the precision of the numbers' internal representation might change.
+
+## NaN
+
+If two <xref:System.Double.NaN?displayProperty=nameWithType> values are tested for equality by calling the <xref:System.Double.Equals*> method, the method returns `true`. However, if two <xref:System.Double.NaN?displayProperty=nameWithType> values are tested for equality by using the *equality operator*, the operator returns `false`. When you want to determine whether the value of a <xref:System.Double> is not a number (NaN), an alternative is to call the <xref:System.Double.IsNaN*> method.
+
+ ]]></format>
+        </remarks>
         <block subset="none" type="usage">
           <para>Compiler overload resolution may account for an apparent difference in the behavior of the two <see cref="M:System.Double.Equals(System.Object)" /> method overloads. If an implicit conversion between the <paramref name="obj" /> argument and a <see cref="T:System.Double" /> is defined and the argument is not typed as an <see cref="T:System.Object" />, compilers may perform an implicit conversion and call the <see cref="M:System.Double.Equals(System.Double)" /> method. Otherwise, they call the <see cref="M:System.Double.Equals(System.Object)" /> method, which always returns <see langword="false" /> if its <paramref name="obj" /> argument is not a <see cref="T:System.Double" /> value. The following example illustrates the difference in behavior between the two method overloads. In the case of all primitive numeric types except for <see cref="T:System.Decimal" /> and in C#, the first comparison returns <see langword="true" /> because the compiler automatically performs a widening conversion and calls the <see cref="M:System.Double.Equals(System.Double)" /> method, whereas the second comparison returns <see langword="false" /> because the compiler calls the <see cref="M:System.Double.Equals(System.Object)" /> method.
 

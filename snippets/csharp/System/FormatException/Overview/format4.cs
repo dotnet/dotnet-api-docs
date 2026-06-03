@@ -1,16 +1,16 @@
 ﻿using System;
 
-public class Example
+public class Example4
 {
    public static void Main()
    {
       // <Snippet4>
-      string formatString = "    {0,10} ({0,8:X8})\n" + 
-                            "And {1,10} ({1,8:X8})\n" + 
+      string formatString = "    {0,10} ({0,8:X8})\n" +
+                            "And {1,10} ({1,8:X8})\n" +
                             "  = {2,10} ({2,8:X8})";
       int value1 = 16932;
       int value2 = 15421;
-      string result = String.Format(formatString, 
+      string result = String.Format(formatString,
                                     value1, value2, value1 & value2);
       Console.WriteLine(result);
       // The example displays the following output:
