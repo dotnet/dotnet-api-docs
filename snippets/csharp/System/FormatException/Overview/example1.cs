@@ -6,7 +6,7 @@ public class Example1
    public enum TemperatureScale
    { Celsius, Fahrenheit, Kelvin }
 
-   public static void Main()
+   public static void Run()
    {
       String info = GetCurrentTemperature();
       Console.WriteLine(info);
@@ -24,6 +24,7 @@ public class Example1
       return result;
    }
 }
+
 // The example displays output like the following:
 //    Unhandled Exception: System.FormatException: Format specifier was invalid.
 //       at System.Number.FormatDecimal(Decimal value, String format, NumberFormatInfo info)
