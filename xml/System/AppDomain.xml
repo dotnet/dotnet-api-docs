@@ -69,45 +69,10 @@
     <remarks>
       <format type="text/markdown"><![CDATA[
 
-## Remarks
-
-Application domains, which are represented by <xref:System.AppDomain> objects, help provide isolation, unloading, and security boundaries for executing managed code.
-
-- Use application domains to isolate tasks that might bring down a process. If the state of the <xref:System.AppDomain> that's executing a task becomes unstable, the <xref:System.AppDomain> can be unloaded without affecting the process. This is important when a process must run for long periods without restarting. You can also use application domains to isolate tasks that should not share data.
-- If an assembly is loaded into the default application domain, it cannot be unloaded from memory while the process is running. However, if you open a second application domain to load and execute the assembly, the assembly is unloaded when that application domain is unloaded. Use this technique to minimize the working set of long-running processes that occasionally use large DLLs.
-
- > [!NOTE]
- > On .NET Core and .NET 5+, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. These versions have exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
-
- Multiple application domains can run in a single process; however, there is not a one-to-one correlation between application domains and threads. Several threads can belong to a single application domain, and while a given thread is not confined to a single application domain, at any given time, a thread executes in a single application domain.
-
- Application domains are created using the <xref:System.AppDomain.CreateDomain*> method. <xref:System.AppDomain> instances are used to load and execute assemblies (<xref:System.Reflection.Assembly>). When an <xref:System.AppDomain> is no longer in use, it can be unloaded.
-
- The <xref:System.AppDomain> class implements a set of events that enable applications to respond when an assembly is loaded, when an application domain will be unloaded, or when an unhandled exception is thrown.
-
- For more information on using application domains, see [Application Domains](/dotnet/framework/app-domains/application-domains).
-
- This class implements the <xref:System.MarshalByRefObject>, <xref:System._AppDomain>, and <xref:System.Security.IEvidenceFactory> interfaces.
-
- You should never create a remotable wrapper for an <xref:System.AppDomain> object. Doing so could publish a remote reference to that <xref:System.AppDomain>, exposing methods such as <xref:System.AppDomain.CreateInstance*> to remote access and effectively destroying code access security for that <xref:System.AppDomain>. Malicious clients connecting to the remoted <xref:System.AppDomain> could obtain access to any resource the <xref:System.AppDomain> itself has access to. Do not create remotable wrappers for any type that extends <xref:System.MarshalByRefObject> and that implements methods that could be used by malicious clients to bypass the security system.
-
-> [!CAUTION]
-> The default value for the <xref:System.AppDomainSetup.DisallowCodeDownload?displayProperty=nameWithType> property is `false`. This setting is unsafe for services. To prevent services from downloading partially trusted code, set this property to `true`.
-
-## Examples
- This example shows how to create a new <xref:System.AppDomain>, instantiate a type in that new <xref:System.AppDomain>, and communicate with that type's object. In addition, this example shows how to unload the <xref:System.AppDomain> causing the object to be garbage collected.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomainX/cpp/AppDomainX.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/Overview/AppDomainX.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/Overview/AppDomainX.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/Overview/AppDomainX.vb" id="Snippet1":::
+In modern .NET versions, the <xref:System.AppDomain> implementation is limited by design and does not provide isolation, unloading, or security boundaries. These versions have exactly one <xref:System.AppDomain>. Isolation and unloading are provided through <xref:System.Runtime.Loader.AssemblyLoadContext>. Security boundaries should be provided by process boundaries and appropriate remoting techniques.
 
  ]]></format>
     </remarks>
-    <related type="Article" href="/dotnet/framework/app-domains/how-to-configure-an-application-domain">How To: Configure an Application Domain</related>
-    <related type="Article" href="/dotnet/framework/app-domains/how-to-create-an-application-domain">How To: Create an Application Domain</related>
-    <related type="Article" href="/dotnet/framework/app-domains/how-to-load-assemblies-into-an-application-domain">How to: Load Assemblies into an Application Domain</related>
-    <related type="Article" href="/dotnet/framework/app-domains/how-to-unload-an-application-domain">How to: Unload an Application Domain</related>
   </Docs>
   <Members>
     <Member MemberName="AppendPrivatePath">
@@ -170,16 +135,7 @@ Application domains, which are represented by <xref:System.AppDomain> objects, h
       <Docs>
         <param name="path">The name of the directory to be appended to the private path.</param>
         <summary>Appends the specified directory name to the private path list.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The use of this property is not recommended, because it might change the probing path for assemblies after they have already been loaded. Use the <xref:System.AppDomainSetup.PrivateBinPath?displayProperty=nameWithType> property instead.
-
- The private path, or relative search path, is the path relative to the base directory where the assembly resolver probes for private assemblies.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.AppDomainUnloadedException">The operation is attempted on an unloaded application domain.</exception>
       </Docs>
     </Member>
@@ -228,14 +184,7 @@ Application domains, which are represented by <xref:System.AppDomain> objects, h
         <param name="assemblyName">The assembly display name, in the form provided by the <see cref="P:System.Reflection.Assembly.FullName" /> property.</param>
         <summary>Returns the assembly display name after policy has been applied.</summary>
         <returns>A string containing the assembly display name after policy has been applied.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The <xref:System.AppDomain.ApplyPolicy*> method takes an assembly display name and returns the post-policy display name. This is useful if you need to load an assembly using policy, because the reflection-only context does not apply policy.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AssemblyLoad">
@@ -368,19 +317,17 @@ Application domains, which are represented by <xref:System.AppDomain> objects, h
 
  For guidance on the use of this event, see [Resolving Assembly Loads](/dotnet/standard/assembly/resolve-loads).
 
- Beginning with the .NET Framework 4, the <xref:System.ResolveEventArgs.RequestingAssembly?displayProperty=nameWithType> property returns the assembly that requested the assembly load that could not be resolved. For example, the loader might be unable to load a dependency of the requesting assembly because the requesting assembly and its dependency are not in the probing path. Knowing the identity of the requesting assembly might be useful in locating the dependency or in identifying the correct version, if more than one version of the dependency is available. For more information, see <xref:System.ResolveEventArgs.RequestingAssembly*?displayProperty=nameWithType>.
+The <xref:System.ResolveEventArgs.RequestingAssembly?displayProperty=nameWithType> property returns the assembly that requested the assembly load that could not be resolved. For example, the loader might be unable to load a dependency of the requesting assembly because the requesting assembly and its dependency are not in the probing path. Knowing the identity of the requesting assembly might be useful in locating the dependency or in identifying the correct version, if more than one version of the dependency is available. For more information, see <xref:System.ResolveEventArgs.RequestingAssembly*?displayProperty=nameWithType>.
 
 > [!IMPORTANT]
->  Beginning with the .NET Framework 4, the <xref:System.ResolveEventHandler> event is raised for all assemblies, including resource assemblies. In earlier versions, the event was not raised for resource assemblies. If the operating system is localized, the handler might be called multiple times: once for each culture in the fallback chain.
+> The <xref:System.ResolveEventHandler> event is raised for all assemblies, including resource assemblies. If the operating system is localized, the handler might be called multiple times: once for each culture in the fallback chain.
 
  For this event, the <xref:System.ResolveEventArgs.Name?displayProperty=nameWithType> property returns the assembly name before policy is applied.
 
 > [!IMPORTANT]
->  If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
+> If more than one event handler is registered for this event, the event handlers are called in order until an event handler returns a value that isn't `null`. Subsequent event handlers are ignored.
 
  For more information about handling events, see [Handling and Raising Events](/dotnet/standard/events/).
-
-
 
 ## Examples
  The following sample demonstrates the <xref:System.AppDomain.AssemblyResolve> event.
@@ -666,30 +613,9 @@ Application domains, which are represented by <xref:System.AppDomain> objects, h
         <param name="friendlyName">The friendly name of the domain.</param>
         <summary>Creates a new application domain with the specified name.</summary>
         <returns>The newly created application domain.</returns>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-The `friendlyName` parameter is intended to identify the domain in a manner that is meaningful to humans. This string should be suitable for display in user interfaces.
-
-This method overload uses the <xref:System.AppDomainSetup> information from the default application domain.
-
-## Examples
- The following sample demonstrates, in general, how to create a domain using one of the <xref:System.AppDomain.CreateDomain*> overloads.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/AppDomain_Setup/CPP/setup.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/CreateDomain/setup.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/CreateDomain/setup.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/CreateDomain/setup.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
-        <exception cref="T:System.ArgumentNullException">
-          <paramref name="friendlyName" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.PlatformNotSupportedException">.NET Core and .NET 5+ only: In all cases.</exception>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.PlatformNotSupportedException">In all cases.</exception>
         <related type="Article" href="/dotnet/core/porting/net-framework-tech-unavailable#application-domains">Unavailable technologies on .NET Core/5+: Application domains</related>
-        <altmember cref="P:System.AppDomain.FriendlyName" />
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateInstance">
@@ -2754,13 +2680,11 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
 
  The event can be handled per application domain. If a thread passes through multiple application domains while executing a call, the event is raised in each application domain that has registered an event handler, before the CLR begins searching for a matching exception handler in that application domain. After the event has been handled, a search is made for a matching exception handler in that application domain. If none is found, the event is raised in the next application domain.
 
- You must handle all exceptions that occur in the event handler for the <xref:System.AppDomain.FirstChanceException> event. Otherwise, <xref:System.AppDomain.FirstChanceException> is raised recursively. This could result in a stack overflow and termination of the application. We recommend that you implement event handlers for this event as constrained execution regions (CERs), to keep infrastructure-related exceptions such as out-of-memory or stack overflow from affecting the virtual machine while the exception notification is being processed.
+ You must handle all exceptions that occur in the event handler for the <xref:System.AppDomain.FirstChanceException> event. Otherwise, <xref:System.AppDomain.FirstChanceException> is raised recursively. This could result in a stack overflow and termination of the application.
 
  This event is not raised for exceptions that indicate corruption of process state, such as access violations, unless the event handler is security-critical and has the <xref:System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute> attribute.
 
  The common language runtime suspends thread aborts while this notification event is being handled.
-
-
 
 ## Examples
  The following example creates a series of application domains named `AD0` through `AD3`, with a `Worker` object in each application domain. Each `Worker` object has a reference to the `Worker` object in the next application domain, except for the `Worker` in the last application domain. The <xref:System.AppDomain.FirstChanceException> event is handled in all application domains except `AD1`.
@@ -2835,7 +2759,7 @@ This method overload uses the <xref:System.AppDomainSetup> information from the 
 
 ## Remarks
 
-The friendly name of the default application domain is the file name of the process executable. For example, if the executable used to start the process is `"c:\MyAppDirectory\MyAssembly.exe"`, the friendly name of the default application domain is `"MyAssembly.exe"`. (In .NET Core and .NET 5+, the friendly name doesn't include the file extension.)
+The friendly name of the default application domain is the file name of the process executable. For example, if the executable used to start the process is `"c:\MyAppDirectory\MyAssembly.exe"`, the friendly name of the default application domain is `"MyAssembly"`. The friendly name doesn't include the file extension.
 
 ## Examples
  The following code example uses the <xref:System.AppDomain.FriendlyName> property to get the friendly name of the current application domain. For the default application domain, the friendly name is the name of the application's executable file. The code example also displays additional information about the application domain.
@@ -3193,17 +3117,7 @@ The friendly name of the default application domain is the file name of the proc
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- This method tests whether the specified compatibility switch has been set for the current application domain. Compatibility switches typically restore a behavior (such as the way strings are sorted) that was changed between versions of the .NET Framework.  They are set by calling the <xref:System.AppDomainSetup.SetCompatibilitySwitches*?displayProperty=nameWithType> method before creating an application domain.
-
- The following table provides examples of compatibility switches that can be set to restore the behavior of earlier versions of the .NET Framework.
-
-|Switch|Meaning|
-|------------|-------------|
-|"NetFx40_LegacySecurityPolicy"|Code access security (CAS) for the .NET Framework 3.5 is enabled in this application domain. See [&lt;NetFx40_LegacySecurityPolicy&gt; Element](/dotnet/framework/configure-apps/file-schema/runtime/netfx40-legacysecuritypolicy-element).|
-|"NetFx40_Legacy20SortingBehavior"|String sorting defaults for the .NET Framework 3.5 are enabled in this application domain. Its success requires sort00001000.dll to be installed. See [&lt;CompatSortNLSVersion&gt; Element](/dotnet/framework/configure-apps/file-schema/runtime/compatsortnlsversion-element).|
-|"NetFx40_Legacy40SortingBehavior"|String sorting defaults for the .NET Framework 4and Unicode 5.0 are enabled in this application domain. Its success requires sort00060101.dll to be installed.|
-|"NetFx40_TimeSpanLegacyFormatMode"|<xref:System.TimeSpan> formatting behavior for the .NET Framework 3.5 is enabled in this application domain.  See [&lt;TimeSpan_LegacyFormatMode&gt; Element](/dotnet/framework/configure-apps/file-schema/runtime/timespan-legacyformatmode-element) and the "Restoring Legacy TimeSpan Formatting" section of the <xref:System.TimeSpan> topic.|
-|"UseRandomizedStringHashAlgorithm"|The runtime calculates hash codes for strings on a per application domain basis instead of using a single hashing algorithm that produces a consistent hash code across application domains. See [&lt;UseRandomizedStringHashAlgorithm&gt; Element](/dotnet/framework/configure-apps/file-schema/runtime/userandomizedstringhashalgorithm-element).|
+ This method tests whether the specified compatibility switch has been set for the current application domain. Compatibility switches typically restore a behavior (such as the way strings are sorted) that was changed between versions of .NET. They are set by calling the <xref:System.AppDomainSetup.SetCompatibilitySwitches*?displayProperty=nameWithType> method before creating an application domain.
 
  ]]></format>
         </remarks>
@@ -3380,31 +3294,9 @@ The friendly name of the default application domain is the file name of the proc
       <Docs>
         <summary>Gets a value that indicates whether assemblies that are loaded into the current application domain execute with full trust.</summary>
         <value>
-          .NET Framework only: <see langword="true" /> if assemblies that are loaded into the current application domain execute with full trust; otherwise, <see langword="false" />.
-
-          .NET Core and .NET 5+: <see langword="true" /> in all cases.
+          <see langword="true" /> in all cases.
         </value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- **.NET Framework only:** This method always returns `true` for the default application domain of an application that runs on the desktop. It returns `false` for a sandboxed application domain that was created by using the <xref:System.AppDomain.CreateDomain(System.String,System.Security.Policy.Evidence,System.AppDomainSetup,System.Security.PermissionSet,System.Security.Policy.StrongName%5B%5D)?displayProperty=nameWithType> method overload, unless the permissions that are granted to the application domain are equivalent to full trust.
-
-
-
-## Examples
- The following example demonstrates the <xref:System.AppDomain.IsFullyTrusted> property and the <xref:System.Reflection.Assembly.IsFullyTrusted?displayProperty=nameWithType> property with fully trusted and partially trusted application domains. The fully trusted application domain is the default application domain for the application. The partially trusted application domain is created by using the <xref:System.AppDomain.CreateDomain(System.String,System.Security.Policy.Evidence,System.AppDomainSetup,System.Security.PermissionSet,System.Security.Policy.StrongName%5B%5D)?displayProperty=nameWithType> method overload.
-
- The example uses a `Worker` class that derives from <xref:System.MarshalByRefObject>, so it can be marshaled across application domain boundaries. The example creates a `Worker` object in the default application domain. It then calls the `TestIsFullyTrusted` method to display the property value for the application domain and for two assemblies that are loaded into the application domain: mscorlib, which is part of the .NET Framework, and the example assembly. The application domain is fully trusted, so both assemblies are fully trusted.
-
- The example creates another `Worker` object in a sandboxed application domain and again calls the `TestIsFullyTrusted` method. Mscorlib is always trusted, even in a partially trusted application domain, but the example assembly is partially trusted.
-
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/IsFullyTrusted/example.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/IsFullyTrusted/example.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/IsFullyTrusted/example.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="IsHomogenous">
@@ -3447,20 +3339,8 @@ The friendly name of the default application domain is the file name of the proc
       <Docs>
         <summary>Gets a value that indicates whether the current application domain has a set of permissions that is granted to all assemblies that are loaded into the application domain.</summary>
         <value>
-          <see langword="true" /> if the current application domain has a homogenous set of permissions; otherwise, <see langword="false" />.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This property returns `true` for sandboxed application domains that were created by using the <xref:System.AppDomain.CreateDomain(System.String,System.Security.Policy.Evidence,System.AppDomainSetup,System.Security.PermissionSet,System.Security.Policy.StrongName%5B%5D)?displayProperty=nameWithType> method overload. Sandboxed application domains have a homogenous set of permissions; that is, the same set of permissions is granted to all partially trusted assemblies that are loaded into the application domain. A sandboxed application domain optionally has a list of strong-named assemblies that are exempt from this permission set, and instead run with full trust.
-
- Fully trusted code can use the <xref:System.AppDomain.PermissionSet> property to determine the homogenous grant set of a sandboxed application domain.
-
- This property also returns `true` for the default application domain of a desktop application, because that application domain grants full trust to all assemblies.
-
- ]]></format>
-        </remarks>
-        <altmember cref="P:System.AppDomain.PermissionSet" />
+          <see langword="true" /> in all cases.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="Load">
@@ -3846,7 +3726,6 @@ The friendly name of the default application domain is the file name of the proc
         </remarks>
         <exception cref="T:System.ArgumentException">The current process attempted to assign the value <see langword="false" /> to this property.</exception>
         <related type="Article" href="/dotnet/standard/garbage-collection/app-domain-resource-monitoring">Application Domain Resource Monitoring</related>
-        <related type="Article" href="/dotnet/framework/configure-apps/file-schema/runtime/appdomainresourcemonitoring-element">&lt;appdomainResourceMonitoring&gt; Element</related>
       </Docs>
     </Member>
     <Member MemberName="MonitoringSurvivedMemorySize">
@@ -4104,11 +3983,8 @@ The friendly name of the default application domain is the file name of the proc
 
 [!INCLUDE[cas-deprecated](~/includes/cas-deprecated.md)]
 
- Sandboxed application domains that were created by using the <xref:System.AppDomain.CreateDomain(System.String,System.Security.Policy.Evidence,System.AppDomainSetup,System.Security.PermissionSet,System.Security.Policy.StrongName%5B%5D)?displayProperty=nameWithType> method overload have a homogenous set of permissions; that is, the same set of permissions is granted to all partially trusted assemblies that are loaded into the application domain. A sandboxed application domain optionally has a list of strong-named assemblies that are exempt from this permission set, and instead run with full trust.
-
  ]]></format>
         </remarks>
-        <altmember cref="P:System.AppDomain.IsHomogenous" />
       </Docs>
     </Member>
     <Member MemberName="ProcessExit">
@@ -4165,14 +4041,7 @@ The friendly name of the default application domain is the file name of the proc
 ## Remarks
  The <xref:System.EventHandler> for this event can perform termination activities, such as closing files, releasing storage and so on, before the process ends.
 
- Beginning with the .NET Framework version 2.0, this event is raised in each application domain that registers an event handler.
-
-> [!NOTE]
->  In .NET Framework, the total execution time of all <xref:System.AppDomain.ProcessExit> event handlers is limited, just as the total execution time of all finalizers is limited at process shutdown. The default is two seconds. An unmanaged host can change this execution time by calling the [ICLRPolicyManager::SetTimeout](/dotnet/framework/unmanaged-api/hosting/iclrpolicymanager-settimeout-method) method with the [OPR_ProcessExit](/dotnet/framework/unmanaged-api/hosting/eclroperation-enumeration) enumeration value. This time limit does not exist in .NET Core and .NET 5+.
-
- In the .NET Framework versions 1.0 and 1.1, this event is raised only in the default application domain, and only if an event handler is registered in the default application domain.
-
- To register an event handler for this event, you must have the required permissions, or a <xref:System.Security.SecurityException> is thrown.
+This event is raised in each application domain that registers an event handler.
 
  For more information about handling events, see [Handling and Raising Events](/dotnet/standard/events/).
 
@@ -5310,36 +5179,10 @@ The following example demonstrates the <xref:System.AppDomain.UnhandledException
       <Docs>
         <param name="domain">An application domain to unload.</param>
         <summary>Unloads the specified application domain.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
-
-There's a thread dedicated to unloading application domains. This improves reliability, especially when .NET Framework is hosted. When a thread calls <xref:System.AppDomain.Unload*>, the target domain is marked for unloading. The dedicated thread attempts to unload the domain, and all threads in the domain are aborted. If a thread does not abort, for example because it is executing unmanaged code, or because it is executing a `finally` block, then after a period of time, a <xref:System.CannotUnloadAppDomainException> is thrown in the thread that originally called <xref:System.AppDomain.Unload*>. If the thread that could not be aborted eventually ends, the target domain is not unloaded. Thus, `domain` is not guaranteed to unload, because it might not be possible to terminate executing threads.
-
-> [!NOTE]
->  In some cases, calling <xref:System.AppDomain.Unload*> causes an immediate <xref:System.CannotUnloadAppDomainException>, for example if it is called in a finalizer.
-
-The threads in `domain` are terminated using the <xref:System.Threading.Thread.Abort*> method, which throws a <xref:System.Threading.ThreadAbortException> in the thread. Although the thread should terminate promptly, it can continue executing for an unpredictable amount of time in a `finally` clause.
-
-## Examples
- The following code example shows how to unload an application domain.
-
- :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR/ADUnload/CPP/adunload.cpp" id="Snippet1":::
- :::code language="csharp" source="~/snippets/csharp/System/AppDomain/Unload/adunload.cs" id="Snippet1":::
- :::code language="fsharp" source="~/snippets/fsharp/System/AppDomain/Unload/adunload.fs" id="Snippet1":::
- :::code language="vb" source="~/snippets/visualbasic/System/AppDomain/Unload/adunload.vb" id="Snippet1":::
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="domain" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.CannotUnloadAppDomainException">
-.NET Core and .NET 5+ only: In all cases.
-
--or-
-
-<paramref name="domain" /> could not be unloaded.</exception>
+        <exception cref="T:System.CannotUnloadAppDomainException">In all cases.</exception>
         <exception cref="T:System.Exception">An error occurred during the unload process.</exception>
         <related type="Article" href="/dotnet/core/porting/net-framework-tech-unavailable#application-domains">Unavailable technologies on .NET Core/5+: Application domains</related>
       </Docs>

@@ -109,7 +109,6 @@ The following code snippet shows example values of the various properties on the
     <altmember cref="T:System.UriBuilder" />
     <related type="Article" href="/dotnet/framework/network-programming/changes-to-the-system-uri-namespace-in-version-2-0">Changes to the System.Uri namespace in Version 2.0</related>
     <related type="Article" href="/dotnet/framework/network-programming/international-resource-identifier-support-in-system-uri">International Resource Identifier Support in System.UriSystem.Uri</related>
-    <related type="Article" href="/dotnet/framework/network-programming/">Network Programming in the .NET Framework</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
@@ -1531,47 +1530,6 @@ For `uriString`, an IPv6 address in string form must be enclosed within brackets
 
 If you used an escaped string to construct this instance (for example, `"http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm"`), then DnsSafeHost returns an escaped string. Unescape any escaped string returned from `DnsSafeHost` before using that string for DNS resolution (see the Example). If you used an invalid unescaped string to construct this instance (for example, "http://[fe80::200:39ff:fe36:1a2d%4]/temp/example.htm"), then DnsSafeHost returns an unescaped string.
 
- The <xref:System.Uri.DnsSafeHost> property is dependent on configuration settings in .NET Framework apps, as discussed later in this topic. The <xref:System.Uri.IdnHost> property is provided as the preferred alternative to using <xref:System.Uri.DnsSafeHost*>, because <xref:System.Uri.IdnHost*> is guaranteed to always be DNS safe.
-
- The <xref:System.Uri.DnsSafeHost> property was extended in .NET Framework v3.5, 3.0 SP1, and 2.0 SP1 to provide International Resource Identifier (IRI) support based on RFC 3987. However, to ensure application compatibility with prior versions, you must specifically enable it in .NET Framework apps. To enable support for IRI, the following two changes are required:
-
-1. Add the following line to the *machine.config* file under the .NET Framework 2.0 directory:
-
-   `\<section name="uri" type="System.Configuration.UriSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />`
-
-2. Specify whether you want Internationalized Domain Name (IDN) parsing applied to the domain name and whether IRI parsing rules should be applied. This can be done in the *machine.config* or in the *app.config* file. For example, add the following:
-
-    ```xml
-    <configuration>
-      <uri>
-        <idn enabled="All" />
-        <iriParsing enabled="true" />
-      </uri>
-    </configuration>
-    ```
-
- Enabling IDN converts all Unicode labels in a domain name to their Punycode equivalents. Punycode names contain only ASCII characters and always start with the xn-- prefix. The reason for this is to support existing DNS servers on the Internet, since most DNS servers only support ASCII characters (see RFC 3940).
-
- Enabling IDN only affects the value of the <xref:System.Uri.DnsSafeHost> property.
-
- There are three possible values for IDN depending on the DNS servers that are used:
-
-- idn enabled = All
-
-  This value will convert any Unicode domain names to their Punycode equivalents (IDN names).
-
-- idn enabled = AllExceptIntranet
-
-  This value will convert all external Unicode domain names to use the Punycode equivalents (IDN names). In this case to handle international names on the local Intranet, the DNS servers that are used for the Intranet should support Unicode names.
-
-- idn enabled = None
-
-  This value will not convert any Unicode domain names to use Punycode. This is the default value, which is consistent with the .NET Framework 2.0 behavior.
-
- Enabling IRI parsing (iriParsing enabled = `true`) normalizes and checks characters according to the IRI rules in RFC 3987. The default value is `false` and normalizes and checks characters according to RFC 2396 and RFC 2732 (for IPv6 literals).
-
- For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
-
 ## Examples
  The following example creates a <xref:System.Uri> instance from a string. It illustrates the difference between the value returned from <xref:System.Uri.Host*>, which returns the host name or address specified in the URI, and the value returned from <xref:System.Uri.DnsSafeHost*>, which returns an address that is safe to use in DNS resolution.
 
@@ -1648,9 +1606,6 @@ If you used an escaped string to construct this instance (for example, `"http://
  If one <xref:System.Uri> instance is formed with a Unicode host name and `comparand` parameter contains a <xref:System.Uri> instance or identifier that is formed with a host name that has the equivalent Punycode host name, then <xref:System.Uri.Equals*> returns `true` only if International Resource Identifier (IRI) and Internationalized Domain Name (IDN) support are enabled. Punycode names contain only ASCII characters and always start with the xn-- prefix.
 
  For more information on IRI support, see the Remarks section for the <xref:System.Uri> class.
-
-> [!NOTE]
->  In the .NET Framework versions 1.0 and 1.1, the <xref:System.Uri.Query*> is also ignored.
 
 > [!NOTE]
 >  The <xref:System.Uri.Equals*> method can be overridden in a derived class; use caution as a malicious entity could modify the method. You should not use this method to perform security checks unless you know that this instance came from a trusted source.
@@ -1859,7 +1814,6 @@ If you used an escaped string to construct this instance (for example, `"http://
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="stringToEscape" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.UriFormatException">.NET Framework only: The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exception>
       </Docs>
     </Member>
     <Member MemberName="EscapeString">
@@ -2016,7 +1970,6 @@ If you used an escaped string to construct this instance (for example, `"http://
         </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="stringToEscape" /> is <see langword="null" />.</exception>
-        <exception cref="T:System.UriFormatException">.NET Framework only: The length of <paramref name="stringToEscape" /> exceeds 32766 characters.</exception>
       </Docs>
     </Member>
     <Member MemberName="Fragment">
@@ -2676,7 +2629,7 @@ The following examples show a URI and the results of calling <xref:System.Uri.Ge
 ## Remarks
  This property is provided for the use of lower-level networking protocols that require the domain name in Punycode form. If your code does not require that specific format, use <xref:System.Uri.Host*> for the hostname.
 
- The deprecated <xref:System.Uri.DnsSafeHost> property is dependent on *app.config* settings, which cannot be changed by Windows Store applications. IdnHost is provided as the preferred alternative to using <xref:System.Uri.DnsSafeHost*>, because <xref:System.Uri.IdnHost*> is guaranteed to always be DNS safe, no matter what the current *app.config* settings might be.
+IdnHost is provided as the preferred alternative to using the deprecated <xref:System.Uri.DnsSafeHost> property, because <xref:System.Uri.IdnHost*> is guaranteed to always be DNS safe.
 
  If you used an escaped string to construct this instance (for example, `"http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm"`), then IdnHost returns an escaped string. You should unescape any escaped string returned from IdnHost before using that string for DNS resolution. Be aware that if you used an invalid unescaped string to construct this instance (for example, "http://[fe80::200:39ff:fe36:1a2d%4]/temp/example.htm"), then IdnHost returns an unescaped string.
 
@@ -5198,9 +5151,6 @@ The following examples show a URI and the results of calling <xref:System.Uri.Ge
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-## Remarks
- In .NET Framework version 1.1, a "`file:///path`" URI was translated to "`file:/path`". This has been corrected for version 2.0.
-
 ## Examples
  The following example creates a <xref:System.Uri> instance and determines whether the scheme is <xref:System.Uri.UriSchemeFile>.
 
@@ -5672,9 +5622,6 @@ The following examples show a URI and the results of calling <xref:System.Uri.Ge
         <summary>Specifies that the URI is an Internet news group and is accessed through the Network News Transport Protocol (NNTP). This field is read-only.</summary>
         <remarks>
           <format type="text/markdown"><![CDATA[
-
-## Remarks
- The NNTP <xref:System.Uri> parsing errors in .NET Framework version 1.1 have been corrected.
 
 ## Examples
  The following example creates a <xref:System.Uri> instance and determines whether the scheme is <xref:System.Uri.UriSchemeNntp>.

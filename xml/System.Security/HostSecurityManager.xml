@@ -32,14 +32,13 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>Allows the control and customization of security behavior for application domains.</summary>
+    <summary>Allows the control and customization of security behavior for hosts.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- When you create a new <xref:System.AppDomain>, the common language runtime queries the <xref:System.AppDomainManager> for the presence of a <xref:System.Security.HostSecurityManager>, which participates in making security decisions for the <xref:System.AppDomain>.  Host providers should implement a host security manager that inherits from the <xref:System.Security.HostSecurityManager> class.
 
-
+Host providers should implement a host security manager that inherits from the <xref:System.Security.HostSecurityManager> class.
 
 ## Examples
  The following example shows a very simple implementation of a <xref:System.Security.HostSecurityManager>.
@@ -134,9 +133,7 @@
 ## Remarks
  This method can be overridden by a derived class. The base implementation calls the application security manager to determine if the application should be executed.
 
- The base implementation does not use the activator evidence. However, an overridden implementation could use the activator evidence to determine the security evidence for the application domain attempting to activate the application.
-
-
+ The base implementation does not use the activator evidence. However, an overridden implementation could use the activator evidence to determine the security evidence.
 
 ## Examples
  The following example shows how to override the <xref:System.Security.HostSecurityManager.DetermineApplicationTrust*> method for a custom host security manager. This example is part of a larger example provided for the <xref:System.Security.HostSecurityManager> class.
@@ -197,9 +194,7 @@
  This property is called at <xref:System.AppDomain> creation time. It allows a host to supply a policy for the current <xref:System.AppDomain>.  A policy level consists of the following:
 
 - A set of code groups organized into a single rooted tree.
-
 - A set of named permission sets that are referenced by the code groups to specify permissions to be granted to code belonging to the code group.
-
 - A list of fully trusted assemblies.
 
 > [!IMPORTANT]
@@ -207,7 +202,7 @@
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.NotSupportedException">This method uses code access security (CAS) policy, which is obsolete in the .NET Framework 4. To enable CAS policy for compatibility with earlier versions of the .NET Framework, use the <see href="/dotnet/framework/configure-apps/file-schema/runtime/netfx40-legacysecuritypolicy-element">&lt;legacyCasPolicy&gt; element</see>.</exception>
+        <exception cref="T:System.NotSupportedException">This method uses code access security (CAS) policy, which is obsolete.</exception>
       </Docs>
     </Member>
     <Member MemberName="Flags">
@@ -306,13 +301,11 @@
 
  To get a callback to this method, hosts must specify the <xref:System.Security.HostSecurityManagerOptions.HostAppDomainEvidence> flag in the <xref:System.Security.HostSecurityManager.Flags> property.
 
- This method of generating evidence allows hosts to delay evidence generation for an <xref:System.AppDomain> until the evidence is needed. In the .NET Framework version 3.5 and earlier versions, it was necessary to provide <xref:System.AppDomain> evidence at load time by overriding the <xref:System.Security.HostSecurityManager.ProvideAppDomainEvidence*> method. We recommend that you use <xref:System.Security.HostSecurityManager.GenerateAppDomainEvidence*> to provide evidence instead of overriding <xref:System.Security.HostSecurityManager.ProvideAppDomainEvidence*>.
+ This method of generating evidence allows hosts to delay evidence generation for an <xref:System.AppDomain> until the evidence is needed. We recommend that you use <xref:System.Security.HostSecurityManager.GenerateAppDomainEvidence*> to provide evidence instead of overriding <xref:System.Security.HostSecurityManager.ProvideAppDomainEvidence*>.
 
  The <xref:System.Security.HostSecurityManager.GenerateAppDomainEvidence*> method is called back into only for types of evidence that the host has specified in the override of the <xref:System.Security.HostSecurityManager.GetHostSuppliedAppDomainEvidenceTypes*> method.
 
  A return value of `null` indicates that the host cannot generate evidence of this specific type.
-
-
 
 ## Examples
  The following example shows how to override the <xref:System.Security.HostSecurityManager.ProvideAppDomainEvidence*> method for a custom host security manager. This example is part of a larger example provided for the <xref:System.Security.HostSecurityManager> class.
@@ -370,7 +363,7 @@
 
  To get a callback to this method, hosts must specify the <xref:System.Security.HostSecurityManagerOptions.HostAssemblyEvidence> flag in the <xref:System.Security.HostSecurityManager.Flags> property.
 
- This method of generating evidence allows hosts to delay evidence generation for an <xref:System.AppDomain> until the evidence is needed. In the .NET Framework 3.5 and earlier versions, it was necessary to provide <xref:System.AppDomain> evidence at load time by overriding the <xref:System.Security.HostSecurityManager.ProvideAppDomainEvidence*> method. We recommend that you use <xref:System.Security.HostSecurityManager.GenerateAssemblyEvidence*> to provide evidence instead of overriding <xref:System.Security.HostSecurityManager.ProvideAssemblyEvidence*>.
+ This method of generating evidence allows hosts to delay evidence generation for an <xref:System.AppDomain> until the evidence is needed. We recommend that you use <xref:System.Security.HostSecurityManager.GenerateAssemblyEvidence*> to provide evidence instead of overriding <xref:System.Security.HostSecurityManager.ProvideAssemblyEvidence*>.
 
  The <xref:System.Security.HostSecurityManager.GenerateAssemblyEvidence*> method is called back into only for types of evidence that the host has specified in the override of the <xref:System.Security.HostSecurityManager.GetHostSuppliedAssemblyEvidenceTypes*> method.
 

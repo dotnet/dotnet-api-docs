@@ -65,9 +65,6 @@
 
  We recommend that you use the <see cref="T:System.Xml.XmlReader" /> class instead.</summary>
     <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmltextreader">Supplemental API remarks for XmlTextReader</see>.</remarks>
-    <block subset="none" type="overrides">
-      <para>This class has an inheritance demand. Full trust is required to inherit from <see langword="XmlTextReader" />.</para>
-    </block>
     <related type="Article" href="/dotnet/standard/data/xml/">XML Documents and Data</related>
   </Docs>
   <Members>
@@ -304,9 +301,6 @@
 
  If the file is located on a resource that requires access credentials, use the <xref:System.Xml.XmlTextReader.XmlResolver> property to specify the necessary credentials.
 
-> [!NOTE]
-> In version 1.1 of the .NET Framework, partially trusted code cannot set the `XmlResolver` property. The workaround is to create an <xref:System.Xml.XmlUrlResolver> with the necessary credentials, pass the URI to the <xref:System.Xml.XmlUrlResolver.GetEntity*?displayProperty=nameWithType> method, and then construct the `XmlTextReader` using the resulting <xref:System.IO.Stream> object. The workaround is described in the following C# code.
-
 ```csharp
 // Create a resolver with the necessary credentials.
 XmlUrlResolver resolver = new XmlUrlResolver();
@@ -318,8 +312,6 @@ Stream s=(Stream)resolver.GetEntity(myUri, null, typeof(Stream));
 // Construct a reader using the Stream object.
 XmlTextReader reader = new XmlTextReader(s);
 ```
-
-
 
 ## Examples
  The following example reads an XML file and displays each of the nodes.
@@ -3967,7 +3959,7 @@ abc<tag/>
 
 - This method returns the actual character content. There is no attempt to resolve entities, CDATA, or any other markup encountered. `ReadChars` returns everything between the start tag and the end tag, including markup.
 
--   `ReadChars` ignores XML markup that is not well-formed. For example, when reading the following XML string `<A>1<A>2</A>`, `ReadChars` returns `1<A>2</A>`. (It returns markup from the matching element pair and ignores others.)
+- `ReadChars` ignores XML markup that is not well-formed. For example, when reading the following XML string `<A>1<A>2</A>`, `ReadChars` returns `1<A>2</A>`. (It returns markup from the matching element pair and ignores others.)
 
 - This method does not do any normalization.
 
@@ -4084,11 +4076,11 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
 
  This method has the following behavior:
 
--   <xref:System.Xml.XmlTextReader.ReadContentAsBase64*> returns the value 0 when it has reached the end of the byte stream it was operating on. The reader is positioned on the first non-content node.
+- <xref:System.Xml.XmlTextReader.ReadContentAsBase64*> returns the value 0 when it has reached the end of the byte stream it was operating on. The reader is positioned on the first non-content node.
 
 - If you ask for fewer, or the exact number, of bytes than are left in the stream the reader remains in its current position.
 
--   <xref:System.Xml.XmlTextReader.ReadContentAsBase64*> is not supported on the following XML node types: `Element`, `XmlDeclaration`, `None`, `Document`, `DocumentType`, `Notation`, `Entity`, `DocumentFragment`.
+- <xref:System.Xml.XmlTextReader.ReadContentAsBase64*> is not supported on the following XML node types: `Element`, `XmlDeclaration`, `None`, `Document`, `DocumentType`, `Notation`, `Entity`, `DocumentFragment`.
 
  ]]></format>
         </remarks>
@@ -4162,11 +4154,11 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
 
  This method has the following behavior:
 
--   <xref:System.Xml.XmlTextReader.ReadContentAsBinHex*> returns the value 0 when it has reached the end of the byte stream it was operating on. The reader is positioned on the first non-content node.
+- <xref:System.Xml.XmlTextReader.ReadContentAsBinHex*> returns the value 0 when it has reached the end of the byte stream it was operating on. The reader is positioned on the first non-content node.
 
 - If you ask for fewer, or the exact number, of bytes than are left in the stream the reader remains in its current position.
 
--   <xref:System.Xml.XmlTextReader.ReadContentAsBinHex*> is not supported on the following XML node types: `Element`, `XmlDeclaration`, `None`, `Document`, `DocumentType`, `Notation`, `Entity`, `DocumentFragment`.
+- <xref:System.Xml.XmlTextReader.ReadContentAsBinHex*> is not supported on the following XML node types: `Element`, `XmlDeclaration`, `None`, `Document`, `DocumentType`, `Notation`, `Entity`, `DocumentFragment`.
 
  ]]></format>
         </remarks>
@@ -4515,19 +4507,14 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
  This method enables you to parse multiple XML documents in a single stream. When you reach the end of an XML document, you can call `ResetState` to reset the state of the reader in preparation for the next XML document.
 
 > [!IMPORTANT]
-> The documents in the stream must share the same encoding. If this is not the case, when `ResetState` is called an <xref:System.Xml.XmlException> is thrown. (This is a change in behavior from .NET Framework version 1.1 and earlier).
+> The documents in the stream must share the same encoding. If this is not the case, when `ResetState` is called an <xref:System.Xml.XmlException> is thrown.
 
  The following properties are not affected by `ResetState`.
 
--   <xref:System.Xml.XmlTextReader.Normalization>
-
--   <xref:System.Xml.XmlTextReader.Namespaces>
-
--   <xref:System.Xml.XmlTextReader.XmlResolver>
-
--   <xref:System.Xml.XmlTextReader.WhitespaceHandling>
-
-
+- <xref:System.Xml.XmlTextReader.Normalization>
+- <xref:System.Xml.XmlTextReader.Namespaces>
+- <xref:System.Xml.XmlTextReader.XmlResolver>
+- <xref:System.Xml.XmlTextReader.WhitespaceHandling>
 
 ## Examples
  The following example parses two XML documents in a single stream.
@@ -5095,9 +5082,7 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
       </ReturnValue>
       <Docs>
         <summary>Sets the <see cref="T:System.Xml.XmlResolver" /> used for resolving DTD references.</summary>
-        <value>The <see langword="XmlResolver" /> to use. If set to <see langword="null" />, external resources are not resolved.
-
- In version 1.1 of the .NET Framework, the caller must be fully trusted in order to specify an <see langword="XmlResolver" />.</value>
+        <value>The <see langword="XmlResolver" /> to use. If set to <see langword="null" />, external resources are not resolved.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -5109,14 +5094,6 @@ if (XmlNodeType.Element == reader.NodeType && "thing" == reader.Name)
  The reader uses `XmlResolver` to resolve the location of the file loaded into the reader and also to resolve DTD references. For example, if your XML included the DOCTYPE declaration, `<!DOCTYPE book SYSTEM book.dtd>` the reader resolves this external file and ensures that the DTD is well-formed. The reader does not use the DTD for validation.
 
  This property can be changed at any time and takes effect on the next read operation. If this property is set to `null`, any external DTD references encountered by the reader are not resolved.
-
- In version 1.1 of the .NET Framework, if this property is not set, the trust level of the application determines the default behavior.
-
- `Fully trusted code:` The reader uses a default <xref:System.Xml.XmlUrlResolver> with no user credentials. If authentication is required to access a network resource, use the `XmlResolver` property to specify an `XmlResolver` with the necessary credentials.
-
- `Semi-trusted code:` The `XmlResolver` property is set to `null`. External resources are not resolved.
-
-
 
 ## Examples
  The following example uses the `XmlResolver` property to specify the credentials necessary to access the networked file.

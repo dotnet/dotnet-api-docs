@@ -59,11 +59,12 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Beginning with .NET Framework 4.5, Windows Identity Foundation (WIF) and claims-based identity are fully integrated into .NET Framework. This means that many classes that represent a principal in the .NET Framework now derive from <xref:System.Security.Claims.ClaimsPrincipal> rather than simply implementing the <xref:System.Security.Principal.IPrincipal> interface. In addition to implementing the <xref:System.Security.Principal.IPrincipal> interface, <xref:System.Security.Claims.ClaimsPrincipal> exposes properties and methods that are useful for working with claims.
+
+Many classes that represent a principal in .NET derive from <xref:System.Security.Claims.ClaimsPrincipal> rather than simply implementing the <xref:System.Security.Principal.IPrincipal> interface. In addition to implementing the <xref:System.Security.Principal.IPrincipal> interface, <xref:System.Security.Claims.ClaimsPrincipal> exposes properties and methods that are useful for working with claims.
 
  <xref:System.Security.Claims.ClaimsPrincipal> exposes a collection of identities, each of which is a <xref:System.Security.Claims.ClaimsIdentity>. In the common case, this collection, which is accessed through the <xref:System.Security.Claims.ClaimsPrincipal.Identities> property, will only have a single element.
 
- The introduction of <xref:System.Security.Claims.ClaimsPrincipal> in .NET 4.5 as the principal from which most principal classes derive does not force you to change anything in the way in which you deal with identity. It does, however open up more possibilities and offer more chances to exercise finer access control. For example:
+<xref:System.Security.Claims.ClaimsPrincipal> offers chances to exercise finer access control. For example:
 
 - The application code itself can work directly with the claims contained in the current principal to drive extra authentication, authorization, and personalization tasks.
 
@@ -71,12 +72,7 @@
 
 - You can configure a web-based application with a custom claims authorization manager, an instance of a class that derives from the <xref:System.Security.Claims.ClaimsAuthorizationManager> class. When so configured, the request processing pipeline packages the incoming <xref:System.Security.Claims.ClaimsPrincipal> in an <xref:System.Security.Claims.AuthorizationContext> and invokes the <xref:System.Security.Claims.ClaimsAuthorizationManager.CheckAccess*> method on your claims authorization manager. Your claims authorization manager can then enforce authorization based on the incoming claims.
 
-- Inline claims-based code access checks can be performed by configuring your application with a custom claims authorization manager and using either the <xref:System.IdentityModel.Services.ClaimsPrincipalPermission> class to perform imperative access checks or the <xref:System.IdentityModel.Services.ClaimsPrincipalPermissionAttribute> to perform declarative access checks. Claims-based code access checks are performed inline, outside of the processing pipeline, and so are available to all applications as long as a claims authorization manager is configured.
-
  You can obtain a <xref:System.Security.Claims.ClaimsPrincipal> instance for the principal associated with a request, or the principal under which a thread is executing, in a [relying party (RP) application](/archive/msdn-magazine/2010/august/federated-identity-passive-authentication-for-asp-net-with-wif) by casting the <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> property to <xref:System.Security.Claims.ClaimsPrincipal>. The claims associated with an <xref:System.Security.Claims.ClaimsPrincipal> object are available through its <xref:System.Security.Claims.ClaimsPrincipal.Claims> property. The <xref:System.Security.Claims.ClaimsPrincipal.Claims> property returns all of the claims contained by the identities associated with the principal. In the uncommon case in which the <xref:System.Security.Claims.ClaimsPrincipal> contains multiple <xref:System.Security.Claims.ClaimsIdentity> instances, you can use the <xref:System.Security.Claims.ClaimsPrincipal.Identities> property or you can access the primary identity by using the <xref:System.Security.Claims.ClaimsPrincipal.Identity> property. <xref:System.Security.Claims.ClaimsPrincipal> provides several methods through which these claims may be searched and fully supports Language Integrated Query (LINQ). Identities can be added to the principal by using the <xref:System.Security.Claims.ClaimsPrincipal.AddIdentities*> or <xref:System.Security.Claims.ClaimsPrincipal.AddIdentity*> methods.
-
-> [!NOTE]
->  To add identities to the <xref:System.Security.Claims.ClaimsPrincipal>, a caller must have full trust.
 
  By default, WIF prioritizes <xref:System.Security.Principal.WindowsIdentity> objects when selecting the primary identity to return through the <xref:System.Security.Claims.ClaimsPrincipal.Identity> property. You can modify this behavior by supplying a delegate through the <xref:System.Security.Claims.ClaimsPrincipal.PrimaryIdentitySelector> property to perform the selection. The <xref:System.Security.Claims.ClaimsPrincipal.ClaimsPrincipalSelector> property provides similar functionality for the <xref:System.Security.Claims.ClaimsPrincipal.Current> property.
 
@@ -1365,7 +1361,7 @@ Each <xref:System.Security.Claims.ClaimsIdentity> is called.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- By default, the framework prioritizes identities of type <xref:System.Security.Principal.WindowsIdentity> when returning the identity. The first <xref:System.Security.Principal.WindowsIdentity> found in the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is returned. If there is no <xref:System.Security.Principal.WindowsIdentity> in the collection, the first identity assignable from <xref:System.Security.Claims.ClaimsIdentity> is returned. If there is no <xref:System.Security.Claims.ClaimsIdentity>, `null` is returned. If the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is empty, an <xref:System.ArgumentNullException> is thrown.
+ By default, .NET prioritizes identities of type <xref:System.Security.Principal.WindowsIdentity> when returning the identity. The first <xref:System.Security.Principal.WindowsIdentity> found in the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is returned. If there is no <xref:System.Security.Principal.WindowsIdentity> in the collection, the first identity assignable from <xref:System.Security.Claims.ClaimsIdentity> is returned. If there is no <xref:System.Security.Claims.ClaimsIdentity>, `null` is returned. If the <xref:System.Security.Claims.ClaimsPrincipal.Identities*> collection is empty, an <xref:System.ArgumentNullException> is thrown.
 
  You can change the default behavior by setting the <xref:System.Security.Claims.ClaimsPrincipal.PrimaryIdentitySelector> property to specify a delegate to be called to determine the identity.
 

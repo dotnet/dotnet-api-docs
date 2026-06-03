@@ -69,50 +69,42 @@
 
 - An earlier version of a .NET utility, such as ILDasm.exe or installutil.exe, is used with an assembly that was developed with a later version of .NET.
 
-     To address this exception, use the version of the tool that corresponds to the version of .NET that was used to develop the assembly. This may require modifying the `Path` environment variable or providing a fully qualified path to the correct executable.
+  To address this exception, use the version of the tool that corresponds to the version of .NET that was used to develop the assembly. This may require modifying the `Path` environment variable or providing a fully qualified path to the correct executable.
 
 - You are trying to load an unmanaged dynamic link library or executable (such as a Windows system DLL) as if it were a .NET assembly. The following example illustrates this by using the <xref:System.Reflection.Assembly.LoadFile*?displayProperty=nameWithType> method to load Kernel32.dll.
 
-     :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/condition1.cs" id="Snippet1":::
-     :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/condition1.fs" id="Snippet1":::
-     :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/condition1.vb" id="Snippet1":::
+  :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/condition1.cs" id="Snippet1":::
+  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/condition1.fs" id="Snippet1":::
+  :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/condition1.vb" id="Snippet1":::
 
-     To address this exception, access the methods defined in the DLL by using the features provided by your development language, such as the `Declare` statement in Visual Basic or the <xref:System.Runtime.InteropServices.DllImportAttribute> attribute with the `extern` keyword in C# and F#.
+  To address this exception, access the methods defined in the DLL by using the features provided by your development language, such as the `Declare` statement in Visual Basic or the <xref:System.Runtime.InteropServices.DllImportAttribute> attribute with the `extern` keyword in C# and F#.
 
 - You are trying to load a reference assembly in a context other than the reflection-only context. You can address this issue in either of two ways:
 
-   - You can load the implementation assembly rather than the reference assembly.
-   - You can load the reference assembly in the reflection-only context by calling the <xref:System.Reflection.Assembly.ReflectionOnlyLoad*?displayProperty=nameWithType> method.
+  - You can load the implementation assembly rather than the reference assembly.
+  - You can load the reference assembly in the reflection-only context by calling the <xref:System.Reflection.Assembly.ReflectionOnlyLoad*?displayProperty=nameWithType> method.
 
 - A DLL or executable is loaded as a 64-bit assembly, but it contains 32-bit features or resources. For example, it relies on COM interop or calls methods in a 32-bit dynamic link library.
 
-     To address this exception, set the project's **Platform target** property to x86 (instead of x64 or AnyCPU) and recompile.
+  To address this exception, set the project's **Platform target** property to x86 (instead of x64 or AnyCPU) and recompile.
 
-- Your application's components were created using different versions of .NET. Typically, this exception occurs when an application that was developed using .NET Framework 2.0 SP1 or .NET Framework 3.5 tries to load an assembly that was developed using .NET Framework 4 or later. The <xref:System.BadImageFormatException> may be reported as a compile-time error, or the exception may be thrown at run time. The following example defines a `StringLib` class that has a single member, `ToProperCase`, and that resides in an assembly named StringLib.dll.
+- Your application's components were created using different versions of .NET. The <xref:System.BadImageFormatException> might be reported as a compile-time error, or it might be thrown at runtime. The following example defines a `StringLib` class that has a single member, `ToProperCase`, and that resides in an assembly named StringLib.dll.
 
-     :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/stringlib.cs" id="Snippet2":::
-     :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/stringlib.fs" id="Snippet2":::
-     :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/stringlib.vb" id="Snippet2":::
-
-     The following example uses reflection to load an assembly named StringLib.dll. If the source code is compiled with a .NET Framework 1.1 compiler, a <xref:System.BadImageFormatException> is thrown by the <xref:System.Reflection.Assembly.LoadFrom*?displayProperty=nameWithType> method.
-
-     :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/loadstringlib.cs" id="Snippet3":::
-     :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/loadstringlib.fs" id="Snippet3":::
-     :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/loadstringlib.vb" id="Snippet3":::
-
-     To address this exception, make sure that the assembly whose code is executing and that throws the exception, and the assembly to be loaded, both target compatible versions of .NET.
+  :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/stringlib.cs" id="Snippet2":::
+  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/stringlib.fs" id="Snippet2":::
+  :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/stringlib.vb" id="Snippet2":::
 
 - The components of your application target different platforms. For example, you are trying to load ARM assemblies in an x86 application. You can use the following command-line utility to determine the target platforms of individual .NET assemblies. The list of files should be provided as a space-delimited list at the command line.
 
-     :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/targetplatform1.cs" id="Snippet4":::
-     :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/targetplatform1.fs" id="Snippet4":::
-     :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/targetplatform1.vb" id="Snippet4":::
+  :::code language="csharp" source="~/snippets/csharp/System/BadImageFormatException/Overview/targetplatform1.cs" id="Snippet4":::
+  :::code language="fsharp" source="~/snippets/fsharp/VS_Snippets_CLR_System/system.badimageformatexception.class/fs/targetplatform1.fs" id="Snippet4":::
+  :::code language="vb" source="~/snippets/visualbasic/System/BadImageFormatException/Overview/targetplatform1.vb" id="Snippet4":::
 
 - Reflecting on C++ executable files might throw this exception. This is most likely caused by the C++ compiler stripping the relocation addresses or the .Reloc section from the executable file. To preserve the .relocation address in a C++ executable file, specify /fixed:no when linking.
 
- <xref:System.BadImageFormatException> uses the HRESULT `COR_E_BADIMAGEFORMAT`, which has the value 0x8007000B.
+<xref:System.BadImageFormatException> uses the HRESULT `COR_E_BADIMAGEFORMAT`, which has the value 0x8007000B.
 
- For a list of initial property values for an instance of <xref:System.BadImageFormatException>, see the <xref:System.BadImageFormatException> constructors.
+For a list of initial property values for an instance of <xref:System.BadImageFormatException>, see the <xref:System.BadImageFormatException> constructors.
 
  ]]></format>
     </remarks>

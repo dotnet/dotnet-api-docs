@@ -44,48 +44,38 @@
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>Provides access to an encoding provider for code pages that otherwise are available only in the desktop .NET Framework.</summary>
+    <summary>Provides access to an encoding provider for code pages that otherwise are available only in .NET Framework.</summary>
     <remarks>
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
- The .NET Framework for the Windows desktop supports a large set of Unicode and code page encodings. .NET Core, on the other hand, supports only the following encodings:
+Modern .NET supports only the following encodings:
 
 - ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
-
 - ISO-8859-1 (code page 28591).
-
 - UTF-7 (code page 65000), which is returned by the <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType> property.
-
 - UTF-8 (code page 65001), which is returned by the <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> property.
-
 - UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode?displayProperty=nameWithType> property.
-
-- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
-
+- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor(System.Boolean,System.Boolean,System.Boolean)?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor(System.Boolean,System.Boolean)?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
 - UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
-
 - UTF-32BE (code page 12001), which is instantiated by calling an <xref:System.Text.UTF32Encoding> constructor that has a `bigEndian` parameter and providing a value of `true` in the method call.
 
- Other than code page 20127, code page encodings are not supported.
+Other than code page 20127, code-page encodings are not supported. The <xref:System.Text.CodePagesEncodingProvider> class extends <xref:System.Text.EncodingProvider> to make these code pages available. To use these additional code pages, follow these steps:
 
- The <xref:System.Text.CodePagesEncodingProvider> class extends <xref:System.Text.EncodingProvider> to make these code pages available to .NET Core. To use these additional code pages, you do the following:
+1. Retrieve a <xref:System.Text.CodePagesEncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
+1. Pass the <xref:System.Text.CodePagesEncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method.
 
-- Retrieve a <xref:System.Text.CodePagesEncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
-
-- Pass the <xref:System.Text.CodePagesEncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method.
-
- After an <xref:System.Text.EncodingProvider> object is registered, the encodings that it supports are available by calling the overloads of <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType>; you should not call the <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> overloads.
+After an <xref:System.Text.EncodingProvider> object is registered, the encodings that it supports are available by calling the overloads of <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType>; you should not call the <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> overloads.
 
 ### Impact on default encoding behavior
 
-Registering <xref:System.Text.CodePagesEncodingProvider> also affects the behavior of <xref:System.Text.Encoding.GetEncoding(System.Int32)> when called with a `codepage` argument of `0` in .NET (Core):
+Registering <xref:System.Text.CodePagesEncodingProvider> also affects the behavior of <xref:System.Text.Encoding.GetEncoding(System.Int32)> when called with a `codepage` argument of `0`:
 
-- On Windows, `GetEncoding(0)` returns the encoding that matches the system's active code page, which is the same behavior as in .NET Framework.
+- On Windows, `GetEncoding(0)` returns the encoding that matches the system's active code page.
 - On non-Windows platforms, `GetEncoding(0)` returns UTF-8, maintaining cross-platform consistency.
 
-When no encoding provider is registered, `GetEncoding(0)` returns UTF-8 on all platforms in .NET Core and later versions.
+When no encoding provider is registered, `GetEncoding(0)` returns UTF-8 on all platforms.
 
  ]]></format>
     </remarks>
@@ -104,33 +94,22 @@ When no encoding provider is registered, `GetEncoding(0)` returns UTF-8 on all p
 
 ## Remarks
 
-The .NET Framework supports a large number of character encodings and code pages. You can get a complete list of encodings by calling the <xref:System.Text.Encoding.GetEncodings*?displayProperty=nameWithType> method, which is available in the .NET Framework. On the other hand, .NET Core only supports the following encodings by default:
+.NET supports only the following encodings by default:
 
 - ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
-
 - ISO-8859-1 (code page 28591).
-
 - UTF-7 (code page 65000), which is returned by the <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType> property.
-
 - UTF-8 (code page 65001), which is returned by the <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> property.
-
 - UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode?displayProperty=nameWithType> property.
-
 - UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
-
 - UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
-
 - UTF-32BE (code page 12001), which is instantiated by calling an <xref:System.Text.UTF32Encoding> constructor that has a `bigEndian` parameter and providing a value of `true` in the method call.
 
- To retrieve an encoding that is present in .NET Framework but not in .NET Core, you do the following:
+To retrieve an encoding that is present in .NET Framework but not in .NET, you do the following:
 
-- Add a reference to the *System.Text.Encoding.CodePages.dll* assembly to your project.
-
-- Get the <xref:System.Text.EncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
-
-- Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
-
-- Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> method to determine whether it can supply the requested encoding.
+1. Get the <xref:System.Text.EncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
+1. Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
+1. Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> method to determine whether it can supply the requested encoding.
 
  ]]></format>
         </remarks>
@@ -172,11 +151,11 @@ The .NET Framework supports a large number of character encodings and code pages
 
 ## Remarks
 
-This method provides access to code page encodings that are available in .NET Framework but not natively supported in .NET Core and later versions.
+This method provides access to code page encodings that are available in .NET Framework but not natively supported in modern .NET.
 
 When `codepage` is `0`, this method has special behavior that affects the default encoding returned by <xref:System.Text.Encoding.GetEncoding(System.Int32)>:
 
-- **On Windows**: Returns the encoding that matches the system's active code page, providing the same behavior as .NET Framework.
+- **On Windows**: Returns the encoding that matches the system's active code page.
 - **On non-Windows platforms**: Returns `null`, allowing <xref:System.Text.Encoding.GetEncoding(System.Int32)> to fall back to its default UTF-8 behavior.
 
 For all other supported code page identifiers, this method returns the corresponding encoding if it's available from the code pages encoding provider, or `null` if the code page is not supported.
@@ -279,38 +258,29 @@ For all other supported code page identifiers, this method returns the correspon
         <ReturnType>System.Text.EncodingProvider</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets an encoding provider for code pages supported in the desktop .NET Framework but not in the current .NET Framework platform.</summary>
+        <summary>Gets an encoding provider for code pages supported in .NET Framework but not in modern .NET.</summary>
         <value>An encoding provider that allows access to encodings not supported on the current .NET Framework platform.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
 
- The .NET Framework supports a large number of character encodings and code pages. You can get a complete list of encodings by calling the <xref:System.Text.Encoding.GetEncodings*?displayProperty=nameWithType> method, which is available in the .NET Framework. On the other hand, .NET Core only supports the following encodings by default:
+.NET supports only the following encodings by default:
 
 - ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
-
 - ISO-8859-1 (code page 28591).
-
 - UTF-7 (code page 65000), which is returned by the <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType> property.
-
 - UTF-8 (code page 65001), which is returned by the <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> property.
-
 - UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode?displayProperty=nameWithType> property.
-
 - UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
-
 - UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
-
 - UTF-32BE (code page 12001), which is instantiated by calling an <xref:System.Text.UTF32Encoding> constructor that has a `bigEndian` parameter and providing a value of `true` in the method call.
 
- To retrieve an encoding that is present in the .NET Framework but not in .NET Core, you do the following:
+To retrieve an encoding that is present in .NET Framework but not in modern .NET, you do the following:
 
-- Get the <xref:System.Text.EncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
-
-- Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
-
-- Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> method to determine whether it can supply the requested encoding.
+1. Get the <xref:System.Text.EncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
+1. Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
+1. Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> method to determine whether it can supply the requested encoding.
 
  ]]></format>
         </remarks>
