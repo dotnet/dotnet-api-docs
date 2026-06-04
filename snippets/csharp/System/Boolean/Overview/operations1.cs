@@ -52,8 +52,7 @@ public class Example5
       // Handle output.
       if (isRedirected) {
          sw = new StreamWriter(fileName);
-         if (!isBoth)
-            Console.SetOut(sw);
+         if (!isBoth) Console.SetOut(sw);
       }
       String msg = String.Format("Application began at {0}", DateTime.Now);
       Console.WriteLine(msg);

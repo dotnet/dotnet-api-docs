@@ -15,8 +15,8 @@ public delegate void D(C1 c);
 public class C1
 {
     private int id;
-    public int ID { get { return id; } }
-    public C1(int id) { this.id = id; }
+    public int ID => id;
+    public C1(int id) => this.id = id;
 
     public void M1(C1 c)
     {
@@ -63,9 +63,9 @@ public class Example
 {
     public static void Main()
     {
-        C1 c1 = new C1(42);
-        C1 c2 = new C1(1491);
-        F f1 = new F();
+        C1 c1 = new (42);
+        C1 c2 = new (1491);
+        F f1 = new ();
 
         D d;
 

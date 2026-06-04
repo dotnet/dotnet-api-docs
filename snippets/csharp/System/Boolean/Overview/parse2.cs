@@ -5,10 +5,10 @@ public class Example7
 {
    public static void Main()
    {
-      string[] values = { null, String.Empty, "True", "False",
+      string[] values = [ null, String.Empty, "True", "False",
                           "true", "false", "    true    ",
                            "TrUe", "fAlSe", "fa lse", "0",
-                          "1", "-1", "string" };
+                          "1", "-1", "string" ];
       // Parse strings using the Boolean.Parse method.
       foreach (var value in values) {
          try {

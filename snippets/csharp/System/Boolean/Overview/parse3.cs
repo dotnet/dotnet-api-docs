@@ -5,7 +5,7 @@ public class Example8
 {
    public static void Main()
    {
-      String[] values = { "09", "12.6", "0", "-13 " };
+      String[] values = [ "09", "12.6", "0", "-13 " ];
       foreach (var value in values) {
          bool success, result;
          int number;

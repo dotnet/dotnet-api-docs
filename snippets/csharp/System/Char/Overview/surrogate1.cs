@@ -9,8 +9,7 @@ public class Example3
         StreamWriter sw = new StreamWriter(@".\chars2.txt");
         int utf32 = 0x1D160;
         string surrogate = Char.ConvertFromUtf32(utf32);
-        sw.WriteLine("U+{0:X6} UTF-32 = {1} ({2}) UTF-16",
-                     utf32, surrogate, ShowCodePoints(surrogate));
+        sw.WriteLine($"U+{utf32:X6} UTF-32 = {surrogate} ({ShowCodePoints(surrogate)}) UTF-16");
         sw.Close();
     }
 
@@ -18,7 +17,7 @@ public class Example3
     {
         string retval = null;
         foreach (var ch in value)
-            retval += String.Format("U+{0:X4} ", Convert.ToUInt16(ch));
+            retval += $"U+{Convert.ToUInt16(ch):X4} ";
 
         return retval.Trim();
     }

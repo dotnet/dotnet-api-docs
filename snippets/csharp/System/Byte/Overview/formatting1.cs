@@ -12,7 +12,7 @@ public class FormattingExample
     private static void CallToString()
     {
         // <Snippet1>
-        byte[] numbers = { 0, 16, 104, 213 };
+        byte[] numbers = [ 0, 16, 104, 213 ];
         foreach (byte number in numbers)
         {
             // Display value using default formatting.
