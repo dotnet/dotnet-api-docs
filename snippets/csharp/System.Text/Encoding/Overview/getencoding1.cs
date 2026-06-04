@@ -1,10 +1,10 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 using System.Text;
 
-public class Example
+public class GetEncodingExample
 {
-   public static void Main()
+   public static void Run()
    {
       Encoding enc = Encoding.GetEncoding(1253);
       Encoding altEnc = Encoding.GetEncoding("windows-1253");
@@ -36,6 +36,7 @@ public class Example
       return retVal;
    }
 }
+
 // The example displays the following output:
 //       Character      Unicode Code Point       Code Page 1253
 //       Α                          u+0391                   C1

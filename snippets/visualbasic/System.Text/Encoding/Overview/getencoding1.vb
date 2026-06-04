@@ -4,8 +4,8 @@ Option Strict On
 ' <Snippet1>
 Imports System.Text
 
-Module Example
-   Public Sub Main()
+Module Example2
+   Public Sub Run()
       Dim enc As Encoding = Encoding.GetEncoding(1253)
       Dim altEnc As Encoding = Encoding.GetEncoding("windows-1253")
       Console.WriteLine("{0} = Code Page {1}: {2}", enc.EncodingName,
@@ -26,7 +26,7 @@ Module Example
       Next
 
    End Sub
-   
+
    Private Function GetCodePoint(ch As String) As String
       Dim retVal As String = "u+"
       Dim bytes() As Byte = Encoding.Unicode.GetBytes(ch)

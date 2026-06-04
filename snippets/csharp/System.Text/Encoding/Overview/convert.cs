@@ -2,9 +2,9 @@
 using System;
 using System.Text;
 
-class Example
+class ConvertExample
 {
-   static void Main()
+   static void Run()
    {
       string unicodeString = "This string contains the unicode character Pi (\u03a0)";
 
@@ -28,6 +28,7 @@ class Example
       Console.WriteLine("Ascii converted string: {0}", asciiString);
    }
 }
+
 // The example displays the following output:
 //    Original string: This string contains the unicode character Pi (Π)
 //    Ascii converted string: This string contains the unicode character Pi (?)
