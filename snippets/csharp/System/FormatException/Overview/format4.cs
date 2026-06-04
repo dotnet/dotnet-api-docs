@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class FormatExample4
 {
-   public static void Main()
+   public static void Run()
    {
       // <Snippet4>
       string formatString = "    {0,10} ({0,8:X8})\n" + 
@@ -10,9 +10,10 @@ public class Example
                             "  = {2,10} ({2,8:X8})";
       int value1 = 16932;
       int value2 = 15421;
-      string result = String.Format(formatString, 
+      string result = string.Format(formatString, 
                                     value1, value2, value1 & value2);
       Console.WriteLine(result);
+
       // The example displays the following output:
       //                16932 (00004224)
       //       And      15421 (00003C3D)

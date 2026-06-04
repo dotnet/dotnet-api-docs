@@ -2,30 +2,30 @@
 Option Strict On
 
 ' <Snippet2>
-Module Example
-   Public Sub Main()
-      Dim rnd As New Random()
+Module NextExample2
+    Public Sub Main()
+        Dim rnd As New Random()
 
-      Console.WriteLine("20 random integers from -100 to 100:")
-      For ctr As Integer = 1 To 20
-         Console.Write("{0,6}", rnd.Next(-100, 101))
-         If ctr Mod 5 = 0 Then Console.WriteLine()
-      Next
-      Console.WriteLine()
-      
-      Console.WriteLine("20 random integers from 1000 to 10000:")      
-      For ctr As Integer = 1 To 20
-         Console.Write("{0,8}", rnd.Next(1000, 10001))
-         If ctr Mod 5 = 0 Then Console.WriteLine()
-      Next
-      Console.WriteLine()
-      
-      Console.WriteLine("20 random integers from 1 to 10:")
-      For ctr As Integer = 1 To 20
-         Console.Write("{0,6}", rnd.Next(1, 11))
-         If ctr Mod 5 = 0 Then Console.WriteLine()
-      Next
-   End Sub
+        Console.WriteLine("20 random integers from -100 to 100:")
+        For ctr As Integer = 1 To 20
+            Console.Write("{0,6}", rnd.Next(-100, 101))
+            If ctr Mod 5 = 0 Then Console.WriteLine()
+        Next
+        Console.WriteLine()
+
+        Console.WriteLine("20 random integers from 1000 to 10000:")
+        For ctr As Integer = 1 To 20
+            Console.Write("{0,8}", rnd.Next(1000, 10001))
+            If ctr Mod 5 = 0 Then Console.WriteLine()
+        Next
+        Console.WriteLine()
+
+        Console.WriteLine("20 random integers from 1 to 10:")
+        For ctr As Integer = 1 To 20
+            Console.Write("{0,6}", rnd.Next(1, 11))
+            If ctr Mod 5 = 0 Then Console.WriteLine()
+        Next
+    End Sub
 End Module
 ' The example displays output similar to the following:
 '       20 random integers from -100 to 100:

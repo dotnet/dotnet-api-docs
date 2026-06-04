@@ -17,7 +17,7 @@ public class CityInfo
    public readonly int Year;
 }
 
-public class Example
+public class FormatExample10
 {
    public static void Main()
    {

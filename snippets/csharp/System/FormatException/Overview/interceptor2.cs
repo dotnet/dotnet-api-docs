@@ -80,7 +80,7 @@ public class InterceptProvider : IFormatProvider, ICustomFormatter
    }
 }
 
-public class Example
+public class FormatExample12
 {
    public static void Main()
    {

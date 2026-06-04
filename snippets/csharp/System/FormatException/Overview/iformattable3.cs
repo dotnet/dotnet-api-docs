@@ -1,7 +1,7 @@
 ﻿// <Snippet9>
 using System;
 
-public class Example
+public class IFormattableExample3
 {
    public static void Main()
    {
@@ -9,6 +9,7 @@ public class Example
       Console.WriteLine(Guid.ParseExact(guidString, "G"));
    }
 }
+
 // The example displays the following output:
 //    Unhandled Exception: System.FormatException:
 //       Format String can be only "D", "d", "N", "n", "P", "p", "B", "b", "X" or "x".

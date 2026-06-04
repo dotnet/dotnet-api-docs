@@ -30,35 +30,4 @@ public class Class1
         Console.WriteLine($"CLR Version {ver}");
         // </Snippet2>
     }
-
-    private static void GetSpecificAssemblyVersion()
-    {
-        // Get the version of a specific assembly.
-        string filename = @".\StringLibrary.dll";
-        Assembly assem = Assembly.ReflectionOnlyLoadFrom(filename);
-        AssemblyName assemName = assem.GetName();
-        Version ver = assemName.Version;
-        Console.WriteLine("{0}, Version {1}", assemName.Name, ver.ToString());
-    }
-
-    private static void GetApplicationVersion()
-    {
-        // Get the version of the executing assembly (that is, this assembly).
-        Assembly assem = Assembly.GetEntryAssembly();
-        AssemblyName assemName = assem.GetName();
-        Version ver = assemName.Version;
-        Console.WriteLine("Application {0}, Version {1}", assemName.Name, ver.ToString());
-    }
-}
-
-public class VersionsExample1
-{
-    public static void GetExecutingAssemblyVersion()
-    {
-        // Get the version of the current application.
-        Assembly assem = typeof(Assembly.GetExecutingAssembly());
-        AssemblyName assemName = assem.GetName();
-        Version ver = assemName.Version;
-        Console.WriteLine("{0}, Version {1}", assemName.Name, ver.ToString());
-    }
 }

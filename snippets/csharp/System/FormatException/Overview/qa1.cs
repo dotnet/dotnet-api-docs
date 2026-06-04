@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class QAExample1
 {
    public static void Main()
    {

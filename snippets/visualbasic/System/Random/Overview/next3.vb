@@ -2,19 +2,19 @@
 Option Strict On
 
 ' <Snippet5>
-Module Example
-   Public Sub Main()
-      Console.Write("Number of random numbers to generate: ")
-      Dim line As String = Console.ReadLine()
-      Dim numbers As UInteger = 0
-      Dim rnd As New Random()
-      
-      If Not UInt32.TryParse(line, numbers) Then numbers = 10
-      
-      For ctr As UInteger = 1 To numbers  
-         Console.WriteLine("{0,15:N0}", rnd.Next())
-      Next
-   End Sub
+Module NextExample3
+    Public Sub Main()
+        Console.Write("Number of random numbers to generate: ")
+        Dim line As String = Console.ReadLine()
+        Dim numbers As UInteger = 0
+        Dim rnd As New Random()
+
+        If Not UInt32.TryParse(line, numbers) Then numbers = 10
+
+        For ctr As UInteger = 1 To numbers
+            Console.WriteLine("{0,15:N0}", rnd.Next())
+        Next
+    End Sub
 End Module
 ' The example displays output like the following when asked to generate
 ' 15 random numbers:

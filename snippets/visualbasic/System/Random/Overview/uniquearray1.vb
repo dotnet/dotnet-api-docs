@@ -88,18 +88,18 @@ Public Class Dealer
    End Function
 End Class
 
-Public Module Example
-   Public Sub Main()
-      Dim dealer As New Dealer()
-      ShowCards(dealer.Deal(20))
-   End Sub
-   
-   Private Sub ShowCards(cards() As Card)
-      For Each card In cards
-         If card IsNot Nothing Then _
+Public Module UniqueArrayExample
+    Public Sub Main()
+        Dim dealer As New Dealer()
+        ShowCards(dealer.Deal(20))
+    End Sub
+
+    Private Sub ShowCards(cards() As Card)
+        For Each card In cards
+            If card IsNot Nothing Then _
             Console.WriteLine("{0} of {1}", card.FaceValue, card.Suit)
-      Next
-   End Sub
+        Next
+    End Sub
 End Module
 ' The example displays output like the following:
 '       Six of Diamonds
