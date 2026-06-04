@@ -20,7 +20,7 @@ public class C
     public C(int id) { this.id = id; }
 
     public void M1(string s) =>
-        Console.WriteLine($"Instance method M1 on C:  id = {this.id}, s = {s}";
+        Console.WriteLine($"Instance method M1 on C:  id = {this.id}, s = {s}");
 
     public static void M2(string s)
     {
