@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
 public class Example4
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet6>
         Random rnd = new Random();

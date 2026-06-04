@@ -1,1 +1,1 @@
-﻿//Example3.Run();
+﻿TryParse.Main();
