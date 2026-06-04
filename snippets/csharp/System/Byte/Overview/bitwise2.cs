@@ -26,7 +26,7 @@ public class BSExample1
 
     private static ByteString[] CreateArray(params int[] values)
     {
-        List<ByteString> byteStrings = new List<ByteString>();
+        List<ByteString> byteStrings = new();
 
         foreach (object value in values)
         {

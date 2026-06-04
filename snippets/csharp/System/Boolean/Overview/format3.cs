@@ -47,22 +47,13 @@ public class BooleanFormatter : ICustomFormatter, IFormatProvider
       if (! (arg is Boolean)) return null;
 
       bool value = (bool) arg;
-      switch (culture.Name) {
-         case "en-US":
-            return value.ToString();
-         case "fr-FR":
-            if (value)
-               return "vrai";
-            else
-               return "faux";
-         case "ru-RU":
-            if (value)
-               return "верно";
-            else
-               return "неверно";
-         default:
-            return value.ToString();
-      }
+      return culture.Name switch 
+     {
+         "en-US" => value.ToString(),
+         "fr-FR" => value ? "vrai" : "faux",
+         "ru-RU" => value ? "верно" : "неверно",
+         _  => value.ToString(),
+      };
    }
 }
 // The example displays the following output:

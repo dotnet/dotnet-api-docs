@@ -5,7 +5,7 @@ public class Example
 {
    public static void Main()
    {
-      DateTime localDate = new DateTime(2010, 3, 14, 2, 30, 0, DateTimeKind.Local);
+      DateTime localDate = new (2010, 3, 14, 2, 30, 0, DateTimeKind.Local);
       long binLocal = localDate.ToBinary();
       if (TimeZoneInfo.Local.IsInvalidTime(localDate))
          Console.WriteLine($"{localDate} is an invalid time in the {TimeZoneInfo.Local.StandardName} zone.");

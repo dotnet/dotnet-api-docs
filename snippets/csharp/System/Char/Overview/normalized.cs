@@ -14,10 +14,10 @@ public class Example2
 
     private static void ShowString(string s)
     {
-        Console.Write("Length of string: {0} (", s.Length);
+        Console.Write($"Length of string: {s.Length} (");
         for (int ctr = 0; ctr < s.Length; ctr++)
         {
-            Console.Write("U+{0:X4}", Convert.ToUInt16(s[ctr]));
+            Console.Write($"U+{Convert.ToUInt16(s[ctr]):X4}");
             if (ctr != s.Length - 1) Console.Write(" ");
         }
         Console.WriteLine(")\n");

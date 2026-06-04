@@ -37,11 +37,11 @@ namespace SystemDateTimeReference
 
         private static void SaveLocalDatesAsString()
         {
-            DateTime[] dates = { new DateTime(2014, 6, 14, 6, 32, 0),
+            DateTime[] dates = [ new DateTime(2014, 6, 14, 6, 32, 0),
                            new DateTime(2014, 7, 10, 23, 49, 0),
                            new DateTime(2015, 1, 10, 1, 16, 0),
                            new DateTime(2014, 12, 20, 21, 45, 0),
-                           new DateTime(2014, 6, 2, 15, 14, 0) };
+                           new DateTime(2014, 6, 2, 15, 14, 0) ];
             string? output = null;
 
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
@@ -111,11 +111,11 @@ namespace SystemDateTimeReference
 
         private static void SaveDatesAsInvariantStrings()
         {
-            DateTime[] dates = { new DateTime(2014, 6, 14, 6, 32, 0),
+            DateTime[] dates = [ new DateTime(2014, 6, 14, 6, 32, 0),
                            new DateTime(2014, 7, 10, 23, 49, 0),
                            new DateTime(2015, 1, 10, 1, 16, 0),
                            new DateTime(2014, 12, 20, 21, 45, 0),
-                           new DateTime(2014, 6, 2, 15, 14, 0) };
+                           new DateTime(2014, 6, 2, 15, 14, 0) ];
             string? output = null;
 
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
@@ -189,11 +189,11 @@ namespace SystemDateTimeReference
 
         private static void SaveDatesAsInts()
         {
-            DateTime[] dates = { new DateTime(2014, 6, 14, 6, 32, 0),
+            DateTime[] dates = [ new DateTime(2014, 6, 14, 6, 32, 0),
                            new DateTime(2014, 7, 10, 23, 49, 0),
                            new DateTime(2015, 1, 10, 1, 16, 0),
                            new DateTime(2014, 12, 20, 21, 45, 0),
-                           new DateTime(2014, 6, 2, 15, 14, 0) };
+                           new DateTime(2014, 6, 2, 15, 14, 0) ];
 
             Console.WriteLine($"Current Time Zone: {TimeZoneInfo.Local.DisplayName}");
             Console.WriteLine($"The dates on an {Thread.CurrentThread.CurrentCulture.Name} system:");
