@@ -1,4 +1,4 @@
-﻿' Visual Basic .NET Document
+' Visual Basic .NET Document
 Option Strict On
 
 ' <Snippet5>
@@ -13,4 +13,3 @@ End Module
 ' The example displays the following output:
 '       0.33333333333333331 = 0.3333333432674408: False
 ' </Snippet5>
-

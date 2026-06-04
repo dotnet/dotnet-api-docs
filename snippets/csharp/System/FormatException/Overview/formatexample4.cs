@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class FormatExample4
+public class FormatExample6
 {
    public static void Main()
    {

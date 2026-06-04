@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class QAExample3
+public class FormatExample13
 {
    public static void Main()
    {

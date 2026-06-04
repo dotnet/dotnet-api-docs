@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class FormatOverloadExample1
+public class Example2
 {
    public static void Main()
    {

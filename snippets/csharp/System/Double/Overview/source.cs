@@ -213,6 +213,7 @@ namespace Snippets4 {
 	}
 	//</snippet4>
 }
+
 namespace Snippets5 {
 	//<snippet5>
 	public class Temperature {
@@ -257,6 +258,7 @@ namespace Snippets5 {
 	}
 	//</snippet5>
 }
+
 namespace Snippets6 {
 	//<snippet6>
 	public class Temperature {
@@ -301,6 +303,7 @@ namespace Snippets6 {
 	}
 	//</snippet6>
 }
+
 namespace Snippets7 {
 	//<snippet7>
 	public class Temperature {
@@ -345,6 +348,7 @@ namespace Snippets7 {
 	}
 	//</snippet7>
 }
+
 namespace Snippets8 {
 	//<snippet8>
 	public class Temperature {

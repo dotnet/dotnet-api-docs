@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
 
-class Example
+class GetTypeExample
 {
      public static void Main()
      {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example3
+public class FormatExample3
 {
    public static void Main()
    {

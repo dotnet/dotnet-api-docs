@@ -3,7 +3,7 @@ Imports System.Text
 
 Class Sample
 
-    Public Shared Sub Main()
+    Public Shared Sub Run()
         Dim s1 As String = New StringBuilder().Append("My").Append("Test").ToString()
         Dim s2 As String = New StringBuilder().Append("My").Append("Test").ToString()
         Console.WriteLine($"s1 = {s1}")
