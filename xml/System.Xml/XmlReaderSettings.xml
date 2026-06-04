@@ -53,7 +53,37 @@
   </Attributes>
   <Docs>
     <summary>Specifies a set of features to support on the <see cref="T:System.Xml.XmlReader" /> object created by the <see cref="Overload:System.Xml.XmlReader.Create" /> method.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmlreadersettings">Supplemental API remarks for XmlReaderSettings</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+You use the <xref:System.Xml.XmlReader.Create*> method to obtain <xref:System.Xml.XmlReader> instances. This method uses the <xref:System.Xml.XmlReaderSettings> class to specify which features to implement in the <xref:System.Xml.XmlReader> object it creates.
+
+See the Remarks sections of the <xref:System.Xml.XmlReader> and <xref:System.Xml.XmlReader.Create*> reference pages for information about which settings to use for conformance checks, validation, and other common scenarios. See the <xref:System.Xml.XmlReaderSettings.%23ctor> constructor for a list of default settings.
+
+## Security considerations
+
+Consider the following when using the <xref:System.Xml.XmlReaderSettings> class.
+
+- The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object are not set by default. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver> object is `null`, schema locations are not resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.
+
+- Schemas added during validation add new types and can change the validation outcome of the document being validated. As a result, external schemas should only be resolved from trusted sources.
+
+- Validation error messages may expose sensitive content model information. Validation error and warning messages are handled using the <xref:System.Xml.Schema.ValidationEventHandler> delegate, or are exposed as an <xref:System.Xml.Schema.XmlSchemaValidationException> if no event handler is provided to the <xref:System.Xml.XmlReaderSettings> object (validation warnings do not cause an <xref:System.Xml.Schema.XmlSchemaValidationException> to be thrown). This content model information should not be exposed in untrusted scenarios. Validation warning messages are suppressed by default and can be reported by setting the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings> flag.
+
+- The <xref:System.Xml.Schema.XmlSchemaException.SourceUri> property of an <xref:System.Xml.Schema.XmlSchemaValidationException> returns the URI path to the schema file that caused the exception. The <xref:System.Xml.Schema.XmlSchemaException.SourceUri> property should not be exposed in untrusted scenarios.
+
+- Disabling the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints> flag (enabled by default) is recommended when validating, untrusted, large XML documents in high availability scenarios against a schema with identity constraints over a large part of the document.
+
+- <xref:System.Xml.XmlReaderSettings> objects can contain sensitive information such as user credentials. You should be careful when caching <xref:System.Xml.XmlReaderSettings> objects, or when passing the <xref:System.Xml.XmlReaderSettings> object from one component to another.
+
+- DTD processing is disabled by default. If you enable DTD processing, you need to be aware of including DTDs from untrusted sources and possible denial of service attacks. Use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access.
+
+- Do not accept supporting components, such as <xref:System.Xml.NameTable>, <xref:System.Xml.XmlNamespaceManager>, and <xref:System.Xml.XmlResolver> objects, from an untrusted source.
+
+- Memory usage of an application that uses <xref:System.Xml.XmlReader> may have a correlation to the size of the parsed XML document. One form of denial of service attack is when excessively large XML documents are submitted to be parsed. You can limit the size of the document that can be parsed by setting the <xref:System.Xml.XmlReaderSettings.MaxCharactersInDocument> property and then limit the number of characters that result from expanding entities by setting the <xref:System.Xml.XmlReaderSettings.MaxCharactersFromEntities> property.
+
+ ]]></format>
+    </remarks>
     <example>
       <format type="text/markdown"><![CDATA[
 The following example creates an <xref:System.Xml.XmlReader> that uses an <xref:System.Xml.XmlUrlResolver> with the necessary credentials.
@@ -509,7 +539,28 @@ If the <xref:System.Xml.XmlReader> is processing text data, it always checks tha
       <Docs>
         <summary>Gets or sets a value that determines the processing of DTDs.</summary>
         <value>One of the enumeration values that determines the processing of DTDs. The default is <see cref="F:System.Xml.DtdProcessing.Prohibit" />.</value>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmlreadersettings-dtdprocessing">Supplemental API remarks for XmlReaderSettings.DtdProcessing</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+Document type definition (DTD) validation is implemented by using the validity constraints defined in the W3C [Extensible Markup Language (XML) 1.0 (fourth edition) recommendation](https://www.w3.org/TR/2006/REC-xml-20060816/). DTDs use a formal grammar to describe the structure and syntax of compliant XML documents; they specify the content and values allowed for the XML document.
+
+The <xref:System.Xml.XmlReaderSettings.DtdProcessing> property can have one of the following values:
+
+- <xref:System.Xml.DtdProcessing.Parse?displayProperty=nameWithType> to enable DTD processing.
+- <xref:System.Xml.DtdProcessing.Prohibit?displayProperty=nameWithType> to throw an <xref:System.Xml.XmlException> exception when a DTD is encountered.
+- <xref:System.Xml.DtdProcessing.Ignore?displayProperty=nameWithType> to disable DTD processing without warnings or exceptions.
+
+To perform validation against a DTD, the <xref:System.Xml.XmlReader> uses the DTD defined in the DOCTYPE declaration of an XML document. The DOCTYPE declaration can either point to an inline DTD or can be a reference to an external DTD file. To validate an XML file against a DTD:
+
+- Set the <xref:System.Xml.XmlReaderSettings.DtdProcessing?displayProperty=nameWithType> property to `DtdProcessing.Parse`.
+- Set the <xref:System.Xml.XmlReaderSettings.ValidationType?displayProperty=nameWithType> property to `ValidationType.DTD`.
+- If the DTD is an external file stored on a network resource that requires authentication, pass an <xref:System.Xml.XmlResolver> object with the necessary credentials to the <xref:System.Xml.XmlReader.Create*> method.
+
+> [!IMPORTANT]
+> If the <xref:System.Xml.XmlReaderSettings.DtdProcessing> property is set to <xref:System.Xml.DtdProcessing.Ignore?displayProperty=nameWithType>, the <xref:System.Xml.XmlReader> will not report the DTDs. This means that the DTD/DOCTYPE will be lost on output.
+
+ ]]></format>
+        </remarks>
         <example>
           <format type="text/markdown"><![CDATA[
 The following example validates an XML file using a DTD file.
@@ -1134,7 +1185,7 @@ There is an error in XML document (MaxCharactersInDocument, ).
 
  When set to `true`, the <xref:System.Xml.XmlReader> throws an <xref:System.Xml.XmlException> when any DTD content is encountered. Do not enable DTD processing if you are concerned about Denial of Service issues or if you are dealing with untrusted sources.
 
- If you have DTD processing enabled, you can use the <xref:System.Xml.XmlSecureResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your application so that the XML processing is memory and time constrained. For example, configure time-out limits in your ASP.NET application.
+ If you have DTD processing enabled, you can use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your application so that the XML processing is memory and time constrained. For example, configure time-out limits in your ASP.NET application.
 
  This property is obsolete. Use <xref:System.Xml.XmlTextReader.DtdProcessing> instead. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd> to its default value `true` set <xref:System.Xml.XmlTextReader.DtdProcessing> to `Prohibit`. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd> to `false` set <xref:System.Xml.XmlTextReader.DtdProcessing> to `Parse`.
 
@@ -1252,7 +1303,28 @@ There is an error in XML document (MaxCharactersInDocument, ).
       <Docs>
         <summary>Gets or sets the <see cref="T:System.Xml.Schema.XmlSchemaSet" /> to use when performing schema validation.</summary>
         <value>The <see cref="T:System.Xml.Schema.XmlSchemaSet" /> to use when performing schema validation. The default is an empty <see cref="T:System.Xml.Schema.XmlSchemaSet" /> object.</value>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmlreadersettings-schemas">Supplemental API remarks for XmlReaderSettings.Schemas</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+This article pertains to the <xref:System.Xml.XmlReaderSettings.Schemas> property.
+
+> [!IMPORTANT]
+>
+> - Do not use schemas from unknown or untrusted sources or locations. Doing so compromises the security of your code.
+> - XML schemas (including inline schemas) are inherently vulnerable to denial of service attacks; do not accept them in untrusted scenarios.
+> - Schema validation error messages and exceptions may expose sensitive information about the content model or URI paths to the schema file. Be careful not to expose this information to untrusted callers.
+> - For additional information, see the "Security considerations" section.
+
+The <xref:System.Xml.Schema.XmlSchemaSet> class only supports XML Schema definition language (XSD) schemas. <xref:System.Xml.XmlReader> instances created by the <xref:System.Xml.XmlReader.Create*> method cannot be configured to enable XML-Data Reduced (XDR) schema validation.
+
+## Security considerations
+
+- Do not use schemas from unknown or untrusted sources. Doing so will compromise the security of your code. The <xref:System.Xml.XmlUrlResolver> class is used to resolve external schemas by default. To disable resolution of include, import, and redefine elements of a schema, set the <xref:System.Xml.Schema.XmlSchemaSet.XmlResolver?displayProperty=nameWithType> property to `null`.
+
+- Exceptions raised as a result of using the <xref:System.Xml.Schema.XmlSchemaSet> class, such as the <xref:System.Xml.Schema.XmlSchemaException> class may contain sensitive information that should not be exposed in untrusted scenarios. For example, the <xref:System.Xml.Schema.XmlSchemaException.SourceUri> property of an <xref:System.Xml.Schema.XmlSchemaException> returns the URI path to the schema file that caused the exception. The <xref:System.Xml.Schema.XmlSchemaException.SourceUri> property should not be exposed in untrusted scenarios. Exceptions should be properly handled so that this sensitive information is not exposed in untrusted scenarios.
+
+ ]]></format>
+        </remarks>
         <example>
           <format type="text/markdown"><![CDATA[
 The example below uses the <xref:System.Xml.XmlReaderSettings> object and the <xref:System.Xml.XmlReader.Create*?displayProperty=nameWithType> method to associate a schema with an XML document. The schema is added to the <xref:System.Xml.XmlReaderSettings.Schemas> property of the <xref:System.Xml.XmlReaderSettings> object. The value of the <xref:System.Xml.XmlReaderSettings.Schemas> property is an <xref:System.Xml.Schema.XmlSchemaSet> object. The schema is used to validate that the XML document conforms to the schema content model. Schema validation errors and warnings are handled by the <xref:System.Xml.XmlReaderSettings.ValidationEventHandler> defined in the <xref:System.Xml.XmlReaderSettings> object.
@@ -1535,17 +1607,11 @@ The output is as follows:
 > [!IMPORTANT]
 > Because the <xref:System.Xml.XmlReaderSettings.XmlResolver> can contain sensitive information such as user credentials, you should be careful when caching <xref:System.Xml.XmlReaderSettings> objects, or when passing the <xref:System.Xml.XmlReaderSettings> object from one component to another.
 >
-> An <xref:System.Xml.XmlSecureResolver> can be used to access external documents. The <xref:System.Xml.XmlSecureResolver> class helps to secure another implementation of <xref:System.Xml.XmlResolver> by wrapping the <xref:System.Xml.XmlResolver> object and restricting the resources that the underlying <xref:System.Xml.XmlResolver> has access to.
+> Use <xref:System.Xml.XmlResolver.ThrowingResolver> to restrict access to external documents.
 >
 > The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object are not set by default. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver> object is `null`, schema locations are not resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.
 >
 > Schemas added during validation add new types and can change the validation outcome of the document being validated. As a result, external schemas should only be resolved from trusted sources.
-
-## Examples
- The following example creates an <xref:System.Xml.XmlReader> that uses an <xref:System.Xml.XmlSecureResolver> with default credentials.
-
- :::code language="csharp" source="~/snippets/csharp/System.Xml/XmlParserContext/Overview/XmlReader_Create.cs" id="Snippet10":::
- :::code language="vb" source="~/snippets/visualbasic/VS_Snippets_Data/XmlReader.Create/VB/XmlReader_Create.vb" id="Snippet10":::
 
  ]]></format>
         </remarks>
