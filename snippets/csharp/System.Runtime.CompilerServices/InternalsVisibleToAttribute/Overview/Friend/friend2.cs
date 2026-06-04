@@ -1,4 +1,5 @@
 ﻿// <Snippet6>
+using System;
 
 public class Example1
 {
