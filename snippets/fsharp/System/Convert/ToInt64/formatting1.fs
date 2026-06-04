@@ -1,4 +1,4 @@
-﻿open System
+open System
 
 let callToString () =
     // <Snippet1>
@@ -30,7 +30,7 @@ let callConvert () =
         printfn $"   Binary:  {Convert.ToString(number, 2)}"
         printfn $"   Octal:   {Convert.ToString(number, 8)}"
         printfn $"   Hex:     {Convert.ToString(number, 16)}\n"
-    
+
     // The example displays the following output:
     //    -146 (Base 10):
     //       Binary:  1111111111111111111111111111111111111111111111111111111101101110
