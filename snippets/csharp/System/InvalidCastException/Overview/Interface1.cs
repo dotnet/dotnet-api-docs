@@ -1,4 +1,5 @@
 ﻿// <Snippet3>
+using System;
 using System.Globalization;
 
 public class InterfaceEx
