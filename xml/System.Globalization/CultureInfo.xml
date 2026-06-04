@@ -178,7 +178,7 @@ You can get a <xref:System.Globalization.CultureInfo> object that represents the
 
 The following example retrieves both property values, compares them to show that they are equal, and displays the name of the current culture.
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/Current1.cs" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/OverviewCurrent1.cs" id="Snippet1":::
 
 You can get a <xref:System.Globalization.CultureInfo> object that represents the current UI culture in either of two ways:
 
@@ -188,7 +188,7 @@ You can get a <xref:System.Globalization.CultureInfo> object that represents the
 
 The following example retrieves both property values, compares them to show that they are equal, and displays the name of the current UI culture.
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/CurrentUI1.cs" id="Snippet2":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/OverviewCurrentUI1.cs" id="Snippet2":::
 
 ### Set the current and current UI cultures
 
@@ -200,11 +200,11 @@ To change the culture and UI culture of a thread, do the following:
 
 The following example retrieves the current culture. If it is anything other than the French (France) culture, it changes the current culture to French (France). Otherwise, it changes the current culture to French (Luxembourg).
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/Change1.cs" id="Snippet3":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/OverviewChange1.cs" id="Snippet3":::
 
 The following example retrieves the current culture. If it is anything other the Slovenian (Slovenia) culture, it changes the current culture to Slovenian (Slovenia). Otherwise, it changes the current culture to Croatian (Croatia).
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/ChangeUI1.cs" id="Snippet4":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/OverviewChangeUI1.cs" id="Snippet4":::
 
 ## Get all cultures
 
@@ -212,30 +212,22 @@ You can retrieve an array of specific categories of cultures or of all the cultu
 
 The following example calls the <xref:System.Globalization.CultureInfo.GetCultures*> method twice, first with the <xref:System.Globalization.CultureTypes?displayProperty=nameWithType> enumeration member to retrieve all custom cultures, and then with the <xref:System.Globalization.CultureTypes?displayProperty=nameWithType> enumeration member to retrieve all replacement cultures.
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/GetCultures1.cs" id="Snippet5":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/OverviewGetCultures1.cs" id="Snippet5":::
 
 ## Culture and threads
 
 When a new application thread is started, its current culture and current UI culture are defined by the current system culture, and not by the current thread culture. The following example illustrates the difference. It sets the current culture and current UI culture of an application thread to the French (France) culture (fr-FR). If the current culture is already fr-FR, the example sets it to the English (United States) culture (en-US). It displays three random numbers as currency values and then creates a new thread, which, in turn, displays three more random numbers as currency values. But as the output from the example shows, the currency values displayed by the new thread do not reflect the formatting conventions of the French (France) culture, unlike the output from the main application thread.
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/defaultthread1.cs" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/Overviewdefaultthread1.cs" id="Snippet1":::
 
 You can set the culture and UI culture of all threads in an application domain by assigning a <xref:System.Globalization.CultureInfo> object that represents that culture to the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> properties. The following example uses these properties to ensure that all threads in the default application domain share the same culture.
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/setthreads1.cs" id="Snippet3":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/Overviewsetthreads1.cs" id="Snippet3":::
 
 > [!WARNING]
 > Although the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> properties are static members, they define the default culture and default UI culture only for the application domain that is current at the time these property values are set. For more information, see the next section, [Culture and application domains](#culture-and-application-domains).
 
 When you assign values to the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> properties, the culture and UI culture of the threads in the application domain also change if they have not explicitly been assigned a culture. However, these threads reflect the new culture settings only while they execute in the current application domain. If these threads execute in another application domain, their culture becomes the default culture defined for that application domain. As a result, we recommend that you always set the culture of the main application thread, and not rely on the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> properties to change it.
-
-## Culture and application domains
-
-<xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> are static properties that explicitly define a default culture only for the application domain that is current when the property value is set or retrieved. The following example sets the default culture and default UI culture in the default application domain to French (France), and then uses the <xref:System.AppDomainSetup> class and the <xref:System.AppDomainInitializer> delegate to set the default culture and UI culture in a new application domain to Russian (Russia). A single thread then executes two methods in each application domain. Note that the thread's culture and UI culture are not explicitly set; they are derived from the default culture and UI culture of the application domain in which the thread is executing. Note also that the <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> properties return the default <xref:System.Globalization.CultureInfo> values of the application domain that is current when the method call is made.
-
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/appdomainex1.cs" id="Snippet1":::
-
-For more information about cultures and application domains, see the "Application Domains and Threads" section in the [Application Domains](/dotnet/framework/app-domains/application-domains) topic.
 
 ## Culture and task-based asynchronous operations
 
@@ -251,7 +243,7 @@ The following example provides a simple illustration. The example defines a <xre
 
 As the output from the example shows, when the current culture is changed to French (France), the current culture of the thread from which tasks are invoked asynchronously becomes the current culture for that asynchronous operation.
 
-:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/asyncculture1.cs" id="Snippet1":::
+:::code language="csharp" source="~/snippets/csharp/System.Globalization/CultureInfo/Overviewasyncculture1.cs" id="Snippet1":::
 
 <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> and <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture> are per-app domain properties; that is, they establish a default culture for all threads not explicitly assigned a culture in a specific application domain. However, for apps that target .NET Framework 4.6 or later, the culture of the calling thread remains part of an asynchronous task's context even if the task crosses app domain boundaries.
 
@@ -786,7 +778,8 @@ If `name` is <xref:System.String.Empty?displayProperty=nameWithType>, the constr
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Information, such as the default culture and format patterns, is cached the first time it is requested. That information can change during the life of the <xref:System.AppDomain>, for example, when the user modifies the regional and language options portion of Control Panel. However, the <xref:System.Globalization.CultureInfo> class does not automatically detect changes in the system settings.
+
+Information, such as the default culture and format patterns, is cached the first time it's requested. That information can change, for example, when the user modifies the regional and language options portion of Control Panel. However, the <xref:System.Globalization.CultureInfo> class does not automatically detect changes in the system settings.
 
  The <xref:System.Globalization.CultureInfo.ClearCachedData*> method clears the cache of <xref:System.Globalization.CultureInfo> objects created by <xref:System.Globalization.CultureInfo.GetCultureInfo*> and refreshes the information in the <xref:System.Globalization.CultureInfo.CurrentCulture*>, <xref:System.Globalization.CultureInfo.CurrentUICulture*>, and <xref:System.Globalization.RegionInfo.CurrentRegion*> properties, based on the current system settings.
 
