@@ -7,7 +7,7 @@ Imports System.Reflection
 <Assembly:AssemblyVersionAttribute("2.0.1")>
 Module MExample1
     Public Sub Main()
-        Dim thisAssem As Assembly = GetType(Example1).Assembly
+        Dim thisAssem As Assembly = Assembly.GetExecutingAssembly()
         Dim thisAssemName As AssemblyName = thisAssem.GetName()
 
         Dim ver As Version = thisAssemName.Version
@@ -15,6 +15,7 @@ Module MExample1
         Console.WriteLine("This is version {0} of {1}.", ver, thisAssemName.Name)
     End Sub
 End Module
+
 ' The example displays the following output:
 '      This is version 2.0.1.0 of Example1.
 ' </Snippet6>

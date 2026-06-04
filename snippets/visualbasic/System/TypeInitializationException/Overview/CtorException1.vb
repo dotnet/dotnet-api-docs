@@ -13,15 +13,18 @@ End Class
 
 Public Class TestClass
    Public ReadOnly Value As Integer
-   
+
    Public Sub New(value As Integer)
-        If value < 0 Or value > 1 Then Throw New ArgumentOutOfRangeException(NameOf(value))
-        value = value
+        If value < 0 Or value > 1 Then
+            Throw New ArgumentOutOfRangeException(NameOf(value))
+        End If
+        Value = value
    End Sub
 End Class
+
 ' The example displays the following output:
-'    Unhandled Exception: System.TypeInitializationException: 
-'       The type initializer for 'Example' threw an exception. ---> 
+'    Unhandled Exception: System.TypeInitializationException:
+'       The type initializer for 'Example' threw an exception. --->
 '       System.ArgumentOutOfRangeException: Specified argument was out of the range of valid values.
 '       at TestClass..ctor(Int32 value)
 '       at Example..cctor()

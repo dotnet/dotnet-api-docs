@@ -4,19 +4,12 @@ using System.Reflection;
 [assembly: CLSCompliant(true)]
 public class Class1
 {
-    public static void Main()
+    public static void Run()
     {
-        VersionsExample1 ex1 = new();
-
         GetOsVersion();
         Console.WriteLine();
         GetClrVersion();
         Console.WriteLine();
-        GetSpecificAssemblyVersion();
-        Console.WriteLine();
-        VersionsExample1.GetExecutingAssemblyVersion();
-        Console.WriteLine();
-        GetApplicationVersion();
     }
 
     private static void GetOsVersion()
@@ -63,7 +56,7 @@ public class VersionsExample1
     public static void GetExecutingAssemblyVersion()
     {
         // Get the version of the current application.
-        Assembly assem = typeof(Example1).Assembly;
+        Assembly assem = typeof(Assembly.GetExecutingAssembly);
         AssemblyName assemName = assem.GetName();
         Version ver = assemName.Version;
         Console.WriteLine("{0}, Version {1}", assemName.Name, ver.ToString());

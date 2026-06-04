@@ -82,72 +82,72 @@ Most commonly, a <xref:System.TypeInitializationException> exception is thrown w
 
 - An unhandled exception in a static constructor
 
-   If an exception is thrown in a static constructor, that exception is wrapped in a <xref:System.TypeInitializationException> exception, and the type cannot be instantiated.
+  If an exception is thrown in a static constructor, that exception is wrapped in a <xref:System.TypeInitializationException> exception, and the type cannot be instantiated.
 
-   What often makes this exception difficult to troubleshoot is that static constructors are not always explicitly defined in source code. A static constructor exists in a type if:
+  What often makes this exception difficult to troubleshoot is that static constructors are not always explicitly defined in source code. A static constructor exists in a type if:
 
   - It has been explicitly defined as a member of a type.
 
-  - The type has  `static` (in C# or F#) or `Shared` (in Visual Basic) variables that are declared and initialized in a single statement. In this case, the language compiler generates a static constructor for the type. You can inspect it by using a utility such as [IL Disassembler](/dotnet/framework/tools/ildasm-exe-il-disassembler). For instance, when the C# and VB compilers compile the following example, they generate the IL for a static constructor that is similar to this:
+  - The type has `static` (in C# or F#) or `Shared` (in Visual Basic) variables that are declared and initialized in a single statement. In this case, the language compiler generates a static constructor for the type. For instance, when the C# and VB compilers compile the following example, they generate the IL for a static constructor that is similar to this:
 
-   ```il
-   .method private specialname rtspecialname static
-           void  .cctor() cil managed
-   {
-     // Code size       12 (0xc)
-     .maxstack  8
-     IL_0000:  ldc.i4.3
-     IL_0001:  newobj     instance void TestClass::.ctor(int32)
-     IL_0006:  stsfld     class TestClass Example::test
-     IL_000b:  ret
-   } // end of method Example::.cctor
-   ```
+    ```il
+    .method private specialname rtspecialname static
+            void  .cctor() cil managed
+    {
+      // Code size       12 (0xc)
+      .maxstack  8
+      IL_0000:  ldc.i4.3
+      IL_0001:  newobj     instance void TestClass::.ctor(int32)
+      IL_0006:  stsfld     class TestClass Example::test
+      IL_000b:  ret
+    } // end of method Example::.cctor
+    ```
 
-   The following example shows a <xref:System.TypeInitializationException> exception thrown by a compiler-generated static constructor. The `Example` class includes a `static` (in C#) or `Shared` (in Visual Basic) field of type `TestClass` that is instantiated by passing a value of 3 to its class constructor. That value, however, is illegal; only values of 0 or 1 are permitted. As a result, the `TestClass` class constructor throws an <xref:System.ArgumentOutOfRangeException>. Since this exception is not handled, it is wrapped in a <xref:System.TypeInitializationException> exception.
+  The following example shows a <xref:System.TypeInitializationException> exception thrown by a compiler-generated static constructor. The `Example` class includes a `static` (in C#) or `Shared` (in Visual Basic) field of type `TestClass` that is instantiated by passing a value of 3 to its class constructor. That value, however, is illegal; only values of 0 or 1 are permitted. As a result, the `TestClass` class constructor throws an <xref:System.ArgumentOutOfRangeException>. Since this exception is not handled, it is wrapped in a <xref:System.TypeInitializationException> exception.
 
-   :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/ctorException1.cs" id="Snippet3":::
-   :::code language="vb" source="~/snippets/visualbasic/System/TypeInitializationException/Overview/CtorException1.vb" id="Snippet3":::
+  :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/ctorException1.cs" id="Snippet3":::
+  :::code language="vb" source="~/snippets/visualbasic/System/TypeInitializationException/Overview/CtorException1.vb" id="Snippet3":::
 
-   Note that the exception message displays information about the <xref:System.Exception.InnerException> property.
+  The exception message displays information about the <xref:System.Exception.InnerException> property.
 
 - A missing assembly or data file
 
-   A common cause of a <xref:System.TypeInitializationException> exception is that an assembly or data file that was present in an application's development and test environments is missing from its runtime environment. For example, you can compile the following example to an assembly named Missing1a.dll by using this command-line syntax:
+  A common cause of a <xref:System.TypeInitializationException> exception is that an assembly or data file that was present in an application's development and test environments is missing from its runtime environment. For example, you can compile the following example to an assembly named Missing1a.dll by using this command-line syntax:
 
-   ```csharp
-   csc -t:library Missing1a.cs
-   ```
+  ```csharp
+  csc -t:library Missing1a.cs
+  ```
 
-   ```fsharp
-   fsc --target:library Missing1a.fs
-   ```
+  ```fsharp
+  fsc --target:library Missing1a.fs
+  ```
 
-   ```vb
-   vbc Missing1a.vb -t:library
-   ```
+  ```vb
+  vbc Missing1a.vb -t:library
+  ```
 
-   :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Missing1a.cs" id="Snippet1":::
-   :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Missing1a.fs" id="Snippet1":::
-   :::code language="vb" source="~/snippets/visualbasic/System/TypeInitializationException/Overview/Missing1a.vb" id="Snippet1":::
+  :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Missing1a.cs" id="Snippet1":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Missing1a.fs" id="Snippet1":::
+  :::code language="vb" source="~/snippets/visualbasic/System/TypeInitializationException/Overview/Missing1a.vb" id="Snippet1":::
 
-   You can then compile the following example to an executable named Missing1.exe by including a reference to Missing1a.dll:
+  You can then compile the following example to an executable named Missing1.exe by including a reference to Missing1a.dll:
 
-   ```csharp
-   csc Missing1.cs /r:Missing1a.dll
-   ```
+  ```csharp
+  csc Missing1.cs /r:Missing1a.dll
+  ```
 
-   ```vb
-   vbc Missing1.vb /r:Missing1a.dll
-   ```
+  ```vb
+  vbc Missing1.vb /r:Missing1a.dll
+  ```
 
-   However, if you rename, move, or delete Missing1a.dll and run the example, it throws a <xref:System.TypeInitializationException> exception and displays the output shown in the example. Note that the exception message includes information about the <xref:System.Exception.InnerException> property. In this case,  the inner exception is a <xref:System.IO.FileNotFoundException> that is thrown because the runtime cannot find the dependent assembly.
+  However, if you rename, move, or delete Missing1a.dll and run the example, it throws a <xref:System.TypeInitializationException> exception and displays the output shown in the example. Note that the exception message includes information about the <xref:System.Exception.InnerException> property. In this case,  the inner exception is a <xref:System.IO.FileNotFoundException> that is thrown because the runtime cannot find the dependent assembly.
 
-   :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Missing1.cs" id="Snippet2":::
-   :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Missing1.fs" id="Snippet2":::
-   :::code language="vb" source="~/snippets/visualbasic/System/TypeInitializationException/Overview/Missing1.vb" id="Snippet2":::
+  :::code language="csharp" source="~/snippets/csharp/System/TypeInitializationException/Overview/Missing1.cs" id="Snippet2":::
+  :::code language="fsharp" source="~/snippets/fsharp/System/TypeInitializationException/Overview/Missing1.fs" id="Snippet2":::
+  :::code language="vb" source="~/snippets/visualbasic/System/TypeInitializationException/Overview/Missing1.vb" id="Snippet2":::
 
-   > [!NOTE]
-   > In this example, a <xref:System.TypeInitializationException> exception was thrown because an assembly could not be loaded. The exception can also be thrown if a static constructor attempts to open a data file, such as a configuration file, an XML file, or a file containing serialized data, that it cannot find.
+  > [!NOTE]
+  > In this example, a <xref:System.TypeInitializationException> exception was thrown because an assembly could not be loaded. The exception can also be thrown if a static constructor attempts to open a data file, such as a configuration file, an XML file, or a file containing serialized data, that it cannot find.
 
 ## Regular expression match timeout values
 
