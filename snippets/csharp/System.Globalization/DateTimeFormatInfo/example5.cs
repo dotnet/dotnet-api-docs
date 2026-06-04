@@ -19,7 +19,7 @@ public class Example5
         dtfi.LongTimePattern = ReplaceWith24HourClock(dtfi.LongTimePattern);
         dtfi.ShortTimePattern = ReplaceWith24HourClock(dtfi.ShortTimePattern);
 
-        Console.WriteLine("Modififed Property Values:");
+        Console.WriteLine("Modified Property Values:");
         Console.WriteLine("ShortTimePattern: " + dtfi.ShortTimePattern);
         Console.WriteLine("LongTimePattern: " + dtfi.LongTimePattern);
         Console.WriteLine("FullDateTimePattern: " + dtfi.FullDateTimePattern);
@@ -40,7 +40,7 @@ public class Example5
 //       LongTimePattern: h:mm:ss tt
 //       FullDateTimePattern: dddd, MMMM dd, yyyy h:mm:ss tt
 //
-//       Modififed Property Values:
+//       Modified Property Values:
 //       ShortTimePattern: HH:mm
 //       LongTimePattern: HH:mm:ss
 //       FullDateTimePattern: dddd, MMMM dd, yyyy HH:mm:ss

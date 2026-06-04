@@ -13,7 +13,7 @@ Module Example1
                           Thread.CurrentThread.CurrentUICulture.Name)
         Thread.CurrentThread.CurrentUICulture = New CultureInfo("pt-BR")
         ' Change the current UI culture to Portuguese (Brazil).
-        Console.WriteLine("Current culture changed to {0}",
+        Console.WriteLine("Current UI culture changed to {0}",
                           Thread.CurrentThread.CurrentUICulture.Name)
         Console.WriteLine("Application thread is thread {0}",
                           Thread.CurrentThread.ManagedThreadId)
@@ -29,9 +29,10 @@ Module Example1
         Task.WaitAll(tasks.ToArray())
     End Sub
 End Module
+
 ' The example displays output like the following:
-'     The current culture is en-US
-'     Current culture changed to pt-BR
+'     The current UI culture is en-US
+'     Current UI culture changed to pt-BR
 '     Application thread is thread 9
 '     Culture of task 2 on thread 11 is pt-BR
 '     Culture of task 1 on thread 10 is pt-BR

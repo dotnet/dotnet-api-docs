@@ -26,6 +26,7 @@ public class Example
         await Task.WhenAll(tasks.ToArray());
     }
 }
+
 // The example displays output like the following:
 //     The current UI culture is en-US
 //     Current UI culture changed to pt-BR

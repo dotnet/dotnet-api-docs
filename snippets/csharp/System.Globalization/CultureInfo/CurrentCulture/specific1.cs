@@ -19,6 +19,7 @@ public class Example2
       Console.WriteLine("{0:C2}", value);
    }
 }
+
 // The example displays the following output:
 //       Current Culture: fr-CA
 //       1 634,92 $

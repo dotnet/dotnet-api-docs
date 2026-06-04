@@ -1,4 +1,4 @@
-// <Snippet5>
+﻿// <Snippet5>
 using System;
 using System.Globalization;
 
@@ -10,6 +10,7 @@ public class Example5
       Console.WriteLine($"The current culture is {culture.NativeName} [{culture.Name}]");
    }
 }
+
 // The example displays output like the following:
 //       The current culture is English (United States) [en-US]
 // </Snippet5>

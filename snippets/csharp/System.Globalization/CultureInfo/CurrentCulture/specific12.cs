@@ -1,4 +1,4 @@
-// <Snippet12>
+﻿// <Snippet12>
 using System;
 using System.Globalization;
 using System.Threading;
@@ -17,6 +17,7 @@ public class Example12
       Console.WriteLine($"{value:C2}");
    }
 }
+
 // The example displays the following output:
 //       Current Culture: fr-CA
 //       1 634,92 $

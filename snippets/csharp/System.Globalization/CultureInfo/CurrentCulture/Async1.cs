@@ -1,8 +1,7 @@
-// <Snippet14>
+﻿// <Snippet14>
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +25,7 @@ public class Example14
         await Task.WhenAll(tasks.ToArray());
     }
 }
+
 // The example displays output like the following:
 //     The current culture is en-US
 //     Current culture changed to pt-BR
