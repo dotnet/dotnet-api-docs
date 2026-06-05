@@ -3,20 +3,20 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-public class Example
+public class Example1
 {
    public static void Main()
    {
-      string[] values = { "6", "6:12", "6:12:14", "6:12:14:45", 
-                          "6.12:14:45", "6:12:14:45.3448", 
+      string[] values = { "6", "6:12", "6:12:14", "6:12:14:45",
+                          "6.12:14:45", "6:12:14:45.3448",
                           "6:12:14:45,3448", "6:34:14:45" };
       string[] cultureNames = { "hr-HR", "en-US"};
-      
+
       // Change the current culture.
       foreach (string cultureName in cultureNames)
       {
          Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureName);
-         Console.WriteLine("Current Culture: {0}", 
+         Console.WriteLine("Current Culture: {0}",
                            Thread.CurrentThread.CurrentCulture.Name);
          foreach (string value in values)
          {
@@ -26,12 +26,12 @@ public class Example
             }
             catch (FormatException) {
                Console.WriteLine("{0}: Bad Format", value);
-            }   
+            }
             catch (OverflowException) {
                Console.WriteLine("{0}: Overflow", value);
             }
-         } 
-         Console.WriteLine();                                
+         }
+         Console.WriteLine();
       }
    }
 }
@@ -45,7 +45,7 @@ public class Example
 //    6:12:14:45.3448: Bad Format
 //    6:12:14:45,3448 --> 6.12:14:45.3448000
 //    6:34:14:45: Overflow
-//    
+//
 //    Current Culture: en-US
 //    6 --> 6.00:00:00
 //    6:12 --> 06:12:00

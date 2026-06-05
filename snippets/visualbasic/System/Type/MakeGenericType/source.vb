@@ -1,9 +1,7 @@
 ﻿'<Snippet1>
-Imports System.Reflection
-Imports System.Collections.Generic
 
 Public Class Test
-    Public Shared Sub Main()
+    Public Shared Sub Main2()
         Console.WriteLine(vbCrLf & "--- Create a constructed type from the generic Dictionary type.")
 
         ' Create a type object representing the generic Dictionary 
@@ -16,7 +14,7 @@ Public Class Test
         ' Create an array of types to substitute for the type
         ' parameters of Dictionary. The key is of type string, and
         ' the type to be contained in the Dictionary is Test.
-        Dim typeArgs() As Type = { GetType(String), GetType(Test) }
+        Dim typeArgs() As Type = {GetType(String), GetType(Test)}
 
         ' Create a Type object representing the constructed generic
         ' type.
@@ -30,7 +28,7 @@ Public Class Test
         Dim t As Type = GetType(Dictionary(Of String, Test))
         Console.WriteLine(vbTab & "Are the constructed types equal? " _
             & (t Is constructed))
-        Console.WriteLine(vbTab & "Are the generic types equal? " _ 
+        Console.WriteLine(vbTab & "Are the generic types equal? " _
             & (t.GetGenericTypeDefinition() Is generic))
     End Sub
 
