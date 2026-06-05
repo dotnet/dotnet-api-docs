@@ -3,8 +3,7 @@ Imports System.Globalization
 Imports System.Threading
 
 Public Module Example2
-   Public Sub Main()
-
+   Public Sub Run()
       ' Display the name of the current culture.
       Console.WriteLine("CurrentCulture is {0}.", CultureInfo.CurrentCulture.Name)
 

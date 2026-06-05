@@ -3,9 +3,9 @@ using System;
 using System.Globalization;
 using System.Reflection;
 
-public class Example
+public class FormatExample1
 {
-   public static void Main()
+   public static void Run()
    {
       // Get the properties of an en-US DateTimeFormatInfo object.
       DateTimeFormatInfo dtfi = CultureInfo.GetCultureInfo("en-US").DateTimeFormat;
