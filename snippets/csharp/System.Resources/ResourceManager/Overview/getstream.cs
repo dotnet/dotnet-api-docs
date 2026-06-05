@@ -1,15 +1,13 @@
 ﻿// <Snippet5>
-using System;
 using System.Drawing;
-using System.IO;
 using System.Resources;
 using System.Windows.Forms;
 
-public class Example
+public class Example3
 {
    public static void Main()
    {
-      ResourceManager rm = new ResourceManager("AppResources", typeof(Example).Assembly);
+      ResourceManager rm = new ResourceManager("AppResources", typeof(Example3).Assembly);
       Bitmap screen = (Bitmap) Image.FromStream(rm.GetStream("SplashScreen"));
 
       Form frm = new Form();

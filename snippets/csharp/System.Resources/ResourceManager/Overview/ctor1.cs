@@ -1,6 +1,6 @@
 ﻿using System.Resources;
 
-public class Example1
+public class CtorExample
 {
     public static void Main()
     {
@@ -12,7 +12,7 @@ public class Example1
     {
         // <Snippet1>
         ResourceManager rm = new ResourceManager("MyCompany.StringResources",
-                                                 typeof(Example).Assembly);
+                                                 typeof(CtorExample).Assembly);
         // </Snippet1>
     }
 

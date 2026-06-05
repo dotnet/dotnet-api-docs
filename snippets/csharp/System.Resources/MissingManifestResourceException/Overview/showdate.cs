@@ -1,4 +1,4 @@
-// <Snippet2>
+﻿// <Snippet2>
 using System;
 using System.Globalization;
 using System.Resources;
@@ -26,6 +26,7 @@ public class ShowDateEx
         }
     }
 }
+
 // The example displays output similar to the following:
 //       Current UI Culture: en-US
 //       Today is February 03.

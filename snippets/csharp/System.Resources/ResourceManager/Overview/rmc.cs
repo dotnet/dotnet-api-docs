@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Resources;
 
-class Example2
+class Example4
 {
     public static void Main()
     {
@@ -14,7 +14,7 @@ class Example2
 
         // Create a resource manager.
         ResourceManager rm = new ResourceManager("rmc",
-                                 typeof(Example).Assembly);
+                                 typeof(Example4).Assembly);
 
         Console.WriteLine("Obtain resources using the current UI culture.");
 

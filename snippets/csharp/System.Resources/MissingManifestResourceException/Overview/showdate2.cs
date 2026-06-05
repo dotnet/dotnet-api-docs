@@ -1,4 +1,4 @@
-// <Snippet3>
+﻿// <Snippet3>
 using System;
 using System.Globalization;
 using System.Resources;
@@ -24,6 +24,7 @@ public class Example2
         }
     }
 }
+
 // The example displays output similar to the following:
 //       French (France): Aujourd'hui, c'est le 7 février.
 //

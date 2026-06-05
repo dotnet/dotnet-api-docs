@@ -1,10 +1,10 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
 
-public class Example
+public class Example1
 {
     public static void Main()
     {
@@ -13,7 +13,7 @@ public class Example
         Random rnd = new Random();
         int cultureNdx = rnd.Next(0, cultures.Length);
         CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
-        ResourceManager rm = new ResourceManager("Greetings", typeof(Example).Assembly);
+        ResourceManager rm = new ResourceManager("Greetings", typeof(Example1).Assembly);
         try
         {
             CultureInfo newCulture = new CultureInfo(cultures[cultureNdx]);

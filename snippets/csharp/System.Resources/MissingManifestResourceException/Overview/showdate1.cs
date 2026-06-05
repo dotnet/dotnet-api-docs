@@ -1,10 +1,10 @@
-// <Snippet2>
+﻿// <Snippet2>
 using System;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
 
-public class Example
+public class ShowTimeExample
 {
    public static void Main()
    {
@@ -23,6 +23,7 @@ public class Example
       }
    }
 }
+
 // The example displays output similar to the following:
 //       Current UI Culture: en-US
 //       Today is February 03.

@@ -4,12 +4,12 @@ using System.Resources;
 
 [assembly: NeutralResourcesLanguageAttribute("en")]
 
-public class Example3
+public class Example2
 {
    public static void Main()
    {
       string fmtString = String.Empty;
-      ResourceManager rm = new ResourceManager("UIResources", typeof(Example).Assembly);
+      ResourceManager rm = new ResourceManager("UIResources", typeof(Example2).Assembly);
       string title = rm.GetString("TableName");
       PersonTable tableInfo = (PersonTable) rm.GetObject("Employees");
 

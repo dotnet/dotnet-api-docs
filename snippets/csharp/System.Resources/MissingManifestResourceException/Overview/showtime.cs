@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 using System.Resources;
 
@@ -12,6 +12,7 @@ public class ShowTimeEx
         Console.WriteLine($"{timeString} {DateTime.Now:T}");
     }
 }
+
 // The example displays output like the following:
 //        The current time is 2:03:14 PM
 // </Snippet1>
