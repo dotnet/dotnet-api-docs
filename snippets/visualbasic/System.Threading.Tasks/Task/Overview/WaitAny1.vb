@@ -3,6 +3,7 @@ Option Strict On
 
 ' <Snippet10>
 Imports System.Threading
+Imports System.Threading.Tasks
 
 Module Example8
     Public Sub Main()
@@ -27,7 +28,7 @@ Module Example8
 End Module
 ' The example displays output like the following:
 '     Task #1 completed first.
-'     
+'
 '     Status of all tasks:
 '        Task #3: Running
 '        Task #1: RanToCompletion

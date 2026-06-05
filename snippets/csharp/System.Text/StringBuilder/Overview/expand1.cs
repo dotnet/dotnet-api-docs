@@ -22,18 +22,17 @@ public class Example6
         int pos = sb.ToString().IndexOf("characters:") + 11 +
                   Environment.NewLine.Length;
         // Insert a column header.
-        sb.Insert(pos, String.Format("{2}{0,12:X4} {1,12}{2}", "Code Unit",
-                                     "Character", "\n"));
+        sb.Insert(pos, $"{Environment.NewLine}{"Code Unit",12} {"Character",12}{Environment.NewLine}");
 
-        // Convert the StringBuilder to a string and display it.      
+        // Convert the StringBuilder to a string and display it.
         Console.WriteLine(sb.ToString());
     }
 }
 // The example displays the following output:
 //    ********** Adding Text to a StringBuilder Object **********
-//    
+//
 //    Some code points and their corresponding characters:
-//    
+//
 //       Code Unit    Character
 //            0032            2
 //            0033            3

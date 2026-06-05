@@ -18,7 +18,7 @@ Public Class SynchronizedCache
           Return innerCache.Count
        End Get
     End Property
-    
+
     Public Function Read(ByVal key As Integer) As String
         cacheLock.EnterReadLock()
         Try
@@ -109,7 +109,7 @@ Public Module Example
       Dim sc As New SynchronizedCache()
       Dim tasks As New List(Of Task)
       Dim itemsWritten As Integer
-      
+
       ' Execute a writer.
       tasks.Add(Task.Run( Sub()
                              Dim vegetables() As String = { "broccoli", "cauliflower",
@@ -150,7 +150,7 @@ Public Module Example
                                 Loop While items < itemsWritten Or itemsWritten = 0
                              End Sub))
       Next
-      ' Execute a red/update task.
+      ' Execute a read/update task.
       tasks.Add(Task.Run( Sub()
                              For ctr As Integer = 1 To sc.Count
                                 Dim value As String = sc.Read(ctr)

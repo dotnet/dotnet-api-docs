@@ -22,18 +22,18 @@ Module Example7
         Dim pos As Integer = sb.ToString().IndexOf("characters:") + 11 +
                            Environment.NewLine.Length
         ' Insert a column header.
-        sb.Insert(pos, String.Format("{2}{0,12:X4} {1,12}{2}", "Code Unit",
+        sb.Insert(pos, String.Format("{2}{0,12} {1,12}{2}", "Code Unit",
                                    "Character", vbCrLf))
 
-        ' Convert the StringBuilder to a string and display it.      
+        ' Convert the StringBuilder to a string and display it.
         Console.WriteLine(sb.ToString())
     End Sub
 End Module
 ' The example displays the following output:
 '       ********** Adding Text to a StringBuilder Object **********
-'       
+'
 '       Some code points and their corresponding characters:
-'       
+'
 '          Code Unit    Character
 '               0032            2
 '               0033            3
