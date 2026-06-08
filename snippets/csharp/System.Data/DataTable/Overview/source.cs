@@ -1,22 +1,29 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 using System.Data;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        // Create two tables and add them into the DataSet
+        // Create two tables and add them into the DataSet.
         DataTable orderTable = CreateOrderTable();
         DataTable orderDetailTable = CreateOrderDetailTable();
-        DataSet salesSet = new DataSet();
+        DataSet salesSet = new();
         salesSet.Tables.Add(orderTable);
         salesSet.Tables.Add(orderDetailTable);
 
-        // Set the relations between the tables and create the related constraint.
-        salesSet.Relations.Add("OrderOrderDetail", orderTable.Columns["OrderId"], orderDetailTable.Columns["OrderId"], true);
+        // Set the relations between the tables
+        // and create the related constraint.
+        salesSet.Relations.Add(
+            "OrderOrderDetail",
+            orderTable.Columns["OrderId"],
+            orderDetailTable.Columns["OrderId"],
+            true);
 
-        Console.WriteLine("After creating the foreign key constraint, you will see the following error if inserting order detail with the wrong OrderId: ");
+        Console.WriteLine("After creating the foreign key constraint, " +
+            "you'll see the following error if you insert " +
+            "an order detail with the wrong OrderId:\n");
         try
         {
             DataRow errorRow = orderDetailTable.NewRow();
@@ -41,15 +48,18 @@ class Program
         ShowTable(orderDetailTable);
 
         // Use the Aggregate-Sum on the child table column to get the result.
-        DataColumn colSub = new DataColumn("SubTotal", typeof(Decimal), "Sum(Child.LineTotal)");
+        DataColumn colSub = new("SubTotal", typeof(decimal), "Sum(Child.LineTotal)");
         orderTable.Columns.Add(colSub);
 
         // Compute the tax by referencing the SubTotal expression column.
-        DataColumn colTax = new DataColumn("Tax", typeof(Decimal), "SubTotal*0.1");
+        DataColumn colTax = new("Tax", typeof(decimal), "SubTotal*0.1");
         orderTable.Columns.Add(colTax);
 
         // If the OrderId is 'Total', compute the due on all orders; or compute the due on this order.
-        DataColumn colTotal = new DataColumn("TotalDue", typeof(Decimal), "IIF(OrderId='Total',Sum(SubTotal)+Sum(Tax),SubTotal+Tax)");
+        DataColumn colTotal = new(
+            "TotalDue",
+            typeof(decimal),
+            "IIF(OrderId='Total',Sum(SubTotal)+Sum(Tax),SubTotal+Tax)");
         orderTable.Columns.Add(colTotal);
 
         DataRow row = orderTable.NewRow();
@@ -65,35 +75,35 @@ class Program
 
     private static DataTable CreateOrderTable()
     {
-        DataTable orderTable = new DataTable("Order");
+        DataTable orderTable = new("Order");
 
         // Define one column.
-        DataColumn colId = new DataColumn("OrderId", typeof(String));
+        DataColumn colId = new("OrderId", typeof(string));
         orderTable.Columns.Add(colId);
 
-        DataColumn colDate = new DataColumn("OrderDate", typeof(DateTime));
+        DataColumn colDate = new("OrderDate", typeof(DateTime));
         orderTable.Columns.Add(colDate);
 
         // Set the OrderId column as the primary key.
-        orderTable.PrimaryKey = new DataColumn[] { colId };
+        orderTable.PrimaryKey = [colId];
 
         return orderTable;
     }
 
     private static DataTable CreateOrderDetailTable()
     {
-        DataTable orderDetailTable = new DataTable("OrderDetail");
+        DataTable orderDetailTable = new("OrderDetail");
 
         // Define all the columns once.
         DataColumn[] cols =
-        {
-            new DataColumn("OrderDetailId", typeof(Int32)),
-            new DataColumn("OrderId", typeof(String)),
-            new DataColumn("Product", typeof(String)),
-            new DataColumn("UnitPrice", typeof(Decimal)),
-            new DataColumn("OrderQty", typeof(Int32)),
-            new DataColumn("LineTotal", typeof(Decimal), "UnitPrice*OrderQty")
-        };
+        [
+            new DataColumn("OrderDetailId", typeof(int)),
+            new DataColumn("OrderId", typeof(string)),
+            new DataColumn("Product", typeof(string)),
+            new DataColumn("UnitPrice", typeof(decimal)),
+            new DataColumn("OrderQty", typeof(int)),
+            new DataColumn("LineTotal", typeof(decimal), "UnitPrice*OrderQty")
+        ];
 
         orderDetailTable.Columns.AddRange(cols);
         orderDetailTable.PrimaryKey = [orderDetailTable.Columns["OrderDetailId"]];
@@ -122,19 +132,20 @@ class Program
     private static void InsertOrderDetails(DataTable orderDetailTable)
     {
         // Use an Object array to insert all the rows .
-        // Values in the array are matched sequentially to the columns, based on the order in which they appear in the table.
-        Object[] rows =
-        {
-            new Object[] { 1, "O0001", "Mountain Bike", 1419.5, 36 },
-            new Object[] { 2, "O0001", "Road Bike", 1233.6, 16 },
-            new Object[] { 3, "O0001", "Touring Bike", 1653.3, 32 },
-            new Object[] { 4, "O0002", "Mountain Bike", 1419.5, 24 },
-            new Object[] { 5, "O0002", "Road Bike", 1233.6, 12 },
-            new Object[] { 6, "O0003", "Mountain Bike", 1419.5, 48 },
-            new Object[] { 7, "O0003", "Touring Bike", 1653.3, 8 },
-        };
+        // Values in the array are matched sequentially to the columns,
+        // based on the order in which they appear in the table.
+        object[][] rows =
+        [
+            [1, "O0001", "Mountain Bike", 1419.5, 36],
+            [2, "O0001", "Road Bike", 1233.6, 16],
+            [3, "O0001", "Touring Bike", 1653.3, 32],
+            [4, "O0002", "Mountain Bike", 1419.5, 24],
+            [5, "O0002", "Road Bike", 1233.6, 12],
+            [6, "O0003", "Mountain Bike", 1419.5, 48],
+            [7, "O0003", "Touring Bike", 1653.3, 8],
+        ];
 
-        foreach (Object[] row in rows.Cast<object[]>())
+        foreach (object[] row in rows)
         {
             orderDetailTable.Rows.Add(row);
         }
@@ -154,7 +165,7 @@ class Program
             {
                 if (col.DataType.Equals(typeof(DateTime)))
                     Console.Write("{0,-14:d}", row[col]);
-                else if (col.DataType.Equals(typeof(Decimal)))
+                else if (col.DataType.Equals(typeof(decimal)))
                     Console.Write("{0,-14:C}", row[col]);
                 else
                     Console.Write("{0,-14}", row[col]);
