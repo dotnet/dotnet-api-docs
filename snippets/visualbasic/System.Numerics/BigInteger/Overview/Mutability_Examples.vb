@@ -1,5 +1,5 @@
 ﻿' Visual Basic .NET Document
-'Option Strict On
+Option Strict On
 
 Imports System.Diagnostics
 Imports System.Numerics
