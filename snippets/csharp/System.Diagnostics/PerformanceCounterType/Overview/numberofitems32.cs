@@ -4,14 +4,13 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-public class NumberOfItems64
+public class NumberOfItems32
 {
-
 	private static PerformanceCounter PC;
 
 	public static void Main()
-	{	
-		ArrayList samplesList = new ArrayList();
+	{
+		ArrayList samplesList = [];
 
         // If the category does not exist, create the category and exit.
         // Performance counters should not be created and immediately used.
@@ -20,23 +19,26 @@ public class NumberOfItems64
         // Execute this sample a second time to use the category.
         if (SetupCategory())
             return;
+
         CreateCounters();
 		CollectSamples(samplesList);
 		CalculateResults(samplesList);
 	}
 
     private static bool SetupCategory()
-    {		
+    {
         if ( !PerformanceCounterCategory.Exists("NumberOfItems32SampleCategory") )
         {
 
             CounterCreationDataCollection CCDC = new CounterCreationDataCollection();
 
             // Add the counter.
-            CounterCreationData NOI64 = new CounterCreationData();
-            NOI64.CounterType = PerformanceCounterType.NumberOfItems64;
-            NOI64.CounterName = "NumberOfItems32Sample";
-            CCDC.Add(NOI64);
+            CounterCreationData NOI32 = new CounterCreationData
+            {
+                CounterType = PerformanceCounterType.NumberOfItems32,
+                CounterName = "NumberOfItems32Sample"
+            };
+            CCDC.Add(NOI32);
 
             // Create the category.
             PerformanceCounterCategory.Create("NumberOfItems32SampleCategory",
@@ -55,22 +57,24 @@ public class NumberOfItems64
     private static void CreateCounters()
     {
         // Create the counter.
-        PC = new PerformanceCounter("NumberOfItems32SampleCategory",
-			"NumberOfItems32Sample",
-			false);
-
-        PC.RawValue=0;
+        PC = new PerformanceCounter(
+            "NumberOfItems32SampleCategory",
+            "NumberOfItems32Sample",
+            false)
+        {
+            RawValue = 0
+        };
     }
 
 	private static void CollectSamples(ArrayList samplesList)
 	{
 
-		Random r = new Random( DateTime.Now.Millisecond );
+		Random r = new( DateTime.Now.Millisecond );
 
 		// Loop for the samples.
 		for (int j = 0; j < 100; j++)
 		{
-	
+
 			int value = r.Next(1, 10);
 			Console.Write(j + " = " + value);
 
@@ -117,7 +121,7 @@ public class NumberOfItems64
 		Single counterValue = s1.RawValue;
 		return(counterValue);
 	}
-	
+
 	// Output information about the counter sample.
 	private static void OutputSample(CounterSample s)
 	{

@@ -120,8 +120,9 @@ namespace Demo
             public const EventKeywords StateChanges = (EventKeywords)(1 << 1);
             public const EventKeywords Performance = (EventKeywords)(1 << 2);
             public const EventKeywords DumpState = (EventKeywords)(1 << 3);
-            // a utility keyword for a common combination of keywords users might enable
-            public const EventKeywords StateTracking = ComponentLifespan & StateChanges & DumpState;
+            // A utility keyword for a common combination of
+            // keywords users might enable.
+            public const EventKeywords StateTracking = ComponentLifespan | StateChanges | DumpState;
         }
 
         protected override void OnEventCommand(EventCommandEventArgs args)

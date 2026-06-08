@@ -16,7 +16,7 @@ class Program
         // Set the relations between the tables and create the related constraint.
         salesSet.Relations.Add("OrderOrderDetail", orderTable.Columns["OrderId"], orderDetailTable.Columns["OrderId"], true);
 
-        Console.WriteLine("After creating the foreign key constriant, you will see the following error if inserting order detail with the wrong OrderId: ");
+        Console.WriteLine("After creating the foreign key constraint, you will see the following error if inserting order detail with the wrong OrderId: ");
         try
         {
             DataRow errorRow = orderDetailTable.NewRow();
@@ -30,7 +30,7 @@ class Program
         }
         Console.WriteLine();
 
-        // Insert the rows into the table
+        // Insert the rows into the table.
         InsertOrders(orderTable);
         InsertOrderDetails(orderDetailTable);
 
@@ -96,7 +96,7 @@ class Program
         };
 
         orderDetailTable.Columns.AddRange(cols);
-        orderDetailTable.PrimaryKey = new DataColumn[] { orderDetailTable.Columns["OrderDetailId"] };
+        orderDetailTable.PrimaryKey = [orderDetailTable.Columns["OrderDetailId"]];
         return orderDetailTable;
     }
 
@@ -134,7 +134,7 @@ class Program
             new Object[] { 7, "O0003", "Touring Bike", 1653.3, 8 },
         };
 
-        foreach (Object[] row in rows)
+        foreach (Object[] row in rows.Cast<object[]>())
         {
             orderDetailTable.Rows.Add(row);
         }

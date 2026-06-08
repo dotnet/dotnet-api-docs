@@ -5,10 +5,9 @@ Imports System.Diagnostics
 Imports System.Runtime.Versioning
 
 <SupportedOSPlatform("Windows")>
-Public Class NumberOfItems64
+Public Class NumberOfItems32
 
     Private Shared PC As PerformanceCounter
-
 
     Public Shared Sub Main()
         Dim samplesList As New ArrayList()
@@ -24,17 +23,16 @@ Public Class NumberOfItems64
         End If
     End Sub
 
-
     Private Shared Function SetupCategory() As Boolean
         If Not PerformanceCounterCategory.Exists("NumberOfItems32SampleCategory") Then
 
             Dim CCDC As New CounterCreationDataCollection()
 
             ' Add the counter.
-            Dim NOI64 As New CounterCreationData()
-            NOI64.CounterType = PerformanceCounterType.NumberOfItems64
-            NOI64.CounterName = "NumberOfItems32Sample"
-            CCDC.Add(NOI64)
+            Dim NOI32 As New CounterCreationData()
+            NOI32.CounterType = PerformanceCounterType.NumberOfItems32
+            NOI32.CounterName = "NumberOfItems32Sample"
+            CCDC.Add(NOI32)
 
             ' Create the category.
             PerformanceCounterCategory.Create("NumberOfItems32SampleCategory", _
@@ -48,7 +46,6 @@ Public Class NumberOfItems64
         End If
     End Function 'SetupCategory
 
-
     Private Shared Sub CreateCounters()
         ' Create the counter.
         PC = New PerformanceCounter("NumberOfItems32SampleCategory", "NumberOfItems32Sample", False)
@@ -56,10 +53,7 @@ Public Class NumberOfItems64
         PC.RawValue = 0
     End Sub
 
-
     Private Shared Sub CollectSamples(ByVal samplesList As ArrayList)
-
-
 
         Dim r As New Random(DateTime.Now.Millisecond)
 
@@ -82,9 +76,6 @@ Public Class NumberOfItems64
         Next j
     End Sub
 
-
-
-
     Private Shared Sub CalculateResults(ByVal samplesList As ArrayList)
         Dim i As Integer
         For i = 0 To (samplesList.Count - 1) - 1
@@ -100,16 +91,12 @@ Public Class NumberOfItems64
         Next i
     End Sub
 
-
-
-
     '++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     '++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++//++++++++
     Private Shared Function MyComputeCounterValue(ByVal s0 As CounterSample, ByVal s1 As CounterSample) As [Single]
         Dim counterValue As [Single] = s1.RawValue
         Return counterValue
     End Function 'MyComputeCounterValue
-
 
     ' Output information about the counter sample.
     Private Shared Sub OutputSample(ByVal s As CounterSample)
@@ -126,6 +113,4 @@ Public Class NumberOfItems64
         Console.WriteLine("++++++++++++++++++++++")
     End Sub
 End Class
-
-
 '</snippet1>
