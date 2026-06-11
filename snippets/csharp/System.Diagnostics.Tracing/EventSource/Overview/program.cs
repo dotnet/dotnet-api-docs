@@ -1,7 +1,7 @@
 ﻿//<Snippet1>
 using System.Diagnostics.Tracing;
 
-namespace Demo1
+namespace Demo
 {
     //<Snippet2>
     sealed class MyCompanyEventSource : EventSource
@@ -15,7 +15,7 @@ namespace Demo1
     //</Snippet2>
 
     //<Snippet3>
-    class Program1
+    class Program
     {
         static void Main(string[] args)
         {

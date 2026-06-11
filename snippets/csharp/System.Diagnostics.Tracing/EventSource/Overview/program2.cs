@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
-namespace Demo
+namespace Demo2
 {
     //<InterfaceSource>
     public interface IMyLogging
