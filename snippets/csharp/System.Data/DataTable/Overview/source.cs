@@ -55,7 +55,7 @@ class Program
         DataColumn colTax = new("Tax", typeof(decimal), "SubTotal*0.1");
         orderTable.Columns.Add(colTax);
 
-        // If the OrderId is 'Total', compute the due on all orders; or compute the due on this order.
+        // If the OrderId is 'Total', compute the amount due on all orders; otherwise, compute the amount due on this order.
         DataColumn colTotal = new(
             "TotalDue",
             typeof(decimal),
@@ -77,7 +77,7 @@ class Program
     {
         DataTable orderTable = new("Order");
 
-        // Define one column.
+        // Define the columns one at a time.
         DataColumn colId = new("OrderId", typeof(string));
         orderTable.Columns.Add(colId);
 
@@ -94,7 +94,7 @@ class Program
     {
         DataTable orderDetailTable = new("OrderDetail");
 
-        // Define all the columns once.
+        // Define all the columns at once.
         DataColumn[] cols =
         [
             new DataColumn("OrderDetailId", typeof(int)),
@@ -112,7 +112,7 @@ class Program
 
     private static void InsertOrders(DataTable orderTable)
     {
-        // Add one row once.
+        // Add one row at a time.
         DataRow row1 = orderTable.NewRow();
         row1["OrderId"] = "O0001";
         row1["OrderDate"] = new DateTime(2013, 3, 1);
@@ -131,7 +131,7 @@ class Program
 
     private static void InsertOrderDetails(DataTable orderDetailTable)
     {
-        // Use an Object array to insert all the rows .
+        // Use an Object array to insert all the rows.
         // Values in the array are matched sequentially to the columns,
         // based on the order in which they appear in the table.
         object[][] rows =
