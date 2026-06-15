@@ -61,10 +61,47 @@
 
 ## Remarks
 
-For more information about this API, see [Supplemental API remarks for AssemblyBuilder](/dotnet/fundamentals/runtime-libraries/system-reflection-emit-assemblybuilder).
+A dynamic assembly is an assembly that is created using the Reflection Emit APIs. A dynamic assembly can reference types defined in another dynamic or static assembly. You can use <xref:System.Reflection.Emit.AssemblyBuilder> to generate dynamic assemblies in memory and execute their code during the same application run. .NET 9 introduced the <xref:System.Reflection.Emit.PersistedAssemblyBuilder> type with a fully managed implementation of reflection emit that allows you to save the assembly to a file. A dynamic assembly can consist of only one dynamic module.
 
-> [!WARNING]
-> `AssemblyBuilder` APIs require a fully trusted environment with trusted input, similar to other technologies such as compilers. There are no restrictions other than basic validation for generated IL that the `AssemblyBuilder` can contain. That includes validation for member name, count, and associated metadata, such as custom attributes.
+## Runnable dynamic assemblies in .NET
+
+To get a runnable <xref:System.Reflection.Emit.AssemblyBuilder> object, use the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicAssembly*?displayProperty=nameWithType> method. Dynamic assemblies can be created using one of the following access modes:
+
+- <xref:System.Reflection.Emit.AssemblyBuilderAccess.Run?displayProperty=nameWithType>
+
+  The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> can be used to execute the emitted code.
+
+- <xref:System.Reflection.Emit.AssemblyBuilderAccess.RunAndCollect?displayProperty=nameWithType>
+
+  The dynamic assembly represented by an <xref:System.Reflection.Emit.AssemblyBuilder> can be used to execute the emitted code and is automatically reclaimed by the garbage collector.
+
+The access mode must be specified by providing the appropriate <xref:System.Reflection.Emit.AssemblyBuilderAccess> value in the call to the <xref:System.Reflection.Emit.AssemblyBuilder.DefineDynamicAssembly*?displayProperty=nameWithType> method when the dynamic assembly is defined and cannot be changed later. The runtime uses the access mode of a dynamic assembly to optimize the assembly's internal representation.
+
+The following example demonstrates how to create and run an assembly:
+
+```csharp
+public void CreateAndRunAssembly(string assemblyPath)
+{
+    AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("MyAssembly"), AssemblyBuilderAccess.Run);
+    ModuleBuilder mob = ab.DefineDynamicModule("MyModule");
+    TypeBuilder tb = mob.DefineType("MyType", TypeAttributes.Public | TypeAttributes.Class);
+    MethodBuilder mb = tb.DefineMethod("SumMethod", MethodAttributes.Public | MethodAttributes.Static,
+                                                                   typeof(int), new Type[] {typeof(int), typeof(int)});
+    ILGenerator il = mb.GetILGenerator();
+    il.Emit(OpCodes.Ldarg_0);
+    il.Emit(OpCodes.Ldarg_1);
+    il.Emit(OpCodes.Add);
+    il.Emit(OpCodes.Ret);
+
+    Type type = tb.CreateType();
+
+    MethodInfo method = type.GetMethod("SumMethod");
+    Console.WriteLine(method.Invoke(null, new object[] { 5, 10 }));
+}
+```
+
+The <xref:System.Reflection.Emit.PersistedAssemblyBuilder> type, which derives from <xref:System.Reflection.Emit.AssemblyBuilder>, lets you save dynamic assemblies. For more information, see the usage scenarios and examples at <xref:System.Reflection.Emit.PersistedAssemblyBuilder>.
+
 ]]></format>
     </remarks>
     <example>

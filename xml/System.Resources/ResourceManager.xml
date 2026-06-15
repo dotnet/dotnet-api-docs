@@ -66,7 +66,255 @@
   </Attributes>
   <Docs>
     <summary>Represents a resource manager that provides convenient access to culture-specific resources at run time.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager">Supplemental API remarks for ResourceManager</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+[!INCLUDE [untrusted-data-class-note](~/includes/untrusted-data-class-note.md)]
+
+The <xref:System.Resources.ResourceManager> class retrieves resources from a binary .resources file that is embedded in an assembly or from a standalone .resources file. If an app has been localized and localized resources have been deployed in [satellite assemblies](/dotnet/framework/resources/creating-satellite-assemblies-for-desktop-apps), it looks up culture-specific resources, provides resource fallback when a localized resource does not exist, and supports resource serialization.
+
+## Desktop apps
+
+For desktop apps, the <xref:System.Resources.ResourceManager> class retrieves resources from binary resource (.resources) files. Typically, a language compiler or the [Assembly Linker (AL.exe)](/dotnet/framework/tools/al-exe-assembly-linker) embeds these resource files in an assembly. You can also use a <xref:System.Resources.ResourceManager> object to retrieve resources directly from a .resources file that is not embedded in an assembly, by calling the <xref:System.Resources.ResourceManager.CreateFileBasedResourceManager*> method.
+
+> [!CAUTION]
+> Using standalone .resources files in an ASP.NET app will break XCOPY deployment, because the resources remain locked until they are explicitly released by the <xref:System.Resources.ResourceManager.ReleaseAllResources*> method. If you want to deploy resources with your ASP.NET apps, you should compile your .resources files into satellite assemblies.
+
+In a resource-based app, one .resources file contains the resources of the default culture whose resources are used if no culture-specific resources can be found. For example, if an app's default culture is English (en), the English language resources are used whenever localized resources cannot be found for a specific culture, such as English (United States) (en-US) or French (France) (fr-FR). Typically, the resources for the default culture are embedded in the main app assembly, and resources for other localized cultures are embedded in satellite assemblies. Satellite assemblies contain only resources. They have the same root file name as the main assembly and an extension of .resources.dll. For apps whose assemblies are not registered in the global assembly cache, satellite assemblies are stored in an app subdirectory whose name corresponds to the assembly's culture.
+
+### Create resources
+
+When you develop a resource-based app, you store resource information in text files (files that have a .txt or .restext extension) or XML files (files that have a .resx extension). You then compile the text or XML files with the [Resource File Generator (Resgen.exe)](/dotnet/framework/tools/resgen-exe-resource-file-generator) to create a binary .resources file. You can then embed the resulting .resources file in an executable or library by using a compiler option such as `/resources` for the C# and Visual Basic compilers, or you can embed it in a satellite assembly by using the [Assembly Linker (AL.exe)](/dotnet/framework/tools/al-exe-assembly-linker). If you include a .resx file in your Visual Studio project, Visual Studio handles the compilation and embedding of default and localized resources automatically as part of the build process.
+
+Ideally, you should create resources for every language your app supports, or at least for a meaningful subset of each language. The binary .resources file names follow the naming convention *basename*.*cultureName*.resources, where *basename* is the name of the app or the name of a class, depending on the level of detail you want. The <xref:System.Globalization.CultureInfo.Name?displayProperty=nameWithType> property is used to determine *cultureName*. A resource for the app's default culture should be named *basename*.resources.
+
+For example, suppose that an assembly has several resources in a resource file that has the base name MyResources. These resource files should have names such as MyResources.ja-JP.resources for the Japan (Japanese) culture, MyResources.de.resources for the German culture, MyResources.zh-CHS.resources for the simplified Chinese culture, and MyResources.fr-BE.resources for the French (Belgium) culture. The default resource file should be named MyResources.resources. The culture-specific resource files are commonly packaged in satellite assemblies for each culture. The default resource file should be embedded in the app's main assembly.
+
+Note that [Assembly Linker](/dotnet/framework/tools/al-exe-assembly-linker) allows resources to be marked as private, but you should always mark them as public so they can be accessed by other assemblies. (Because a satellite assembly contains no code, resources that are marked as private are unavailable to your app through any mechanism.)
+
+For more information about creating, packaging, and deploying resources, see the articles [Creating Resource Files](/dotnet/framework/resources/creating-resource-files-for-desktop-apps), [Creating Satellite Assemblies](/dotnet/framework/resources/creating-satellite-assemblies-for-desktop-apps), and [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps).
+
+### Instantiate a ResourceManager object
+
+You instantiate a <xref:System.Resources.ResourceManager> object that retrieves resources from an embedded .resources file by calling one of its class constructor overloads. This tightly couples a <xref:System.Resources.ResourceManager> object with a particular .resources file and with any associated localized .resources files in satellite assemblies.
+
+The two most commonly called constructors are:
+
+- <xref:System.Resources.ResourceManager.%23ctor(System.String,System.Reflection.Assembly)> looks up resources based on two pieces of information that you supply: the base name of the .resources file, and the assembly in which the default .resources file resides. The base name includes the namespace and root name of the .resources file, without its culture or extension. Note that .resources files that are compiled from the command line typically do not include a namespace name, whereas .resources files that are created in the Visual Studio environment do. For example, if a resource file is named MyCompany.StringResources.resources and the <xref:System.Resources.ResourceManager> constructor is called from a static method named `Example.Main`, the following code instantiates a <xref:System.Resources.ResourceManager> object that can retrieve resources from the .resources file:
+
+  :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/ctor1.cs" id="Snippet1":::
+  :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/Overview/ctor1.vb" id="Snippet1":::
+
+- <xref:System.Resources.ResourceManager.%23ctor(System.Type)> looks up resources in satellite assemblies based on information from a type object. The type's fully qualified name corresponds to the base name of the .resources file without its file name extension. In desktop apps that are created by using the Visual Studio Resource Designer, Visual Studio creates a wrapper class whose fully qualified name is the same as the root name of the .resources file. For example, if a resource file is named MyCompany.StringResources.resources and there is a wrapper class named `MyCompany.StringResources`, the following code instantiates a <xref:System.Resources.ResourceManager> object that can retrieve resources from the .resources file:
+
+  :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/ctor1.cs" id="Snippet2":::
+  :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/Overview/ctor1.vb" id="Snippet2":::
+
+If the appropriate resources cannot be found, the constructor call creates a valid <xref:System.Resources.ResourceManager> object. However, the attempt to retrieve a resource throws a <xref:System.Resources.MissingManifestResourceException> exception. For information about dealing with the exception, see the [Handle MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions](#handle-missingmanifestresourceexception-and-missingsatelliteassemblyexception-exceptions) section later in this article.
+
+The following example shows how to instantiate a <xref:System.Resources.ResourceManager> object. It contains the source code for an executable named ShowTime.exe. It also includes the following text file named Strings.txt that contains a single string resource, `TimeHeader`:
+
+```
+TimeHeader=The current time is
+```
+
+You can use a batch file to generate the resource file and embed it into the executable. Here's the batch file to generate an executable by using the C# compiler:
+
+```
+resgen strings.txt
+csc ShowTime.cs /resource:strings.resources
+```
+
+For the Visual Basic compiler, you can use the following batch file:
+
+```
+resgen strings.txt
+vbc ShowTime.vb /resource:strings.resources
+```
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/showtime.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/Overview/showtime.vb" id="Snippet1":::
+
+### ResourceManager and culture-specific resources
+
+A localized app requires resources to be deployed, as discussed in the article [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps). If the assemblies are properly configured, the resource manager determines which resources to retrieve based on the current thread's <xref:System.Threading.Thread.CurrentUICulture?displayProperty=nameWithType> property. (That property also returns the current thread's UI culture.) For example, if an app is compiled with default English language resources in the main assembly and with French and Russian language resources in two satellite assemblies, and the <xref:System.Threading.Thread.CurrentUICulture?displayProperty=nameWithType> property is set to fr-FR, the resource manager retrieves the French resources.
+
+You can set the <xref:System.Globalization.CultureInfo.CurrentUICulture> property explicitly or implicitly. The way you set it determines how the <xref:System.Resources.ResourceManager> object retrieves resources based on culture:
+
+- If you explicitly set the <xref:System.Threading.Thread.CurrentUICulture?displayProperty=nameWithType> property to a specific culture, the resource manager always retrieves the resources for that culture, regardless of the user's browser or operating system language. Consider an app that is compiled with default English language resources and three satellite assemblies that contain resources for English (United States), French (France), and Russian (Russia). If the <xref:System.Globalization.CultureInfo.CurrentUICulture> property is set to fr-FR, the <xref:System.Resources.ResourceManager> object always retrieves the French (France) resources, even if the user's operating system language is not French. Make sure that this is the desired behavior before you set the property explicitly.
+
+  In ASP.NET apps, you must set the <xref:System.Threading.Thread.CurrentUICulture?displayProperty=nameWithType> property explicitly, because it is unlikely that the setting on the server will match incoming client requests. An ASP.NET app can set the <xref:System.Threading.Thread.CurrentUICulture?displayProperty=nameWithType> property explicitly to the user's browser accept language.
+
+  Explicitly setting the <xref:System.Threading.Thread.CurrentUICulture?displayProperty=nameWithType> property defines the current UI culture for that thread. It does not affect the current UI culture of any other threads in an app.
+
+- You can set the UI culture of all threads in an app domain by assigning a <xref:System.Globalization.CultureInfo> object that represents that culture to the static <xref:System.Globalization.CultureInfo.DefaultThreadCurrentUICulture?displayProperty=nameWithType> property.
+
+- If you do not explicitly set the current UI culture and you do not define a default culture for the current app domain, the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property is set implicitly by the Windows `GetUserDefaultUILanguage` function. This function is provided by the Multilingual User Interface (MUI), which enables the user to set the default language. If the UI language is not set by the user, it defaults to the system-installed language, which is the language of operating system resources.
+
+The following simple "Hello world" example sets the current UI culture explicitly. It contains resources for three cultures: English (United States) or en-US, French (France) or fr-FR, and Russian (Russia) or ru-RU. The en-US resources are contained in a text file named Greetings.txt:
+
+```
+HelloString=Hello world!
+```
+
+The fr-FR resources are contained in a text file named Greetings.fr-FR.txt:
+
+```
+HelloString=Salut tout le monde!
+```
+
+The ru-RU resources are contained in a text file named Greetings.ru-RU.txt:
+
+```
+HelloString=Всем привет!
+```
+
+Here's the source code for the example (Example.vb for the Visual Basic version or Example.cs for the C# version):
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/CurrentCulture/Overview/example.vb" id="Snippet1":::
+
+To compile this example, create a batch (.bat) file that contains the following commands and run it from the command prompt. If you're using C#, specify `csc` instead of `vbc` and `Example.cs` instead of `Example.vb`.
+
+```
+resgen Greetings.txt
+vbc Example.vb /resource:Greetings.resources
+
+resgen Greetings.fr-FR.txt
+Md fr-FR
+al /embed:Greetings.fr-FR.resources /culture:fr-FR /out:fr-FR\Example.resources.dll
+
+resgen Greetings.ru-RU.txt
+Md ru-RU
+al /embed:Greetings.ru-RU.resources /culture:ru-RU /out:ru-RU\Example.resources.dll
+```
+
+### Retrieve resources
+
+You call the <xref:System.Resources.ResourceManager.GetObject(System.String)> and <xref:System.Resources.ResourceManager.GetString(System.String)> methods to access a specific resource. You can also call the <xref:System.Resources.ResourceManager.GetStream(System.String)> method to retrieve non-string resources as a byte array. By default, in an app that has localized resources, these methods return the resource for the culture determined by the current UI culture of the thread that made the call. See the previous section, [ResourceManager and culture-specific resources](#resourcemanager-and-culture-specific-resources), for more information about how the current UI culture of a thread is defined. If the resource manager cannot find the resource for the current thread's UI culture, it uses a fallback process to retrieve the specified resource. If the resource manager cannot find any localized resources, it uses the resources of the default culture. For more information about resource fallback rules, see the "Resource Fallback Process" section of the article [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps).
+
+> [!NOTE]
+> If the .resources file specified in the <xref:System.Resources.ResourceManager> class constructor cannot be found, the attempt to retrieve a resource throws a <xref:System.Resources.MissingManifestResourceException> or <xref:System.Resources.MissingSatelliteAssemblyException> exception. For information about dealing with the exception, see the [Handle MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions](#handle-missingmanifestresourceexception-and-missingsatelliteassemblyexception-exceptions) section later in this article.
+
+The following example uses the <xref:System.Resources.ResourceManager.GetString*> method to retrieve culture-specific resources. It consists of resources compiled from .txt files for the English (en), French (France) (fr-FR), and Russian (Russia) (ru-RU) cultures. The example changes the current culture and current UI culture to English (United States), French (France), Russian (Russia), and Swedish (Sweden). It then calls the <xref:System.Resources.ResourceManager.GetString*> method to retrieve the localized string, which it displays along with the current day and month. Notice that the output displays the appropriate localized string except when the current UI culture is Swedish (Sweden). Because Swedish language resources are unavailable, the app instead uses the resources of the default culture, which is English.
+
+The example requires the text-based resource files listed in the following table. Each has a single string resource named `DateStart`.
+
+| Culture | File name             | Resource name | Resource value        |
+|---------|-----------------------|---------------|-----------------------|
+| en-US   | DateStrings.txt       | `DateStart`   | Today is              |
+| fr-FR   | DateStrings.fr-FR.txt | `DateStart`   | Aujourd'hui, c'est le |
+| ru-RU   | DateStrings.ru-RU.txt | `DateStart`   | Сегодня               |
+
+Here's the source code for the example (ShowDate.vb for the Visual Basic version or ShowDate.cs for the C# version of the code).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/showdate.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/Overview/showdate.vb" id="Snippet2":::
+
+To compile this example, create a batch file that contains the following commands and run it from the command prompt. If you're using C#, specify `csc` instead of `vbc` and `showdate.cs` instead of `showdate.vb`.
+
+```
+resgen DateStrings.txt
+vbc showdate.vb /resource:DateStrings.resources
+
+md fr-FR
+resgen DateStrings.fr-FR.txt
+al /out:fr-FR\Showdate.resources.dll /culture:fr-FR /embed:DateStrings.fr-FR.resources
+
+md ru-RU
+resgen DateStrings.ru-RU.txt
+al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.resources
+```
+
+There are two ways to retrieve the resources of a specific culture other than the current UI culture:
+
+- You can call the <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)>,  <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)>, or <xref:System.Resources.ResourceManager.GetStream(System.String,System.Globalization.CultureInfo)> method to retrieve a resource for a specific culture. If a localized resource cannot be found, the resource manager uses the resource fallback process to locate an appropriate resource.
+- You can call the <xref:System.Resources.ResourceManager.GetResourceSet*> method to obtain a <xref:System.Resources.ResourceSet> object that represents the resources for a particular culture. In the method call, you can determine whether the resource manager probes for parent cultures if it is unable to find localized resources, or whether it simply falls back to the resources of the default culture. You can then use the <xref:System.Resources.ResourceSet> methods to access the resources (localized for that culture) by name, or to enumerate the resources in the set.
+
+### Handle MissingManifestResourceException and MissingSatelliteAssemblyException exceptions
+
+If you try to retrieve a specific resource, but the resource manager cannot find that resource and either no default culture has been defined or the resources of the default culture cannot be located, the resource manager throws a <xref:System.Resources.MissingManifestResourceException> exception if it expects to find the resources in the main assembly or a <xref:System.Resources.MissingSatelliteAssemblyException> if it expects to find the resources in a satellite assembly. Note that the exception is thrown when you call a resource retrieval method such as <xref:System.Resources.ResourceManager.GetString*> or <xref:System.Resources.ResourceManager.GetObject*>, and not when you instantiate a <xref:System.Resources.ResourceManager> object.
+
+The exception is typically thrown under the following conditions:
+
+- The appropriate resource file or satellite assembly does not exist. If the resource manager expects the app's default resources to be embedded in the main app assembly, they are absent. If the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute indicates that the app's default resources reside in a satellite assembly, that assembly cannot be found. When you compile your app, make sure that resources are embedded in the main assembly or that the necessary satellite assembly is generated and is named appropriately. Its name should take the form *appName*.resources.dll, and it should be located in a directory named after the culture whose resources it contains.
+
+- Your app doesn't have a default or neutral culture defined. Add the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to a source code file or to the project information file (AssemblyInfo.vb for a Visual Basic app or AssemblyInfo.cs for a C# app) file.
+
+- The `baseName` parameter in the <xref:System.Resources.ResourceManager.%23ctor(System.String,System.Reflection.Assembly)> constructor does not specify the name of a .resources file. The name should include the resource file's fully qualified namespace but not its file name extension. Typically, resource files that are created in Visual Studio include namespace names, but resource files that are created and compiled at the command prompt do not. You can determine the names of embedded .resources files by compiling and running the following utility. This is a console app that accepts the name of a main assembly or satellite assembly as a command-line parameter. It displays the strings that should be provided as the `baseName` parameter so that the resource manager can correctly identify the resource.
+
+  :::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/resourcenames.cs" id="Snippet4":::
+  :::code language="vb" source="~/snippets/visualbasic/System.Resources/MissingManifestResourceException/Overview/resourcenames.vb" id="Snippet4":::
+
+If you are changing the current culture of your application explicitly, you should also remember that the resource manager retrieves a resource set based on the value of the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property, and not the <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> property. Typically, if you change one value, you should also change the other.
+
+### Resource versioning
+
+Because the main assembly that contains an app's default resources is separate from the app's satellite assemblies, you can release a new version of your main assembly without redeploying the satellite assemblies. The <xref:System.Resources.SatelliteContractVersionAttribute> attribute instructs the resource manager to use existing satellite assemblies and not to redeploy them with a new version of your main assembly.
+
+For more information about versioning support for satellite assemblies, see the article [Retrieving Resources](/dotnet/framework/resources/retrieving-resources-in-desktop-apps).
+
+## Examples
+
+The following example demonstrates how to use an explicit culture and the implicit current UI culture to obtain string resources from a main assembly and a satellite assembly. For more information, see the "Directory Locations for Satellite Assemblies Not Installed in the Global Assembly Cache" section of the [Creating Satellite Assemblies](/dotnet/framework/resources/creating-satellite-assemblies-for-desktop-apps) topic.
+
+To run this example:
+
+1. In the app directory, create a file named rmc.txt that contains the following resource strings:
+
+   ```
+   day=Friday
+   year=2006
+   holiday="Cinco de Mayo"
+   ```
+
+2. Use the [Resource File Generator](/dotnet/framework/tools/resgen-exe-resource-file-generator) to generate the rmc.resources resource file from the rmc.txt input file as follows:
+
+   ```
+   resgen rmc.txt
+   ```
+
+3. Create a subdirectory of the app directory and name it "es-MX". This is the culture name of the satellite assembly that you will create in the next three steps.
+
+4. Create a file named rmc.es-MX.txt in the es-MX directory that contains the following resource strings:
+
+   ```
+   day=Viernes
+   year=2006
+   holiday="Cinco de Mayo"
+   ```
+
+5. Use the [Resource File Generator](/dotnet/framework/tools/resgen-exe-resource-file-generator) to generate the rmc.es-MX.resources resource file from the rmc.es-MX.txt input file as follows:
+
+   ```
+   resgen rmc.es-MX.txt
+   ```
+
+6. Assume that the filename for this example is rmc.vb or rmc.cs. Copy the following source code into a file. Then compile it and embed the main assembly resource file, rmc.resources, in the executable assembly. If you are using the Visual Basic compiler, the syntax is:
+
+   ```
+   vbc rmc.vb /resource:rmc.resources
+   ```
+
+   The corresponding syntax for the C# compiler is:
+
+   ```
+   csc /resource:rmc.resources rmc.cs
+   ```
+
+7. Use the [Assembly Linker](/dotnet/framework/tools/al-exe-assembly-linker) to create a satellite assembly. If the base name of the app is rmc, the satellite assembly name must be rmc.resources.dll. The satellite assembly should be created in the es-MX directory. If es-MX is the current directory, use this command:
+
+   ```
+   al /embed:rmc.es-MX.resources /c:es-MX /out:rmc.resources.dll
+   ```
+
+8. Run rmc.exe to obtain and display the embedded resource strings.
+
+   :::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/rmc.cs" id="Snippet1":::
+   :::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/Overview/rmc.vb" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
     <threadsafe>This type is thread safe.</threadsafe>
     <altmember cref="T:System.Globalization.CultureInfo" />
     <altmember cref="P:System.Globalization.CultureInfo.CurrentUICulture" />
@@ -175,7 +423,69 @@
       <Docs>
         <param name="resourceSource">A type from which the resource manager derives all information for finding .resources files.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Resources.ResourceManager" /> class that looks up resources in satellite assemblies based on information from the specified type object.</summary>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager-ctor">Supplemental API remarks for ResourceManager constructor</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Desktop apps
+
+In desktop apps, the resource manager uses the `resourceSource` parameter to load a particular resource file as follows:
+
+- If the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute is not used to indicate that the resources of the default culture reside in a satellite assembly, the resource manager assumes that the resource file for the default culture is found in the same assembly as the type specified by the `resourceSource` parameter.
+- The resource manager assumes that the default resource file has the same base name as the type specified by the `resourceSource` parameter.
+- The resource manager uses the default <xref:System.Resources.ResourceSet> class to manipulate the resource file.
+
+For example, given a type named `MyCompany.MyProduct.MyType`, the resource manager looks for a *.resources* file named *MyCompany.MyProduct.MyType.resources* in the assembly that defines `MyType`.
+
+In Visual Studio, the Resource Designer automatically generates code that defines an `internal` (in C#) or `Friend` (in Visual Basic) class whose name is the same as the base name of the *.resources* file for the default culture. This makes it possible to instantiate a <xref:System.Resources.ResourceManager> object and couple it with a particular set of resources by getting a type object whose name corresponds to the name of the resource, because as long as the class is visible to the compiler, the resources must be as well. For example, if a *.resources* file is named Resource1, the following statement instantiates a <xref:System.Resources.ResourceManager> object to manage the *.resources* file named Resource1:
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/.ctor/ctor1.cs" id="Snippet2":::
+
+If you're not using Visual Studio, you can create a class with no members whose namespace and name are the same as that of the default *.resources* file. The example provides an illustration.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.%23ctor(System.Type)> constructor to instantiate a <xref:System.Resources.ResourceManager> object. It consists of resources compiled from .txt files for the English (en), French (France) (fr-FR), and Russian (Russia) (ru-RU) cultures. The example changes the current culture and current UI culture to English (United States), French (France), Russian (Russia), and Swedish (Sweden). It then calls the <xref:System.Resources.ResourceManager.GetString(System.String)> method to retrieve the localized string, which displays a greeting that depends on the time of day.
+
+The example requires three text-based resource files, as listed in the following table. Each file includes string resources named `Morning`, `Afternoon`, and `Evening`.
+
+| Culture | File name                   | Resource name | Resource value |
+|---------|-----------------------------|---------------|----------------|
+| en-US   | GreetingResources.txt       | `Morning`     | Good morning   |
+| en-US   | GreetingResources.txt       | `Afternoon`   | Good afternoon |
+| en-US   | GreetingResources.txt       | `Evening`     | Good evening   |
+| fr-FR   | GreetingResources.fr-FR.txt | `Morning`     | Bonjour        |
+| fr-FR   | GreetingResources.fr-FR.txt | `Afternoon`   | Bonjour        |
+| fr-FR   | GreetingResources.fr-FR.txt | `Evening`     | Bonsoir        |
+| ru-RU   | GreetingResources.ru-RU.txt | `Morning`     | Доброе утро    |
+| ru-RU   | GreetingResources.ru-RU.txt | `Afternoon`   | Добрый день    |
+| ru-RU   | GreetingResources.ru-RU.txt | `Evening`     | Добрый вечер   |
+
+You can use the following batch file to compile the Visual Basic example and create an executable named Greet.exe. To compile with C#, change the compiler name from `vbc` to `csc` and the file extension from `.vb` to `.cs`.
+
+```
+resgen GreetingResources.txt
+vbc Greet.vb /resource: GreetingResources.resources
+
+md fr-FR
+resgen GreetingResources.fr-FR.txt
+al /out:fr-FR\Greet.resources.dll /culture:fr-FR /embed: GreetingResources.fr-FR.resources
+
+md ru-RU
+resgen GreetingResources.ru-RU.txt
+al /out:ru-RU\Greet.resources.dll /culture:ru-RU /embed: GreetingResources.ru-RU.resources
+```
+
+Here's the source code for the example (ShowDate.vb for the Visual Basic version or ShowDate.cs for the C# version of the code).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/.ctor/greet.cs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/.ctor/greet.vb" id="Snippet3":::
+
+In addition to defining an app class named `Example`, the source code defines an internal class whose name, `GreetingResources`, is the same as the base name of the resource files. This makes it possible to successfully instantiate a <xref:System.Resources.ResourceManager> object by calling the <xref:System.Resources.ResourceManager.%23ctor(System.Type)> constructor.
+
+Notice that the output displays the appropriate localized string except when the current UI culture is Swedish (Sweden), in which case it uses English language resources. Because Swedish language resources are unavailable, the app uses the resources of the default culture, as defined by the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute, instead.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="resourceSource" /> parameter is <see langword="null" />.</exception>
       </Docs>
     </Member>
@@ -224,7 +534,43 @@
         <param name="baseName">The root name of the resource file without its extension but including any fully qualified namespace name. For example, the root name for the resource file named MyApplication.MyResource.en-US.resources is MyApplication.MyResource.</param>
         <param name="assembly">The main assembly for the resources.</param>
         <summary>Initializes a new instance of the <see cref="T:System.Resources.ResourceManager" /> class that looks up resources contained in files with the specified root name in the given assembly.</summary>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager-ctor">Supplemental API remarks for ResourceManager constructor</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Desktop apps
+
+In desktop apps, the individual culture-specific resource files should be contained in satellite assemblies, and the default culture's resource file should be contained in the main assembly. A satellite assembly is assumed to contain resources for a single culture specified in that assembly's manifest, and is loaded as necessary.
+
+> [!NOTE]
+> To retrieve resources from *.resources* files directly instead of retrieving them from assemblies, you must call the <xref:System.Resources.ResourceManager.CreateFileBasedResourceManager*> method instead to instantiate a <xref:System.Resources.ResourceManager> object.
+
+If the resource file identified by `baseName` cannot be found in `assembly`, the method instantiates a <xref:System.Resources.ResourceManager> object, but the attempt to retrieve a specific resource throws an exception, typically <xref:System.Resources.MissingManifestResourceException>. For information about diagnosing the cause of the exception, see the "Handling the MissingManifestResourceException Exception" section of the <xref:System.Resources.ResourceManager> class topic.
+
+### Example
+
+The following example uses a simple non-localized "Hello World" app to illustrate the <xref:System.Resources.ResourceManager.%23ctor(System.String,System.Reflection.Assembly)> constructor. The contents of a text file named *ExampleResources.txt* is `Greeting=Hello`. When the app is compiled, the resource is embedded in the main app assembly.
+
+The text file can be converted to a binary resource file by using the [Resource File Generator (ResGen.exe)](/dotnet/framework/tools/resgen-exe-resource-file-generator) at the command prompt as follows:
+
+```cmd
+resgen ExampleResources.txt
+```
+
+The following example provides the executable code that instantiates a <xref:System.Resources.ResourceManager> object, prompts the user to enter a name, and displays a greeting.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/.ctor/example.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/.ctor/example.vb" id="Snippet1":::
+
+It can be compiled by using the following command in C#:
+
+```cmd
+csc Example.cs /resource:ExampleResources.resources
+```
+
+The example retrieves a reference to the assembly that contains the resource file by passing a type defined in that assembly to the `typeof` function (in C#) or the `GetType` function (in Visual Basic) and retrieving the value of its <xref:System.Type.Assembly?displayProperty=nameWithType> property.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="baseName" /> or <paramref name="assembly" /> parameter is <see langword="null" />.</exception>
         <block subset="none" type="overrides">
           <para>This constructor uses the system-provided <see cref="T:System.Resources.ResourceSet" /> implementation. To use a custom resource file format, you should derive from the <see cref="T:System.Resources.ResourceSet" /> class, override the <see cref="M:System.Resources.ResourceSet.GetDefaultReader" /> and <see cref="M:System.Resources.ResourceSet.GetDefaultWriter" /> methods, and pass that type to the <see cref="M:System.Resources.ResourceManager.#ctor(System.String,System.Reflection.Assembly,System.Type)" /> constructor. Using a custom <see cref="T:System.Resources.ResourceSet" /> can be useful for controlling resource caching policy or supporting your own resource file format, but is generally not necessary.</para>
@@ -293,15 +639,16 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The individual culture-specific resource files should be contained in satellite assemblies, and the default culture's resource file should be contained in the main assembly. A satellite assembly is assumed to contain resources for a single culture specified in that assembly's manifest, and is loaded as necessary.
+
+The individual culture-specific resource files should be contained in satellite assemblies, and the default culture's resource file should be contained in the main assembly. A satellite assembly is assumed to contain resources for a single culture specified in that assembly's manifest, and is loaded as necessary.
 
 > [!NOTE]
->  To retrieve resources from .resources files directly instead of retrieving them from assemblies, you must call the <xref:System.Resources.ResourceManager.CreateFileBasedResourceManager*> method instead to instantiate a <xref:System.Resources.ResourceManager> object.
+> To retrieve resources from .resources files directly instead of retrieving them from assemblies, you must call the <xref:System.Resources.ResourceManager.CreateFileBasedResourceManager*> method instead to instantiate a <xref:System.Resources.ResourceManager> object.
 
- If the resource file identified by `baseName` cannot be found in `assembly`, the method instantiates a <xref:System.Resources.ResourceManager> object, but the attempt to retrieve a specific resource throws an exception, typically <xref:System.Resources.MissingManifestResourceException>. For information about diagnosing the cause of the exception, see the "Handling the MissingManifestResourceException Exception" section of the <xref:System.Resources.ResourceManager> class topic.
+If the resource file identified by `baseName` cannot be found in `assembly`, the method instantiates a <xref:System.Resources.ResourceManager> object, but the attempt to retrieve a specific resource throws an exception, typically <xref:System.Resources.MissingManifestResourceException>. For information about diagnosing the cause of the exception, see the "Handling the MissingManifestResourceException Exception" section of the <xref:System.Resources.ResourceManager> class topic.
 
 > [!NOTE]
->  The `usingResourceSet` parameter is used to support your own resource format, and will commonly be `null`. This is different from the constructor that takes a <xref:System.Type> only.
+> The `usingResourceSet` parameter is used to support your own resource format, and will commonly be `null`. This is different from the constructor that takes a <xref:System.Type> only.
 
  ]]></format>
         </remarks>
@@ -624,7 +971,103 @@
         <param name="name">The name of the resource to get.</param>
         <summary>Returns the value of the specified non-string resource.</summary>
         <returns>The value of the resource localized for the caller's current culture settings. If an appropriate resource set exists but <paramref name="name" /> cannot be found, the method returns <see langword="null" />.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager-getobject">Supplemental API remarks for ResourceManager.GetObject</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Resources.ResourceManager.GetObject*> method is used to retrieve non-string resources. These include values that belong to primitive data types such as <xref:System.Int32> or <xref:System.Double>, bitmaps (such as a <xref:System.Drawing.Bitmap?displayProperty=nameWithType> object), or custom serialized objects. Typically, the returned object must be cast (in C#) or converted (in Visual Basic) to an object of the appropriate type.
+
+The <xref:System.Resources.ResourceManager.IgnoreCase> property determines whether the comparison of `name` with the names of resources is case-insensitive or case-sensitive (the default).
+
+> [!NOTE]
+> These methods can throw more exceptions than are listed. One reason this might occur is if a method that this method calls throws an exception. For example, a <xref:System.IO.FileLoadException> exception might be thrown if an error was made deploying or installing a satellite assembly, or a <xref:System.Runtime.Serialization.SerializationException> exception might be thrown if a user-defined type throws a user-defined exception when the type is deserialized.
+
+## <xref:System.Resources.ResourceManager.GetObject(System.String)> method
+
+The returned resource is localized for the UI culture of the current thread, which is defined by the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property. If the resource is not localized for that culture, the resource manager uses fallback rules to load an appropriate resource. If no usable set of localized resources is found, the <xref:System.Resources.ResourceManager> falls back on the default culture's resources. If a resource set for the default culture is not found, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetObject(System.String)> method to deserialize a custom object. The example includes a source code file named UIElements.cs (UIElements.vb if you're using Visual Basic) that defines the following structure named `PersonTable`. This structure is intended to be used by a general table display routine that displays the localized names of table columns. Note that the `PersonTable` structure is marked with the <xref:System.SerializableAttribute> attribute.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example1.cs" id="Snippet6":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/example.vb" id="Snippet6":::
+
+The following code from a file named CreateResources.cs (or CreateResources.vb for Visual Basic) creates an XML resource file named UIResources.resx that stores a table title and a `PersonTable` object that contains information for an app that is localized for the English language.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example11.cs" id="Snippet7":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/example.vb" id="Snippet7":::
+
+The following code in a source code file named GetObject.cs (or GetObject.vb) then retrieves the resources and displays them to the console.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example2.cs" id="Snippet8":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/example2.vb" id="Snippet8":::
+
+You can build the necessary resource file and assemblies and run the app by executing the following batch file. You must use the `/r` option to supply Resgen.exe with a reference to UIElements.dll so that it can access information about the `PersonTable` structure. If you're using C#, replace the `vbc` compiler name with `csc`, and replace the `.vb` extension with `.cs`.
+
+```
+vbc /t:library UIElements.vb
+vbc CreateResources.vb /r:UIElements.dll
+CreateResources
+
+resgen UIResources.resx  /r:UIElements.dll
+vbc GetObject.vb /r:UIElements.dll /resource:UIResources.resources
+
+GetObject.exe
+```
+
+## <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)> method
+
+The returned resource is localized for the culture that is specified by `culture`, or for the culture that is specified by the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property if `culture` is `null`. If the resource is not localized for that culture, the resource manager uses fallback rules to load an appropriate resource. If no usable set of localized resources is found, the resource manager falls back on the default culture's resources. If a resource set for the default culture is not found, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)> method to deserialize a custom object. The example includes a source code file named NumberInfo.cs (NumberInfo.vb if you're using Visual Basic) that defines the following structure named `Numbers`. This structure is intended to be used by a simple educational app that teaches non-English speaking students to count to ten in English. Note that the `Numbers` class is marked with the <xref:System.SerializableAttribute> attribute.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetObject/numberinfo.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/numberinfo.vb" id="Snippet1":::
+
+The following source code from a file named CreateResources.cs (CreateResources.vb for Visual Basic) creates XML resource files for the default English language, as well as for the French, Portuguese, and Russian languages.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetObject/createresources.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/createresources.vb" id="Snippet2":::
+
+The resources are consumed by the following app, which sets the current UI culture to French (France), Portuguese (Brazil), or Russian (Russia). It calls the <xref:System.Resources.ResourceManager.GetObject(System.String)> method to get a `Numbers` object that contains localized numbers and the <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)> method to get a `Numbers` object that contains English language numbers. It then displays odd numbers using the current UI culture and the English language. The source code file is named ShowNumbers.cs (ShowNumbers.vb).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetObject/shownumbers.cs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/shownumbers.vb" id="Snippet3":::
+
+You can use the following batch file to build and execute the Visual Basic version of the example. If you're using C#, replace `vbc` with `csc`, and replace the `.vb` extension with `.cs`.
+
+```
+vbc /t:library NumberInfo.vb
+
+vbc CreateResources.vb /r:NumberInfo.dll
+CreateResources
+
+resgen NumberResources.resx /r:NumberInfo.dll
+
+resgen NumberResources.fr.resx /r:Numberinfo.dll
+Md fr
+al /embed:NumberResources.fr.resources /culture:fr /t:lib /out:fr\ShowNumbers.resources.dll
+
+resgen NumberResources.pt.resx  /r:Numberinfo.dll
+Md pt
+al /embed:NumberResources.pt.resources /culture:pt /t:lib /out:pt\ShowNumbers.resources.dll
+
+resgen NumberResources.ru.resx /r:Numberinfo.dll
+Md ru
+al /embed:NumberResources.ru.resources /culture:ru /t:lib /out:ru\ShowNumbers.resources.dll
+
+vbc ShowNumbers.vb /r:NumberInfo.dll /resource:NumberResources.resources
+ShowNumbers.exe
+```
+
+## Performance considerations
+
+If you call the <xref:System.Resources.ResourceManager.GetObject*> method multiple times with the same `name` parameter, do not depend on the method returning a reference to the same object with each call. This is because the <xref:System.Resources.ResourceManager.GetObject*> method can return a reference to an existing resource object in a cache, or it can reload the resource and return a reference to a new resource object.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="name" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.Resources.MissingManifestResourceException">No usable set of localized resources has been found, and there are no default culture resources. For information about how to handle this exception, see the "Handling MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions" section in the <see cref="T:System.Resources.ResourceManager" /> class topic.</exception>
         <exception cref="T:System.Resources.MissingSatelliteAssemblyException">The default culture's resources reside in a satellite assembly that could not be found. For information about how to handle this exception, see the "Handling MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions" section in the <see cref="T:System.Resources.ResourceManager" /> class topic.</exception>
@@ -690,7 +1133,103 @@
  If this value is <see langword="null" />, the <see cref="T:System.Globalization.CultureInfo" /> object is obtained by using the <see cref="P:System.Globalization.CultureInfo.CurrentUICulture" /> property.</param>
         <summary>Gets the value of the specified non-string resource localized for the specified culture.</summary>
         <returns>The value of the resource, localized for the specified culture. If an appropriate resource set exists but <paramref name="name" /> cannot be found, the method returns <see langword="null" />.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager-getobject">Supplemental API remarks for ResourceManager.GetObject</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Resources.ResourceManager.GetObject*> method is used to retrieve non-string resources. These include values that belong to primitive data types such as <xref:System.Int32> or <xref:System.Double>, bitmaps (such as a <xref:System.Drawing.Bitmap?displayProperty=nameWithType> object), or custom serialized objects. Typically, the returned object must be cast (in C#) or converted (in Visual Basic) to an object of the appropriate type.
+
+The <xref:System.Resources.ResourceManager.IgnoreCase> property determines whether the comparison of `name` with the names of resources is case-insensitive or case-sensitive (the default).
+
+> [!NOTE]
+> These methods can throw more exceptions than are listed. One reason this might occur is if a method that this method calls throws an exception. For example, a <xref:System.IO.FileLoadException> exception might be thrown if an error was made deploying or installing a satellite assembly, or a <xref:System.Runtime.Serialization.SerializationException> exception might be thrown if a user-defined type throws a user-defined exception when the type is deserialized.
+
+## <xref:System.Resources.ResourceManager.GetObject(System.String)> method
+
+The returned resource is localized for the UI culture of the current thread, which is defined by the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property. If the resource is not localized for that culture, the resource manager uses fallback rules to load an appropriate resource. If no usable set of localized resources is found, the <xref:System.Resources.ResourceManager> falls back on the default culture's resources. If a resource set for the default culture is not found, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetObject(System.String)> method to deserialize a custom object. The example includes a source code file named UIElements.cs (UIElements.vb if you're using Visual Basic) that defines the following structure named `PersonTable`. This structure is intended to be used by a general table display routine that displays the localized names of table columns. Note that the `PersonTable` structure is marked with the <xref:System.SerializableAttribute> attribute.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example1.cs" id="Snippet6":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/example.vb" id="Snippet6":::
+
+The following code from a file named CreateResources.cs (or CreateResources.vb for Visual Basic) creates an XML resource file named UIResources.resx that stores a table title and a `PersonTable` object that contains information for an app that is localized for the English language.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example11.cs" id="Snippet7":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/example.vb" id="Snippet7":::
+
+The following code in a source code file named GetObject.cs (or GetObject.vb) then retrieves the resources and displays them to the console.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/Overview/example2.cs" id="Snippet8":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/example2.vb" id="Snippet8":::
+
+You can build the necessary resource file and assemblies and run the app by executing the following batch file. You must use the `/r` option to supply Resgen.exe with a reference to UIElements.dll so that it can access information about the `PersonTable` structure. If you're using C#, replace the `vbc` compiler name with `csc`, and replace the `.vb` extension with `.cs`.
+
+```
+vbc /t:library UIElements.vb
+vbc CreateResources.vb /r:UIElements.dll
+CreateResources
+
+resgen UIResources.resx  /r:UIElements.dll
+vbc GetObject.vb /r:UIElements.dll /resource:UIResources.resources
+
+GetObject.exe
+```
+
+## <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)> method
+
+The returned resource is localized for the culture that is specified by `culture`, or for the culture that is specified by the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property if `culture` is `null`. If the resource is not localized for that culture, the resource manager uses fallback rules to load an appropriate resource. If no usable set of localized resources is found, the resource manager falls back on the default culture's resources. If a resource set for the default culture is not found, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)> method to deserialize a custom object. The example includes a source code file named NumberInfo.cs (NumberInfo.vb if you're using Visual Basic) that defines the following structure named `Numbers`. This structure is intended to be used by a simple educational app that teaches non-English speaking students to count to ten in English. Note that the `Numbers` class is marked with the <xref:System.SerializableAttribute> attribute.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetObject/numberinfo.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/numberinfo.vb" id="Snippet1":::
+
+The following source code from a file named CreateResources.cs (CreateResources.vb for Visual Basic) creates XML resource files for the default English language, as well as for the French, Portuguese, and Russian languages.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetObject/createresources.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/createresources.vb" id="Snippet2":::
+
+The resources are consumed by the following app, which sets the current UI culture to French (France), Portuguese (Brazil), or Russian (Russia). It calls the <xref:System.Resources.ResourceManager.GetObject(System.String)> method to get a `Numbers` object that contains localized numbers and the <xref:System.Resources.ResourceManager.GetObject(System.String,System.Globalization.CultureInfo)> method to get a `Numbers` object that contains English language numbers. It then displays odd numbers using the current UI culture and the English language. The source code file is named ShowNumbers.cs (ShowNumbers.vb).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/ResourceManager/GetObject/shownumbers.cs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetObject/shownumbers.vb" id="Snippet3":::
+
+You can use the following batch file to build and execute the Visual Basic version of the example. If you're using C#, replace `vbc` with `csc`, and replace the `.vb` extension with `.cs`.
+
+```
+vbc /t:library NumberInfo.vb
+
+vbc CreateResources.vb /r:NumberInfo.dll
+CreateResources
+
+resgen NumberResources.resx /r:NumberInfo.dll
+
+resgen NumberResources.fr.resx /r:Numberinfo.dll
+Md fr
+al /embed:NumberResources.fr.resources /culture:fr /t:lib /out:fr\ShowNumbers.resources.dll
+
+resgen NumberResources.pt.resx  /r:Numberinfo.dll
+Md pt
+al /embed:NumberResources.pt.resources /culture:pt /t:lib /out:pt\ShowNumbers.resources.dll
+
+resgen NumberResources.ru.resx /r:Numberinfo.dll
+Md ru
+al /embed:NumberResources.ru.resources /culture:ru /t:lib /out:ru\ShowNumbers.resources.dll
+
+vbc ShowNumbers.vb /r:NumberInfo.dll /resource:NumberResources.resources
+ShowNumbers.exe
+```
+
+## Performance considerations
+
+If you call the <xref:System.Resources.ResourceManager.GetObject*> method multiple times with the same `name` parameter, do not depend on the method returning a reference to the same object with each call. This is because the <xref:System.Resources.ResourceManager.GetObject*> method can return a reference to an existing resource object in a cache, or it can reload the resource and return a reference to a new resource object.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="name" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.Resources.MissingManifestResourceException">No usable set of resources have been found, and there are no default culture resources. For information about how to handle this exception, see the "Handling MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions" section in the <see cref="T:System.Resources.ResourceManager" /> class topic.</exception>
         <exception cref="T:System.Resources.MissingSatelliteAssemblyException">The default culture's resources reside in a satellite assembly that could not be found. For information about how to handle this exception, see the "Handling MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions" section in the <see cref="T:System.Resources.ResourceManager" /> class topic.</exception>
@@ -1205,7 +1744,92 @@ csc GetStream.cs /resource:AppResources.resources
         <param name="name">The name of the resource to retrieve.</param>
         <summary>Returns the value of the specified string resource.</summary>
         <returns>The value of the resource localized for the caller's current UI culture, or <see langword="null" /> if <paramref name="name" /> cannot be found in a resource set.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager-getstring">Supplemental API remarks for ResourceManager.GetString</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Resources.ResourceManager.IgnoreCase> property determines whether the comparison of `name` with the names of resources is case-insensitive (the default) or case-sensitive.
+
+> [!NOTE]
+> The <xref:System.Resources.ResourceManager.GetString*> methods can throw more exceptions than are listed. One reason this might occur is if a method that this method calls throws an exception. For example, a <xref:System.IO.FileLoadException> exception might be thrown if an error was made deploying or installing a satellite assembly, or a <xref:System.Runtime.Serialization.SerializationException> exception might be thrown if a user-defined type throws a user-defined exception when the type is deserialized.
+
+## <xref:System.Resources.ResourceManager.GetString(System.String)> method
+
+### Desktop apps
+
+In desktop apps, the resource that is returned is localized for the UI culture of the current thread, as defined by the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property. If the resource has not been localized for that culture, the resource manager probes for a resource by following the steps outlined in the "Resource Fallback Process" section of the [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps) article. If no usable set of localized resources is found, the resource manager falls back on the default culture's resources. If the resource manager cannot load the default culture's resource set, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetString*> method to retrieve culture-specific resources. It consists of resources compiled from .txt files for the English (en), French (France) (fr-FR), and Russian (Russia) (ru-RU) cultures. The example changes the current culture and current UI culture to English (United States), French (France), Russian (Russia), and Swedish (Sweden). It then calls the <xref:System.Resources.ResourceManager.GetString*> method to retrieve the localized string, which it displays along with the current day and month. Notice that the output displays the appropriate localized string except when the current UI culture is Swedish (Sweden). Because Swedish language resources are unavailable, the app instead uses the resources of the default culture, which is English. The example requires the text-based resource files listed in the following table. Each has a single string resource named `DateStart`.
+
+| Culture | File name             | Resource name | Resource value        |
+|---------|-----------------------|---------------|-----------------------|
+| en-US   | DateStrings.txt       | `DateStart`   | Today is              |
+| fr-FR   | DateStrings.fr-FR.txt | `DateStart`   | Aujourd'hui, c'est le |
+| ru-RU   | DateStrings.ru-RU.txt | `DateStart`   | Сегодня               |
+
+You can use the following batch file to compile the C# example. For Visual Basic, change `csc` to `vbc`, and change the extension of the source code file from `.cs` to `.vb`.
+
+```
+resgen DateStrings.txt
+csc showdate.cs /resource:DateStrings.resources
+
+md fr-FR
+resgen DateStrings.fr-FR.txt
+al /out:fr-FR\Showdate.resources.dll /culture:fr-FR /embed:DateStrings.fr-FR.resources
+
+md ru-RU
+resgen DateStrings.ru-RU.txt
+al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.resources
+```
+
+Here's the source code for the example (ShowDate.vb for the Visual Basic version or ShowDate.cs for the C# version).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/showdate1.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetString/showdate.vb" id="Snippet2":::
+
+## <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)> method
+
+### Desktop apps
+
+In desktop apps, if `culture` is `null`, the <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)> method uses the current UI culture obtained from the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property.
+
+The resource that is returned is localized for the culture specified by the `culture` parameter. If the resource has not been localized for `culture`, the resource manager probes for a resource by following the steps outlined in the "Resource Fallback Process" section of the [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps) topic. If no usable set of resources is found, the resource manager falls back on the default culture's resources. If the resource manager cannot load the default culture's resource set, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)> method to retrieve culture-specific resources. The example's default culture is English (en), and it includes satellite assemblies for the French (France) (fr-FR) and Russian (Russia) (ru-RU) cultures. The example changes the current culture and current UI culture to Russian (Russia) before calling <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)>. It then calls the <xref:System.Resources.ResourceManager.GetString*> method and the <xref:System.DateTime.ToString(System.String,System.IFormatProvider)?displayProperty=nameWithType> method and passes <xref:System.Globalization.CultureInfo> objects that represent the French (France) and Swedish (Sweden) cultures to each method. In the output, the month and day of the month as well as the string that precedes them appear in French, because the <xref:System.Resources.ResourceManager.GetString*> method is able to retrieve the French language resource. However, when the Swedish (Sweden) culture is used, the month and day of the month appear in Swedish, although the string that precedes them is in English. This is because the resource manager cannot find localized Swedish language resources, so it returns a resource for the default English culture instead.
+
+The example requires the text-based resource files listed in the following table. Each has a single string resource named `DateStart`.
+
+| Culture | File name             | Resource name | Resource value        |
+|---------|-----------------------|---------------|-----------------------|
+| en-US   | DateStrings.txt       | `DateStart`   | Today is              |
+| fr-FR   | DateStrings.fr-FR.txt | `DateStart`   | Aujourd'hui, c'est le |
+| ru-RU   | DateStrings.ru-RU.txt | `DateStart`   | Сегодня               |
+
+You can use the following batch file to compile the Visual Basic example. To compile in C#, change `vbc` to `csc`, and change the extension of the source code file from `.vb` to `.cs`.
+
+```
+resgen DateStrings.txt
+vbc showdate.vb /resource:DateStrings.resources
+
+md fr-FR
+resgen DateStrings.fr-FR.txt
+al /out:fr-FR\Showdate.resources.dll /culture:fr-FR /embed:DateStrings.fr-FR.resources
+
+md ru-RU
+resgen DateStrings.ru-RU.txt
+al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.resources
+```
+
+Here's the source code for the example (ShowDate.vb for the Visual Basic version or ShowDate.cs for the C# version).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/showdate2.cs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetString/showdate2.vb" id="Snippet3":::
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="name" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The value of the specified resource is not a string.</exception>
         <exception cref="T:System.Resources.MissingManifestResourceException">No usable set of resources has been found, and there are no resources for the default culture. For information about how to handle this exception, see the "Handling MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions" section in the <see cref="T:System.Resources.ResourceManager" /> class topic.</exception>
@@ -1273,7 +1897,92 @@ csc GetStream.cs /resource:AppResources.resources
         <param name="culture">An object that represents the culture for which the resource is localized.</param>
         <summary>Returns the value of the string resource localized for the specified culture.</summary>
         <returns>The value of the resource localized for the specified culture, or <see langword="null" /> if <paramref name="name" /> cannot be found in a resource set.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-resourcemanager-getstring">Supplemental API remarks for ResourceManager.GetString</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Resources.ResourceManager.IgnoreCase> property determines whether the comparison of `name` with the names of resources is case-insensitive (the default) or case-sensitive.
+
+> [!NOTE]
+> The <xref:System.Resources.ResourceManager.GetString*> methods can throw more exceptions than are listed. One reason this might occur is if a method that this method calls throws an exception. For example, a <xref:System.IO.FileLoadException> exception might be thrown if an error was made deploying or installing a satellite assembly, or a <xref:System.Runtime.Serialization.SerializationException> exception might be thrown if a user-defined type throws a user-defined exception when the type is deserialized.
+
+## <xref:System.Resources.ResourceManager.GetString(System.String)> method
+
+### Desktop apps
+
+In desktop apps, the resource that is returned is localized for the UI culture of the current thread, as defined by the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property. If the resource has not been localized for that culture, the resource manager probes for a resource by following the steps outlined in the "Resource Fallback Process" section of the [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps) article. If no usable set of localized resources is found, the resource manager falls back on the default culture's resources. If the resource manager cannot load the default culture's resource set, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetString*> method to retrieve culture-specific resources. It consists of resources compiled from .txt files for the English (en), French (France) (fr-FR), and Russian (Russia) (ru-RU) cultures. The example changes the current culture and current UI culture to English (United States), French (France), Russian (Russia), and Swedish (Sweden). It then calls the <xref:System.Resources.ResourceManager.GetString*> method to retrieve the localized string, which it displays along with the current day and month. Notice that the output displays the appropriate localized string except when the current UI culture is Swedish (Sweden). Because Swedish language resources are unavailable, the app instead uses the resources of the default culture, which is English. The example requires the text-based resource files listed in the following table. Each has a single string resource named `DateStart`.
+
+| Culture | File name             | Resource name | Resource value        |
+|---------|-----------------------|---------------|-----------------------|
+| en-US   | DateStrings.txt       | `DateStart`   | Today is              |
+| fr-FR   | DateStrings.fr-FR.txt | `DateStart`   | Aujourd'hui, c'est le |
+| ru-RU   | DateStrings.ru-RU.txt | `DateStart`   | Сегодня               |
+
+You can use the following batch file to compile the C# example. For Visual Basic, change `csc` to `vbc`, and change the extension of the source code file from `.cs` to `.vb`.
+
+```
+resgen DateStrings.txt
+csc showdate.cs /resource:DateStrings.resources
+
+md fr-FR
+resgen DateStrings.fr-FR.txt
+al /out:fr-FR\Showdate.resources.dll /culture:fr-FR /embed:DateStrings.fr-FR.resources
+
+md ru-RU
+resgen DateStrings.ru-RU.txt
+al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.resources
+```
+
+Here's the source code for the example (ShowDate.vb for the Visual Basic version or ShowDate.cs for the C# version).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/showdate1.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetString/showdate.vb" id="Snippet2":::
+
+## <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)> method
+
+### Desktop apps
+
+In desktop apps, if `culture` is `null`, the <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)> method uses the current UI culture obtained from the <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType> property.
+
+The resource that is returned is localized for the culture specified by the `culture` parameter. If the resource has not been localized for `culture`, the resource manager probes for a resource by following the steps outlined in the "Resource Fallback Process" section of the [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps) topic. If no usable set of resources is found, the resource manager falls back on the default culture's resources. If the resource manager cannot load the default culture's resource set, the method throws a <xref:System.Resources.MissingManifestResourceException> exception or, if the resource set is expected to reside in a satellite assembly, a <xref:System.Resources.MissingSatelliteAssemblyException> exception. If the resource manager can load an appropriate resource set but cannot find a resource named `name`, the method returns `null`.
+
+### Example
+
+The following example uses the <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)> method to retrieve culture-specific resources. The example's default culture is English (en), and it includes satellite assemblies for the French (France) (fr-FR) and Russian (Russia) (ru-RU) cultures. The example changes the current culture and current UI culture to Russian (Russia) before calling <xref:System.Resources.ResourceManager.GetString(System.String,System.Globalization.CultureInfo)>. It then calls the <xref:System.Resources.ResourceManager.GetString*> method and the <xref:System.DateTime.ToString(System.String,System.IFormatProvider)?displayProperty=nameWithType> method and passes <xref:System.Globalization.CultureInfo> objects that represent the French (France) and Swedish (Sweden) cultures to each method. In the output, the month and day of the month as well as the string that precedes them appear in French, because the <xref:System.Resources.ResourceManager.GetString*> method is able to retrieve the French language resource. However, when the Swedish (Sweden) culture is used, the month and day of the month appear in Swedish, although the string that precedes them is in English. This is because the resource manager cannot find localized Swedish language resources, so it returns a resource for the default English culture instead.
+
+The example requires the text-based resource files listed in the following table. Each has a single string resource named `DateStart`.
+
+| Culture | File name             | Resource name | Resource value        |
+|---------|-----------------------|---------------|-----------------------|
+| en-US   | DateStrings.txt       | `DateStart`   | Today is              |
+| fr-FR   | DateStrings.fr-FR.txt | `DateStart`   | Aujourd'hui, c'est le |
+| ru-RU   | DateStrings.ru-RU.txt | `DateStart`   | Сегодня               |
+
+You can use the following batch file to compile the Visual Basic example. To compile in C#, change `vbc` to `csc`, and change the extension of the source code file from `.vb` to `.cs`.
+
+```
+resgen DateStrings.txt
+vbc showdate.vb /resource:DateStrings.resources
+
+md fr-FR
+resgen DateStrings.fr-FR.txt
+al /out:fr-FR\Showdate.resources.dll /culture:fr-FR /embed:DateStrings.fr-FR.resources
+
+md ru-RU
+resgen DateStrings.ru-RU.txt
+al /out:ru-RU\Showdate.resources.dll /culture:ru-RU /embed:DateStrings.ru-RU.resources
+```
+
+Here's the source code for the example (ShowDate.vb for the Visual Basic version or ShowDate.cs for the C# version).
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/MissingManifestResourceException/Overview/showdate2.cs" id="Snippet3":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/ResourceManager/GetString/showdate2.vb" id="Snippet3":::
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">The <paramref name="name" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.InvalidOperationException">The value of the specified resource is not a string.</exception>
         <exception cref="T:System.Resources.MissingManifestResourceException">No usable set of resources has been found, and there are no resources for a default culture. For information about how to handle this exception, see the "Handling MissingManifestResourceException and MissingSatelliteAssemblyException Exceptions" section in the <see cref="T:System.Resources.ResourceManager" /> class topic.</exception>

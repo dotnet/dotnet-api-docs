@@ -284,7 +284,37 @@
         <param name="right">A <see cref="T:System.Linq.Expressions.Expression" /> to set the <see cref="P:System.Linq.Expressions.BinaryExpression.Right" /> property equal to.</param>
         <summary>Creates a <see cref="T:System.Linq.Expressions.BinaryExpression" /> that represents an arithmetic addition operation that does not have overflow checking.</summary>
         <returns>A <see cref="T:System.Linq.Expressions.BinaryExpression" /> that has the <see cref="P:System.Linq.Expressions.Expression.NodeType" /> property equal to <see cref="F:System.Linq.Expressions.ExpressionType.Add" /> and the <see cref="P:System.Linq.Expressions.BinaryExpression.Left" /> and <see cref="P:System.Linq.Expressions.BinaryExpression.Right" /> properties set to the specified values.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-linq-expressions-expression-add">Supplemental API remarks for Expression.Add</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Linq.Expressions.Expression.Add*> method returns a <xref:System.Linq.Expressions.BinaryExpression> that has the <xref:System.Linq.Expressions.BinaryExpression.Method> property set to the implementing method. The <xref:System.Linq.Expressions.Expression.Type> property is set to the type of the node. If the node is lifted, the <xref:System.Linq.Expressions.BinaryExpression.IsLifted*> and <xref:System.Linq.Expressions.BinaryExpression.IsLiftedToNull> properties are both `true`. Otherwise, they are `false`. The <xref:System.Linq.Expressions.BinaryExpression.Conversion> property is `null`.
+
+The following information describes the implementing method, the node type, and whether a node is lifted.
+
+## Implementing method
+
+The following rules determine the selected implementing method for the operation:
+
+- If the <xref:System.Linq.Expressions.Expression.Type> property of either `left` or `right` represents a user-defined type that overloads the addition operator, the <xref:System.Reflection.MethodInfo> that represents that method is the implementing method.
+- Otherwise, if `left`.Type and `right`.Type are numeric types, the implementing method is `null`.
+
+## Node type and lifted versus non-lifted
+
+If the implementing method is not `null`:
+
+- If `left`.Type and `right`.Type are assignable to the corresponding argument types of the implementing method, the node is not lifted. The type of the node is the return type of the implementing method.
+- If the following two conditions are satisfied, the node is lifted and the type of the node is the nullable type that corresponds to the return type of the implementing method:
+
+  - `left`.Type and `right`.Type are both value types of which at least one is nullable and the corresponding non-nullable types are equal to the corresponding argument types of the implementing method.
+  - The return type of the implementing method is a non-nullable value type.
+
+If the implementing method is `null`:
+
+- If `left`.Type and `right`.Type are both non-nullable, the node is not lifted. The type of the node is the result type of the predefined addition operator.
+- If `left`.Type and `right`.Type are both nullable, the node is lifted. The type of the node is the nullable type that corresponds to the result type of the predefined addition operator.
+
+ ]]></format>
+        </remarks>
         <example>
           <format type="text/markdown"><![CDATA[
 The following code example shows how to create an expression that adds two integers.
@@ -353,7 +383,37 @@ The following code example shows how to create an expression that adds two integ
         <param name="method">A <see cref="T:System.Reflection.MethodInfo" /> to set the <see cref="P:System.Linq.Expressions.BinaryExpression.Method" /> property equal to.</param>
         <summary>Creates a <see cref="T:System.Linq.Expressions.BinaryExpression" /> that represents an arithmetic addition operation that does not have overflow checking. The implementing method can be specified.</summary>
         <returns>A <see cref="T:System.Linq.Expressions.BinaryExpression" /> that has the <see cref="P:System.Linq.Expressions.Expression.NodeType" /> property equal to <see cref="F:System.Linq.Expressions.ExpressionType.Add" /> and the <see cref="P:System.Linq.Expressions.BinaryExpression.Left" />, <see cref="P:System.Linq.Expressions.BinaryExpression.Right" /> and <see cref="P:System.Linq.Expressions.BinaryExpression.Method" /> properties set to the specified values.</returns>
-        <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-linq-expressions-expression-add">Supplemental API remarks for Expression.Add</see>.</remarks>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+The <xref:System.Linq.Expressions.Expression.Add*> method returns a <xref:System.Linq.Expressions.BinaryExpression> that has the <xref:System.Linq.Expressions.BinaryExpression.Method> property set to the implementing method. The <xref:System.Linq.Expressions.Expression.Type> property is set to the type of the node. If the node is lifted, the <xref:System.Linq.Expressions.BinaryExpression.IsLifted*> and <xref:System.Linq.Expressions.BinaryExpression.IsLiftedToNull> properties are both `true`. Otherwise, they are `false`. The <xref:System.Linq.Expressions.BinaryExpression.Conversion> property is `null`.
+
+The following information describes the implementing method, the node type, and whether a node is lifted.
+
+## Implementing method
+
+The following rules determine the selected implementing method for the operation:
+
+- If the <xref:System.Linq.Expressions.Expression.Type> property of either `left` or `right` represents a user-defined type that overloads the addition operator, the <xref:System.Reflection.MethodInfo> that represents that method is the implementing method.
+- Otherwise, if `left`.Type and `right`.Type are numeric types, the implementing method is `null`.
+
+## Node type and lifted versus non-lifted
+
+If the implementing method is not `null`:
+
+- If `left`.Type and `right`.Type are assignable to the corresponding argument types of the implementing method, the node is not lifted. The type of the node is the return type of the implementing method.
+- If the following two conditions are satisfied, the node is lifted and the type of the node is the nullable type that corresponds to the return type of the implementing method:
+
+  - `left`.Type and `right`.Type are both value types of which at least one is nullable and the corresponding non-nullable types are equal to the corresponding argument types of the implementing method.
+  - The return type of the implementing method is a non-nullable value type.
+
+If the implementing method is `null`:
+
+- If `left`.Type and `right`.Type are both non-nullable, the node is not lifted. The type of the node is the result type of the predefined addition operator.
+- If `left`.Type and `right`.Type are both nullable, the node is lifted. The type of the node is the nullable type that corresponds to the result type of the predefined addition operator.
+
+ ]]></format>
+        </remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="left" /> or <paramref name="right" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">

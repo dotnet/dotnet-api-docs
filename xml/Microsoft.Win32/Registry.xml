@@ -38,9 +38,37 @@
   </Attributes>
   <Docs>
     <summary>Provides <see cref="T:Microsoft.Win32.RegistryKey" /> objects that represent the root keys in the Windows registry, and <see langword="static" /> methods to access key/value pairs.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/microsoft-win32-registry">Microsoft.Win32.Registry class</see>.</remarks>
     <remarks>
       <format type="text/markdown"><![CDATA[
+
+The <xref:Microsoft.Win32.Registry> class provides the set of standard root keys found in the registry on machines running Windows. The registry is a storage facility for information about applications, users, and default system settings. Applications can use the registry for storing information that needs to be preserved after the application is closed, and access that same information when the application is reloaded. For example, you can store color preferences, screen locations, or the size of a window. You can control this data for each user by storing the information in a different location in the registry.
+
+The base, or root, <xref:Microsoft.Win32.RegistryKey> instances that are exposed by the `Registry` class delineate the basic storage mechanism for subkeys and values in the registry. All keys are read-only because the registry depends on their existence. The keys exposed by `Registry` are:
+
+| Key                                             | Description                                                        |
+|-------------------------------------------------|--------------------------------------------------------------------|
+| <xref:Microsoft.Win32.Registry.CurrentUser>     | Stores information about user preferences.                         |
+| <xref:Microsoft.Win32.Registry.LocalMachine>    | Stores configuration information for the local machine.            |
+| <xref:Microsoft.Win32.Registry.ClassesRoot>     | Stores information about types (and classes) and their properties. |
+| <xref:Microsoft.Win32.Registry.Users>           | Stores information about the default user configuration.           |
+| <xref:Microsoft.Win32.Registry.PerformanceData> | Stores performance information for software components.            |
+| <xref:Microsoft.Win32.Registry.CurrentConfig>   | Stores non-user-specific hardware information.                     |
+| <xref:Microsoft.Win32.Registry.DynData>         | Stores dynamic data.                                               |
+
+Once you've identified the root key under which you want to store/retrieve information from the registry, you can use the <xref:Microsoft.Win32.RegistryKey> class to add or remove subkeys and manipulate the values for a given key.
+
+Hardware devices can place information in the registry automatically using the Plug and Play interface. Software for installing device drivers can place information in the registry by writing to standard APIs.
+
+## Static methods for getting and setting values
+
+The <xref:Microsoft.Win32.Registry> class also contains `static` <xref:Microsoft.Win32.Registry.GetValue*> and <xref:Microsoft.Win32.Registry.SetValue*> methods for setting and retrieving values from registry keys. These methods open and close registry keys each time they're used. So when you access a large number of values, they don't perform as well as analogous methods in the <xref:Microsoft.Win32.RegistryKey> class.
+
+The <xref:Microsoft.Win32.RegistryKey> class also provides methods that allow you to:
+
+- Set Windows access control security for registry keys.
+- Test the data type of a value before retrieving it.
+- Delete keys.
+
 The following code example demonstrates how to retrieve the subkeys of the `HKEY_USERS` key and print their names to the screen. Use the <xref:Microsoft.Win32.RegistryKey.OpenSubKey*> method to create an instance of the particular subkey of interest. You can then use other operations in `RegistryKey` to manipulate that key.
 
 :::code language="cpp" source="~/snippets/cpp/VS_Snippets_CLR_Classic/classic Registry.Users Example/CPP/source.cpp" id="Snippet1":::
@@ -537,10 +565,10 @@ The following code example stores values of several data types in an example key
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="keyName" /> does not begin with a valid registry root.  
-  
- -or-  
-  
+          <paramref name="keyName" /> does not begin with a valid registry root.
+
+ -or-
+
  <paramref name="keyName" /> is longer than the maximum length allowed (255 characters).</exception>
         <exception cref="T:System.UnauthorizedAccessException">The <see cref="T:Microsoft.Win32.RegistryKey" /> is read-only, and thus cannot be written to; for example, it is a root-level node.</exception>
         <exception cref="T:System.Security.SecurityException">The user does not have the permissions required to create or modify registry keys.</exception>
@@ -633,14 +661,14 @@ The following code example stores values of several data types in an example key
         <exception cref="T:System.ArgumentNullException">
           <paramref name="value" /> is <see langword="null" />.</exception>
         <exception cref="T:System.ArgumentException">
-          <paramref name="keyName" /> does not begin with a valid registry root.  
-  
- -or-  
-  
- <paramref name="keyName" /> is longer than the maximum length allowed (255 characters).  
-  
- -or-  
-  
+          <paramref name="keyName" /> does not begin with a valid registry root.
+
+ -or-
+
+ <paramref name="keyName" /> is longer than the maximum length allowed (255 characters).
+
+ -or-
+
  The type of <paramref name="value" /> did not match the registry data type specified by <paramref name="valueKind" />, therefore the data could not be converted properly.</exception>
         <exception cref="T:System.UnauthorizedAccessException">The <see cref="T:Microsoft.Win32.RegistryKey" /> is read-only, and thus cannot be written to; for example, it is a root-level node, or the key has not been opened with write access.</exception>
         <exception cref="T:System.Security.SecurityException">The user does not have the permissions required to create or modify registry keys.</exception>
