@@ -25,7 +25,6 @@ class Program
 
 public class Cube : IEquatable<Cube>
 {
-
     public Cube(int h, int l, int w)
     {
         this.Height = h;
