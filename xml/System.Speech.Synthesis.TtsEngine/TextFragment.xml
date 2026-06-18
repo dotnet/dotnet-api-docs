@@ -40,26 +40,23 @@
 
  Speech attribute information, such as emphasis, pitch, and rate, are obtained from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> object returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment><xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property.
 
-
-
 ## Examples
  The example below is part of a custom speech synthesis implementation inheriting from <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>, and using the use of <xref:System.Speech.Synthesis.TtsEngine.TextFragment>, <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, <xref:System.Speech.Synthesis.TtsEngine.FragmentState>, and <xref:System.Speech.Synthesis.TtsEngine.TtsEventId>.
 
  The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak*>
 
-1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
+1. Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
 
-     Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
+   Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
 
-2.  If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
+2. If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
 
-    -   Translates Americanism to Britishisms in the text to be spoken.
+   - Translates Americanism to Britishisms in the text to be spoken.
+   - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
 
-    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
+3. A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
 
-3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
-
-```
+```csharp
 private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
 private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };
 internal struct UsVsUk
@@ -201,19 +198,18 @@ override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite si
 
  The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak*>
 
-1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
+1. Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
 
-     Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
+   Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
 
-2.  If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
+2. If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
 
-    -   Translates Americanism to Britishisms in the text to be spoken.
+   - Translates Americanism to Britishisms in the text to be spoken.
+   - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
 
-    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
+3. A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
 
-3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
-
-```
+```csharp
 private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
 private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };
 internal struct UsVsUk
@@ -292,26 +288,23 @@ override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite si
 ## Remarks
  The default value of this property is 0.
 
-
-
 ## Examples
  The example below is part of a custom speech synthesis implementation inheriting from <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>, and using the use of <xref:System.Speech.Synthesis.TtsEngine.TextFragment>, <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, <xref:System.Speech.Synthesis.TtsEngine.FragmentState>, and <xref:System.Speech.Synthesis.TtsEngine.TtsEventId>.
 
  The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak*>
 
-1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
+1. Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
 
-     Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
+   Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
 
-2.  If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
+2. If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
 
-    -   Translates Americanism to Britishisms in the text to be spoken.
+   - Translates Americanism to Britishisms in the text to be spoken.
+   - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
 
-    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
+3. A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
 
-3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
-
-```
+```csharp
 private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
 private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };
 internal struct UsVsUk
@@ -394,26 +387,23 @@ override public void Speak (TextFragment [] frags, IntPtr wfx, ITtsEngineSite si
 
  Resetting the value of <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> will not change the value of <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*> and <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*>.
 
-
-
 ## Examples
  The example below is part of a custom speech synthesis implementation inheriting from <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>, and using the use of <xref:System.Speech.Synthesis.TtsEngine.TextFragment>, <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, <xref:System.Speech.Synthesis.TtsEngine.FragmentState>, and <xref:System.Speech.Synthesis.TtsEngine.TtsEventId>.
 
  The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak*>
 
-1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
+1. Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
 
-     Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
+   Particular care is used to respect the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextOffset*>, <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextLength*> on the original <xref:System.Speech.Synthesis.TtsEngine.TextFragment> when creating the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.TextToSpeak*> on the new <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances.
 
-2.  If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
+2. If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
 
-    -   Translates Americanism to Britishisms in the text to be spoken.
+   - Translates Americanism to Britishisms in the text to be spoken.
+   - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
 
-    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
+3. A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
 
-3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
-
-```
+```csharp
 private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
 private readonly char[] spaces = new char[] { ' ', '\t', '\r', '\n' };
 internal struct UsVsUk

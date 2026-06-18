@@ -40,19 +40,18 @@ For detailed information on how use `EventParameterType`, see the documentation 
 ## Examples
  The following example is part of a custom speech synthesis implementation inheriting from <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml>, and using the use of <xref:System.Speech.Synthesis.TtsEngine.TextFragment>, <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, <xref:System.Speech.Synthesis.TtsEngine.FragmentState>, and <xref:System.Speech.Synthesis.TtsEngine.TtsEventId>.
 
- The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak*>
+ The implementation of <xref:System.Speech.Synthesis.TtsEngine.TtsEngineSsml.Speak*>:
 
-1.  Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
+1. Receives an array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances and creates a new array of <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instances to be passed to the `Speak` method on an underlying synthesis engine.
 
-2.  If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
+2. If the <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction> enumeration value by found from the <xref:System.Speech.Synthesis.TtsEngine.FragmentState.Action> property on the <xref:System.Speech.Synthesis.TtsEngine.FragmentState> returned by the <xref:System.Speech.Synthesis.TtsEngine.TextFragment.State> property of each <xref:System.Speech.Synthesis.TtsEngine.TextFragment> instance is <xref:System.Speech.Synthesis.TtsEngine.TtsEngineAction.Speak>, the implementation
 
-    -   Translates Americanism to Britishisms in the text to be spoken.
+   - Translates Americanism to Britishisms in the text to be spoken.
+   - If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
 
-    -   If the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite.EventInterest> property on the <xref:System.Speech.Synthesis.TtsEngine.ITtsEngineSite> interfaces provided to the implementation support the <xref:System.Speech.Synthesis.TtsEngine.TtsEventId.WordBoundary> event type, a <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo> instance is used to create an event to drive a synthesizer progress meter is created.
+     The parameters on <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, including the <xref:System.Speech.Synthesis.TtsEngine.EventParameterType> member value returned by <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.ParameterType*>, are used to log the event generated through the `LogSpeechEvent` method.
 
-         The parameters on <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo>, including the <xref:System.Speech.Synthesis.TtsEngine.EventParameterType> member value returned by <xref:System.Speech.Synthesis.TtsEngine.SpeechEventInfo.ParameterType*>, are used to log the event generated through the `LogSpeechEvent` method.
-
-3.  A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
+3. A speech rendering engine is then called with the modified <xref:System.Speech.Synthesis.TtsEngine.TextFragment> array.
 
 ```csharp
 private const int WordBoundaryFlag = 1 << (int)TtsEventId.WordBoundary;
