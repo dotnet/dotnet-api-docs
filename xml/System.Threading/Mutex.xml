@@ -60,12 +60,11 @@
  When two or more threads need to access a shared resource at the same time, the system needs a synchronization mechanism to ensure that only one thread at a time uses the resource. <xref:System.Threading.Mutex> is a synchronization primitive that grants exclusive access to the shared resource to only one thread. If a thread acquires a mutex, the second thread that wants to acquire that mutex is suspended until the first thread releases the mutex.
 
 > [!IMPORTANT]
->  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
+> This type implements the <xref:System.IDisposable> interface. When you've finished using the type, you should dispose of it either directly (by calling its `Dispose` method) or indirectly (with a language construct such as `using` in C#). For more information, see [Use an object that implements IDisposable](xref:System.IDisposable#use-an-object-that-implements-idisposable).
 
  You can use the <xref:System.Threading.WaitHandle.WaitOne*?displayProperty=nameWithType> method to request ownership of a mutex. The calling thread blocks until one of the following occurs:
 
 - The mutex is signaled to indicate that it is not owned. When this happens, the <xref:System.Threading.WaitHandle.WaitOne*> method returns `true`, and the calling thread assumes ownership of the mutex and accesses the resource protected by the mutex. When it has finished accessing the resource, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex*> method to release ownership of the mutex. The first example in the Examples section illustrates this pattern.
-
 - The time-out interval specified in the call to a <xref:System.Threading.WaitHandle.WaitOne*> method that has a `millisecondsTimeout` or `timeout` parameter has elapsed. When this happens, the <xref:System.Threading.WaitHandle.WaitOne*> method returns `false`, and the calling thread makes no further attempt to acquire ownership of the mutex. In this case, you should structure your code so that access to the resource that is protected by the mutex is denied to the calling thread. Because the thread never acquired ownership of the mutex, it must not call the <xref:System.Threading.Mutex.ReleaseMutex*> method. The second example in the Examples section illustrates this pattern.
 
  The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it. By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity.
@@ -77,7 +76,7 @@
  If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled, and the next waiting thread gets ownership. An <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex.
 
 > [!CAUTION]
->  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
+> An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
 
  In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).
 
@@ -851,7 +850,7 @@ There was some other error. The `HResult` property might provide more informatio
  If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled and the next waiting thread gets ownership. If no one owns the mutex, the state of the mutex is signaled. An <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex.
 
 > [!CAUTION]
->  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
+> An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.
 
  In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).
 
