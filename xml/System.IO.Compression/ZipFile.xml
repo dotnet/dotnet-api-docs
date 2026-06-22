@@ -54,7 +54,24 @@
     <remarks>
       <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipFile/ZipFile.md)]
+The methods for manipulating zip archives and their files are spread across three classes: <xref:System.IO.Compression.ZipFile>, <xref:System.IO.Compression.ZipArchive>, and <xref:System.IO.Compression.ZipArchiveEntry>.
+
+| To...                                 | Use... |
+|---------------------------------------|--------|
+| Create a zip archive from a directory | <xref:System.IO.Compression.ZipFile.CreateFromDirectory*?displayProperty=nameWithType> |
+| Extract the contents of a zip archive to a directory | <xref:System.IO.Compression.ZipFile.ExtractToDirectory*?displayProperty=nameWithType> |
+| Add new files to an existing zip archive | <xref:System.IO.Compression.ZipArchive.CreateEntry*?displayProperty=nameWithType> |
+| Retrieve a file in a zip archive      | <xref:System.IO.Compression.ZipArchive.GetEntry*?displayProperty=nameWithType> |
+| Retrieve all of the files in a zip archive | <xref:System.IO.Compression.ZipArchive.Entries*?displayProperty=nameWithType> |
+| Open a stream to an individual file contained in a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Open*?displayProperty=nameWithType> |
+| Delete a file from a zip archive      | <xref:System.IO.Compression.ZipArchiveEntry.Delete*?displayProperty=nameWithType> |
+
+## Examples
+
+This example shows how to create and extract a zip archive by using the <xref:System.IO.Compression.ZipFile> class. It compresses the contents of a folder into a zip archive, and then extracts that content to a new folder.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipFile/CreateFromDirectory/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipFile/CreateFromDirectory/program1.vb" id="Snippet1":::
 
       ]]></format>
     </remarks>
@@ -2501,7 +2518,7 @@ An archive entry has been compressed using a compression method that isn't suppo
 
  When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Create>, the archive is opened with <xref:System.IO.FileMode.CreateNew?displayProperty=nameWithType> as the file mode value. If the archive already exists, an <xref:System.IO.IOException> is thrown.
 
- When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Update>,  the archive is opened with <xref:System.IO.FileMode.OpenOrCreate?displayProperty=nameWithType> as the file mode value. If the archive exists, it is opened. The existing entries can be modified and new entries can be created. If the archive does not exist, a new archive is created; however, creating a zip archive in <xref:System.IO.Compression.ZipArchiveMode.Update> mode is not as efficient as creating it in <xref:System.IO.Compression.ZipArchiveMode.Create> mode.
+ When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Update>, the archive is opened with <xref:System.IO.FileMode.OpenOrCreate?displayProperty=nameWithType> as the file mode value. If the archive exists, it is opened. The existing entries can be modified and new entries can be created. If the archive does not exist, a new archive is created; however, creating a zip archive in <xref:System.IO.Compression.ZipArchiveMode.Update> mode is not as efficient as creating it in <xref:System.IO.Compression.ZipArchiveMode.Create> mode.
 
 ## Examples
  The following example shows how to open a zip archive in the update mode and add an entry to the archive.
@@ -2610,7 +2627,28 @@ An unspecified I/O error occurred while opening the file.</exception>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipFile/Open.md)]
+When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Read>, the archive is opened with <xref:System.IO.FileMode.Open?displayProperty=nameWithType> as the file mode value. If the archive does not exist, a <xref:System.IO.FileNotFoundException> exception is thrown. Setting the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Read> is equivalent to calling the <xref:System.IO.Compression.ZipFile.OpenRead*> method.
+
+When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Create>, the archive is opened with <xref:System.IO.FileMode.CreateNew?displayProperty=nameWithType> as the file mode value. If the archive already exists, an <xref:System.IO.IOException> is thrown.
+
+When you set the `mode` parameter to <xref:System.IO.Compression.ZipArchiveMode.Update>, the archive is opened with <xref:System.IO.FileMode.OpenOrCreate?displayProperty=nameWithType> as the file mode value. If the archive exists, it is opened. The existing entries can be modified and new entries can be created. If the archive does not exist, a new archive is created; however, creating a zip archive in <xref:System.IO.Compression.ZipArchiveMode.Update> mode is not as efficient as creating it in <xref:System.IO.Compression.ZipArchiveMode.Create> mode.
+
+When you open a zip archive file for reading and `entryNameEncoding` is set to `null`, entry names and comments are decoded according to the following rules:
+
+- When the language encoding flag (in the general-purpose bit flag of the local file header) is not set, the current system default code page is used to decode the entry name and comment.
+- When the language encoding flag is set, UTF-8 is used to decode the entry name and comment.
+
+When you open a zip archive file for reading and `entryNameEncoding` is set to a value other than `null`, entry names and comments are decoded according to the following rules:
+
+- When the language encoding flag is not set, the specified `entryNameEncoding` is used to decode the entry name and comment.
+- When the language encoding flag is set, UTF-8 is used to decode the entry name and comment.
+
+When you write to archive files and `entryNameEncoding` is set to `null`, entry names and comments are encoded according to the following rules:
+
+- For entry names or comments that contain characters outside the ASCII range, the language encoding flag is set, and entry names and comments are encoded by using UTF-8.
+- For entry names or comments that contain only ASCII characters, the language encoding flag is not set, and entry names and comments are encoded by using the current system default code page.
+
+When you write to archive files and `entryNameEncoding` is set to a value other than `null`, the specified `entryNameEncoding` is used to encode the entry names and comments into bytes. The language encoding flag (in the general-purpose bit flag of the local file header) is set only when the specified encoding is a UTF-8 encoding.
 
           ]]></format>
         </remarks>

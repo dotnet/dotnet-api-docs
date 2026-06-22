@@ -50,7 +50,33 @@
     <remarks>
       <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipArchiveEntry/ZipArchiveEntry.md)]
+A zip archive contains an entry for each compressed file. The <xref:System.IO.Compression.ZipArchiveEntry> class enables you to examine the properties of an entry, and open or delete the entry. When you open an entry, you can modify the compressed file by writing to the stream for that compressed file.
+
+The methods for manipulating zip archives and their file entries are spread across three classes: <xref:System.IO.Compression.ZipFile>, <xref:System.IO.Compression.ZipArchive>, and <xref:System.IO.Compression.ZipArchiveEntry>.
+
+| To...                                 | Use... |
+|---------------------------------------|--------|
+| Create a zip archive from a directory | <xref:System.IO.Compression.ZipFile.CreateFromDirectory*?displayProperty=nameWithType> |
+|Extract the contents of a zip archive to a directory|<xref:System.IO.Compression.ZipFile.ExtractToDirectory*?displayProperty=nameWithType>|
+|Add new files to an existing zip archive|<xref:System.IO.Compression.ZipArchive.CreateEntry*?displayProperty=nameWithType>|
+|Retrieve a file in a zip archive|<xref:System.IO.Compression.ZipArchive.GetEntry*?displayProperty=nameWithType>|
+|Retrieve all of the files in a zip archive|<xref:System.IO.Compression.ZipArchive.Entries*?displayProperty=nameWithType>|
+|To open a stream to an individual file contained in a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Open*?displayProperty=nameWithType>|
+|Delete a file from a zip archive|<xref:System.IO.Compression.ZipArchiveEntry.Delete*?displayProperty=nameWithType>|
+
+The <xref:System.IO.Compression.ZipFileExtensions> class provides extension methods for <xref:System.IO.Compression.ZipArchiveEntry>, such as <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile(System.IO.Compression.ZipArchiveEntry,System.String)> and <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile(System.IO.Compression.ZipArchiveEntry,System.String,System.Boolean)>, which enable you to decompress the contents of the entry to a file.
+
+## Examples
+
+The first example shows how to create a new entry in a zip archive and write to it.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/CreateEntry/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipArchive/CreateEntry/program1.vb" id="Snippet1":::
+
+The second example shows how to use the <xref:System.IO.Compression.ZipFileExtensions.ExtractToFile(System.IO.Compression.ZipArchiveEntry,System.String)> extension method.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipArchive/Entries/program1.vb" id="Snippet1":::
 
       ]]></format>
     </remarks>
@@ -359,7 +385,16 @@ If the comment byte length is larger than <xref:System.UInt16.MaxValue>, it will
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipArchiveEntry/FullName.md)]
+The <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property contains the relative path, including the subdirectory hierarchy, of an entry in a zip archive. (In contrast, the <xref:System.IO.Compression.ZipArchiveEntry.Name*> property contains only the name of the entry and does not include the subdirectory hierarchy.) For example, if you create two entries in a zip archive by using the <xref:System.IO.Compression.ZipFileExtensions.CreateEntryFromFile*> method and provide `NewEntry.txt` as the name for the first entry and `AddedFolder\NewEntry.txt` for the second entry, both entries will have `NewEntry.txt` in the <xref:System.IO.Compression.ZipArchiveEntry.Name*> property. The first entry will also have `NewEntry.txt` in the <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property, but the second entry will have `AddedFolder\NewEntry.txt` in the <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property.
+
+You can specify any string as the path of an entry, including strings that specify invalid and absolute paths. Therefore, the <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property might contain a value that is not correctly formatted. An invalid or absolute path might result in an exception when you extract the contents of the zip archive.
+
+## Examples
+
+The following example shows how to iterate through the contents of a .zip file, and extract files that contain the .txt extension.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/Entries/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipArchive/Entries/program1.vb" id="Snippet1":::
 
           ]]></format>
         </remarks>
@@ -429,7 +464,16 @@ If the comment byte length is larger than <xref:System.UInt16.MaxValue>, it will
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipArchiveEntry/LastWriteTime.md)]
+When you create a new entry from an existing file by calling the <xref:System.IO.Compression.ZipFileExtensions.CreateEntryFromFile*> method, the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime*> property for the entry is automatically set to the last time the file was modified. When you create a new entry programmatically by calling the <xref:System.IO.Compression.ZipArchive.CreateEntry*> method, the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime*> property for the entry is automatically set to the time of execution. If you modify the entry, you must explicitly set the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime*> property if you want the value to reflect the time of the latest change.
+
+When you set this property, the <xref:System.DateTimeOffset> value is converted to a timestamp format that is specific to zip archives. This format supports a resolution of two seconds. The earliest permitted value is 1980 January 1 0:00:00 (midnight). The latest permitted value is 2107 December 31 23:59:58 (one second before midnight). If the value for the last write time is not valid, the property returns a default value of 1980 January 1 0:00:00 (midnight).
+
+## Examples
+
+The following example shows how to open an entry in a zip archive, modify it, and set the <xref:System.IO.Compression.ZipArchiveEntry.LastWriteTime*> property to the current time.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/GetEntry/program2.cs" id="Snippet2":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipArchive/GetEntry/program2.vb" id="Snippet2":::
 
           ]]></format>
         </remarks>
@@ -528,7 +572,16 @@ If the comment byte length is larger than <xref:System.UInt16.MaxValue>, it will
         <remarks>
           <format type="text/markdown"><![CDATA[
 
-[!INCLUDE[remarks](~/includes/remarks/System.IO.Compression/ZipArchiveEntry/Name.md)]
+The <xref:System.IO.Compression.ZipArchiveEntry.Name*> property contains the portion of the <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property that follows the final directory separator character (\\), and does not include the subdirectory hierarchy. For example, if you create two entries in a zip archive by using the <xref:System.IO.Compression.ZipFileExtensions.CreateEntryFromFile*> method and provide `NewEntry.txt` as the name for the first entry and `AddedFolder\NewEntry.txt` for the second entry, both entries will have `NewEntry.txt` in the <xref:System.IO.Compression.ZipArchiveEntry.Name*> property. The first entry will also have `NewEntry.txt` in the <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property, but the second entry will have `AddedFolder\NewEntry.txt` in the <xref:System.IO.Compression.ZipArchiveEntry.FullName*> property.
+
+On Windows, colons (`:`) are also treated as separators due to NTFS rules, which can cause <xref:System.IO.Compression.ZipArchiveEntry.Name*> to differ across platforms. For platform-independent behavior, you can use <xref:System.IO.Compression.ZipArchiveEntry.FullName*>, which always reflects the complete entry name as stored in the archive.
+
+## Examples
+
+The following example shows how to retrieve entries from a zip archive and evaluate the properties of the entries. It uses the <xref:System.IO.Compression.ZipArchiveEntry.Name*> property to display the name of the entry, and the <xref:System.IO.Compression.ZipArchiveEntry.Length*> and <xref:System.IO.Compression.ZipArchiveEntry.CompressedLength*> properties to calculate how much the file was compressed.
+
+:::code language="csharp" source="~/snippets/csharp/System.IO.Compression/ZipArchive/GetEntry/program1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.IO.Compression/ZipArchive/GetEntry/program1.vb" id="Snippet1":::
 
           ]]></format>
         </remarks>
