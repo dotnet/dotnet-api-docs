@@ -64,23 +64,13 @@
 
 - When you use registered wait handles, a system thread monitors the status of the wait handles. When a wait operation completes, a worker thread from the thread pool executes the corresponding callback function.
 
-- When you call the <xref:System.Threading.ThreadPool.QueueUserWorkItem*> method to queue a method for execution on a thread pool thread. You do this by passing the method a <xref:System.Threading.WaitCallback> delegate.   The delegate has the signature
-
-    ```csharp
-    void WaitCallback(Object state)
-    ```
-
-    ```vb
-    Sub WaitCallback(state As Object)
-    ```
-
-     where `state` is an object that contains data to be used by the delegate. The actual data can be passed to the delegate by calling the <xref:System.Threading.ThreadPool.QueueUserWorkItem(System.Threading.WaitCallback,System.Object)> method.
+- When you call the <xref:System.Threading.ThreadPool.QueueUserWorkItem*> method to queue a method for execution on a thread pool thread. You do this by passing the method a <xref:System.Threading.WaitCallback> delegate. The delegate has the signature `void WaitCallback(object state)`, where `state` is an object that contains data to be used by the delegate. The actual data can be passed to the delegate by calling the <xref:System.Threading.ThreadPool.QueueUserWorkItem(System.Threading.WaitCallback,System.Object)> method.
 
 > [!NOTE]
->  The threads in the managed thread pool are background threads. That is, their <xref:System.Threading.Thread.IsBackground*> properties are `true`. This means that a <xref:System.Threading.ThreadPool> thread will not keep an application running after all foreground threads have exited.
+> The threads in the managed thread pool are background threads. That is, their <xref:System.Threading.Thread.IsBackground*> properties are `true`. This means that a <xref:System.Threading.ThreadPool> thread will not keep an application running after all foreground threads have exited.
 
 > [!IMPORTANT]
->  When the thread pool reuses a thread, it does not clear the data in thread local storage or in fields that are marked with the <xref:System.ThreadStaticAttribute> attribute. Therefore, when a method examines thread local storage or fields that are marked with the <xref:System.ThreadStaticAttribute> attribute, the values it finds might be left over from an earlier use of the thread pool thread.
+> When the thread pool reuses a thread, it does not clear the data in thread local storage or in fields that are marked with the <xref:System.ThreadStaticAttribute> attribute. Therefore, when a method examines thread local storage or fields that are marked with the <xref:System.ThreadStaticAttribute> attribute, the values it finds might be left over from an earlier use of the thread pool thread.
 
  You can also queue work items that are not related to a wait operation to the thread pool. To request that a work item be handled by a thread in the thread pool, call the <xref:System.Threading.ThreadPool.QueueUserWorkItem*> method. This method takes as a parameter a reference to the method or delegate that will be called by the thread selected from the thread pool. There is no way to cancel a work item after it has been queued.
 
@@ -94,12 +84,12 @@
  The thread pool provides new worker threads or I/O completion threads on demand until it reaches the maximum for each category. When a maximum is reached, the thread pool can create additional threads in that category or wait until some tasks complete. The thread pool creates and destroys worker threads in order to optimize throughput, which is defined as the number of tasks that complete per unit of time. Too few threads might not make optimal use of available resources, whereas too many threads could increase resource contention.
 
 > [!NOTE]
->  When demand is low, the actual number of thread pool threads can fall below the minimum values.
+> When demand is low, the actual number of thread pool threads can fall below the minimum values.
 
  You can use the <xref:System.Threading.ThreadPool.GetMinThreads*> method to obtain these minimum values.
 
 > [!CAUTION]
->  You can use the <xref:System.Threading.ThreadPool.SetMinThreads*> method to increase the minimum number of threads. However, unnecessarily increasing these values can cause performance problems. If too many tasks start at the same time, all of them might appear to be slow. In most cases the thread pool will perform better with its own algorithm for allocating threads.
+> You can use the <xref:System.Threading.ThreadPool.SetMinThreads*> method to increase the minimum number of threads. However, unnecessarily increasing these values can cause performance problems. If too many tasks start at the same time, all of them might appear to be slow. In most cases the thread pool will perform better with its own algorithm for allocating threads.
 
 ## Examples
  In the following example, the main application thread  queues a method named `ThreadProc` to execute on a thread pool thread, sleeps for one second, and then exits. The `ThreadProc` method simply displays a message.
@@ -492,7 +482,7 @@ If a thread pool implementation may have different types of work items, the coun
  The thread pool provides new worker threads or I/O completion threads on demand until it reaches the minimum for each category. By default, the minimum number of threads is set to the number of processors on a system. When the minimum is reached, the thread pool can create additional threads in that category or wait until some tasks complete. The thread pool creates and destroys threads in order to optimize throughput, which is defined as the number of tasks that complete per unit of time. Too few threads might not make optimal use of available resources, whereas too many threads could increase resource contention.
 
 > [!NOTE]
->  When demand is low, the actual number of thread pool threads can fall below the minimum values.
+> When demand is low, the actual number of thread pool threads can fall below the minimum values.
 
 ## Examples
  The following example sets the minimum number of worker threads to four, and preserves the original value for the minimum number of asynchronous I/O completion threads.
@@ -850,7 +840,7 @@ The following example uses the <xref:System.Threading.ThreadPool.QueueUserWorkIt
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject*> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.
 
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
+> Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
 
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister*?displayProperty=nameWithType> method.
 
@@ -945,7 +935,7 @@ The following example uses the <xref:System.Threading.ThreadPool.QueueUserWorkIt
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject*> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.
 
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
+> Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
 
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister*?displayProperty=nameWithType> method.
 
@@ -1040,7 +1030,7 @@ The following example uses the <xref:System.Threading.ThreadPool.QueueUserWorkIt
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject*> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.
 
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
+> Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
 
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister*?displayProperty=nameWithType> method.
 
@@ -1140,7 +1130,7 @@ The following example uses the <xref:System.Threading.ThreadPool.QueueUserWorkIt
  The <xref:System.Threading.ThreadPool.RegisterWaitForSingleObject*> method checks the current state of the specified object's <xref:System.Threading.WaitHandle>. If the object's state is unsignaled, the method registers a wait operation. The wait operation is performed by a thread from the thread pool. The delegate is executed by a worker thread when the object's state becomes signaled or the time-out interval elapses. If the `timeOutInterval` parameter is not 0 (zero) and the `executeOnlyOnce` parameter is `false`, the timer is reset every time the event is signaled or the time-out interval elapses.
 
 > [!IMPORTANT]
->  Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
+> Using a <xref:System.Threading.Mutex> for `waitObject` does not provide mutual exclusion for the callbacks because the underlying Windows API uses the default `WT_EXECUTEDEFAULT` flag, so each callback is dispatched on a separate thread pool thread. Instead of a <xref:System.Threading.Mutex>, use a <xref:System.Threading.Semaphore> with a maximum count of 1.
 
  To cancel the wait operation, call the <xref:System.Threading.RegisteredWaitHandle.Unregister*?displayProperty=nameWithType> method.
 
@@ -1226,7 +1216,7 @@ The following example uses the <xref:System.Threading.ThreadPool.QueueUserWorkIt
  Setting the thread pool size too large can cause performance problems. If too many threads are executing at the same time, the task switching overhead becomes a significant factor.
 
 > [!NOTE]
->  The thread pool may have upper limits for the maximum thread counts (such as `short.MaxValue`, depending on the implementation). The argument values are capped to the upper limit, so even when the method returns `true`, the actual maximum thread counts may be lower than requested.
+> The thread pool may have upper limits for the maximum thread counts (such as `short.MaxValue`, depending on the implementation). The argument values are capped to the upper limit, so even when the method returns `true`, the actual maximum thread counts may be lower than requested.
 
  ]]></format>
         </remarks>

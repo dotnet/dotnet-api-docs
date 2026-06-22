@@ -67,7 +67,7 @@ A thread can enter the lock in three modes: read mode, write mode, and upgradeab
 Regardless of recursion policy, only one thread can be in write mode at any time. When a thread is in write mode, no other thread can enter the lock in any mode. Only one thread can be in upgradeable mode at any time. Any number of threads can be in read mode, and there can be one thread in upgradeable mode while other threads are in read mode.
 
 > [!IMPORTANT]
-> This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface topic.
+> This type implements the <xref:System.IDisposable> interface. When you've finished using the type, you should dispose of it either directly (by calling its `Dispose` method) or indirectly (with a language construct such as `using` in C#). For more information, see [Use an object that implements IDisposable](xref:System.IDisposable#use-an-object-that-implements-idisposable).
 
 <xref:System.Threading.ReaderWriterLockSlim> has managed thread affinity; that is, each <xref:System.Threading.Thread> object must make its own method calls to enter and exit lock modes. No thread can change the mode of another thread.
 
@@ -110,11 +110,8 @@ You can create a <xref:System.Threading.ReaderWriterLockSlim> that supports recu
 For a <xref:System.Threading.ReaderWriterLockSlim> that allows recursion, the following can be said about the modes a thread can enter:
 
 - A thread in read mode can enter read mode recursively, but cannot enter write mode or upgradeable mode. If it tries to do this, a <xref:System.Threading.LockRecursionException> is thrown. Entering read mode and then entering write mode or upgradeable mode is a pattern with a strong probability of deadlocks, so it is not allowed. As discussed earlier, upgradeable mode is provided for cases where it is necessary to upgrade a lock.
-
 - A thread in upgradeable mode can enter write mode and/or read mode, and can enter any of the three modes recursively. However, an attempt to enter write mode blocks if there are other threads in read mode.
-
 - A thread in write mode can enter read mode and/or upgradeable mode, and can enter any of the three modes recursively.
-
 - A thread that has not entered the lock can enter any mode. This attempt can block for the same reasons as an attempt to enter a non-recursive lock.
 
 A thread can exit the modes it has entered in any order, as long as it exits each mode exactly as many times as it entered that mode. If a thread tries to exit a mode too many times, or to exit a mode it has not entered, a <xref:System.Threading.SynchronizationLockException> is thrown.
@@ -124,14 +121,12 @@ A thread can exit the modes it has entered in any order, as long as it exits eac
 You may find it useful to think of the lock in terms of its states. A <xref:System.Threading.ReaderWriterLockSlim> can be in one of four states: not entered, read, upgrade, and write.
 
 - Not entered: In this state, no threads have entered the lock (or all threads have exited the lock).
-
 - Read: In this state, one or more threads have entered the lock for read access to the protected resource.
 
     > [!NOTE]
     > A thread can enter the lock in read mode by using the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock*> or <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock*> methods, or by downgrading from upgradeable mode.
 
 - Upgrade: In this state, one thread has entered the lock for read access with the option to upgrade to write access (that is, in upgradeable mode), and zero or more threads have entered the lock for read access. No more than one thread at a time can enter the lock with the option to upgrade; additional threads that try to enter upgradeable mode are blocked.
-
 - Write: In this state, one thread has entered the lock for write access to the protected resource. That thread has exclusive possession of the lock. Any other thread that tries to enter the lock for any reason is blocked.
 
 The following table describes the transitions between lock states, for locks that do not allow recursion, when a thread `t` takes the action described in the leftmost column. At the time it takes the action, `t` has no mode. (The special case where `t` is in upgradeable mode is described in the table footnotes.) The top row describes the starting state of the lock. The cells describe what happens to the thread, and show changes to the lock state in parentheses.
@@ -314,7 +309,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  Recursion policy determines the restrictions on threads that enter the lock more than once. For example, if a lock was created with <xref:System.Threading.LockRecursionPolicy.NoRecursion?displayProperty=nameWithType> and a thread has entered the lock in read mode, <xref:System.Threading.LockRecursionException> is thrown if the thread tries to reenter the lock in read mode. Similarly, if a thread has entered the lock in write mode, <xref:System.Threading.LockRecursionException> is thrown if the thread tries to reenter the lock in any mode.
 
 > [!NOTE]
->  A thread in upgradeable mode can upgrade to write mode or downgrade to read mode regardless of the lock recursion policy setting.
+> A thread in upgradeable mode can upgrade to write mode or downgrade to read mode regardless of the lock recursion policy setting.
 
  Regardless of recursion policy, a thread that initially entered read mode is not allowed to upgrade to upgradeable mode or write mode, because that pattern creates a strong probability of deadlocks.
 
@@ -459,7 +454,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  Call <xref:System.Threading.ReaderWriterLockSlim.Dispose*> when you are finished using the <xref:System.Threading.ReaderWriterLockSlim>. The <xref:System.Threading.ReaderWriterLockSlim.Dispose*> method leaves the <xref:System.Threading.ReaderWriterLockSlim> in an unusable state. After calling <xref:System.Threading.ReaderWriterLockSlim.Dispose*>, you must release all references to the <xref:System.Threading.ReaderWriterLockSlim> so the garbage collector can reclaim the memory that the <xref:System.Threading.ReaderWriterLockSlim> was occupying. For more information, see [Cleaning Up Unmanaged Resources](/dotnet/standard/garbage-collection/unmanaged) and [Implementing a Dispose Method](/dotnet/standard/garbage-collection/implementing-dispose).
 
 > [!NOTE]
->  Always call <xref:System.Threading.ReaderWriterLockSlim.Dispose*> before you release your last reference to the <xref:System.Threading.ReaderWriterLockSlim> object.
+> Always call <xref:System.Threading.ReaderWriterLockSlim.Dispose*> before you release your last reference to the <xref:System.Threading.ReaderWriterLockSlim> object.
 
  ]]></format>
         </remarks>
@@ -525,7 +520,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock*> method blocks until those threads have either timed out or entered write mode and then exited from it.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.
 
  At most one thread can be in upgradeable mode while other threads are in read mode. If additional threads are waiting to enter upgradeable mode, and there are no threads waiting to enter write mode, threads that call the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock*> method enter read mode immediately and do not block.
 
@@ -607,7 +602,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock*> method blocks until those threads have either timed out or entered write mode and then exited from it.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode.
 
 
 
@@ -689,7 +684,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If other threads have entered the lock in read mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.EnterWriteLock*> method blocks until those threads have exited read mode. When there are threads waiting to enter write mode, additional threads that try to enter read mode or upgradeable mode block until all the threads waiting to enter write mode have either timed out or entered write mode and then exited from it.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode.
 
 
 
@@ -1141,7 +1136,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  Recursion policy determines the restrictions on threads that enter the lock more than once. For example, if a lock was created with <xref:System.Threading.LockRecursionPolicy.NoRecursion?displayProperty=nameWithType> and a thread has entered the lock in read mode, <xref:System.Threading.LockRecursionException> is thrown if the thread tries to reenter the lock in read mode.
 
 > [!NOTE]
->  A thread in upgradeable mode can upgrade to write mode or downgrade to read mode regardless of the lock recursion policy setting.
+> A thread in upgradeable mode can upgrade to write mode or downgrade to read mode regardless of the lock recursion policy setting.
 
  Regardless of recursion policy, a thread that initially entered read mode is not allowed to upgrade to upgradeable mode or write mode, because that pattern creates a strong probability of deadlocks.
 
@@ -1365,7 +1360,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock*> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.
 
  One thread can be in upgradeable mode while other threads are in read mode. If additional threads are waiting to enter upgradeable mode, and there are no threads waiting to enter write mode, threads that call the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock*> method enter read mode immediately and do not block.
 
@@ -1435,7 +1430,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If one or more threads are queued to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock*> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.
 
  One thread can be in upgradeable mode while other threads are in read mode. If additional threads are waiting to enter upgradeable mode, and there are no threads waiting to enter write mode, threads that call the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock*> method enter read mode immediately and do not block.
 
@@ -1522,7 +1517,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock*> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode.
 
  ]]></format>
         </remarks>
@@ -1596,7 +1591,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock*> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode.
 
  ]]></format>
         </remarks>
@@ -1681,7 +1676,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If other threads have entered the lock in read mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock*> method blocks until those threads have exited read mode or until the time-out interval has elapsed. While threads are blocked waiting to enter write mode, additional threads that try to enter read mode or upgradeable mode block until all the threads waiting to enter write mode have either timed out or entered write mode and then exited from it.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode.
 
 
 
@@ -1765,7 +1760,7 @@ The following code then uses the `SynchronizedCache` object to store a dictionar
  If other threads have entered the lock in read mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock*> method blocks until those threads have exited read mode or until the time-out interval has elapsed. While threads are blocked waiting to enter write mode, additional threads that try to enter read mode or upgradeable mode block until all the threads waiting to enter write mode have either timed out or entered write mode and then exited from it.
 
 > [!NOTE]
->  If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode.
+> If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode.
 
  ]]></format>
         </remarks>

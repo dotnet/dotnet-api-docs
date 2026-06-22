@@ -97,7 +97,7 @@
 The <xref:System.Resources.ResourceReader> class provides a standard implementation of the <xref:System.Resources.IResourceReader> interface. A <xref:System.Resources.ResourceReader> instance represents either a standalone .resources file or a .resources file that is embedded in an assembly. It is used to enumerate the resources in a .resources file and retrieve its name/value pairs. It differs from the <xref:System.Resources.ResourceManager> class, which is used to retrieve specified named resources from a .resources file that is embedded in an assembly. The <xref:System.Resources.ResourceManager> class is used to retrieve resources whose names are known in advance, whereas the <xref:System.Resources.ResourceReader> class is useful for retrieving resources whose number or precise names are not known at compile time. For example, an application may use a resources file to store configuration information that is organized into sections and items in a section, where the number of sections or items in a section is not known in advance. Resources can then be named generically (such as `Section1`, `Section1Item1`, `Section1Item2`, and so on) and retrieved by using a <xref:System.Resources.ResourceReader> object.
 
 > [!IMPORTANT]
-> This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose*> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the "Using an Object that Implements IDisposable" section in the <xref:System.IDisposable> interface documentation.
+> This type implements the <xref:System.IDisposable> interface. When you've finished using the type, you should dispose of it either directly (by calling its `Dispose` method) or indirectly (with a language construct such as `using` in C#). For more information, see [Use an object that implements IDisposable](xref:System.IDisposable#use-an-object-that-implements-idisposable).
 
 ## Instantiate a ResourceReader object
 
@@ -182,9 +182,9 @@ The following example illustrates how to use this approach to retrieve resources
 
    The source code file is named CreateResources.cs. You can compile it in C# by using the following command:
 
-    ```
-    csc CreateResources.cs /r:library.dll
-    ```
+   ```
+   csc CreateResources.cs /r:library.dll
+   ```
 
 2. Compile and run the following code to enumerate the resources in the ContactResources.resources file.
 
@@ -590,17 +590,17 @@ Label11="Mobile Phone:"
 
  The implementation of the <xref:System.Collections.IDictionaryEnumerator.Value?displayProperty=nameWithType> property by the <xref:System.Resources.ResourceReader> class can throw the following exceptions:
 
--   <xref:System.IO.FileNotFoundException>
+- <xref:System.IO.FileNotFoundException>
 
-     The assembly that contains the type to which the data belongs cannot be found.
+  The assembly that contains the type to which the data belongs cannot be found.
 
--   <xref:System.FormatException>
+- <xref:System.FormatException>
 
-     The data is not in the expected format.
+  The data is not in the expected format.
 
--   <xref:System.TypeLoadException>
+- <xref:System.TypeLoadException>
 
-     The type to which the data belongs cannot be found.
+  The type to which the data belongs cannot be found.
 
  You can handle the exception by calling the <xref:System.Resources.ResourceReader.GetResourceData*> method to retrieve information about the data type and the byte array assigned to the named resource. For more information, see the "Retrieving Resources by Name with GetResourceData" section in the <xref:System.Resources.ResourceReader> class topic.
 
@@ -696,23 +696,24 @@ Label11="Mobile Phone:"
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Resources.ResourceReader.GetResourceData*> method retrieves the value of a named resource as a byte array. It is typically used when the <xref:System.Collections.IDictionaryEnumerator.Value> property throws an exception when it tries to retrieve the value of a resource.
 
- `resourceType` is a string that represents the data type of the resource. It can be any of the following values:
+The <xref:System.Resources.ResourceReader.GetResourceData*> method retrieves the value of a named resource as a byte array. It is typically used when the <xref:System.Collections.IDictionaryEnumerator.Value> property throws an exception when it tries to retrieve the value of a resource.
 
- - The string representation of a `ResourceTypeCode` enumeration member that indicates the data type of the resource. `ResourceTypeCode` is a private enumeration that is used by Resgen.exe to indicate that a special binary format is used to store one of 19 common data types. These include the .NET primitive data types (<xref:System.Boolean>, <xref:System.Byte>, <xref:System.Char>, <xref:System.Decimal>, <xref:System.Double>, <xref:System.Int16>, <xref:System.Int32>, <xref:System.Int64>, <xref:System.Single>, <xref:System.SByte>, <xref:System.UInt16>, <xref:System.UInt32>, <xref:System.UInt64>), as well as <xref:System.String>, <xref:System.DateTime>, and <xref:System.TimeSpan>. In addition, the `ResourceTypeCode` enumeration includes the values shown in the following table.
+`resourceType` is a string that represents the data type of the resource. It can be any of the following values:
 
-    |ResourceTypeCode value|Description|
-    |----------------------------|-----------------|
-    |`ResourceTypeCode.ByteArray`|The data is a byte array. This data type commonly results from the call to the <xref:System.Resources.ResourceWriter.AddResource(System.String,System.Byte[])?displayProperty=nameWithType> method.|
-    |`ResourceTypeCode.Null`|The data is a null reference. This data type commonly results from the call to the <xref:System.Resources.ResourceWriter.AddResource(System.String,System.Object)?displayProperty=nameWithType> method with an object whose value is `null`.|
-    |`ResourceTypeCode.Stream`|The data is stored in a stream. This data type commonly results from the call to the <xref:System.Resources.ResourceWriter.AddResource(System.String,System.IO.Stream)?displayProperty=nameWithType> or <xref:System.Resources.ResourceWriter.AddResource(System.String,System.IO.Stream,System.Boolean)?displayProperty=nameWithType> method.|
+- The string representation of a `ResourceTypeCode` enumeration member that indicates the data type of the resource. `ResourceTypeCode` is a private enumeration that is used by Resgen.exe to indicate that a special binary format is used to store one of 19 common data types. These include the .NET primitive data types (<xref:System.Boolean>, <xref:System.Byte>, <xref:System.Char>, <xref:System.Decimal>, <xref:System.Double>, <xref:System.Int16>, <xref:System.Int32>, <xref:System.Int64>, <xref:System.Single>, <xref:System.SByte>, <xref:System.UInt16>, <xref:System.UInt32>, <xref:System.UInt64>), as well as <xref:System.String>, <xref:System.DateTime>, and <xref:System.TimeSpan>. In addition, the `ResourceTypeCode` enumeration includes the values shown in the following table.
 
-     Assuming that `resourceData` has not been corrupted, it can usually be converted from a byte array back to its original value by calling a <xref:System.BitConverter> or <xref:System.IO.BinaryReader> method.
+  |ResourceTypeCode value|Description|
+  |----------------------------|-----------------|
+  |`ResourceTypeCode.ByteArray`|The data is a byte array. This data type commonly results from the call to the <xref:System.Resources.ResourceWriter.AddResource(System.String,System.Byte[])?displayProperty=nameWithType> method.|
+  |`ResourceTypeCode.Null`|The data is a null reference. This data type commonly results from the call to the <xref:System.Resources.ResourceWriter.AddResource(System.String,System.Object)?displayProperty=nameWithType> method with an object whose value is `null`.|
+  |`ResourceTypeCode.Stream`|The data is stored in a stream. This data type commonly results from the call to the <xref:System.Resources.ResourceWriter.AddResource(System.String,System.IO.Stream)?displayProperty=nameWithType> or <xref:System.Resources.ResourceWriter.AddResource(System.String,System.IO.Stream,System.Boolean)?displayProperty=nameWithType> method.|
+
+  Assuming that `resourceData` has not been corrupted, it can usually be converted from a byte array back to its original value by calling a <xref:System.BitConverter> or <xref:System.IO.BinaryReader> method.
 
 - A string that contains the fully qualified name of the type whose serialized data is assigned to the `resourceData` argument (for example, `System.String`). In addition, for types that are not part of the .NET class library, the string includes the name, version, culture, and public key of the assembly that contains the type. For example, the following string indicates that the serialized data represents an instance of the `Person` type in the `Extensions` namespace, which is found in version 1.0 of an assembly named Utility that has no public key and no designated culture.
 
-     `Extensions.Person, Utility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null`
+  `Extensions.Person, Utility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null`
 
 - The string used to describe the data type in the <xref:System.Resources.ResourceWriter.AddResourceData*?displayProperty=nameWithType> method call.
 
