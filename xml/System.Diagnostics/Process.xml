@@ -1651,8 +1651,6 @@ The following code example creates a process that prints a file. It sets the <xr
 > [!NOTE]
 > Multiple Windows services can be loaded within the same instance of the Service Host process (svchost.exe). GetProcesses does not identify those individual services; for that, see <xref:System.ServiceProcess.ServiceController.GetServices*>.
 
-
-
 ## Examples
  The following example retrieves information of the current process, processes running on the local computer, all instances of Notepad running on the local computer, and a specific process on the local computer. It then retrieves information for the same processes on a remote computer.
 
@@ -1665,7 +1663,6 @@ The following code example creates a process that prints a file. It sets the <xr
         <exception cref="T:System.ArgumentException">The <paramref name="machineName" /> parameter syntax is invalid. It might have length zero (0).</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="machineName" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.PlatformNotSupportedException">The operating system platform does not support this operation on remote computers.</exception>
-        <exception cref="T:System.InvalidOperationException">There are problems accessing the performance counter APIs used to get process information. This exception is specific to Windows NT, Windows 2000, and Windows XP.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">A problem occurred accessing an underlying system API.</exception>
         <altmember cref="P:System.Diagnostics.Process.MachineName" />
         <altmember cref="M:System.Diagnostics.Process.GetProcessById(System.Int32,System.String)" />
@@ -1770,7 +1767,6 @@ The following code example creates a process that prints a file. It sets the <xr
 
  ]]></format>
         </remarks>
-        <exception cref="T:System.InvalidOperationException">There are problems accessing the performance counter APIs used to get process information. This exception is specific to Windows NT, Windows 2000, and Windows XP.</exception>
         <altmember cref="P:System.Diagnostics.Process.ProcessName" />
         <altmember cref="M:System.Diagnostics.Process.GetProcessById(System.Int32,System.String)" />
         <altmember cref="M:System.Diagnostics.Process.GetProcesses" />
@@ -1873,11 +1869,7 @@ The following code example creates a process that prints a file. It sets the <xr
         <exception cref="T:System.ArgumentException">The <paramref name="machineName" /> parameter syntax is invalid. It might have length zero (0).</exception>
         <exception cref="T:System.ArgumentNullException">The <paramref name="machineName" /> parameter is <see langword="null" />.</exception>
         <exception cref="T:System.PlatformNotSupportedException">The operating system platform does not support this operation on remote computers.</exception>
-        <exception cref="T:System.InvalidOperationException">The attempt to connect to <paramref name="machineName" /> has failed.
-
- -or-
-
-There are problems accessing the performance counter APIs used to get process information. This exception is specific to Windows NT, Windows 2000, and Windows XP.</exception>
+        <exception cref="T:System.InvalidOperationException">The attempt to connect to <paramref name="machineName" /> has failed.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">A problem occurred accessing an underlying system API.</exception>
         <altmember cref="P:System.Diagnostics.Process.ProcessName" />
         <altmember cref="P:System.Diagnostics.Process.MachineName" />
@@ -3688,16 +3680,7 @@ If no main module is found, it could be because the process hasn't finished load
       <Docs>
         <summary>Gets the peak working set size for the associated process, in bytes.</summary>
         <value>The maximum amount of physical memory that the associated process has required all at once, in bytes.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The working set of a process is the set of memory pages currently visible to the process in physical RAM memory. These pages are resident and available for an application to use without triggering a page fault.
-
- The working set includes both shared and private data. The shared data includes the pages that contain all the instructions that the process executes, including process modules and the system libraries.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Diagnostics.Process.WorkingSet64" />
         <altmember cref="P:System.Diagnostics.Process.MinWorkingSet" />
         <altmember cref="P:System.Diagnostics.Process.MaxWorkingSet" />
@@ -4147,9 +4130,6 @@ If no main module is found, it could be because the process hasn't finished load
 ## Remarks
  The <xref:System.Diagnostics.Process.ProcessName> property holds an executable file name, such as Outlook, that does not include the .exe extension or the path. It is helpful for getting and manipulating all the processes that are associated with the same executable file.
 
-> [!NOTE]
-> On Windows 2000 operating systems, the <xref:System.Diagnostics.Process.ProcessName> property may be truncated to 15 characters if the process module information cannot be obtained.
-
  You can call <xref:System.Diagnostics.Process.GetProcessesByName*>, passing it an executable file name, to retrieve an array that contains every running instance on the specified computer. You can use this array, for example, to shut down all the running instances of the executable file.
 
  ]]></format>
@@ -4219,19 +4199,19 @@ If no main module is found, it could be because the process hasn't finished load
 ## Remarks
  The value returned by this property represents the most recently refreshed affinity of the process. To get the most up to date affinity, you need to call <xref:System.Diagnostics.Process.Refresh> method first.
 
- In Windows 2000 and later, a thread in a process can migrate from processor to processor, with each migration reloading the processor cache. Under heavy system loads, specifying which processor should run a specific thread can improve performance by reducing the number of times the processor cache is reloaded. The association between a processor and a thread is called the processor affinity.
+A thread in a process can migrate from processor to processor, with each migration reloading the processor cache. Under heavy system loads, specifying which processor should run a specific thread can improve performance by reducing the number of times the processor cache is reloaded. The association between a processor and a thread is called the processor affinity.
 
  Each processor is represented as a bit. Bit 0 is processor one, bit 1 is processor two, and so forth. If you set a bit to the value 1, the corresponding processor is selected for thread assignment. When you set the <xref:System.Diagnostics.Process.ProcessorAffinity*> value to zero, the operating system's scheduling algorithms set the thread's affinity. When the <xref:System.Diagnostics.Process.ProcessorAffinity*> value is set to any nonzero value, the value is interpreted as a bitmask that specifies those processors eligible for selection.
 
  The following table shows a selection of <xref:System.Diagnostics.Process.ProcessorAffinity*> values for an eight-processor system.
 
-|Bitmask|Binary value|Eligible processors|
-|-------------|------------------|-------------------------|
-|0x0001|00000000 00000001|1|
-|0x0003|00000000 00000011|1 and 2|
-|0x0007|00000000 00000111|1, 2 and 3|
-|0x0009|00000000 00001001|1 and 4|
-|0x007F|00000000 01111111|1, 2, 3, 4, 5, 6 and 7|
+| Bitmask | Binary value      | Eligible processors    |
+|---------|-------------------|------------------------|
+| 0x0001  | 00000000 00000001 | 1                      |
+| 0x0003  | 00000000 00000011 | 1 and 2                |
+| 0x0007  | 00000000 00000111 | 1, 2 and 3             |
+| 0x0009  | 00000000 00001001 | 1 and 4                |
+| 0x007F  | 00000000 01111111 | 1, 2, 3, 4, 5, 6 and 7 |
 
  ]]></format>
         </remarks>
@@ -7293,21 +7273,9 @@ No process is associated with this <see cref="T:System.Diagnostics.Process" /> o
       <Docs>
         <summary>Gets the associated process's physical memory usage, in bytes.</summary>
         <value>The total amount of physical memory the associated process is using, in bytes.</value>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- The value returned by this property represents the most recently refreshed size of working set memory used by the process, in bytes. To get the most up to date size, you need to call <xref:System.Diagnostics.Process.Refresh> method first.
-
- The working set of a process is the set of memory pages currently visible to the process in physical RAM memory. These pages are resident and available for an application to use without triggering a page fault.
-
- The working set includes both shared and private data. The shared data includes the pages that contain all the instructions that the process executes, including the process modules and the system libraries.
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <altmember cref="P:System.Diagnostics.Process.MinWorkingSet" />
         <altmember cref="P:System.Diagnostics.Process.MaxWorkingSet" />
-        <altmember cref="P:System.Diagnostics.Process.PeakWorkingSet" />
         <altmember cref="P:System.Diagnostics.Process.PeakWorkingSet64" />
         <altmember cref="P:System.Diagnostics.Process.WorkingSet64" />
       </Docs>
