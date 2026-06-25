@@ -1,34 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
-using System.Web.Services;
-using System.Web.Services.Protocols;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-
-public class Test
-{
-    public class DownloadAuthorization { }
-
-    static void Main()
-    {
-        Console.WriteLine("Hello");
-    }
-
-    //<snippet1>
-    [WebMethod]
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute
-    (ParameterStyle = SoapParameterStyle.Bare)]
-    public SongStream DownloadSong(DownloadAuthorization Authorization, string filePath)
-    {
-        // Turn off response buffering.
-        System.Web.HttpContext.Current.Response.Buffer = false;
-        // Return a song.
-        SongStream song = new SongStream(filePath);
-        return song;
-    }
-    //</snippet1>
-}
 
 //<snippet2>
 [XmlSchemaProvider("MySchema")]
@@ -53,7 +27,7 @@ public class SongStream : IXmlSerializable
         XmlSerializer schemaSerializer = new XmlSerializer(typeof(XmlSchema));
         string xsdPath = null;
         // NOTE: replace the string with your own path.
-        xsdPath = System.Web.HttpContext.Current.Server.MapPath("SongStream.xsd");
+        xsdPath = "SongStream.xsd";
         XmlSchema s = (XmlSchema)schemaSerializer.Deserialize(
             new XmlTextReader(xsdPath), null);
         xs.XmlResolver = new XmlUrlResolver();
