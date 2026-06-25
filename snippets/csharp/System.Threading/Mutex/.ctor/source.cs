@@ -77,7 +77,7 @@ internal class Example
             // indicates creation of the underlying system object
             // is placed in mutexWasCreated.
             //
-            m = new Mutex(true, mutexName, out mutexWasCreated, mSec);
+            m = MutexAcl.Create(true, mutexName, out mutexWasCreated, mSec);
 
             // If the named system mutex was created, it can be
             // used by the current instance of this program, even 
@@ -104,7 +104,7 @@ internal class Example
             //
             try
             {
-                m = Mutex.OpenExisting(mutexName, 
+                m = MutexAcl.OpenExisting(mutexName, 
                     MutexRights.ReadPermissions | MutexRights.ChangePermissions);
 
                 // Get the current ACL. This requires 
