@@ -131,6 +131,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public virtual int UpdatePeriod
         {
             get
@@ -161,6 +162,7 @@ namespace MarqueeControlLibrary
         // <snippet60>
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int LightSize
         {
             get
@@ -184,6 +186,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int LightPeriod
         {
             get
@@ -206,6 +209,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color LightColor
         {
             get
@@ -229,6 +233,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color DarkColor
         {
             get
@@ -252,6 +257,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int LightSpacing
         {
             get
@@ -276,6 +282,7 @@ namespace MarqueeControlLibrary
         [Browsable(true)]
         [EditorAttribute(typeof(LightShapeEditor), 
              typeof(System.Drawing.Design.UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public MarqueeLightShape LightShape
         {
             get
@@ -291,6 +298,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public MarqueeSpinDirection SpinDirection
         {
             get
