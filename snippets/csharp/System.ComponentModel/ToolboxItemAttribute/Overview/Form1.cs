@@ -77,6 +77,7 @@ public class UserControl1 : UserControl
 
     public UserControl1() => InitializeComponent();
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public string LabelText
     {
         get => label1.Text; set => label1.Text = value;

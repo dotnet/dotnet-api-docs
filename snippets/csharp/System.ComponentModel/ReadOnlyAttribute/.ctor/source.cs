@@ -7,6 +7,7 @@ public class Form1 : Form
 
     // <Snippet1>
     [ReadOnly(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty
     {
         get =>

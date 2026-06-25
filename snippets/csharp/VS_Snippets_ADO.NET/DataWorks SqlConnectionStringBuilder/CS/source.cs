@@ -22,7 +22,6 @@ class Program
         // you can work with individual items.
         Console.WriteLine($"Initial catalog: '{builder.InitialCatalog}'");
         builder.InitialCatalog = "Northwind";
-        builder.AsynchronousProcessing = true;
 
         // You can refer to connection keys using strings,
         // as well. When you use this technique (the default

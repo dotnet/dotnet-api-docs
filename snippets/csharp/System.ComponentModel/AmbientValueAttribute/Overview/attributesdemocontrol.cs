@@ -148,6 +148,7 @@ public class AttributesDemoControl : UserControl
     [Description("Indicates the source of data for the control.")]
     [RefreshProperties(RefreshProperties.Repaint)]
     [AttributeProvider(typeof(IListSource))]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public object DataSource
     {
         get => _dataGridView1.DataSource;
@@ -158,6 +159,7 @@ public class AttributesDemoControl : UserControl
     // <snippet26>
     [Category("Data")]
     [Description("Indicates a sub-list of the data source to show in the control.")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public string DataMember
     {
         get => _dataGridView1.DataMember;
@@ -174,6 +176,7 @@ public class AttributesDemoControl : UserControl
     [Category("Behavior")]
     [Description("The timestamp of the latest entry.")]
     [ReadOnly(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public DateTime CurrentLogTime
     {
         get
@@ -201,6 +204,7 @@ public class AttributesDemoControl : UserControl
     // <snippet28>
     [Category("Behavior")]
     [Description("The value above which the ThresholdExceeded event will be raised.")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public object Threshold { get; set; }
     // </snippet28>
 
