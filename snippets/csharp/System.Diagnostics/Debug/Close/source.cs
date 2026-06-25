@@ -16,7 +16,7 @@ class Test
             // Add the stream object to the trace listeners.
             TextWriterTraceListener myTextListener =
                 new TextWriterTraceListener(myFileStream);
-            Debug.Listeners.Add(myTextListener);
+            Trace.Listeners.Add(myTextListener);
 
             // Write output to the file.
             Debug.WriteLine("Test output");

@@ -9,7 +9,7 @@ class Test
 {
     static void Main()
     {
-       Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+       Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
        Debug.AutoFlush = true;
        Debug.Indent();
        Debug.WriteLine("Entering Main");
