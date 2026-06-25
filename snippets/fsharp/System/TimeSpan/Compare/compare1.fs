@@ -8,9 +8,9 @@ let baseInterval = TimeSpan(2, 0, 0)
 // the base interval.
 let spans = 
     [ TimeSpan.FromSeconds -2.5
-      TimeSpan.FromMinutes 20
+      TimeSpan.FromMinutes 20.0
       TimeSpan.FromHours 1 
-      TimeSpan.FromMinutes 90
+      TimeSpan.FromMinutes 90.0
       baseInterval
       TimeSpan.FromDays 0.5 
       TimeSpan.FromDays 1 ]
