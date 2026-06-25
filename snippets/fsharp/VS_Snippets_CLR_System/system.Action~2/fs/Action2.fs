@@ -23,5 +23,4 @@ let concat =
     )
 
 concat.Invoke(message1, message2)
-
 // </Snippet2>
