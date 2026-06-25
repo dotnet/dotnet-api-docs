@@ -7,6 +7,7 @@ public class Form1 : Form
 
     // <Snippet1>
     [Bindable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty
     {
         get =>
@@ -18,6 +19,7 @@ public class Form1 : Form
         }
     }
     // </Snippet1>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty2
     {
         get
@@ -55,6 +57,7 @@ public class Form1 : Form
             // Insert code here.
         }
     }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty3
     {
         get

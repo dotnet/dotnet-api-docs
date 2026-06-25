@@ -26,6 +26,7 @@ public class Form1 : Form
     [DefaultProperty("MyProperty")]
     public class MyControl : Control
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int MyProperty
         {
             get =>

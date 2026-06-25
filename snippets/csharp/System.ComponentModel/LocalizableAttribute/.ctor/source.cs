@@ -6,6 +6,7 @@ public class Form1 : Form
     // <Snippet1>
 
     [Localizable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty
     {
         get =>

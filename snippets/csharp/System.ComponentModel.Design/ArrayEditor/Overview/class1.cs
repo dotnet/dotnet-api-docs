@@ -9,6 +9,7 @@ namespace ArrayEditorExample
     {
         //<Snippet1>
         [EditorAttribute(typeof(System.ComponentModel.Design.ArrayEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public object[] componentArray
         {
             get
