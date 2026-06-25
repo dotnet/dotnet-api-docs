@@ -41,9 +41,11 @@ namespace FileSystemExample
         public static void AddFileAuditRule(string FileName, string Account, FileSystemRights Rights, AuditFlags AuditRule)
         {
 
+            FileInfo fInfo = new FileInfo(FileName);
+
             // Get a FileSecurity object that represents the
             // current security settings.
-            FileSecurity fSecurity = File.GetAccessControl(FileName);
+            FileSecurity fSecurity = fInfo.GetAccessControl();
 
             // Add the FileSystemAuditRule to the security settings.
             fSecurity.AddAuditRule(new FileSystemAuditRule(Account,
@@ -51,16 +53,18 @@ namespace FileSystemExample
                                                             AuditRule));
 
             // Set the new access settings.
-            File.SetAccessControl(FileName, fSecurity);
+            fInfo.SetAccessControl(fSecurity);
         }
 
         // Removes an ACL entry on the specified file for the specified account.
         public static void RemoveFileAuditRule(string FileName, string Account, FileSystemRights Rights, AuditFlags AuditRule)
         {
 
+            FileInfo fInfo = new FileInfo(FileName);
+
             // Get a FileSecurity object that represents the
             // current security settings.
-            FileSecurity fSecurity = File.GetAccessControl(FileName);
+            FileSecurity fSecurity = fInfo.GetAccessControl();
 
             // Add the FileSystemAuditRule to the security settings.
             fSecurity.RemoveAuditRule(new FileSystemAuditRule(Account,
@@ -68,7 +72,7 @@ namespace FileSystemExample
                                                             AuditRule));
 
             // Set the new access settings.
-            File.SetAccessControl(FileName, fSecurity);
+            fInfo.SetAccessControl(fSecurity);
         }
     }
 }
