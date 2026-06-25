@@ -12,7 +12,7 @@ class DynamicJumpTableDemo
 	AssemblyName myAsmName = new AssemblyName();
 	myAsmName.Name = "MyDynamicAssembly";
 
-	AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
+	AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 						myAsmName,
 						AssemblyBuilderAccess.Run);
 	ModuleBuilder myModBuilder = myAsmBuilder.DefineDynamicModule(

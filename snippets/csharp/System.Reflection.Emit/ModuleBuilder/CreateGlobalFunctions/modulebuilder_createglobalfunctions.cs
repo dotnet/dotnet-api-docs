@@ -34,8 +34,8 @@
 
          // Define a dynamic assembly in the 'currentDomain'.
          myAssemblyBuilder =
-            currentDomain.DefineDynamicAssembly
-                        (myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+            AssemblyBuilder.DefineDynamicAssembly
+                        (myAssemblyName, AssemblyBuilderAccess.Run);
          // Define a dynamic module in "TempAssembly" assembly.
          myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("TempModule");
 

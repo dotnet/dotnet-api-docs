@@ -41,7 +41,7 @@ public class Example
       myAssemblyName.Name = "Example";
       // Create the callee dynamic assembly.
       AssemblyBuilder myAssembly =
-         myAppDomain.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
+         AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module in the callee assembly.
       ModuleBuilder myModule = myAssembly.DefineDynamicModule("EmittedModule");
       // Define a public class named "MyHelloWorld".

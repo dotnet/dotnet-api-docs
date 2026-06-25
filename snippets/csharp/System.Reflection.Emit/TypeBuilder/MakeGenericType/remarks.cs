@@ -11,7 +11,7 @@ class CompareGenericTypes
             AppDomain currentDomain = AppDomain.CurrentDomain;
 
             AssemblyName aName = new AssemblyName("TempAssembly");
-            AssemblyBuilder ab = currentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
+            AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
 
             ModuleBuilder mb = ab.DefineDynamicModule(aName.Name);
 

@@ -24,7 +24,7 @@ public class App
    public static void Main()
    {
       // Create the "HelloWorld" type in an assembly with mode 'RunAndSave'.
-      Type helloWorldType = CreateCallee(Thread.GetDomain(), AssemblyBuilderAccess.RunAndSave);
+      Type helloWorldType = CreateCallee(Thread.GetDomain(), AssemblyBuilderAccess.Run);
 
       // Create an instance of the "HelloWorld" class.
       Object helloWorld = Activator.CreateInstance(helloWorldType, new object[] { "HelloWorld" });
@@ -53,7 +53,6 @@ public class App
 
       AssemblyBuilder myAssembly = (AssemblyBuilder) helloWorldType.Assembly;
       // Save to disk.
-      myAssembly.Save("EmittedAssembly.dll");
    }
 
    // Create the callee transient dynamic assembly.
@@ -64,7 +63,7 @@ public class App
       myAssemblyName.Name = "EmittedAssembly";
       // Create the callee dynamic assembly.
       AssemblyBuilder myAssemblyBuilder =
-                     myAppDomain.DefineDynamicAssembly(myAssemblyName, access);
+                     AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, access);
       // Create a dynamic module named "EmittedModule" in the callee assembly.
       ModuleBuilder myModule;
       if (access == AssemblyBuilderAccess.Run)
@@ -73,7 +72,7 @@ public class App
       }
       else
       {
-         myModule = myAssemblyBuilder.DefineDynamicModule("EmittedModule", "EmittedModule.mod");
+         myModule = myAssemblyBuilder.DefineDynamicModule("EmittedModule");
       }
 // <Snippet2>
       // Define a public class named "HelloWorld" in the assembly.

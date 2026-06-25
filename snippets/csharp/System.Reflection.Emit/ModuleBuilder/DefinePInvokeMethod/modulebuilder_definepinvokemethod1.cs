@@ -23,7 +23,7 @@ namespace PInvoke
 
          // Define a dynamic assembly in the current application domain.
          AssemblyBuilder myAssemblyBuilder =
-            AppDomain.CurrentDomain.DefineDynamicAssembly(
+            AssemblyBuilder.DefineDynamicAssembly(
                         myAssemblyName, AssemblyBuilderAccess.Run);
 
          // Define a dynamic module in "TempAssembly" assembly.

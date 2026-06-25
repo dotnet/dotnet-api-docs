@@ -33,7 +33,7 @@ public class MyEnumBuilderSample
    {
       try
       {
-         CreateCallee(Thread.GetDomain(), AssemblyBuilderAccess.Save);
+         CreateCallee(Thread.GetDomain(), AssemblyBuilderAccess.Run);
          Type[] myTypeArray = myModuleBuilder.GetTypes();
          foreach(Type myType in myTypeArray)
          {
@@ -48,7 +48,6 @@ public class MyEnumBuilderSample
          Console.WriteLine("Enum Module is :" +  myEnumBuilder.Module.ToString());
          Console.WriteLine("Enum Name is :" +  myEnumBuilder.Name.ToString());
          Console.WriteLine("Enum NameSpace is :" +  myEnumBuilder.Namespace);
-         myAssemblyBuilder.Save("EmittedAssembly.dll");
       }
       catch(NotSupportedException ex)
       {
@@ -67,12 +66,11 @@ public class MyEnumBuilderSample
       myAssemblyName.Name = "EmittedAssembly";
 
       // Create the dynamic assembly.
-      myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName,
-                                             AssemblyBuilderAccess.Save);
+      myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName,
+                                             AssemblyBuilderAccess.Run);
 
       // Create a dynamic module.
-      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule",
-                                                         "EmittedModule.mod");
+      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule");
 
       // Create a dynamic Enum.
       myEnumBuilder = myModuleBuilder.DefineEnum("MyNamespace.MyEnum",

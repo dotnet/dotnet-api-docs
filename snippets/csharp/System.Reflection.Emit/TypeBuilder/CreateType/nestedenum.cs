@@ -16,8 +16,8 @@ internal class NestedEnum {
     public static void Main(String[] args) {
 	AssemblyName asmName = new AssemblyName();
 	asmName.Name = "NestedEnum";
-	AssemblyBuilder asmBuild = Thread.GetDomain().DefineDynamicAssembly(asmName, AssemblyBuilderAccess.RunAndSave);
-	ModuleBuilder modBuild = asmBuild.DefineDynamicModule("ModuleOne", "NestedEnum.dll");
+	AssemblyBuilder asmBuild = AssemblyBuilder.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.Run);
+	ModuleBuilder modBuild = asmBuild.DefineDynamicModule("ModuleOne");
 
 	// Hook up the event listening.
 	TypeResolveHandler typeResolveHandler = new TypeResolveHandler(modBuild);
@@ -61,7 +61,6 @@ internal class NestedEnum {
 		Console.WriteLine(x.Name);
 	}
 
-	asmBuild.Save( "NestedEnum.dll" );
 
 	// Remove the listener for the type resolve events.
 	currentDomain.TypeResolve -= resolveHandler;

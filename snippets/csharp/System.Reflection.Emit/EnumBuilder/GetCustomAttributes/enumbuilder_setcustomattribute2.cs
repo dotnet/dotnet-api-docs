@@ -65,7 +65,7 @@ class MyApplication2
 
       // Create the dynamic assembly.
       AssemblyBuilder myAssemblyBuilder
-                  = domain.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
+                  = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
 
       Type myType = typeof(MyAttribute2);
       ConstructorInfo myInfo = myType.GetConstructor(new Type[]{typeof(bool)});

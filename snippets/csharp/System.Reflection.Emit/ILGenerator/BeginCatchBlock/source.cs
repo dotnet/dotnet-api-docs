@@ -10,11 +10,10 @@ class ILThrowExceptionDemo
       AppDomain current = AppDomain.CurrentDomain;
       AssemblyName myAsmName = new AssemblyName();
       myAsmName.Name = "AdderExceptionAsm";
-      AssemblyBuilder myAsmBldr = current.DefineDynamicAssembly(myAsmName,
-                               AssemblyBuilderAccess.RunAndSave);
+      AssemblyBuilder myAsmBldr = AssemblyBuilder.DefineDynamicAssembly(myAsmName,
+                               AssemblyBuilderAccess.Run);
 
-      ModuleBuilder myModBldr = myAsmBldr.DefineDynamicModule(myAsmName.Name,
-                         myAsmName.Name + ".dll");
+      ModuleBuilder myModBldr = myAsmBldr.DefineDynamicModule(myAsmName.Name);
 
       TypeBuilder myTypeBldr = myModBldr.DefineType("Adder");
 

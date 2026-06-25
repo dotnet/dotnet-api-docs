@@ -23,8 +23,8 @@ class Example
       // specifying that the assembly is to be saved.
       //
       AssemblyBuilder myAssembly =
-         AppDomain.CurrentDomain.DefineDynamicAssembly(assemName,
-            AssemblyBuilderAccess.Save);
+         AssemblyBuilder.DefineDynamicAssembly(assemName,
+            AssemblyBuilderAccess.Run);
 
       // To apply an attribute to a dynamic assembly, first get the
       // attribute type. The AssemblyFileVersionAttribute sets the
@@ -106,8 +106,7 @@ class Example
       // the module name is the assembly name.
       //
       ModuleBuilder myModule =
-         myAssembly.DefineDynamicModule(assemName.Name,
-            assemName.Name + ".exe");
+         myAssembly.DefineDynamicModule(assemName.Name);
 
       // No types or methods are created for this example.
 
@@ -116,8 +115,6 @@ class Example
       // the assembly. Use the Windows Explorer to examine the properties
       // of the .exe file.
       //
-      myAssembly.DefineVersionInfoResource();
-      myAssembly.Save(assemName.Name + ".exe");
    }
 }
 // </Snippet1>

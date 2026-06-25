@@ -10,7 +10,7 @@ class Example
         string name = "InMemory";
 
         AssemblyBuilder asmBldr =
-           AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(name),
+           AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(name),
               AssemblyBuilderAccess.Run);
         ModuleBuilder modBldr = asmBldr.DefineDynamicModule(name);
 

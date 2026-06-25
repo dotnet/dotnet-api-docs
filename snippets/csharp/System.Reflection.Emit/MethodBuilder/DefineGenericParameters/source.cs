@@ -15,19 +15,16 @@ class DemoMethodBuilder
             new AssemblyName("DemoMethodBuilder1");
         AppDomain domain = AppDomain.CurrentDomain;
         AssemblyBuilder demoAssembly =
-            domain.DefineDynamicAssembly(
+            AssemblyBuilder.DefineDynamicAssembly(
                 asmName,
-                AssemblyBuilderAccess.RunAndSave
+                AssemblyBuilderAccess.Run
             );
 
         // Define the module that contains the code. For an
         // assembly with one module, the module name is the
         // assembly name plus a file extension.
         ModuleBuilder demoModule =
-            demoAssembly.DefineDynamicModule(
-                asmName.Name,
-                asmName.Name + ".dll"
-            );
+            demoAssembly.DefineDynamicModule(asmName.Name);
 
         TypeBuilder demoType = demoModule.DefineType(
             "DemoType",
@@ -106,7 +103,6 @@ class DemoMethodBuilder
         //</Snippet6>
 
         // Save the assembly, so it can be examined with Ildasm.exe.
-        demoAssembly.Save(asmName.Name + ".dll");
     }
 }
 

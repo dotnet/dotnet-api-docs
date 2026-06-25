@@ -12,7 +12,7 @@ class ILLabelDemo {
   	AppDomain myDomain = Thread.GetDomain();
   	AssemblyName myAsmName = new AssemblyName();
   	myAsmName.Name = "AdderExceptionAsm";
-  	AssemblyBuilder myAsmBldr = myDomain.DefineDynamicAssembly(myAsmName,
+  	AssemblyBuilder myAsmBldr = AssemblyBuilder.DefineDynamicAssembly(myAsmName,
 					       	     AssemblyBuilderAccess.Run);
 
   	ModuleBuilder myModBldr = myAsmBldr.DefineDynamicModule("AdderExceptionMod");

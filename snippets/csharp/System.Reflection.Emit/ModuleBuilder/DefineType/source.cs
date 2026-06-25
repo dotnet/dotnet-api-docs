@@ -9,13 +9,11 @@ public class Sample
 // <Snippet1>
  AssemblyName asmname = new AssemblyName();
  asmname.Name = "assemfilename.exe";
- AssemblyBuilder asmbuild = System.Threading.Thread.GetDomain().
-             DefineDynamicAssembly(asmname, AssemblyBuilderAccess.RunAndSave);
- ModuleBuilder modbuild = asmbuild.DefineDynamicModule( "modulename",
-    "assemfilename.exe" );
+ AssemblyBuilder asmbuild =
+             AssemblyBuilder.DefineDynamicAssembly(asmname, AssemblyBuilderAccess.Run);
+ ModuleBuilder modbuild = asmbuild.DefineDynamicModule("modulename");
  TypeBuilder typebuild1 = modbuild.DefineType( "typename" );
  typebuild1.CreateType();
- asmbuild.Save( "assemfilename.exe" );
 // </Snippet1>
  }
 }

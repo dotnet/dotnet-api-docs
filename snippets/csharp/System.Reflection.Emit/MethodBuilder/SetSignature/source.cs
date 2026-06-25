@@ -24,11 +24,9 @@ public class Example
         AppDomain myDomain = AppDomain.CurrentDomain;
         AssemblyName myAsmName =
             new AssemblyName("TypeBuilderGetFieldExample");
-        AssemblyBuilder myAssembly = myDomain.DefineDynamicAssembly(
-            myAsmName, AssemblyBuilderAccess.Save);
-        ModuleBuilder myModule = myAssembly.DefineDynamicModule(
-            myAsmName.Name,
-            myAsmName.Name + ".exe");
+        AssemblyBuilder myAssembly = AssemblyBuilder.DefineDynamicAssembly(
+            myAsmName, AssemblyBuilderAccess.Run);
+        ModuleBuilder myModule = myAssembly.DefineDynamicModule(myAsmName.Name);
 
         // Define the sample type.
         TypeBuilder myType = myModule.DefineType("Sample",
@@ -143,8 +141,6 @@ public class Example
 
         myType.CreateType();
         dummy.CreateType();
-        myAssembly.SetEntryPoint(entryPoint);
-        myAssembly.Save(myAsmName.Name + ".exe");
 
         Console.WriteLine(myAsmName.Name + ".exe has been saved.");
     }

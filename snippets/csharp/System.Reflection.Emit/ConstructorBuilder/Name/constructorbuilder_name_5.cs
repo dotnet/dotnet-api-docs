@@ -33,7 +33,7 @@ public class MyConstructorBuilder
       AssemblyName myAssemblyName = new AssemblyName();
       myAssemblyName.Name = "TempAssembly";
       // Create a dynamic assembly.
-      myAssemblyBuilder = myCurrentDomain.DefineDynamicAssembly
+      myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly
                (myAssemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module in the assembly.
       myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("TempModule");
@@ -51,8 +51,6 @@ public class MyConstructorBuilder
       Console.WriteLine("The constructor name is  : "+ myConstructor.Name);
       // Display the 'Type' object from which this object was obtained.
       Console.WriteLine("The reflected type  is  : "+ myConstructor.ReflectedType);
-      // Display the signature of the field.
-      Console.WriteLine(myConstructor.Signature);
       // Display the constructor builder instance as a string.
       Console.WriteLine(myConstructor.ToString());
 // </Snippet2>

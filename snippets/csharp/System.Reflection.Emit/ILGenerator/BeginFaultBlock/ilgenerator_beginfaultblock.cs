@@ -25,7 +25,7 @@ public class ILGenerator_BeginFaultBlock
 
       // Create dynamic assembly.
       AppDomain myAppDomain = Thread.GetDomain();
-      AssemblyBuilder myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName,
+      AssemblyBuilder myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName,
          AssemblyBuilderAccess.Run);
 
       // Create a dynamic module.

@@ -24,7 +24,7 @@ public class FieldBuilder_Sample
       AssemblyName myAssemblyName = new AssemblyName();
       myAssemblyName.Name = "DynamicAssembly";
       AssemblyBuilder myAssembly =
-         currentDomain.DefineDynamicAssembly(myAssemblyName,AssemblyBuilderAccess.Run);
+         AssemblyBuilder.DefineDynamicAssembly(myAssemblyName,AssemblyBuilderAccess.Run);
       // Create a dynamic module in Dynamic Assembly.
       ModuleBuilder myModuleBuilder=myAssembly.DefineDynamicModule("MyModule");
       // Define a public class named "MyClass" in the assembly.

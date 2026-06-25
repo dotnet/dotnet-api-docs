@@ -30,9 +30,9 @@ public class AssemblyName_Constructor
    public static void MakeAssembly(AssemblyName myAssemblyName, string fileName)
    {
       // Get the assembly builder from the application domain associated with the current thread.
-      AssemblyBuilder myAssemblyBuilder = Thread.GetDomain().DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+      AssemblyBuilder myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module in the assembly.
-      ModuleBuilder myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("MyModule", fileName);
+      ModuleBuilder myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("MyModule");
       // Create a type in the module.
       TypeBuilder myTypeBuilder = myModuleBuilder.DefineType("MyType");
       // Create a method called 'Main'.
@@ -47,8 +47,6 @@ public class AssemblyName_Constructor
       // End the creation of the type.
       myTypeBuilder.CreateType();
       // Set the method with name 'Main' as the entry point in the assembly.
-      myAssemblyBuilder.SetEntryPoint(myMethodBuilder);
-      myAssemblyBuilder.Save(fileName);
    }
 
    public static void Main()

@@ -36,8 +36,8 @@ internal class MyConstructorBuilder
       AssemblyName myAssemblyName = new AssemblyName();
       myAssemblyName.Name = "TempAssembly";
       // Create a dynamic assembly
-      myAssemblyBuilder = myCurrentDomain.DefineDynamicAssembly
-         (myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+      myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly
+         (myAssemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module in the assembly.
       myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("TempModule");
       FieldInfo myFieldInfo =
@@ -50,12 +50,6 @@ internal class MyConstructorBuilder
       // Define a constructor of the dynamic class.
       ConstructorBuilder myConstructor = myTypeBuilder.DefineConstructor(
          MethodAttributes.Public, CallingConventions.Standard, myConstructorArgs);
-      PermissionSet myPset = new PermissionSet(PermissionState.Unrestricted);
-      // Add declarative security to the constructor.
-      Console.WriteLine("Adding declarative security to the constructor.....");
-      Console.WriteLine("The Security action to be taken is \"DENY\" and" +
-         " Permission set is \"UNRESTRICTED\".");
-      myConstructor.AddDeclarativeSecurity(SecurityAction.Deny,myPset);
 // </Snippet3>
       MethodAttributes myMethodAttributes = myConstructor.Attributes;
       Type myAttributeType = typeof(MethodAttributes);

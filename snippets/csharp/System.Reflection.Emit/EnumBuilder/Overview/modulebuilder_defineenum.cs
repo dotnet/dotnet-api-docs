@@ -13,12 +13,12 @@ class Example
         // Create a dynamic assembly in the current application domain,
         // and allow it to be executed and saved to disk.
         AssemblyName aName = new AssemblyName("TempAssembly");
-        AssemblyBuilder ab = currentDomain.DefineDynamicAssembly(
-            aName, AssemblyBuilderAccess.RunAndSave);
+        AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(
+            aName, AssemblyBuilderAccess.Run);
 
         // Define a dynamic module in "TempAssembly" assembly. For a single-
         // module assembly, the module has the same name as the assembly.
-        ModuleBuilder mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
+        ModuleBuilder mb = ab.DefineDynamicModule(aName.Name);
 
         // Define a public enumeration with the name "Elevation" and an
         // underlying type of Integer.
@@ -30,7 +30,6 @@ class Example
 
         // Create the type and save the assembly.
         Type finished = eb.CreateType();
-        ab.Save(aName.Name + ".dll");
 
         foreach( object o in Enum.GetValues(finished) )
         {

@@ -26,9 +26,9 @@ public class ParameterInfo_IsIn_IsOut_IsOptional
       AssemblyName myAssemblyName = new AssemblyName();
       myAssemblyName.Name = "MyAssembly";
       // Get the assembly builder from the application domain associated with the current thread.
-      AssemblyBuilder myAssemblyBuilder = Thread.GetDomain().DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+      AssemblyBuilder myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module in the assembly.
-      ModuleBuilder myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("MyModule", "MyAssembly.dll");
+      ModuleBuilder myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("MyModule");
       // Create a type in the module.
       TypeBuilder myTypeBuilder = myModuleBuilder.DefineType("MyType");
       // Create a method called MyMethod.

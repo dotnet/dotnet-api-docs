@@ -75,7 +75,7 @@ class MyApplication
       myAssemblyName.Name = "EmittedAssembly";
 
       // Create the dynamic assembly.
-      myAssemblyBuilder = domain.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
+      myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
 
       Type myType = typeof(MyAttribute);
       ConstructorInfo myInfo = myType.GetConstructor(new Type[2]{typeof(String), typeof(int)});

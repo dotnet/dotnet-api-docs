@@ -31,10 +31,10 @@ public class ILGenerator_Begin_EndScope
          myAssemblyName.Name = "SampleAssembly";
 
          // Create a dynamic assembly 'myAssembly' with access mode 'Run'.
-         AssemblyBuilder myAssembly = myAppDomain.DefineDynamicAssembly(
+         AssemblyBuilder myAssembly = AssemblyBuilder.DefineDynamicAssembly(
                                  myAssemblyName, AssemblyBuilderAccess.Run);
          // Create a dynamic module 'myModule' in 'myAssembly'.
-         ModuleBuilder myModule=myAssembly.DefineDynamicModule("MyDynamicModule",true);
+         ModuleBuilder myModule=myAssembly.DefineDynamicModule("MyDynamicModule");
          // Define a public class 'MyDynamicClass'.
          TypeBuilder myTypeBuilder = myModule.DefineType("MyDynamicClass",
                                           TypeAttributes.Public);

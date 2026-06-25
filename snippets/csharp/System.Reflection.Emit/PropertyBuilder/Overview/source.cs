@@ -12,12 +12,12 @@ class PropertyBuilderDemo
         AssemblyName myAsmName = new AssemblyName();
         myAsmName.Name = "MyDynamicAssembly";
 
-        // To generate a persistable assembly, specify AssemblyBuilderAccess.RunAndSave.
-        AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(myAsmName,
-                                                        AssemblyBuilderAccess.RunAndSave);
+        // To generate a persistable assembly, specify AssemblyBuilderAccess.Run.
+        AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(myAsmName,
+                                                        AssemblyBuilderAccess.Run);
         // Generate a persistable single-module assembly.
         ModuleBuilder myModBuilder =
-            myAsmBuilder.DefineDynamicModule(myAsmName.Name, myAsmName.Name + ".dll");
+            myAsmBuilder.DefineDynamicModule(myAsmName.Name);
 
         TypeBuilder myTypeBuilder = myModBuilder.DefineType("CustomerData",
                                                         TypeAttributes.Public);
@@ -77,7 +77,6 @@ class PropertyBuilderDemo
 
         // Save the assembly so it can be examined with Ildasm.exe,
         // or referenced by a test program.
-        myAsmBuilder.Save(myAsmName.Name + ".dll");
         return retval;
    }
 

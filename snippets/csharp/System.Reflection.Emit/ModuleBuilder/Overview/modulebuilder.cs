@@ -24,7 +24,7 @@ class and created class is called from the 'TestClass'.
          myAssemblyName.Name = "TempAssembly";
 
          // Define a dynamic assembly in the current application domain.
-         myAssemblyBuilder = myCurrentDomain.DefineDynamicAssembly
+         myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly
                         (myAssemblyName, AssemblyBuilderAccess.Run);
 
          // Define a dynamic module in this assembly.
@@ -75,11 +75,6 @@ class and created class is called from the 'TestClass'.
          Type myType = myModuleBuilder.GetType("TempClass");
          MethodInfo myMethodInfo =
                                                    myType.GetMethod("MyMethod");
-          // Get the token used to identify the method within this module.
-         MethodToken myMethodToken =
-                           myModuleBuilder.GetMethodToken(myMethodInfo);
-         Console.WriteLine("Token used to identify the method of 'myType'"
-                       + " within the module is {0:x}",myMethodToken.Token);
         object[] args={"Hello."};
         object myObject = Activator.CreateInstance(myType,null,null);
         myMethodInfo.Invoke(myObject,args);

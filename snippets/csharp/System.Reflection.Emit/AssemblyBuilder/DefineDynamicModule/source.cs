@@ -12,7 +12,7 @@ class TypeBuilderMemberDemo
 	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
-	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
+	   AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 							myAsmName,
 							AssemblyBuilderAccess.Run);
 
@@ -28,15 +28,14 @@ class TypeBuilderMemberDemo
 	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
-	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
+	   AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 							myAsmName,
 							AssemblyBuilderAccess.Run);
 
 	   // Create a transient dynamic module. Since no DLL name is specified with
 	   // this constructor, it can not be saved. By specifying the second parameter
 	   // of the constructor as false, we can suppress the emission of symbol info.
-	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule2",
-										false);
+	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule2");
 	   // </Snippet2>
 	}
 	public static void DefineDynamicModuleDemo3()
@@ -45,12 +44,11 @@ class TypeBuilderMemberDemo
 	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
-	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
+	   AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 							myAsmName,
 							AssemblyBuilderAccess.Run);
 	   // Create a dynamic module that can be saved as the specified DLL name.
-	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule3",
-									    "MyModule3.dll");
+	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule3");
 	   // </Snippet3>
 	}
 	public static void DefineDynamicModuleDemo4()
@@ -59,14 +57,12 @@ class TypeBuilderMemberDemo
 	   AppDomain myAppDomain = Thread.GetDomain();
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "MyAssembly";
-	   AssemblyBuilder myAsmBuilder = myAppDomain.DefineDynamicAssembly(
+	   AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 							myAsmName,
 							AssemblyBuilderAccess.Run);
 	   // Create a dynamic module that can be saved as the specified DLL name. By
 	   // specifying the third parameter as true, we can allow the emission of symbol info.
-	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule4",
-									    "MyModule4.dll",
-									     true);
+	   ModuleBuilder myModuleBuilder = myAsmBuilder.DefineDynamicModule("MyModule4");
 	   // </Snippet4>
 	}
 }
