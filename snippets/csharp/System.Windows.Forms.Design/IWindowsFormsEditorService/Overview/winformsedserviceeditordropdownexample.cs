@@ -101,6 +101,7 @@ namespace IWindowsFormsEditorServiceExample
     public class WinFormsEdServiceDropDownExampleControl : UserControl
     {
         [EditorAttribute(typeof(TestDropDownEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string TestDropDownString
         {
             get

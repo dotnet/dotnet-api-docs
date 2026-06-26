@@ -4,7 +4,7 @@
 // Example of the TimeSpan.FromDays( double ) method.
 open System
 
-let genTimeSpanFromDays days =
+let genTimeSpanFromDays (days: float) =
     // Create a TimeSpan object and TimeSpan string from 
     // a number of days.
     let interval = TimeSpan.FromDays days
@@ -32,7 +32,7 @@ genTimeSpanFromDays 12345.678987654
 genTimeSpanFromDays 0.000011574
 genTimeSpanFromDays 0.000694444
 genTimeSpanFromDays 0.041666666
-genTimeSpanFromDays 1
+genTimeSpanFromDays 1.0
 genTimeSpanFromDays 20.84745602
 
 (*

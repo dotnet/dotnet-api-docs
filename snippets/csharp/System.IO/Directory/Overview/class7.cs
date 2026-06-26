@@ -11,7 +11,7 @@ partial class Program
         securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\account1", FileSystemRights.Read, AccessControlType.Allow));
         securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\account2", FileSystemRights.FullControl, AccessControlType.Allow));
 
-        DirectoryInfo di = Directory.CreateDirectory(@"C:\destination\NewDirectory", securityRules);
+        DirectoryInfo di = securityRules.CreateDirectory(@"C:\destination\NewDirectory");
     }
 }
 // </snippet15>
