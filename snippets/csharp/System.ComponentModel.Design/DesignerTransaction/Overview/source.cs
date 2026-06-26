@@ -45,6 +45,7 @@ namespace DesignerTransactionSample
     	private string m_String;
 	private int m_Count;
 			
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 	public string StringProperty
 	{
 	    get
@@ -53,6 +54,7 @@ namespace DesignerTransactionSample
 	    { m_String = value; }
 	}
 			
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 	public int CountProperty
 	{
 	    get

@@ -68,6 +68,7 @@ public class ColorLabel : System.Windows.Forms.Label
 {
     private bool colorLockedValue = false;
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public bool ColorLocked
     {
         get

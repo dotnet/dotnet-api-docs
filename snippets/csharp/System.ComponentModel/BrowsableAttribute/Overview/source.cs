@@ -5,6 +5,7 @@ public class Form1 : Form
 {
     // <Snippet1>
     [Browsable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty
     {
         get =>
@@ -17,6 +18,7 @@ public class Form1 : Form
     }
 
     // </Snippet1>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty2
     {
         get
@@ -44,6 +46,7 @@ public class Form1 : Form
         }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int MyProperty3
     {
         get
