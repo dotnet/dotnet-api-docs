@@ -10,21 +10,19 @@ public class Example
     {
         // Define a dynamic assembly to contain the sample type. The
         // assembly will not be run, but only saved to disk, so
-        // AssemblyBuilderAccess.Save is specified.
+        // AssemblyBuilderAccess.Run is specified.
         //
         AppDomain myDomain = AppDomain.CurrentDomain;
         AssemblyName myAsmName = new AssemblyName("MakeXxxTypeExample");
-        AssemblyBuilder myAssembly = myDomain.DefineDynamicAssembly(
+        AssemblyBuilder myAssembly = AssemblyBuilder.DefineDynamicAssembly(
             myAsmName,
-            AssemblyBuilderAccess.Save);
+            AssemblyBuilderAccess.Run);
 
         // An assembly is made up of executable modules. For a single-
         // module assembly, the module name and file name are the same
         // as the assembly name.
         //
-        ModuleBuilder myModule = myAssembly.DefineDynamicModule(
-            myAsmName.Name,
-            myAsmName.Name + ".dll");
+        ModuleBuilder myModule = myAssembly.DefineDynamicModule(myAsmName.Name);
 
         // Define the sample type.
         TypeBuilder myType = myModule.DefineType(
@@ -66,7 +64,6 @@ public class Example
         // information in.
         //
         myType.CreateType();
-        myAssembly.Save(myAsmName.Name + ".dll");
     }
 }
 //</Snippet1>

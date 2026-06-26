@@ -55,7 +55,7 @@ class MethodBuilderCustomAttributesDemo
 	AssemblyName myAsmName = new AssemblyName();
 	myAsmName.Name = "MyAssembly";
 
-	AssemblyBuilder myAsmBuilder = currentDomain.DefineDynamicAssembly(
+	AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 				       myAsmName, AssemblyBuilderAccess.Run);
 
 	ModuleBuilder myModBuilder = myAsmBuilder.DefineDynamicModule("MyModule");

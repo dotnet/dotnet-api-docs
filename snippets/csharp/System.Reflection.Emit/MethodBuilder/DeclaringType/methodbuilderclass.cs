@@ -25,11 +25,11 @@ public class MethodBuilderClass
          myAssemblyName.Name = "MyDynamicAssembly";
 
          // Create the dynamic assembly and set its access mode to 'Save'.
-         AssemblyBuilder myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(
-                        myAssemblyName, AssemblyBuilderAccess.Save);
+         AssemblyBuilder myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(
+                        myAssemblyName, AssemblyBuilderAccess.Run);
          // Create a dynamic module 'myModuleBuilder'.
          ModuleBuilder myModuleBuilder =
-              myAssemblyBuilder.DefineDynamicModule("MyDynamicModule", true);
+              myAssemblyBuilder.DefineDynamicModule("MyDynamicModule");
          // Define a public class 'MyDynamicClass'.
          TypeBuilder myTypeBuilder = myModuleBuilder.DefineType("MyDynamicClass",
                                                  TypeAttributes.Public);
@@ -62,8 +62,6 @@ public class MethodBuilderClass
          // Print the 'Attribute', 'Signature' of 'myMethodBuilder'.
          Console.WriteLine("\nThe Attribute of 'MyDynamicMethod' is :{0}" ,
                                     myMethodBuilder.Attributes);
-         Console.WriteLine("\nThe Signature of 'MyDynamicMethod' is : \n"
-                                    + myMethodBuilder.Signature);
       }
       catch(Exception e)
       {

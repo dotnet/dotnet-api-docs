@@ -3,6 +3,7 @@
 //<Snippet1>
 using System;
 using System.Security.Principal;
+using Microsoft.Win32.SafeHandles;
 
 class WindowsIdentityMembers
 {
@@ -202,24 +203,20 @@ class WindowsIdentityMembers
     //<Snippet16>
     private static void ImpersonateIdentity(IntPtr logonToken)
     {
-        // Retrieve the Windows identity using the specified token.
-        WindowsIdentity windowsIdentity = new WindowsIdentity(logonToken);
+        // Create a SafeAccessTokenHandle from the specified token.
+        SafeAccessTokenHandle accessTokenHandle = new SafeAccessTokenHandle(logonToken);
 
-        // Create a WindowsImpersonationContext object by impersonating the
-        // Windows identity.
-        WindowsImpersonationContext impersonationContext =
-            windowsIdentity.Impersonate();
+        // Run the specified action while impersonating the Windows identity
+        // represented by the access token.
+        WindowsIdentity.RunImpersonated(accessTokenHandle, () =>
+        {
+            Console.WriteLine("Name of the identity during impersonation: "
+                + WindowsIdentity.GetCurrent().Name + ".");
+        });
 
-        Console.WriteLine("Name of the identity after impersonation: "
-            + WindowsIdentity.GetCurrent().Name + ".");
-        Console.WriteLine(windowsIdentity.ImpersonationLevel);
-        // Stop impersonating the user.
-        impersonationContext.Undo();
-
-        // Check the identity name.
-        Console.Write("Name of the identity after performing an Undo on the");
-        Console.WriteLine(" impersonation: " +
-            WindowsIdentity.GetCurrent().Name);
+        // Check the identity name after the impersonation ends.
+        Console.Write("Name of the identity after the impersonation ends: ");
+        Console.WriteLine(WindowsIdentity.GetCurrent().Name);
     }
     //</Snippet16>
 }

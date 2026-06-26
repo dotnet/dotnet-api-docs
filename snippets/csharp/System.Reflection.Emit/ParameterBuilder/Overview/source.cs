@@ -16,7 +16,7 @@ class ParamBuilderDemo
 	AssemblyName myAsmName = new AssemblyName();
 	myAsmName.Name = "MyDynamicAssembly";
 
-	AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(myAsmName,
+	AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(myAsmName,
 						AssemblyBuilderAccess.Run);
 
 	ModuleBuilder myModBuilder = myAsmBuilder.DefineDynamicModule("MyMod");
