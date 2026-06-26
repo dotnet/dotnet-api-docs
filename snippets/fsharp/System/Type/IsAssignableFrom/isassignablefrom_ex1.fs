@@ -7,13 +7,12 @@ open System.Reflection.Emit
 
 type A() = class end
 
-let domain = AppDomain.CurrentDomain
 let assemName = AssemblyName()
 assemName.Name <- "TempAssembly"
 
 // Define a dynamic assembly in the current application domain.
 let assemBuilder = 
-    domain.DefineDynamicAssembly(assemName, AssemblyBuilderAccess.Run)
+    AssemblyBuilder.DefineDynamicAssembly(assemName, AssemblyBuilderAccess.Run)
 
 // Define a dynamic module in this assembly.
 let moduleBuilder = 

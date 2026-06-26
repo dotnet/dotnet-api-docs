@@ -4,7 +4,7 @@ open System.Text.RegularExpressions
 
 let domain = AppDomain.CurrentDomain
 // Set a timeout interval of -2 seconds.
-domain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromSeconds -2)
+domain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromSeconds -2.0)
 
 let rgx = Regex "[aeiouy]"
 printfn $"Regular expression pattern: {rgx}"
