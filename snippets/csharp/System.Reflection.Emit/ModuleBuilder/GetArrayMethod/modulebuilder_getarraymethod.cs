@@ -23,8 +23,8 @@ using System.Security.Permissions;
          AssemblyName myAssemblyName = new AssemblyName();
          myAssemblyName.Name = "TempAssembly";
          // Define a dynamic assembly in the current application domain.
-         myAssemblyBuilder = myCurrentDomain.DefineDynamicAssembly
-                        (myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+         myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly
+                        (myAssemblyName, AssemblyBuilderAccess.Run);
 // <Snippet1>
 // <Snippet2>
          // Define a dynamic module in "TempAssembly" assembly.
@@ -43,13 +43,7 @@ using System.Security.Permissions;
          // Get the 'MethodInfo' object corresponding to 'Sort' method of 'Array' class.
          MethodInfo myMethodInfo=myModuleBuilder.GetArrayMethod(
                      myArrayClass.GetType(),"Sort",CallingConventions.Standard,
-                                                                                  null,parameterTypes);
-         // Get the token corresponding to 'Sort' method of 'Array' class.
-         MethodToken myMethodToken=myModuleBuilder.GetArrayMethodToken(
-                     myArrayClass.GetType(),"Sort",CallingConventions.Standard,
                                                                                  null,parameterTypes);
-         Console.WriteLine("Token used by module to identify the 'Sort' method"
-                                     + " of 'Array' class is : {0:x} ",myMethodToken.Token);
 
          ILGenerator methodIL = myMethod.GetILGenerator();
          methodIL.Emit(OpCodes.Ldarg_1);

@@ -36,9 +36,9 @@ public class AssemblyName_CodeBase
    public static void MakeAssembly(AssemblyName myAssemblyName, string fileName)
    {
       // Get the assembly builder from the application domain associated with the current thread.
-      AssemblyBuilder myAssemblyBuilder = Thread.GetDomain().DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+      AssemblyBuilder myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module in the assembly.
-      ModuleBuilder myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("MyModule", fileName);
+      ModuleBuilder myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("MyModule");
       // Create a type in the module.
       TypeBuilder myTypeBuilder = myModuleBuilder.DefineType("MyType");
       // Create a method called 'Main'.
@@ -53,8 +53,6 @@ public class AssemblyName_CodeBase
       // End the creation of the type.
       myTypeBuilder.CreateType();
       // Set the method with name 'Main' as the entry point in the assembly.
-      myAssemblyBuilder.SetEntryPoint(myMethodBuilder);
-      myAssemblyBuilder.Save(fileName);
    }
 
    public static void Main()
@@ -66,7 +64,7 @@ public class AssemblyName_CodeBase
       // Set the culture information of the assembly to 'English-American'.
       myAssemblyName.CultureInfo = new CultureInfo("en-US");
       // Set the hash algorithm to 'SHA256'.
-      myAssemblyName.HashAlgorithm = AssemblyHashAlgorithm.SHA256;
+      myAssemblyName.HashAlgorithm = System.Configuration.Assemblies.AssemblyHashAlgorithm.SHA256;
       myAssemblyName.VersionCompatibility = AssemblyVersionCompatibility.SameProcess;
       myAssemblyName.Flags = AssemblyNameFlags.PublicKey;
       // Get the whole contents of the 'PublicKey.snk' into a byte array.

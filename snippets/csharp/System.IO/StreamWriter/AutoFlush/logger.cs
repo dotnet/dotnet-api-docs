@@ -1,7 +1,6 @@
 ﻿//<snippet1>
 using System;
 using System.IO;
-using System.Runtime.Remoting.Lifetime;
 
 namespace StreamWriterSample
 {
@@ -126,25 +125,6 @@ namespace StreamWriterSample
             // Set the characters you would like to designate a new line
             sw.NewLine = "\r\n";
             //</snippet13>
-            //<snippet14>
-            ILease obj = (ILease)sw.InitializeLifetimeService();
-            if(obj != null)
-            {
-                sw.WriteLine("Object initialized lease " +
-                    "time remaining: {0}.",
-                    obj.CurrentLeaseTime.ToString()
-                    );
-            }
-            //</snippet14>
-            //<snippet15>
-            ILease lease = (ILease)sw.GetLifetimeService();
-            if(lease != null)
-            {
-                sw.WriteLine("Object lease time remaining: {0}.",
-                    lease.CurrentLeaseTime.ToString()
-                    );
-            }
-            //</snippet15>
 
             //<snippet16>
             // update underlying file

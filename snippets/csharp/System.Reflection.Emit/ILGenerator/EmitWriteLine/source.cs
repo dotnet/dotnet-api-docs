@@ -15,12 +15,11 @@ class EmitWriteLineDemo {
        AssemblyName myAsmName = new AssemblyName();
        myAsmName.Name = "MyDynamicAssembly";
 
-       AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
+       AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 				      myAsmName,
 				      AssemblyBuilderAccess.Run);
 
-       ModuleBuilder pointModule = myAsmBuilder.DefineDynamicModule("PointModule",
-								    "Point.dll");
+       ModuleBuilder pointModule = myAsmBuilder.DefineDynamicModule("PointModule");
 
        TypeBuilder pointTypeBld = pointModule.DefineType("Point",
 					              TypeAttributes.Public);

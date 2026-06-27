@@ -12,7 +12,7 @@ class Example
         //
         AssemblyName aName = new AssemblyName("MyDynamic");
         AssemblyBuilder ab =
-            AppDomain.CurrentDomain.DefineDynamicAssembly(
+            AssemblyBuilder.DefineDynamicAssembly(
                 aName,
                 AssemblyBuilderAccess.Run);
         ModuleBuilder mb = ab.DefineDynamicModule(aName.Name);

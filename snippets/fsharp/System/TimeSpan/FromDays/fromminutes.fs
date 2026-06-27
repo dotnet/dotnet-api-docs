@@ -4,7 +4,7 @@
 // Example of the TimeSpan.FromMinutes( double ) method.
 open System
 
-let genTimeSpanFromMinutes minutes =
+let genTimeSpanFromMinutes (minutes: float) =
     // Create a TimeSpan object and TimeSpan string from 
     // a number of minutes.
     let interval = TimeSpan.FromMinutes minutes
@@ -30,9 +30,9 @@ genTimeSpanFromMinutes 0.12345
 genTimeSpanFromMinutes 1234.56789
 genTimeSpanFromMinutes 12345678.98765
 genTimeSpanFromMinutes 0.01666
-genTimeSpanFromMinutes 1
-genTimeSpanFromMinutes 60
-genTimeSpanFromMinutes 1440
+genTimeSpanFromMinutes 1.0
+genTimeSpanFromMinutes 60.0
+genTimeSpanFromMinutes 1440.0
 genTimeSpanFromMinutes 30020.33667
 
 (*

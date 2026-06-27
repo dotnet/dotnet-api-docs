@@ -105,6 +105,7 @@ namespace IWindowsFormsEditorServiceExample
     public class WinFormsEdServiceDialogExampleControl : UserControl
     {
         [EditorAttribute(typeof(TestDialogEditor), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string TestDialogString
         {
             get

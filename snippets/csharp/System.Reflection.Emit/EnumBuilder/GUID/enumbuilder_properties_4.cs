@@ -32,7 +32,7 @@ public class MyEnumBuilderSample
    {
       try
       {
-         CreateCallee(Thread.GetDomain(), AssemblyBuilderAccess.Save);
+         CreateCallee(Thread.GetDomain(), AssemblyBuilderAccess.Run);
          Type[] myTypeArray = myModuleBuilder.GetTypes();
          foreach(Type myType in myTypeArray)
          {
@@ -40,14 +40,11 @@ public class MyEnumBuilderSample
                + myType.Name);
          }
 
-         Console.WriteLine("Enum TypeToken is :" +
-                                       myEnumBuilder.TypeToken.ToString());
          Console.WriteLine("Enum UnderLyingField is :" +
                                     myEnumBuilder.UnderlyingField.ToString());
          Console.WriteLine("Enum UnderLyingSystemType is :" +
                               myEnumBuilder.UnderlyingSystemType.ToString());
          Console.WriteLine("Enum GUID is :" + myEnumBuilder.GUID.ToString());
-         myAssemblyBuilder.Save("EmittedAssembly.dll");
       }
       catch(NotSupportedException ex)
       {
@@ -66,11 +63,10 @@ public class MyEnumBuilderSample
       myAssemblyName.Name = "EmittedAssembly";
 
       // Create the dynamic assembly.
-      myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName,
-                                             AssemblyBuilderAccess.Save);
+      myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName,
+                                             AssemblyBuilderAccess.Run);
       // Create a dynamic module.
-      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule",
-                                                         "EmittedModule.mod");
+      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule");
       // Create a dynamic Enum.
       myEnumBuilder = myModuleBuilder.DefineEnum("MyNamespace.MyEnum",
                                  TypeAttributes.Public, typeof(Int32));

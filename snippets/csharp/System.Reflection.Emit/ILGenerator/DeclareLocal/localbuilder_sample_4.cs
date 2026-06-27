@@ -29,14 +29,13 @@ class LocalBuilder_Sample
         myAssemblyName.Name = "SampleAssembly";
 
         AssemblyBuilder myAssembly =
-           Thread.GetDomain().DefineDynamicAssembly(myAssemblyName,
-               AssemblyBuilderAccess.RunAndSave);
+           AssemblyBuilder.DefineDynamicAssembly(myAssemblyName,
+               AssemblyBuilderAccess.Run);
 
         // Create a module. For a single-file assembly the module
         // name is usually the same as the assembly name.
         ModuleBuilder myModule =
-            myAssembly.DefineDynamicModule(myAssemblyName.Name,
-                myAssemblyName.Name + ".dll", true);
+            myAssembly.DefineDynamicModule(myAssemblyName.Name);
 
         // Define a public class 'Example'.
         TypeBuilder myTypeBuilder =
@@ -61,7 +60,7 @@ class LocalBuilder_Sample
         Console.WriteLine("local 'myString' type is: {0}", myLB1.LocalType);
 
         LocalBuilder myLB2 = myMethodIL.DeclareLocal(typeof(int));
-        myLB2.SetLocalSymInfo("myInt", 1, 2);
+        myLB2.SetLocalSymInfo("myInt");
         Console.WriteLine("local 'myInt' type is: {0}", myLB2.LocalType);
         // </Snippet2>
 
@@ -79,7 +78,6 @@ class LocalBuilder_Sample
         Type myType1 = myTypeBuilder.CreateType();
         Console.WriteLine("'Example' is created.");
 
-        myAssembly.Save(myAssemblyName.Name + ".dll");
         Console.WriteLine( "'{0}' is created.", myAssemblyName.Name + ".dll" );
 
         // Invoke 'Function1' method of 'Example', passing the value 42.

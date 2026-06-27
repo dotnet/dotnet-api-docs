@@ -119,6 +119,7 @@ namespace CustomControls
         /// <summary>
         /// Gets and sets the index of the selected item.
         /// </summary>
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public int SelectedIndex
         {
             get

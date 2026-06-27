@@ -30,10 +30,10 @@ internal class MyConstructorBuilder
          AssemblyName myAssemblyName = new AssemblyName();
          myAssemblyName.Name = "TempAssembly";
          // Create a dynamic assembly.
-         myAssemblyBuilder = myCurrentDomain.DefineDynamicAssembly
+         myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly
             (myAssemblyName, AssemblyBuilderAccess.Run);
          // Create a dynamic module in the assembly.
-         myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("TempModule", true);
+         myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("TempModule");
          FieldInfo myFieldInfo2 =
             myModuleBuilder.DefineUninitializedData("myField", 2, FieldAttributes.Public);
          // Create a type in the module.

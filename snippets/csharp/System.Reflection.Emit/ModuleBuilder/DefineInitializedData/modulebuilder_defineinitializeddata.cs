@@ -30,7 +30,7 @@ using System.Reflection.Emit;
 
          // Define a dynamic assembly in the 'currentDomain'.
          myAssemblyBuilder =
-            currentDomain.DefineDynamicAssembly
+            AssemblyBuilder.DefineDynamicAssembly
                         (myAssemblyName, AssemblyBuilderAccess.Run);
 
          // Define a dynamic module in "TempAssembly" assembly.

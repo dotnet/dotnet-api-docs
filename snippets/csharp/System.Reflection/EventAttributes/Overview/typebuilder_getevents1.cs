@@ -33,7 +33,7 @@ public class MyApplication
 
       // Create the callee dynamic assembly.
       AssemblyBuilder myAssembly =
-         myDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
+         AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
       // Create a dynamic module named "CalleeModule" in the callee.
       ModuleBuilder myModule = myAssembly.DefineDynamicModule("EmittedModule");
 

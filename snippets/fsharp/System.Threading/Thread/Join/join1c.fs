@@ -13,7 +13,7 @@ let threadProc () =
         Thread.CurrentThread.Name = "Thread1"
         && thread2.ThreadState <> ThreadState.Unstarted
     then
-        if TimeSpan.FromSeconds 2 |> thread2.Join then
+        if TimeSpan.FromSeconds 2.0 |> thread2.Join then
             printfn "Thread2 has termminated."
         else
             printfn "The timeout has elapsed and Thread1 will resume."

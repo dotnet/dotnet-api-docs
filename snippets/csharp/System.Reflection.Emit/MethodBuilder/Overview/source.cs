@@ -53,12 +53,11 @@ class DemoMethodBuilder
         AssemblyName asmName = new AssemblyName();
         asmName.Name = "MyDynamicAsm";
 
-        AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
+        AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
                                        asmName,
-                                       AssemblyBuilderAccess.RunAndSave);
+                                       AssemblyBuilderAccess.Run);
 
-        ModuleBuilder myModule = myAsmBuilder.DefineDynamicModule("MyDynamicAsm",
-                                                                  "MyDynamicAsm.dll");
+        ModuleBuilder myModule = myAsmBuilder.DefineDynamicModule("MyDynamicAsm");
 
         TypeBuilder myTypeBld = myModule.DefineType("MyDynamicType",
                                                     TypeAttributes.Public);
@@ -114,7 +113,6 @@ class DemoMethodBuilder
         // of manifest contents appears, click on "MyDynamicType" and then on the name of
         // of the method you provided during execution.
 
-        myAsmBuilder.Save("MyDynamicAsm.dll");
 
         MethodInfo myMthdInfo = myType.GetMethod(myMthdName);
         Console.WriteLine("Your Dynamic Method: {0};", myMthdInfo.ToString());

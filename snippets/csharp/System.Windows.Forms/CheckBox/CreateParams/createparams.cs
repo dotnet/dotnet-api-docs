@@ -1,14 +1,14 @@
 ﻿// <snippet1>
 using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.IO;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.ComponentModel;
 
 public class MyIconButton : Button
 {
-    private Icon icon;
+    private Icon _icon;
 
     public MyIconButton()
     {
@@ -20,11 +20,11 @@ public class MyIconButton : Button
         : this()
     {
         // Assign the icon to the private field.   
-        this.icon = ButtonIcon;
+        _icon = ButtonIcon;
 
         // Size the button to 4 pixels larger than the icon.
-        this.Height = icon.Height + 4;
-        this.Width = icon.Width + 4;
+        Height = _icon.Height + 4;
+        Width = _icon.Width + 4;
     }
 
     //<snippet3>
@@ -42,20 +42,21 @@ public class MyIconButton : Button
     }
     //</snippet3>     
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public Icon Icon
     {
         get
         {
-            return icon;
+            return _icon;
         }
 
         set
         {
-            icon = value;
+            _icon = value;
             UpdateIcon();
             // Size the button to 4 pixels larger than the icon.
-            this.Height = icon.Height + 4;
-            this.Width = icon.Width + 4;
+            Height = _icon.Height + 4;
+            Width = _icon.Width + 4;
         }
     }
 
@@ -63,8 +64,9 @@ public class MyIconButton : Button
     {
         base.OnHandleCreated(e);
 
-        // Update the icon on the button if there is currently an icon assigned to the icon field.
-        if (icon != null)
+        // Update the icon on the button if there is
+        // currently an icon assigned to the icon field.
+        if (_icon != null)
         {
             UpdateIcon();
         }
@@ -75,13 +77,17 @@ public class MyIconButton : Button
         IntPtr iconHandle = IntPtr.Zero;
 
         // Get the icon's handle.
-        if (icon != null)
+        if (_icon != null)
         {
-            iconHandle = icon.Handle;
+            iconHandle = _icon.Handle;
         }
 
         // Send Windows the message to update the button. 
-        SendMessage(Handle, 0x00F7 /*BM_SETIMAGE value*/, 1 /*IMAGE_ICON value*/, (int)iconHandle);
+        SendMessage(
+            Handle,
+            0x00F7 /*BM_SETIMAGE value*/,
+            1 /*IMAGE_ICON value*/,
+            (int)iconHandle);
     }
 
     // Import the SendMessage method of the User32 DLL.   
@@ -95,9 +101,9 @@ public class MyIconButton : Button
 // <snippet2>
 public class MyApplication : Form
 {
-    private MyIconButton myIconButton;
-    private Button stdButton;
-    private OpenFileDialog openDlg;
+    private readonly MyIconButton _myIconButton;
+    private readonly Button _stdButton;
+    private OpenFileDialog _openDlg;
 
     static void Main()
     {
@@ -109,30 +115,32 @@ public class MyApplication : Form
         try
         {
             // Create the button with the default icon.
-            myIconButton = new MyIconButton(new Icon(Application.StartupPath + "\\Default.ico"));
+            _myIconButton = new MyIconButton(new Icon(Application.StartupPath + "\\Default.ico"));
         }
         catch (Exception ex)
         {
             // If the default icon does not exist, create the button without an icon.
-            myIconButton = new MyIconButton();
+            _myIconButton = new MyIconButton();
             Debug.WriteLine(ex.ToString());
         }
         finally
         {
-            stdButton = new Button();
+            _stdButton = new Button();
 
             // Add the Click event handlers.
-            myIconButton.Click += new EventHandler(this.myIconButton_Click);
-            stdButton.Click += new EventHandler(this.stdButton_Click);
+            _myIconButton.Click += new EventHandler(myIconButton_Click);
+            _stdButton.Click += new EventHandler(stdButton_Click);
 
             // Set the location, text and width of the standard button.
-            stdButton.Location = new Point(myIconButton.Location.X, myIconButton.Location.Y + myIconButton.Height + 20);
-            stdButton.Text = "Change Icon";
-            stdButton.Width = 100;
+            _stdButton.Location = new Point(
+                _myIconButton.Location.X,
+                _myIconButton.Location.Y + _myIconButton.Height + 20);
+            _stdButton.Text = "Change Icon";
+            _stdButton.Width = 100;
 
             // Add the buttons to the Form.
-            this.Controls.Add(stdButton);
-            this.Controls.Add(myIconButton);
+            Controls.Add(_stdButton);
+            Controls.Add(_myIconButton);
         }
     }
 
@@ -144,16 +152,19 @@ public class MyApplication : Form
 
     private void stdButton_Click(object Sender, EventArgs e)
     {
-        // Use an OpenFileDialog to allow the user to assign a new image to the derived button.
-        openDlg = new OpenFileDialog();
-        openDlg.InitialDirectory = Application.StartupPath;
-        openDlg.Filter = "Icon files (*.ico)|*.ico";
-        openDlg.Multiselect = false;
-        openDlg.ShowDialog();
-
-        if (openDlg.FileName != "")
+        // Use an OpenFileDialog to allow the user
+        // to assign a new image to the derived button.
+        _openDlg = new OpenFileDialog
         {
-            myIconButton.Icon = new Icon(openDlg.FileName);
+            InitialDirectory = Application.StartupPath,
+            Filter = "Icon files (*.ico)|*.ico",
+            Multiselect = false
+        };
+        _openDlg.ShowDialog();
+
+        if (_openDlg.FileName != "")
+        {
+            _myIconButton.Icon = new Icon(_openDlg.FileName);
         }
     }
 }

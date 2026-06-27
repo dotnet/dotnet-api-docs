@@ -24,14 +24,14 @@ public class Example
     {
         // Define a dynamic assembly to contain the sample type. The
         // assembly will not be run, but only saved to disk, so
-        // AssemblyBuilderAccess.Save is specified.
+        // AssemblyBuilderAccess.Run is specified.
         //
         //<Snippet2>
         AppDomain myDomain = AppDomain.CurrentDomain;
         AssemblyName myAsmName = new AssemblyName("GenericEmitExample1");
         AssemblyBuilder myAssembly =
-            myDomain.DefineDynamicAssembly(myAsmName,
-                AssemblyBuilderAccess.RunAndSave);
+            AssemblyBuilder.DefineDynamicAssembly(myAsmName,
+                AssemblyBuilderAccess.Run);
         //</Snippet2>
 
         // An assembly is made up of executable modules. For a single-
@@ -40,8 +40,7 @@ public class Example
         //
         //<Snippet3>
         ModuleBuilder myModule =
-            myAssembly.DefineDynamicModule(myAsmName.Name,
-               myAsmName.Name + ".dll");
+            myAssembly.DefineDynamicModule(myAsmName.Name);
         //</Snippet3>
 
         // Get type objects for the base class trivial interfaces to
@@ -186,7 +185,6 @@ public class Example
         // Create the type and save the assembly.
         //<Snippet8>
         Type finished = myType.CreateType();
-        myAssembly.Save(myAsmName.Name+".dll");
         //</Snippet8>
 
         // Invoke the method.
