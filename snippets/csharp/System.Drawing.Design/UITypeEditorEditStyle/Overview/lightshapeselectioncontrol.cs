@@ -73,7 +73,7 @@ namespace MarqueeControlLibrary
         // <snippet360>
         // LightShape is the property for which this control provides
         // a custom user interface in the Properties window.
-		[System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Visible)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public MarqueeLightShape LightShape
 		{
 			get
