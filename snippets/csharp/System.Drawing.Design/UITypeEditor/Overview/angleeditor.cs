@@ -266,6 +266,7 @@ namespace AngleEditor
 
         [BrowsableAttribute(true)]
         [EditorAttribute(typeof(AngleEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public double Angle
         {
             get

@@ -1,5 +1,6 @@
 ﻿//<Snippet1>
 using System.Collections;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
@@ -14,9 +15,11 @@ namespace PropertyValueUIServiceExample
     public class PropertyUIComponent : System.ComponentModel.Component
     {
         // Example property for which to provide a PropertyValueUIItem.
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int HorizontalMargin { get; set; }
 
         // Example property for which to provide a PropertyValueUIItem.
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int VerticalMargin { get; set; }
 
         // Field storing the value of the VerticalMargin property.
