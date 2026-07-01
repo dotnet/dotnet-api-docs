@@ -16,6 +16,7 @@ namespace BitmapEditorExample
         //<Snippet1>
         [EditorAttribute(typeof(System.Drawing.Design.BitmapEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Bitmap testBitmap
         {
             get

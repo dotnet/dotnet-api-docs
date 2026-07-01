@@ -70,6 +70,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int UpdatePeriod
         {
             get
@@ -99,6 +100,7 @@ namespace MarqueeControlLibrary
         // <snippet160>
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color LightColor
         {
             get
@@ -121,6 +123,7 @@ namespace MarqueeControlLibrary
 
         [Category("Marquee")]
         [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color DarkColor
         {
             get
