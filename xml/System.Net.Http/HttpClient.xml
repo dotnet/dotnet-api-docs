@@ -54,9 +54,9 @@ The <xref:System.Net.Http.HttpClient> class instance acts as a session to send H
 
 ## Instancing
 
-<xref:System.Net.Http.HttpClient> is intended to be instantiated once and reused throughout the life of an application. In .NET Core and .NET 5+, `HttpClient` pools connections inside the handler instance and reuses a connection across multiple requests. If you instantiate an `HttpClient` class for every request, the number of sockets available under heavy loads will be exhausted. This exhaustion will result in <xref:System.Net.Sockets.SocketException> errors.
+<xref:System.Net.Http.HttpClient> is intended to be instantiated once and reused throughout the life of an application. `HttpClient` pools connections inside the handler instance and reuses a connection across multiple requests. If you instantiate an `HttpClient` class for every request, the number of sockets available under heavy loads might be exhausted. This exhaustion results in <xref:System.Net.Sockets.SocketException> errors.
 
-You can configure additional options by passing in a "handler", such as <xref:System.Net.Http.HttpClientHandler> (or <xref:System.Net.Http.SocketsHttpHandler> in .NET Core 2.1 or later), as part of the constructor. The connection properties on the handler cannot be changed once a request has been submitted, so one reason to create a new `HttpClient` instance would be if you need to change the connection properties. If different requests require different settings, this may also lead to an application having multiple <xref:System.Net.Http.HttpClient> instances, where each instance is configured appropriately, and then requests are issued on the relevant client.
+You can configure additional options by passing in a "handler", such as <xref:System.Net.Http.HttpClientHandler> or <xref:System.Net.Http.SocketsHttpHandler>, as part of the constructor. The connection properties on the handler cannot be changed once a request has been submitted, so one reason to create a new `HttpClient` instance would be if you need to change the connection properties. If different requests require different settings, this may also lead to an application having multiple <xref:System.Net.Http.HttpClient> instances, where each instance is configured appropriately, and then requests are issued on the relevant client.
 
 `HttpClient` only resolves DNS entries when a connection is created. It does not track any time to live (TTL) durations specified by the DNS server. If DNS entries change regularly, which can happen in some container scenarios, the client won't respect those updates. To solve this issue, you can limit the lifetime of the connection by setting the <xref:System.Net.Http.SocketsHttpHandler.PooledConnectionLifetime?displayProperty=nameWithType> property, so that DNS lookup is required when the connection is replaced.
 
@@ -94,32 +94,21 @@ On each platform, <xref:System.Net.Http.HttpClient> tries to use the best availa
 | Windows/.NET Framework      | <xref:System.Net.HttpWebRequest>                                                          |
 | Windows/Mono                | <xref:System.Net.HttpWebRequest>                                                          |
 | Windows/UWP                 | Windows native <xref:System.Net.Http.WinHttpHandler> (HTTP 2.0 capable)                   |
-| Windows/.NET Core 1.0-2.0   | Windows native <xref:System.Net.Http.WinHttpHandler> (HTTP 2.0 capable)                   |
 | macOS/Mono                  | <xref:System.Net.HttpWebRequest>                                                          |
-| macOS/.NET Core 1.0-2.0     | `libcurl`-based HTTP transport (HTTP 2.0 capable)                                         |
 | Linux/Mono                  | <xref:System.Net.HttpWebRequest>                                                          |
-| Linux/.NET Core 1.0-2.0     | `libcurl`-based HTTP transport (HTTP 2.0 capable)                                         |
-| .NET Core 2.1 and later     | <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType>                    |
+| .NET                       | <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType>                    |
 
 Users can also configure a specific transport for <xref:System.Net.Http.HttpClient> by invoking the <xref:System.Net.Http.HttpClient.%23ctor*> constructor that takes an <xref:System.Net.Http.HttpMessageHandler>.
 
-### .NET Framework & Mono
+The <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class provides the implementation used by higher-level HTTP networking classes such as <xref:System.Net.Http.HttpClient>. The use of <xref:System.Net.Http.SocketsHttpHandler> offers a number of advantages:
 
-By default on .NET Framework and Mono, <xref:System.Net.HttpWebRequest> is used to send requests to the server. This behavior can be modified by specifying a different handler in one of the constructor overloads with an <xref:System.Net.Http.HttpMessageHandler> parameter. If you require features like authentication or caching, you can use <xref:System.Net.Http.WebRequestHandler> to configure settings and the instance can be passed to the constructor. The returned handler can be passed to a constructor overload that has an <xref:System.Net.Http.HttpMessageHandler> parameter.
-
-### .NET Core
-
-Starting with .NET Core 2.1, the <xref:System.Net.Http.SocketsHttpHandler?displayProperty=nameWithType> class instead of <xref:System.Net.Http.HttpClientHandler> provides the implementation used by higher-level HTTP networking classes such as <xref:System.Net.Http.HttpClient>. The use of <xref:System.Net.Http.SocketsHttpHandler> offers a number of advantages:
-
-- A significant performance improvement when compared with the previous implementation.
-- The elimination of platform dependencies, which simplifies deployment and servicing. For example, `libcurl` is no longer a dependency on .NET Core for macOS and .NET Core for Linux.
+- High performance.
+- The elimination of platform dependencies, which simplifies deployment and servicing.
 - Consistent behavior across all .NET platforms.
-
-If this change is undesirable, on Windows you can continue to use <xref:System.Net.Http.WinHttpHandler> by referencing its [NuGet package](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler/) and passing it to [HttpClient's constructor](xref:System.Net.Http.HttpClient.%23ctor(System.Net.Http.HttpMessageHandler)) manually.
 
 ## Configure behavior using runtime configuration options
 
-Certain aspects of <xref:System.Net.Http.HttpClient>'s behavior are customizable through [Runtime configuration options](/dotnet/core/run-time-config/networking). However, the behavior of these switches differs through .NET versions. For example, in .NET Core 2.1 - 3.1, you can configure whether <xref:System.Net.Http.SocketsHttpHandler> is used by default, but that option is no longer available starting in .NET 5.
+Certain aspects of <xref:System.Net.Http.HttpClient>'s behavior are customizable through [Runtime configuration options](/dotnet/core/run-time-config/networking).
 
 ## Connection pooling
 
@@ -716,7 +705,7 @@ This property has no effect on any of the <xref:System.Net.Http.HttpClient.Send*
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -786,7 +775,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -862,7 +851,7 @@ The <paramref name="requestUri" /> is not an absolute URI.
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -938,7 +927,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1081,7 +1070,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1144,7 +1133,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1212,7 +1201,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete based on the `completionOption` parameter after the part or all of the response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1281,7 +1270,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1350,7 +1339,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete based on the `completionOption` parameter after the part or all of the response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1414,7 +1403,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read. The behavior is the same as if <xref:System.Net.Http.HttpCompletionOption.ResponseContentRead> has been explicitly specified.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1488,7 +1477,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete based on the `completionOption` parameter after the part or all of the response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1559,7 +1548,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete based on the `completionOption` parameter after the part or all of the response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1644,7 +1633,7 @@ The request failed due to timeout.</exception>
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -1713,7 +1702,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
           ]]></format>
         </remarks>
@@ -1779,7 +1768,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
           ]]></format>
         </remarks>
@@ -1845,7 +1834,7 @@ The request failed due to timeout.</exception>
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
           ]]></format>
         </remarks>
@@ -1934,7 +1923,7 @@ The request failed due to timeout.</exception>
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2003,7 +1992,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2069,7 +2058,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout: an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2136,7 +2125,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2225,7 +2214,7 @@ The request failed due to timeout.</exception>
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2294,7 +2283,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2360,7 +2349,7 @@ The response status code was outside of the range of 200-299 (which indicate suc
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2427,7 +2416,7 @@ The request failed due to timeout.</exception>
 In some scenarios, you might need more control over which status codes are considered to be successful; for example, an API might be expected to always return `200 OK`. In such cases, we recommend to manually check if <xref:System.Net.Http.HttpResponseMessage.StatusCode> matches the expected value.
 
 > [!NOTE]
-> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of a timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2822,7 +2811,7 @@ The size specified is greater than the maximum allowed buffer size.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2887,7 +2876,7 @@ The size specified is greater than the maximum allowed buffer size.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -2960,7 +2949,7 @@ The size specified is greater than the maximum allowed buffer size.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -3031,7 +3020,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -3119,7 +3108,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -3184,7 +3173,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -3257,7 +3246,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>
@@ -3328,7 +3317,7 @@ The request failed due to timeout.</exception>
  This operation doesn't block. The returned <xref:System.Threading.Tasks.Task`1> object will complete after the whole response (including content) is read.
 
 > [!NOTE]
-> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown. (On .NET Core versions, <xref:System.OperationCanceledException> without any inner exception is thrown.)
+> In case of timeout, an <xref:System.OperationCanceledException> that nests a <xref:System.TimeoutException> is thrown.
 
  ]]></format>
         </remarks>

@@ -1828,13 +1828,13 @@
 The `id` parameter must correspond exactly to the time zone's identifier in length, but not in case, for a successful match to occur; that is, the comparison of `id` with time zone identifiers is case-insensitive. If you want to retrieve time zone objects based on partial matches, you can write custom procedures that work with the read-only collection of <xref:System.TimeZoneInfo> objects returned by the <xref:System.TimeZoneInfo.GetSystemTimeZones*> method.
 
 On Windows systems, `FindSystemTimeZoneById` tries to match `id` to the subkey names of the HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Time Zones branch of the registry.
-Starting with .NET 6, Windows systems also support IANA time zone identifiers (such as "America/Los_Angeles" or "Pacific/Auckland"), providing cross-platform time zone resolution. IANA IDs are supported on Windows only if NLS isn't enabled and globalization invariant mode isn't enabled.
+Windows systems also support IANA time zone identifiers (such as "America/Los_Angeles" or "Pacific/Auckland"), providing cross-platform time zone resolution. IANA IDs are supported on Windows only if NLS isn't enabled and globalization invariant mode isn't enabled.
 On Linux and macOS, it uses time zone information available in the [ICU Library](https://unicode-org.github.io/icu/userguide/datetime/timezone/).
 If the registry or the library does not have the information for the time zone you desire, you can create a particular time zone either by calling one of the overloads of the <xref:System.TimeZoneInfo.CreateCustomTimeZone*> method or by calling <xref:System.TimeZoneInfo.FromSerializedString*> to deserialize a <xref:System.TimeZoneInfo> object that represents the required time zone.
 However, time zones created by these method calls are not system-defined time and cannot be retrieved using the <xref:System.TimeZoneInfo.FindSystemTimeZoneById*> method.
 These custom time zones can be accessed only through the object reference returned by the <xref:System.TimeZoneInfo.CreateCustomTimeZone*> or <xref:System.TimeZoneInfo.FromSerializedString*> method call.
 
-In .NET 7 and earlier versions, this method returns a new <xref:System.TimeZoneInfo> instance for each method call. This might impact performance in applications that call the `FindSystemTimeZoneById` method repeatedly with the same identifier. (In .NET 8 and later versions, this method always returns a cached <xref:System.TimeZoneInfo> instance.)
+This method always returns a cached <xref:System.TimeZoneInfo> instance.
 
 ## Examples
 
@@ -3474,7 +3474,7 @@ The time zone identifier is a key string that uniquely identifies a particular t
 
 ## Remarks
 
-This API is exclusively supported on .NET 6 and later versions, and only when the application utilizes the ICU library.
+This API is supported only when the application utilizes the ICU library.
 However, in .NET, the ICU library is not always used by default, particularly in the following scenarios:
 
 - When the application runs on an operating system that does not have the ICU library, and the app does not utilize the [app-local ICU](/dotnet/core/extensions/globalization-icu#app-local-icu) feature.
@@ -3540,7 +3540,7 @@ If the application is running on a Windows OS version that lacks the ICU library
 
 ## Remarks
 
-This API is exclusively supported on .NET 6.0 and later versions. It is also supported when the application utilizes the ICU library, otherwise the API will fail.
+This API is supported only when the application utilizes the ICU library; otherwise, the API fails.
 However, in .NET, the ICU library is not always used by default, particularly in the following scenarios:
 
 - When the application runs on an operating system that does not have the ICU library, and the app does not utilize the [APP-Local ICU](/dotnet/core/extensions/globalization-icu#app-local-icu) feature.
@@ -3606,7 +3606,7 @@ If the application is running on a Windows OS version that lacks the ICU library
 
 ## Remarks
 
-This API is exclusively supported on .NET 6.0 and later versions. It is also supported when the application utilizes the ICU library, otherwise the API will fail.
+This API is supported only when the application utilizes the ICU library; otherwise, the API fails.
 However, in .NET, the ICU library is not always used by default, particularly in the following scenarios:
 
 - When the application runs on an operating system that does not have the ICU library, and the app does not utilize the [App-local ICU](/dotnet/core/extensions/globalization-icu#app-local-icu) feature.
