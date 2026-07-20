@@ -196,12 +196,14 @@
         <Parameter Name="arguments" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="fileName">To be added.</param>
-        <param name="arguments">To be added.</param>
+        <param name="fileName">The name of the application or document to start.</param>
+        <param name="arguments">A collection of command-line arguments to pass to the application.</param>
         <summary>
           <para>Initializes a new instance of the <see cref="T:System.Diagnostics.ProcessStartInfo" /> class and specifies the name of the application to start and a set of command-line arguments to pass to the application.</para>
         </summary>
         <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="fileName" /> or <paramref name="arguments" /> is <see langword="null" />.</exception>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -786,12 +788,28 @@ If you use this property to set command-line arguments, <xref:System.Diagnostics
         <ReturnType>System.Collections.Generic.IList&lt;System.Runtime.InteropServices.SafeHandle&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a list of handles that will be inherited by the child process.</summary>
+        <value>A list of <see cref="T:System.Runtime.InteropServices.SafeHandle" /> objects to be explicitly inherited by the child process, or <see langword="null" /> to use the default handle inheritance behavior.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+When this property is not `null`, handle inheritance is restricted to the standard handles and the handles from this list. If the list is empty, only the standard handles are inherited.
+
+Only <xref:Microsoft.Win32.SafeHandles.SafeFileHandle> and <xref:System.IO.Pipes.SafePipeHandle> are supported in this list.
+
+Setting this property on Unix systems that do not have native support for controlling handle inheritance can severely degrade process start performance.
+
+Handles in this list should not have inheritance enabled beforehand. If they do, they could be unintentionally inherited by other processes started concurrently with different APIs, which might lead to security or resource management issues.
+
+Two concurrent process starts that pass same handle in <xref:System.Diagnostics.ProcessStartInfo.InheritedHandles> are not supported. The implementation temporarily modifies each handle's inheritance flags and this is not thread-safe across concurrent starts sharing the same handle.
+
+This API can't be used together with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> set to `true` or when specifying a user name via the <xref:System.Diagnostics.ProcessStartInfo.UserName> property.
+
+On Windows, the implementation will temporarily enable inheritance on each handle in this list by modifying the handle's flags using [SetHandleInformation](https://learn.microsoft.com/windows/win32/api/handleapi/nf-handleapi-sethandleinformation). After the child process is created, inheritance will be unconditionally disabled on these handles to prevent them from being inherited by other processes started with different APIs. The handles themselves are not duplicated; they are made inheritable and passed to the child process.
+
+On Unix, the implementation will modify each file descriptor in the child process by removing the FD_CLOEXEC flag. This modification occurs after the fork and before the exec, so it does not affect the parent process.
+          ]]></format>
+        </remarks>
       </Docs>
-    </Member>
-    <Member MemberName="KillOnParentExit">
       <MemberSignature Language="C#" Value="public bool KillOnParentExit { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool KillOnParentExit" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessStartInfo.KillOnParentExit" />
@@ -824,12 +842,21 @@ If you use this property to set command-line arguments, <xref:System.Diagnostics
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a value indicating whether the child process should be terminated when the parent process exits.</summary>
+        <value>
+          <see langword="true" /> to terminate the child process when the parent exits; otherwise, <see langword="false" />. The default is <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+When this property is set to `true`, the operating system will automatically terminate the child process when the parent process exits, regardless of whether the parent exits gracefully or crashes.
+
+This property cannot be used together with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> set to `true`.
+
+On Windows, this is implemented using Job Objects with the [JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE](https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information) flag.
+
+On Linux and Android, this is implemented using `prctl(PR_SET_PDEATHSIG)`.
+          ]]></format>
+        </remarks>
       </Docs>
-    </Member>
-    <Member MemberName="LoadUserProfile">
       <MemberSignature Language="C#" Value="public bool LoadUserProfile { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool LoadUserProfile" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessStartInfo.LoadUserProfile" />
@@ -1286,12 +1313,20 @@ You can use asynchronous read operations to avoid these dependencies and their d
         <ReturnType>Microsoft.Win32.SafeHandles.SafeFileHandle</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> that will be used as the standard error of the child process. When set, the handle is passed directly to the child process and <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardError" /> must be <see langword="false" />.</summary>
+        <value>A <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> to use as the standard error handle of the child process, or <see langword="null" /> to use the default behavior.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+The handle does not need to be inheritable; the runtime will duplicate it as inheritable if needed.
+
+Use <xref:Microsoft.Win32.SafeHandles.SafeFileHandle.CreateAnonymousPipe%2A> to create a pair of connected pipe handles, <xref:System.IO.File.OpenHandle%2A> to open a file handle, <xref:System.IO.File.OpenNullHandle%2A> to discard error output, or <xref:System.Console.OpenStandardErrorHandle%2A> to inherit the parent's standard error (the default behavior when this property is `null`).
+
+It's recommended to dispose the handle right after starting the process.
+
+This property cannot be used together with <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardError> and requires <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> to be `false`.
+          ]]></format>
+        </remarks>
       </Docs>
-    </Member>
-    <Member MemberName="StandardInputEncoding">
       <MemberSignature Language="C#" Value="public System.Text.Encoding? StandardInputEncoding { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Text.Encoding StandardInputEncoding" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessStartInfo.StandardInputEncoding" />
@@ -1357,12 +1392,20 @@ You can use asynchronous read operations to avoid these dependencies and their d
         <ReturnType>Microsoft.Win32.SafeHandles.SafeFileHandle</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> that will be used as the standard input of the child process. When set, the handle is passed directly to the child process and <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardInput" /> must be <see langword="false" />.</summary>
+        <value>A <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> to use as the standard input handle of the child process, or <see langword="null" /> to use the default behavior.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+The handle does not need to be inheritable; the runtime will duplicate it as inheritable if needed.
+
+Use <xref:Microsoft.Win32.SafeHandles.SafeFileHandle.CreateAnonymousPipe%2A> to create a pair of connected pipe handles, <xref:System.IO.File.OpenHandle%2A> to open a file handle, <xref:System.IO.File.OpenNullHandle%2A> to provide an empty input, or <xref:System.Console.OpenStandardInputHandle%2A> to inherit the parent's standard input (the default behavior when this property is `null`).
+
+It's recommended to dispose the handle right after starting the process.
+
+This property cannot be used together with <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardInput> and requires <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> to be `false`.
+          ]]></format>
+        </remarks>
       </Docs>
-    </Member>
-    <Member MemberName="StandardOutputEncoding">
       <MemberSignature Language="C#" Value="public System.Text.Encoding? StandardOutputEncoding { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Text.Encoding StandardOutputEncoding" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessStartInfo.StandardOutputEncoding" />
@@ -1435,9 +1478,19 @@ You can use asynchronous read operations to avoid these dependencies and their d
         <ReturnType>Microsoft.Win32.SafeHandles.SafeFileHandle</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> that will be used as the standard output of the child process. When set, the handle is passed directly to the child process and <see cref="P:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput" /> must be <see langword="false" />.</summary>
+        <value>A <see cref="T:Microsoft.Win32.SafeHandles.SafeFileHandle" /> to use as the standard output handle of the child process, or <see langword="null" /> to use the default behavior.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+The handle does not need to be inheritable; the runtime will duplicate it as inheritable if needed.
+
+Use <xref:Microsoft.Win32.SafeHandles.SafeFileHandle.CreateAnonymousPipe%2A> to create a pair of connected pipe handles, <xref:System.IO.File.OpenHandle%2A> to open a file handle, <xref:System.IO.File.OpenNullHandle%2A> to discard output, or <xref:System.Console.OpenStandardOutputHandle%2A> to inherit the parent's standard output (the default behavior when this property is `null`).
+
+It's recommended to dispose the handle right after starting the process.
+
+This property cannot be used together with <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput> and requires <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> to be `false`.
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="StartDetached">
@@ -1459,12 +1512,21 @@ You can use asynchronous read operations to avoid these dependencies and their d
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets or sets a value indicating whether the process should be started in a detached manner.</summary>
+        <value>
+          <see langword="true" /> to start the process detached from the parent; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+Starts a new detached process with standard input, output, and error redirected to the null device (`NUL` on Windows, `/dev/null` on Unix) unless explicitly configured by the user with <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardInput>, <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardOutput>, <xref:System.Diagnostics.ProcessStartInfo.RedirectStandardError>, <xref:System.Diagnostics.ProcessStartInfo.StandardInputHandle>, <xref:System.Diagnostics.ProcessStartInfo.StandardOutputHandle>, or <xref:System.Diagnostics.ProcessStartInfo.StandardErrorHandle>.
+
+On Windows, the process is started with the [DETACHED_PROCESS](https://learn.microsoft.com/windows/win32/procthread/process-creation-flags) flag.
+
+On Unix, the process is started as a leader of a new session.
+
+This property cannot be used together with <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> set to `true`.
+          ]]></format>
+        </remarks>
       </Docs>
-    </Member>
-    <Member MemberName="UseCredentialsForNetworkingOnly">
       <MemberSignature Language="C#" Value="public bool UseCredentialsForNetworkingOnly { get; set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance bool UseCredentialsForNetworkingOnly" />
       <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessStartInfo.UseCredentialsForNetworkingOnly" />
