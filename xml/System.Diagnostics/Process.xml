@@ -1105,6 +1105,7 @@ The following code example creates a process that prints a file. It sets the <xr
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object, the process has not exited, or there is no process handle available.</exception>
         <exception cref="T:System.NotSupportedException">You are trying to access the <see cref="P:System.Diagnostics.Process.ExitTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.Handle" />
         <altmember cref="P:System.Diagnostics.Process.ExitCode" />
@@ -3573,10 +3574,16 @@ If no main module is found, it could be because the process hasn't finished load
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the privileged processor time for this process.</summary>
+        <summary>Gets the amount of time the process has spent running code inside the operating system core.</summary>
         <value>A <see cref="T:System.TimeSpan" /> that indicates the amount of time that the process has spent running code inside the operating system core.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
+
+## Remarks
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
+
+
 
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
@@ -3587,6 +3594,8 @@ If no main module is found, it could be because the process hasn't finished load
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object. On Windows, there is no process handle available. On Unix, the process has exited.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">The operating system could not retrieve process timing information.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.UserProcessorTime" />
         <altmember cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />
@@ -5668,14 +5677,10 @@ The file specified in the <paramref name="fileName" /> could not be found.
       </ReturnValue>
       <Docs>
         <summary>Gets the time that the associated process was started.</summary>
-        <value>An object  that indicates when the process started. An exception is thrown if the process is not running.</value>
-        <remarks>To be added.</remarks>
+        <value>An object that indicates when the process started.</value>
+        <remarks>On Windows, if a handle to the process is available, this property can be read after the process exits. On Unix, this property caches its value on first access. A cached value can be read after the process exits, but accessing an uncached value after the process exits might throw <see cref="T:System.InvalidOperationException" /> when the value is unavailable.</remarks>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.StartTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
-        <exception cref="T:System.InvalidOperationException">The process has exited.
-
- -or-
-
- The process has not been started.</exception>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object; on Windows, there is no process handle available; or on Unix, the value was not cached and is unavailable after the process exited.</exception>
         <exception cref="T:System.ComponentModel.Win32Exception">An error occurred in the call to the Windows function.</exception>
       </Docs>
     </Member>
@@ -5836,6 +5841,12 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <remarks>
           <format type="text/markdown"><![CDATA[
 
+## Remarks
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
+
+
+
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
 
@@ -5892,10 +5903,16 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the total processor time for this process.</summary>
+        <summary>Gets the amount of time the associated process has spent utilizing the CPU. This value is the sum of the <see cref="P:System.Diagnostics.Process.UserProcessorTime" /> and the <see cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />.</summary>
         <value>A <see cref="T:System.TimeSpan" /> that indicates the amount of time that the associated process has spent utilizing the CPU. This value is the sum of the <see cref="P:System.Diagnostics.Process.UserProcessorTime" /> and the <see cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
+
+## Remarks
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
+
+
 
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
@@ -5906,6 +5923,8 @@ The file specified in the <paramref name="fileName" /> could not be found.
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object. On Windows, there is no process handle available. On Unix, the process has exited.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">The operating system could not retrieve process timing information.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.TotalProcessorTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.UserProcessorTime" />
         <altmember cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />
@@ -5956,10 +5975,16 @@ The file specified in the <paramref name="fileName" /> could not be found.
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the user processor time for this process.</summary>
+        <summary>Gets the amount of time the associated process has spent running code inside the application portion of the process (not the operating system core).</summary>
         <value>A <see cref="T:System.TimeSpan" /> that indicates the amount of time that the associated process has spent running code inside the application portion of the process (not inside the operating system core).</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
+
+## Remarks
+ On Windows, if a handle to the process is available, the value can be retrieved after the process exits.
+ On Unix, the value is unavailable after the process exits.
+
+
 
 ## Examples
  The following example starts an instance of Notepad. The example then retrieves and displays various properties of the associated process. The example detects when the process exits, and displays the process's exit code.
@@ -5970,6 +5995,8 @@ The file specified in the <paramref name="fileName" /> could not be found.
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.InvalidOperationException">No process is associated with this object. On Windows, there is no process handle available. On Unix, the process has exited.</exception>
+        <exception cref="T:System.ComponentModel.Win32Exception">The operating system could not retrieve process timing information.</exception>
         <exception cref="T:System.NotSupportedException">You are attempting to access the <see cref="P:System.Diagnostics.Process.UserProcessorTime" /> property for a process that is running on a remote computer. This property is available only for processes that are running on the local computer.</exception>
         <altmember cref="P:System.Diagnostics.Process.UserProcessorTime" />
         <altmember cref="P:System.Diagnostics.Process.PrivilegedProcessorTime" />
