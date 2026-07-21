@@ -1,10 +1,10 @@
 <Type Name="ValidatableTypeInfo" FullName="Microsoft.Extensions.Validation.ValidatableTypeInfo">
-  <TypeSignature Language="C#" Value="public abstract class ValidatableTypeInfo : Microsoft.Extensions.Validation.IValidatableInfo" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit ValidatableTypeInfo extends System.Object implements class Microsoft.Extensions.Validation.IValidatableInfo" />
+  <TypeSignature Language="C#" Value="public abstract class ValidatableTypeInfo : Microsoft.Extensions.Validation.IValidatableTypeInfo" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit ValidatableTypeInfo extends System.Object implements class Microsoft.Extensions.Validation.IValidatableTypeInfo" />
   <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Validation.ValidatableTypeInfo" />
-  <TypeSignature Language="VB.NET" Value="Public MustInherit Class ValidatableTypeInfo&#xA;Implements IValidatableInfo" />
-  <TypeSignature Language="F#" Value="type ValidatableTypeInfo = class&#xA;    interface IValidatableInfo" />
-  <TypeSignature Language="C++ CLI" Value="public ref class ValidatableTypeInfo abstract : Microsoft::Extensions::Validation::IValidatableInfo" />
+  <TypeSignature Language="VB.NET" Value="Public MustInherit Class ValidatableTypeInfo&#xA;Implements IValidatableTypeInfo" />
+  <TypeSignature Language="F#" Value="type ValidatableTypeInfo = class&#xA;    interface IValidatableTypeInfo" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ValidatableTypeInfo abstract : Microsoft::Extensions::Validation::IValidatableTypeInfo" />
   <AssemblyInfo>
     <AssemblyName>Microsoft.Extensions.Validation</AssemblyName>
     <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -15,7 +15,7 @@
   </Base>
   <Interfaces>
     <Interface>
-      <InterfaceName>Microsoft.Extensions.Validation.IValidatableInfo</InterfaceName>
+      <InterfaceName>Microsoft.Extensions.Validation.IValidatableTypeInfo</InterfaceName>
     </Interface>
   </Interfaces>
   <Attributes>
@@ -68,7 +68,7 @@
       <Docs>
         <param name="type">The type being validated.</param>
         <param name="members">The members that can be validated.</param>
-        <param name="displayNameInfo">An optional <see cref="P:Microsoft.Extensions.Validation.ValidatableTypeInfo.DisplayNameInfo" /> that resolves the
+        <param name="displayNameInfo">An optional strategy that resolves the
             display name for the type at validation time. When <see langword="null" />, the validation
             pipeline uses <see cref="P:System.Reflection.MemberInfo.Name" /> of <paramref name="type" />
             as the display name.</param>
@@ -102,6 +102,58 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="TryFindProperty">
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Validation.IValidatablePropertyInfo? TryFindProperty (string propertyName, Microsoft.Extensions.Validation.ValidationOptions validationOptions);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Microsoft.Extensions.Validation.IValidatablePropertyInfo TryFindProperty(string propertyName, class Microsoft.Extensions.Validation.ValidationOptions validationOptions) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Validation.ValidatableTypeInfo.TryFindProperty(System.String,Microsoft.Extensions.Validation.ValidationOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Function TryFindProperty (propertyName As String, validationOptions As ValidationOptions) As IValidatablePropertyInfo" />
+      <MemberSignature Language="F#" Value="abstract member TryFindProperty : string * Microsoft.Extensions.Validation.ValidationOptions -&gt; Microsoft.Extensions.Validation.IValidatablePropertyInfo&#xA;override this.TryFindProperty : string * Microsoft.Extensions.Validation.ValidationOptions -&gt; Microsoft.Extensions.Validation.IValidatablePropertyInfo" Usage="validatableTypeInfo.TryFindProperty (propertyName, validationOptions)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual Microsoft::Extensions::Validation::IValidatablePropertyInfo ^ TryFindProperty(System::String ^ propertyName, Microsoft::Extensions::Validation::ValidationOptions ^ validationOptions);" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:Microsoft.Extensions.Validation.IValidatableTypeInfo.TryFindProperty(System.String,Microsoft.Extensions.Validation.ValidationOptions)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Validation</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Microsoft.Extensions.Validation.IValidatablePropertyInfo</ReturnType>
+        <Attributes>
+          <Attribute>
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="propertyName" Type="System.String" />
+        <Parameter Name="validationOptions" Type="Microsoft.Extensions.Validation.ValidationOptions" />
+      </Parameters>
+      <Docs>
+        <param name="propertyName">The CLR name of the property to find.</param>
+        <param name="validationOptions">The <see cref="T:Microsoft.Extensions.Validation.ValidationOptions" /> used to resolve metadata for super-types.</param>
+        <summary>
+            Finds the <see cref="T:Microsoft.Extensions.Validation.ValidatablePropertyInfo" /> for a member with the specified
+            <paramref name="propertyName" />, including members inherited from base types or implemented
+            interfaces.
+            </summary>
+        <returns>The matching <see cref="T:Microsoft.Extensions.Validation.ValidatablePropertyInfo" />, or <see langword="null" /> if no
+            member with the specified name is declared on <see cref="P:Microsoft.Extensions.Validation.ValidatableTypeInfo.Type" /> or any of its super-types.</returns>
+        <remarks>
+          <para>
+            Members declared directly on <see cref="P:Microsoft.Extensions.Validation.ValidatableTypeInfo.Type" /> take precedence over members inherited
+            from super-types, matching the order in which <see cref="M:Microsoft.Extensions.Validation.ValidatableTypeInfo.ValidateAsync(System.Object,Microsoft.Extensions.Validation.ValidateContext,System.Threading.CancellationToken)" />
+            visits members.
+            </para>
+          <para>
+            Inherited members are resolved by looking up each super-type via
+            <paramref name="validationOptions" />'s <see cref="P:Microsoft.Extensions.Validation.ValidationOptions.Resolvers" />. Super-types that
+            are not registered with a resolver are silently skipped.
+            </para>
+        </remarks>
+      </Docs>
+    </Member>
     <Member MemberName="ValidateAsync">
       <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task ValidateAsync (object? value, Microsoft.Extensions.Validation.ValidateContext context, System.Threading.CancellationToken cancellationToken);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task ValidateAsync(object value, class Microsoft.Extensions.Validation.ValidateContext context, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
@@ -111,7 +163,7 @@
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Threading::Tasks::Task ^ ValidateAsync(System::Object ^ value, Microsoft::Extensions::Validation::ValidateContext ^ context, System::Threading::CancellationToken cancellationToken);" />
       <MemberType>Method</MemberType>
       <Implements>
-        <InterfaceMember>M:Microsoft.Extensions.Validation.IValidatableInfo.ValidateAsync(System.Object,Microsoft.Extensions.Validation.ValidateContext,System.Threading.CancellationToken)</InterfaceMember>
+        <InterfaceMember>M:Microsoft.Extensions.Validation.IValidatableTypeInfo.ValidateAsync(System.Object,Microsoft.Extensions.Validation.ValidateContext,System.Threading.CancellationToken)</InterfaceMember>
       </Implements>
       <AssemblyInfo>
         <AssemblyName>Microsoft.Extensions.Validation</AssemblyName>
