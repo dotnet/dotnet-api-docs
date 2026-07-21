@@ -14,7 +14,7 @@
   </Base>
   <Interfaces />
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Represents the exit status of a process.</summary>
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
@@ -35,10 +35,10 @@
         <Parameter Name="signal" Type="System.Nullable&lt;System.Runtime.InteropServices.PosixSignal&gt;" />
       </Parameters>
       <Docs>
-        <param name="exitCode">To be added.</param>
-        <param name="canceled">To be added.</param>
-        <param name="signal">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="exitCode">The exit code of the process.</param>
+        <param name="canceled">A value indicating whether the process has been terminated due to timeout or cancellation.</param>
+        <param name="signal">On Unix, the POSIX signal that terminated the process, or <see langword="null" /> if the process exited normally.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.ProcessExitStatus" /> class.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -58,8 +58,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
+        <summary>Gets a value indicating whether the process has been terminated due to timeout or cancellation.</summary>
+        <value>
+          <see langword="true" /> if the process was terminated due to timeout or cancellation; otherwise, <see langword="false" />.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -79,9 +80,13 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the exit code of the process.</summary>
+        <value>The exit code of the process.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+If the process was terminated by a signal on Unix, this is 128 + the signal number. Use <xref:System.Diagnostics.ProcessExitStatus.Signal> to get the actual signal.
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Signal">
@@ -100,9 +105,13 @@
         <ReturnType>System.Nullable&lt;System.Runtime.InteropServices.PosixSignal&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the POSIX signal that terminated the process on Unix, or <see langword="null" /> if the process was not terminated by a signal.</summary>
+        <value>The POSIX signal that terminated the process, or <see langword="null" /> if the process was not terminated by a signal.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+On Unix, a process can be terminated by a signal (e.g., SIGKILL, SIGTERM). When this happens, the kernel reports "terminated by signal X" rather than an exit code. This property captures that signal. When the process exits normally on Unix, or on Windows where signals do not exist, this property is `null`.
+          ]]></format>
+        </remarks>
       </Docs>
     </Member>
   </Members>
