@@ -28,9 +28,8 @@ namespace Microsoft.WCF.Documentation
 
       app.UseServiceModel(serviceBuilder =>
       {
-        serviceBuilder.AddService<SampleService>();
         serviceBuilder.AddServiceEndpoint<SampleService, ISampleService>(
-          new WSHttpBinding(SecurityMode.None),
+          new WSHttpBinding(SecurityMode.Message),
           "/SampleService");
 
         ServiceMetadataBehavior serviceMetadataBehavior =
