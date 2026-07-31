@@ -26,7 +26,7 @@ Module SpinWaitDemo
                     sw.SpinOnce()
                 End While
 
-                ' As of .NET Framework 4: After some initial spinning, SpinWait.SpinOnce() will yield every time.
+                ' After some initial spinning, SpinWait.SpinOnce() will yield every time.
                 Console.WriteLine("SpinWait called {0} times, yielded {1} times", sw.Count, numYields)
             End Sub)
 

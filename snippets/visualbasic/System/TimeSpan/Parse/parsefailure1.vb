@@ -13,12 +13,9 @@ Module Example
             Console.WriteLine("{0}: Bad Format", value)
          Catch e As OverflowException
             Console.WriteLine("{0}: Overflow", value)
-         End Try         
+         End Try
       Next
-      ' Output from .NET Framework 3.5 and earlier versions:
-      '       000000006 --> 6.00:00:00
-      '       12.12:12:12.12345678: Bad Format      
-      ' Output from .NET Framework 4:
+      ' Output:
       '       000000006: Overflow
       '       12.12:12:12.12345678: Overflow
       ' </Snippet3>

@@ -12,11 +12,11 @@ using namespace System::Globalization;
 using namespace System::Collections;
 using namespace System::Reflection;
 
-/*   This sample shows how to support code generation for a custom type of object 
+/*   This sample shows how to support code generation for a custom type of object
          using a type converter and InstanceDescriptor objects.
 
          To use this code, copy it to a file and add the file to a project. Then add
-         a component to the project and declare a Triangle field and a public property 
+         a component to the project and declare a Triangle field and a public property
          with accessors for the Triangle field on the component.
 
          The Triangle property will be persisted using code generation.
@@ -35,7 +35,7 @@ private:
 
 public:
 
-   property Point Point1 
+   property Point Point1
    {
       Point get()
       {
@@ -48,7 +48,7 @@ public:
       }
    }
 
-   property Point Point2 
+   property Point Point2
    {
       Point get()
       {
@@ -61,7 +61,7 @@ public:
       }
    }
 
-   property Point Point3 
+   property Point Point3
    {
       Point get()
       {
@@ -81,12 +81,11 @@ public:
       P3 = point3;
    }
 
-
-   /* A TypeConverter for the Triangle object.  Note that you can make it internal,
+   /* A TypeConverter for the Triangle object. Note that you can make it internal,
       private, or any scope you want and the designers will still be able to use
       it through the TypeDescriptor object.  This type converter provides the
-      capability to convert to an InstanceDescriptor.  This object can be used by 
-      the .NET Framework to generate source code that creates an instance of a 
+      capability to convert to an InstanceDescriptor.  This object can be used by
+      .NET to generate source code that creates an instance of a
       Triangle object. */
    [System::Security::Permissions::PermissionSet(System::Security::
       Permissions::SecurityAction::Demand, Name = "FullTrust")]
@@ -104,7 +103,7 @@ public:
             return true;
          }
 
-         
+
          // Always call the base to see if it can perform the conversion.
          return TypeConverter::CanConvertTo( context, destinationType );
       }
@@ -138,7 +137,7 @@ public:
       myTriangle = gcnew Triangle( Point(5,5),Point(10,10),Point(1,8) );
    }
 
-   property Triangle^ MyTriangle 
+   property Triangle^ MyTriangle
    {
       Triangle^ get()
       {

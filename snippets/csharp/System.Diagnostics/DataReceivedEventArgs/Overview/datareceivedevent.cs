@@ -1,27 +1,25 @@
 ﻿//<Snippet4>
-using System;
-using System.IO;
 using System.Diagnostics;
 using System.Text;
 
 class StandardAsyncOutputExample
 {
-    private static int lineCount = 0;
-    private static StringBuilder output = new StringBuilder();
+    private static int s_lineCount = 0;
+    private static readonly StringBuilder s_output = new();
 
     public static void Main()
     {
-        Process process = new Process();
+        Process process = new();
         process.StartInfo.FileName = "ipconfig.exe";
         process.StartInfo.UseShellExecute = false;
         process.StartInfo.RedirectStandardOutput = true;
         process.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
         {
             // Prepend line numbers to each line of the output.
-            if (!String.IsNullOrEmpty(e.Data))
+            if (!string.IsNullOrEmpty(e.Data))
             {
-                lineCount++;
-                output.Append("\n[" + lineCount + "]: " + e.Data);
+                s_lineCount++;
+                s_output.Append("\n[" + s_lineCount + "]: " + e.Data);
             }
         });
 
@@ -33,7 +31,7 @@ class StandardAsyncOutputExample
         process.WaitForExit();
 
         // Write the redirected output to this application's window.
-        Console.WriteLine(output);
+        Console.WriteLine(s_output);
 
         process.WaitForExit();
         process.Close();

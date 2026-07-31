@@ -5,7 +5,7 @@ namespace BasicSnippetC {
 	class ConvertSnippet {
 
 		static void Main(string[] args) {
-			
+
 			ConvertSnippet	snippet = new ConvertSnippet();
 
 			double	doubleVal;
@@ -68,7 +68,7 @@ namespace BasicSnippetC {
 			ConvertByteDecimal(byteVal);
 			ConvertByteSingle(byteVal);
 		}
-	
+
 		//<Snippet1>
 		public void ConvertDoubleBool(double doubleVal) {
 			bool	boolVal;
@@ -108,7 +108,7 @@ namespace BasicSnippetC {
 
 		//<Snippet3>
 		public void ConvertDoubleInt(double doubleVal) {
-			
+
 			int     intVal = 0;
 			// Double to int conversion can overflow.
 			try {
@@ -127,12 +127,12 @@ namespace BasicSnippetC {
 				intVal, doubleVal);
 		}
 		//</Snippet3>
-	
+
 		//<Snippet5>
 		public void ConvertDoubleDecimal(decimal decimalVal){
-			
+
 			double doubleVal;
-			
+
 			// Decimal to double conversion cannot overflow.
          doubleVal = System.Convert.ToDouble(decimalVal);
 			System.Console.WriteLine("{0} as a double is: {1}",
@@ -153,7 +153,7 @@ namespace BasicSnippetC {
 		//</Snippet5>
 
 		//<Snippet6>
-		public void CovertDoubleFloat(double doubleVal) {	
+		public void CovertDoubleFloat(double doubleVal) {
 			float floatVal = 0;
 
 			// Double to float conversion cannot overflow.
@@ -167,10 +167,10 @@ namespace BasicSnippetC {
 				floatVal, doubleVal);
 		}
 		//</Snippet6>
-		
+
 		//<Snippet7>
 		public void ConvertDoubleString(double doubleVal) {
-			
+
 			string	stringVal;
 
 			// A conversion from Double to string cannot overflow.
@@ -212,7 +212,7 @@ namespace BasicSnippetC {
 				System.Console.WriteLine(
 					"Overflow in long-to-char conversion.");
 			}
-			
+
 			// A conversion from Char to long cannot overflow.
 			longVal = System.Convert.ToInt64(charVal);
 			System.Console.WriteLine("{0} as an Int64 is {1}",
@@ -235,7 +235,7 @@ namespace BasicSnippetC {
 				System.Console.WriteLine(
 					"Overflow in long-to-byte conversion.");
 			}
-			
+
 			// A conversion from Byte to long cannot overflow.
 			longVal = System.Convert.ToInt64(byteVal);
 			System.Console.WriteLine("{0} as an Int64 is {1}",
@@ -247,7 +247,7 @@ namespace BasicSnippetC {
 		public void ConvertLongDecimal(long longVal) {
 
 			decimal	decimalVal;
-			
+
 			// Long to decimal conversion cannot overflow.
 			decimalVal = System.Convert.ToDecimal(longVal);
 			System.Console.WriteLine("{0} as a decimal is {1}",
@@ -270,12 +270,12 @@ namespace BasicSnippetC {
 		public void ConvertLongFloat(long longVal) {
 
 			float	floatVal;
-			
+
 			// A conversion from Long to float cannot overflow.
 			floatVal = System.Convert.ToSingle(longVal);
 			System.Console.WriteLine("{0} as a float is {1}",
 					longVal, floatVal);
-			
+
 			// A conversion from float to long can overflow.
 			try {
 				longVal = System.Convert.ToInt64(floatVal);
@@ -291,7 +291,7 @@ namespace BasicSnippetC {
 
 		//<Snippet12>
 		public void ConvertStringBoolean(string stringVal) {
-			
+
 			bool boolVal = false;
 
 			try {
@@ -321,7 +321,7 @@ namespace BasicSnippetC {
 		//<Snippet13>
 		public void ConvertStringByte(string stringVal) {
 			byte byteVal = 0;
-			
+
 			try {
 				byteVal = System.Convert.ToByte(stringVal);
 				System.Console.WriteLine("{0} as a byte is: {1}",
@@ -346,7 +346,7 @@ namespace BasicSnippetC {
 				byteVal, stringVal);
 		}
 		//</Snippet13>
-		
+
 		//<Snippet14>
 		public void ConvertStringChar(string stringVal) {
 			char charVal = 'a';
@@ -371,11 +371,11 @@ namespace BasicSnippetC {
 					stringVal);
 		}
 		//</Snippet14>
-		
+
 		//<Snippet15>
 		public void ConvertStringDecimal(string stringVal) {
 			decimal decimalVal = 0;
-			
+
 			try {
 				decimalVal = System.Convert.ToDecimal(stringVal);
 				System.Console.WriteLine(
@@ -398,13 +398,13 @@ namespace BasicSnippetC {
 			stringVal = System.Convert.ToString(decimalVal);
 			System.Console.WriteLine(
 				"The decimal as a string is {0}.", stringVal);
-		}	
+		}
 		//</Snippet15>
 
 		//<Snippet16>
 		public void ConvertStringFloat(string stringVal) {
 			float floatVal = 0;
-			
+
 			try {
 				floatVal = System.Convert.ToSingle(stringVal);
 				System.Console.WriteLine(
@@ -433,7 +433,7 @@ namespace BasicSnippetC {
 		//<Snippet17>
 		public void ConvertCharDecimal(char charVal) {
 			Decimal decimalVal = 0;
-			
+
 			// Char to decimal conversion is not supported and will always
 			// throw an InvalidCastException.
 			try {
@@ -441,8 +441,7 @@ namespace BasicSnippetC {
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine(
-					"Char-to-Decimal conversion is not supported " +
-					"by the .NET Framework.");
+					"Char-to-Decimal conversion is not supported by .NET.");
 			}
 
 			//Decimal to char conversion is also not supported.
@@ -451,8 +450,7 @@ namespace BasicSnippetC {
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine(
-					"Decimal-to-Char conversion is not supported " +
-					"by the .NET Framework.");
+					"Decimal-to-Char conversion is not supported by .NET.");
 			}
 		}
 		//</Snippet17>
@@ -513,7 +511,7 @@ namespace BasicSnippetC {
 
 			DateTime dateTime = new DateTime(year, month, day, hour,
 										minute, second, millisecond);
-			
+
 			bool boolVal;
 
 			// System.InvalidCastException is always thrown.
@@ -522,7 +520,7 @@ namespace BasicSnippetC {
 			}
 			catch (System.InvalidCastException) {
 				System.Console.WriteLine("Conversion from DateTime to " +
-					"Boolean is not supported by the .NET Framework.");
+					"Boolean is not supported by .NET.");
 			}
 		}
 		//</Snippet20>

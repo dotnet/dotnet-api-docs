@@ -1,10 +1,8 @@
 ﻿' System.CodeDom.Compiler.CompilerInfo
-' 
-' Requires .NET Framework version 2.0 or higher.
 '
 ' The following example displays compiler configuration settings.
 ' Command-line arguments are used to specify a compiler language,
-' file extension, or provider type.  For the given input, the 
+' file extension, or provider type.  For the given input, the
 ' example determines the corresponding code compiler settings.
 '
 ' <Snippet1>
@@ -39,16 +37,16 @@ Namespace CodeDomCompilerInfoSample
         Dim queryCommand As String = ""
         Dim queryArg As String = ""
         Dim iNumArguments As Integer = args.Length
-        
+
         ' Get input command-line arguments.
         If iNumArguments > 0 Then
             queryCommand = args(0).ToUpper(CultureInfo.InvariantCulture)
-            
+
             If iNumArguments > 1 Then
                 queryArg = args(1)
             End If
         End If
-        
+
         ' Determine which method to call.
         Console.WriteLine()
         Select Case queryCommand
@@ -62,13 +60,13 @@ Namespace CodeDomCompilerInfoSample
                 ' Display settings for the configured language provider.
                 DisplayCompilerInfoForConfigLanguage(queryArg)
             Case "ALL"
-                ' Display compiler information for all configured 
+                ' Display compiler information for all configured
                 ' language providers.
                 DisplayAllCompilerInfo()
             Case Else
-                ' There was no command-line argument, or the 
+                ' There was no command-line argument, or the
                 ' command-line argument was not recognized.
-                ' Display the C#, Visual Basic and JScript 
+                ' Display the C#, Visual Basic and JScript
                 ' compiler information.
                 DisplayCSharpCompilerInfo()
                 DisplayVBCompilerInfo()
@@ -76,14 +74,14 @@ Namespace CodeDomCompilerInfoSample
         End Select
 
       End Sub
-      
-      
+
+
       Shared Sub DisplayCSharpCompilerInfo()
-         
+
          ' <Snippet2>
          ' Get the provider for Microsoft.CSharp
             Dim provider = CodeDomProvider.CreateProvider("CSharp")
-         
+
          ' Display the C# language provider information.
          Console.WriteLine("CSharp provider is {0}", _
             provider.ToString())
@@ -91,17 +89,17 @@ Namespace CodeDomCompilerInfoSample
             provider.GetHashCode().ToString())
          Console.WriteLine("  Default file extension: {0}", _
             provider.FileExtension)
-         
+
          ' </Snippet2>
          Console.WriteLine()
       End Sub
-      
-      
+
+
       Shared Sub DisplayVBCompilerInfo()
          ' <Snippet3>
          ' Get the provider for Microsoft.VisualBasic
             Dim provider = CodeDomProvider.CreateProvider("VisualBasic")
-         
+
          ' Display the Visual Basic language provider information.
          Console.WriteLine("Visual Basic provider is {0}", _
             provider.ToString())
@@ -109,20 +107,20 @@ Namespace CodeDomCompilerInfoSample
             provider.GetHashCode().ToString())
          Console.WriteLine("  Default file extension: {0}", _
             provider.FileExtension)
-         
+
          ' </Snippet3>
          Console.WriteLine()
       End Sub
-      
-      
+
+
       Shared Sub DisplayJScriptCompilerInfo()
          ' <Snippet4>
          ' Get the provider for JScript.
          Dim provider As CodeDomProvider
-         
+
          Try
             provider = CodeDomProvider.CreateProvider("js")
-            
+
             ' Display the JScript language provider information.
             Console.WriteLine("JScript language provider is {0}", _
                 provider.ToString())
@@ -138,9 +136,9 @@ Namespace CodeDomCompilerInfoSample
          ' </Snippet4>
 
       End Sub
-      
+
       Shared Sub DisplayCompilerInfoUsingExtension(fileExtension As String)
-         ' <Snippet5> 
+         ' <Snippet5>
          If Not fileExtension.StartsWith(".") Then
             fileExtension = "." + fileExtension
          End If
@@ -149,24 +147,24 @@ Namespace CodeDomCompilerInfoSample
          If CodeDomProvider.IsDefinedExtension(fileExtension) Then
             Dim provider As CodeDomProvider
             Dim language As String = CodeDomProvider.GetLanguageFromExtension(fileExtension)
-            
+
             Console.WriteLine("The language ""{0}"" is associated with file extension ""{1}""", _
                 language, fileExtension)
             Console.WriteLine()
-            
+
             ' Check for a corresponding language provider.
             If CodeDomProvider.IsDefinedLanguage(language) Then
                provider = CodeDomProvider.CreateProvider(language)
-               
+
                ' Display information about this language provider.
                Console.WriteLine("Language provider:  {0}", _
                   provider.ToString())
                Console.WriteLine()
-               
+
                ' Get the compiler settings for this language.
                Dim langCompilerInfo As CompilerInfo = CodeDomProvider.GetCompilerInfo(language)
                Dim langCompilerConfig As CompilerParameters = langCompilerInfo.CreateDefaultCompilerParameters()
-               
+
                Console.WriteLine("  Compiler options:        {0}", _
                    langCompilerConfig.CompilerOptions)
                Console.WriteLine("  Compiler warning level:  {0}", _
@@ -176,18 +174,18 @@ Namespace CodeDomCompilerInfoSample
             ' Tell the user that the language provider was not found.
             Console.WriteLine("There is no language provider associated with input file extension ""{0}"".", fileExtension)
          End If
-         ' </Snippet5> 
+         ' </Snippet5>
       End Sub
-     
-      
+
+
       Shared Sub DisplayCompilerInfoForLanguage(language As String)
-         ' <Snippet6> 
+         ' <Snippet6>
          Dim provider As CodeDomProvider
-         
-         ' Check for a provider corresponding to the input language.  
+
+         ' Check for a provider corresponding to the input language.
          If CodeDomProvider.IsDefinedLanguage(language) Then
             provider = CodeDomProvider.CreateProvider(language)
-            
+
             ' Display information about this language provider.
             Console.WriteLine("Language provider:  {0}", _
                 provider.ToString())
@@ -195,11 +193,11 @@ Namespace CodeDomCompilerInfoSample
             Console.WriteLine("  Default file extension:  {0}", _
                 provider.FileExtension)
             Console.WriteLine()
-            
+
             ' Get the compiler settings for this language.
             Dim langCompilerInfo As CompilerInfo = CodeDomProvider.GetCompilerInfo(language)
             Dim langCompilerConfig As CompilerParameters = langCompilerInfo.CreateDefaultCompilerParameters()
-            
+
             Console.WriteLine("  Compiler options:        {0}", _
                 langCompilerConfig.CompilerOptions)
             Console.WriteLine("  Compiler warning level:  {0}", _
@@ -209,20 +207,20 @@ Namespace CodeDomCompilerInfoSample
             Console.WriteLine("There is no provider configured for input language ""{0}"".", _
                 language)
          End If
-         ' </Snippet6> 
+         ' </Snippet6>
 
       End Sub
-      
+
       Shared Sub DisplayCompilerInfoForConfigLanguage(configLanguage As String)
          ' <Snippet7>
          Dim info As CompilerInfo = CodeDomProvider.GetCompilerInfo(configLanguage)
-         
+
          ' Check whether there is a provider configured for this language.
          If info.IsCodeDomProviderTypeValid Then
             ' Get a provider instance using the configured type information.
             Dim provider As CodeDomProvider
             provider = CType(Activator.CreateInstance(info.CodeDomProviderType), CodeDomProvider)
-            
+
             ' Display information about this language provider.
             Console.WriteLine("Language provider:  {0}", _
                 provider.ToString())
@@ -230,10 +228,10 @@ Namespace CodeDomCompilerInfoSample
             Console.WriteLine("  Default file extension:  {0}", _
                 provider.FileExtension)
             Console.WriteLine()
-            
+
             ' Get the compiler settings for this language.
             Dim langCompilerConfig As CompilerParameters = info.CreateDefaultCompilerParameters()
-            
+
             Console.WriteLine("  Compiler options:        {0}", _
                 langCompilerConfig.CompilerOptions)
             Console.WriteLine("  Compiler warning level:  {0}", _
@@ -244,10 +242,10 @@ Namespace CodeDomCompilerInfoSample
          End If
          ' </Snippet7>
       End Sub
-      
-      
+
+
       Shared Sub DisplayAllCompilerInfo()
-         ' <Snippet8> 
+         ' <Snippet8>
          Dim allCompilerInfo As CompilerInfo() = CodeDomProvider.GetAllCompilerInfo()
          Dim info As CompilerInfo
          For Each info In  allCompilerInfo
@@ -256,27 +254,27 @@ Namespace CodeDomCompilerInfoSample
             Dim defaultExtension As String
 
             Dim provider As CodeDomProvider = info.CreateProvider()
-            
+
             ' Display information about this configured provider.
             Console.WriteLine("Language provider:  {0}", _
                 provider.ToString())
             Console.WriteLine()
-            
+
             Console.WriteLine("  Supported file extension(s):")
             Dim extension As String
             For Each extension In info.GetExtensions()
                Console.WriteLine("    {0}", extension)
             Next extension
-            
+
             defaultExtension = provider.FileExtension
             If Not defaultExtension.StartsWith(".") Then
                defaultExtension = "." + defaultExtension
             End If
- 
+
             Console.WriteLine("  Default file extension:  {0}", _
               defaultExtension)
             Console.WriteLine()
-            
+
             Console.WriteLine("  Supported language(s):")
             Dim language As String
             For Each language In  info.GetLanguages()
@@ -286,17 +284,17 @@ Namespace CodeDomCompilerInfoSample
             Console.WriteLine("  Default language:        {0}", _
                defaultLanguage)
             Console.WriteLine()
-            
+
             ' Get the compiler settings for this provider.
             Dim langCompilerConfig As CompilerParameters = info.CreateDefaultCompilerParameters()
-            
+
             Console.WriteLine("  Compiler options:        {0}", _
                 langCompilerConfig.CompilerOptions)
             Console.WriteLine("  Compiler warning level:  {0}", _
                 langCompilerConfig.WarningLevel)
             Console.WriteLine()
          Next info
-         ' </Snippet8> 
+         ' </Snippet8>
       End Sub
 
    End Class

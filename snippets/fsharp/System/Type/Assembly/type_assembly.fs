@@ -8,9 +8,12 @@ printfn $"Assembly full name:\n   {objType.Assembly.FullName}."
 
 // Print the assembly qualified name.
 printfn $"Assembly qualified name:\n   {objType.AssemblyQualifiedName}."
-// The example displays the following output if run under the .NET Framework 4.5:
+
+// The example displays output similar to the following:
+//
 //    Assembly full name:
-//       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089.
+//       System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea7798e.
 //    Assembly qualified name:
-//       System.Array, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089.
+//       System.Array, System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea779
+
 // </Snippet1>
