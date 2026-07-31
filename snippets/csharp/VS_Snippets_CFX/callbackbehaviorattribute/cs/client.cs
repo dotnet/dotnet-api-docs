@@ -21,7 +21,7 @@ namespace Microsoft.WCF.Documentation
     public void Run()
     {
       System.ServiceModel.Channels.Binding binding = new CustomBinding();
-      EndpointAddress address = new EndpointAddress("http://localhost:8080/DuplexHello");
+      EndpointAddress address = new("http://localhost:8080/DuplexHello");
       SampleDuplexHelloClient wcfClient
         = new SampleDuplexHelloClient(new InstanceContext(this), binding, address);
       try

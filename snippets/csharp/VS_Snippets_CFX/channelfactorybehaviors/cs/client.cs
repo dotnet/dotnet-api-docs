@@ -16,7 +16,7 @@ public class Client
       WSHttpBinding binding = new WSHttpBinding(SecurityMode.Message);
       EndpointAddress address = new EndpointAddress("http://localhost:8080/ServiceMetadata/SampleService");
       ChannelFactory<ISampleServiceChannel> factory
-        = new ChannelFactory<ISampleServiceChannel>(binding, address);
+        = new(binding, address);
 
       // Add the client side behavior programmatically to all created channels.
       factory.Endpoint.EndpointBehaviors.Add(new EndpointBehaviorMessageInspector());
