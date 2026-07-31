@@ -1,51 +1,46 @@
 ﻿using System;
-using System.Configuration;
-using System.Collections.Generic;
-using System.ServiceModel;
-using System.Text;
+using CoreWCF;
+using CoreWCF.Configuration;
+using CoreWCF.Description;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.WCF.Documentation
 {
   class HostApplication
   {
 
-    static void Main()
+    static void Main(string[] args)
     {
       HostApplication app = new HostApplication();
-      app.Run();
+      app.Run(args);
     }
 
-    private void Run()
+    private void Run(string[] args)
     {
-      // Create a ServiceHost for the service type and use the base address from configuration.
-      using (ServiceHost serviceHost = new ServiceHost(typeof(SampleService)))
+      WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+      builder.WebHost.UseUrls("http://localhost:8080");
+      builder.Services.AddServiceModelServices();
+      builder.Services.AddServiceModelMetadata();
+
+      WebApplication app = builder.Build();
+
+      app.UseServiceModel(serviceBuilder =>
       {
-        try
-        {
-            // Open the ServiceHostBase to create listeners and start listening for messages.
-            serviceHost.Open();
+        serviceBuilder.AddService<SampleService>();
+        serviceBuilder.AddServiceEndpoint<SampleService, ISampleService>(
+          new WSHttpBinding(SecurityMode.None),
+          "/SampleService");
 
-            // The service can now be accessed.
-            Console.WriteLine("The service is ready.");
-            Console.WriteLine("Press <ENTER> to terminate service.");
-            Console.ReadLine();
+        ServiceMetadataBehavior serviceMetadataBehavior =
+          app.Services.GetRequiredService<ServiceMetadataBehavior>();
+        serviceMetadataBehavior.HttpGetEnabled = true;
+      });
 
-            // Close the ServiceHostBase to shutdown the service.
-            serviceHost.Close();
-        }
-        catch (TimeoutException timeProblem)
-        {
-          Console.WriteLine("The service operation timed out. " + timeProblem.Message);
-          Console.ReadLine();
-          serviceHost.Abort();
-        }
-        catch (CommunicationException commProblem)
-        {
-          Console.WriteLine("There was a communication problem. " + commProblem.Message);
-          Console.ReadLine();
-          serviceHost.Abort();
-        }
-      }
+      Console.WriteLine("The service is ready.");
+      Console.WriteLine("Press Ctrl+C to terminate service.");
+      app.Run();
     }
   }
 }

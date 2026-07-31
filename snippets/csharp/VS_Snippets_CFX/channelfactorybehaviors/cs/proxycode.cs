@@ -75,20 +75,6 @@ public partial class SampleServiceClient : System.ServiceModel.ClientBase<ISampl
     {
     }
 
-    public SampleServiceClient(string endpointConfigurationName) :
-            base(endpointConfigurationName)
-    {
-    }
-
-    public SampleServiceClient(string endpointConfigurationName, string remoteAddress) :
-            base(endpointConfigurationName, remoteAddress)
-    {
-    }
-
-    public SampleServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) :
-            base(endpointConfigurationName, remoteAddress)
-    {
-    }
 
     public SampleServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
             base(binding, remoteAddress)

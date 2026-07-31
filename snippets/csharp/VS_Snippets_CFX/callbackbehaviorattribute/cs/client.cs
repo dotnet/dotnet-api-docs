@@ -7,9 +7,7 @@ using System.Threading;
 namespace Microsoft.WCF.Documentation
 {
   [CallbackBehaviorAttribute(
-   IncludeExceptionDetailInFaults= true,
-    UseSynchronizationContext=true,
-    ValidateMustUnderstand=true
+    UseSynchronizationContext=true
   )]
   public class Client : SampleDuplexHelloCallback
   {
@@ -22,9 +20,10 @@ namespace Microsoft.WCF.Documentation
 
     public void Run()
     {
-      // Picks up configuration from the configuration file.
+      System.ServiceModel.Channels.Binding binding = new CustomBinding();
+      EndpointAddress address = new EndpointAddress("http://localhost:8080/DuplexHello");
       SampleDuplexHelloClient wcfClient
-        = new SampleDuplexHelloClient(new InstanceContext(this), "WSDualHttpBinding_SampleDuplexHello");
+        = new SampleDuplexHelloClient(new InstanceContext(this), binding, address);
       try
       {
         Console.ForegroundColor = ConsoleColor.White;

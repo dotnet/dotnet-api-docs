@@ -3,14 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using System.ServiceModel.Configuration;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using System.Text;
 
 namespace Microsoft.WCF.Documentation
 {
-  class EndpointBehaviorMessageInspector : BehaviorExtensionElement, IEndpointBehavior, IDispatchMessageInspector, IClientMessageInspector
+  class EndpointBehaviorMessageInspector : IEndpointBehavior, IClientMessageInspector
   {
     //<snippet4>
     // IEndpointBehavior Members
@@ -21,12 +20,12 @@ namespace Microsoft.WCF.Documentation
 
     public void ApplyClientBehavior(ServiceEndpoint serviceEndpoint, ClientRuntime behavior)
     {
-      behavior.MessageInspectors.Add(new EndpointBehaviorMessageInspector());
+      behavior.ClientMessageInspectors.Add(new EndpointBehaviorMessageInspector());
     }
 
     public void ApplyDispatchBehavior(ServiceEndpoint serviceEndpoint, EndpointDispatcher endpointDispatcher)
     {
-      endpointDispatcher.DispatchRuntime.MessageInspectors.Add(new EndpointBehaviorMessageInspector());
+      return;
     }
 
     public void Validate(ServiceEndpoint serviceEndpoint)
@@ -36,31 +35,15 @@ namespace Microsoft.WCF.Documentation
     //</snippet4>
 
     //<snippet3>
-    // BehaviorExtensionElement members
-    public override Type BehaviorType
-    {
-      get { return typeof(EndpointBehaviorMessageInspector); }
-    }
-
-    protected override object CreateBehavior()
+    // Sample helper for creating the behavior instance in modern .NET builds.
+    public static EndpointBehaviorMessageInspector CreateBehavior()
     {
       return new EndpointBehaviorMessageInspector();
     }
     //</snippet3>
 
     //<snippet2>
-    // IDispatchMessageInspector Members
-
-    public object AfterReceiveRequest(ref System.ServiceModel.Channels.Message request, IClientChannel channel, InstanceContext instanceContext)
-    {
-      Console.WriteLine("AfterReceiveRequest called.");
-      return null;
-    }
-
-    public void BeforeSendReply(ref System.ServiceModel.Channels.Message reply, object correlationState)
-    {
-      Console.WriteLine("BeforeSendReply called.");
-    }
+    // IClientMessageInspector members
     //</snippet2>
 
     #region IClientMessageInspector Members

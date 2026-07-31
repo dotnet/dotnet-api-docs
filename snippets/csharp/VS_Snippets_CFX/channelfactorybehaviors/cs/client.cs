@@ -13,12 +13,13 @@ public class Client
   {
     try
     {
-      // Picks up configuration from the config file.
+      WSHttpBinding binding = new WSHttpBinding(SecurityMode.Message);
+      EndpointAddress address = new EndpointAddress("http://localhost:8080/ServiceMetadata/SampleService");
       ChannelFactory<ISampleServiceChannel> factory
-        = new ChannelFactory<ISampleServiceChannel>("WSHttpBinding_ISampleService");
+        = new ChannelFactory<ISampleServiceChannel>(binding, address);
 
       // Add the client side behavior programmatically to all created channels.
-      factory.Endpoint.Behaviors.Add(new EndpointBehaviorMessageInspector());
+      factory.Endpoint.EndpointBehaviors.Add(new EndpointBehaviorMessageInspector());
 
       ISampleServiceChannel wcfClientChannel = factory.CreateChannel();
 
