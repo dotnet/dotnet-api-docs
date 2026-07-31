@@ -40,7 +40,7 @@ public class Example
         FrameworkName actualVersion = new($".NET, Version={Environment.Version}");
 
         Console.WriteLine($"Given Version: {version}");
-        Console.WriteLine($"Actual Version {actualVersion}");
+        Console.WriteLine($"Actual Version: {actualVersion}");
         if (version != actualVersion)
             Console.WriteLine("The versions are different.");
         else

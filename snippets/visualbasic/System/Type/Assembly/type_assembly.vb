@@ -16,6 +16,6 @@ End Class
 '    Assembly full name:
 '       System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea7798e.
 '    Assembly qualified name:
-       System.Array, System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea7798e.
+'       System.Array, System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea7798e.
 
 ' </Snippet1>

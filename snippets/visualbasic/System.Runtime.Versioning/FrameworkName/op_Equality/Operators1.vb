@@ -39,7 +39,7 @@ Module Example
       Dim actualVersion As New FrameworkName($".NET, Version={Environment.Version}")
 
       Console.WriteLine($"Given Version: {version}")
-      Console.WriteLine($"Actual Version {actualVersion}")
+      Console.WriteLine($"Actual Version: {actualVersion}")
       If version <> actualVersion Then
          Console.WriteLine("The versions are different.")
       Else

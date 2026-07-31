@@ -14,6 +14,6 @@ printfn $"Assembly qualified name:\n   {objType.AssemblyQualifiedName}."
 //    Assembly full name:
 //       System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea7798e.
 //    Assembly qualified name:
-//       System.Array, System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea779
+//       System.Array, System.Private.CoreLib, Version = 10.0.0.0, Culture = neutral, PublicKeyToken = 7cec85d7bea7798e.
 
 // </Snippet1>
