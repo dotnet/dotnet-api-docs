@@ -6,14 +6,12 @@ using System.Globalization;
 
 public class SamplesCultureInfo
 {
-
    public static void Main()
    {
-
       // Prints the header.
       Console.WriteLine("CULTURE                                              SPECIFIC CULTURE");
 
-      // Determines the specific culture associated with each culture in the .NET Framework.
+      // Determines the specific culture associated with each culture in .NET.
       foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.AllCultures))
       {
          Console.Write("{0,-12} {1,-40}", ci.Name, ci.EnglishName);

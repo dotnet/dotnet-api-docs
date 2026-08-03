@@ -113,7 +113,7 @@ Public Class SimpleService
         SetServiceStatus(handle, myServiceStatus)
         System.Diagnostics.EventLog.WriteEntry("SimpleService", "Starting SimpleService")
 
-        ' Get arguments from the ImagePath string value for the service's registry 
+        ' Get arguments from the ImagePath string value for the service's registry
         ' key (HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SimpleService).
         ' These arguments are not used by this sample, this code is only intended to
         ' demonstrate how to obtain the arguments.
@@ -143,7 +143,6 @@ Public Class SimpleService
     ' <Snippet4>
     ' Stop this service.
     Protected Overrides Sub OnStop()
-        ' New in .NET Framework version 2.0.
         Me.RequestAdditionalTime(4000)
         ' Signal the worker thread to exit.
         If Not (workerThread Is Nothing) AndAlso workerThread.IsAlive Then
@@ -299,8 +298,8 @@ Public Class SimpleService
     End Sub
 
     '</Snippet9>
-    ' Define a simple method that runs as the worker thread for 
-    ' the service.  
+    ' Define a simple method that runs as the worker thread for
+    ' the service.
     Public Sub ServiceWorkerMethod()
 #If LOGEVENTS Then
         System.Diagnostics.EventLog.WriteEntry("SimpleService.WorkerThread", DateTime.Now.ToLongTimeString() + " - Starting the service worker thread.")
@@ -319,7 +318,7 @@ Public Class SimpleService
         Catch
             ' Another thread has signalled that this worker
             ' thread must terminate.  Typically, this occurs when
-            ' the main service thread receives a service stop 
+            ' the main service thread receives a service stop
             ' command.
             ' Write a trace line indicating that the worker thread
             ' is exiting.  Notice that this simple thread does

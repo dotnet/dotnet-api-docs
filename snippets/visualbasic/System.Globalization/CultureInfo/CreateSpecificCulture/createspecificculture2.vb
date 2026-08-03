@@ -11,11 +11,11 @@ Public Class Example
       ' Display the header.
       Console.WriteLine("{0,-53}{1}", "CULTURE", "SPECIFIC CULTURE")
 
-      ' Get each neutral culture in the .NET Framework.
+      ' Get each neutral culture in .NET.
       Dim cultures() As CultureInfo = CultureInfo.GetCultures(CultureTypes.NeutralCultures)
       ' Sort the returned array by name.
       Array.Sort(Of CultureInfo)(cultures, New NamePropertyComparer(Of CultureInfo)())
-      
+
       ' Determine the specific culture associated with each neutral culture.
       For Each culture As CultureInfo In cultures
          Console.Write("{0,-12} {1,-40}", culture.Name, culture.EnglishName)
@@ -24,7 +24,7 @@ Public Class Example
          Catch e As ArgumentException
             Console.WriteLine("(no associated specific culture)")
          End Try
-      Next 
+      Next
    End Sub
 End Class
 
@@ -37,15 +37,15 @@ Public Class NamePropertyComparer(Of T) : Implements IComparer(Of T)
          Else
             Return -1
          End If
-      End If 
+      End If
       Dim pX As PropertyInfo = x.GetType().GetProperty("Name")
-      Dim pY As PropertyInfo = y.GetType().GetProperty("Name")             
+      Dim pY As PropertyInfo = y.GetType().GetProperty("Name")
       Return String.Compare(CStr(pX.GetValue(x, Nothing)), CStr(pY.GetValue(y, Nothing)))
    End Function
 End Class
 ' The example displays the following output on a Windows system.  This output has been cropped for brevity.
 '    CULTURE                                              SPECIFIC CULTURE
-               Invariant Language (Invariant Country)  
+               Invariant Language (Invariant Country)
 '    aa           Afar                                    aa-ET
 '    af           Afrikaans                               af-ZA
 '    agq          Aghem                                   agq-CM

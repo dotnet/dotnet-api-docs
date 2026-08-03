@@ -17,9 +17,9 @@ Module PrecisionList3
         End If
     End Sub
 
-    ' The example displays the following output on .NET:
+    ' The example displays the following output:
+    
     '      The sum of the values (27.650002) does not equal the total (27.65).
-    ' The example displays the following output on .NET Framework:
-    '      The sum of the values (27.65) does not equal the total (27.65).
+
     ' </Snippet6>
 End Module

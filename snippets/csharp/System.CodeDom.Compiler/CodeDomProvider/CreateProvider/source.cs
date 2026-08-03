@@ -1,7 +1,5 @@
 ﻿// System.CodeDom.Compiler.CompilerInfo
 //
-// Requires .NET Framework version 2.0 or higher.
-//
 // The following example displays compiler configuration settings.
 // Command-line arguments are used to specify a compiler language,
 // file extension, or provider type.  For the given input, the
