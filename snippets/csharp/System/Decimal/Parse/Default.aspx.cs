@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Globalization;
-using System.Web.UI.WebControls;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default2
 {
-    // controls on web form
-    TextBox inputNumber;
-    Label outputNumber;
+    private sealed class TextBox
+    {
+        public string Text { get; set; } = String.Empty;
+    }
+
+    private sealed class Label
+    {
+        public string Text { get; set; } = String.Empty;
+    }
+
+    private sealed class RequestContext
+    {
+        public string[] UserLanguages { get; } = [CultureInfo.CurrentCulture.Name];
+    }
+
+    private readonly TextBox inputNumber = new();
+    private readonly Label outputNumber = new();
+    private RequestContext Request { get; } = new();
 
     // <Snippet1>
     protected void OkToSingle_Click(object sender, EventArgs e)
