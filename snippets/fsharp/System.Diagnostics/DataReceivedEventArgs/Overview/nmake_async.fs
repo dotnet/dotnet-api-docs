@@ -1,7 +1,4 @@
 ﻿module nmakeasync
-// System.Diagnostics
-//
-// Requires .NET Framework version 1.2 or higher.
 
 // Define the namespaces used by this sample.
 open System

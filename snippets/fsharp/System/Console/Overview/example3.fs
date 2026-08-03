@@ -117,7 +117,6 @@ let main args =
             | None -> ()
             | Some parsedArgs ->
                 if parsedArgs.setOutputEncodingToUnicode then
-                    // This won't work before .NET Framework 4.5.
                     try
                         // Set encoding using endianness of this system.
                         // We're interested in displaying individual Char objects, so
