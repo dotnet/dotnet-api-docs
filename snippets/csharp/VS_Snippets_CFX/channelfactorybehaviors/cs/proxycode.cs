@@ -8,16 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Microsoft.WCF.Documentation;
+
 [assembly: System.Runtime.Serialization.ContractNamespaceAttribute("http://microsoft.wcf.documentation", ClrNamespace="microsoft.wcf.documentation")]
 
-namespace microsoft.wcf.documentation
+namespace Microsoft.WCF.Documentation
 {
     using System.Runtime.Serialization;
 
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class SampleFault : object, System.Runtime.Serialization.IExtensibleDataObject
+    public partial class SampleFault : object, IExtensibleDataObject
     {
 
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -51,14 +52,12 @@ namespace microsoft.wcf.documentation
     }
 }
 
-
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
 [System.ServiceModel.ServiceContractAttribute(Namespace="http://microsoft.wcf.documentation")]
 public interface ISampleService
 {
-
     [System.ServiceModel.OperationContractAttribute(Action="http://microsoft.wcf.documentation/ISampleService/SampleMethod", ReplyAction="http://microsoft.wcf.documentation/ISampleService/SampleMethodResponse")]
-    [System.ServiceModel.FaultContractAttribute(typeof(microsoft.wcf.documentation.SampleFault), Action="http://microsoft.wcf.documentation/ISampleService/SampleMethodSampleFaultFault")]
+    [System.ServiceModel.FaultContractAttribute(typeof(SampleFault), Action="http://microsoft.wcf.documentation/ISampleService/SampleMethodSampleFaultFault")]
     string SampleMethod(string msg);
 }
 
@@ -70,11 +69,9 @@ public interface ISampleServiceChannel : ISampleService, System.ServiceModel.ICl
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
 public partial class SampleServiceClient : System.ServiceModel.ClientBase<ISampleService>, ISampleService
 {
-
     public SampleServiceClient()
     {
     }
-
 
     public SampleServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
             base(binding, remoteAddress)

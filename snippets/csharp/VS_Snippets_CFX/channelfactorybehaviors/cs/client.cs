@@ -1,9 +1,5 @@
 ﻿using System;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
-
-using microsoft.wcf.documentation;
-// for the client behavior
 using Microsoft.WCF.Documentation;
 
 // <snippet10>
@@ -13,8 +9,8 @@ public class Client
   {
     try
     {
-      WSHttpBinding binding = new WSHttpBinding(SecurityMode.Message);
-      EndpointAddress address = new EndpointAddress("http://localhost:8080/ServiceMetadata/SampleService");
+      WSHttpBinding binding = new(SecurityMode.Message);
+      EndpointAddress address = new("http://localhost:8080/ServiceMetadata/SampleService");
       ChannelFactory<ISampleServiceChannel> factory
         = new(binding, address);
 
