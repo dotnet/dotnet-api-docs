@@ -1436,6 +1436,8 @@ For `uriString`, an IPv6 address in string form must be enclosed within brackets
 ## Remarks
  For IPv6 addresses, the brackets ([]) are removed and the <xref:System.Net.IPAddress.ScopeId> property is set, if one was specified when this instance was constructed.
 
+ <xref:System.Uri.DnsSafeHost%2A> is a legacy property whose behavior depends on configuration settings in .NET Framework apps. For new code, prefer <xref:System.Uri.IdnHost%2A>, which is configuration-independent and produces a value suitable for DNS resolution. See <xref:System.Uri.Host%2A> and <xref:System.Uri.IdnHost%2A> for guidance on choosing a host property.
+
 If you used an escaped string to construct this instance (for example, `"http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm"`), then DnsSafeHost returns an escaped string. Unescape any escaped string returned from `DnsSafeHost` before using that string for DNS resolution (see the Example). If you used an invalid unescaped string to construct this instance (for example, "http://[fe80::200:39ff:fe36:1a2d%4]/temp/example.htm"), then DnsSafeHost returns an unescaped string.
 
 ## Examples
@@ -2293,12 +2295,24 @@ The following examples show a URI and the results of calling <xref:System.Uri.Ge
 ## Remarks
  Unlike the <xref:System.Uri.Authority> property, this property value does not include the port number.
 
+ The value returned by this property depends on the host type:
+
+ - For **DNS host names** (including international domain names): Returns the escaped input. Non-ASCII characters are returned as-is and aren't punycode encoded.
+ - For **IPv6 addresses**: Returns the address enclosed in square brackets (for example, `[::1]`), but doesn't include the zone ID (scope) even if one was specified in the original URI.
+ - For **IPv4 addresses**: Returns the dotted-decimal notation (for example, `192.168.1.1`).
+
+ For DNS resolution or other lower-level networking scenarios, use <xref:System.Uri.IdnHost%2A> instead, which returns a punycode-encoded form for valid international domain names and includes the zone ID (without brackets) for IPv6 addresses. Use <xref:System.Uri.Host%2A> when you want the host as it appears in the URI (for example, for display or comparison).
+
 ## Examples
  The following example writes the host name (`www.contoso.com`) of the server to the console.
 
  :::code language="csharp" source="~/snippets/csharp/System/Uri/Host/source.cs" id="Snippet1":::
  :::code language="fsharp" source="~/snippets/fsharp/System/Uri/Host/source.fs" id="Snippet1":::
  :::code language="vb" source="~/snippets/visualbasic/System/Uri/Host/source.vb" id="Snippet1":::
+
+ The following example shows how <xref:System.Uri.Host%2A> and <xref:System.Uri.IdnHost%2A> differ across DNS, IDN, IPv4, and IPv6 inputs:
+
+ :::code language="csharp" source="~/snippets/csharp/System/Uri/HostComparison/source.cs" id="SnippetHostComparison":::
 
  ]]></format>
         </remarks>
@@ -2390,9 +2404,20 @@ The following examples show a URI and the results of calling <xref:System.Uri.Ge
 ## Remarks
  This property is provided for the use of lower-level networking protocols that require the domain name in Punycode form. If your code does not require that specific format, use <xref:System.Uri.Host*> for the hostname.
 
-IdnHost is provided as the preferred alternative to using the deprecated <xref:System.Uri.DnsSafeHost> property, because <xref:System.Uri.IdnHost*> is guaranteed to always be DNS safe.
+ The value returned by this property depends on the host type:
+
+ - For **DNS host names**: For valid international domain names, non-ASCII characters are punycode encoded (for example, `münchen.de` becomes `xn--mnchen-3ya.de`). Hostnames that aren't valid IDNs might be returned as-is and include non-ASCII characters.
+ - For **IPv6 addresses**: Returns the address without the surrounding brackets, and includes the zone ID (scope) if one was specified (for example, `::1` or `fe80::1%18`).
+ - For **IPv4 addresses**: Returns the dotted-decimal notation (for example, `192.168.1.1`).
+
+ <xref:System.Uri.IdnHost%2A> is the preferred alternative to the legacy <xref:System.Uri.DnsSafeHost%2A> property, because its behavior doesn't depend on *app.config* settings and it's designed to produce a value suitable for DNS resolution. Note that for IPv6 results that include a zone ID, callers might still need to strip the zone ID before passing the value to APIs that don't accept it.
 
  If you used an escaped string to construct this instance (for example, `"http://[fe80::200:39ff:fe36:1a2d%254]/temp/example.htm"`), then IdnHost returns an escaped string. You should unescape any escaped string returned from IdnHost before using that string for DNS resolution. Be aware that if you used an invalid unescaped string to construct this instance (for example, "http://[fe80::200:39ff:fe36:1a2d%4]/temp/example.htm"), then IdnHost returns an unescaped string.
+
+## Examples
+ The following example shows how <xref:System.Uri.Host%2A> and <xref:System.Uri.IdnHost%2A> differ across DNS, IDN, IPv4, and IPv6 inputs:
+
+ :::code language="csharp" source="~/snippets/csharp/System/Uri/HostComparison/source.cs" id="SnippetHostComparison":::
 
  ]]></format>
         </remarks>
