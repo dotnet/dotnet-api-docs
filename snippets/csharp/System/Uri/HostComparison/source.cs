@@ -20,7 +20,7 @@ public class UriHostComparison
         Uri uri2 = new Uri("http://münchen.de/path");
         Console.WriteLine($"  Host:        {uri2.Host}");        // münchen.de (original)
         Console.WriteLine($"  IdnHost:     {uri2.IdnHost}");     // xn--mnchen-3ya.de (punycode)
-        Console.WriteLine($"  DnsSafeHost: {uri2.DnsSafeHost}"); // münchen.de
+        Console.WriteLine($"  DnsSafeHost: {uri2.DnsSafeHost}"); // münchen.de or xn--mnchen-3ya.de, depending on configuration.
         Console.WriteLine();
 
         // Example 3: International domain name already in punycode (encoded) form.
