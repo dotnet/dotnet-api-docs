@@ -1,7 +1,7 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class FormatExample2
 {
    public enum TemperatureScale
    { Celsius, Fahrenheit, Kelvin }

@@ -160,6 +160,7 @@ namespace ServiceArchitectureExample
         // The current state of the control reflecting whether it has 
         // obtained or provided a text service.
         private TextServiceState state_;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public TextServiceState state
         {
             get

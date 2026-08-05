@@ -9,6 +9,7 @@ public class Form1 : Form
     protected Image image1;
     // <Snippet1>
     [Description("The image associated with the control"), Category("Appearance")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public Image MyImage
     {
         get =>

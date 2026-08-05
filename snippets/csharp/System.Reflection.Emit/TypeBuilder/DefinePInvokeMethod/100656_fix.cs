@@ -11,14 +11,14 @@ public class Example
     {
         // Create the AssemblyBuilder.
         AssemblyName asmName = new AssemblyName("PInvokeTest");
-        AssemblyBuilder dynamicAsm = AppDomain.CurrentDomain.DefineDynamicAssembly(
+        AssemblyBuilder dynamicAsm = AssemblyBuilder.DefineDynamicAssembly(
             asmName,
-            AssemblyBuilderAccess.RunAndSave
+            AssemblyBuilderAccess.Run
         );
 
         // Create the module.
         ModuleBuilder dynamicMod =
-            dynamicAsm.DefineDynamicModule(asmName.Name, asmName.Name + ".dll");
+            dynamicAsm.DefineDynamicModule(asmName.Name);
 
         // Create the TypeBuilder for the class that will contain the
         // signature for the PInvoke call.
@@ -54,7 +54,6 @@ public class Example
 
         // Produce the .dll file.
         Console.WriteLine("Saving: " + asmName.Name + ".dll");
-        dynamicAsm.Save(asmName.Name + ".dll");
     }
 }
 

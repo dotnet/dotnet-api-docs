@@ -21,9 +21,6 @@ namespace SDKSample
             "http://schemas.microsoft.com/opc/2006/06/sample/document";
         private static string _sampleResourceRelationshipType =
             "http://schemas.microsoft.com/xps/2005/06/required-resource";
-        private static string _digitalSignatureUri =
-            "/package/services/digital-signature/_rels/origin.psdsor.rels";
-
         //  ------------------------------ Main -------------------------------
         public static void Main()
         {

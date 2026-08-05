@@ -11,13 +11,13 @@ public class Example
       // Display the header.
       Console.WriteLine("{0,-53}{1}", "CULTURE", "SPECIFIC CULTURE");
 
-      // Get each neutral culture in the .NET Framework.
+      // Get each neutral culture in .NET.
       CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.NeutralCultures);
       // Sort the returned array by name.
       Array.Sort<CultureInfo>(cultures, new NamePropertyComparer<CultureInfo>());
 
       // Determine the specific culture associated with each neutral culture.
-      foreach (var culture in cultures)
+      foreach (CultureInfo culture in cultures)
       {
          Console.Write("{0,-12} {1,-40}", culture.Name, culture.EnglishName);
          try {
@@ -45,7 +45,9 @@ public class NamePropertyComparer<T> : IComparer<T>
       return String.Compare((string) pX.GetValue(x, null), (string) pY.GetValue(y, null));
    }
 }
-// The example displays the following output on a Windows system.  This output has been cropped for brevity.
+
+// The example displays the following output on a Windows system. This output has been cropped for brevity.
+//
 //    CULTURE                                              SPECIFIC CULTURE
 //                 Invariant Language (Invariant Country)
 //    aa           Afar                                    aa-ET

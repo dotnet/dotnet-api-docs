@@ -1,15 +1,15 @@
 ﻿using System;
 
-public class Example
+public class FormatExample7
 {
    public static void Main()
    {
       // <Snippet7>
       DateTime birthdate = new DateTime(1993, 7, 28);
-      DateTime[] dates = { new DateTime(1993, 8, 16), 
-                           new DateTime(1994, 7, 28), 
-                           new DateTime(2000, 10, 16), 
-                           new DateTime(2003, 7, 27), 
+      DateTime[] dates = { new DateTime(1993, 8, 16),
+                           new DateTime(1994, 7, 28),
+                           new DateTime(2000, 10, 16),
+                           new DateTime(2003, 7, 27),
                            new DateTime(2007, 5, 27) };
 
       foreach (DateTime dateValue in dates)
@@ -22,11 +22,11 @@ public class Example
          if (birthdate.AddYears(years) <= dateValue) {
             output = String.Format("You are now {0} years old.", years);
             Console.WriteLine(output);
-         }   
+         }
          else {
             output = String.Format("You are now {0} years old.", years - 1);
             Console.WriteLine(output);
-         }      
+         }
       }
       // The example displays the following output:
       //       You are now 0 years old.

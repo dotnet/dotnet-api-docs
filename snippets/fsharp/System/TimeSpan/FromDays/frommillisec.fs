@@ -4,7 +4,7 @@
 // Example of the TimeSpan.FromMilliseconds( double ) method.
 open System
 
-let genTimeSpanFromMillisec millisec =
+let genTimeSpanFromMillisec (millisec: float) =
     // Create a TimeSpan object and TimeSpan string from 
     // a number of milliseconds.
     let interval = TimeSpan.FromMilliseconds millisec
@@ -24,16 +24,16 @@ printfn "This example of TimeSpan.FromMilliseconds( double )\ngenerates the foll
 printfn "%21s%18s" "FromMilliseconds" "TimeSpan"
 printfn "%21s%18s" "----------------" "--------"
 
-genTimeSpanFromMillisec 1
+genTimeSpanFromMillisec 1.0
 genTimeSpanFromMillisec 1.5
 genTimeSpanFromMillisec 12345.6
 genTimeSpanFromMillisec 123456789.8
 genTimeSpanFromMillisec 1234567898765.4
-genTimeSpanFromMillisec 1000
-genTimeSpanFromMillisec 60000
-genTimeSpanFromMillisec 3600000
-genTimeSpanFromMillisec 86400000
-genTimeSpanFromMillisec 1801220200
+genTimeSpanFromMillisec 1000.0
+genTimeSpanFromMillisec 60000.0
+genTimeSpanFromMillisec 3600000.0
+genTimeSpanFromMillisec 86400000.0
+genTimeSpanFromMillisec 1801220200.0
 
 (*
 This example of TimeSpan.FromMilliseconds( double )

@@ -38,15 +38,15 @@ printfn $"c4) sb1 equals sb2: {sb1.Equals sb2}"
 //       a4) sb1 equals sb2: True
 //
 //       Ensure sb1 has a capacity of at least 50 characters.
-//       
+//
 //       b1) sb1.Length = 3, sb1.Capacity = 50
 //       b2) sb2.Length = 3, sb2.Capacity = 16
 //       b3) sb1.ToString() = "abc", sb2.ToString() = "abc"
-//       b4) sb1 equals sb2: True (False on .NET Framework)
-//       
+//       b4) sb1 equals sb2: True
+//
 //       Set the length of sb1 to zero.
 //       Set the capacity of sb2 to 51 characters.
-//       
+//
 //       c1) sb1.Length = 0, sb1.Capacity = 50
 //       c2) sb2.Length = 3, sb2.Capacity = 51
 //       c3) sb1.ToString() = "", sb2.ToString() = "abc"

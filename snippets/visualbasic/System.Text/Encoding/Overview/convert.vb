@@ -1,8 +1,8 @@
 ﻿' <Snippet1>
 Imports System.Text
 
-Class Example
-   Shared Sub Main()
+Class Example1
+   Shared Sub Run()
       Dim unicodeString As String = "This string contains the unicode character Pi (" & ChrW(&H03A0) & ")"
 
       ' Create two different encodings.

@@ -35,17 +35,10 @@
     <AssemblyVersion>11.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeForwardingChain>
-    <TypeForwarding From="mscorlib" FromVersion="4.0.0.0" To="System.Resources.ResourceManager" ToVersion="0.0.0.0" FrameworkAlternate="dotnet-uwp-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="System.Resources.ResourceManager" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
     <TypeForwarding From="System.Resources.ResourceManager" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="System.Resources.ResourceManager" FromVersion="5.0.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="System.Resources.ResourceManager" FromVersion="6.0.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
-    <TypeForwarding From="System.Resources.ResourceManager" FromVersion="7.0.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="System.Resources.ResourceManager" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
@@ -60,33 +53,129 @@
       <AttributeName Language="C#">[System.AttributeUsage(System.AttributeTargets.Assembly, AllowMultiple=false)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.AttributeUsage(System.AttributeTargets.Assembly, AllowMultiple=false)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="dotnet-uwp-10.0;net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-1.0;netstandard-1.1;netstandard-1.2;netstandard-1.3;netstandard-1.4;netstandard-1.6">
+    <Attribute>
       <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
-      <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(true)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(true)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>Informs the resource manager of an app's default culture. This class cannot be inherited.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-resources-neutralresourceslanguageattribute">Supplemental API remarks for NeutralResourcesLanguageAttribute</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+In desktop apps, the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute informs the resource manager of an app's default culture and the location of its resources. By default, resources are embedded in the main app assembly, and you can use the attribute as follows. This statement specifies that the English (United States) is the app's default culture.
+
+```csharp
+[assembly: NeutralResourcesLanguage("en-US")]
+```
+
+```vb
+<Assembly:NeutralResourcesLanguage("en-US")>
+```
+
+You can also use the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to indicate where <xref:System.Resources.ResourceManager> can find the resources of the default culture by providing an <xref:System.Resources.UltimateResourceFallbackLocation> enumeration value in the attribute statement. This is most commonly done to indicate that the resources reside in a satellite assembly. For example, the following statement specifies that English (United States) is the app's default or neutral culture and that its resources reside in a satellite assembly. The <xref:System.Resources.ResourceManager> object will look for them in a subdirectory named en-US.
+
+```csharp
+[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
+```
+
+```vb
+<Assembly:NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)>
+```
+
+> [!TIP]
+> We recommend that you always use the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to define the default culture of your app.
+
+The attribute performs two roles:
+
+- If the default culture's resources are embedded in the app's main assembly and <xref:System.Resources.ResourceManager> has to retrieve resources that belong to the same culture as the default culture, the <xref:System.Resources.ResourceManager> automatically uses the resources located in the main assembly instead of searching for a satellite assembly. This bypasses the usual assembly probe, improves lookup performance for the first resource you load, and can reduce your working set. See [Packaging and Deploying Resources](/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps) for the process <xref:System.Resources.ResourceManager> uses to probe for resource files.
+
+- If the default culture's resources are located in a satellite assembly rather than in the main app assembly, the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute specifies the culture and the directory from which the runtime can load the resources.
+
+## Examples
+
+The following example uses a simple "Hello World" app to illustrate the use of the <xref:System.Resources.NeutralResourcesLanguageAttribute> attribute to define a default or fallback culture. It requires the creation of separate resource files for the English (en), English (United States) (en-US), and French (France) (fr-FR) cultures. The following shows the contents of a text file named ExampleResources.txt for the English culture.
+
+```
+# Resources for the default (en) culture.
+Greeting=Hello
+```
+
+To use the resource file in an app, you must use the [Resource File Generator (Resgen.exe)](/dotnet/framework/tools/resgen-exe-resource-file-generator) to convert the file from its text (.txt) format to a binary (.resources) format as follows:
+
+```
+resgen ExampleResources.txt
+```
+
+When the app is compiled, the binary resource file will be embedded in the main app assembly.
+
+The following shows the contents of a text file named ExampleResources.en-US.txt that provides resources for the English (United States) culture.
+
+```
+# Resources for the en-US culture.
+Greeting=Hi
+```
+
+The text file can be converted to a binary resources file by using the [Resource File Generator (ResGen.exe)](/dotnet/framework/tools/resgen-exe-resource-file-generator) at the command line as follows:
+
+```
+resgen ExampleResources.en-US.txt ExampleResources.en-US.resources
+```
+
+The binary resource file should then be compiled into an assembly by using [Assembly Linker (Al.exe)](/dotnet/framework/tools/al-exe-assembly-linker) and placed in the en-US subdirectory of the app directory by issuing the following command:
+
+```
+al /t:lib /embed:ExampleResources.en-US.resources /culture:en-US /out:en-us\Example.resources.dll
+```
+
+The following shows the contents of a text file named ExampleResources.fr-FR.txt that provides resources for the French (France) culture.
+
+```
+# Resources for the fr-FR culture.
+Greeting=Bonjour
+```
+
+The text file can be converted to a binary resource file by using ResGen.exe at the command line as follows:
+
+```
+resgen ExampleResources.fr-FR.txt ExampleResources.fr-FR.resources
+```
+
+The binary resources file should then be compiled into an assembly by using Assembly Linker and placed in the fr-FR subdirectory of the app directory by issuing the following command:
+
+```
+al /t:lib /embed:ExampleResources.fr-FR.resources /culture:fr-FR /out:fr-FR\Example.resources.dll
+```
+
+The following example provides the executable code that sets the current culture, prompts for the user's name, and displays a localized string.
+
+:::code language="csharp" source="~/snippets/csharp/System.Resources/NeutralResourcesLanguageAttribute/Overview/example.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Resources/NeutralResourcesLanguageAttribute/Overview/example.vb" id="Snippet1":::
+
+It can be compiled by using the following command in Visual Basic:
+
+```
+vbc Example.vb /resource:ExampleResources.resources
+```
+
+or by using the following command in C#:
+
+```
+csc Example.cs /resource:ExampleResources.resources
+```
+
+ ]]></format>
+    </remarks>
     <altmember cref="T:System.Resources.UltimateResourceFallbackLocation" />
     <altmember cref="P:System.Resources.ResourceManager.FallbackLocation" />
     <related type="Article" href="/dotnet/framework/resources/packaging-and-deploying-resources-in-desktop-apps">Packaging and Deploying Resources</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
-      <AssemblyInfo>
-        <AssemblyName>System.Resources.ResourceManager</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Resources.NeutralResourcesLanguageAttribute" /> class.</summary>
       </Docs>
@@ -120,9 +209,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -174,17 +260,14 @@ For a detailed list of culture names available on Windows systems, see the **Lan
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters>
-        <Parameter Name="cultureName" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
-        <Parameter Name="location" Type="System.Resources.UltimateResourceFallbackLocation" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="cultureName" Type="System.String" />
+        <Parameter Name="location" Type="System.Resources.UltimateResourceFallbackLocation" />
       </Parameters>
       <Docs>
         <param name="cultureName">The name of the culture that the current assembly's neutral resources were written in.</param>
@@ -194,7 +277,7 @@ For a detailed list of culture names available on Windows systems, see the **Lan
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Use the <xref:System.Resources.NeutralResourcesLanguageAttribute> constructor with the <xref:System.Resources.UltimateResourceFallbackLocation> enumeration to specify whether the <xref:System.Resources.ResourceManager> class is to retrieve neutral fallback resources from the main app assembly (the default), or from a satellite assembly specified by the <xref:System.Globalization.CultureInfo.CurrentUICulture%2A> and the <xref:System.Resources.ResourceManager.FallbackLocation%2A> properties.
+ Use the <xref:System.Resources.NeutralResourcesLanguageAttribute> constructor with the <xref:System.Resources.UltimateResourceFallbackLocation> enumeration to specify whether the <xref:System.Resources.ResourceManager> class is to retrieve neutral fallback resources from the main app assembly (the default), or from a satellite assembly specified by the <xref:System.Globalization.CultureInfo.CurrentUICulture*> and the <xref:System.Resources.ResourceManager.FallbackLocation*> properties.
 
  For a detailed list of culture names available on Windows systems, see the **Language tag** column in the [list of language/region names supported by Windows](https://learn.microsoft.com/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Culture names follow the standard defined by [BCP 47](https://tools.ietf.org/html/bcp47).
 
@@ -238,9 +321,6 @@ For a detailed list of culture names available on Windows systems, see the **Lan
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -291,9 +371,6 @@ For a detailed list of culture names available on Windows systems, see the **Lan
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>

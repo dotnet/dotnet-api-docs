@@ -15,7 +15,7 @@ namespace Demo1
     //</Snippet2>
 
     //<Snippet3>
-    class Program1
+    class Program
     {
         static void Main(string[] args)
         {

@@ -1,11 +1,10 @@
 <Type Name="AccessViolationException" FullName="System.AccessViolationException">
   <TypeSignature Language="C#" Value="public class AccessViolationException : SystemException" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AccessViolationException extends System.SystemException" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netstandard-2.0;netstandard-2.1" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AccessViolationException extends System.SystemException" />
   <TypeSignature Language="DocId" Value="T:System.AccessViolationException" />
   <TypeSignature Language="VB.NET" Value="Public Class AccessViolationException&#xA;Inherits SystemException" />
   <TypeSignature Language="F#" Value="type AccessViolationException = class&#xA;    inherit SystemException" />
   <TypeSignature Language="C++ CLI" Value="public ref class AccessViolationException : SystemException" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi serializable beforefieldinit AccessViolationException extends System.SystemException" FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
   <AssemblyInfo>
     <AssemblyName>mscorlib</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -33,9 +32,6 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
   </TypeForwardingChain>
@@ -44,31 +40,48 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
-      <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(true)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(true)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
-      <AttributeName Language="C#">[System.Serializable]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Serializable&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>The exception that is thrown when there is an attempt to read or write protected memory.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-accessviolationexception">Supplemental API remarks for AccessViolationException</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+An access violation occurs in unmanaged or unsafe code when the code attempts to read or write to memory that has not been allocated, or to which it does not have access. This usually occurs because a pointer has a bad value. Not all reads or writes through bad pointers lead to access violations, so an access violation usually indicates that several reads or writes have occurred through bad pointers, and that memory might be corrupted. Thus, access violations almost always indicate serious programming errors. An <xref:System.AccessViolationException> clearly identifies these serious errors.
+
+In programs that consist entirely of verifiable managed code, all references are either valid or null, and access violations are impossible. Any operation that attempts to reference a null reference in verifiable code throws a <xref:System.NullReferenceException> exception. An <xref:System.AccessViolationException> occurs only when verifiable managed code interacts with unmanaged code or with unsafe managed code.
+
+## Troubleshoot AccessViolationException exceptions
+
+An <xref:System.AccessViolationException> exception can occur only in unsafe managed code or when verifiable managed code interacts with unmanaged code:
+
+- An access violation that occurs in unsafe managed code can be expressed as either a <xref:System.NullReferenceException> exception or an <xref:System.AccessViolationException> exception, depending on the platform.
+- An access violation in unmanaged code that bubbles up to managed code is always wrapped in an <xref:System.AccessViolationException> exception.
+
+In either case, you can identify and correct the cause of the <xref:System.AccessViolationException> exception as follows:
+
+- Make sure that the memory that you're attempting to access has been allocated. An <xref:System.AccessViolationException> exception is always thrown by an attempt to access protected memory&mdash;that is, to access memory that's not allocated or that's not owned by a process.
+
+  Automatic memory management is one of the services that the .NET runtime provides. If managed code provides the same functionality as your unmanaged code, consider moving to managed code to take advantage of this functionality. For more information, see [Automatic memory management](/dotnet/standard/automatic-memory-management).
+
+- Make sure that the memory that you're attempting to access hasn't been corrupted. If several read or write operations have occurred through bad pointers, memory might be corrupted. This typically occurs when reading or writing to addresses outside of a predefined buffer.
+
+## AccessViolationException and try/catch blocks
+
+<xref:System.AccessViolationException> exceptions thrown by the .NET runtime aren't handled by the `catch` statement in a structured exception handler if the exception occurs outside of the memory reserved by the runtime.
+
+> [!CAUTION]
+> The [HandleProcessCorruptedStateExceptions attribute](xref:System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute) is obsolete in current .NET versions. Recovery from corrupted process state&ndash;exceptions isn't supported, and the attribute, if present, is ignored.
+
+ ]]></format>
+    </remarks>
     <related type="Article" href="/dotnet/standard/exceptions/">Handling and Throwing Exceptions</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
-      <AssemblyInfo>
-        <AssemblyName>mscorlib</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.AccessViolationException" /> class.</summary>
       </Docs>
@@ -93,12 +106,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -117,8 +124,8 @@
 
 |Property|Value|
 |--------------|-----------|
-|<xref:System.Exception.InnerException%2A>|`null`.|
-|<xref:System.Exception.Message%2A>|The localized error message string.|
+|<xref:System.Exception.InnerException*>|`null`.|
+|<xref:System.Exception.Message*>|The localized error message string.|
 
  ]]></format>
         </remarks>
@@ -126,13 +133,12 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AccessViolationException (string? message);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public AccessViolationException (string? message);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string message) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.AccessViolationException.#ctor(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (message As String)" />
       <MemberSignature Language="F#" Value="new AccessViolationException : string -&gt; AccessViolationException" Usage="new System.AccessViolationException message" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; AccessViolationException(System::String ^ message);" />
-      <MemberSignature Language="C#" Value="public AccessViolationException (string message);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -147,12 +153,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -172,8 +172,8 @@
 
 |Property|Value|
 |--------------|-----------|
-|<xref:System.Exception.InnerException%2A>|`null`.|
-|<xref:System.Exception.Message%2A>|The error message string specified in `message`.|
+|<xref:System.Exception.InnerException*>|`null`.|
+|<xref:System.Exception.Message*>|The error message string specified in `message`.|
 
  ]]></format>
         </remarks>
@@ -201,29 +201,19 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
         </Attribute>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.", DiagnosticId="SYSLIB0051", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.", DiagnosticId="SYSLIB0051", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Security.SecuritySafeCritical]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Security.SecuritySafeCritical&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <Parameters>
@@ -234,25 +224,17 @@
         <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data.</param>
         <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
         <summary>Initializes a new instance of the <see cref="T:System.AccessViolationException" /> class with serialized data.</summary>
-        <remarks>
-          <format type="text/markdown"><![CDATA[
-
-## Remarks
- This constructor is called during deserialization to reconstitute the exception object transmitted over a stream. For more information, see [XML and SOAP Serialization](/dotnet/standard/serialization/xml-and-soap-serialization).
-
- ]]></format>
-        </remarks>
+        <remarks>To be added.</remarks>
         <related type="Article" href="/dotnet/standard/serialization/xml-and-soap-serialization">XML and SOAP Serialization</related>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AccessViolationException (string? message, Exception? innerException);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-3.0;netcore-3.1" />
+      <MemberSignature Language="C#" Value="public AccessViolationException (string? message, Exception? innerException);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(string message, class System.Exception innerException) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.AccessViolationException.#ctor(System.String,System.Exception)" />
       <MemberSignature Language="VB.NET" Value="Public Sub New (message As String, innerException As Exception)" />
       <MemberSignature Language="F#" Value="new AccessViolationException : string * Exception -&gt; AccessViolationException" Usage="new System.AccessViolationException (message, innerException)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; AccessViolationException(System::String ^ message, Exception ^ innerException);" />
-      <MemberSignature Language="C#" Value="public AccessViolationException (string message, Exception innerException);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>mscorlib</AssemblyName>
@@ -267,12 +249,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -296,8 +272,8 @@
 
 |Property|Value|
 |--------------|-----------|
-|<xref:System.Exception.InnerException%2A>|`null`.|
-|<xref:System.Exception.Message%2A>|The error message string specified in `message`.|
+|<xref:System.Exception.InnerException*>|`null`.|
+|<xref:System.Exception.Message*>|The error message string specified in `message`.|
 
  ]]></format>
         </remarks>

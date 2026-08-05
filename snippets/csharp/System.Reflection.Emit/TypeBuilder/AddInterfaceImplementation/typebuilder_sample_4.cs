@@ -30,7 +30,7 @@ public class MyTypeBuilder
       Console.WriteLine("----------------------");
       // Create 'helloWorldType' .
       Type helloWorldType = CreateDynamicAssembly(Thread.GetDomain(),
-                                       AssemblyBuilderAccess.RunAndSave);
+                                       AssemblyBuilderAccess.Run);
       // Create an instance of 'HelloWorld' class.
       Object helloWorld = Activator.CreateInstance(helloWorldType,
                                        new Object[] { "Called HelloWorld" });
@@ -41,7 +41,6 @@ public class MyTypeBuilder
       // Get defined field in the class.
       Console.WriteLine("Defined Field: " + helloWorldType.GetField("myGreeting").Name);
       AssemblyBuilder myAssemblyBuilder = (AssemblyBuilder)helloWorldType.Assembly;
-      myAssemblyBuilder.Save("EmittedAssembly.dll");
    }
    // Declare the interface.
    public interface IHello
@@ -56,11 +55,10 @@ public class MyTypeBuilder
       AssemblyName myAssemblyName = new AssemblyName();
       myAssemblyName.Name = "EmittedAssembly";
       // Create the dynamic assembly.
-      AssemblyBuilder myAssemblyBuilder = myAppDomain.DefineDynamicAssembly(myAssemblyName, myAccess);
+      AssemblyBuilder myAssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, myAccess);
       // Create a dynamic module named 'CalleeModule' in the assembly.
       ModuleBuilder myModuleBuilder;
-      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule",
-                                                          "EmittedModule.mod");
+      myModuleBuilder = myAssemblyBuilder.DefineDynamicModule("EmittedModule");
 // <Snippet1>
 // <Snippet4>
       // Define a public class named 'myHelloWorld' in the assembly.

@@ -5,7 +5,7 @@ Imports System.Globalization
 Imports System.Threading
 
 Module Example1
-    Public Sub Main()
+    Public Sub Main1()
         ' <Snippet1>
         Dim values() As String = {"6", "6:12", "6:12:14", "6:12:14:45",
                                  "6.12:14:45", "6:12:14:45.3448",
@@ -40,7 +40,7 @@ Module Example1
         '       6:12:14:45.3448: Bad Format
         '       6:12:14:45,3448 --> 6.12:14:45.3448000
         '       6:34:14:45: Overflow
-        '       
+        '
         '       Current Culture: en-US
         '       6 --> 6.00:00:00
         '       6:12 --> 06:12:00

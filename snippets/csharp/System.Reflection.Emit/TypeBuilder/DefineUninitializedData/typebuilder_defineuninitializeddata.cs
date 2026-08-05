@@ -69,7 +69,7 @@ public sealed class Example
 
       // Create the callee dynamic assembly.
       AssemblyBuilder myAssembly =
-         myDomain.DefineDynamicAssembly(myAssemblyName,AssemblyBuilderAccess.Run);
+         AssemblyBuilder.DefineDynamicAssembly(myAssemblyName,AssemblyBuilderAccess.Run);
 
       // Create a dynamic module in the callee assembly.
       ModuleBuilder myModule =

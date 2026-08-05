@@ -1,7 +1,4 @@
 ﻿module netasync
-// System.Diagnostics
-//
-// Requires .NET Framework version 1.2 or higher.
 
 // The following example uses the net view command to list the
 // available network resources available on a remote computer,

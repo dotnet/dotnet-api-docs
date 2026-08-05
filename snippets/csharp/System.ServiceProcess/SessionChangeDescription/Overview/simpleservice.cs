@@ -156,8 +156,7 @@ namespace SimpleService
         // Stop this service.
         protected override void OnStop()
         {
-            // New in .NET Framework version 2.0.
-            this.RequestAdditionalTime(4000);
+            RequestAdditionalTime(4000);
             // Signal the worker thread to exit.
             if ((workerThread != null) && (workerThread.IsAlive))
             {

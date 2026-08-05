@@ -17,12 +17,11 @@ class TestILGenerator
 	   AssemblyName myAsmName = new AssemblyName();
 	   myAsmName.Name = "IntVectorAsm";
 	
-	   AssemblyBuilder myAsmBuilder = myDomain.DefineDynamicAssembly(
+	   AssemblyBuilder myAsmBuilder = AssemblyBuilder.DefineDynamicAssembly(
 					  myAsmName,
-					  AssemblyBuilderAccess.RunAndSave);
+					  AssemblyBuilderAccess.Run);
 
-   	   ModuleBuilder IntVectorModule = myAsmBuilder.DefineDynamicModule("IntVectorModule",
-									    "Vector.dll");
+   	   ModuleBuilder IntVectorModule = myAsmBuilder.DefineDynamicModule("IntVectorModule");
 
 	   TypeBuilder ivTypeBld = IntVectorModule.DefineType("IntVector",
 						              TypeAttributes.Public);

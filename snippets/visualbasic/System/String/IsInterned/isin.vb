@@ -1,43 +1,34 @@
-﻿'<snippet1>
-' Sample for String.IsInterned(String)
+﻿' Sample for String.IsInterned(String)
 Imports System.Text
-Imports System.Runtime.CompilerServices
 
-' In the .NET Framework 2.0 the following attribute declaration allows you to 
-' avoid the use of the interning when you use NGEN.exe to compile an assembly 
-' to the native image cache.
-<Assembly: CompilationRelaxations(CompilationRelaxations.NoStringInterning)> 
-Class Sample
-    Public Shared Sub Main()
-        ' String str1 is known at compile time, and is automatically interned.
-        Dim str1 As [String] = "abcd"
+Module IsInExample
+    Public Sub Run()
+        '<snippet1>
 
-        ' Constructed string, str2, is not explicitly or automatically interned.
-        Dim str2 As [String] = New StringBuilder().Append("wx").Append("yz").ToString()
-        Console.WriteLine()
-        Test(1, str1)
-        Test(2, str2)
+        ' Constructed strings are not automatically interned.
+        Dim s1 As String = New StringBuilder().Append("My").Append("Test").ToString()
+        Dim s2 As String = New StringBuilder().Append("My").Append("Test").ToString()
+
+        ' Neither string is in the intern pool yet.
+        Console.WriteLine($"Is s1 interned? {String.IsInterned(s1) IsNot Nothing}")
+        Console.WriteLine($"Is s2 interned? {String.IsInterned(s2) IsNot Nothing}")
+
+        ' Intern s1 explicitly.
+        Dim i1 As String = String.Intern(s1)
+
+        ' Now s2 can be found in the intern pool.
+        Dim i2 As String = String.IsInterned(s2)
+
+        Console.WriteLine($"Is s2 interned after interning s1? {i2 IsNot Nothing}")
+        Console.WriteLine($"Are i1 and i2 the same reference? {Object.ReferenceEquals(i1, i2)}")
+
+        ' This example produces the following results:
+        '
+        ' Is s1 interned? False
+        ' Is s2 interned? False
+        ' Is s2 interned after interning s1? True
+        ' Are i1 and i2 the same reference? True
+
+        '</snippet1>
     End Sub
-
-    Public Shared Sub Test(ByVal sequence As Integer, ByVal str As [String])
-        Console.Write("{0}) The string, '", sequence)
-        Dim strInterned As [String] = [String].IsInterned(str)
-        If strInterned Is Nothing Then
-            Console.WriteLine("{0}', is not interned.", str)
-        Else
-            Console.WriteLine("{0}', is interned.", strInterned)
-        End If
-    End Sub
-End Class
-
-'This example produces the following results:
-
-'1) The string, 'abcd', is interned.
-'2) The string, 'wxyz', is not interned.
-
-'If you use NGEN.exe to compile the assembly to the native image cache, this
-'example produces the following results:
-
-'1) The string, 'abcd', is not interned.
-'2) The string, 'wxyz', is not interned.
-'</snippet1>
+End Module

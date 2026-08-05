@@ -35,9 +35,6 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.ComponentModel.TypeConverter" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
   </TypeForwardingChain>
@@ -46,13 +43,9 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1">
-      <AttributeName Language="C#">[System.Runtime.InteropServices.ComVisible(true)]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.InteropServices.ComVisible(true)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
@@ -64,13 +57,11 @@
  The most common type of converter is one that converts to and from a text representation. The type converter for a class is bound to the class with a <xref:System.ComponentModel.TypeConverterAttribute>. Unless this attribute is overridden, all classes that inherit from this class use the same type converter as the base class.
 
 > [!NOTE]
->  For general type system purposes, do not access a type converter directly. Instead, access the appropriate converter by using <xref:System.ComponentModel.TypeDescriptor>. For more information, see the code examples provided.
+> For general type system purposes, do not access a type converter directly. Instead, access the appropriate converter by using <xref:System.ComponentModel.TypeDescriptor>. For more information, see the code examples provided.
 >
 > However, when using XAML, a XAML processor searches for the <xref:System.ComponentModel.TypeConverterAttribute> directly, instead of going through <xref:System.ComponentModel.TypeDescriptor>. For cases where you do want a <xref:System.ComponentModel.TypeDescriptor> instance from code, or where you create a shared instance in WPF resources, it is acceptable to construct it directly without referencing <xref:System.ComponentModel.TypeDescriptor> or other reflection and type system support.
 
  Classes derived from <xref:System.ComponentModel.TypeConverter> are often referenced as part of how a XAML processor converts an attribute or initialization text value from markup (which is inherently a string) and generates an object for a run-time representation. Custom type authors that intend to support a type conversion behavior for XAML typically implement a <xref:System.ComponentModel.TypeConverter> class that supports their own unique `ConvertFrom` behavior from a string. This behavior enables type conversion from the string provided as a XAML attribute value and provides a XAML processor with the support needed to create an object from the string, so that the object can be produced in a parsed object graph. Custom types or members of custom types are indicated by applying <xref:System.ComponentModel.TypeConverterAttribute> to the definitions, with the attribute referencing the custom <xref:System.ComponentModel.TypeConverter> implementation. For more information, see [Type Converters for XAML Overview](/dotnet/framework/xaml-services/type-converters-for-xaml-overview).
-
-
 
 ## Examples
  The following code example shows how to create an instance of a type converter and bind it to a class. The class implementing the converter, `MyClassConverter`, must inherit from the <xref:System.ComponentModel.TypeConverter> class.
@@ -106,28 +97,22 @@
  ]]></format>
     </remarks>
     <block subset="none" type="overrides">
-      <para>Inherit from <see cref="T:System.ComponentModel.TypeConverter" /> to implement your own conversion requirements. When you inherit from this class, you can override the following methods:
+      <para>Inherit from <see cref="T:System.ComponentModel.TypeConverter" /> to implement your own conversion requirements. When you inherit from this class, you can override the following methods:</para>
 
 - To support custom type conversion, override the <see cref="M:System.ComponentModel.TypeConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)" />, <see cref="M:System.ComponentModel.TypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)" />, <see cref="M:System.ComponentModel.TypeConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" />, and <see cref="M:System.ComponentModel.TypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" /> methods.
-
 - To convert types that must re-create the object to change its value, override the <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.ComponentModel.ITypeDescriptorContext,System.Collections.IDictionary)" /> and <see cref="M:System.ComponentModel.TypeConverter.GetCreateInstanceSupported(System.ComponentModel.ITypeDescriptorContext)" /> methods.
-
 - To convert types that support properties, override the <see cref="M:System.ComponentModel.TypeConverter.GetProperties(System.ComponentModel.ITypeDescriptorContext,System.Object,System.Attribute[])" /> and <see cref="M:System.ComponentModel.TypeConverter.GetPropertiesSupported(System.ComponentModel.ITypeDescriptorContext)" /> methods. If the class you are converting does not have properties, and you need to implement properties, you can use the <see cref="T:System.ComponentModel.TypeConverter.SimplePropertyDescriptor" /> class as a base for implementing the property descriptors. When you inherit from <see cref="T:System.ComponentModel.TypeConverter.SimplePropertyDescriptor" />, you must override the <see cref="M:System.ComponentModel.PropertyDescriptor.GetValue(System.Object)" /> and <see cref="M:System.ComponentModel.PropertyDescriptor.SetValue(System.Object,System.Object)" /> methods.
-
 - To convert types that support standard values, override the <see cref="M:System.ComponentModel.TypeConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" />, <see cref="M:System.ComponentModel.TypeConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)" />, <see cref="M:System.ComponentModel.TypeConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)" /> and <see cref="M:System.ComponentModel.TypeConverter.IsValid(System.ComponentModel.ITypeDescriptorContext,System.Object)" /> methods.
 
-Note: Your derived type might be marked as <see langword="internal" /> or <see langword="private" />, but an instance of your type can be created with the <see cref="T:System.ComponentModel.TypeDescriptor" /> class. Do not write insecure code by assuming the caller is trusted. Assume instead that callers might create instances of your type in partial trust.
-
- For more information about type converters for general (non-XAML) purposes, see <see href="https://learn.microsoft.com/previous-versions/visualstudio/visual-studio-2013/ayybcxe5(v=vs.120)">How to: Implement a Type Converter</see> or <see href="/previous-versions/visualstudio/visual-studio-2013/yy580hbd(v=vs.120)">Generalized Type Conversion</see>.</para>
-    </block>
+    <para>Note: Your derived type might be marked as <see langword="internal" /> or <see langword="private" />, but an instance of your type can be created with the <see cref="T:System.ComponentModel.TypeDescriptor" /> class. Do not write insecure code by assuming the caller is trusted.</para></block>
     <altmember cref="T:System.ComponentModel.TypeConverterAttribute" />
     <altmember cref="T:System.ComponentModel.PropertyDescriptorCollection" />
     <altmember cref="T:System.ComponentModel.TypeConverter.SimplePropertyDescriptor" />
     <altmember cref="T:System.ComponentModel.TypeConverter.StandardValuesCollection" />
-    <related type="Article" href="/dotnet/desktop-wpf/xaml-services/type-converters-overview">Overview of type converters for XAML</related>
-    <related type="Article" href="/dotnet/desktop-wpf/xaml-services/clr-attributes-with-custom-types-and-libraries">XAML-related CLR attributes for custom types and libraries</related>
-    <related type="Article" href="/dotnet/desktop-wpf/xaml-services/define-custom-types">Define custom types for use with .NET XAML Services</related>
-    <related type="Article" href="/dotnet/desktop-wpf/xaml-services/">NET XAML Services Conceptual Documentation</related>
+    <related type="Article" href="/dotnet/desktop/xaml-services/type-converters-overview">Overview of type converters for XAML</related>
+    <related type="Article" href="/dotnet/desktop/xaml-services/clr-attributes-with-custom-types-and-libraries">XAML-related CLR attributes for custom types and libraries</related>
+    <related type="Article" href="/dotnet/desktop/xaml-services/define-custom-types">Define custom types for use with .NET XAML Services</related>
+    <related type="Article" href="/dotnet/desktop/xaml-services/">NET XAML Services Conceptual Documentation</related>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -139,13 +124,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -163,12 +141,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <Parameters />
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.ComponentModel.TypeConverter" /> class.</summary>
@@ -176,11 +148,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="CanConvertFrom">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether this converter can convert an object of one type to the type of this converter.</summary>
       </Docs>
@@ -195,13 +162,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -219,12 +179,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -247,23 +201,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="CanConvertFrom">
-      <MemberSignature Language="C#" Value="public virtual bool CanConvertFrom (System.ComponentModel.ITypeDescriptorContext? context, Type sourceType);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool CanConvertFrom (System.ComponentModel.ITypeDescriptorContext? context, Type sourceType);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool CanConvertFrom(class System.ComponentModel.ITypeDescriptorContext context, class System.Type sourceType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CanConvertFrom (context As ITypeDescriptorContext, sourceType As Type) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member CanConvertFrom : System.ComponentModel.ITypeDescriptorContext * Type -&gt; bool&#xA;override this.CanConvertFrom : System.ComponentModel.ITypeDescriptorContext * Type -&gt; bool" Usage="typeConverter.CanConvertFrom (context, sourceType)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool CanConvertFrom(System::ComponentModel::ITypeDescriptorContext ^ context, Type ^ sourceType);" />
-      <MemberSignature Language="C#" Value="public virtual bool CanConvertFrom (System.ComponentModel.ITypeDescriptorContext context, Type sourceType);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -287,7 +233,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <Parameters>
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -318,33 +264,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="CanConvertTo">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether this converter can convert the object to the specified type.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="CanConvertTo">
-      <MemberSignature Language="C#" Value="public bool CanConvertTo (Type? destinationType);" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public bool CanConvertTo (Type? destinationType);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool CanConvertTo(class System.Type destinationType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.CanConvertTo(System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Function CanConvertTo (destinationType As Type) As Boolean" />
       <MemberSignature Language="F#" Value="member this.CanConvertTo : Type -&gt; bool" Usage="typeConverter.CanConvertTo destinationType" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; bool CanConvertTo(Type ^ destinationType);" />
-      <MemberSignature Language="C#" Value="public bool CanConvertTo (Type destinationType);" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -362,19 +295,13 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="destinationType" Type="System.Type">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
             </Attribute>
@@ -390,30 +317,22 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- If `destinationType` is a string, the default implementation of <xref:System.ComponentModel.TypeConverter.CanConvertTo%2A> always returns `true`.
+ If `destinationType` is a string, the default implementation of <xref:System.ComponentModel.TypeConverter.CanConvertTo*> always returns `true`.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="CanConvertTo">
-      <MemberSignature Language="C#" Value="public virtual bool CanConvertTo (System.ComponentModel.ITypeDescriptorContext? context, Type? destinationType);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool CanConvertTo (System.ComponentModel.ITypeDescriptorContext? context, Type? destinationType);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool CanConvertTo(class System.ComponentModel.ITypeDescriptorContext context, class System.Type destinationType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CanConvertTo (context As ITypeDescriptorContext, destinationType As Type) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member CanConvertTo : System.ComponentModel.ITypeDescriptorContext * Type -&gt; bool&#xA;override this.CanConvertTo : System.ComponentModel.ITypeDescriptorContext * Type -&gt; bool" Usage="typeConverter.CanConvertTo (context, destinationType)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool CanConvertTo(System::ComponentModel::ITypeDescriptorContext ^ context, Type ^ destinationType);" />
-      <MemberSignature Language="C#" Value="public virtual bool CanConvertTo (System.ComponentModel.ITypeDescriptorContext context, Type destinationType);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -438,7 +357,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext" />
         <Parameter Name="destinationType" Type="System.Type">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.NotNullWhen(true)&gt;]</AttributeName>
             </Attribute>
@@ -457,7 +376,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
 ## Remarks
  Use the `context` parameter to extract additional information about the environment from which this converter is invoked. This parameter can be `null`, so always check it. Also, properties on the context object can return `null`.
 
- If `destinationType` is a string, the default implementation of <xref:System.ComponentModel.TypeConverter.CanConvertTo%2A> always returns `true`.
+ If `destinationType` is a string, the default implementation of <xref:System.ComponentModel.TypeConverter.CanConvertTo*> always returns `true`.
 
  ]]></format>
         </remarks>
@@ -468,33 +387,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertFrom">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Converts the given value to the type of this converter.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ConvertFrom">
-      <MemberSignature Language="C#" Value="public object? ConvertFrom (object value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertFrom (object value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertFrom(object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFrom(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertFrom (value As Object) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertFrom : obj -&gt; obj" Usage="typeConverter.ConvertFrom value" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertFrom(System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public object ConvertFrom (object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -533,23 +439,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertFrom">
-      <MemberSignature Language="C#" Value="public virtual object? ConvertFrom (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual object? ConvertFrom (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object ConvertFrom(class System.ComponentModel.ITypeDescriptorContext context, class System.Globalization.CultureInfo culture, object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function ConvertFrom (context As ITypeDescriptorContext, culture As CultureInfo, value As Object) As Object" />
       <MemberSignature Language="F#" Value="abstract member ConvertFrom : System.ComponentModel.ITypeDescriptorContext * System.Globalization.CultureInfo * obj -&gt; obj&#xA;override this.ConvertFrom : System.ComponentModel.ITypeDescriptorContext * System.Globalization.CultureInfo * obj -&gt; obj" Usage="typeConverter.ConvertFrom (context, culture, value)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ ConvertFrom(System::ComponentModel::ITypeDescriptorContext ^ context, System::Globalization::CultureInfo ^ culture, System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public virtual object ConvertFrom (System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -575,7 +473,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="culture" Type="System.Globalization.CultureInfo" />
         <Parameter Name="value" Type="System.Object">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -592,7 +490,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Custom type authors that intend to support a type conversion behavior for XAML typically implement a <xref:System.ComponentModel.TypeConverter> class that supports <xref:System.ComponentModel.TypeConverter.ConvertFrom%2A> behavior from a string. This behavior enables type conversion from the string provided as a XAML attribute value and provides a XAML processor with the support needed to create an object from the string, so that the object can be produced in a parsed object graph. Custom types or members of custom types are indicated by applying <xref:System.ComponentModel.TypeConverterAttribute> to the definitions, with the attribute referencing the custom <xref:System.ComponentModel.TypeConverter> implementation.
+ Custom type authors that intend to support a type conversion behavior for XAML typically implement a <xref:System.ComponentModel.TypeConverter> class that supports <xref:System.ComponentModel.TypeConverter.ConvertFrom*> behavior from a string. This behavior enables type conversion from the string provided as a XAML attribute value and provides a XAML processor with the support needed to create an object from the string, so that the object can be produced in a parsed object graph. Custom types or members of custom types are indicated by applying <xref:System.ComponentModel.TypeConverterAttribute> to the definitions, with the attribute referencing the custom <xref:System.ComponentModel.TypeConverter> implementation.
 
  For XAML purposes, you do not typically provide branching implementations based on `culture`. This is because XAML is precompiled in a development environment context, and culture-specific information for runtime XAML is not relevant for XAML type conversion. For more information, see [Type Converters for XAML Overview](/dotnet/framework/xaml-services/type-converters-for-xaml-overview).
 
@@ -607,37 +505,24 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
  For implementation patterns for type converters that are used to support XAML and custom types, see <see href="/dotnet/framework/xaml-services/type-converters-for-xaml-overview">Type Converters for XAML Overview</see>.</para>
         </block>
         <altmember cref="T:System.ComponentModel.ITypeDescriptorContext" />
-        <related type="Article" href="/dotnet/desktop-wpf/xaml-services/type-converters-overview">Overview of type converters for XAML</related>
+        <related type="Article" href="/dotnet/desktop/xaml-services/type-converters-overview">Overview of type converters for XAML</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertFromInvariantString">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Converts the value to a type of this converter, using the invariant culture.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ConvertFromInvariantString">
-      <MemberSignature Language="C#" Value="public object? ConvertFromInvariantString (string text);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertFromInvariantString (string text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertFromInvariantString(string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFromInvariantString(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertFromInvariantString (text As String) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertFromInvariantString : string -&gt; obj" Usage="typeConverter.ConvertFromInvariantString text" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertFromInvariantString(System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public object ConvertFromInvariantString (string text);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -684,23 +569,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertFromInvariantString">
-      <MemberSignature Language="C#" Value="public object? ConvertFromInvariantString (System.ComponentModel.ITypeDescriptorContext? context, string text);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertFromInvariantString (System.ComponentModel.ITypeDescriptorContext? context, string text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertFromInvariantString(class System.ComponentModel.ITypeDescriptorContext context, string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFromInvariantString(System.ComponentModel.ITypeDescriptorContext,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertFromInvariantString (context As ITypeDescriptorContext, text As String) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertFromInvariantString : System.ComponentModel.ITypeDescriptorContext * string -&gt; obj" Usage="typeConverter.ConvertFromInvariantString (context, text)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertFromInvariantString(System::ComponentModel::ITypeDescriptorContext ^ context, System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public object ConvertFromInvariantString (System.ComponentModel.ITypeDescriptorContext context, string text);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -725,7 +602,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext" />
         <Parameter Name="text" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -752,33 +629,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertFromString">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Converts the specified text to an object.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ConvertFromString">
-      <MemberSignature Language="C#" Value="public object? ConvertFromString (string text);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertFromString (string text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertFromString(string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFromString(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertFromString (text As String) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertFromString : string -&gt; obj" Usage="typeConverter.ConvertFromString text" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertFromString(System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public object ConvertFromString (string text);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -796,12 +660,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
         <Attributes>
@@ -835,23 +693,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertFromString">
-      <MemberSignature Language="C#" Value="public object? ConvertFromString (System.ComponentModel.ITypeDescriptorContext? context, string text);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertFromString (System.ComponentModel.ITypeDescriptorContext? context, string text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertFromString(class System.ComponentModel.ITypeDescriptorContext context, string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFromString(System.ComponentModel.ITypeDescriptorContext,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertFromString (context As ITypeDescriptorContext, text As String) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertFromString : System.ComponentModel.ITypeDescriptorContext * string -&gt; obj" Usage="typeConverter.ConvertFromString (context, text)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertFromString(System::ComponentModel::ITypeDescriptorContext ^ context, System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public object ConvertFromString (System.ComponentModel.ITypeDescriptorContext context, string text);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -876,7 +726,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext" />
         <Parameter Name="text" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -903,23 +753,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertFromString">
-      <MemberSignature Language="C#" Value="public object? ConvertFromString (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, string text);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertFromString (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, string text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertFromString(class System.ComponentModel.ITypeDescriptorContext context, class System.Globalization.CultureInfo culture, string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertFromString(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertFromString (context As ITypeDescriptorContext, culture As CultureInfo, text As String) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertFromString : System.ComponentModel.ITypeDescriptorContext * System.Globalization.CultureInfo * string -&gt; obj" Usage="typeConverter.ConvertFromString (context, culture, text)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertFromString(System::ComponentModel::ITypeDescriptorContext ^ context, System::Globalization::CultureInfo ^ culture, System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public object ConvertFromString (System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, string text);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -937,12 +779,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
@@ -951,7 +787,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="culture" Type="System.Globalization.CultureInfo" />
         <Parameter Name="text" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -979,33 +815,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertTo">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Converts the given value object to the specified type.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ConvertTo">
-      <MemberSignature Language="C#" Value="public object? ConvertTo (object? value, Type destinationType);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? ConvertTo (object? value, Type destinationType);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object ConvertTo(object value, class System.Type destinationType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertTo(System.Object,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertTo (value As Object, destinationType As Type) As Object" />
       <MemberSignature Language="F#" Value="member this.ConvertTo : obj * Type -&gt; obj" Usage="typeConverter.ConvertTo (value, destinationType)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ ConvertTo(System::Object ^ value, Type ^ destinationType);" />
-      <MemberSignature Language="C#" Value="public object ConvertTo (object value, Type destinationType);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1023,12 +846,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
@@ -1036,7 +853,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="value" Type="System.Object" />
         <Parameter Name="destinationType" Type="System.Type">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -1052,7 +869,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The most common type to convert to and from is a string object. This implementation calls <xref:System.Object.ToString%2A> on the object, if the object is valid and if the destination type is a string.
+ The most common type to convert to and from is a string object. This implementation calls <xref:System.Object.ToString*> on the object, if the object is valid and if the destination type is a string.
 
  ]]></format>
         </remarks>
@@ -1061,23 +878,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertTo">
-      <MemberSignature Language="C#" Value="public virtual object? ConvertTo (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object? value, Type destinationType);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual object? ConvertTo (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object? value, Type destinationType);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object ConvertTo(class System.ComponentModel.ITypeDescriptorContext context, class System.Globalization.CultureInfo culture, object value, class System.Type destinationType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function ConvertTo (context As ITypeDescriptorContext, culture As CultureInfo, value As Object, destinationType As Type) As Object" />
       <MemberSignature Language="F#" Value="abstract member ConvertTo : System.ComponentModel.ITypeDescriptorContext * System.Globalization.CultureInfo * obj * Type -&gt; obj&#xA;override this.ConvertTo : System.ComponentModel.ITypeDescriptorContext * System.Globalization.CultureInfo * obj * Type -&gt; obj" Usage="typeConverter.ConvertTo (context, culture, value, destinationType)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ ConvertTo(System::ComponentModel::ITypeDescriptorContext ^ context, System::Globalization::CultureInfo ^ culture, System::Object ^ value, Type ^ destinationType);" />
-      <MemberSignature Language="C#" Value="public virtual object ConvertTo (System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1104,7 +913,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="value" Type="System.Object" />
         <Parameter Name="destinationType" Type="System.Type">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -1122,13 +931,13 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The most common types to convert are to and from a string object. This implementation calls <xref:System.Object.ToString%2A> on the object if the object is valid and if the destination type is a string.
+ The most common types to convert are to and from a string object. This implementation calls <xref:System.Object.ToString*> on the object if the object is valid and if the destination type is a string.
 
  Use the `context` parameter to extract additional information about the environment from which this converter is invoked. This parameter can be `null`, so always check it. Also, properties on the context object can return `null`.
 
- Custom type authors that intend to support a type conversion behavior for XAML typically implement a <xref:System.ComponentModel.TypeConverter> class that supports <xref:System.ComponentModel.TypeConverter.ConvertFrom%2A> behavior from a string. These type converters might also implement <xref:System.ComponentModel.TypeConverter.ConvertTo%2A> to support serialization back to XAML.
+ Custom type authors that intend to support a type conversion behavior for XAML typically implement a <xref:System.ComponentModel.TypeConverter> class that supports <xref:System.ComponentModel.TypeConverter.ConvertFrom*> behavior from a string. These type converters might also implement <xref:System.ComponentModel.TypeConverter.ConvertTo*> to support serialization back to XAML.
 
- Some XAML serialization scenarios cannot be adequately addressed with <xref:System.ComponentModel.TypeConverter> alone. In these cases, it may be necessary to also define a <xref:System.Windows.Markup.ValueSerializer> that handles the serialization cases that would otherwise be handled by <xref:System.ComponentModel.TypeConverter.ConvertTo%2A>. For more information, see <xref:System.Windows.Markup.ValueSerializer>.
+ Some XAML serialization scenarios cannot be adequately addressed with <xref:System.ComponentModel.TypeConverter> alone. In these cases, it may be necessary to also define a <xref:System.Windows.Markup.ValueSerializer> that handles the serialization cases that would otherwise be handled by <xref:System.ComponentModel.TypeConverter.ConvertTo*>. For more information, see <xref:System.Windows.Markup.ValueSerializer>.
 
  ]]></format>
         </remarks>
@@ -1140,37 +949,24 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
  For implementation patterns for type converters that are used to support XAML and custom types, see <see href="/dotnet/framework/xaml-services/type-converters-for-xaml-overview">Type Converters for XAML Overview</see>.</para>
         </block>
         <altmember cref="T:System.ComponentModel.ITypeDescriptorContext" />
-        <related type="Article" href="/dotnet/desktop-wpf/xaml-services/type-converters-overview">Overview of type converters for XAML</related>
+        <related type="Article" href="/dotnet/desktop/xaml-services/type-converters-overview">Overview of type converters for XAML</related>
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertToInvariantString">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Converts the specified value to a culture-invariant string representation.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ConvertToInvariantString">
-      <MemberSignature Language="C#" Value="public string? ConvertToInvariantString (object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public string? ConvertToInvariantString (object? value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string ConvertToInvariantString(object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertToInvariantString(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertToInvariantString (value As Object) As String" />
       <MemberSignature Language="F#" Value="member this.ConvertToInvariantString : obj -&gt; string" Usage="typeConverter.ConvertToInvariantString value" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ ConvertToInvariantString(System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public string ConvertToInvariantString (object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1213,23 +1009,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertToInvariantString">
-      <MemberSignature Language="C#" Value="public string? ConvertToInvariantString (System.ComponentModel.ITypeDescriptorContext? context, object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public string? ConvertToInvariantString (System.ComponentModel.ITypeDescriptorContext? context, object? value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string ConvertToInvariantString(class System.ComponentModel.ITypeDescriptorContext context, object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertToInvariantString(System.ComponentModel.ITypeDescriptorContext,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertToInvariantString (context As ITypeDescriptorContext, value As Object) As String" />
       <MemberSignature Language="F#" Value="member this.ConvertToInvariantString : System.ComponentModel.ITypeDescriptorContext * obj -&gt; string" Usage="typeConverter.ConvertToInvariantString (context, value)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ ConvertToInvariantString(System::ComponentModel::ITypeDescriptorContext ^ context, System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public string ConvertToInvariantString (System.ComponentModel.ITypeDescriptorContext context, object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1274,33 +1062,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="ConvertToString">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Converts the specified value to a string representation.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="ConvertToString">
-      <MemberSignature Language="C#" Value="public string? ConvertToString (object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public string? ConvertToString (object? value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string ConvertToString(object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertToString(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertToString (value As Object) As String" />
       <MemberSignature Language="F#" Value="member this.ConvertToString : obj -&gt; string" Usage="typeConverter.ConvertToString value" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ ConvertToString(System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public string ConvertToString (object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1345,23 +1120,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertToString">
-      <MemberSignature Language="C#" Value="public string? ConvertToString (System.ComponentModel.ITypeDescriptorContext? context, object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public string? ConvertToString (System.ComponentModel.ITypeDescriptorContext? context, object? value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string ConvertToString(class System.ComponentModel.ITypeDescriptorContext context, object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertToString(System.ComponentModel.ITypeDescriptorContext,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertToString (context As ITypeDescriptorContext, value As Object) As String" />
       <MemberSignature Language="F#" Value="member this.ConvertToString : System.ComponentModel.ITypeDescriptorContext * obj -&gt; string" Usage="typeConverter.ConvertToString (context, value)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ ConvertToString(System::ComponentModel::ITypeDescriptorContext ^ context, System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public string ConvertToString (System.ComponentModel.ITypeDescriptorContext context, object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1406,23 +1173,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="ConvertToString">
-      <MemberSignature Language="C#" Value="public string? ConvertToString (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public string? ConvertToString (System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object? value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance string ConvertToString(class System.ComponentModel.ITypeDescriptorContext context, class System.Globalization.CultureInfo culture, object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.ConvertToString(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function ConvertToString (context As ITypeDescriptorContext, culture As CultureInfo, value As Object) As String" />
       <MemberSignature Language="F#" Value="member this.ConvertToString : System.ComponentModel.ITypeDescriptorContext * System.Globalization.CultureInfo * obj -&gt; string" Usage="typeConverter.ConvertToString (context, culture, value)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::String ^ ConvertToString(System::ComponentModel::ITypeDescriptorContext ^ context, System::Globalization::CultureInfo ^ culture, System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public string ConvertToString (System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1469,33 +1228,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateInstance">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Re-creates an <see cref="T:System.Object" /> given a set of property values for the object.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="CreateInstance">
-      <MemberSignature Language="C#" Value="public object? CreateInstance (System.Collections.IDictionary propertyValues);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public object? CreateInstance (System.Collections.IDictionary propertyValues);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object CreateInstance(class System.Collections.IDictionary propertyValues) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)" />
       <MemberSignature Language="VB.NET" Value="Public Function CreateInstance (propertyValues As IDictionary) As Object" />
       <MemberSignature Language="F#" Value="member this.CreateInstance : System.Collections.IDictionary -&gt; obj" Usage="typeConverter.CreateInstance propertyValues" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Object ^ CreateInstance(System::Collections::IDictionary ^ propertyValues);" />
-      <MemberSignature Language="C#" Value="public object CreateInstance (System.Collections.IDictionary propertyValues);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1513,12 +1259,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Object</ReturnType>
         <Attributes>
@@ -1541,7 +1281,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
 ## Remarks
  Use this method for objects that are immutable, but for which you want to provide changeable properties.
 
- The dictionary provided by the `propertyValues` parameter has a series of name/value pairs, one for each property returned from <xref:System.ComponentModel.TypeConverter.GetProperties%2A>.
+ The dictionary provided by the `propertyValues` parameter has a series of name/value pairs, one for each property returned from <xref:System.ComponentModel.TypeConverter.GetProperties*>.
 
  ]]></format>
         </remarks>
@@ -1549,23 +1289,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="CreateInstance">
-      <MemberSignature Language="C#" Value="public virtual object? CreateInstance (System.ComponentModel.ITypeDescriptorContext? context, System.Collections.IDictionary propertyValues);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual object? CreateInstance (System.ComponentModel.ITypeDescriptorContext? context, System.Collections.IDictionary propertyValues);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object CreateInstance(class System.ComponentModel.ITypeDescriptorContext context, class System.Collections.IDictionary propertyValues) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.CreateInstance(System.ComponentModel.ITypeDescriptorContext,System.Collections.IDictionary)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateInstance (context As ITypeDescriptorContext, propertyValues As IDictionary) As Object" />
       <MemberSignature Language="F#" Value="abstract member CreateInstance : System.ComponentModel.ITypeDescriptorContext * System.Collections.IDictionary -&gt; obj&#xA;override this.CreateInstance : System.ComponentModel.ITypeDescriptorContext * System.Collections.IDictionary -&gt; obj" Usage="typeConverter.CreateInstance (context, propertyValues)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ CreateInstance(System::ComponentModel::ITypeDescriptorContext ^ context, System::Collections::IDictionary ^ propertyValues);" />
-      <MemberSignature Language="C#" Value="public virtual object CreateInstance (System.ComponentModel.ITypeDescriptorContext context, System.Collections.IDictionary propertyValues);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1590,7 +1322,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext" />
         <Parameter Name="propertyValues" Type="System.Collections.IDictionary">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -1622,23 +1354,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetConvertFromException">
-      <MemberSignature Language="C#" Value="protected Exception GetConvertFromException (object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected Exception GetConvertFromException (object? value);" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance class System.Exception GetConvertFromException(object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetConvertFromException(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Protected Function GetConvertFromException (value As Object) As Exception" />
       <MemberSignature Language="F#" Value="member this.GetConvertFromException : obj -&gt; Exception" Usage="typeConverter.GetConvertFromException value" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; Exception ^ GetConvertFromException(System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="protected Exception GetConvertFromException (object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1662,7 +1386,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <Parameters>
         <Parameter Name="value" Type="System.Object">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1678,23 +1402,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetConvertToException">
-      <MemberSignature Language="C#" Value="protected Exception GetConvertToException (object? value, Type destinationType);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected Exception GetConvertToException (object? value, Type destinationType);" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance class System.Exception GetConvertToException(object value, class System.Type destinationType) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetConvertToException(System.Object,System.Type)" />
       <MemberSignature Language="VB.NET" Value="Protected Function GetConvertToException (value As Object, destinationType As Type) As Exception" />
       <MemberSignature Language="F#" Value="member this.GetConvertToException : obj * Type -&gt; Exception" Usage="typeConverter.GetConvertToException (value, destinationType)" />
       <MemberSignature Language="C++ CLI" Value="protected:&#xA; Exception ^ GetConvertToException(System::Object ^ value, Type ^ destinationType);" />
-      <MemberSignature Language="C#" Value="protected Exception GetConvertToException (object value, Type destinationType);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1718,7 +1434,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <Parameters>
         <Parameter Name="value" Type="System.Object">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1736,11 +1452,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="GetCreateInstanceSupported">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether changing a value on this object requires a call to the <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)" /> method to create a new value.</summary>
       </Docs>
@@ -1755,13 +1466,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1779,12 +1483,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -1797,23 +1495,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetCreateInstanceSupported">
-      <MemberSignature Language="C#" Value="public virtual bool GetCreateInstanceSupported (System.ComponentModel.ITypeDescriptorContext? context);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool GetCreateInstanceSupported (System.ComponentModel.ITypeDescriptorContext? context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool GetCreateInstanceSupported(class System.ComponentModel.ITypeDescriptorContext context) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetCreateInstanceSupported(System.ComponentModel.ITypeDescriptorContext)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetCreateInstanceSupported (context As ITypeDescriptorContext) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member GetCreateInstanceSupported : System.ComponentModel.ITypeDescriptorContext -&gt; bool&#xA;override this.GetCreateInstanceSupported : System.ComponentModel.ITypeDescriptorContext -&gt; bool" Usage="typeConverter.GetCreateInstanceSupported context" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool GetCreateInstanceSupported(System::ComponentModel::ITypeDescriptorContext ^ context);" />
-      <MemberSignature Language="C#" Value="public virtual bool GetCreateInstanceSupported (System.ComponentModel.ITypeDescriptorContext context);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1859,33 +1549,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="GetProperties">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns a collection of properties for the type of array specified by the value parameter.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="GetProperties">
-      <MemberSignature Language="C#" Value="public System.ComponentModel.PropertyDescriptorCollection? GetProperties (object value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public System.ComponentModel.PropertyDescriptorCollection? GetProperties (object value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.ComponentModel.PropertyDescriptorCollection GetProperties(object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetProperties(System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function GetProperties (value As Object) As PropertyDescriptorCollection" />
       <MemberSignature Language="F#" Value="member this.GetProperties : obj -&gt; System.ComponentModel.PropertyDescriptorCollection" Usage="typeConverter.GetProperties value" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::ComponentModel::PropertyDescriptorCollection ^ GetProperties(System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public System.ComponentModel.PropertyDescriptorCollection GetProperties (object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1904,13 +1581,9 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The Type of value cannot be statically discovered.")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The Type of value cannot be statically discovered.")&gt;]</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
         </Attribute>
       </Attributes>
       <ReturnValue>
@@ -1935,30 +1608,22 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
 ## Remarks
  As implemented in this class, this method always returns `null`.
 
- By default, a type does not return properties. An easy implementation of this method can call <xref:System.ComponentModel.TypeDescriptor.GetProperties%2A> for the correct data type.
+ By default, a type does not return properties. An easy implementation of this method can call <xref:System.ComponentModel.TypeDescriptor.GetProperties*> for the correct data type.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetProperties">
-      <MemberSignature Language="C#" Value="public System.ComponentModel.PropertyDescriptorCollection? GetProperties (System.ComponentModel.ITypeDescriptorContext? context, object value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public System.ComponentModel.PropertyDescriptorCollection? GetProperties (System.ComponentModel.ITypeDescriptorContext? context, object value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.ComponentModel.PropertyDescriptorCollection GetProperties(class System.ComponentModel.ITypeDescriptorContext context, object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetProperties(System.ComponentModel.ITypeDescriptorContext,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Function GetProperties (context As ITypeDescriptorContext, value As Object) As PropertyDescriptorCollection" />
       <MemberSignature Language="F#" Value="member this.GetProperties : System.ComponentModel.ITypeDescriptorContext * obj -&gt; System.ComponentModel.PropertyDescriptorCollection" Usage="typeConverter.GetProperties (context, value)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::ComponentModel::PropertyDescriptorCollection ^ GetProperties(System::ComponentModel::ITypeDescriptorContext ^ context, System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public System.ComponentModel.PropertyDescriptorCollection GetProperties (System.ComponentModel.ITypeDescriptorContext context, object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1977,7 +1642,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The Type of value cannot be statically discovered.")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The Type of value cannot be statically discovered.")&gt;]</AttributeName>
         </Attribute>
@@ -1989,7 +1654,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext" />
         <Parameter Name="value" Type="System.Object">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -2009,7 +1674,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
 
  As implemented in this class, this method always returns `null`.
 
- By default, a type does not return properties. An easy implementation of this method can call <xref:System.ComponentModel.TypeDescriptor.GetProperties%2A> for the correct data type.
+ By default, a type does not return properties. An easy implementation of this method can call <xref:System.ComponentModel.TypeDescriptor.GetProperties*> for the correct data type.
 
  ]]></format>
         </remarks>
@@ -2017,23 +1682,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetProperties">
-      <MemberSignature Language="C#" Value="public virtual System.ComponentModel.PropertyDescriptorCollection? GetProperties (System.ComponentModel.ITypeDescriptorContext? context, object value, Attribute[]? attributes);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual System.ComponentModel.PropertyDescriptorCollection? GetProperties (System.ComponentModel.ITypeDescriptorContext? context, object value, Attribute[]? attributes);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.ComponentModel.PropertyDescriptorCollection GetProperties(class System.ComponentModel.ITypeDescriptorContext context, object value, class System.Attribute[] attributes) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetProperties(System.ComponentModel.ITypeDescriptorContext,System.Object,System.Attribute[])" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetProperties (context As ITypeDescriptorContext, value As Object, attributes As Attribute()) As PropertyDescriptorCollection" />
       <MemberSignature Language="F#" Value="abstract member GetProperties : System.ComponentModel.ITypeDescriptorContext * obj * Attribute[] -&gt; System.ComponentModel.PropertyDescriptorCollection&#xA;override this.GetProperties : System.ComponentModel.ITypeDescriptorContext * obj * Attribute[] -&gt; System.ComponentModel.PropertyDescriptorCollection" Usage="typeConverter.GetProperties (context, value, attributes)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::ComponentModel::PropertyDescriptorCollection ^ GetProperties(System::ComponentModel::ITypeDescriptorContext ^ context, System::Object ^ value, cli::array &lt;Attribute ^&gt; ^ attributes);" />
-      <MemberSignature Language="C#" Value="public virtual System.ComponentModel.PropertyDescriptorCollection GetProperties (System.ComponentModel.ITypeDescriptorContext context, object value, Attribute[] attributes);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2052,7 +1709,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The Type of value cannot be statically discovered. The public parameterless constructor or the 'Default' static field may be trimmed from the Attribute's Type.")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The Type of value cannot be statically discovered. The public parameterless constructor or the 'Default' static field may be trimmed from the Attribute's Type.")&gt;]</AttributeName>
         </Attribute>
@@ -2064,7 +1721,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <Parameter Name="context" Type="System.ComponentModel.ITypeDescriptorContext" />
         <Parameter Name="value" Type="System.Object">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -2072,7 +1729,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         </Parameter>
         <Parameter Name="attributes" Type="System.Attribute[]">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 2, 1 })&gt;]</AttributeName>
             </Attribute>
@@ -2113,11 +1770,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="GetPropertiesSupported">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether this object supports properties.</summary>
       </Docs>
@@ -2132,13 +1784,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2156,12 +1801,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -2181,23 +1820,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetPropertiesSupported">
-      <MemberSignature Language="C#" Value="public virtual bool GetPropertiesSupported (System.ComponentModel.ITypeDescriptorContext? context);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool GetPropertiesSupported (System.ComponentModel.ITypeDescriptorContext? context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool GetPropertiesSupported(class System.ComponentModel.ITypeDescriptorContext context) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetPropertiesSupported(System.ComponentModel.ITypeDescriptorContext)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetPropertiesSupported (context As ITypeDescriptorContext) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member GetPropertiesSupported : System.ComponentModel.ITypeDescriptorContext -&gt; bool&#xA;override this.GetPropertiesSupported : System.ComponentModel.ITypeDescriptorContext -&gt; bool" Usage="typeConverter.GetPropertiesSupported context" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool GetPropertiesSupported(System::ComponentModel::ITypeDescriptorContext ^ context);" />
-      <MemberSignature Language="C#" Value="public virtual bool GetPropertiesSupported (System.ComponentModel.ITypeDescriptorContext context);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2243,33 +1874,20 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStandardValues">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns a collection of standard values for the data type this type converter is designed for.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="GetStandardValues">
-      <MemberSignature Language="C#" Value="public System.Collections.ICollection? GetStandardValues ();" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public System.Collections.ICollection? GetStandardValues ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Collections.ICollection GetStandardValues() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetStandardValues" />
       <MemberSignature Language="VB.NET" Value="Public Function GetStandardValues () As ICollection" />
       <MemberSignature Language="F#" Value="member this.GetStandardValues : unit -&gt; System.Collections.ICollection" Usage="typeConverter.GetStandardValues " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Collections::ICollection ^ GetStandardValues();" />
-      <MemberSignature Language="C#" Value="public System.Collections.ICollection GetStandardValues ();" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2287,12 +1905,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Collections.ICollection</ReturnType>
       </ReturnValue>
@@ -2311,23 +1923,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetStandardValues">
-      <MemberSignature Language="C#" Value="public virtual System.ComponentModel.TypeConverter.StandardValuesCollection? GetStandardValues (System.ComponentModel.ITypeDescriptorContext? context);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual System.ComponentModel.TypeConverter.StandardValuesCollection? GetStandardValues (System.ComponentModel.ITypeDescriptorContext? context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.ComponentModel.TypeConverter/StandardValuesCollection GetStandardValues(class System.ComponentModel.ITypeDescriptorContext context) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetStandardValues (context As ITypeDescriptorContext) As TypeConverter.StandardValuesCollection" />
       <MemberSignature Language="F#" Value="abstract member GetStandardValues : System.ComponentModel.ITypeDescriptorContext -&gt; System.ComponentModel.TypeConverter.StandardValuesCollection&#xA;override this.GetStandardValues : System.ComponentModel.ITypeDescriptorContext -&gt; System.ComponentModel.TypeConverter.StandardValuesCollection" Usage="typeConverter.GetStandardValues context" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::ComponentModel::TypeConverter::StandardValuesCollection ^ GetStandardValues(System::ComponentModel::ITypeDescriptorContext ^ context);" />
-      <MemberSignature Language="C#" Value="public virtual System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues (System.ComponentModel.ITypeDescriptorContext context);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2375,11 +1979,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStandardValuesExclusive">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether the collection of standard values returned from <see cref="M:System.ComponentModel.TypeConverter.GetStandardValues" /> is an exclusive list.</summary>
       </Docs>
@@ -2394,13 +1993,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2418,12 +2010,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -2438,30 +2024,22 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
 ## Remarks
  As implemented in this class, this method always returns `false`.
 
- If the list is exclusive, such as in an enumeration data type, then no other values are valid. If the list is not exclusive, then other valid values might exist in addition to the list of standard values that the <xref:System.ComponentModel.TypeConverter.GetStandardValues%2A> method provides. If the values are exclusive, the list returned by <xref:System.ComponentModel.TypeConverter.GetStandardValues%2A> should not allow these values to be edited.
+ If the list is exclusive, such as in an enumeration data type, then no other values are valid. If the list is not exclusive, then other valid values might exist in addition to the list of standard values that the <xref:System.ComponentModel.TypeConverter.GetStandardValues*> method provides. If the values are exclusive, the list returned by <xref:System.ComponentModel.TypeConverter.GetStandardValues*> should not allow these values to be edited.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="GetStandardValuesExclusive">
-      <MemberSignature Language="C#" Value="public virtual bool GetStandardValuesExclusive (System.ComponentModel.ITypeDescriptorContext? context);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool GetStandardValuesExclusive (System.ComponentModel.ITypeDescriptorContext? context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool GetStandardValuesExclusive(class System.ComponentModel.ITypeDescriptorContext context) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetStandardValuesExclusive (context As ITypeDescriptorContext) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member GetStandardValuesExclusive : System.ComponentModel.ITypeDescriptorContext -&gt; bool&#xA;override this.GetStandardValuesExclusive : System.ComponentModel.ITypeDescriptorContext -&gt; bool" Usage="typeConverter.GetStandardValuesExclusive context" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool GetStandardValuesExclusive(System::ComponentModel::ITypeDescriptorContext ^ context);" />
-      <MemberSignature Language="C#" Value="public virtual bool GetStandardValuesExclusive (System.ComponentModel.ITypeDescriptorContext context);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2496,7 +2074,7 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
 ## Remarks
  As implemented in this class, this method always returns `false`.
 
- If the list is exclusive, such as in an enumeration data type, then no other values are valid. If the list is not exclusive, then other valid values might exist in addition to the list of standard values that the <xref:System.ComponentModel.TypeConverter.GetStandardValues%2A> method provides. If the values are exclusive, the list returned by <xref:System.ComponentModel.TypeConverter.GetStandardValues%2A> should not allow these values to be edited.
+ If the list is exclusive, such as in an enumeration data type, then no other values are valid. If the list is not exclusive, then other valid values might exist in addition to the list of standard values that the <xref:System.ComponentModel.TypeConverter.GetStandardValues*> method provides. If the values are exclusive, the list returned by <xref:System.ComponentModel.TypeConverter.GetStandardValues*> should not allow these values to be edited.
 
  ]]></format>
         </remarks>
@@ -2509,11 +2087,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="GetStandardValuesSupported">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether this object supports a standard set of values that can be picked from a list.</summary>
       </Docs>
@@ -2528,13 +2101,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2552,12 +2118,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -2570,23 +2130,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="GetStandardValuesSupported">
-      <MemberSignature Language="C#" Value="public virtual bool GetStandardValuesSupported (System.ComponentModel.ITypeDescriptorContext? context);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool GetStandardValuesSupported (System.ComponentModel.ITypeDescriptorContext? context);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool GetStandardValuesSupported(class System.ComponentModel.ITypeDescriptorContext context) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetStandardValuesSupported (context As ITypeDescriptorContext) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member GetStandardValuesSupported : System.ComponentModel.ITypeDescriptorContext -&gt; bool&#xA;override this.GetStandardValuesSupported : System.ComponentModel.ITypeDescriptorContext -&gt; bool" Usage="typeConverter.GetStandardValuesSupported context" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool GetStandardValuesSupported(System::ComponentModel::ITypeDescriptorContext ^ context);" />
-      <MemberSignature Language="C#" Value="public virtual bool GetStandardValuesSupported (System.ComponentModel.ITypeDescriptorContext context);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2632,11 +2184,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <MemberGroup MemberName="IsValid">
-      <AssemblyInfo>
-        <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns whether the given value object is valid for this type.</summary>
       </Docs>
@@ -2651,13 +2198,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2675,12 +2215,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -2696,17 +2230,8 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Starting in .NET Framework 4, the <xref:System.ComponentModel.TypeConverter.IsValid%2A> method catches exceptions from the <xref:System.ComponentModel.TypeConverter.CanConvertFrom%2A> and <xref:System.ComponentModel.TypeConverter.ConvertFrom%2A> methods. If the input value type causes <xref:System.ComponentModel.TypeConverter.CanConvertFrom%2A> to return `false`, or if the input value causes <xref:System.ComponentModel.TypeConverter.ConvertFrom%2A> to raise an exception, the <xref:System.ComponentModel.TypeConverter.IsValid%2A> method returns `false`.
 
- To enable the legacy behavior, insert the following lines into the configuration file of your .NET Framework application.
-
-```xml
-<configuration>
-  <appSettings>
-    <add key="UseCompatibleTypeConverterBehavior" value="true" />
-  </appSettings>
-</configuration>
-```
+The <xref:System.ComponentModel.TypeConverter.IsValid*> method catches exceptions from the <xref:System.ComponentModel.TypeConverter.CanConvertFrom*> and <xref:System.ComponentModel.TypeConverter.ConvertFrom*> methods. If the input value type causes <xref:System.ComponentModel.TypeConverter.CanConvertFrom*> to return `false`, or if the input value causes <xref:System.ComponentModel.TypeConverter.ConvertFrom*> to raise an exception, the <xref:System.ComponentModel.TypeConverter.IsValid*> method returns `false`.
 
  ]]></format>
         </remarks>
@@ -2721,23 +2246,15 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       </Docs>
     </Member>
     <Member MemberName="IsValid">
-      <MemberSignature Language="C#" Value="public virtual bool IsValid (System.ComponentModel.ITypeDescriptorContext? context, object? value);" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual bool IsValid (System.ComponentModel.ITypeDescriptorContext? context, object? value);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool IsValid(class System.ComponentModel.ITypeDescriptorContext context, object value) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.ComponentModel.TypeConverter.IsValid(System.ComponentModel.ITypeDescriptorContext,System.Object)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function IsValid (context As ITypeDescriptorContext, value As Object) As Boolean" />
       <MemberSignature Language="F#" Value="abstract member IsValid : System.ComponentModel.ITypeDescriptorContext * obj -&gt; bool&#xA;override this.IsValid : System.ComponentModel.ITypeDescriptorContext * obj -&gt; bool" Usage="typeConverter.IsValid (context, value)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool IsValid(System::ComponentModel::ITypeDescriptorContext ^ context, System::Object ^ value);" />
-      <MemberSignature Language="C#" Value="public virtual bool IsValid (System.ComponentModel.ITypeDescriptorContext context, object value);" FrameworkAlternate="net-5.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2772,22 +2289,12 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- Use the `context` parameter to extract additional information about the environment from which this converter is invoked. This parameter can be `null`, so always check it. Also, properties on the context object can return `null`.
 
- Starting in .NET Framework 4, the <xref:System.ComponentModel.TypeConverter.IsValid%2A> method catches exceptions from the <xref:System.ComponentModel.TypeConverter.CanConvertFrom%2A> and <xref:System.ComponentModel.TypeConverter.ConvertFrom%2A> methods. If the input value type causes <xref:System.ComponentModel.TypeConverter.CanConvertFrom%2A> to return `false`, or if the input value causes <xref:System.ComponentModel.TypeConverter.ConvertFrom%2A> to raise an exception, the <xref:System.ComponentModel.TypeConverter.IsValid%2A> method returns `false`.
+Use the `context` parameter to extract additional information about the environment from which this converter is invoked. This parameter can be `null`, so always check it. Also, properties on the context object can return `null`.
 
- To enable the legacy behavior, insert the following lines into the configuration file of your .NET Framework application.
+The <xref:System.ComponentModel.TypeConverter.IsValid*> method catches exceptions from the <xref:System.ComponentModel.TypeConverter.CanConvertFrom*> and <xref:System.ComponentModel.TypeConverter.ConvertFrom*> methods. If the input value type causes <xref:System.ComponentModel.TypeConverter.CanConvertFrom*> to return `false`, or if the input value causes <xref:System.ComponentModel.TypeConverter.ConvertFrom*> to raise an exception, the <xref:System.ComponentModel.TypeConverter.IsValid*> method returns `false`.
 
-```xml
-<configuration>
-  <appSettings>
-    <add key="UseCompatibleTypeConverterBehavior" value="true" />
-  </appSettings>
-</configuration>
-```
-
-## Examples
- For an example of this function, see the <xref:System.ComponentModel.TypeConverter> class.
+For an example of this function, see <xref:System.ComponentModel.TypeConverter>.
 
  ]]></format>
         </remarks>
@@ -2810,13 +2317,6 @@ Note: Your derived type might be marked as <see langword="internal" /> or <see l
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.ComponentModel.TypeConverter</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>

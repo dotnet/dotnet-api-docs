@@ -24,34 +24,83 @@
       <AttributeName Language="C#">[System.CLSCompliant(false)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.CLSCompliant(false)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("android")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("android")&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("browser")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("browser")&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("ios")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("ios")&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.Versioning.UnsupportedOSPlatform("tvos")]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.Versioning.UnsupportedOSPlatform("tvos")&gt;]</AttributeName>
-    </Attribute>
-    <Attribute FrameworkAlternate="net-5.0">
-      <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("windows")]</AttributeName>
-      <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("windows")&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>Class for managing wrappers of COM IUnknown types.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-runtime-interopservices-comwrappers">Supplemental API remarks for ComWrappers</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+The <xref:System.Runtime.InteropServices.ComWrappers> API provides support for the `IUnknown` API independent of the built-in COM interoperability support. The `ComWrappers` API exposes the minimal runtime support that's needed for developers to replace the built-in version in an efficient manner.
+
+Traditionally in the runtime, a native proxy to managed object is called a COM Callable Wrapper (CCW), and a managed proxy to a native object is called a Runtime Callable Wrapper (RCW). However, when used here, those terms should not be confused with the built-in features of the same name (that is, [CCW](/dotnet/standard/native-interop/com-callable-wrapper) and [RCW](/dotnet/standard/native-interop/runtime-callable-wrapper)). Unlike the built-in features, a majority of the responsibility for accurate lifetime management, dispatching methods, and marshalling of arguments and return values is left to the `ComWrappers` implementer.
+
+"Minimal support" is defined by the following features:
+
+1. Efficient mapping between a managed object and a native proxy (for example, CCW).
+2. Efficient mapping between a native `IUnknown` and its managed proxy (for example, RCW).
+3. Integration with the garbage collector through the [IReferenceTrackerHost](/windows/win32/api/windows.ui.xaml.hosting.referencetracker/nn-windows-ui-xaml-hosting-referencetracker-ireferencetrackerhost) interface contract.
+
+Leveraging this is an advanced scenario.
+
+## Proxy state
+
+This section provides descriptions and illustrations of native and managed proxy state after their respective creation.
+
+In the following illustrations, a strong reference is depicted as a solid line (`===`) and a weak reference is depicted as a dashed line (`= = =`). The terms "strong reference" and "weak reference" should be interpreted as "extending lifetime" and "not extending lifetime", as opposed to implying a specific implementation.
+
+The following illustration shows the state of the managed object and native proxy after a call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateComInterfaceForObject(System.Object,System.Runtime.InteropServices.CreateComInterfaceFlags)?displayProperty=nameWithType>.
+
+```
+ --------------------                  ----------------------
+|   Managed object   |                |     Native proxy     |
+|                    |                | Ref count: 1         |
+|  ----------------  |                |  ------------------  |
+| | Weak reference |=| = = = = = = = >| | Strong reference | |
+| |    to proxy    | |<===============|=|    to object     | |
+|  ----------------  |                |  ------------------  |
+ --------------------                  ----------------------
+```
+
+The next illustration shows the state of the native object and managed proxy after a call to <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)?displayProperty=nameWithType>. The concept of "identity" follows the [rules for `IUnknown`](/windows/win32/com/rules-for-implementing-queryinterface#objects-must-have-identity).
+
+```
+ ------------------               ------------------
+|  Native object   |< = = = = = =|                  |
+| Ref count: +1    |             | Mapping from     |
+ ------------------              | native identity  |
+ ------------------------        | to managed proxy |
+|   Managed proxy        |< = = =|                  |
+| Created by ComWrappers |        ------------------
+|   implementer.        |
+| Optional AddRef() on   |
+|   native object.      |
+ ------------------------
+```
+
+Observe that only weak references exist from the runtime perspective. The `+1` reference count on the native object is assumed to be performed by the managed proxy creator (that is, the `ComWrappers` implementer) to ensure the associated lifetime between the native object and its managed proxy. There is an optional strong reference (that is, `AddRef()`) mentioned in the managed proxy, which is used to support scenario (3) mentioned earlier. See <xref:System.Runtime.InteropServices.CreateObjectFlags.TrackerObject?displayProperty=nameWithType>. With this optional strong reference, the reference count would be `+2`.
+
+ ]]></format>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -63,9 +112,6 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -86,9 +132,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -100,7 +143,7 @@
       <Parameters>
         <Parameter Name="obj" Type="System.Object">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
@@ -129,6 +172,11 @@ If the interface entries cannot be created and a negative `count` or `null` and 
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="CreateObject">
+      <Docs>
+        <summary>Creates a managed object for the object pointed at by <paramref name="externalComObject" /> respecting the values of <paramref name="flags" />.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="CreateObject">
       <MemberSignature Language="C#" Value="protected abstract object? CreateObject (IntPtr externalComObject, System.Runtime.InteropServices.CreateObjectFlags flags);" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance object CreateObject(native int externalComObject, valuetype System.Runtime.InteropServices.CreateObjectFlags flags) cil managed" />
@@ -139,9 +187,6 @@ If the interface entries cannot be created and a negative `count` or `null` and 
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -206,22 +251,15 @@ If the object cannot be created and `null` is returned, the call to <xref:System
       </Docs>
     </Member>
     <Member MemberName="GetIUnknownImpl">
-      <MemberSignature Language="C#" Value="public static void GetIUnknownImpl (out IntPtr fpQueryInterface, out IntPtr fpAddRef, out IntPtr fpRelease);" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void GetIUnknownImpl([out] native int&amp; fpQueryInterface, [out] native int&amp; fpAddRef, [out] native int&amp; fpRelease) cil managed" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public static void GetIUnknownImpl (out IntPtr fpQueryInterface, out IntPtr fpAddRef, out IntPtr fpRelease);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void GetIUnknownImpl([out] native int&amp; fpQueryInterface, [out] native int&amp; fpAddRef, [out] native int&amp; fpRelease) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Runtime.InteropServices.ComWrappers.GetIUnknownImpl(System.IntPtr@,System.IntPtr@,System.IntPtr@)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Sub GetIUnknownImpl (ByRef fpQueryInterface As IntPtr, ByRef fpAddRef As IntPtr, ByRef fpRelease As IntPtr)" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Sub GetIUnknownImpl (ByRef fpQueryInterface As IntPtr, ByRef fpAddRef As IntPtr, ByRef fpRelease As IntPtr)" />
       <MemberSignature Language="F#" Value="static member GetIUnknownImpl : nativeint * nativeint * nativeint -&gt; unit" Usage="System.Runtime.InteropServices.ComWrappers.GetIUnknownImpl (fpQueryInterface, fpAddRef, fpRelease)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void GetIUnknownImpl([Runtime::InteropServices::Out] IntPtr % fpQueryInterface, [Runtime::InteropServices::Out] IntPtr % fpAddRef, [Runtime::InteropServices::Out] IntPtr % fpRelease);" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C#" Value="protected static void GetIUnknownImpl (out IntPtr fpQueryInterface, out IntPtr fpAddRef, out IntPtr fpRelease);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
-      <MemberSignature Language="ILAsm" Value=".method familystatic hidebysig void GetIUnknownImpl([out] native int&amp; fpQueryInterface, [out] native int&amp; fpAddRef, [out] native int&amp; fpRelease) cil managed" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
-      <MemberSignature Language="VB.NET" Value="Protected Shared Sub GetIUnknownImpl (ByRef fpQueryInterface As IntPtr, ByRef fpAddRef As IntPtr, ByRef fpRelease As IntPtr)" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; static void GetIUnknownImpl([Runtime::InteropServices::Out] IntPtr % fpQueryInterface, [Runtime::InteropServices::Out] IntPtr % fpAddRef, [Runtime::InteropServices::Out] IntPtr % fpRelease);" FrameworkAlternate="net-5.0;net-6.0;net-7.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static void GetIUnknownImpl([Runtime::InteropServices::Out] IntPtr % fpQueryInterface, [Runtime::InteropServices::Out] IntPtr % fpAddRef, [Runtime::InteropServices::Out] IntPtr % fpRelease);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -261,9 +299,6 @@ The runtime implementations of these `IUnknown` functions are all thread-safe. E
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -292,6 +327,11 @@ If a COM representation was previously created for the specified `instance` usin
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="GetOrCreateObjectForComInstance">
+      <Docs>
+        <summary>Gets the currently registered managed object or creates a new managed object and registers it.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="GetOrCreateObjectForComInstance">
       <MemberSignature Language="C#" Value="public object GetOrCreateObjectForComInstance (IntPtr externalComObject, System.Runtime.InteropServices.CreateObjectFlags flags);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetOrCreateObjectForComInstance(native int externalComObject, valuetype System.Runtime.InteropServices.CreateObjectFlags flags) cil managed" />
@@ -302,9 +342,6 @@ If a COM representation was previously created for the specified `instance` usin
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -372,6 +409,11 @@ If a managed object was previously created for the specified `externalComObject`
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="GetOrRegisterObjectForComInstance">
+      <Docs>
+        <summary>Get the currently registered managed object or uses the supplied managed object and registers it.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="GetOrRegisterObjectForComInstance">
       <MemberSignature Language="C#" Value="public object GetOrRegisterObjectForComInstance (IntPtr externalComObject, System.Runtime.InteropServices.CreateObjectFlags flags, object wrapper);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance object GetOrRegisterObjectForComInstance(native int externalComObject, valuetype System.Runtime.InteropServices.CreateObjectFlags flags, object wrapper) cil managed" />
@@ -382,9 +424,6 @@ If a managed object was previously created for the specified `externalComObject`
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -426,8 +465,6 @@ If the `wrapper` instance already has an associated external object a <xref:Syst
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -437,10 +474,10 @@ If the `wrapper` instance already has an associated external object a <xref:Syst
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="externalComObject" Type="System.IntPtr" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
-        <Parameter Name="flags" Type="System.Runtime.InteropServices.CreateObjectFlags" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
-        <Parameter Name="wrapper" Type="System.Object" Index="2" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
-        <Parameter Name="inner" Type="System.IntPtr" Index="3" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+        <Parameter Name="externalComObject" Type="System.IntPtr" />
+        <Parameter Name="flags" Type="System.Runtime.InteropServices.CreateObjectFlags" />
+        <Parameter Name="wrapper" Type="System.Object" />
+        <Parameter Name="inner" Type="System.IntPtr" />
       </Parameters>
       <Docs>
         <param name="externalComObject">Object to import for usage into the .NET runtime.</param>
@@ -475,16 +512,13 @@ If the `wrapper` instance already has an associated external object a <xref:Syst
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Runtime.Versioning.SupportedOSPlatform("windows")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.Versioning.SupportedOSPlatform("windows")&gt;]</AttributeName>
         </Attribute>
@@ -524,9 +558,6 @@ This function can only be called a single time. Subsequent calls to this functio
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -565,9 +596,6 @@ This function can only be called a single time. Subsequent calls to this functio
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Runtime.InteropServices</AssemblyName>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -604,8 +632,8 @@ This function can only be called a single time. Subsequent calls to this functio
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="obj" Type="System.Object" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-        <Parameter Name="unknown" Type="System.IntPtr" RefType="out" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+        <Parameter Name="obj" Type="System.Object" />
+        <Parameter Name="unknown" Type="System.IntPtr" RefType="out" />
       </Parameters>
       <Docs>
         <param name="obj">The managed wrapper.</param>
@@ -637,8 +665,8 @@ This function can only be called a single time. Subsequent calls to this functio
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="unknown" Type="System.IntPtr" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-        <Parameter Name="obj" Type="System.Object" RefType="out" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Parameter Name="unknown" Type="System.IntPtr" />
+        <Parameter Name="obj" Type="System.Object" RefType="out">
           <Attributes>
             <Attribute>
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.NotNullWhen(true)]</AttributeName>

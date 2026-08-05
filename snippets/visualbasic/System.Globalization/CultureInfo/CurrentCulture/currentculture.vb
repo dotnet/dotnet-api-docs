@@ -2,9 +2,8 @@
 Imports System.Globalization
 Imports System.Threading
 
-Public Module Example
-   Public Sub Main()
-
+Public Module Example2
+   Public Sub Run()
       ' Display the name of the current culture.
       Console.WriteLine("CurrentCulture is {0}.", CultureInfo.CurrentCulture.Name)
 
@@ -18,7 +17,7 @@ Public Module Example
       ' Change the current UI culture to ja-JP.
       CultureInfo.CurrentUICulture = New CultureInfo("ja-JP", False)
       Console.WriteLine("CurrentUICulture is now {0}.", CultureInfo.CurrentUICulture.Name)
-   End Sub 
+   End Sub
 End Module
 ' The example displays the following output:
 '       CurrentCulture is en-US.

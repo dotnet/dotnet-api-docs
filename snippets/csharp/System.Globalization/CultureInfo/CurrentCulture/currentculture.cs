@@ -1,7 +1,6 @@
 ﻿// <snippet11>
 using System;
 using System.Globalization;
-using System.Threading;
 
 public class Example0
 {
@@ -22,6 +21,7 @@ public class Example0
       Console.WriteLine("CurrentUICulture is now {0}.", CultureInfo.CurrentUICulture.Name);
    }
 }
+
 // The example displays the following output:
 //       CurrentCulture is en-US.
 //       CurrentCulture is now th-TH.

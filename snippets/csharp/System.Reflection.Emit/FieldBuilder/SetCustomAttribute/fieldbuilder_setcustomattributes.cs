@@ -49,9 +49,9 @@ namespace MySample
          myAssemblyName.Name = "EmittedAssembly";
          // Create the called dynamic assembly.
          AssemblyBuilder myAssemblyBuilder =
-            currentDomain.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.RunAndSave);
+            AssemblyBuilder.DefineDynamicAssembly(myAssemblyName, AssemblyBuilderAccess.Run);
          ModuleBuilder myModuleBuilder =
-                  myAssemblyBuilder.DefineDynamicModule("EmittedModule","EmittedModule.mod");
+                  myAssemblyBuilder.DefineDynamicModule("EmittedModule");
          // Define a public class named 'CustomClass' in the assembly.
          TypeBuilder myTypeBuilder = myModuleBuilder.DefineType("CustomClass",
             TypeAttributes.Public);

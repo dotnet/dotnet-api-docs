@@ -4,7 +4,7 @@ using System.Globalization;
 
 public enum SignBit { Negative=-1, Zero=0, Positive=1 };
 
-public struct ByteString : IConvertible
+public struct ByteString3 : IConvertible
 {
    private SignBit signBit;
    private string byteString;
@@ -60,7 +60,7 @@ public struct ByteString : IConvertible
 
    public DateTime ToDateTime(IFormatProvider provider)
    {
-      throw new InvalidCastException("ByteString to DateTime conversion is not supported.");
+      throw new InvalidCastException("ByteString3 to DateTime conversion is not supported.");
    }
 
    public decimal ToDecimal(IFormatProvider provider)
@@ -159,7 +159,7 @@ public struct ByteString : IConvertible
          case TypeCode.Int64:
             return this.ToInt64(null);
          case TypeCode.Object:
-            if (typeof(ByteString).Equals(conversionType))
+            if (typeof(ByteString3).Equals(conversionType))
                return this;
             else
                throw new InvalidCastException(String.Format("Conversion to a {0} is not supported.", conversionType.Name));
@@ -217,11 +217,11 @@ public class Class1
       byte positiveByte = 216;
       sbyte negativeByte = -101;
 
-      ByteString positiveString = new ByteString();
+      ByteString3 positiveString = new ByteString3();
       positiveString.Sign = (SignBit) Math.Sign(positiveByte);
       positiveString.Value = positiveByte.ToString("X2");
 
-      ByteString negativeString = new ByteString();
+      ByteString3 negativeString = new ByteString3();
       negativeString.Sign = (SignBit) Math.Sign(negativeByte);
       negativeString.Value = negativeByte.ToString("X2");
 

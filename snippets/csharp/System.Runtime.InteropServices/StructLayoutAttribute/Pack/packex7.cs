@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 [StructLayout(LayoutKind.Sequential, Pack = 16)]
 unsafe struct ExampleStruct7
 {
-
     public byte b1;
     public byte b2;
     public int i3;
@@ -29,19 +28,10 @@ public class Example7
 }
 // The example displays the following output:
 //
-// .NET 5+:
 //       Size:      32
 //       b1 Offset: 0
 //       b2 Offset: 1
 //       i3 Offset: 4
 //       a4 Offset: 8
 //       d5 Offset: 16
-//
-// .NET Framework:
-//       Size:      28
-//       b1 Offset: 0
-//       b2 Offset: 1
-//       i3 Offset: 4
-//       a4 Offset: 8
-//       d5 Offset: 12
 // </Snippet8>

@@ -17,7 +17,7 @@ let t =
         printfn $"Mean:    {float sum / float n:N2}"
         printfn $"N:       {n:N0}")
 
-let ts = TimeSpan.FromMilliseconds 150
+let ts = TimeSpan.FromMilliseconds 150.0
 
 if t.Wait ts |> not then
     printfn "The timeout interval elapsed."

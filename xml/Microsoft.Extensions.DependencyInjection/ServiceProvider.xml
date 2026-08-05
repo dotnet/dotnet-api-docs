@@ -80,8 +80,16 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+            Disposes the service provider and all resolved services that implement <see cref="T:System.IDisposable" />.
+            </summary>
+        <remarks>
+            Prefer calling <see cref="M:Microsoft.Extensions.DependencyInjection.ServiceProvider.DisposeAsync" /> over this method. If any resolved service implements
+            <see cref="T:System.IAsyncDisposable" /> but not <see cref="T:System.IDisposable" />, this method throws an
+            <see cref="T:System.InvalidOperationException" />. Use <see cref="M:Microsoft.Extensions.DependencyInjection.ServiceProvider.DisposeAsync" /> to properly handle all
+            disposable services, or explicitly perform sync-over-async on the caller side if synchronous
+            disposal is required.
+            </remarks>
         <inheritdoc />
       </Docs>
     </Member>
@@ -105,9 +113,15 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources asynchronously.</summary>
-        <returns>A task that represents the asynchronous dispose operation.</returns>
-        <remarks>This method stores in the task it returns all non-usage exceptions that the method's synchronous counterpart can throw. If an exception is stored into the returned task, that exception will be thrown when the task is awaited. Usage exceptions, such as <see cref="T:System.ArgumentException" />, are still thrown synchronously. For the stored exceptions, see the exceptions thrown by <see cref="M:Microsoft.Extensions.DependencyInjection.ServiceProvider.Dispose" />.</remarks>
+        <summary>
+            Asynchronously disposes the service provider and all resolved services that implement <see cref="T:System.IDisposable" /> or <see cref="T:System.IAsyncDisposable" />.
+            </summary>
+        <returns>A value task that represents the asynchronous operation.</returns>
+        <remarks>
+            Awaiting individual <see cref="M:System.IAsyncDisposable.DisposeAsync" /> calls uses <c>ConfigureAwait(false)</c>,
+            so when an asynchronous dispose operation yields, its continuations do not attempt to resume on the original
+            synchronization context. Services should not rely on disposal continuations running on any particular context.
+            </remarks>
         <inheritdoc />
       </Docs>
     </Member>

@@ -63,13 +63,18 @@
         <summary>
             Configures the lifetime of the <see cref="T:Microsoft.Extensions.Hosting.IHost" /> built from <paramref name="services" /> to
             <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />, provides notification messages for application started
-            and stopping, and configures console logging to the systemd format.
+            and stopping, and configures console logging to the systemd format when running as a systemd service.
             </summary>
         <returns>The <paramref name="services" /> instance for chaining.</returns>
         <remarks>
           <para>
                 This is context aware and will only activate if it detects the process is running
-                as a systemd Service.
+                as a systemd Service or if <c>NOTIFY_SOCKET</c> is set.
+              </para>
+          <para>
+                The console log formatter is enabled when the process is detected as a systemd service.
+                The <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" /> and <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdNotifier" /> are registered when
+                <c>NOTIFY_SOCKET</c> is set or the process is detected as a systemd service.
               </para>
           <para>
                 The systemd service file must be configured with <c>Type=notify</c> to enable
@@ -101,17 +106,22 @@
         <summary>
             Configures the <see cref="T:Microsoft.Extensions.Hosting.IHost" /> lifetime to <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" />,
             provides notification messages for application started and stopping,
-            and configures console logging to the systemd format.
+            and configures console logging to the systemd format when running as a systemd service.
             </summary>
         <returns>The <paramref name="hostBuilder" /> instance for chaining.</returns>
         <remarks>
           <para>
                 This is context aware and will only activate if it detects the process is running
-                as a systemd Service.
+                as a systemd Service or if <c>NOTIFY_SOCKET</c> is set.
+              </para>
+          <para>
+                The console log formatter is enabled when the process is detected as a systemd service.
+                The <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdLifetime" /> and <see cref="T:Microsoft.Extensions.Hosting.Systemd.SystemdNotifier" /> are registered when
+                <c>NOTIFY_SOCKET</c> is set or the process is detected as a systemd service.
               </para>
           <para>
                 The systemd service file must be configured with <c>Type=notify</c> to enable
-                notifications. See https://www.freedesktop.org/software/systemd/man/systemd.service.html.
+                notifications. See <see href="https://www.freedesktop.org/software/systemd/man/systemd.service.html" />.
               </para>
         </remarks>
       </Docs>

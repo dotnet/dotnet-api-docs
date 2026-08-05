@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Resources;
 
-public class Example
+public class CreateResourcesExample
 {
    public static void Main()
    {

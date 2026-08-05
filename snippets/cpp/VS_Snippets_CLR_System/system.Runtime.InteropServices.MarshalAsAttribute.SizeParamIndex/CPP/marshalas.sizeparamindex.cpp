@@ -4,7 +4,7 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 
 // Force the layout of your fields to the C-style struct layout.
-// Without this, the .NET Framework will reorder your fields.
+// Without this, .NET will reorder your fields.
 
 [StructLayoutAttribute(LayoutKind::Sequential)]
 value struct Vertex

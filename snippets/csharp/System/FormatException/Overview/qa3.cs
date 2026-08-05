@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example
+public class FormatExample13
 {
    public static void Main()
    {
@@ -26,7 +26,7 @@ public class Example
          Console.WriteLine("FormatException");
       }
    }
-   
+
    public static void WontThrow()
    {
       // <Snippet24>
@@ -38,7 +38,7 @@ public class Example
       Console.WriteLine(result);
       // </Snippet24>
    }
-   
+
    public static void Recommended()
    {
       // <Snippet25>

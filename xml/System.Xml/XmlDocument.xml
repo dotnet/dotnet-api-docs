@@ -40,41 +40,235 @@
     <TypeForwarding From="System.Xml.XmlDocument" FromVersion="10.0.0.0" To="System.Xml.ReaderWriter" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
     <TypeForwarding From="System.Xml.XmlDocument" FromVersion="11.0.0.0" To="System.Xml.ReaderWriter" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="System.Xml.XmlDocument" FromVersion="5.0.0.0" To="System.Xml.ReaderWriter" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="System.Xml.XmlDocument" FromVersion="6.0.0.0" To="System.Xml.ReaderWriter" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
-    <TypeForwarding From="System.Xml.XmlDocument" FromVersion="7.0.0.0" To="System.Xml.ReaderWriter" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="System.Xml.XmlDocument" FromVersion="8.0.0.0" To="System.Xml.ReaderWriter" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.ReaderWriter" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
     <TypeForwarding From="System.Xml.XmlDocument" FromVersion="9.0.0.0" To="System.Xml.ReaderWriter" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
-    <TypeForwarding From="System.Xml.XmlDocument" FromVersion="4.1.0.0" To="System.Xml.ReaderWriter" ToVersion="4.2.0.0" FrameworkAlternate="netcore-2.0" />
-    <TypeForwarding From="System.Xml.XmlDocument" FromVersion="4.1.1.0" To="System.Xml.ReaderWriter" ToVersion="4.2.1.0" FrameworkAlternate="netcore-2.1;netcore-2.2;netcore-3.0" />
-    <TypeForwarding From="System.Xml.XmlDocument" FromVersion="4.1.2.0" To="System.Xml.ReaderWriter" ToVersion="4.2.2.0" FrameworkAlternate="netcore-3.1" />
   </TypeForwardingChain>
   <Base>
     <BaseTypeName>System.Xml.XmlNode</BaseTypeName>
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
     <summary>Represents an XML document. You can use this class to load, validate, edit, add, and position XML in a document.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-xml-xmldocument">Supplemental API remarks for XmlDocument</see>.</remarks>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+The <xref:System.Xml.XmlDocument> class is an in-memory representation of an XML document. It implements the W3C [XML Document Object Model (DOM)](/dotnet/standard/data/xml/xml-document-object-model-dom) Level 1 Core and the Core DOM Level 2.
+
+*DOM* stands for *document object model*. To read more about it, see [XML Document Object Model (DOM)](/dotnet/standard/data/xml/xml-document-object-model-dom).
+
+You can load XML into the DOM by using the <xref:System.Xml.XmlDocument> class, and then programmatically read, modify, and remove XML in the document.
+
+If you want to pry open the <xref:System.Xml.XmlDocument> class and see how it's implemented, see the [Reference Source](https://referencesource.microsoft.com/#System.Xml/Xml/System/Xml/Dom/XmlDocument.cs#f82a4c1bd1f0ee12).
+
+## Load XML into the document object model
+
+Start with an XML document like this one that has a few books in a collection. It contains the basic things that you'd find in any XML document, including a namespace, elements that represent data, and attributes that describe the data.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<books xmlns="http://www.contoso.com/books">
+  <book genre="novel" ISBN="1-861001-57-8" publicationdate="1823-01-28">
+    <title>Pride And Prejudice</title>
+    <price>24.95</price>
+  </book>
+  <book genre="novel" ISBN="1-861002-30-1" publicationdate="1985-01-01">
+    <title>The Handmaid's Tale</title>
+    <price>29.95</price>
+  </book>
+  <book genre="novel" ISBN="1-861001-45-3" publicationdate="1811-01-01">
+    <title>Sense and Sensibility</title>
+    <price>19.95</price>
+  </book>
+</books>
+```
+
+Next, load this data into the DOM so that you can work with it in memory. The most popular way to do this is refer to a file on your local computer or on a network.
+
+This example loads XML from a file. If the file doesn't exist, it just generates some XML and loads that.
+
+[!code-csharp[XMLProcessingApp#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#1)]
+[!code-vb[XMLProcessingApp#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#1)]
+
+For more information, see [Reading an XML Document into the DOM](/dotnet/standard/data/xml/reading-an-xml-document-into-the-dom).
+
+## Validate it against a schema
+
+Start with an XML schema like this one. This schema defines the data types in the XML and which attributes are required.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  attributeFormDefault="unqualified"
+  elementFormDefault="qualified"
+  targetNamespace="http://www.contoso.com/books">
+  <xs:element name="books">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="book">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" type="xs:string" />
+              <xs:element name="price" type="xs:decimal" />
+            </xs:sequence>
+            <xs:attribute name="genre" type="xs:string" use="required" />
+            <xs:attribute name="ISBN" type="xs:string" use="required" />
+            <xs:attribute name="publicationdate" type="xs:date" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+```
+
+Create an <xref:System.Xml.XmlReader> object by using your schema, and then load that object into the DOM. Create an event handler that executes when code attempts to modify your XML file in ways that violate the rules of the schema.
+
+These blocks of code show helper methods that do all of this.
+
+[!code-csharp[XMLProcessingApp#2](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#2)]
+[!code-vb[XMLProcessingApp#2](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#2)]
+
+For more information, see [Validating an XML Document in the DOM](/dotnet/standard/data/xml/validating-an-xml-document-in-the-dom).
+
+## Navigate the document tree
+
+You can use properties to navigate around an XML document. But before you use any of them, let's quickly review a few terms. Your document is composed of nodes. Each node has a single *parent* node directly above it. The only node that does not have a parent node is the document root, as it is the top-level node. Most nodes can have *child* nodes, which are nodes directly below them. Nodes that are at the same level are *siblings*.
+
+The following examples show you how to obtain the root node, jump to the first child node of the root node, access any of its child nodes, get back out to the parent node, and then navigate across sibling nodes.
+
+**Start with the root node**
+
+This example gets the root node and then uses that node to output the contents of the document to the console.
+
+[!code-csharp[Classic WebData XmlDocument.DocumentElement Example#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/source.cs#1)]
+[!code-vb[Classic WebData XmlDocument.DocumentElement Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/Non-WinForms/source-element.vb#1)]
+
+**Get child nodes**
+
+This example jumps to the first child node of the root node and then iterates through the child nodes of that node if any exist.
+
+[!code-csharp[Classic WebData XmlNode.HasChildNodes Example#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/source2.cs#1)]
+[!code-vb[Classic WebData XmlNode.HasChildNodes Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/Non-WinForms/source2.vb#1)]
+
+**Get back to the parent node**
+
+Use the <xref:System.Xml.XmlDocument.ParentNode> property.
+
+**Refer to the last child node**
+
+This example writes the price of a book to the console. The price node is the last child of a book node.
+
+[!code-csharp[Classic WebData XmlNode.LastChild Example#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/source3.cs#1)]
+[!code-vb[Classic WebData XmlNode.LastChild Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/Non-WinForms/source-lastchild.vb#1)]
+
+**Navigate forward across siblings**
+
+This example moves forward from book to book. Book nodes are siblings to one another.
+
+[!code-csharp[Classic WebData XmlNode.NextSibling Example#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/source4.cs#1)]
+[!code-vb[Classic WebData XmlNode.NextSibling Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/Non-WinForms/source-nextsibling.vb#1)]
+
+**Navigate backwards across siblings**
+
+This example moves backwards from book to book.
+
+[!code-csharp[Classic WebData XmlNode.PreviousSibling Example#1](~/snippets/csharp/System.Xml/XmlLinkedNode/PreviousSibling/source.cs#1)]
+[!code-vb[Classic WebData XmlNode.PreviousSibling Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/Non-WinForms/source5.vb#1)]
+
+## Find nodes
+
+The most popular way to find one or more nodes of data is to use an XPath query string, but there are also methods that don't require one.
+
+**Get a single node**
+
+This example locates a book by using the ISBN number.
+
+[!code-csharp[XMLProcessingApp#3](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#3)]
+[!code-vb[XMLProcessingApp#3](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#3)]
+
+The string used in this example is an Xpath query. You can find more examples of them at [XPath examples](/previous-versions/dotnet/netframework-4.0/ms256086(v=vs.100)).
+
+You can also use the <xref:System.Xml.XmlDocument.GetElementById*> to retrieve nodes. To use this approach, you'll have to define ID's in the document type definition declarations of your XML file.
+
+After you get a node, you get the value of attributes or child nodes. This example does that with a book node.
+
+[!code-csharp[XMLProcessingApp#4](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#4)]
+[!code-vb[XMLProcessingApp#4](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#4)]
+
+**Get a collection of nodes**
+
+This example selects all books where the author's last name is **Austen**, and then changes the price of those books.
+
+[!code-csharp[Classic WebData XmlNode.SelectNodes Example#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/source6.cs#1)]
+[!code-vb[Classic WebData XmlNode.SelectNodes Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/source.vb#1)]
+
+You can also get a collection of nodes by using the name of the node. For example, this example gets a collection of all book titles.
+
+[!code-csharp[Classic WebData XmlDocument.GetElementsByTagName Example#1](~/snippets/csharp/System.Xml/XmlDocument/Overview/source1.cs#1)]
+[!code-vb[Classic WebData XmlDocument.GetElementsByTagName Example#1](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/Non-WinForms/source-tag.vb#1)]
+
+For more information, see [Select Nodes Using XPath Navigation](/dotnet/standard/data/xml/select-nodes-using-xpath-navigation).
+
+## Edit nodes
+
+This example edits a book node and its attributes.
+
+[!code-csharp[XMLProcessingApp#7](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#7)]
+[!code-vb[XMLProcessingApp#7](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#7)]
+
+For more information, see [Modifying Nodes, Content, and Values in an XML Document](/dotnet/standard/data/xml/modifying-nodes-content-and-values-in-an-xml-document).
+
+## Add nodes
+
+To add a node, use the <xref:System.Xml.XmlDocument.CreateElement*> method or the <xref:System.Xml.XmlDocument.CreateNode*> method.
+
+To add a data node such as a book, use the <xref:System.Xml.XmlDocument.CreateElement*> method.
+
+For any other type of node such as a comment, whitespace node, or CDATA node, use the <xref:System.Xml.XmlDocument.CreateNode*> method.
+
+This example creates a book node, adds attributes to that node, and then adds that node to the document.
+
+[!code-csharp[XMLProcessingApp#5](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#5)]
+[!code-vb[XMLProcessingApp#5](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#5)]
+
+For more information, see [Inserting Nodes into an XML Document](/dotnet/standard/data/xml/inserting-nodes-into-an-xml-document).
+
+## Remove nodes
+
+To remove a node, use the <xref:System.Xml.XmlNode.RemoveChild*> method.
+
+This example removes a book from the document and any whitespace that appears just before the book node.
+
+[!code-csharp[XMLProcessingApp#6](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#6)]
+[!code-vb[XMLProcessingApp#6](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#6)]
+
+For more information, see [Removing Nodes, Content, and Values from an XML Document](/dotnet/standard/data/xml/removing-nodes-content-and-values-from-an-xml-document).
+
+## Position nodes
+
+You can choose where you want a node to appear in your document by using the <xref:System.Xml.XmlNode.InsertBefore*> and <xref:System.Xml.XmlNode.InsertAfter*> methods.
+
+This example shows two helper methods. One of them moves a node higher in a list. The other one moves a node lower.
+
+These methods could be used in an application that enables users to move books up and down in a list of books. When a user chooses a book and presses an up or down button, your code could call methods like these to position the corresponding book node before or after other book nodes.
+
+[!code-csharp[XMLProcessingApp#8](~/snippets/csharp/System.Xml/XmlDocument/Overview/xmlhelpermethods.cs#8)]
+[!code-vb[XMLProcessingApp#8](~/snippets/visualbasic/System.Xml/XmlDocument/Overview/WinForms/xmlhelpermethods.vb#8)]
+
+ ]]></format>
+    </remarks>
     <altmember cref="T:System.Xml.XmlNodeChangedEventHandler" />
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Xml.XmlDocument" /> class.</summary>
       </Docs>
@@ -105,12 +299,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -124,7 +312,7 @@
 
 ## Examples
 
-The following is an example of load-time validation. A document type definition (DTD) validating <xref:System.Xml.XmlReader> is passed to the <xref:System.Xml.XmlDocument.Load%2A> method and a <xref:System.Xml.Schema.ValidationEventHandler> is provided to notify users of any validation errors. In this example a validation error is found, but the document is still loaded. Alternatively, you can define a validating <xref:System.Xml.XmlReader> to throw an exception and stop the load process when a validation error is found by not specifying the <xref:System.Xml.Schema.ValidationEventHandler>. For more information about validating XML data, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
+The following is an example of load-time validation. A document type definition (DTD) validating <xref:System.Xml.XmlReader> is passed to the <xref:System.Xml.XmlDocument.Load*> method and a <xref:System.Xml.Schema.ValidationEventHandler> is provided to notify users of any validation errors. In this example a validation error is found, but the document is still loaded. Alternatively, you can define a validating <xref:System.Xml.XmlReader> to throw an exception and stop the load process when a validation error is found by not specifying the <xref:System.Xml.Schema.ValidationEventHandler>. For more information about validating XML data, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
 [!code-csharp[XmlDocument.cctor#1](~/snippets/csharp/System.Xml/XmlDocument/.ctor/docload.cs#1)]
 [!code-vb[XmlDocument.cctor#1](~/snippets/visualbasic/VS_Snippets_Data/XmlDocument.cctor/VB/docload.vb#1)]
@@ -166,12 +354,6 @@ The example uses the `bookDTD.xml` file as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -213,12 +395,6 @@ The example uses the `bookDTD.xml` file as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -260,23 +436,11 @@ The example uses the `bookDTD.xml` file as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
@@ -289,7 +453,7 @@ The example uses the `bookDTD.xml` file as input.
 ## Remarks
  A networked XML document is comprised of chunks of data aggregated using various W3C standard inclusion mechanisms and therefore contains nodes that come from different places. The `BaseURI` tells you where these nodes came from.
 
- For Document nodes, `BaseURI` returns the location of the XML document. For example, if the `XmlDocument` was loaded using the following call `doc.Load("http://server/mydata.xml")`, the `BaseURI` for the document node is `http://server/mydata.xml`. However, if the <xref:System.Xml.XmlDocument.Load%2A> method is redirected by server to a different URI, `BaseURI` returns the original URI passed to the `Load` method.
+ For Document nodes, `BaseURI` returns the location of the XML document. For example, if the `XmlDocument` was loaded using the following call `doc.Load("http://server/mydata.xml")`, the `BaseURI` for the document node is `http://server/mydata.xml`. However, if the <xref:System.Xml.XmlDocument.Load*> method is redirected by server to a different URI, `BaseURI` returns the original URI passed to the `Load` method.
 
  This property is a Microsoft extension to the Document Object Model (DOM). For additional information on `BaseURI` and how it behaves with other node types, see <xref:System.Xml.XmlNode.BaseURI?displayProperty=nameWithType>.
 
@@ -324,12 +488,6 @@ The example uses the `bookDTD.xml` file as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -352,7 +510,7 @@ The example uses the `bookDTD.xml` file as input.
 ## Remarks
  This method serves as a copy constructor for nodes. The cloned node has no parent (<xref:System.Xml.XmlNode.ParentNode> returns `null`).
 
- If `deep` is `true`, the cloned node includes all the child nodes, otherwise only the `XmlDocument` node is cloned. See the <xref:System.Xml.XmlNode.CloneNode%2A?displayProperty=nameWithType> method to see how this method behaves on other node types.
+ If `deep` is `true`, the cloned node includes all the child nodes, otherwise only the `XmlDocument` node is cloned. See the <xref:System.Xml.XmlNode.CloneNode*?displayProperty=nameWithType> method to see how this method behaves on other node types.
 
 ## Examples
 
@@ -366,10 +524,6 @@ The following example shows the difference between a deep and shallow clone.
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateAttribute">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Creates an <see cref="T:System.Xml.XmlAttribute" /> with the specified name.</summary>
       </Docs>
@@ -401,12 +555,6 @@ The following example shows the difference between a deep and shallow clone.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -426,7 +574,7 @@ The following example shows the difference between a deep and shallow clone.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `XmlAttribute` can be added to an <xref:System.Xml.XmlElement> using the <xref:System.Xml.XmlElement.SetAttributeNode%2A> method.
+ The `XmlAttribute` can be added to an <xref:System.Xml.XmlElement> using the <xref:System.Xml.XmlElement.SetAttributeNode*> method.
 
 ## Examples
 
@@ -440,13 +588,12 @@ The following creates an attribute and adds it to an XML document.
       </Docs>
     </Member>
     <Member MemberName="CreateAttribute">
-      <MemberSignature Language="C#" Value="public System.Xml.XmlAttribute CreateAttribute (string qualifiedName, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public System.Xml.XmlAttribute CreateAttribute (string qualifiedName, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Xml.XmlAttribute CreateAttribute(string qualifiedName, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateAttribute(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function CreateAttribute (qualifiedName As String, namespaceURI As String) As XmlAttribute" />
       <MemberSignature Language="F#" Value="member this.CreateAttribute : string * string -&gt; System.Xml.XmlAttribute" Usage="xmlDocument.CreateAttribute (qualifiedName, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Xml::XmlAttribute ^ CreateAttribute(System::String ^ qualifiedName, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public System.Xml.XmlAttribute CreateAttribute (string qualifiedName, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -467,23 +614,11 @@ The following creates an attribute and adds it to an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Xml.XmlAttribute</ReturnType>
       </ReturnValue>
@@ -491,7 +626,7 @@ The following creates an attribute and adds it to an XML document.
         <Parameter Name="qualifiedName" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -507,20 +642,19 @@ The following creates an attribute and adds it to an XML document.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `XmlAttribute` can be added to an <xref:System.Xml.XmlElement> using the <xref:System.Xml.XmlElement.SetAttributeNode%2A> method.
+ The `XmlAttribute` can be added to an <xref:System.Xml.XmlElement> using the <xref:System.Xml.XmlElement.SetAttributeNode*> method.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateAttribute">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlAttribute CreateAttribute (string prefix, string localName, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlAttribute CreateAttribute (string? prefix, string localName, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlAttribute CreateAttribute(string prefix, string localName, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateAttribute(System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateAttribute (prefix As String, localName As String, namespaceURI As String) As XmlAttribute" />
       <MemberSignature Language="F#" Value="abstract member CreateAttribute : string * string * string -&gt; System.Xml.XmlAttribute&#xA;override this.CreateAttribute : string * string * string -&gt; System.Xml.XmlAttribute" Usage="xmlDocument.CreateAttribute (prefix, localName, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlAttribute ^ CreateAttribute(System::String ^ prefix, System::String ^ localName, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlAttribute CreateAttribute (string? prefix, string localName, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -541,12 +675,6 @@ The following creates an attribute and adds it to an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -558,7 +686,7 @@ The following creates an attribute and adds it to an XML document.
       <Parameters>
         <Parameter Name="prefix" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -567,7 +695,7 @@ The following creates an attribute and adds it to an XML document.
         <Parameter Name="localName" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -584,7 +712,7 @@ The following creates an attribute and adds it to an XML document.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The `XmlAttribute` can be added to an <xref:System.Xml.XmlElement> using the <xref:System.Xml.XmlElement.SetAttributeNode%2A> method.
+ The `XmlAttribute` can be added to an <xref:System.Xml.XmlElement> using the <xref:System.Xml.XmlElement.SetAttributeNode*> method.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
@@ -593,13 +721,12 @@ The following creates an attribute and adds it to an XML document.
       </Docs>
     </Member>
     <Member MemberName="CreateCDataSection">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlCDataSection CreateCDataSection (string data);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlCDataSection CreateCDataSection (string? data);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlCDataSection CreateCDataSection(string data) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateCDataSection(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateCDataSection (data As String) As XmlCDataSection" />
       <MemberSignature Language="F#" Value="abstract member CreateCDataSection : string -&gt; System.Xml.XmlCDataSection&#xA;override this.CreateCDataSection : string -&gt; System.Xml.XmlCDataSection" Usage="xmlDocument.CreateCDataSection data" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlCDataSection ^ CreateCDataSection(System::String ^ data);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlCDataSection CreateCDataSection (string? data);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -620,12 +747,6 @@ The following creates an attribute and adds it to an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -637,7 +758,7 @@ The following creates an attribute and adds it to an XML document.
       <Parameters>
         <Parameter Name="data" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -668,13 +789,12 @@ The following example creates a CDATA node and adds it to the document.
       </Docs>
     </Member>
     <Member MemberName="CreateComment">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlComment CreateComment (string data);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlComment CreateComment (string? data);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlComment CreateComment(string data) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateComment(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateComment (data As String) As XmlComment" />
       <MemberSignature Language="F#" Value="abstract member CreateComment : string -&gt; System.Xml.XmlComment&#xA;override this.CreateComment : string -&gt; System.Xml.XmlComment" Usage="xmlDocument.CreateComment data" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlComment ^ CreateComment(System::String ^ data);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlComment CreateComment (string? data);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -695,12 +815,6 @@ The following example creates a CDATA node and adds it to the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -712,7 +826,7 @@ The following example creates a CDATA node and adds it to the document.
       <Parameters>
         <Parameter Name="data" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -743,13 +857,12 @@ The following example creates a comment and adds it to an XML document.
       </Docs>
     </Member>
     <Member MemberName="CreateDefaultAttribute">
-      <MemberSignature Language="C#" Value="protected internal virtual System.Xml.XmlAttribute CreateDefaultAttribute (string? prefix, string localName, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal virtual System.Xml.XmlAttribute CreateDefaultAttribute (string? prefix, string localName, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance class System.Xml.XmlAttribute CreateDefaultAttribute(string prefix, string localName, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateDefaultAttribute(System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Function CreateDefaultAttribute (prefix As String, localName As String, namespaceURI As String) As XmlAttribute" />
       <MemberSignature Language="F#" Value="abstract member CreateDefaultAttribute : string * string * string -&gt; System.Xml.XmlAttribute&#xA;override this.CreateDefaultAttribute : string * string * string -&gt; System.Xml.XmlAttribute" Usage="xmlDocument.CreateDefaultAttribute (prefix, localName, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual System::Xml::XmlAttribute ^ CreateDefaultAttribute(System::String ^ prefix, System::String ^ localName, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="protected internal virtual System.Xml.XmlAttribute CreateDefaultAttribute (string prefix, string localName, string namespaceURI);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -765,12 +878,6 @@ The following example creates a comment and adds it to an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -783,18 +890,18 @@ The following example creates a comment and adds it to an XML document.
         <ReturnType>System.Xml.XmlAttribute</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="prefix" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0">
+        <Parameter Name="prefix" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="localName" Type="System.String" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
-        <Parameter Name="namespaceURI" Type="System.String" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0">
+        <Parameter Name="localName" Type="System.String" />
+        <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -844,12 +951,6 @@ The following example creates a comment and adds it to an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -880,13 +981,12 @@ The following example adds new nodes to an XML document.
       </Docs>
     </Member>
     <Member MemberName="CreateDocumentType">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDocumentType CreateDocumentType (string name, string? publicId, string? systemId, string? internalSubset);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDocumentType CreateDocumentType (string name, string? publicId, string? systemId, string? internalSubset);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlDocumentType CreateDocumentType(string name, string publicId, string systemId, string internalSubset) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateDocumentType(System.String,System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateDocumentType (name As String, publicId As String, systemId As String, internalSubset As String) As XmlDocumentType" />
       <MemberSignature Language="F#" Value="abstract member CreateDocumentType : string * string * string * string -&gt; System.Xml.XmlDocumentType&#xA;override this.CreateDocumentType : string * string * string * string -&gt; System.Xml.XmlDocumentType" Usage="xmlDocument.CreateDocumentType (name, publicId, systemId, internalSubset)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlDocumentType ^ CreateDocumentType(System::String ^ name, System::String ^ publicId, System::String ^ systemId, System::String ^ internalSubset);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDocumentType CreateDocumentType (string name, string publicId, string systemId, string internalSubset);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -902,12 +1002,6 @@ The following example adds new nodes to an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -926,20 +1020,20 @@ The following example adds new nodes to an XML document.
         </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0">
+        <Parameter Name="name" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="publicId" Type="System.String" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
-        <Parameter Name="systemId" Type="System.String" Index="2" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
-        <Parameter Name="internalSubset" Type="System.String" Index="3" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="publicId" Type="System.String" />
+        <Parameter Name="systemId" Type="System.String" />
+        <Parameter Name="internalSubset" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">Name of the document type.</param>
+        <param name="name">The name of the document type.</param>
         <param name="publicId">The public identifier of the document type or <see langword="null" />. You can specify a public URI and also a system identifier to identify the location of the external DTD subset.</param>
         <param name="systemId">The system identifier of the document type or <see langword="null" />. Specifies the URL of the file location for the external DTD subset.</param>
         <param name="internalSubset">The DTD internal subset of the document type or <see langword="null" />.</param>
@@ -965,18 +1059,9 @@ The following example creates a DocumentType node and adds it to an XML document
 
  ]]></format>
         </remarks>
-        <block subset="none" type="overrides">
-          <para>This method has an inheritance demand. Full trust is required to override the <see langword="CreateDocumentType" /> method.
-
- This method is a Microsoft extension to the Document Object Model (DOM).</para>
-        </block>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateElement">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Creates an <see cref="T:System.Xml.XmlElement" />.</summary>
       </Docs>
@@ -1008,12 +1093,6 @@ The following example creates a DocumentType node and adds it to an XML document
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1062,13 +1141,12 @@ Display the modified XML...
       </Docs>
     </Member>
     <Member MemberName="CreateElement">
-      <MemberSignature Language="C#" Value="public System.Xml.XmlElement CreateElement (string qualifiedName, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public System.Xml.XmlElement CreateElement (string qualifiedName, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Xml.XmlElement CreateElement(string qualifiedName, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateElement(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Function CreateElement (qualifiedName As String, namespaceURI As String) As XmlElement" />
       <MemberSignature Language="F#" Value="member this.CreateElement : string * string -&gt; System.Xml.XmlElement" Usage="xmlDocument.CreateElement (qualifiedName, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Xml::XmlElement ^ CreateElement(System::String ^ qualifiedName, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public System.Xml.XmlElement CreateElement (string qualifiedName, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1089,12 +1167,6 @@ Display the modified XML...
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1107,7 +1179,7 @@ Display the modified XML...
         <Parameter Name="qualifiedName" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1147,13 +1219,12 @@ elem=doc.CreateElement("xy:item", "urn:abc");
       </Docs>
     </Member>
     <Member MemberName="CreateElement">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlElement CreateElement (string prefix, string localName, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlElement CreateElement (string? prefix, string localName, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlElement CreateElement(string prefix, string localName, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateElement(System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateElement (prefix As String, localName As String, namespaceURI As String) As XmlElement" />
       <MemberSignature Language="F#" Value="abstract member CreateElement : string * string * string -&gt; System.Xml.XmlElement&#xA;override this.CreateElement : string * string * string -&gt; System.Xml.XmlElement" Usage="xmlDocument.CreateElement (prefix, localName, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlElement ^ CreateElement(System::String ^ prefix, System::String ^ localName, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlElement CreateElement (string? prefix, string localName, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1174,12 +1245,6 @@ elem=doc.CreateElement("xy:item", "urn:abc");
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1191,7 +1256,7 @@ elem=doc.CreateElement("xy:item", "urn:abc");
       <Parameters>
         <Parameter Name="prefix" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1200,7 +1265,7 @@ elem=doc.CreateElement("xy:item", "urn:abc");
         <Parameter Name="localName" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1270,12 +1335,6 @@ The following example adds a new element to the existing XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1288,7 +1347,7 @@ The following example adds a new element to the existing XML document.
         <ReturnType>System.Xml.XmlEntityReference</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
         <param name="name">The name of the entity reference.</param>
@@ -1306,7 +1365,7 @@ The following example adds a new element to the existing XML document.
 <!ENTITY a "<b>test</b>">
 ```
 
- If you call `CreateEntityReference("a")`, you get back a single node of type EntityReference with no children. If you append this node as a child of the following node, `<item xmlns="urn:1"/>`, then, at the time of calling <xref:System.Xml.XmlNode.AppendChild%2A>, the parent of the newly created entity reference node is set and the children are expanded in this namespace context. The child element node `b` will have NamespaceURI equal to `urn:1`. The child nodes of the entity reference remain the same even if you move the entity reference to a place in the document that has a different default namespace context. This does not happen for existing entity reference nodes when you remove and insert them or for entity references that you clone with <xref:System.Xml.XmlDocument.CloneNode%2A>. It only happens for newly created entity references.
+ If you call `CreateEntityReference("a")`, you get back a single node of type EntityReference with no children. If you append this node as a child of the following node, `<item xmlns="urn:1"/>`, then, at the time of calling <xref:System.Xml.XmlNode.AppendChild*>, the parent of the newly created entity reference node is set and the children are expanded in this namespace context. The child element node `b` will have NamespaceURI equal to `urn:1`. The child nodes of the entity reference remain the same even if you move the entity reference to a place in the document that has a different default namespace context. This does not happen for existing entity reference nodes when you remove and insert them or for entity references that you clone with <xref:System.Xml.XmlDocument.CloneNode*>. It only happens for newly created entity references.
 
  If the corresponding entity is not defined in the DocumentType when the entity reference node is added, because the entity reference is not defined, its only child node will be an empty text node.
 
@@ -1329,23 +1388,17 @@ The following example creates two entity reference nodes and inserts them into a
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateNavigator">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Creates a new <see cref="T:System.Xml.XPath.XPathNavigator" /> object for navigating this document.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="CreateNavigator">
-      <MemberSignature Language="C#" Value="public override System.Xml.XPath.XPathNavigator? CreateNavigator ();" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public override System.Xml.XPath.XPathNavigator? CreateNavigator ();" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Xml.XPath.XPathNavigator CreateNavigator() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateNavigator" />
       <MemberSignature Language="VB.NET" Value="Public Overrides Function CreateNavigator () As XPathNavigator" />
       <MemberSignature Language="F#" Value="override this.CreateNavigator : unit -&gt; System.Xml.XPath.XPathNavigator" Usage="xmlDocument.CreateNavigator " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Xml::XPath::XPathNavigator ^ CreateNavigator();" />
-      <MemberSignature Language="C#" Value="public override System.Xml.XPath.XPathNavigator CreateNavigator ();" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -1360,12 +1413,6 @@ The following example creates two entity reference nodes and inserts them into a
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1374,12 +1421,6 @@ The following example creates two entity reference nodes and inserts them into a
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Xml.XPath.XPathNavigator</ReturnType>
       </ReturnValue>
@@ -1396,20 +1437,19 @@ The following example creates two entity reference nodes and inserts them into a
 
 
 ## Examples
- See <xref:System.Xml.XmlNode.CreateNavigator%2A?displayProperty=nameWithType> for an example using this method.
+ See <xref:System.Xml.XmlNode.CreateNavigator*?displayProperty=nameWithType> for an example using this method.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateNavigator">
-      <MemberSignature Language="C#" Value="protected internal virtual System.Xml.XPath.XPathNavigator? CreateNavigator (System.Xml.XmlNode node);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal virtual System.Xml.XPath.XPathNavigator? CreateNavigator (System.Xml.XmlNode node);" />
       <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig newslot virtual instance class System.Xml.XPath.XPathNavigator CreateNavigator(class System.Xml.XmlNode node) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateNavigator(System.Xml.XmlNode)" />
       <MemberSignature Language="VB.NET" Value="Protected Friend Overridable Function CreateNavigator (node As XmlNode) As XPathNavigator" />
       <MemberSignature Language="F#" Value="override this.CreateNavigator : System.Xml.XmlNode -&gt; System.Xml.XPath.XPathNavigator" Usage="xmlDocument.CreateNavigator node" />
       <MemberSignature Language="C++ CLI" Value="protected public:&#xA; virtual System::Xml::XPath::XPathNavigator ^ CreateNavigator(System::Xml::XmlNode ^ node);" />
-      <MemberSignature Language="C#" Value="protected internal virtual System.Xml.XPath.XPathNavigator CreateNavigator (System.Xml.XmlNode node);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -1425,12 +1465,6 @@ The following example creates two entity reference nodes and inserts them into a
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1449,7 +1483,7 @@ The following example creates two entity reference nodes and inserts them into a
         </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="node" Type="System.Xml.XmlNode" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="node" Type="System.Xml.XmlNode" />
       </Parameters>
       <Docs>
         <param name="node">The <see cref="T:System.Xml.XmlNode" /> you want the navigator initially positioned on.</param>
@@ -1464,29 +1498,24 @@ The following example creates two entity reference nodes and inserts them into a
 
 
 ## Examples
- See <xref:System.Xml.XmlNode.CreateNavigator%2A?displayProperty=nameWithType> for an example using this method.
+ See <xref:System.Xml.XmlNode.CreateNavigator*?displayProperty=nameWithType> for an example using this method.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="CreateNode">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Creates an <see cref="T:System.Xml.XmlNode" />.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="CreateNode">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (string nodeTypeString, string name, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (string nodeTypeString, string name, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlNode CreateNode(string nodeTypeString, string name, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateNode(System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateNode (nodeTypeString As String, name As String, namespaceURI As String) As XmlNode" />
       <MemberSignature Language="F#" Value="abstract member CreateNode : string * string * string -&gt; System.Xml.XmlNode&#xA;override this.CreateNode : string * string * string -&gt; System.Xml.XmlNode" Usage="xmlDocument.CreateNode (nodeTypeString, name, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlNode ^ CreateNode(System::String ^ nodeTypeString, System::String ^ name, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (string nodeTypeString, string name, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1507,12 +1536,6 @@ The following example creates two entity reference nodes and inserts them into a
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1526,7 +1549,7 @@ The following example creates two entity reference nodes and inserts them into a
         <Parameter Name="name" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1600,13 +1623,12 @@ The following example creates a new element and inserts it into the document.
       </Docs>
     </Member>
     <Member MemberName="CreateNode">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (System.Xml.XmlNodeType type, string name, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (System.Xml.XmlNodeType type, string name, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlNode CreateNode(valuetype System.Xml.XmlNodeType type, string name, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateNode(System.Xml.XmlNodeType,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateNode (type As XmlNodeType, name As String, namespaceURI As String) As XmlNode" />
       <MemberSignature Language="F#" Value="abstract member CreateNode : System.Xml.XmlNodeType * string * string -&gt; System.Xml.XmlNode&#xA;override this.CreateNode : System.Xml.XmlNodeType * string * string -&gt; System.Xml.XmlNode" Usage="xmlDocument.CreateNode (type, name, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlNode ^ CreateNode(System::Xml::XmlNodeType type, System::String ^ name, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (System.Xml.XmlNodeType type, string name, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1627,23 +1649,11 @@ The following example creates a new element and inserts it into the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Xml.XmlNode</ReturnType>
       </ReturnValue>
@@ -1652,7 +1662,7 @@ The following example creates a new element and inserts it into the document.
         <Parameter Name="name" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1708,13 +1718,12 @@ The following example creates a new element and inserts it into an XML document.
       </Docs>
     </Member>
     <Member MemberName="CreateNode">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (System.Xml.XmlNodeType type, string prefix, string name, string namespaceURI);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (System.Xml.XmlNodeType type, string? prefix, string name, string? namespaceURI);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlNode CreateNode(valuetype System.Xml.XmlNodeType type, string prefix, string name, string namespaceURI) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateNode(System.Xml.XmlNodeType,System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateNode (type As XmlNodeType, prefix As String, name As String, namespaceURI As String) As XmlNode" />
       <MemberSignature Language="F#" Value="abstract member CreateNode : System.Xml.XmlNodeType * string * string * string -&gt; System.Xml.XmlNode&#xA;override this.CreateNode : System.Xml.XmlNodeType * string * string * string -&gt; System.Xml.XmlNode" Usage="xmlDocument.CreateNode (type, prefix, name, namespaceURI)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlNode ^ CreateNode(System::Xml::XmlNodeType type, System::String ^ prefix, System::String ^ name, System::String ^ namespaceURI);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode CreateNode (System.Xml.XmlNodeType type, string? prefix, string name, string? namespaceURI);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1735,12 +1744,6 @@ The following example creates a new element and inserts it into an XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1753,7 +1756,7 @@ The following example creates a new element and inserts it into an XML document.
         <Parameter Name="type" Type="System.Xml.XmlNodeType" />
         <Parameter Name="prefix" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1762,7 +1765,7 @@ The following example creates a new element and inserts it into an XML document.
         <Parameter Name="name" Type="System.String" />
         <Parameter Name="namespaceURI" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1819,13 +1822,12 @@ The following example adds a new element to the document.
       </Docs>
     </Member>
     <Member MemberName="CreateProcessingInstruction">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlProcessingInstruction CreateProcessingInstruction (string target, string data);" FrameworkAlternate="dotnet-uwp-10.0;net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlProcessingInstruction CreateProcessingInstruction (string target, string? data);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlProcessingInstruction CreateProcessingInstruction(string target, string data) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateProcessingInstruction(System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateProcessingInstruction (target As String, data As String) As XmlProcessingInstruction" />
       <MemberSignature Language="F#" Value="abstract member CreateProcessingInstruction : string * string -&gt; System.Xml.XmlProcessingInstruction&#xA;override this.CreateProcessingInstruction : string * string -&gt; System.Xml.XmlProcessingInstruction" Usage="xmlDocument.CreateProcessingInstruction (target, data)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlProcessingInstruction ^ CreateProcessingInstruction(System::String ^ target, System::String ^ data);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlProcessingInstruction CreateProcessingInstruction (string target, string? data);" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1846,12 +1848,6 @@ The following example adds a new element to the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1864,7 +1860,7 @@ The following example adds a new element to the document.
         <Parameter Name="target" Type="System.String" />
         <Parameter Name="data" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1896,13 +1892,12 @@ The following example creates a ProcessingInstruction node and adds it to the do
       </Docs>
     </Member>
     <Member MemberName="CreateSignificantWhitespace">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlSignificantWhitespace CreateSignificantWhitespace (string text);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlSignificantWhitespace CreateSignificantWhitespace (string? text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlSignificantWhitespace CreateSignificantWhitespace(string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateSignificantWhitespace(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateSignificantWhitespace (text As String) As XmlSignificantWhitespace" />
       <MemberSignature Language="F#" Value="abstract member CreateSignificantWhitespace : string -&gt; System.Xml.XmlSignificantWhitespace&#xA;override this.CreateSignificantWhitespace : string -&gt; System.Xml.XmlSignificantWhitespace" Usage="xmlDocument.CreateSignificantWhitespace text" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlSignificantWhitespace ^ CreateSignificantWhitespace(System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlSignificantWhitespace CreateSignificantWhitespace (string? text);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1923,12 +1918,6 @@ The following example creates a ProcessingInstruction node and adds it to the do
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1940,7 +1929,7 @@ The following example creates a ProcessingInstruction node and adds it to the do
       <Parameters>
         <Parameter Name="text" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -1971,13 +1960,12 @@ The following example adds significant white space to the document.
       </Docs>
     </Member>
     <Member MemberName="CreateTextNode">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlText CreateTextNode (string text);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlText CreateTextNode (string? text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlText CreateTextNode(string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateTextNode(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateTextNode (text As String) As XmlText" />
       <MemberSignature Language="F#" Value="abstract member CreateTextNode : string -&gt; System.Xml.XmlText&#xA;override this.CreateTextNode : string -&gt; System.Xml.XmlText" Usage="xmlDocument.CreateTextNode text" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlText ^ CreateTextNode(System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlText CreateTextNode (string? text);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -1998,12 +1986,6 @@ The following example adds significant white space to the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2015,7 +1997,7 @@ The following example adds significant white space to the document.
       <Parameters>
         <Parameter Name="text" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -2047,13 +2029,12 @@ The following example creates a new element and adds it to the document.
       </Docs>
     </Member>
     <Member MemberName="CreateWhitespace">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlWhitespace CreateWhitespace (string text);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlWhitespace CreateWhitespace (string? text);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlWhitespace CreateWhitespace(string text) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateWhitespace(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateWhitespace (text As String) As XmlWhitespace" />
       <MemberSignature Language="F#" Value="abstract member CreateWhitespace : string -&gt; System.Xml.XmlWhitespace&#xA;override this.CreateWhitespace : string -&gt; System.Xml.XmlWhitespace" Usage="xmlDocument.CreateWhitespace text" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlWhitespace ^ CreateWhitespace(System::String ^ text);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlWhitespace CreateWhitespace (string? text);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -2074,12 +2055,6 @@ The following example creates a new element and adds it to the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2091,7 +2066,7 @@ The following example creates a new element and adds it to the document.
       <Parameters>
         <Parameter Name="text" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -2122,13 +2097,12 @@ The following example adds white space to the document.
       </Docs>
     </Member>
     <Member MemberName="CreateXmlDeclaration">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDeclaration CreateXmlDeclaration (string version, string encoding, string standalone);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDeclaration CreateXmlDeclaration (string version, string? encoding, string? standalone);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlDeclaration CreateXmlDeclaration(string version, string encoding, string standalone) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.CreateXmlDeclaration(System.String,System.String,System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateXmlDeclaration (version As String, encoding As String, standalone As String) As XmlDeclaration" />
       <MemberSignature Language="F#" Value="abstract member CreateXmlDeclaration : string * string * string -&gt; System.Xml.XmlDeclaration&#xA;override this.CreateXmlDeclaration : string * string * string -&gt; System.Xml.XmlDeclaration" Usage="xmlDocument.CreateXmlDeclaration (version, encoding, standalone)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlDeclaration ^ CreateXmlDeclaration(System::String ^ version, System::String ^ encoding, System::String ^ standalone);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDeclaration CreateXmlDeclaration (string version, string? encoding, string? standalone);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -2149,12 +2123,6 @@ The following example adds white space to the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2167,7 +2135,7 @@ The following example adds white space to the document.
         <Parameter Name="version" Type="System.String" />
         <Parameter Name="encoding" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -2175,7 +2143,7 @@ The following example adds white space to the document.
         </Parameter>
         <Parameter Name="standalone" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
@@ -2216,13 +2184,12 @@ The following example creates an XML declaration and adds it to the document.
       </Docs>
     </Member>
     <Member MemberName="DocumentElement">
-      <MemberSignature Language="C#" Value="public System.Xml.XmlElement DocumentElement { get; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public System.Xml.XmlElement? DocumentElement { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Xml.XmlElement DocumentElement" />
       <MemberSignature Language="DocId" Value="P:System.Xml.XmlDocument.DocumentElement" />
       <MemberSignature Language="VB.NET" Value="Public ReadOnly Property DocumentElement As XmlElement" />
       <MemberSignature Language="F#" Value="member this.DocumentElement : System.Xml.XmlElement" Usage="System.Xml.XmlDocument.DocumentElement" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Xml::XmlElement ^ DocumentElement { System::Xml::XmlElement ^ get(); };" />
-      <MemberSignature Language="C#" Value="public System.Xml.XmlElement? DocumentElement { get; }" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -2243,19 +2210,13 @@ The following example creates an XML declaration and adds it to the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
         </Attribute>
@@ -2287,13 +2248,12 @@ The following example displays the root element of the XML document.
       </Docs>
     </Member>
     <Member MemberName="DocumentType">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDocumentType? DocumentType { get; }" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDocumentType? DocumentType { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Xml.XmlDocumentType DocumentType" />
       <MemberSignature Language="DocId" Value="P:System.Xml.XmlDocument.DocumentType" />
       <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property DocumentType As XmlDocumentType" />
       <MemberSignature Language="F#" Value="member this.DocumentType : System.Xml.XmlDocumentType" Usage="System.Xml.XmlDocument.DocumentType" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Xml::XmlDocumentType ^ DocumentType { System::Xml::XmlDocumentType ^ get(); };" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlDocumentType DocumentType { get; }" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -2309,12 +2269,6 @@ The following example displays the root element of the XML document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2324,7 +2278,7 @@ The following example displays the root element of the XML document.
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
         </Attribute>
@@ -2342,7 +2296,7 @@ The following example displays the root element of the XML document.
  An `XmlDocument` can have one and only one child with <xref:System.Xml.XmlNodeType> equal to DocumentType.
 
 > [!NOTE]
-> This property is read-only. To change the DocumentType node, delete the existing node, create a new one using the <xref:System.Xml.XmlDocument.CreateDocumentType%2A> method, and add the new node to the document.
+> This property is read-only. To change the DocumentType node, delete the existing node, create a new one using the <xref:System.Xml.XmlDocument.CreateDocumentType*> method, and add the new node to the document.
 
 ## Examples
 
@@ -2357,13 +2311,12 @@ The following example gets and displays the DOCTYPE declaration for the document
       </Docs>
     </Member>
     <Member MemberName="GetElementById">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlElement? GetElementById (string elementId);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlElement? GetElementById (string elementId);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlElement GetElementById(string elementId) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.GetElementById(System.String)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function GetElementById (elementId As String) As XmlElement" />
       <MemberSignature Language="F#" Value="abstract member GetElementById : string -&gt; System.Xml.XmlElement&#xA;override this.GetElementById : string -&gt; System.Xml.XmlElement" Usage="xmlDocument.GetElementById elementId" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlElement ^ GetElementById(System::String ^ elementId);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlElement GetElementById (string elementId);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -2379,12 +2332,6 @@ The following example gets and displays the DOCTYPE declaration for the document
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2403,7 +2350,7 @@ The following example gets and displays the DOCTYPE declaration for the document
         </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="elementId" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="elementId" Type="System.String" />
       </Parameters>
       <Docs>
         <param name="elementId">The attribute ID to match.</param>
@@ -2449,10 +2396,6 @@ The following example uses the `GetElementById` method.
       </Docs>
     </Member>
     <MemberGroup MemberName="GetElementsByTagName">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Returns an <see cref="T:System.Xml.XmlNodeList" /> containing a list of all descendant elements that match the specified name.</summary>
       </Docs>
@@ -2484,12 +2427,6 @@ The following example uses the `GetElementById` method.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2512,7 +2449,7 @@ The following example uses the `GetElementById` method.
  The nodes are placed in the order in which they would be encountered in the document.
 
 > [!NOTE]
-> It is recommended that you use the <xref:System.Xml.XmlNode.SelectNodes%2A?displayProperty=nameWithType> or <xref:System.Xml.XmlNode.SelectSingleNode%2A?displayProperty=nameWithType> method instead of the <xref:System.Xml.XmlDocument.GetElementsByTagName%2A> method.
+> It is recommended that you use the <xref:System.Xml.XmlNode.SelectNodes*?displayProperty=nameWithType> or <xref:System.Xml.XmlNode.SelectSingleNode*?displayProperty=nameWithType> method instead of the <xref:System.Xml.XmlDocument.GetElementsByTagName*> method.
 
 ## Examples
 
@@ -2556,12 +2493,6 @@ The following example creates a `XmlDocument` object and uses the `GetElementsBy
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2586,7 +2517,7 @@ The following example creates a `XmlDocument` object and uses the `GetElementsBy
  The nodes are placed in the order in which they would be encountered in the document tree.
 
 > [!NOTE]
-> It is recommended that you use the <xref:System.Xml.XmlNode.SelectNodes%2A?displayProperty=nameWithType> or <xref:System.Xml.XmlNode.SelectSingleNode%2A?displayProperty=nameWithType> method instead of the <xref:System.Xml.XmlDocument.GetElementsByTagName%2A> method.
+> It is recommended that you use the <xref:System.Xml.XmlNode.SelectNodes*?displayProperty=nameWithType> or <xref:System.Xml.XmlNode.SelectSingleNode*?displayProperty=nameWithType> method instead of the <xref:System.Xml.XmlDocument.GetElementsByTagName*> method.
 
  ]]></format>
         </remarks>
@@ -2619,23 +2550,11 @@ The following example creates a `XmlDocument` object and uses the `GetElementsBy
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Xml.XmlImplementation</ReturnType>
       </ReturnValue>
@@ -2648,7 +2567,7 @@ The following example creates a `XmlDocument` object and uses the `GetElementsBy
 ## Remarks
  `XmlDocument` objects created from the same `XmlImplementation` share the same <xref:System.Xml.XmlNameTable>. This allows users to compare attribute and element names as objects rather than strings.
 
- Although the `XmlDocument` objects share the same implementation, to move nodes from one document to another you must use the <xref:System.Xml.XmlDocument.ImportNode%2A> method.
+ Although the `XmlDocument` objects share the same implementation, to move nodes from one document to another you must use the <xref:System.Xml.XmlDocument.ImportNode*> method.
 
 ## Examples
 
@@ -2688,23 +2607,11 @@ The following example creates a new `XmlDocument` using another document's imple
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Xml.XmlNode</ReturnType>
       </ReturnValue>
@@ -2789,12 +2696,6 @@ The example uses the file, `books.xml`, as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -2844,23 +2745,11 @@ The example uses the file, `books.xml`, as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
@@ -2982,12 +2871,6 @@ The example uses the file, `books.xml`, as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3020,10 +2903,6 @@ The following example shows how to use the `IsReadOnly` property.
       </Docs>
     </Member>
     <MemberGroup MemberName="Load">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Loads the specified XML data from a <see cref="T:System.IO.Stream" />, a URL, a <see cref="T:System.IO.TextReader" />, or an <see cref="T:System.Xml.XmlReader" />.</summary>
       </Docs>
@@ -3055,12 +2934,6 @@ The following example shows how to use the `IsReadOnly` property.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3083,7 +2956,7 @@ The following example shows how to use the `IsReadOnly` property.
 > [!NOTE]
 > The `Load` method always preserves significant white space. The <xref:System.Xml.XmlDocument.PreserveWhitespace> property determines whether or not insignificant white space, that is white space in element content, is preserved. The default is `false`; white space in element content is not preserved.
 
- If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create%2A> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
+ If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create*> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
@@ -3124,12 +2997,6 @@ The following example shows how to use the `IsReadOnly` property.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3152,7 +3019,7 @@ The following example shows how to use the `IsReadOnly` property.
 > [!NOTE]
 > The `Load` method always preserves significant white space. The <xref:System.Xml.XmlDocument.PreserveWhitespace> property determines whether or not insignificant white space, that is white space in element content, is preserved. The default is `false`; white space in element content is not preserved.
 
- If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create%2A> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
+ If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create*> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
@@ -3194,12 +3061,6 @@ The following example uses the <xref:System.IO.StringReader> class to load a str
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3212,7 +3073,7 @@ The following example uses the <xref:System.IO.StringReader> class to load a str
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="filename" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="filename" Type="System.String" />
       </Parameters>
       <Docs>
         <param name="filename">URL for the file containing the XML document to load. The URL can be either a local file or an HTTP URL (a Web address).</param>
@@ -3225,7 +3086,7 @@ The following example uses the <xref:System.IO.StringReader> class to load a str
 > [!NOTE]
 > The `Load` method always preserves significant white space. The <xref:System.Xml.XmlDocument.PreserveWhitespace> property determines whether or not insignificant white space, that is white space in element content, is preserved. The default is `false`; white space in element content is not preserved.
 
- If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create%2A> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
+ If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create*> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
@@ -3289,12 +3150,6 @@ The following example uses the <xref:System.IO.StringReader> class to load a str
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3333,11 +3188,11 @@ The following example uses the <xref:System.IO.StringReader> class to load a str
 <!--comment--><?process instruction?><!--comment--></endtag>
 ```
 
- `Load` succeeds, but you have an incomplete DOM tree because there is no root level element. Before you save the document, you must add a root level element, otherwise <xref:System.Xml.XmlDocument.Save%2A> will throw an exception.
+ `Load` succeeds, but you have an incomplete DOM tree because there is no root level element. Before you save the document, you must add a root level element, otherwise <xref:System.Xml.XmlDocument.Save*> will throw an exception.
 
  If the reader is positioned on a leaf node that is invalid for the root level of a document, for example a white space or attribute node, the reader continues to read until it is positioned on a node that can be used for the root. The document begins loading at this point.
 
- If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create%2A> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
+ If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create*> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
@@ -3387,12 +3242,6 @@ The example uses the file, `books.xml`, as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3404,7 +3253,7 @@ The example uses the file, `books.xml`, as input.
       <Parameters>
         <Parameter Name="xml" Type="System.String">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Diagnostics.CodeAnalysis.StringSyntax("Xml")]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Diagnostics.CodeAnalysis.StringSyntax("Xml")&gt;]</AttributeName>
             </Attribute>
@@ -3420,7 +3269,7 @@ The example uses the file, `books.xml`, as input.
 ## Remarks
  By default the `LoadXml` method does not preserve white space or significant white space.
 
- This method parses Document Type Definitions (DTDs), but does not do DTD or Schema validation. If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create%2A> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
+ This method parses Document Type Definitions (DTDs), but does not do DTD or Schema validation. If you want validation to occur, you can create a validating <xref:System.Xml.XmlReader> instance by using the <xref:System.Xml.XmlReaderSettings> class and the <xref:System.Xml.XmlReader.Create*> method. For more information, see the Remarks section of the <xref:System.Xml.XmlReader> reference page.
 
  If you want to load from a <xref:System.IO.Stream>, <xref:System.String>, <xref:System.IO.TextReader>, or <xref:System.Xml.XmlReader>, use the Load method instead of this method.
 
@@ -3466,23 +3315,11 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
@@ -3526,23 +3363,11 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
@@ -3586,12 +3411,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3645,12 +3464,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3701,12 +3514,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3757,12 +3564,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3811,12 +3612,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3867,12 +3662,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3921,12 +3710,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3977,12 +3760,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -3999,13 +3776,12 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </Docs>
     </Member>
     <Member MemberName="OwnerDocument">
-      <MemberSignature Language="C#" Value="public override System.Xml.XmlDocument OwnerDocument { get; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override System.Xml.XmlDocument? OwnerDocument { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Xml.XmlDocument OwnerDocument" />
       <MemberSignature Language="DocId" Value="P:System.Xml.XmlDocument.OwnerDocument" />
       <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property OwnerDocument As XmlDocument" />
       <MemberSignature Language="F#" Value="member this.OwnerDocument : System.Xml.XmlDocument" Usage="System.Xml.XmlDocument.OwnerDocument" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Xml::XmlDocument ^ OwnerDocument { System::Xml::XmlDocument ^ get(); };" />
-      <MemberSignature Language="C#" Value="public override System.Xml.XmlDocument? OwnerDocument { get; }" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -4026,19 +3802,13 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
         </Attribute>
@@ -4053,13 +3823,12 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </Docs>
     </Member>
     <Member MemberName="ParentNode">
-      <MemberSignature Language="C#" Value="public override System.Xml.XmlNode ParentNode { get; }" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public override System.Xml.XmlNode? ParentNode { get; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Xml.XmlNode ParentNode" />
       <MemberSignature Language="DocId" Value="P:System.Xml.XmlDocument.ParentNode" />
       <MemberSignature Language="VB.NET" Value="Public Overrides ReadOnly Property ParentNode As XmlNode" />
       <MemberSignature Language="F#" Value="member this.ParentNode : System.Xml.XmlNode" Usage="System.Xml.XmlDocument.ParentNode" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Xml::XmlNode ^ ParentNode { System::Xml::XmlNode ^ get(); };" />
-      <MemberSignature Language="C#" Value="public override System.Xml.XmlNode? ParentNode { get; }" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -4079,19 +3848,13 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
         </Attribute>
@@ -4132,27 +3895,11 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;get: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
@@ -4166,9 +3913,9 @@ The following example loads XML into an `XmlDocument` object and saves it out to
 ## Remarks
  This property determines how white space is handled during the load and save process.
 
- If `PreserveWhitespace` is `true` before <xref:System.Xml.XmlDocument.Load%2A> or <xref:System.Xml.XmlDocument.LoadXml%2A> is called, white space nodes are preserved; otherwise, if this property is `false`, significant white space is preserved, white space is not.
+ If `PreserveWhitespace` is `true` before <xref:System.Xml.XmlDocument.Load*> or <xref:System.Xml.XmlDocument.LoadXml*> is called, white space nodes are preserved; otherwise, if this property is `false`, significant white space is preserved, white space is not.
 
- If `PreserveWhitespace` is `true` before <xref:System.Xml.XmlDocument.Save%2A> is called, white space in the document is preserved in the output; otherwise, if this property is `false`, `XmlDocument` auto-indents the output.
+ If `PreserveWhitespace` is `true` before <xref:System.Xml.XmlDocument.Save*> is called, white space in the document is preserved in the output; otherwise, if this property is `false`, `XmlDocument` auto-indents the output.
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
@@ -4188,13 +3935,12 @@ The example uses the file `book.xml` as input.
       </Docs>
     </Member>
     <Member MemberName="ReadNode">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode ReadNode (System.Xml.XmlReader reader);" FrameworkAlternate="dotnet-uwp-10.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode? ReadNode (System.Xml.XmlReader reader);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Xml.XmlNode ReadNode(class System.Xml.XmlReader reader) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.ReadNode(System.Xml.XmlReader)" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Function ReadNode (reader As XmlReader) As XmlNode" />
       <MemberSignature Language="F#" Value="abstract member ReadNode : System.Xml.XmlReader -&gt; System.Xml.XmlNode&#xA;override this.ReadNode : System.Xml.XmlReader -&gt; System.Xml.XmlNode" Usage="xmlDocument.ReadNode reader" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Xml::XmlNode ^ ReadNode(System::Xml::XmlReader ^ reader);" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlNode? ReadNode (System.Xml.XmlReader reader);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
@@ -4215,12 +3961,6 @@ The example uses the file `book.xml` as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4228,6 +3968,12 @@ The example uses the file `book.xml` as input.
       </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Xml.XmlNode</ReturnType>
+        <Attributes>
+          <Attribute FrameworkAlternate="net-10.0">
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
       </ReturnValue>
       <Parameters>
         <Parameter Name="reader" Type="System.Xml.XmlReader" />
@@ -4255,7 +4001,7 @@ while (reader.MoveToNextAttribute())
 }
 ```
 
- `ReadNode` does consume the attribute value though, which means after calling `ReadNode` on an attribute, <xref:System.Xml.XmlReader.ReadAttributeValue%2A?displayProperty=nameWithType> returns `false`.
+ `ReadNode` does consume the attribute value though, which means after calling `ReadNode` on an attribute, <xref:System.Xml.XmlReader.ReadAttributeValue*?displayProperty=nameWithType> returns `false`.
 
 ## Examples
 
@@ -4271,20 +4017,11 @@ The example uses the file, `cd.xml`, as input.
  ]]></format>
         </remarks>
         <exception cref="T:System.NullReferenceException">The reader is positioned on a node type that does not translate to a valid DOM node (for example, EndElement or EndEntity).</exception>
-        <block subset="none" type="overrides">
-          <para>This method has an inheritance demand. Full trust is required to override the <see langword="ReadNode" /> method.
-
- This method is a Microsoft extension to the Document Object Model (DOM).</para>
-        </block>
         <altmember cref="T:System.Xml.XmlReader" />
         <altmember cref="M:System.Xml.XmlDocument.ImportNode(System.Xml.XmlNode,System.Boolean)" />
       </Docs>
     </Member>
     <MemberGroup MemberName="Save">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml.XmlDocument</AssemblyName>
-        <AssemblyVersion>4.0.1.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Saves the XML document to the specified location.</summary>
       </Docs>
@@ -4316,12 +4053,6 @@ The example uses the file, `cd.xml`, as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4356,7 +4087,7 @@ doc.Save(Console.Out);
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
- Note that only the <xref:System.Xml.XmlDocument.Save%2A> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
+ Note that only the <xref:System.Xml.XmlDocument.Save*> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
 
  ]]></format>
         </remarks>
@@ -4390,12 +4121,6 @@ doc.Save(Console.Out);
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4418,7 +4143,7 @@ doc.Save(Console.Out);
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
- Note that only the <xref:System.Xml.XmlDocument.Save%2A> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
+ Note that only the <xref:System.Xml.XmlDocument.Save*> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
 
  ]]></format>
         </remarks>
@@ -4447,12 +4172,6 @@ doc.Save(Console.Out);
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4465,7 +4184,7 @@ doc.Save(Console.Out);
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="filename" Type="System.String" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="filename" Type="System.String" />
       </Parameters>
       <Docs>
         <param name="filename">The location of the file where you want to save the document.</param>
@@ -4490,7 +4209,7 @@ doc.Save(Console.Out);
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
- Note that only the <xref:System.Xml.XmlDocument.Save%2A> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
+ Note that only the <xref:System.Xml.XmlDocument.Save*> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
 
 ## Examples
 
@@ -4533,12 +4252,6 @@ The following example loads XML into an XmlDocument object, modifies it, and the
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4578,7 +4291,7 @@ doc.Save(Console.Out);
 
  This method is a Microsoft extension to the Document Object Model (DOM).
 
- Note that only the <xref:System.Xml.XmlDocument.Save%2A> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
+ Note that only the <xref:System.Xml.XmlDocument.Save*> method enforces a well-formed XML document. All other `Save` overloads only guarantee a well-formed fragment.
 
 ## Examples
 
@@ -4614,12 +4327,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4667,12 +4374,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4681,12 +4382,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;set: System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Xml.Schema.XmlSchemaSet</ReturnType>
       </ReturnValue>
@@ -4697,7 +4392,7 @@ The following example loads XML into an `XmlDocument` object and saves it out to
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The schemas contained in an <xref:System.Xml.Schema.XmlSchemaSet> object associated with an <xref:System.Xml.XmlDocument> object are used for validation when the <xref:System.Xml.XmlDocument.Validate%2A> method of an <xref:System.Xml.XmlDocument> is executed.
+ The schemas contained in an <xref:System.Xml.Schema.XmlSchemaSet> object associated with an <xref:System.Xml.XmlDocument> object are used for validation when the <xref:System.Xml.XmlDocument.Validate*> method of an <xref:System.Xml.XmlDocument> is executed.
 
  When an <xref:System.Xml.XmlDocument> object is initialized with XML data from an <xref:System.Xml.XmlReader> object, the <xref:System.Xml.Schema.XmlSchemaSet> object is loaded from the <xref:System.Xml.XmlReaderSettings.Schemas> property of the <xref:System.Xml.XmlReader> object.
 
@@ -4707,23 +4402,17 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </Docs>
     </Member>
     <MemberGroup MemberName="Validate">
-      <AssemblyInfo>
-        <AssemblyName>System.Xml</AssemblyName>
-        <AssemblyVersion>2.0.5.0</AssemblyVersion>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Validates the <see cref="T:System.Xml.XmlDocument" /> against the XML Schema Definition Language (XSD) schemas contained in the <see cref="P:System.Xml.XmlDocument.Schemas" /> property.</summary>
       </Docs>
     </MemberGroup>
     <Member MemberName="Validate">
-      <MemberSignature Language="C#" Value="public void Validate (System.Xml.Schema.ValidationEventHandler? validationEventHandler);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public void Validate (System.Xml.Schema.ValidationEventHandler? validationEventHandler);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Validate(class System.Xml.Schema.ValidationEventHandler validationEventHandler) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.Validate(System.Xml.Schema.ValidationEventHandler)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Validate (validationEventHandler As ValidationEventHandler)" />
       <MemberSignature Language="F#" Value="member this.Validate : System.Xml.Schema.ValidationEventHandler -&gt; unit" Usage="xmlDocument.Validate validationEventHandler" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void Validate(System::Xml::Schema::ValidationEventHandler ^ validationEventHandler);" />
-      <MemberSignature Language="C#" Value="public void Validate (System.Xml.Schema.ValidationEventHandler validationEventHandler);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -4738,12 +4427,6 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4752,17 +4435,11 @@ The following example loads XML into an `XmlDocument` object and saves it out to
       <AssemblyInfo>
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="validationEventHandler" Type="System.Xml.Schema.ValidationEventHandler" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="validationEventHandler" Type="System.Xml.Schema.ValidationEventHandler" />
       </Parameters>
       <Docs>
         <param name="validationEventHandler">The <see cref="T:System.Xml.Schema.ValidationEventHandler" /> object that receives information about schema validation warnings and errors.</param>
@@ -4771,9 +4448,9 @@ The following example loads XML into an `XmlDocument` object and saves it out to
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Xml.XmlDocument.Validate%2A> method validates the XML data in the <xref:System.Xml.XmlDocument> against the schemas contained in the <xref:System.Xml.XmlDocument.Schemas> property. The <xref:System.Xml.XmlDocument.Validate%2A> method performs infoset augmentation. Specifically, after successful validation, schema defaults are applied, text values are converted to atomic values as necessary, and type information is associated with validated information items. The result is a previously un-typed XML sub-tree in the <xref:System.Xml.XmlDocument> replaced with a typed sub-tree.
+ The <xref:System.Xml.XmlDocument.Validate*> method validates the XML data in the <xref:System.Xml.XmlDocument> against the schemas contained in the <xref:System.Xml.XmlDocument.Schemas> property. The <xref:System.Xml.XmlDocument.Validate*> method performs infoset augmentation. Specifically, after successful validation, schema defaults are applied, text values are converted to atomic values as necessary, and type information is associated with validated information items. The result is a previously un-typed XML sub-tree in the <xref:System.Xml.XmlDocument> replaced with a typed sub-tree.
 
-Consider the following points when using the <xref:System.Xml.XmlDocument.Validate%2A> method:
+Consider the following points when using the <xref:System.Xml.XmlDocument.Validate*> method:
 
 - Schema location hints like `xsi:schemaLocation` or `xsi:noNamespaceSchemaLocation` are ignored.
 - Inline schemas are ignored.
@@ -4782,7 +4459,7 @@ Consider the following points when using the <xref:System.Xml.XmlDocument.Valida
 
 ## Examples
 
-The following example illustrates use of the <xref:System.Xml.XmlDocument.Validate%2A> method. The example creates an <xref:System.Xml.XmlDocument> that contains an associated XSD schema using the <xref:System.Xml.XmlReaderSettings> and <xref:System.Xml.XmlReader> objects. The example then uses the <xref:System.Xml.XPath.XPathNavigator> class to incorrectly modify the typed value of an element in the XML document generating a schema validation error.
+The following example illustrates use of the <xref:System.Xml.XmlDocument.Validate*> method. The example creates an <xref:System.Xml.XmlDocument> that contains an associated XSD schema using the <xref:System.Xml.XmlReaderSettings> and <xref:System.Xml.XmlReader> objects. The example then uses the <xref:System.Xml.XPath.XPathNavigator> class to incorrectly modify the typed value of an element in the XML document generating a schema validation error.
 
 [!code-csharp[XPathValidation#1](~/snippets/csharp/System.Xml/XmlDocument/Validate/XPathValidation.cs#1)]
 [!code-vb[XPathValidation#1](~/snippets/visualbasic/VS_Snippets_Data/XPathValidation/VB/XPathValidation.vb#1)]
@@ -4799,13 +4476,12 @@ The example takes the `contosoBooks.xml` and `contosoBooks.xsd` files as input.
       </Docs>
     </Member>
     <Member MemberName="Validate">
-      <MemberSignature Language="C#" Value="public void Validate (System.Xml.Schema.ValidationEventHandler? validationEventHandler, System.Xml.XmlNode nodeToValidate);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public void Validate (System.Xml.Schema.ValidationEventHandler? validationEventHandler, System.Xml.XmlNode nodeToValidate);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Validate(class System.Xml.Schema.ValidationEventHandler validationEventHandler, class System.Xml.XmlNode nodeToValidate) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Xml.XmlDocument.Validate(System.Xml.Schema.ValidationEventHandler,System.Xml.XmlNode)" />
       <MemberSignature Language="VB.NET" Value="Public Sub Validate (validationEventHandler As ValidationEventHandler, nodeToValidate As XmlNode)" />
       <MemberSignature Language="F#" Value="member this.Validate : System.Xml.Schema.ValidationEventHandler * System.Xml.XmlNode -&gt; unit" Usage="xmlDocument.Validate (validationEventHandler, nodeToValidate)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void Validate(System::Xml::Schema::ValidationEventHandler ^ validationEventHandler, System::Xml::XmlNode ^ nodeToValidate);" />
-      <MemberSignature Language="C#" Value="public void Validate (System.Xml.Schema.ValidationEventHandler validationEventHandler, System.Xml.XmlNode nodeToValidate);" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -4820,12 +4496,6 @@ The example takes the `contosoBooks.xml` and `contosoBooks.xsd` files as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4838,15 +4508,15 @@ The example takes the `contosoBooks.xml` and `contosoBooks.xsd` files as input.
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="validationEventHandler" Type="System.Xml.Schema.ValidationEventHandler" Index="0" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0">
+        <Parameter Name="validationEventHandler" Type="System.Xml.Schema.ValidationEventHandler">
           <Attributes>
-            <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+            <Attribute>
               <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
               <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
             </Attribute>
           </Attributes>
         </Parameter>
-        <Parameter Name="nodeToValidate" Type="System.Xml.XmlNode" Index="1" FrameworkAlternate="netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netstandard-2.0;netstandard-2.1;netcore-3.1;net-5.0;net-6.0;net-7.0;netframework-4.8.1;net-8.0;net-9.0;net-10.0;net-11.0" />
+        <Parameter Name="nodeToValidate" Type="System.Xml.XmlNode" />
       </Parameters>
       <Docs>
         <param name="validationEventHandler">The <see cref="T:System.Xml.Schema.ValidationEventHandler" /> object that receives information about schema validation warnings and errors.</param>
@@ -4856,9 +4526,9 @@ The example takes the `contosoBooks.xml` and `contosoBooks.xsd` files as input.
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The <xref:System.Xml.XmlDocument.Validate%2A> method validates the XML data in the <xref:System.Xml.XmlNode> object against the schemas contained in the <xref:System.Xml.XmlDocument.Schemas> property. The <xref:System.Xml.XmlDocument.Validate%2A> method performs infoset augmentation. Specifically, after successful validation, schema defaults are applied, text values are converted to atomic values as necessary, and type information is associated with validated information items. The result is a previously un-typed XML sub-tree in the <xref:System.Xml.XmlDocument> replaced with a typed sub-tree.
+ The <xref:System.Xml.XmlDocument.Validate*> method validates the XML data in the <xref:System.Xml.XmlNode> object against the schemas contained in the <xref:System.Xml.XmlDocument.Schemas> property. The <xref:System.Xml.XmlDocument.Validate*> method performs infoset augmentation. Specifically, after successful validation, schema defaults are applied, text values are converted to atomic values as necessary, and type information is associated with validated information items. The result is a previously un-typed XML sub-tree in the <xref:System.Xml.XmlDocument> replaced with a typed sub-tree.
 
- The following are important notes to consider when using the <xref:System.Xml.XmlDocument.Validate%2A> method.
+ The following are important notes to consider when using the <xref:System.Xml.XmlDocument.Validate*> method.
 
 - Schema location hints like `xsi:schemaLocation` or `xsi:noNamespaceSchemaLocation` are ignored.
 
@@ -4871,7 +4541,7 @@ The example takes the `contosoBooks.xml` and `contosoBooks.xsd` files as input.
 
 
 ## Examples
- For an example of the <xref:System.Xml.XmlDocument.Validate%2A> method, see the <xref:System.Xml.XmlDocument.Validate%2A> method.
+ For an example of the <xref:System.Xml.XmlDocument.Validate*> method, see the <xref:System.Xml.XmlDocument.Validate*> method.
 
  ]]></format>
         </remarks>
@@ -4907,12 +4577,6 @@ The example takes the `contosoBooks.xml` and `contosoBooks.xsd` files as input.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -4973,12 +4637,6 @@ The following example displays the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -5013,13 +4671,12 @@ The following example displays the document.
       </Docs>
     </Member>
     <Member MemberName="XmlResolver">
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlResolver? XmlResolver { set; }" FrameworkAlternate="net-10.0;net-11.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlResolver? XmlResolver { set; }" />
       <MemberSignature Language="ILAsm" Value=".property instance class System.Xml.XmlResolver XmlResolver" />
       <MemberSignature Language="DocId" Value="P:System.Xml.XmlDocument.XmlResolver" />
       <MemberSignature Language="VB.NET" Value="Public Overridable Property XmlResolver As XmlResolver" />
       <MemberSignature Language="F#" Value="member this.XmlResolver : System.Xml.XmlResolver" Usage="System.Xml.XmlDocument.XmlResolver" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Xml::XmlResolver ^ XmlResolver {  void set(System::Xml::XmlResolver ^ value); };" />
-      <MemberSignature Language="C#" Value="public virtual System.Xml.XmlResolver XmlResolver { set; }" FrameworkAlternate="net-5.0;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-2.0;netstandard-2.1" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Xml</AssemblyName>
@@ -5035,12 +4692,6 @@ The following example displays the document.
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Xml.ReaderWriter</AssemblyName>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -5050,7 +4701,7 @@ The following example displays the document.
         <AssemblyName>System.Xml.XmlDocument</AssemblyName>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
         </Attribute>
@@ -5060,9 +4711,7 @@ The following example displays the document.
       </ReturnValue>
       <Docs>
         <summary>Sets the <see cref="T:System.Xml.XmlResolver" /> to use for resolving external resources.</summary>
-        <value>The <see langword="XmlResolver" /> to use.
-
- In version 1.1 of the.NET Framework, the caller must be fully trusted in order to specify an <see langword="XmlResolver" />.</value>
+        <value>The <see langword="XmlResolver" /> to use.</value>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
@@ -5078,15 +4727,7 @@ The following example displays the document.
 - If the document was loaded with a class that extends `XmlReader` and the `XmlReader` cannot resolve entities (<xref:System.Xml.XmlReader.CanResolveEntity> returns `false`), the `XmlResolver` on the `XmlDocument` is used to resolve any references in the DocumentType node and to expand any entity references.
 
 > [!NOTE]
-> If the `XmlDocument` is loaded using an <xref:System.Xml.XmlReader> that had an `XmlResolver` set to it, the `XmlResolver` on the `XmlReader` is not cached by the `XmlDocument` after <xref:System.Xml.XmlDocument.Load%2A> completes.
-
- In version 1.1 of the.NET Framework, if this property is not set, the trust level of the application determines the default behavior.
-
- `Fully trusted code:` The document uses a default <xref:System.Xml.XmlUrlResolver> with no user credentials. If authentication is required to access a network resource, use the `XmlResolver` property to specify an `XmlResolver` with the necessary credentials.
-
- `Semi-trusted code:` The `XmlResolver` property is set to `null`. External resources are not resolved.
-
- For more information on security and the `XmlResolver` property, see [Resolving External Resources](/dotnet/standard/data/xml/resolving-external-resources).
+> If the `XmlDocument` is loaded using an <xref:System.Xml.XmlReader> that had an `XmlResolver` set to it, the `XmlResolver` on the `XmlReader` is not cached by the `XmlDocument` after <xref:System.Xml.XmlDocument.Load*> completes.
 
  This property is a Microsoft extension to the Document Object Model (DOM).
 
@@ -5113,7 +4754,6 @@ The example uses the following data files as input.
         <altmember cref="P:System.Xml.XmlUrlResolver.Credentials" />
         <altmember cref="T:System.Net.CredentialCache" />
         <altmember cref="T:System.Net.NetworkCredential" />
-        <altmember cref="T:System.Xml.XmlSecureResolver" />
       </Docs>
     </Member>
   </Members>

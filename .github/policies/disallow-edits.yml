@@ -8,8 +8,11 @@ configuration:
       - description: Close PRs that modify files whose "source of truth" is not in this repo.
         if:
           - payloadType: Pull_Request
-          - isAction:
-              action: Opened
+          - or:
+              - isAction:
+                  action: Opened
+              - isAction:
+                  action: Synchronize
           - targetsBranch:
               branch: main
           - or:
@@ -24,10 +27,10 @@ configuration:
                   pattern: xml/System.CommandLine*/*
               - filesMatchPattern:
                   matchAny: true
-                  pattern: xml/System.Composition/*
+                  pattern: xml/System.Composition*/*
               - filesMatchPattern:
                   matchAny: true
-                  pattern: xml/System.Diagnostics.EventLog.Messages/*
+                  pattern: xml/System.Diagnostics/FileVersionInfo.xml
               - filesMatchPattern:
                   matchAny: true
                   pattern: xml/System.Formats.Asn1/*
@@ -54,10 +57,10 @@ configuration:
                   pattern: xml/System.Numerics.Tensors/*
               - filesMatchPattern:
                   matchAny: true
-                  pattern: xml/System.Reflection/DispatchProxy.xml
+                  pattern: xml/System.Reflection.Context/*
               - filesMatchPattern:
                   matchAny: true
-                  pattern: xml/System.Runtime.Serialization.Schema/*
+                  pattern: xml/System.Reflection/DispatchProxy.xml
               - filesMatchPattern:
                   matchAny: true
                   pattern: xml/System.Runtime.Serialization/ISerializationCodeDomSurrogateProvider.xml
@@ -67,10 +70,16 @@ configuration:
               - filesMatchPattern:
                   matchAny: true
                   pattern: xml/System.Runtime.Serialization/XsdDataContractExporter.xml
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Text.RegularExpressions/*
+              - filesMatchPattern:
+                  matchAny: true
+                  pattern: xml/System.Threading.RateLimiting/*
         then:
             - addReply:
                 reply: >-
-                  @${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates in the /// comments in the dotnet/runtime repo (or dotnet/extensions repo) instead.
+                  ${issueAuthor} - This PR edits one or more files whose 'source of truth' for documentation is not in this repo. Please make documentation updates in the /// comments in the dotnet/runtime repo (or dotnet/extensions repo) instead.
             - if:
                 - or:
                     - activitySenderHasPermission:

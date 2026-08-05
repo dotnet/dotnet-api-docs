@@ -27,15 +27,15 @@
       <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The synchronous <xref:System.Windows.Markup.XamlReader.Load%2A> methods are static, but the asynchronous <xref:System.Windows.Markup.XamlReader.LoadAsync%2A> methods are not static and require an instance of the <xref:System.Windows.Markup.XamlReader> class to use.
+ The synchronous <xref:System.Windows.Markup.XamlReader.Load*> methods are static, but the asynchronous <xref:System.Windows.Markup.XamlReader.LoadAsync*> methods are not static and require an instance of the <xref:System.Windows.Markup.XamlReader> class to use.
 
- The output of the `Load` methods is a single object, which represents the root object of a created object tree or object graph. Object graphs that are created by <xref:System.Windows.Markup.XamlReader> are typically added to the existing object tree of a WPF application at run time. Otherwise the new object graph is considered disconnected for purposes of the WPF application model. This means that it does not render, and cannot be accessed using any of the object tree techniques as applied to the WPF application's main object tree (for example, the APIs <xref:System.Windows.FrameworkElement.FindName%2A>, <xref:System.Windows.LogicalTreeHelper>, <xref:System.Windows.Media.VisualTreeHelper>). For more information on object tree concepts, see [Trees in WPF](/dotnet/framework/wpf/advanced/trees-in-wpf).
+ The output of the `Load` methods is a single object, which represents the root object of a created object tree or object graph. Object graphs that are created by <xref:System.Windows.Markup.XamlReader> are typically added to the existing object tree of a WPF application at run time. Otherwise the new object graph is considered disconnected for purposes of the WPF application model. This means that it does not render, and cannot be accessed using any of the object tree techniques as applied to the WPF application's main object tree (for example, the APIs <xref:System.Windows.FrameworkElement.FindName*>, <xref:System.Windows.LogicalTreeHelper>, <xref:System.Windows.Media.VisualTreeHelper>). For more information on object tree concepts, see [Trees in WPF](/dotnet/desktop/wpf/advanced/trees-in-wpf).
 
  <xref:System.Windows.Markup.XamlReader> supports the following primary scenarios:
 
--   **Cloning/object factory**: Without additional mechanisms, a reference type generally cannot be included in more than one position in a WPF object tree. (Examples of additional mechanisms that offer support for sharing or re-use in WPF include objects that are based on <xref:System.Windows.Freezable>, or support for commonly shareable objects such as <xref:System.Windows.Media.Brush> that are referenced as an item from a <xref:System.Windows.ResourceDictionary>.) One way to clone an object that is already in the object tree is to serialize the object using <xref:System.Windows.Markup.XamlWriter.Save%2A?displayProperty=nameWithType>. You then use the serialized string as input for a call to <xref:System.Windows.Markup.XamlReader.Load%2A>, with a stream or <xref:System.Xml.XmlReader> as an intermediary.
+-   **Cloning/object factory**: Without additional mechanisms, a reference type generally cannot be included in more than one position in a WPF object tree. (Examples of additional mechanisms that offer support for sharing or re-use in WPF include objects that are based on <xref:System.Windows.Freezable>, or support for commonly shareable objects such as <xref:System.Windows.Media.Brush> that are referenced as an item from a <xref:System.Windows.ResourceDictionary>.) One way to clone an object that is already in the object tree is to serialize the object using <xref:System.Windows.Markup.XamlWriter.Save*?displayProperty=nameWithType>. You then use the serialized string as input for a call to <xref:System.Windows.Markup.XamlReader.Load*>, with a stream or <xref:System.Xml.XmlReader> as an intermediary.
 
--   **Constructing objects based on just-in-time information**: There are often other ways to have late-binding or user-supplied input change the state of existing objects. For example you could use the same value to set more than one property, or use data binding. But if you have a scenario where even the type of object to create is only determinable at run time or with user interaction, then creating such an object by building up a string for <xref:System.Windows.Markup.XamlReader.Load%2A> input is often a useful technique.
+-   **Constructing objects based on just-in-time information**: There are often other ways to have late-binding or user-supplied input change the state of existing objects. For example you could use the same value to set more than one property, or use data binding. But if you have a scenario where even the type of object to create is only determinable at run time or with user interaction, then creating such an object by building up a string for <xref:System.Windows.Markup.XamlReader.Load*> input is often a useful technique.
 
 -   **Using existing resource techniques**: The <xref:System.IO.Stream> type is used frequently in other frameworks or technologies for transferring data or objects across application boundaries or for similar situations. You can then use the <xref:System.IO.Stream> techniques to store or obtain XAML-formatted data that you eventually use to create an object as part of your application.
 
@@ -47,7 +47,7 @@
 ## Code Access Security, Loose XAML, and XamlReader
  XAML is a markup language that directly represents object instantiation and execution. Therefore, elements created in XAML have the same ability to interact with system resources (network access, file system IO, for example) as the equivalent generated code does.
 
- WPF supports the .NET security framework Code Access Security (CAS). This means that WPF content running in the internet zone has reduced execution permissions. "Loose XAML" (pages of noncompiled XAML interpreted at load time by a XAML viewer) and XAML browser application (XBAP) are usually run in this internet zone and use the same permission set.  However, XAML loaded in to a fully trusted application has the same access to the system resources as the hosting application does. For more information, see [WPF Partial Trust Security](/dotnet/framework/wpf/wpf-partial-trust-security).
+ WPF supports the .NET security framework Code Access Security (CAS). This means that WPF content running in the internet zone has reduced execution permissions. "Loose XAML" (pages of noncompiled XAML interpreted at load time by a XAML viewer) and XAML browser application (XBAP) are usually run in this internet zone and use the same permission set.  However, XAML loaded in to a fully trusted application has the same access to the system resources as the hosting application does. For more information, see [WPF Partial Trust Security](/dotnet/desktop/wpf/wpf-partial-trust-security).
 
  The implications of these statements for <xref:System.Windows.Markup.XamlReader> is that your application design must make trust decisions about the XAML you decide to load. If you are loading XAML that is not trusted, consider implementing your own sandboxing technique for how you load the resulting object graph.
 
@@ -68,7 +68,7 @@
  If you are targeting .NET Framework 4, the external API is the same, but parts of the implementation are built on the .NET Framework 4 general XAML implementation in the System.Xaml assembly, which improves many of the technical and reporting aspects of parsing XAML. Targeting .NET Framework 4 necessarily entails including System.Xaml as a reference, and details of implementation such as the exceptions reported may come from System.Xaml defined types.
 
 ## Examples
- The following example converts a <xref:System.Windows.Controls.Button> into a string using the <xref:System.Windows.Markup.XamlWriter> class.  The string is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load%2A> method on the <xref:System.Windows.Markup.XamlReader> class.
+ The following example converts a <xref:System.Windows.Controls.Button> into a string using the <xref:System.Windows.Markup.XamlWriter> class.  The string is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load*> method on the <xref:System.Windows.Markup.XamlReader> class.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Markup/XamlReader/Overview/Window1.xaml.cs" id="Snippetxamlreaderloadxmlreader":::
  :::code language="vb" source="~/snippets/visualbasic/System.Windows.Markup/XamlReader/Overview/window1.xaml.vb" id="Snippetxamlreaderloadxmlreader":::
@@ -87,7 +87,6 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -113,7 +112,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -133,7 +131,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- <xref:System.Windows.Markup.XamlReader.CancelAsync%2A> is an asynchronous operation; therefore, some loading may occur before the operation is aborted.
+ <xref:System.Windows.Markup.XamlReader.CancelAsync*> is an asynchronous operation; therefore, some loading may occur before the operation is aborted.
 
  ]]></format>
         </remarks>
@@ -169,10 +167,6 @@
       </Docs>
     </Member>
     <MemberGroup MemberName="Load">
-      <AssemblyInfo>
-        <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Reads XAML input and returns the root of the corresponding object tree.</summary>
       </Docs>
@@ -187,7 +181,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -211,7 +204,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- The following example saves a <xref:System.Windows.Controls.Button> into a <xref:System.IO.MemoryStream> using the <xref:System.Windows.Markup.XamlWriter> class. The stream is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load%2A> method on the <xref:System.Windows.Markup.XamlReader> class.
+ The following example saves a <xref:System.Windows.Controls.Button> into a <xref:System.IO.MemoryStream> using the <xref:System.Windows.Markup.XamlWriter> class. The stream is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load*> method on the <xref:System.Windows.Markup.XamlReader> class.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Markup/XamlReader/Overview/Window1.xaml.cs" id="Snippetxamlreaderloadxmlreader":::
  :::code language="vb" source="~/snippets/visualbasic/System.Windows.Markup/XamlReader/Overview/window1.xaml.vb" id="Snippetxamlreaderloadxmlreader":::
@@ -246,7 +239,7 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="reader" Type="System.Xaml.XamlReader" Index="0" FrameworkAlternate="net-5.0;net-6.0;netcore-3.0;netcore-3.1;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;netframework-4.8.1;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="reader" Type="System.Xaml.XamlReader" />
       </Parameters>
       <Docs>
         <param name="reader">A <see cref="T:System.Xaml.XamlReader" /> object. This is expected to be initialized with input XAML.</param>
@@ -274,7 +267,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -298,7 +290,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- The following example converts a <xref:System.Windows.Controls.Button> into a string using the <xref:System.Windows.Markup.XamlWriter> class.  The string is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load%2A> method on the <xref:System.Windows.Markup.XamlReader> class.
+ The following example converts a <xref:System.Windows.Controls.Button> into a string using the <xref:System.Windows.Markup.XamlWriter> class.  The string is then loaded back into a <xref:System.Windows.Controls.Button> using the static <xref:System.Windows.Markup.XamlReader.Load*> method on the <xref:System.Windows.Markup.XamlReader> class.
 
  :::code language="csharp" source="~/snippets/csharp/System.Windows.Markup/XamlReader/Overview/Window1.xaml.cs" id="Snippetxamlreaderloadxmlreader":::
  :::code language="vb" source="~/snippets/visualbasic/System.Windows.Markup/XamlReader/Overview/window1.xaml.vb" id="Snippetxamlreaderloadxmlreader":::
@@ -332,8 +324,8 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="stream">To be added.</param>
@@ -353,7 +345,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -386,12 +377,12 @@
       </Docs>
     </Member>
     <Member MemberName="Load">
-      <MemberSignature Language="C#" Value="public static object Load (System.Xml.XmlReader reader, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.Xml.XmlReader reader, bool useRestrictiveXamlReader) cil managed" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.Xml.XmlReader,System.Boolean)" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (reader As XmlReader, useRestrictiveXamlReader As Boolean) As Object" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="F#" Value="static member Load : System.Xml.XmlReader * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (reader, useRestrictiveXamlReader)" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xml::XmlReader ^ reader, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+      <MemberSignature Language="C#" Value="public static object Load (System.Xml.XmlReader reader, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.Xml.XmlReader reader, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.Xml.XmlReader,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (reader As XmlReader, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="static member Load : System.Xml.XmlReader * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (reader, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::Xml::XmlReader ^ reader, bool useRestrictiveXamlReader);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
@@ -404,11 +395,11 @@
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0">System.Object</ReturnType>
+        <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="reader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="reader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="reader">To be added.</param>
@@ -419,12 +410,12 @@
       </Docs>
     </Member>
     <Member MemberName="Load">
-      <MemberSignature Language="C#" Value="public static object Load (System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.IO.Stream stream, class System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) cil managed" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.IO.Stream,System.Windows.Markup.ParserContext,System.Boolean)" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (stream As Stream, parserContext As ParserContext, useRestrictiveXamlReader As Boolean) As Object" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="F#" Value="static member Load : System.IO.Stream * System.Windows.Markup.ParserContext * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (stream, parserContext, useRestrictiveXamlReader)" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext, bool useRestrictiveXamlReader);" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+      <MemberSignature Language="C#" Value="public static object Load (System.IO.Stream stream, System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig object Load(class System.IO.Stream stream, class System.Windows.Markup.ParserContext parserContext, bool useRestrictiveXamlReader) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Windows.Markup.XamlReader.Load(System.IO.Stream,System.Windows.Markup.ParserContext,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Load (stream As Stream, parserContext As ParserContext, useRestrictiveXamlReader As Boolean) As Object" />
+      <MemberSignature Language="F#" Value="static member Load : System.IO.Stream * System.Windows.Markup.ParserContext * bool -&gt; obj" Usage="System.Windows.Markup.XamlReader.Load (stream, parserContext, useRestrictiveXamlReader)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Object ^ Load(System::IO::Stream ^ stream, System::Windows::Markup::ParserContext ^ parserContext, bool useRestrictiveXamlReader);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
@@ -437,12 +428,12 @@
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0">System.Object</ReturnType>
+        <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="stream">To be added.</param>
@@ -454,10 +445,6 @@
       </Docs>
     </Member>
     <MemberGroup MemberName="LoadAsync">
-      <AssemblyInfo>
-        <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Reads XAML markup and returns an object that corresponds to the root of the specified markup.</summary>
       </Docs>
@@ -472,7 +459,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -500,7 +486,7 @@
 
  You typically would assign the returned object to some location in your WPF application's object tree, with the knowledge that content might still be filling in and might cause incremental layout updates if the entire content is exposed as part of the UI. For this reason it is typical to isolate or virtualize any asynchronously loaded objects from XAML, and to use application-specific logic or application state to notify when <xref:System.Windows.Markup.XamlReader.LoadCompleted> is handled.
 
- In order for <xref:System.Windows.Markup.XamlReader.LoadAsync%2A> to load XAML input asynchronously, the root element in the XAML input must contain the attribute and value `x:SynchronousMode="Async"`. The value is treated as case sensitive. If the XAML input root does not contain `x:SynchronousMode="Async"`, no exception is thrown, and the call is processed as a synchronous load (see <xref:System.Windows.Markup.XamlReader.Load%28System.IO.Stream%29>).
+ In order for <xref:System.Windows.Markup.XamlReader.LoadAsync*> to load XAML input asynchronously, the root element in the XAML input must contain the attribute and value `x:SynchronousMode="Async"`. The value is treated as case sensitive. If the XAML input root does not contain `x:SynchronousMode="Async"`, no exception is thrown, and the call is processed as a synchronous load (see <xref:System.Windows.Markup.XamlReader.Load(System.IO.Stream)>).
 
  Only one asynchronous load operation per instance of the <xref:System.Windows.Markup.XamlReader> class can be performed at a time.  If more than one asynchronous operation is attempted on the same instance of the <xref:System.Windows.Markup.XamlReader> class an <xref:System.InvalidOperationException> is thrown.
 
@@ -524,7 +510,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -550,9 +535,9 @@
 ## Remarks
  An asynchronous XAML load operation will initially return an object that is purely the root object. Asynchronously, XAML parsing then continues, and any child objects are filled in under the root. This is in contrast to the typical WPF XAML processing behavior and its interaction with WPF concepts of object lifetime. In the typical (non-async) interaction, all properties of an object including all child collections are filled before returning an element and reporting it as loaded. That behavior equates to a bottom-up methodology for creating the tree where the root object is the last object to become available.
 
- You typically would assign the returned object from <xref:System.Windows.Markup.XamlReader.LoadAsync%2A> to some location in your application's object tree, with the knowledge that content might still be filling in and might cause incremental layout updates if the entire content is exposed as part of the UI. For this reason it is typical to isolate or virtualize any asynchronously loaded objects from XAML, and to use application-specific logic or application state to notify when <xref:System.Windows.Markup.XamlReader.LoadCompleted> is handled.
+ You typically would assign the returned object from <xref:System.Windows.Markup.XamlReader.LoadAsync*> to some location in your application's object tree, with the knowledge that content might still be filling in and might cause incremental layout updates if the entire content is exposed as part of the UI. For this reason it is typical to isolate or virtualize any asynchronously loaded objects from XAML, and to use application-specific logic or application state to notify when <xref:System.Windows.Markup.XamlReader.LoadCompleted> is handled.
 
- In order for <xref:System.Windows.Markup.XamlReader.LoadAsync%2A> to load XAML input asynchronously, the root element in the XAML markup must contain the attribute and value `x:SynchronousMode="Async"`. The value is treated as case sensitive. If the XAML markup root does not contain `x:SynchronousMode="Async"`, no exception is thrown, and the call is instead processed as a synchronous load (see <xref:System.Windows.Markup.XamlReader.Load%28System.Xml.XmlReader%29>).
+ In order for <xref:System.Windows.Markup.XamlReader.LoadAsync*> to load XAML input asynchronously, the root element in the XAML markup must contain the attribute and value `x:SynchronousMode="Async"`. The value is treated as case sensitive. If the XAML markup root does not contain `x:SynchronousMode="Async"`, no exception is thrown, and the call is instead processed as a synchronous load (see <xref:System.Windows.Markup.XamlReader.Load(System.Xml.XmlReader)>).
 
  Only one asynchronous load operation per instance of the <xref:System.Windows.Markup.XamlReader> class can be performed at a time.  If more than one asynchronous operation is attempted on the same instance of the <xref:System.Windows.Markup.XamlReader> class an <xref:System.InvalidOperationException> is thrown.
 
@@ -588,8 +573,8 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="stream">To be added.</param>
@@ -609,7 +594,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -639,7 +623,7 @@
 
  You typically would assign the returned object to some location in your application's object tree, with the knowledge that content might still be filling in and might cause incremental layout updates if the entire content is exposed as part of the UI. For this reason it is typical to isolate or virtualize any asynchronously loaded objects from XAML, and to use application-specific logic or application state to notify when <xref:System.Windows.Markup.XamlReader.LoadCompleted> is handled.
 
- In order for <xref:System.Windows.Markup.XamlReader.LoadAsync%2A> to load markup asynchronously, the root element in the XAML markup must contain the attribute and value `x:SynchronousMode="Async"`. The value is treated as case sensitive. If the XAML markup root does not contain `x:SynchronousMode="Async"`, no exception is thrown, and the call is processed as a synchronous load (see <xref:System.Windows.Markup.XamlReader.Load%28System.IO.Stream%2CSystem.Windows.Markup.ParserContext%29>).
+ In order for <xref:System.Windows.Markup.XamlReader.LoadAsync*> to load markup asynchronously, the root element in the XAML markup must contain the attribute and value `x:SynchronousMode="Async"`. The value is treated as case sensitive. If the XAML markup root does not contain `x:SynchronousMode="Async"`, no exception is thrown, and the call is processed as a synchronous load (see <xref:System.Windows.Markup.XamlReader.Load(System.IO.Stream,System.Windows.Markup.ParserContext)>).
 
  Only one asynchronous load operation per instance of the <xref:System.Windows.Markup.XamlReader> class can be performed at a time.  If more than one asynchronous operation is attempted on the same instance of the <xref:System.Windows.Markup.XamlReader> class an <xref:System.InvalidOperationException> is thrown.
 
@@ -675,8 +659,8 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="reader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="reader" Type="System.Xml.XmlReader" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="reader">To be added.</param>
@@ -708,9 +692,9 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="stream" Type="System.IO.Stream" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="stream">To be added.</param>
@@ -725,14 +709,12 @@
       <MemberSignature Language="C#" Value="public event System.ComponentModel.AsyncCompletedEventHandler LoadCompleted;" />
       <MemberSignature Language="ILAsm" Value=".event class System.ComponentModel.AsyncCompletedEventHandler LoadCompleted" />
       <MemberSignature Language="DocId" Value="E:System.Windows.Markup.XamlReader.LoadCompleted" />
-      <MemberSignature Language="VB.NET" Value="Public Custom Event LoadCompleted As AsyncCompletedEventHandler " FrameworkAlternate="netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+      <MemberSignature Language="VB.NET" Value="Public Custom Event LoadCompleted As AsyncCompletedEventHandler " />
       <MemberSignature Language="F#" Value="member this.LoadCompleted : System.ComponentModel.AsyncCompletedEventHandler " Usage="member this.LoadCompleted : System.ComponentModel.AsyncCompletedEventHandler " />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; event System::ComponentModel::AsyncCompletedEventHandler ^ LoadCompleted;" />
-      <MemberSignature Language="VB.NET" Value="Public Event LoadCompleted As AsyncCompletedEventHandler " FrameworkAlternate="netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -759,10 +741,6 @@
       </Docs>
     </Member>
     <MemberGroup MemberName="Parse">
-      <AssemblyInfo>
-        <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Reads the markup in the specified text string and returns an object that corresponds to the root of the specified markup.</summary>
       </Docs>
@@ -777,7 +755,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -801,7 +778,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The implementation calls <xref:System.Windows.Markup.XamlReader.Load%2A> internally after creating a stream from the string. See <xref:System.Windows.Markup.XamlReader.Load%2A> for additional information such as possible exceptions.
+ The implementation calls <xref:System.Windows.Markup.XamlReader.Load*> internally after creating a stream from the string. See <xref:System.Windows.Markup.XamlReader.Load*> for additional information such as possible exceptions.
 
  ]]></format>
         </remarks>
@@ -829,8 +806,8 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="xamlText" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="xamlText" Type="System.String" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="xamlText">To be added.</param>
@@ -850,7 +827,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>PresentationFramework</AssemblyName>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
         <AssemblyVersion>4.0.0.0</AssemblyVersion>
         <AssemblyVersion>5.0.0.0</AssemblyVersion>
         <AssemblyVersion>6.0.0.0</AssemblyVersion>
@@ -876,7 +852,7 @@
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
- The implementation calls <xref:System.Windows.Markup.XamlReader.Load%2A> internally after creating a stream from the string. See <xref:System.Windows.Markup.XamlReader.Load%2A> for additional information such as possible exceptions.
+ The implementation calls <xref:System.Windows.Markup.XamlReader.Load*> internally after creating a stream from the string. See <xref:System.Windows.Markup.XamlReader.Load*> for additional information such as possible exceptions.
 
  ]]></format>
         </remarks>
@@ -904,9 +880,9 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="xamlText" Type="System.String" Index="0" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
-        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="net-5.0;net-6.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0;windowsdesktop-10.0;windowsdesktop-11.0" />
+        <Parameter Name="xamlText" Type="System.String" Index="0" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="parserContext" Type="System.Windows.Markup.ParserContext" Index="1" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
+        <Parameter Name="useRestrictiveXamlReader" Type="System.Boolean" Index="2" FrameworkAlternate="windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0;windowsdesktop-9.0" />
       </Parameters>
       <Docs>
         <param name="xamlText">To be added.</param>

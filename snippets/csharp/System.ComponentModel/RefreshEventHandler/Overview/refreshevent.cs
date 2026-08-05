@@ -86,6 +86,7 @@ class Control : Component
 {
     int position;
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public int Position
     {
         get => position;

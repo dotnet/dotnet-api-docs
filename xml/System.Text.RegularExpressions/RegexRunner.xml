@@ -35,9 +35,6 @@
   <TypeForwardingChain>
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
   </TypeForwardingChain>
@@ -46,18 +43,29 @@
   </Base>
   <Interfaces />
   <Attributes>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1">
+    <Attribute>
       <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
     </Attribute>
-    <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+    <Attribute>
       <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
       <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
     </Attribute>
   </Attributes>
   <Docs>
-    <summary>The <see cref="T:System.Text.RegularExpressions.RegexRunner" /> class is the base class for compiled regular expressions.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+            Base class for source-generated regex extensibility
+            (and the old CompileToAssembly extensibility).
+            It's not intended to be used by anything else.
+            </summary>
+    <remarks>
+            Provides the driver code that calls the subclass's Scan
+            method for either scanning or direct execution.
+            Also maintains memory allocation for the backtracking stack,
+            the grouping stack and the longjump crawlstack, and provides
+            methods to push new subpattern match results into (or remove
+            backtracked results from) the Match instance.
+            </remarks>
     <forInternalUseOnly />
   </Docs>
   <Members>
@@ -70,14 +78,6 @@
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -95,12 +95,6 @@
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <Parameters />
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Text.RegularExpressions.RegexRunner" /> class.</summary>
@@ -118,14 +112,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -155,33 +141,25 @@
         <param name="capnum">A capture number.</param>
         <param name="start">The starting position of the capture.</param>
         <param name="end">The ending position of the capture.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Called by Go() to capture a subexpression. Note that the
+            capnum used here has already been mapped to a non-sparse
+            index (by the code generator RegexWriter).
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="CharInClass">
-      <MemberSignature Language="C#" Value="public static bool CharInClass (char ch, string charClass);" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool CharInClass(char ch, string charClass) cil managed" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="public static bool CharInClass (char ch, string charClass);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool CharInClass(char ch, string charClass) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.RegexRunner.CharInClass(System.Char,System.String)" />
-      <MemberSignature Language="VB.NET" Value="Public Shared Function CharInClass (ch As Char, charClass As String) As Boolean" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function CharInClass (ch As Char, charClass As String) As Boolean" />
       <MemberSignature Language="F#" Value="static member CharInClass : char * string -&gt; bool" Usage="System.Text.RegularExpressions.RegexRunner.CharInClass (ch, charClass)" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool CharInClass(char ch, System::String ^ charClass);" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C#" Value="protected static bool CharInClass (char ch, string charClass);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="ILAsm" Value=".method familystatic hidebysig bool CharInClass(char ch, string charClass) cil managed" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="VB.NET" Value="Protected Shared Function CharInClass (ch As Char, charClass As String) As Boolean" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; static bool CharInClass(char ch, System::String ^ charClass);" FrameworkAlternate="net-5.0;net-6.0;net-7.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static bool CharInClass(char ch, System::String ^ charClass);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -202,13 +180,13 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="ch" Type="System.Char" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="charClass" Type="System.String" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="ch" Type="System.Char" />
+        <Parameter Name="charClass" Type="System.String" />
       </Parameters>
       <Docs>
         <param name="ch">A character to test.</param>
         <param name="charClass">The internal name of a character class.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method. Determines whether a character is in a character class.</summary>
+        <summary>Determines whether the specified character matches the given character class string.</summary>
         <returns>
           <see langword="true" /> if the <paramref name="ch" /> parameter is in the character class specified by the <paramref name="charClass" /> parameter.</returns>
         <remarks>To be added.</remarks>
@@ -225,14 +203,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -251,7 +221,7 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Obsolete("This API supports obsolete mechanisms for Regex extensibility. It is not supported.", DiagnosticId="SYSLIB0052", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("This API supports obsolete mechanisms for Regex extensibility. It is not supported.", DiagnosticId="SYSLIB0052", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
         </Attribute>
@@ -268,7 +238,7 @@
         <param name="ch">A character.</param>
         <param name="set">The character set.</param>
         <param name="category">The character category.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Determines whether the specified character is in the given character set and category.</summary>
         <returns>Returns <see cref="T:System.Boolean" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -284,14 +254,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -312,7 +274,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Checks whether the operation has timed out, and throws <see cref="T:System.Text.RegularExpressions.RegexMatchTimeoutException" /> if it has.</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -327,14 +289,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -360,7 +314,9 @@
       </Parameters>
       <Docs>
         <param name="i">A number to save.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Save a number on the longjump unrolling stack
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -375,14 +331,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -405,7 +353,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Get the height of the stack
+            </summary>
         <returns>Returns <see cref="T:System.Int32" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -421,14 +371,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -451,7 +393,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Increases the size of the longjump unrolling stack.
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -466,14 +410,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -496,7 +432,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Called by the implementation of Go() to increase the size of the
+            grouping stack.
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -511,14 +450,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -541,7 +472,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Called by the implementation of Go() to increase the size of the
+            backtracking stack.
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -556,14 +490,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -586,33 +512,23 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Called by the implementation of Go() to increase the size of storage
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="FindFirstChar">
-      <MemberSignature Language="C#" Value="protected virtual bool FindFirstChar ();" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected virtual bool FindFirstChar ();" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance bool FindFirstChar() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.RegexRunner.FindFirstChar" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Function FindFirstChar () As Boolean" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="F#" Value="abstract member FindFirstChar : unit -&gt; bool&#xA;override this.FindFirstChar : unit -&gt; bool" Usage="regexRunner.FindFirstChar " FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual bool FindFirstChar();" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C#" Value="protected abstract bool FindFirstChar ();" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function FindFirstChar () As Boolean" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="F#" Value="abstract member FindFirstChar : unit -&gt; bool" Usage="regexRunner.FindFirstChar " FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract bool FindFirstChar();" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Function FindFirstChar () As Boolean" />
+      <MemberSignature Language="F#" Value="abstract member FindFirstChar : unit -&gt; bool&#xA;override this.FindFirstChar : unit -&gt; bool" Usage="regexRunner.FindFirstChar " />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual bool FindFirstChar();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -635,34 +551,26 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            The responsibility of FindFirstChar() is to advance runtextpos
+            until it is at the next position which is a candidate for the
+            beginning of a successful match.
+            </summary>
         <returns>Returns <see cref="T:System.Boolean" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="Go">
-      <MemberSignature Language="C#" Value="protected virtual void Go ();" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected virtual void Go ();" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void Go() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.RegexRunner.Go" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub Go ()" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="F#" Value="abstract member Go : unit -&gt; unit&#xA;override this.Go : unit -&gt; unit" Usage="regexRunner.Go " FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void Go();" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C#" Value="protected abstract void Go ();" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="VB.NET" Value="Protected MustOverride Sub Go ()" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="F#" Value="abstract member Go : unit -&gt; unit" Usage="regexRunner.Go " FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract void Go();" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub Go ()" />
+      <MemberSignature Language="F#" Value="abstract member Go : unit -&gt; unit&#xA;override this.Go : unit -&gt; unit" Usage="regexRunner.Go " />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void Go();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -685,33 +593,26 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            The responsibility of Go() is to run the regular expression at
+            runtextpos and call Capture() on all the captured subexpressions,
+            then to leave runtextpos at the ending position. It should leave
+            runtextpos where it started if there was no match.
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="InitTrackCount">
-      <MemberSignature Language="C#" Value="protected virtual void InitTrackCount ();" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected virtual void InitTrackCount ();" />
       <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void InitTrackCount() cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.RegexRunner.InitTrackCount" />
-      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub InitTrackCount ()" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="F#" Value="abstract member InitTrackCount : unit -&gt; unit&#xA;override this.InitTrackCount : unit -&gt; unit" Usage="regexRunner.InitTrackCount " FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void InitTrackCount();" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
-      <MemberSignature Language="C#" Value="protected abstract void InitTrackCount ();" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="VB.NET" Value="Protected MustOverride Sub InitTrackCount ()" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="F#" Value="abstract member InitTrackCount : unit -&gt; unit" Usage="regexRunner.InitTrackCount " FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract void InitTrackCount();" FrameworkAlternate="net-5.0;net-6.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+      <MemberSignature Language="VB.NET" Value="Protected Overridable Sub InitTrackCount ()" />
+      <MemberSignature Language="F#" Value="abstract member InitTrackCount : unit -&gt; unit&#xA;override this.InitTrackCount : unit -&gt; unit" Usage="regexRunner.InitTrackCount " />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; virtual void InitTrackCount();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -734,7 +635,11 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            InitTrackCount must initialize the runtrackcount field; this is
+            used to know how large the initial runtrack and runstack arrays
+            must be.
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -749,14 +654,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -786,7 +683,11 @@
         <param name="index">The possible boundary position.</param>
         <param name="startpos">The starting position.</param>
         <param name="endpos">The ending position.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Called by the implementation of Go() to decide whether the pos
+            at the specified index is a boundary or not. It's just not worth
+            emitting inline code for this logic.
+            </summary>
         <returns>Returns <see cref="T:System.Boolean" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -802,14 +703,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -839,7 +732,7 @@
         <param name="index">The possible ECMA boundary position.</param>
         <param name="startpos">The starting position.</param>
         <param name="endpos">The ending position.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Determines whether the position at the specified index is an ECMA-compatible word boundary.</summary>
         <returns>Returns <see cref="T:System.Boolean" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -855,14 +748,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -888,7 +773,9 @@
       </Parameters>
       <Docs>
         <param name="cap">The capture number.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Call out to runmatch to get around visibility issues
+            </summary>
         <returns>Returns <see cref="T:System.Boolean" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -904,14 +791,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -937,7 +816,9 @@
       </Parameters>
       <Docs>
         <param name="cap">The capture number.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Call out to runmatch to get around visibility issues
+            </summary>
         <returns>Returns <see cref="T:System.Int32" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -953,14 +834,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -986,7 +859,9 @@
       </Parameters>
       <Docs>
         <param name="cap">The capture number.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Call out to runmatch to get around visibility issues
+            </summary>
         <returns>Returns <see cref="T:System.Int32" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1002,14 +877,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1032,31 +899,24 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Remove a number from the longjump unrolling stack
+            </summary>
         <returns>Returns <see cref="T:System.Int32" />.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="runcrawl">
-      <MemberSignature Language="C#" Value="protected internal int[]? runcrawl;" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal int[]? runcrawl;" />
       <MemberSignature Language="ILAsm" Value=".field familyorassembly int32[] runcrawl" />
       <MemberSignature Language="DocId" Value="F:System.Text.RegularExpressions.RegexRunner.runcrawl" />
       <MemberSignature Language="VB.NET" Value="Protected Friend runcrawl As Integer() " />
       <MemberSignature Language="F#" Value="val mutable runcrawl : int[]" Usage="System.Text.RegularExpressions.RegexRunner.runcrawl" />
       <MemberSignature Language="C++ CLI" Value="protected public: cli::array &lt;int&gt; ^ runcrawl;" />
-      <MemberSignature Language="C#" Value="protected internal int[] runcrawl;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1078,8 +938,11 @@
         <ReturnType>System.Int32[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Crawl stack</summary>
+        <remarks>
+            Every time a group has a capture, we push its group number onto the runcrawl stack.
+            In the case of a balanced match, we push BOTH groups onto the stack.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -1093,14 +956,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1122,30 +977,21 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Crawl stack position</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="runmatch">
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match? runmatch;" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match? runmatch;" />
       <MemberSignature Language="ILAsm" Value=".field familyorassembly class System.Text.RegularExpressions.Match runmatch" />
       <MemberSignature Language="DocId" Value="F:System.Text.RegularExpressions.RegexRunner.runmatch" />
       <MemberSignature Language="VB.NET" Value="Protected Friend runmatch As Match " />
       <MemberSignature Language="F#" Value="val mutable runmatch : System.Text.RegularExpressions.Match" Usage="System.Text.RegularExpressions.RegexRunner.runmatch" />
       <MemberSignature Language="C++ CLI" Value="protected public: System::Text::RegularExpressions::Match ^ runmatch;" />
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match runmatch;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1167,30 +1013,21 @@
         <ReturnType>System.Text.RegularExpressions.Match</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Result object</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="runregex">
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Regex? runregex;" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Regex? runregex;" />
       <MemberSignature Language="ILAsm" Value=".field familyorassembly class System.Text.RegularExpressions.Regex runregex" />
       <MemberSignature Language="DocId" Value="F:System.Text.RegularExpressions.RegexRunner.runregex" />
       <MemberSignature Language="VB.NET" Value="Protected Friend runregex As Regex " />
       <MemberSignature Language="F#" Value="val mutable runregex : System.Text.RegularExpressions.Regex" Usage="System.Text.RegularExpressions.RegexRunner.runregex" />
       <MemberSignature Language="C++ CLI" Value="protected public: System::Text::RegularExpressions::Regex ^ runregex;" />
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Regex runregex;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1212,30 +1049,21 @@
         <ReturnType>System.Text.RegularExpressions.Regex</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Regex object</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="runstack">
-      <MemberSignature Language="C#" Value="protected internal int[]? runstack;" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal int[]? runstack;" />
       <MemberSignature Language="ILAsm" Value=".field familyorassembly int32[] runstack" />
       <MemberSignature Language="DocId" Value="F:System.Text.RegularExpressions.RegexRunner.runstack" />
       <MemberSignature Language="VB.NET" Value="Protected Friend runstack As Integer() " />
       <MemberSignature Language="F#" Value="val mutable runstack : int[]" Usage="System.Text.RegularExpressions.RegexRunner.runstack" />
       <MemberSignature Language="C++ CLI" Value="protected public: cli::array &lt;int&gt; ^ runstack;" />
-      <MemberSignature Language="C#" Value="protected internal int[] runstack;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1257,8 +1085,16 @@
         <ReturnType>System.Int32[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Utility stack</summary>
+        <remarks>
+            This stack is used to track text positions across different opcodes.
+            For example, in /(a*b)+/, the parentheses result in a SetMark/CaptureMark
+            pair. SetMark records the text position before we match a*b.  Then
+            CaptureMark uses that position to figure out where the capture starts.
+            Opcodes which push onto this stack are always paired with other opcodes
+            which will pop the value from it later.  A successful match should mean
+            that this stack is empty.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -1272,14 +1108,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1301,30 +1129,21 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Utility stack position</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="runtext">
-      <MemberSignature Language="C#" Value="protected internal string? runtext;" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal string? runtext;" />
       <MemberSignature Language="ILAsm" Value=".field familyorassembly string runtext" />
       <MemberSignature Language="DocId" Value="F:System.Text.RegularExpressions.RegexRunner.runtext" />
       <MemberSignature Language="VB.NET" Value="Protected Friend runtext As String " />
       <MemberSignature Language="F#" Value="val mutable runtext : string" Usage="System.Text.RegularExpressions.RegexRunner.runtext" />
       <MemberSignature Language="C++ CLI" Value="protected public: System::String ^ runtext;" />
-      <MemberSignature Language="C#" Value="protected internal string runtext;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1346,7 +1165,7 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Text to search. May be null if the input was supplied as a span.</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -1361,14 +1180,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1390,8 +1201,12 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Index of the first character to search</summary>
+        <remarks>
+            We now always use a sliced span of the input
+            from runtextbeg to runtextend, which means that runtextbeg is now always 0 except
+            for CompiledToAssembly scenario which works over the original input.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -1405,14 +1220,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1434,8 +1241,12 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Index just past the last character to search</summary>
+        <remarks>
+            Because we now pass in a sliced span of the input into Scan,
+            the runtextend will always match the length of that passed in span except for CompileToAssembly
+            scenario, which still works over the original input.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -1449,14 +1260,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1478,7 +1281,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Current position in text</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -1493,14 +1296,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1522,30 +1317,24 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Index of the starting character for the search.</summary>
+        <remarks>
+            The differs from <see cref="F:System.Text.RegularExpressions.RegexRunner.runtextbeg" /> in that lookbehinds will be able to see text before
+            <see cref="F:System.Text.RegularExpressions.RegexRunner.runtextstart" /> but not before <see cref="F:System.Text.RegularExpressions.RegexRunner.runtextbeg" />.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="runtrack">
-      <MemberSignature Language="C#" Value="protected internal int[]? runtrack;" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal int[]? runtrack;" />
       <MemberSignature Language="ILAsm" Value=".field familyorassembly int32[] runtrack" />
       <MemberSignature Language="DocId" Value="F:System.Text.RegularExpressions.RegexRunner.runtrack" />
       <MemberSignature Language="VB.NET" Value="Protected Friend runtrack As Integer() " />
       <MemberSignature Language="F#" Value="val mutable runtrack : int[]" Usage="System.Text.RegularExpressions.RegexRunner.runtrack" />
       <MemberSignature Language="C++ CLI" Value="protected public: cli::array &lt;int&gt; ^ runtrack;" />
-      <MemberSignature Language="C#" Value="protected internal int[] runtrack;" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1567,8 +1356,21 @@
         <ReturnType>System.Int32[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Backtracking stack</summary>
+        <remarks>
+            Opcodes use this to store data regarding
+            what they have matched and where to backtrack to.  Each "frame" on
+            the stack takes the form of [CodePosition Data1 Data2...], where
+            CodePosition is the position of the current opcode and
+            the data values are all optional.  The CodePosition can be negative, and
+            these values (also called "back2") are used by the BranchMark family of opcodes
+            to indicate whether they are backtracking after a successful or failed
+            match.
+            When we backtrack, we pop the CodePosition off the stack, set the current
+            instruction pointer to that code position, and mark the opcode
+            with a backtracking flag ("Back").  Each opcode then knows how to
+            handle its own data.
+            </remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
@@ -1582,14 +1384,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1611,7 +1405,7 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Count of states that may do backtracking</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -1626,14 +1420,6 @@
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1655,18 +1441,12 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Backtracking stack position</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <MemberGroup MemberName="Scan">
-      <AssemblyInfo>
-        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
       </Docs>
@@ -1681,7 +1461,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1694,35 +1473,28 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-7.0;net-8.0;net-9.0" />
+        <Parameter Name="text" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
         <param name="text">The text to scan for a pattern match.</param>
         <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object to scan the input <paramref name="text" /> looking for the next match.</summary>
         <remarks>This API supports the product infrastructure and is not intended to be used directly from your code.</remarks>
         <exception cref="T:System.NotSupportedException">
-          <see cref="T:System.ReadOnlySpan`1" />-based <see cref="T:System.Text.RegularExpressions.Regex" /> methods are not supported from <see cref="T:System.Text.RegularExpressions.Regex" />-derived types generated by <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" />.</exception>
+          <see cref="T:System.ReadOnlySpan`1" />-based <see cref="T:System.Text.RegularExpressions.Regex" /> methods are not supported from <see cref="T:System.Text.RegularExpressions.Regex" />-derived types
+            generated by Regex.CompileToAssembly.
+            </exception>
       </Docs>
     </Member>
     <Member MemberName="Scan">
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match? Scan (System.Text.RegularExpressions.Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match? Scan (System.Text.RegularExpressions.Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick);" />
       <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig instance class System.Text.RegularExpressions.Match Scan(class System.Text.RegularExpressions.Regex regex, string text, int32 textbeg, int32 textend, int32 textstart, int32 prevlen, bool quick) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.RegexRunner.Scan(System.Text.RegularExpressions.Regex,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)" />
       <MemberSignature Language="VB.NET" Value="Protected Friend Function Scan (regex As Regex, text As String, textbeg As Integer, textend As Integer, textstart As Integer, prevlen As Integer, quick As Boolean) As Match" />
       <MemberSignature Language="F#" Value="member this.Scan : System.Text.RegularExpressions.Regex * string * int * int * int * int * bool -&gt; System.Text.RegularExpressions.Match" Usage="regexRunner.Scan (regex, text, textbeg, textend, textstart, prevlen, quick)" />
       <MemberSignature Language="C++ CLI" Value="protected public:&#xA; System::Text::RegularExpressions::Match ^ Scan(System::Text::RegularExpressions::Regex ^ regex, System::String ^ text, int textbeg, int textend, int textstart, int prevlen, bool quick);" />
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match Scan (System.Text.RegularExpressions.Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1741,7 +1513,7 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Obsolete("This API supports obsolete mechanisms for Regex extensibility. It is not supported.", DiagnosticId="SYSLIB0052", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("This API supports obsolete mechanisms for Regex extensibility. It is not supported.", DiagnosticId="SYSLIB0052", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
         </Attribute>
@@ -1773,31 +1545,22 @@
         <param name="prevlen">The number of characters in the previous match.</param>
         <param name="quick">
           <see langword="true" /> to search for a match in quick mode; otherwise, <see langword="false" />.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object to scan the input <paramref name="text" />.</summary>
         <returns>A match.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
     </Member>
     <Member MemberName="Scan">
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match? Scan (System.Text.RegularExpressions.Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick, TimeSpan timeout);" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0" />
+      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match? Scan (System.Text.RegularExpressions.Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick, TimeSpan timeout);" />
       <MemberSignature Language="ILAsm" Value=".method familyorassemblyhidebysig instance class System.Text.RegularExpressions.Match Scan(class System.Text.RegularExpressions.Regex regex, string text, int32 textbeg, int32 textend, int32 textstart, int32 prevlen, bool quick, valuetype System.TimeSpan timeout) cil managed" />
       <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.RegexRunner.Scan(System.Text.RegularExpressions.Regex,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.TimeSpan)" />
       <MemberSignature Language="VB.NET" Value="Protected Friend Function Scan (regex As Regex, text As String, textbeg As Integer, textend As Integer, textstart As Integer, prevlen As Integer, quick As Boolean, timeout As TimeSpan) As Match" />
       <MemberSignature Language="F#" Value="member this.Scan : System.Text.RegularExpressions.Regex * string * int * int * int * int * bool * TimeSpan -&gt; System.Text.RegularExpressions.Match" Usage="regexRunner.Scan (regex, text, textbeg, textend, textstart, prevlen, quick, timeout)" />
       <MemberSignature Language="C++ CLI" Value="protected public:&#xA; System::Text::RegularExpressions::Match ^ Scan(System::Text::RegularExpressions::Regex ^ regex, System::String ^ text, int textbeg, int textend, int textstart, int prevlen, bool quick, TimeSpan timeout);" />
-      <MemberSignature Language="C#" Value="protected internal System.Text.RegularExpressions.Match Scan (System.Text.RegularExpressions.Regex regex, string text, int textbeg, int textend, int textstart, int prevlen, bool quick, TimeSpan timeout);" FrameworkAlternate="netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1814,7 +1577,7 @@
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Attributes>
-        <Attribute FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0">
+        <Attribute>
           <AttributeName Language="C#">[System.Obsolete("This API supports obsolete mechanisms for Regex extensibility. It is not supported.", DiagnosticId="SYSLIB0052", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
           <AttributeName Language="F#">[&lt;System.Obsolete("This API supports obsolete mechanisms for Regex extensibility. It is not supported.", DiagnosticId="SYSLIB0052", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
         </Attribute>
@@ -1829,14 +1592,14 @@
         </Attributes>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="regex" Type="System.Text.RegularExpressions.Regex" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="text" Type="System.String" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="textbeg" Type="System.Int32" Index="2" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="textend" Type="System.Int32" Index="3" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="textstart" Type="System.Int32" Index="4" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="prevlen" Type="System.Int32" Index="5" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="quick" Type="System.Boolean" Index="6" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
-        <Parameter Name="timeout" Type="System.TimeSpan" Index="7" FrameworkAlternate="net-10.0;net-11.0;net-5.0;net-6.0;net-7.0;net-8.0;net-9.0;netcore-1.0;netcore-1.1;netcore-2.0;netcore-2.1;netcore-2.2;netcore-3.0;netcore-3.1;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.7;netframework-4.7.1;netframework-4.7.2;netframework-4.8;netframework-4.8.1;netstandard-1.6;netstandard-2.0;netstandard-2.1" />
+        <Parameter Name="regex" Type="System.Text.RegularExpressions.Regex" />
+        <Parameter Name="text" Type="System.String" />
+        <Parameter Name="textbeg" Type="System.Int32" />
+        <Parameter Name="textend" Type="System.Int32" />
+        <Parameter Name="textstart" Type="System.Int32" />
+        <Parameter Name="prevlen" Type="System.Int32" />
+        <Parameter Name="quick" Type="System.Boolean" />
+        <Parameter Name="timeout" Type="System.TimeSpan" />
       </Parameters>
       <Docs>
         <param name="regex">An instance of the regular expression engine.</param>
@@ -1848,7 +1611,10 @@
         <param name="quick">
           <see langword="true" /> to search for a match in quick mode; otherwise, <see langword="false" />.</param>
         <param name="timeout">The timeout interval.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            This method's body is only kept since it is a protected member that could be called by someone outside
+            the assembly.
+            </summary>
         <returns>A match.</returns>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
@@ -1864,14 +1630,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1903,7 +1661,11 @@
         <param name="uncapnum">A saved capture number.</param>
         <param name="start">The starting position.</param>
         <param name="end">The ending position.</param>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>
+            Called by Go() to capture a subexpression. Note that the
+            capnum used here has already been mapped to a non-sparse
+            index (by the code generator RegexWriter).
+            </summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>
@@ -1918,14 +1680,6 @@
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Text.RegularExpressions</AssemblyName>
-        <AssemblyVersion>4.1.0.0</AssemblyVersion>
-        <AssemblyVersion>4.1.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.0.0</AssemblyVersion>
-        <AssemblyVersion>4.2.1.0</AssemblyVersion>
-        <AssemblyVersion>4.2.2.0</AssemblyVersion>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <AssemblyVersion>6.0.0.0</AssemblyVersion>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -1948,7 +1702,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Used by a <see cref="T:System.Text.RegularExpressions.Regex" /> object generated by the <see cref="Overload:System.Text.RegularExpressions.Regex.CompileToAssembly" /> method.</summary>
+        <summary>Called by <see cref="M:System.Text.RegularExpressions.RegexRunner.Go" /> to revert the last capture.</summary>
         <remarks>To be added.</remarks>
         <forInternalUseOnly />
       </Docs>

@@ -35,7 +35,7 @@ public class rfc2898test
             //data1 can be a string or contents of a file.
             string data1 = "Some test data";
             //<SNIPPET3>
-            //The default iteration count is 1000 so the two methods use the same iteration count.
+            //The legacy default iteration count is 1000 so the two methods use the same iteration count.
             int myIterations = 1000;
             //</SNIPPET6>		
             //<SNIPPET2>

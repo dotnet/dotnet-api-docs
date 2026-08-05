@@ -35,10 +35,6 @@
     <TypeForwarding From="System.Memory" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
     <TypeForwarding From="System.Memory" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Memory" ToVersion="5.0.0.0" FrameworkAlternate="net-5.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Memory" ToVersion="6.0.0.0" FrameworkAlternate="net-6.0" />
-    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
-    <TypeForwarding From="System.Memory" FromVersion="7.0.0.0" To="System.Runtime" ToVersion="7.0.0.0" FrameworkAlternate="net-7.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="System.Memory" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
     <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
@@ -161,6 +157,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="DecodeFromUtf8">
+      <Docs>
+        <summary>Decodes the span of UTF-8 encoded text represented as base 64 into binary data. If the input is not a multiple of 4, it will decode as much as it can, to the closest multiple of 4.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="DecodeFromUtf8">
       <MemberSignature Language="C#" Value="public static byte[] DecodeFromUtf8 (ReadOnlySpan&lt;byte&gt; source);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig unsigned int8[] DecodeFromUtf8(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; source) cil managed" />
@@ -255,7 +256,6 @@
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -281,16 +281,16 @@
         <summary>Decodes the span of UTF-8 encoded text represented as base 64 into binary data. If the input is not a multiple of 4, it will decode as much as it can, to the closest multiple of 4.</summary>
         <returns>One of the enumeration values that indicates the status of the decoding operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 The return value can be as follows:
 
 - <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Processing of the entire input span succeeded.
 - <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType>: There is not enough space in the output span to write the decoded input.
 - <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType>: `isFinalBlock` is `false` and the input is not a multiple of 4. Otherwise, the partial input is considered <xref:System.Buffers.OperationStatus.InvalidData>.
-- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range, or is incomplete (that is, not a multiple of 4) and `isFinalBlock` is `true`. In .NET 7 and earlier versions, this value can also indicate that the input has invalid or more than two padding characters.
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range, or is incomplete (that is, not a multiple of 4) and `isFinalBlock` is `true`.
 
  ]]></format>
         </remarks>
@@ -321,7 +321,6 @@ The return value can be as follows:
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -340,14 +339,14 @@ The return value can be as follows:
         <summary>Decodes the span of UTF-8 encoded text in base 64 (in-place) into binary data. The decoded binary output is smaller than the text data contained in the input (the operation deflates the data). If the input is not a multiple of 4, the method will not decode any data.</summary>
         <returns>One of the enumeration values that indicates the status of the decoding operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 The return value can be as follows:
 
 - <xref:System.Buffers.OperationStatus.Done?displayProperty=nameWithType>: Processing of the entire input span succeeded.
-- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range or is incomplete (that is, not a multiple of 4). In .NET 7 and earlier versions, this value can also indicate that the input has invalid or more than two padding characters.
+- <xref:System.Buffers.OperationStatus.InvalidData?displayProperty=nameWithType>: The input contains bytes outside of the expected base 64 range or is incomplete (that is, not a multiple of 4).
 
 This method cannot return the <xref:System.Buffers.OperationStatus.DestinationTooSmall?displayProperty=nameWithType> and <xref:System.Buffers.OperationStatus.NeedMoreData?displayProperty=nameWithType> values.
 
@@ -500,6 +499,11 @@ This method cannot return the <xref:System.Buffers.OperationStatus.DestinationTo
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="EncodeToUtf8">
+      <Docs>
+        <summary>Encodes the span of binary data into UTF-8 encoded text represented as base 64.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="EncodeToUtf8">
       <MemberSignature Language="C#" Value="public static byte[] EncodeToUtf8 (ReadOnlySpan&lt;byte&gt; source);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig unsigned int8[] EncodeToUtf8(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; source) cil managed" />
@@ -594,7 +598,6 @@ This method cannot return the <xref:System.Buffers.OperationStatus.DestinationTo
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -620,9 +623,9 @@ This method cannot return the <xref:System.Buffers.OperationStatus.DestinationTo
         <summary>Encodes the span of binary data into UTF-8 encoded text represented as base 64.</summary>
         <returns>One of the enumeration values that indicates the status of the encoding operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 The return value can be as follows:
 
@@ -661,7 +664,6 @@ This method cannot return <xref:System.Buffers.OperationStatus.InvalidData?displ
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -682,9 +684,9 @@ This method cannot return <xref:System.Buffers.OperationStatus.InvalidData?displ
         <summary>Encodes the span of binary data (in-place) into UTF-8 encoded text represented as base 64. The encoded text output is larger than the binary data contained in the input (the operation inflates the data).</summary>
         <returns>One of the enumeration values that indicates the status of the encoding operation.</returns>
         <remarks>
-          <format type="text/markdown"><![CDATA[  
-  
-## Remarks  
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
 
 The return value can be as follows:
 
@@ -753,7 +755,6 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -830,7 +831,6 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
       </AssemblyInfo>
       <AssemblyInfo>
         <AssemblyName>System.Runtime</AssemblyName>
-        <AssemblyVersion>7.0.0.0</AssemblyVersion>
         <AssemblyVersion>8.0.0.0</AssemblyVersion>
         <AssemblyVersion>9.0.0.0</AssemblyVersion>
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
@@ -851,6 +851,11 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
           <paramref name="length" /> is less than 0 or larger than 1610612733 (since encode inflates the data by 4/3).</exception>
       </Docs>
     </Member>
+    <MemberGroup MemberName="IsValid">
+      <Docs>
+        <summary>Validates that the specified span of text is comprised of valid base-64 encoded data.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="IsValid">
       <MemberSignature Language="C#" Value="public static bool IsValid (ReadOnlySpan&lt;byte&gt; base64TextUtf8);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsValid(valuetype System.ReadOnlySpan`1&lt;unsigned int8&gt; base64TextUtf8) cil managed" />
@@ -876,7 +881,7 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="base64TextUtf8" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+        <Parameter Name="base64TextUtf8" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
       </Parameters>
       <Docs>
         <param name="base64TextUtf8">A span of UTF-8 text to validate.</param>
@@ -911,7 +916,7 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="base64Text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+        <Parameter Name="base64Text" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
       </Parameters>
       <Docs>
         <param name="base64Text">A span of text to validate.</param>
@@ -946,8 +951,8 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="base64TextUtf8" Type="System.ReadOnlySpan&lt;System.Byte&gt;" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-        <Parameter Name="decodedLength" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+        <Parameter Name="base64TextUtf8" Type="System.ReadOnlySpan&lt;System.Byte&gt;" />
+        <Parameter Name="decodedLength" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
         <param name="base64TextUtf8">A span of UTF-8 text to validate.</param>
@@ -983,8 +988,8 @@ This method cannot return <xref:System.Buffers.OperationStatus.NeedMoreData?disp
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="base64Text" Type="System.ReadOnlySpan&lt;System.Char&gt;" Index="0" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
-        <Parameter Name="decodedLength" Type="System.Int32" RefType="out" Index="1" FrameworkAlternate="net-10.0;net-11.0;net-8.0;net-9.0" />
+        <Parameter Name="base64Text" Type="System.ReadOnlySpan&lt;System.Char&gt;" />
+        <Parameter Name="decodedLength" Type="System.Int32" RefType="out" />
       </Parameters>
       <Docs>
         <param name="base64Text">A span of text to validate.</param>

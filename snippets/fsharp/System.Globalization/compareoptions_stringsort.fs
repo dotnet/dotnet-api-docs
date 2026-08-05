@@ -1,6 +1,5 @@
 module compareoptions_stringsort
 
-open System
 open System.Collections.Generic
 open System.Globalization
 
@@ -11,8 +10,7 @@ let sortAndDisplay (unsorted: List<string>) (options: CompareOptions) =
     for word in words do
         printfn "%s" word
 
-[<EntryPoint>]
-let main argv =
+let run argv =
     let wordList = new List<string>(
         ["cant"; "bill's"; "coop"; "cannot"; "billet"; "can't"; "con"; "bills"; "co-op"])
 

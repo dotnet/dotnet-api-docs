@@ -44,15 +44,55 @@
   </Attributes>
   <Docs>
     <summary>Encapsulates a 3-by-3 affine matrix that represents a geometric transform. This class cannot be inherited.</summary>
-    <remarks>For more information about this API, see <see href="/dotnet/fundamentals/runtime-libraries/system-drawing-drawing2d-matrix">Supplemental API remarks for Matrix</see>.</remarks>
-    <related type="Article" href="/dotnet/framework/winforms/advanced/coordinate-systems-and-transformations">Coordinate Systems and Transformations</related>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+The <xref:System.Drawing.Drawing2D.Matrix> class encapsulates a 3-by-3 affine matrix that represents a geometric transform.
+
+In GDI+, you can store an affine transformation in a <xref:System.Drawing.Drawing2D.Matrix> object. Because the third column of a matrix that represents an affine transformation is always (0, 0, 1), you specify only the six numbers in the first two columns when you construct a <xref:System.Drawing.Drawing2D.Matrix> object. The statement `Matrix myMatrix = new Matrix(0, 1, -1, 0, 3, 4)` constructs the matrix shown in the following figure.
+
+![Matrix.](~/add/media/gdip-art10.gif)
+
+[!INCLUDE[System.Drawing.Common note](~/includes/system-drawing-common.md)]
+
+## Composite transformations
+
+A composite transformation is a sequence of transformations, one followed by the other. Consider the matrices and transformations in the following list:
+
+| Matrix   | Transformation                            |
+|----------|-------------------------------------------|
+| Matrix A | Rotate 90 degrees                         |
+| Matrix B | Scale by a factor of 2 in the x direction |
+| Matrix C | Translate 3 units in the y direction      |
+
+If you start with the point (2, 1) - represented by the matrix [2 1 1] - and multiply by A, then B, then C, the point (2, 1) will undergo the three transformations in the order listed.
+
+`[2 1 1]ABC = [-2 5 1]`
+
+Rather than store the three parts of the composite transformation in three separate matrices, you can multiply A, B, and C together to get a single 3×3 matrix that stores the entire composite transformation. Suppose `ABC = D`. Then a point multiplied by D gives the same result as a point multiplied by A, then B, then C.
+
+`[2 1 1]D = [-2 5 1]`
+
+The following illustration shows the matrices A, B, C, and D.
+
+![Matrices A, B, C, and D](~/add/media/gdip-art12.gif)
+
+The fact that the matrix of a composite transformation can be formed by multiplying the individual transformation matrices means that any sequence of affine transformations can be stored in a single <xref:System.Drawing.Drawing2D.Matrix> object.
+
+> [!CAUTION]
+> The order of a composite transformation is important. In general, rotate, then scale, then translate is not the same as scale, then rotate, then translate. Similarly, the order of matrix multiplication is important. In general, ABC is not the same as BAC.
+
+The <xref:System.Drawing.Drawing2D.Matrix> class provides several methods for building a composite transformation: <xref:System.Drawing.Drawing2D.Matrix.Multiply*>, <xref:System.Drawing.Drawing2D.Matrix.Rotate*>, <xref:System.Drawing.Drawing2D.Matrix.RotateAt*>, <xref:System.Drawing.Drawing2D.Matrix.Scale*>, <xref:System.Drawing.Drawing2D.Matrix.Shear*>, and <xref:System.Drawing.Drawing2D.Matrix.Translate*>. The following example creates the matrix of a composite transformation that first rotates 30 degrees, then scales by a factor of 2 in the y direction, and then translates 5 units in the x direction:
+
+:::code language="csharp" source="~/snippets/csharp/System.Drawing.Drawing2D/Matrix/Overview/Class1.cs" id="Snippet11":::
+:::code language="vb" source="~/snippets/visualbasic/System.Drawing.Drawing2D/Matrix/Overview/Class1.vb" id="Snippet11":::
+
+ ]]></format>
+    </remarks>
+    <related type="Article" href="/dotnet/desktop/winforms/advanced/coordinate-systems-and-transformations">Coordinate Systems and Transformations</related>
   </Docs>
   <Members>
     <MemberGroup MemberName=".ctor">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Initializes a new instance of the <see cref="T:System.Drawing.Drawing2D.Matrix" /> class.</summary>
       </Docs>
@@ -124,9 +164,9 @@
       <MemberSignature Language="VB.NET" Value="Public Sub New (rect As Rectangle, ParamArray plgpts As Point())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="new System.Drawing.Drawing2D.Matrix : System.Drawing.Rectangle * System.Drawing.Point[] -&gt; System.Drawing.Drawing2D.Matrix" Usage="new System.Drawing.Drawing2D.Matrix (rect, plgpts)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::Rectangle rect, ... cli::array &lt;System::Drawing::Point&gt; ^ plgpts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public Matrix (System.Drawing.Rectangle rect, System.Drawing.Point[] plgpts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (rect As Rectangle, plgpts As Point())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::Rectangle rect, cli::array &lt;System::Drawing::Point&gt; ^ plgpts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public Matrix (System.Drawing.Rectangle rect, System.Drawing.Point[] plgpts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (rect As Rectangle, plgpts As Point())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::Rectangle rect, cli::array &lt;System::Drawing::Point&gt; ^ plgpts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -178,9 +218,9 @@
       <MemberSignature Language="VB.NET" Value="Public Sub New (rect As RectangleF, ParamArray plgpts As PointF())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="new System.Drawing.Drawing2D.Matrix : System.Drawing.RectangleF * System.Drawing.PointF[] -&gt; System.Drawing.Drawing2D.Matrix" Usage="new System.Drawing.Drawing2D.Matrix (rect, plgpts)" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::RectangleF rect, ... cli::array &lt;System::Drawing::PointF&gt; ^ plgpts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public Matrix (System.Drawing.RectangleF rect, System.Drawing.PointF[] plgpts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub New (rect As RectangleF, plgpts As PointF())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::RectangleF rect, cli::array &lt;System::Drawing::PointF&gt; ^ plgpts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public Matrix (System.Drawing.RectangleF rect, System.Drawing.PointF[] plgpts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (rect As RectangleF, plgpts As PointF())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; Matrix(System::Drawing::RectangleF rect, cli::array &lt;System::Drawing::PointF&gt; ^ plgpts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -406,7 +446,7 @@
       <MemberSignature Language="VB.NET" Value="Public Overrides Function Equals (obj As Object) As Boolean" />
       <MemberSignature Language="F#" Value="override this.Equals : obj -&gt; bool" Usage="matrix.Equals obj" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool Equals(System::Object ^ obj);" />
-      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;windowsdesktop-3.0;windowsdesktop-3.1" />
+      <MemberSignature Language="C#" Value="public override bool Equals (object obj);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;windowsdesktop-3.0;windowsdesktop-3.1" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -664,10 +704,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="Multiply">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Multiplies this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by the specified <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the specified <see cref="T:System.Drawing.Drawing2D.Matrix" />.</summary>
       </Docs>
@@ -698,12 +734,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -717,7 +747,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.Multiply%2A>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.Multiply*>.
 
  ]]></format>
         </remarks>
@@ -941,10 +971,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="Rotate">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Applies a clockwise rotation of the specified angle about the origin to this <see cref="T:System.Drawing.Drawing2D.Matrix" />.</summary>
       </Docs>
@@ -975,12 +1001,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -994,7 +1014,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.Rotate%28System.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.Rotate(System.Single,System.Drawing.Drawing2D.MatrixOrder)>.
 
  ]]></format>
         </remarks>
@@ -1062,10 +1082,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="RotateAt">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Applies a clockwise rotation about the specified point to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the rotation.</summary>
       </Docs>
@@ -1096,12 +1112,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -1117,7 +1127,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- The following code example demonstrates using a <xref:System.Drawing.Drawing2D.Matrix> and the <xref:System.Drawing.Drawing2D.GraphicsPath.Transform%2A> method to rotate a string. This example is designed to be used with Windows Forms. Create a form and paste the following code into it. Call the `DrawVerticalStringFromBottomUp` method in the form's <xref:System.Windows.Forms.Control.Paint> event handler, passing `e` as <xref:System.Windows.Forms.PaintEventArgs>.
+ The following code example demonstrates using a <xref:System.Drawing.Drawing2D.Matrix> and the <xref:System.Drawing.Drawing2D.GraphicsPath.Transform*> method to rotate a string. This example is designed to be used with Windows Forms. Create a form and paste the following code into it. Call the `DrawVerticalStringFromBottomUp` method in the form's <xref:System.Windows.Forms.Control.Paint> event handler, passing `e` as <xref:System.Windows.Forms.PaintEventArgs>.
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Winforms/System.Drawing.MiscExamples/CPP/form1.cpp" id="Snippet5":::
  :::code language="csharp" source="~/snippets/csharp/System.Drawing/Bitmap/.ctor/form12.cs" id="Snippet5":::
@@ -1180,7 +1190,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
 
 - Draws the transformed rectangle to the screen (the red rectangle).
 
- Notice that the red rectangle has been rotated around the upper left-hand corner of the rectangle (the rotation point specified the <xref:System.Drawing.Drawing2D.Matrix.RotateAt%2A> method).
+ Notice that the red rectangle has been rotated around the upper left-hand corner of the rectangle (the rotation point specified the <xref:System.Drawing.Drawing2D.Matrix.RotateAt*> method).
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp" id="Snippet4":::
  :::code language="csharp" source="~/snippets/csharp/System.Drawing.Drawing2D/Matrix/Multiply/form1.cs" id="Snippet4":::
@@ -1191,10 +1201,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="Scale">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Applies the specified scale vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the scale vector.</summary>
       </Docs>
@@ -1225,12 +1231,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -1246,7 +1246,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.Scale%28System.Single%2CSystem.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.Scale(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)>.
 
  ]]></format>
         </remarks>
@@ -1316,10 +1316,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="Shear">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Applies the specified shear vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the shear vector.</summary>
       </Docs>
@@ -1380,7 +1376,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
 
 - Draws an ellipse using a blue pen.
 
- The result is a green rectangle, a red parallelogram and a transformed, blue ellipse. Notice that the green rectangle (drawn prior to setting the transform) directly uses the coordinates supplied in the <xref:System.Drawing.Graphics.DrawRectangle%2A> call. The other two figures are transformed prior to drawing. The rectangle is transformed to a parallelogram (red), and the ellipse (blue) is transformed to fit into the transformed parallelogram. Notice the bottom of the rectangle is moved (sheared) in the x-axis by a factor of two times the height of the rectangle, thus forming the parallelogram.
+ The result is a green rectangle, a red parallelogram and a transformed, blue ellipse. Notice that the green rectangle (drawn prior to setting the transform) directly uses the coordinates supplied in the <xref:System.Drawing.Graphics.DrawRectangle*> call. The other two figures are transformed prior to drawing. The rectangle is transformed to a parallelogram (red), and the ellipse (blue) is transformed to fit into the transformed parallelogram. Notice the bottom of the rectangle is moved (sheared) in the x-axis by a factor of two times the height of the rectangle, thus forming the parallelogram.
 
  :::code language="cpp" source="~/snippets/cpp/VS_Snippets_Winforms/System.Drawing.Drawing2D.ClassicMatrixExamples/CPP/form1.cpp" id="Snippet6":::
  :::code language="csharp" source="~/snippets/csharp/System.Drawing.Drawing2D/Matrix/Multiply/form1.cs" id="Snippet6":::
@@ -1438,17 +1434,13 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
 
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.Shear%28System.Single%2CSystem.Single%29>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.Shear(System.Single,System.Single)>.
 
  ]]></format>
         </remarks>
       </Docs>
     </Member>
     <MemberGroup MemberName="TransformPoints">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Applies the geometric transform this <see cref="T:System.Drawing.Drawing2D.Matrix" /> represents to an array of points.</summary>
       </Docs>
@@ -1460,9 +1452,9 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (ParamArray pts As Point())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="member this.TransformPoints : System.Drawing.Point[] -&gt; unit" Usage="matrix.TransformPoints pts" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(... cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public void TransformPoints (System.Drawing.Point[] pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (pts As Point())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public void TransformPoints (System.Drawing.Point[] pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (pts As Point())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -1531,9 +1523,9 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (ParamArray pts As PointF())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="member this.TransformPoints : System.Drawing.PointF[] -&gt; unit" Usage="matrix.TransformPoints pts" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(... cli::array &lt;System::Drawing::PointF&gt; ^ pts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public void TransformPoints (System.Drawing.PointF[] pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (pts As PointF())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(cli::array &lt;System::Drawing::PointF&gt; ^ pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public void TransformPoints (System.Drawing.PointF[] pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformPoints (pts As PointF())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformPoints(cli::array &lt;System::Drawing::PointF&gt; ^ pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -1573,7 +1565,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.TransformPoints%28System.Drawing.Point%5B%5D%29>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.TransformPoints(System.Drawing.Point[])>.
 
  ]]></format>
         </remarks>
@@ -1663,10 +1655,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="TransformVectors">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Multiplies each vector in an array by the matrix. The translation elements of this matrix (third row) are ignored.</summary>
       </Docs>
@@ -1678,9 +1666,9 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (ParamArray pts As Point())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="member this.TransformVectors : System.Drawing.Point[] -&gt; unit" Usage="matrix.TransformVectors pts" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(... cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public void TransformVectors (System.Drawing.Point[] pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (pts As Point())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public void TransformVectors (System.Drawing.Point[] pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (pts As Point())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -1752,9 +1740,9 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (ParamArray pts As PointF())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="member this.TransformVectors : System.Drawing.PointF[] -&gt; unit" Usage="matrix.TransformVectors pts" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(... cli::array &lt;System::Drawing::PointF&gt; ^ pts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public void TransformVectors (System.Drawing.PointF[] pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (pts As PointF())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(cli::array &lt;System::Drawing::PointF&gt; ^ pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public void TransformVectors (System.Drawing.PointF[] pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub TransformVectors (pts As PointF())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void TransformVectors(cli::array &lt;System::Drawing::PointF&gt; ^ pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -1794,7 +1782,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.TransformVectors%28System.Drawing.Point%5B%5D%29>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.TransformVectors(System.Drawing.Point[])>.
 
  ]]></format>
         </remarks>
@@ -1883,10 +1871,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       </Docs>
     </Member>
     <MemberGroup MemberName="Translate">
-      <AssemblyInfo>
-        <AssemblyName>System.Drawing</AssemblyName>
-        <AssemblyVersion>4.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
       <Docs>
         <summary>Applies the specified translation vector to this <see cref="T:System.Drawing.Drawing2D.Matrix" /> by prepending the translation vector.</summary>
       </Docs>
@@ -1917,12 +1901,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -1938,7 +1916,7 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
           <format type="text/markdown"><![CDATA[
 
 ## Examples
- For an example, see <xref:System.Drawing.Drawing2D.Matrix.Translate%28System.Single%2CSystem.Single%2CSystem.Drawing.Drawing2D.MatrixOrder%29>.
+ For an example, see <xref:System.Drawing.Drawing2D.Matrix.Translate(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)>.
 
  ]]></format>
         </remarks>
@@ -2007,6 +1985,11 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         </remarks>
       </Docs>
     </Member>
+    <MemberGroup MemberName="VectorTransformPoints">
+      <Docs>
+        <summary>Multiplies each vector in an array by the matrix. The translation elements of this matrix (third row) are ignored.</summary>
+      </Docs>
+    </MemberGroup>
     <Member MemberName="VectorTransformPoints">
       <MemberSignature Language="C#" Value="public void VectorTransformPoints (params System.Drawing.Point[] pts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void VectorTransformPoints(valuetype System.Drawing.Point[] pts) cil managed" />
@@ -2014,9 +1997,9 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
       <MemberSignature Language="VB.NET" Value="Public Sub VectorTransformPoints (ParamArray pts As Point())" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
       <MemberSignature Language="F#" Value="member this.VectorTransformPoints : System.Drawing.Point[] -&gt; unit" Usage="matrix.VectorTransformPoints pts" />
       <MemberSignature Language="C++ CLI" Value="public:&#xA; void VectorTransformPoints(... cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="net-10.0-pp;net-11.0-pp;windowsdesktop-10.0;windowsdesktop-11.0;windowsdesktop-9.0" />
-      <MemberSignature Language="C#" Value="public void VectorTransformPoints (System.Drawing.Point[] pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="VB.NET" Value="Public Sub VectorTransformPoints (pts As Point())" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
-      <MemberSignature Language="C++ CLI" Value="public:&#xA; void VectorTransformPoints(cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="netframework-1.1;netframework-2.0;netframework-3.0;netframework-3.5;netframework-4.0;netframework-4.5;netframework-4.5.1;netframework-4.5.2;netframework-4.6;netframework-4.6.1;netframework-4.6.2;netframework-4.6.2-pp;netframework-4.7;netframework-4.7.1;netframework-4.7.1-pp;netframework-4.7.2;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8;netframework-4.8.1;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C#" Value="public void VectorTransformPoints (System.Drawing.Point[] pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="VB.NET" Value="Public Sub VectorTransformPoints (pts As Point())" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void VectorTransformPoints(cli::array &lt;System::Drawing::Point&gt; ^ pts);" FrameworkAlternate="netframework-4.6.2-pp;netframework-4.7.1-pp;netframework-4.7.2-pp;netframework-4.7-pp;netframework-4.8.1-pp;netframework-4.8-pp;netstandard-2.0-pp;windowsdesktop-3.0;windowsdesktop-3.1;windowsdesktop-5.0;windowsdesktop-6.0;windowsdesktop-7.0;windowsdesktop-8.0" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyName>System.Drawing</AssemblyName>
@@ -2036,12 +2019,6 @@ Matrix myMatrix = new Matrix(3, 5, 1, 2, 2, 4);
         <AssemblyVersion>10.0.0.0</AssemblyVersion>
         <AssemblyVersion>11.0.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Attributes>
-        <Attribute FrameworkAlternate="netframework-4.0">
-          <AttributeName Language="C#">[System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]</AttributeName>
-          <AttributeName Language="F#">[&lt;System.Runtime.TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")&gt;]</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>

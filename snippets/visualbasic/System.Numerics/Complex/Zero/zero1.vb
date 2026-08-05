@@ -9,7 +9,7 @@ Module Example
       Dim value As Complex = Complex.Zero
       Console.WriteLine(value.ToString())
       
-      ' Instantiate a complex number with real part 1 and imaginary part 0.
+      ' Instantiate a complex number with real part 0 and imaginary part 0.
       Dim value1 As New Complex(0, 0)
       Console.WriteLine(value.Equals(value1))
    End Sub

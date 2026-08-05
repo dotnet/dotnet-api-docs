@@ -1,7 +1,7 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class OverExample
 {
    static double value = 112;
 

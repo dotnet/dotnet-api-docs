@@ -1,9 +1,8 @@
 ﻿// <snippet1>
 using System;
 using System.Collections.Generic;
-using System.Net.Security;
 using System.Runtime.Serialization;
-using System.ServiceModel;
+using CoreWCF;
 using System.Text;
 
 namespace Microsoft.WCF.Documentation
@@ -14,8 +13,7 @@ namespace Microsoft.WCF.Documentation
     [OperationContract]
     [FaultContractAttribute(
       typeof(GreetingFault),
-      Action="http://www.contoso.com/GreetingFault",
-      ProtectionLevel=ProtectionLevel.EncryptAndSign
+      Action="http://www.contoso.com/GreetingFault"
       )]
     string SampleMethod(string msg);
     // </snippet4>
@@ -39,7 +37,7 @@ namespace Microsoft.WCF.Documentation
     }
   }
 
-  class SampleService : ISampleService
+  public class SampleService : ISampleService
   {
   #region ISampleService Members
 
