@@ -39,7 +39,7 @@ public class Example12
         for (int ctr = 0; ctr < names.Length; ctr++)
         {
             var ContinentD = arr[ctr];
-            Console.WriteLine($"{ContinentD.Name}: Area: {ContinentD.Population}, Population {ContinentD.Area}");
+            Console.WriteLine($"{ContinentD.Name}: Area: {ContinentD.Area}, Population {ContinentD.Population}");
         }
     }
 

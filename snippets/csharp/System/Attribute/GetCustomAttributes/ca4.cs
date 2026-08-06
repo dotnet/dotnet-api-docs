@@ -31,7 +31,7 @@ namespace CustAttrs4CS
         public UnmanagedType Win32Type
         {
             get => thisType;
-            set => thisType = Win32Type;
+            set => thisType = value;
         }
     }
 

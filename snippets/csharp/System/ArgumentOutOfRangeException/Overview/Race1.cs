@@ -33,7 +33,7 @@ public class Example11
         for (int ctr = 0; ctr < names.Length; ctr++)
         {
             var continent = continents[ctr];
-            Console.WriteLine($"{continent.Name}: Area: {continent.Population}, Population {continent.Area}");
+            Console.WriteLine($"{continent.Name}: Area: {continent.Area}, Population {continent.Population}");
         }
     }
 
