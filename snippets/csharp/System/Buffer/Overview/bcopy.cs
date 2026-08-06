@@ -7,17 +7,17 @@ class Example
     public static void DisplayArray(Array arr, string name)
     {
         Console.WindowWidth = 120;
-        Console.Write("{0,11}:", name);
+        Console.Write($"{name,11}:");
         for (int ctr = 0; ctr < arr.Length; ctr++)
         {
             byte[] bytes;
             if (arr is long[])
-               bytes = BitConverter.GetBytes((long) arr.GetValue(ctr));
+                bytes = BitConverter.GetBytes((long)arr.GetValue(ctr));
             else
-               bytes = BitConverter.GetBytes((short) arr.GetValue(ctr));
+                bytes = BitConverter.GetBytes((short)arr.GetValue(ctr));
 
             foreach (byte byteValue in bytes)
-               Console.Write(" {0:X2}", byteValue);
+                Console.Write($" {byteValue:X2}");
         }
         Console.WriteLine();
     }
@@ -27,25 +27,25 @@ class Example
     {
         // Get the length of one element in the array.
         int elementLength = Buffer.ByteLength(arr) / arr.Length;
-        string formatString = String.Format(" {{0:X{0}}}", 2 * elementLength);
-        Console.Write( "{0,11}:", name);
+        string formatString = $" {{0:X{2 * elementLength}}}";
+        Console.Write($"{name,11}:");
         for (int ctr = 0; ctr < arr.Length; ctr++)
             Console.Write(formatString, arr.GetValue(ctr));
 
         Console.WriteLine();
     }
 
-    public static void Main( )
+    public static void Main()
     {
         // These are the source and destination arrays for BlockCopy.
-        short[] src  = { 258, 259, 260, 261, 262, 263, 264,
+        short[] src = { 258, 259, 260, 261, 262, 263, 264,
                           265, 266, 267, 268, 269, 270 };
         long[] dest = { 17, 18, 19, 20 };
 
         // Display the initial value of the arrays in memory.
-        Console.WriteLine( "Initial values of arrays:");
+        Console.WriteLine("Initial values of arrays:");
         Console.WriteLine("   Array values as Bytes:");
-        DisplayArray(src, "src" );
+        DisplayArray(src, "src");
         DisplayArray(dest, "dest");
         Console.WriteLine("   Array values:");
         DisplayArrayValues(src, "src");
@@ -75,7 +75,7 @@ class Example
         Console.WriteLine();
 
         // Copy overlapping range of bytes 4-10 to index 5 in source.
-        Buffer.BlockCopy(src, 4, src, 5, 7 );
+        Buffer.BlockCopy(src, 4, src, 5, 7);
         Console.WriteLine("Buffer.BlockCopy( src, 4, src, 5, 7)");
         Console.WriteLine("   Array values as Bytes:");
         DisplayArray(src, "src");

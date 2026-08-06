@@ -7,15 +7,15 @@ class BytesToCharDemo
     const string formatter = "{0,5}{1,17}{2,8}";
 
     // Convert two byte array elements to a char and display it.
-    public static void BAToChar( byte[] bytes, int index )
+    public static void BAToChar(byte[] bytes, int index)
     {
-        char value = BitConverter.ToChar( bytes, index );
+        char value = BitConverter.ToChar(bytes, index);
 
-        Console.WriteLine( formatter, index,
-            BitConverter.ToString( bytes, index, 2 ), value );
+        Console.WriteLine(formatter, index,
+            BitConverter.ToString(bytes, index, 2), value);
     }
 
-    public static void Main( )
+    public static void Main()
     {
         byte[] byteArray = {
              32,   0,   0,  42,   0,  65,   0, 125,   0,
@@ -24,24 +24,24 @@ class BytesToCharDemo
         Console.WriteLine(
             "This example of the BitConverter.ToChar( byte[ ], " +
             "int ) \nmethod generates the following output. It " +
-            "converts \nelements of a byte array to char values.\n" );
-        Console.WriteLine( "initial byte array" );
-        Console.WriteLine( "------------------" );
-        Console.WriteLine( BitConverter.ToString( byteArray ) );
-        Console.WriteLine( );
-        Console.WriteLine( formatter, "index", "array elements", "char" );
-        Console.WriteLine( formatter, "-----", "--------------", "----" );
+            "converts \nelements of a byte array to char values.\n");
+        Console.WriteLine("initial byte array");
+        Console.WriteLine("------------------");
+        Console.WriteLine(BitConverter.ToString(byteArray));
+        Console.WriteLine();
+        Console.WriteLine(formatter, "index", "array elements", "char");
+        Console.WriteLine(formatter, "-----", "--------------", "----");
 
         // Convert byte array elements to char values.
-        BAToChar( byteArray, 0 );
-        BAToChar( byteArray, 1 );
-        BAToChar( byteArray, 3 );
-        BAToChar( byteArray, 5 );
-        BAToChar( byteArray, 7 );
-        BAToChar( byteArray, 9 );
-        BAToChar( byteArray, 11 );
-        BAToChar( byteArray, 13 );
-        BAToChar( byteArray, 15 );
+        BAToChar(byteArray, 0);
+        BAToChar(byteArray, 1);
+        BAToChar(byteArray, 3);
+        BAToChar(byteArray, 5);
+        BAToChar(byteArray, 7);
+        BAToChar(byteArray, 9);
+        BAToChar(byteArray, 11);
+        BAToChar(byteArray, 13);
+        BAToChar(byteArray, 15);
     }
 }
 
