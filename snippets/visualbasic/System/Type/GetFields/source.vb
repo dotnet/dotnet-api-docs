@@ -42,4 +42,14 @@ Class AttributesSample
         Next i
     End Sub
 End Class
+' This code produces the following output:
+' 
+' Reflection.MethodBase.Attributes Sample
+' Mymethodbase = Void Mymethod(Int32, System.String ByRef, System.String ByRef).
+' PrivateScope
+' FamANDAssem
+' Family
+' Public
+' HideBySig
+' ReuseSlot
 '</Snippet1>
