@@ -8,63 +8,63 @@ class StringToDateTimeDemo
     const string lineFmt = "{0,-18}{1,-12}{2}";
 
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
-    public static void StringToDateTime( string cultureName )
+    public static void StringToDateTime(string cultureName)
     {
-        string[ ] dateStrings = {         "01/02/03",
+        string[] dateStrings = {         "01/02/03",
             "2001/02/03",  "01/2002/03",  "01/02/2003",
             "21/02/03",    "01/22/03",    "01/02/23" };
-        CultureInfo culture = new CultureInfo( cultureName );
+        CultureInfo culture = new(cultureName);
 
-        Console.WriteLine( );
+        Console.WriteLine();
 
         // Convert each string in the dateStrings array.
-        foreach( string dateStr in dateStrings )
+        foreach (string dateStr in dateStrings)
         {
             DateTime dateTimeValue;
 
             // Display the first part of the output line.
-            Console.Write( lineFmt, dateStr, cultureName, null );
+            Console.Write(lineFmt, dateStr, cultureName, null);
 
             try
             {
                 // Convert the string to a DateTime object.
-                dateTimeValue = Convert.ToDateTime( dateStr, culture );
+                dateTimeValue = Convert.ToDateTime(dateStr, culture);
 
                 // Display the DateTime object in a fixed format
                 // if Convert succeeded.
-                Console.WriteLine( "{0:yyyy-MMM-dd}", dateTimeValue );
+                Console.WriteLine($"{dateTimeValue:yyyy-MMM-dd}");
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
                 // Display the exception type if Parse failed.
-                Console.WriteLine( "{0}", GetExceptionType( ex ) );
+                Console.WriteLine($"{GetExceptionType(ex)}");
             }
         }
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of " +
+        Console.WriteLine("This example of " +
             "Convert.ToDateTime( String, IFormatProvider ) " +
             "\ngenerates the following output. Several strings are " +
             "converted \nto DateTime objects using formatting " +
             "information from different \ncultures, and then the " +
-            "strings are displayed in a \nculture-invariant form.\n" );
-        Console.WriteLine( lineFmt, "Date String", "Culture",
-            "DateTime or Exception" );
-        Console.WriteLine( lineFmt, "-----------", "-------",
-            "---------------------" );
+            "strings are displayed in a \nculture-invariant form.\n");
+        Console.WriteLine(lineFmt, "Date String", "Culture",
+            "DateTime or Exception");
+        Console.WriteLine(lineFmt, "-----------", "-------",
+            "---------------------");
 
-        StringToDateTime( "en-US" );
-        StringToDateTime( "ru-RU" );
-        StringToDateTime( "ja-JP" );
+        StringToDateTime("en-US");
+        StringToDateTime("ru-RU");
+        StringToDateTime("ja-JP");
     }
 }
 
