@@ -3,27 +3,30 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] values= { "-1,035.77219", "1AFF", "1e-35",
+    public static void Main()
+    {
+        string[] values = { "-1,035.77219", "1AFF", "1e-35",
                          "1,635,592,999,999,999,999,999,999", "-17.455",
                          "190.34001", "1.29e325"};
-      double result;
+        double result;
 
-      foreach (string value in values)
-      {
-         try {
-            result = Convert.ToDouble(value);
-            Console.WriteLine("Converted '{0}' to {1}.", value, result);
-         }
-         catch (FormatException) {
-            Console.WriteLine("Unable to convert '{0}' to a Double.", value);
-         }
-         catch (OverflowException) {
-            Console.WriteLine("'{0}' is outside the range of a Double.", value);
-         }
-      }
-   }
+        foreach (string value in values)
+        {
+            try
+            {
+                result = Convert.ToDouble(value);
+                Console.WriteLine($"Converted '{value}' to {result}.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"Unable to convert '{value}' to a Double.");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"'{value}' is outside the range of a Double.");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       Converted '-1,035.77219' to -1035.77219.

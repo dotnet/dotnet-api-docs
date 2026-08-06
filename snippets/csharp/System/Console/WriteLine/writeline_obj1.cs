@@ -2,21 +2,21 @@
 
 public class Example
 {
-   public static void Main()
-   {
-      // <Snippet3>
-      Object[] values = { true, 12.632, 17908, "stringValue",
+    public static void Main()
+    {
+        // <Snippet3>
+        object[] values = { true, 12.632, 17908, "stringValue",
                                  'a', 16907.32m };
-      foreach (var value in values)
-         Console.WriteLine(value);
+        foreach (object value in values)
+            Console.WriteLine(value);
 
-      // The example displays the following output:
-      //    True
-      //    12.632
-      //    17908
-      //    stringValue
-      //    a
-      //    16907.32
-      // </Snippet3>
-   }
+        // The example displays the following output:
+        //    True
+        //    12.632
+        //    17908
+        //    stringValue
+        //    a
+        //    16907.32
+        // </Snippet3>
+    }
 }
