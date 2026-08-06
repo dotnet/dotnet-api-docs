@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 public class TipCalculator
@@ -7,7 +7,7 @@ public class TipCalculator
     public static void Main(string[] args)
     {
         double billTotal;
-        if (args.Length == 0 || ! Double.TryParse(args[0], out billTotal))
+        if (args.Length == 0 || !double.TryParse(args[0], out billTotal))
         {
             Console.WriteLine("usage: TIPCALC total");
             return;
