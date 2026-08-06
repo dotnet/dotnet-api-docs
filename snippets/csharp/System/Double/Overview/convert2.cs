@@ -1,21 +1,21 @@
-// <Snippet21>
+﻿// <Snippet21>
 using System;
 
 public class Example5
 {
     public static void Main()
     {
-        Double[] values = { Double.MinValue, -67890.1234, -12345.6789,
-                          12345.6789, 67890.1234, Double.MaxValue,
-                          Double.NaN, Double.PositiveInfinity,
-                          Double.NegativeInfinity };
+        double[] values = { double.MinValue, -67890.1234, -12345.6789,
+                          12345.6789, 67890.1234, double.MaxValue,
+                          double.NaN, double.PositiveInfinity,
+                          double.NegativeInfinity };
         checked
         {
-            foreach (var value in values)
+            foreach (double value in values)
             {
                 try
                 {
-                    Int64 lValue = (long)value;
+                    long lValue = (long)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {lValue} (0x{lValue:X16}) ({lValue.GetType().Name})");
                 }
                 catch (OverflowException)
@@ -24,7 +24,7 @@ public class Example5
                 }
                 try
                 {
-                    UInt64 ulValue = (ulong)value;
+                    ulong ulValue = (ulong)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {ulValue} (0x{ulValue:X16}) ({ulValue.GetType().Name})");
                 }
                 catch (OverflowException)
@@ -33,7 +33,7 @@ public class Example5
                 }
                 try
                 {
-                    Decimal dValue = (decimal)value;
+                    decimal dValue = (decimal)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {dValue} ({dValue.GetType().Name})");
                 }
                 catch (OverflowException)
@@ -42,7 +42,7 @@ public class Example5
                 }
                 try
                 {
-                    Single sValue = (float)value;
+                    float sValue = (float)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {sValue} ({sValue.GetType().Name})");
                 }
                 catch (OverflowException)

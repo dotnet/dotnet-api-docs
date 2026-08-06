@@ -5,55 +5,52 @@ using System;
 class DecimalCtorSDemo
 {
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Create a decimal object and display its value.
-    public static void CreateDecimal( float value, string valToStr )
+    public static void CreateDecimal(float value, string valToStr)
     {
         // Format and display the constructor.
-        Console.Write( "{0,-27}",
-            String.Format( "decimal( {0} )", valToStr ) );
+        Console.Write($"{string.Format("decimal( {0} )", valToStr),-27}");
 
         try
         {
             // Construct the decimal value.
-            decimal decimalNum = new decimal( value );
+            decimal decimalNum = new(value);
 
             // Display the value if it was created successfully.
-            Console.WriteLine( "{0,31}", decimalNum );
+            Console.WriteLine($"{decimalNum,31}");
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
             // Display the exception type if an exception was thrown.
-            Console.WriteLine( "{0,31}", GetExceptionType( ex ) );
+            Console.WriteLine($"{GetExceptionType(ex),31}");
         }
     }
 
-    public static void Main( )
+    public static void Main()
     {
 
-        Console.WriteLine( "This example of the decimal( float ) " +
-            "constructor \ngenerates the following output.\n" );
-        Console.WriteLine( "{0,-27}{1,31}", "Constructor",
-            "Value or Exception" );
-        Console.WriteLine( "{0,-27}{1,31}", "-----------",
-            "------------------" );
+        Console.WriteLine("This example of the decimal( float ) " +
+            "constructor \ngenerates the following output.\n");
+        Console.WriteLine($"{"Constructor",-27}{"Value or Exception",31}");
+        Console.WriteLine($"{"-----------",-27}{"------------------",31}");
 
         // Construct decimal objects from float values.
-        CreateDecimal( 1.2345E+5F, "1.2345E+5F" );
-        CreateDecimal( 1.234567E+15F, "1.234567E+15F" );
-        CreateDecimal( 1.23456789E+25F, "1.23456789E+25F" );
-        CreateDecimal( 1.23456789E+35F, "1.23456789E+35F" );
-        CreateDecimal( 1.2345E-5F, "1.2345E-5F" );
-        CreateDecimal( 1.234567E-15F, "1.234567E-15F" );
-        CreateDecimal( 1.23456789E-25F, "1.23456789E-25F" );
-        CreateDecimal( 1.23456789E-35F, "1.23456789E-35F" );
-        CreateDecimal( 1.0F / 7.0F, "1.0F / 7.0F" );
+        CreateDecimal(1.2345E+5F, "1.2345E+5F");
+        CreateDecimal(1.234567E+15F, "1.234567E+15F");
+        CreateDecimal(1.23456789E+25F, "1.23456789E+25F");
+        CreateDecimal(1.23456789E+35F, "1.23456789E+35F");
+        CreateDecimal(1.2345E-5F, "1.2345E-5F");
+        CreateDecimal(1.234567E-15F, "1.234567E-15F");
+        CreateDecimal(1.23456789E-25F, "1.23456789E-25F");
+        CreateDecimal(1.23456789E-35F, "1.23456789E-35F");
+        CreateDecimal(1.0F / 7.0F, "1.0F / 7.0F");
     }
 }
 

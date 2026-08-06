@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
+
 
 namespace SystemDateTimeReference
 {
     public static class DateTimeComparisons
     {
-        public static void Snippets()
-        {
-            TestRoughlyEquals();
-        }
+        public static void Snippets() => TestRoughlyEquals();
 
         // <Snippet1>
         public static bool RoughlyEquals(DateTime time, DateTime timeWithWindow, int windowInSeconds, int frequencyInSeconds)
