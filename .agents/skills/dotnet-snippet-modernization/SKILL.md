@@ -26,7 +26,7 @@ Apply these changes when they preserve behavior and sample clarity:
   framework type names.
 - Use target-typed `new` when the target type is evident.
 - Use string interpolation instead of composite formatting.
-- Use raw string literals (or interpolated raw string literals) for paragraph-style output
+- Use raw string literals (or interpolated raw string literals) for paragraph-style output.
 - Use object and collection initializers when evaluation order and behavior
   remain unchanged.
 - Convert eligible value-producing `switch` statements to switch expressions.
@@ -60,7 +60,7 @@ applying a stylistic transformation.
 ## Behavioral safeguards
 
 - Preserve snippet markers, including `// <SnippetName>` and
-  `// </SnippetName>`. However, if the snippet markers, and possibly output comments, can be moved closer to each other such that less "fluff", such as scaffolding that doesn't directly pertain to the API being demonstrated, is included in the snippet, please do so.
+  `// </SnippetName>`. However, if the markers (and possibly output comments) can be moved closer together to exclude scaffolding that doesn't directly pertain to the API being demonstrated, do so.
 - Preserve observable output, exception behavior, culture-sensitive formatting,
   evaluation order, and disposal behavior.
 - Preserve comments that describe expected output.
