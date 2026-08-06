@@ -21,13 +21,16 @@ teaches.
 
 Apply these changes when they preserve behavior and sample clarity:
 
+- Use top-level statements where possible.
 - Use C# built-in aliases, such as `string`, `int`, and `bool`, instead of
   framework type names.
 - Use target-typed `new` when the target type is evident.
 - Use string interpolation instead of composite formatting.
+- Use raw string literals (or interpolated raw string literals) for paragraph-style output
 - Use object and collection initializers when evaluation order and behavior
   remain unchanged.
 - Convert eligible value-producing `switch` statements to switch expressions.
+- Use auto-implemented properties instead of defining a separate field.
 - Use expression-bodied members for simple single-expression members.
 - Remove unused using directives and sort the remaining directives with
   `System` namespaces first.
@@ -57,7 +60,7 @@ applying a stylistic transformation.
 ## Behavioral safeguards
 
 - Preserve snippet markers, including `// <SnippetName>` and
-  `// </SnippetName>`.
+  `// </SnippetName>`. However, if the snippet markers, and possibly output comments, can be moved closer to each other such that less "fluff", such as scaffolding that doesn't directly pertain to the API being demonstrated, is included in the snippet, please do so.
 - Preserve observable output, exception behavior, culture-sensitive formatting,
   evaluation order, and disposal behavior.
 - Preserve comments that describe expected output.
@@ -77,7 +80,7 @@ modernization. Useful diagnostics include:
 
 - `IDE0049` for built-in type aliases.
 - `IDE0090` for target-typed `new`.
-- `IDE0053` for switch expressions.
+- `IDE0066` for switch expressions.
 - `IDE0021` through `IDE0027`, and `IDE0061`, for expression-bodied members.
 - `IDE0017` for object initializers.
 - `IDE0028` for collection initializers.
@@ -91,7 +94,7 @@ Place temporary solutions, scripts, and Roslyn tools outside the repository.
 
 ## Validation
 
-1. Build every affected snippet project with its existing project file.
+1. Build every affected snippet project with its existing project file. If no project file exists, add one.
 2. Treat warnings as pre-existing only after confirming the modernization
    didn't introduce them.
 3. Run `git diff --check` for the exact scope.
