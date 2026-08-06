@@ -5,57 +5,57 @@ using System.Threading;
 
 public class ContinentD
 {
-   public string? Name { get; set; }
-   public int Population { get; set; }
-   public Decimal Area { get; set; }
+    public string? Name { get; set; }
+    public int Population { get; set; }
+    public decimal Area { get; set; }
 }
 
 public class Example12
 {
-   static ConcurrentBag<ContinentD> ContinentDs = new ConcurrentBag<ContinentD>();
-   static CountdownEvent? gate;
-   static string msg = string.Empty;
+    static ConcurrentBag<ContinentD> ContinentDs = new();
+    static CountdownEvent? gate;
+    static string msg = string.Empty;
 
-   public static void Main()
-   {
-      String[] names = { "Africa", "Antarctica", "Asia",
+    public static void Main()
+    {
+        string[] names = { "Africa", "Antarctica", "Asia",
                          "Australia", "Europe", "North America",
                          "South America" };
-      gate = new CountdownEvent(names.Length);
+        gate = new(names.Length);
 
-      // Populate the list.
-      foreach (var name in names) {
-         var th = new Thread(PopulateContinentDs);
-         th.Start(name);
-      }
+        // Populate the list.
+        foreach (string name in names)
+        {
+            var th = new Thread(PopulateContinentDs);
+            th.Start(name);
+        }
 
-      // Display the list.
-      gate.Wait();
-      Console.WriteLine(msg);
-      Console.WriteLine();
+        // Display the list.
+        gate.Wait();
+        Console.WriteLine(msg);
+        Console.WriteLine();
 
-      var arr = ContinentDs.ToArray();
-      for (int ctr = 0; ctr < names.Length; ctr++) {
-         var ContinentD = arr[ctr];
-         Console.WriteLine("{0}: Area: {1}, Population {2}",
-                           ContinentD.Name, ContinentD.Population,
-                           ContinentD.Area);
-      }
-   }
+        var arr = ContinentDs.ToArray();
+        for (int ctr = 0; ctr < names.Length; ctr++)
+        {
+            var ContinentD = arr[ctr];
+            Console.WriteLine($"{ContinentD.Name}: Area: {ContinentD.Population}, Population {ContinentD.Area}");
+        }
+    }
 
-   private static void PopulateContinentDs(Object? obj)
-   {
-      string? name = obj?.ToString();
-      lock(msg) {
-         msg += string.Format("Adding '{0}' to the list.\n", name);
-      }
-      var ContinentD = new ContinentD();
-      ContinentD.Name = name;
-      // Sleep to simulate retrieving remaining data.
-      Thread.Sleep(25);
-      ContinentDs.Add(ContinentD);
-      gate?.Signal();
-   }
+    private static void PopulateContinentDs(object? obj)
+    {
+        string? name = obj?.ToString();
+        lock (msg)
+        {
+            msg += $"Adding '{name}' to the list.\n";
+        }
+        var ContinentD = new ContinentD() { Name = name };
+        // Sleep to simulate retrieving remaining data.
+        Thread.Sleep(25);
+        ContinentDs.Add(ContinentD);
+        gate?.Signal();
+    }
 }
 // The example displays output like the following:
 //       Adding 'Africa' to the list.

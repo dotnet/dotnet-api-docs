@@ -24,16 +24,12 @@ public class Example1
             new(DateTime.Now, TimeZoneInfo.Utc)
         };
         foreach (var timeZoneTime in timeZoneTimes)
-            Console.WriteLine("{0}: {1:G}",
-                              timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString(),
-                              timeZoneTime.DateTime);
+            Console.WriteLine($"{(timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString())}: {timeZoneTime.DateTime:G}");
         Console.WriteLine();
 
         Array.Clear(timeZoneTimes, 1, 1);
         foreach (var timeZoneTime in timeZoneTimes)
-            Console.WriteLine("{0}: {1:G}",
-                              timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString(),
-                              timeZoneTime.DateTime);
+            Console.WriteLine($"{(timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString())}: {timeZoneTime.DateTime:G}");
     }
 }
 

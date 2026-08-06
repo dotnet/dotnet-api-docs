@@ -17,16 +17,10 @@ namespace DefAttrCS
     public class AnimalTypeAttribute : Attribute
     {
         // The constructor is called when the attribute is set.
-        public AnimalTypeAttribute(Animal pet)
-        {
-            thePet = pet;
-        }
+        public AnimalTypeAttribute(Animal pet) => thePet = pet;
 
         // Provide a default constructor and make Dog the default.
-        public AnimalTypeAttribute()
-        {
-            thePet = Animal.Dog;
-        }
+        public AnimalTypeAttribute() => thePet = Animal.Dog;
 
         // Keep a variable internally ...
         protected Animal thePet;
@@ -34,8 +28,8 @@ namespace DefAttrCS
         // .. and show a copy to the outside world.
         public Animal Pet
         {
-            get { return thePet; }
-            set { thePet = Pet; }
+            get => thePet;
+            set => thePet = Pet;
         }
 
         // Override IsDefaultAttribute to return the correct response.
@@ -53,7 +47,7 @@ namespace DefAttrCS
         // Use the default constructor.
         [AnimalType]
         public void Method1()
-        {}
+        { }
     }
 
     class DemoClass
@@ -69,10 +63,8 @@ namespace DefAttrCS
                 (AnimalTypeAttribute)Attribute.GetCustomAttribute(mInfo,
                 typeof(AnimalTypeAttribute));
             // Check to see if the default attribute is applied.
-            Console.WriteLine("The attribute {0} for method {1} in class {2}",
-                atAttr.Pet, mInfo.Name, clsType.Name);
-            Console.WriteLine("{0} the default for the AnimalType attribute.",
-                atAttr.IsDefaultAttribute() ? "is" : "is not");
+            Console.WriteLine($"The attribute {atAttr.Pet} for method {mInfo.Name} in class {clsType.Name}");
+            Console.WriteLine($"{(atAttr.IsDefaultAttribute() ? "is" : "is not")} the default for the AnimalType attribute.");
         }
     }
 }
