@@ -16,7 +16,7 @@ public struct Path : IEquatable<Path>
         if (Segments is null || other.Segments is null) return false;
         if (Segments.Count != other.Segments.Count) return false;
 
-        for (var i = 0; i < Segments.Count; i++)
+        for (int i = 0; i < Segments.Count; i++)
         {
             if (!string.Equals(Segments[i], other.Segments[i]))
                 return false;
@@ -29,7 +29,7 @@ public struct Path : IEquatable<Path>
     {
         var hash = new HashCode();
 
-        for (var i = 0; i < Segments?.Count; i++)
+        for (int i = 0; i < Segments?.Count; i++)
             hash.Add(Segments[i]);
 
         return hash.ToHashCode();
