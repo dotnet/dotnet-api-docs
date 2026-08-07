@@ -3,9 +3,6 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
-    {
-        GC.Collect(2, GCCollectionMode.Optimized);
-    }
+    static void Main(string[] args) => GC.Collect(2, GCCollectionMode.Optimized);
 }
 // </Snippet1>

@@ -12,7 +12,7 @@ public class Example
                                  originalGuid.ToString("X") };
 
         // Parse each string representation.
-        foreach (var stringGuid in stringGuids)
+        foreach (string stringGuid in stringGuids)
         {
             try
             {

@@ -6,7 +6,7 @@ public class Example
     {
         // <Snippet2>
         var g = new Guid(0xA, 0xB, 0xC,
-                          new Byte[] { 0, 1, 2, 3, 4, 5, 6, 7 } );
+                          new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 });
         Console.WriteLine($"{g:B}");
 
         // The example displays the following output:

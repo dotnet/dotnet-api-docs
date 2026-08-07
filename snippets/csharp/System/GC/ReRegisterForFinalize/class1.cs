@@ -8,7 +8,7 @@ namespace ReRegisterForFinalizeExample
         static void Main()
         {
             // Create a MyFinalizeObject.
-            MyFinalizeObject mfo = new MyFinalizeObject();
+            MyFinalizeObject mfo = new();
 
             // Release the reference to mfo.
             mfo = null;
@@ -33,7 +33,7 @@ namespace ReRegisterForFinalizeExample
 
         ~MyFinalizeObject()
         {
-            if(!hasFinalized)
+            if (!hasFinalized)
             {
                 Console.WriteLine("First finalization");
 
