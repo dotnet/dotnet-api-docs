@@ -5,19 +5,16 @@ public class Example18
     public static void Main()
     {
         // <Snippet19>
-        String s1, s2;
+        string s1, s2;
 
         s1 = "car"; s2 = "Car";
-        Console.WriteLine("'{0}' and '{1}': {2}", s1, s2, 
-                        String.Compare(s1, s2));
-                        
-        s1 = "fork"; s2 = "forks";                  
-        Console.WriteLine("'{0}' and '{1}': {2}", s1, s2, 
-                        String.Compare(s1, s2));
+        Console.WriteLine($"'{s1}' and '{s2}': {string.Compare(s1, s2)}");
+
+        s1 = "fork"; s2 = "forks";
+        Console.WriteLine($"'{s1}' and '{s2}': {string.Compare(s1, s2)}");
 
         s1 = "mammal"; s2 = "fish";
-        Console.WriteLine("'{0}' and '{1}': {2}", s1, s2,  
-                        String.Compare(s1, s2));
+        Console.WriteLine($"'{s1}' and '{s2}': {string.Compare(s1, s2)}");
 
         // The example displays the following output:
         //       'car' and 'Car': -1

@@ -5,21 +5,21 @@ using System.Linq;
 
 public class Example
 {
-   public static void Main()
-   {
-      string output = String.Concat( GetAlphabet(true).Where( letter => 
-                      letter.CompareTo("M") >= 0));
-      Console.WriteLine(output);  
-   }
+    public static void Main()
+    {
+        string output = string.Concat(GetAlphabet(true).Where(letter =>
+                        letter.CompareTo("M") >= 0));
+        Console.WriteLine(output);
+    }
 
-   private static List<string> GetAlphabet(bool upper)
-   {
-      List<string> alphabet = new List<string>();
-      int charValue = upper ? 65 : 97;
-      for (int ctr = 0; ctr <= 25; ctr++)
-         alphabet.Add(((char)(charValue + ctr)).ToString());
-      return alphabet; 
-   }
+    private static List<string> GetAlphabet(bool upper)
+    {
+        List<string> alphabet = new();
+        int charValue = upper ? 65 : 97;
+        for (int ctr = 0; ctr <= 25; ctr++)
+            alphabet.Add(((char)(charValue + ctr)).ToString());
+        return alphabet;
+    }
 }
 // The example displays the following output:
 //      MNOPQRSTUVWXYZ

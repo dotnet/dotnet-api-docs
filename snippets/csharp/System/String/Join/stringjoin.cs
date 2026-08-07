@@ -13,12 +13,12 @@ public class JoinTest
 
     private static string MakeLine(int initVal, int multVal, string sep)
     {
-        string [] sArr = new string [10];
+        string[] sArr = new string[10];
 
         for (int i = initVal; i < initVal + 10; i++)
-            sArr[i - initVal] = String.Format("{0,-3}", i * multVal);
+            sArr[i - initVal] = $"{i * multVal,-3}";
 
-        return String.Join(sep, sArr);
+        return string.Join(sep, sArr);
     }
 }
 // The example displays the following output:

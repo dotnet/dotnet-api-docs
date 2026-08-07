@@ -1,21 +1,23 @@
 ﻿//<snippet1>
 using System;
 
-public class ToLowerTest {
-    public static void Main() {
+public class ToLowerTest
+{
+    public static void Main()
+    {
 
-        string [] info = {"Name", "Title", "Age", "Location", "Gender"};
+        string[] info = { "Name", "Title", "Age", "Location", "Gender" };
 
         Console.WriteLine("The initial values in the array are:");
         foreach (string s in info)
             Console.WriteLine(s);
 
-        Console.WriteLine("{0}The lowercase of these values is:", Environment.NewLine);
+        Console.WriteLine($"{Environment.NewLine}The lowercase of these values is:");
 
         foreach (string s in info)
             Console.WriteLine(s.ToLower());
 
-        Console.WriteLine("{0}The uppercase of these values is:", Environment.NewLine);
+        Console.WriteLine($"{Environment.NewLine}The uppercase of these values is:");
 
         foreach (string s in info)
             Console.WriteLine(s.ToUpper());

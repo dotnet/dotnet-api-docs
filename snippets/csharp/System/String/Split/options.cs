@@ -227,7 +227,7 @@ namespace Split
             Console.Write("   ");
             foreach (string s in result)
             {
-                Console.Write("'{0}' ", String.IsNullOrEmpty(s) ? "<>" : s);
+                Console.Write($"'{(string.IsNullOrEmpty(s) ? "<>" : s)}' ");
             }
             Console.WriteLine();
             Console.WriteLine();
@@ -238,7 +238,7 @@ namespace Split
             Console.Write("   ");
             foreach (string s in result)
             {
-                Console.Write("'{0}' ", String.IsNullOrEmpty(s) ? "<>" : s);
+                Console.Write($"'{(string.IsNullOrEmpty(s) ? "<>" : s)}' ");
             }
             Console.WriteLine();
 
@@ -263,7 +263,7 @@ namespace Split
             string[] separators = { ",", ".", "!", "?", ";", ":", " " };
             string value = "The handsome, energetic, young dog was playing with his smaller, more lethargic litter mate.";
             string[] words = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in words)
+            foreach (string word in words)
                 Console.WriteLine(word);
 
             // The example displays the following output:

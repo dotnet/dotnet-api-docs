@@ -19,11 +19,11 @@ public class Example1
         int length = Math.Max(name1.Length, name2.Length);
 
         Console.WriteLine("Sorted alphabetically by last name:");
-        if (String.Compare(name1, index1, name2, index2, length,
+        if (string.Compare(name1, index1, name2, index2, length,
                            new CultureInfo("en-US"), CompareOptions.IgnoreCase) < 0)
-            Console.WriteLine("{0}\n{1}", name1, name2);
+            Console.WriteLine($"{name1}\n{name2}");
         else
-            Console.WriteLine("{0}\n{1}", name2, name1);
+            Console.WriteLine($"{name2}\n{name1}");
 
         // The example displays the following output:
         //       Sorted alphabetically by last name:

@@ -1,4 +1,4 @@
-// Sample for String.IndexOf(String, Int32, Int32)
+﻿// Sample for String.IndexOf(String, Int32, Int32)
 using System;
 
 class Sample
@@ -15,22 +15,22 @@ class Sample
         int count;
 
         end = str.Length;
-        start = end/2;
+        start = end / 2;
         Console.WriteLine();
-        Console.WriteLine("All occurrences of 'he' from position {0} to {1}.", start, end-1);
+        Console.WriteLine($"All occurrences of 'he' from position {start} to {end - 1}.");
         Console.WriteLine("{1}{0}{2}{0}{3}{0}", Environment.NewLine, br1, br2, str);
         Console.Write("The string 'he' occurs at position(s): ");
 
         count = 0;
         at = 0;
-        while((start <= end) && (at > -1))
+        while ((start <= end) && (at > -1))
         {
             // start+count must be a position within -str-.
             count = end - start;
             at = str.IndexOf("he", start, count);
             if (at == -1) break;
-            Console.Write("{0} ", at);
-            start = at+1;
+            Console.Write($"{at} ");
+            start = at + 1;
         }
         Console.WriteLine();
 

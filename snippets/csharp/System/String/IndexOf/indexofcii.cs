@@ -2,60 +2,58 @@
 // Example for the String.IndexOf( char, int, int ) method.
 using System;
 
-class IndexOfCII 
+class IndexOfCII
 {
-    public static void Main() 
+    public static void Main()
     {
-        string br1 = 
+        string br1 =
             "0----+----1----+----2----+----3----+----" +
             "4----+----5----+----6----+----7";
-        string br2 = 
+        string br2 =
             "0123456789012345678901234567890123456789" +
             "0123456789012345678901234567890";
-        string str = 
+        string str =
             "ABCDEFGHI abcdefghi ABCDEFGHI abcdefghi " +
             "ABCDEFGHI abcdefghi ABCDEFGHI";
 
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of String.IndexOf( char, int, int )\n" +
-            "generates the following output." );
-        Console.WriteLine( 
-            "{0}{1}{0}{2}{0}{3}{0}", 
-            Environment.NewLine, br1, br2, str );
+            "generates the following output.");
+        Console.WriteLine(
+            "{0}{1}{0}{2}{0}{3}{0}",
+            Environment.NewLine, br1, br2, str);
 
-        FindAllChar( 'A', str );
-        FindAllChar( 'a', str );
-        FindAllChar( 'I', str );
-        FindAllChar( 'i', str );
-        FindAllChar( '@', str );
-        FindAllChar( ' ', str );
+        FindAllChar('A', str);
+        FindAllChar('a', str);
+        FindAllChar('I', str);
+        FindAllChar('i', str);
+        FindAllChar('@', str);
+        FindAllChar(' ', str);
     }
 
-    static void FindAllChar( Char target, String searched )
+    static void FindAllChar(char target, string searched)
     {
-        Console.Write( 
-            "The character '{0}' occurs at position(s): ", 
-            target );
+        Console.Write($"The character '{target}' occurs at position(s): ");
 
-        int     startIndex = -1;
-        int     hitCount = 0;
+        int startIndex = -1;
+        int hitCount = 0;
 
         // Search for all occurrences of the target.
-        while( true )
+        while (true)
         {
-            startIndex = searched.IndexOf( 
-                target, startIndex + 1, 
-                searched.Length - startIndex - 1 );
+            startIndex = searched.IndexOf(
+                target, startIndex + 1,
+                searched.Length - startIndex - 1);
 
             // Exit the loop if the target is not found.
-            if( startIndex < 0 )
+            if (startIndex < 0)
                 break;
 
-            Console.Write( "{0}, ", startIndex );
+            Console.Write($"{startIndex}, ");
             hitCount++;
         }
 
-        Console.WriteLine( "occurrences: {0}", hitCount );
+        Console.WriteLine($"occurrences: {hitCount}");
     }
 }
 

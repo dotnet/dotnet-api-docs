@@ -11,9 +11,9 @@ public class Example
         foreach (string other in others)
         {
             if (word.Equals(other))
-                Console.WriteLine("{0} = {1}", word, other);
+                Console.WriteLine($"{word} = {other}");
             else
-                Console.WriteLine("{0} {1} {2}", word, '\u2260', other);
+                Console.WriteLine($"{word} {'\u2260'} {other}");
         }
     }
 }

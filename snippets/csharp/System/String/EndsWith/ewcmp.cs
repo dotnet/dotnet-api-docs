@@ -1,13 +1,13 @@
 ﻿//<snippet1>
-// This example demonstrates the 
+// This example demonstrates the
 // System.String.EndsWith(String, StringComparison) method.
 
 using System;
 using System.Threading;
 
-class Sample 
+class Sample
 {
-    public static void Main() 
+    public static void Main()
     {
         string intro = "Determine whether a string ends with another string, " +
                    "using\n  different values of StringComparison.";
@@ -24,13 +24,12 @@ class Sample
 
         // Display the current culture because the culture-specific comparisons
         // can produce different results with different cultures.
-        Console.WriteLine("The current culture is {0}.\n", 
-                       Thread.CurrentThread.CurrentCulture.Name);
-        
-        // Determine whether three versions of the letter I are equal to each other. 
+        Console.WriteLine($"The current culture is {Thread.CurrentThread.CurrentCulture.Name}.\n");
+
+        // Determine whether three versions of the letter I are equal to each other.
         foreach (StringComparison sc in scValues)
         {
-            Console.WriteLine("StringComparison.{0}:", sc);
+            Console.WriteLine($"StringComparison.{sc}:");
             Test("abcXYZ", "XYZ", sc);
             Test("abcXYZ", "xyz", sc);
             Console.WriteLine();

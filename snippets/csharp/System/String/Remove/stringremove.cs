@@ -8,7 +8,7 @@ public class RemoveTest
 
         string name = "Michelle Violet Banks";
 
-        Console.WriteLine("The entire name is '{0}'", name);
+        Console.WriteLine($"The entire name is '{name}'");
 
         // Remove the middle name, identified by finding the spaces in the name.
         int foundS1 = name.IndexOf(" ");
@@ -18,7 +18,7 @@ public class RemoveTest
         {
             name = name.Remove(foundS1 + 1, foundS2 - foundS1);
 
-            Console.WriteLine("After removing the middle name, we are left with '{0}'", name);
+            Console.WriteLine($"After removing the middle name, we are left with '{name}'");
         }
     }
 }

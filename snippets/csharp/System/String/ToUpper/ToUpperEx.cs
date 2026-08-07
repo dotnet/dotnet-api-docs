@@ -3,23 +3,21 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      int n = 0;
-      for (int ctr = 0x20; ctr <= 0x017F; ctr++) {
-         string string1 = ((char)ctr).ToString();
-         string upperString = string1.ToUpper();
-         if (string1 != upperString) {
-            Console.Write(@"{0} (\u+{1}) --> {2} (\u+{3})         ",
-                          string1, 
-                          Convert.ToUInt16(string1[0]).ToString("X4"),
-                          upperString, 
-                          Convert.ToUInt16(upperString[0]).ToString("X4"));
-            n++;
-            if (n % 2 == 0) Console.WriteLine();
-         }
-      } 
-   }
+    public static void Main()
+    {
+        int n = 0;
+        for (int ctr = 0x20; ctr <= 0x017F; ctr++)
+        {
+            string string1 = ((char)ctr).ToString();
+            string upperString = string1.ToUpper();
+            if (string1 != upperString)
+            {
+                Console.Write($"{string1} (\\u+{Convert.ToUInt16(string1[0]).ToString("X4")}) --> {upperString} (\\u+{Convert.ToUInt16(upperString[0]).ToString("X4")})         ");
+                n++;
+                if (n % 2 == 0) Console.WriteLine();
+            }
+        }
+    }
 }
 // The example displays the following output:
 //    a (\u+0061) --> A (\u+0041)         b (\u+0062) --> B (\u+0042)

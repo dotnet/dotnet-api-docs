@@ -5,17 +5,15 @@ public class Example
     public static void Main()
     {
         // <Snippet1>
-        String[] pairs = { "Color1=red", "Color2=green", "Color3=blue",
+        string[] pairs = { "Color1=red", "Color2=green", "Color3=blue",
                          "Title=Code Repository" };
-        foreach (var pair in pairs) 
+        foreach (string pair in pairs)
         {
             int position = pair.IndexOf("=");
             if (position < 0)
                 continue;
-            Console.WriteLine("Key: {0}, Value: '{1}'", 
-                           pair.Substring(0, position),
-                           pair.Substring(position + 1));
-        }                          
+            Console.WriteLine($"Key: {pair.Substring(0, position)}, Value: '{pair.Substring(position + 1)}'");
+        }
 
         // The example displays the following output:
         //     Key: Color1, Value: 'red'

@@ -1,14 +1,14 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example {
+public class Example
+{
     public static void Main()
     {
         string animal1 = "fox";
         string animal2 = "dog";
 
-        string strTarget = String.Format("The {0} jumps over the {1}.",
-                                         animal1, animal2);
+        string strTarget = $"The {animal1} jumps over the {animal2}.";
 
         Console.WriteLine("The original string is:{0}{1}{0}",
                           Environment.NewLine, strTarget);

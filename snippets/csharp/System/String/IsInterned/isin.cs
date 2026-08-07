@@ -12,17 +12,17 @@ class Sample
         string s2 = new StringBuilder().Append("My").Append("Test").ToString();
 
         // Neither string is in the intern pool yet.
-        Console.WriteLine($"Is s1 interned? {String.IsInterned(s1) != null}");
-        Console.WriteLine($"Is s2 interned? {String.IsInterned(s2) != null}");
+        Console.WriteLine($"Is s1 interned? {string.IsInterned(s1) != null}");
+        Console.WriteLine($"Is s2 interned? {string.IsInterned(s2) != null}");
 
         // Intern s1 explicitly.
-        string i1 = String.Intern(s1);
+        string i1 = string.Intern(s1);
 
         // Now s2 can be found in the intern pool.
-        string i2 = String.IsInterned(s2);
+        string i2 = string.IsInterned(s2);
 
         Console.WriteLine($"Is s2 interned after interning s1? {i2 != null}");
-        Console.WriteLine($"Are i1 and i2 the same reference? {Object.ReferenceEquals(i1, i2)}");
+        Console.WriteLine($"Are i1 and i2 the same reference? {object.ReferenceEquals(i1, i2)}");
     }
 }
 

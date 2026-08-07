@@ -11,7 +11,7 @@ namespace Split
 
             string[] subs = s.Split(' ');
 
-            foreach (var sub in subs)
+            foreach (string sub in subs)
             {
                 Console.WriteLine($"Substring: {sub}");
             }
@@ -34,7 +34,7 @@ namespace Split
 
             string[] subs = s.Split(' ', '.');
 
-            foreach (var sub in subs)
+            foreach (string sub in subs)
             {
                 Console.WriteLine($"Substring: {sub}");
             }
@@ -60,7 +60,7 @@ namespace Split
 
             string[] subs = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var sub in subs)
+            foreach (string sub in subs)
             {
                 Console.WriteLine($"Substring: {sub}");
             }

@@ -6,14 +6,14 @@ class Sample
     public static void Main()
     {
         //<snippet1>
-        String[] val = {"apple", "orange", "grape", "pear"};
-        String sep   = ", ";
-        String result;
+        string[] val = { "apple", "orange", "grape", "pear" };
+        string sep = ", ";
+        string result;
 
-        Console.WriteLine("sep = '{0}'", sep);
-        Console.WriteLine("val[] = {{'{0}' '{1}' '{2}' '{3}'}}", val[0], val[1], val[2], val[3]);
-        result = String.Join(sep, val, 1, 2);
-        Console.WriteLine("String.Join(sep, val, 1, 2) = '{0}'", result);
+        Console.WriteLine($"sep = '{sep}'");
+        Console.WriteLine($"val[] = {{'{val[0]}' '{val[1]}' '{val[2]}' '{val[3]}'}}");
+        result = string.Join(sep, val, 1, 2);
+        Console.WriteLine($"String.Join(sep, val, 1, 2) = '{result}'");
 
         // This example produces the following results:
         // sep = ', '
