@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 // Note: you must compile this sample using the unsafe flag.
 // From the command line, type the following: csc sample.cs /unsafe
@@ -34,10 +34,7 @@ public class Example
         }
     }
 
-    private static int[] CreateInt32Array()
-    {
-        return new int[] { 100, 200, 300, 400, 500 };
-    }
+    private static int[] CreateInt32Array() => new int[] { 100, 200, 300, 400, 500 };
 }
 
 // The example displays the following output:

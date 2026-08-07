@@ -5,12 +5,12 @@ public class Example
     public static void Main()
     {
         // <Snippet1>
-        Random rnd = new Random();
-        Byte[] b = new Byte[10];
+        Random rnd = new();
+        byte[] b = new byte[10];
         rnd.NextBytes(b);
         Console.WriteLine("The Random bytes are: ");
         for (int i = 0; i <= b.GetUpperBound(0); i++)
-            Console.WriteLine("{0}: {1}", i, b[i]);
+            Console.WriteLine($"{i}: {b[i]}");
 
         // The example displays output similar to the following:
         //       The Random bytes are:
