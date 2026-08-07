@@ -6,7 +6,7 @@ public class Example
     public static void Main()
     {
         // Define a byte array.
-        var bytes = new byte[100];
+        byte[] bytes = new byte[100];
         int originalTotal = 0;
         for (int ctr = 0; ctr <= bytes.GetUpperBound(0); ctr++)
         {
