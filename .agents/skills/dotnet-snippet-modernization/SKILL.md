@@ -25,7 +25,9 @@ Apply these changes when they preserve behavior and sample clarity:
 - Use C# built-in aliases, such as `string`, `int`, and `bool`, instead of
   framework type names.
 - Use target-typed `new` when the target type is evident.
-- Use string interpolation instead of composite formatting, except where the code becomes too hard to read. For example, don't use string interpolation on code like this:
+- Use string interpolation instead of composite formatting, unless it makes the code harder to read
+  or the composite-format overload is the subject of the snippet. For example, keep composite
+  formatting when the arguments are complex:
   ```csharp
   Console.WriteLine("{0}: {1:G}",
       timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString(),
