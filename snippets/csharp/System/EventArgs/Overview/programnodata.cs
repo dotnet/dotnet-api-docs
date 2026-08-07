@@ -30,10 +30,7 @@ namespace ConsoleApplication1
         private readonly int _threshold;
         private int _total;
 
-        public Counter(int passedThreshold)
-        {
-            _threshold = passedThreshold;
-        }
+        public Counter(int passedThreshold) => _threshold = passedThreshold;
 
         public void Add(int x)
         {
@@ -44,10 +41,7 @@ namespace ConsoleApplication1
             }
         }
 
-        protected virtual void OnThresholdReached(EventArgs e)
-        {
-            ThresholdReached?.Invoke(this, e);
-        }
+        protected virtual void OnThresholdReached(EventArgs e) => ThresholdReached?.Invoke(this, e);
 
         public event EventHandler? ThresholdReached;
     }

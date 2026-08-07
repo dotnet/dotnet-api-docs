@@ -1,25 +1,25 @@
 ﻿// <Snippet2>
 using System;
 
-[Flags] enum Colors { None=0, Red = 1, Green = 2, Blue = 4 };
+[Flags] enum Colors { None = 0, Red = 1, Green = 2, Blue = 4 };
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] colorStrings = { "0", "2", "8", "blue", "Blue", "Yellow", "Red, Green" };
-      foreach (string colorString in colorStrings)
-      {
-         Colors colorValue;
-         if (Enum.TryParse(colorString, true, out colorValue))
-            if (Enum.IsDefined(typeof(Colors), colorValue) | colorValue.ToString().Contains(","))
-               Console.WriteLine("Converted '{0}' to {1}.", colorString, colorValue.ToString());
+    public static void Main()
+    {
+        string[] colorStrings = { "0", "2", "8", "blue", "Blue", "Yellow", "Red, Green" };
+        foreach (string colorString in colorStrings)
+        {
+            Colors colorValue;
+            if (Enum.TryParse(colorString, true, out colorValue))
+                if (Enum.IsDefined(typeof(Colors), colorValue) | colorValue.ToString().Contains(","))
+                    Console.WriteLine("Converted '{0}' to {1}.", colorString, colorValue.ToString());
+                else
+                    Console.WriteLine($"{colorString} is not an underlying value of the Colors enumeration.");
             else
-               Console.WriteLine("{0} is not an underlying value of the Colors enumeration.", colorString);
-         else
-            Console.WriteLine("{0} is not a member of the Colors enumeration.", colorString);
-      }
-   }
+                Console.WriteLine($"{colorString} is not a member of the Colors enumeration.");
+        }
+    }
 }
 // The example displays the following output:
 //       Converted '0' to None.

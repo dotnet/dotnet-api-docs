@@ -4,13 +4,10 @@ using System.Runtime.InteropServices;
 
 public class Example
 {
-   [DllImport("StringUtilities.dll", CharSet = CharSet.Unicode )]
-   public static extern String SayGoodMorning(String name);
+    [DllImport("StringUtilities.dll", CharSet = CharSet.Unicode)]
+    public static extern string SayGoodMorning(string name);
 
-   public static void Main()
-   {
-      Console.WriteLine(SayGoodMorning("Dakota"));
-   }
+    public static void Main() => Console.WriteLine(SayGoodMorning("Dakota"));
 }
 // The example displays the following output:
 //    Unhandled Exception: System.EntryPointNotFoundException: Unable to find an entry point
