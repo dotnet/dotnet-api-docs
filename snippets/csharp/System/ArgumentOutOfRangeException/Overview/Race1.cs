@@ -54,7 +54,13 @@ public class Example11
 //    Adding //Australia// to the list.
 //    Adding //Europe// to the list.
 //    Adding //North America// to the list.
-//    Adding //South America// to the list.
+//    Adding 'Africa' to the list.
+//    Adding 'Antarctica' to the list.
+//    Adding 'Asia' to the list.
+//    Adding 'Australia' to the list.
+//    Adding 'Europe' to the list.
+//    Adding 'North America' to the list.
+//    Adding 'South America' to the list.
 //
 //
 //
