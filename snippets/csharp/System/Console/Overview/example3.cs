@@ -89,8 +89,7 @@ public static class DisplayChars
         if (start > upperRange)
             throw new ArgumentException($"0x{start:X5} is outside the upper range of Unicode code points (0x{upperRange:X5})");
         if (end > upperRange)
-            throw new ArgumentException(string.Format("0x{0:X5} is outside the upper range of Unicode code points (0x{0:X5})",
-                                                      end, upperRange));
+            throw new ArgumentException($"0x{end:X5} is outside the upper range of Unicode code points (0x{upperRange:X5})");
 
         // Since we're using 21-bit code points, we can't use U+D800 to U+DFFF.
         if ((start < surrogateStart & end > surrogateStart) || (start >= surrogateStart & start <= surrogateEnd))

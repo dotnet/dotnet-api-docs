@@ -46,8 +46,11 @@ public class Example
                 CONSOLE_FONT_INFO_EX newInfo = new();
                 newInfo.cbSize = (uint)Marshal.SizeOf(newInfo);
                 newInfo.FontFamily = TMPF_TRUETYPE;
-                IntPtr ptr = new(newInfo.FaceName);
-                Marshal.Copy(fontName.ToCharArray(), 0, ptr, fontName.Length);
+                fixed (char* faceName = newInfo.FaceName)
+                {
+                    Marshal.Copy(fontName.ToCharArray(), 0, (IntPtr)faceName, fontName.Length);
+                    faceName[fontName.Length] = '\0';
+                }
                 // Get some settings from current font.
                 newInfo.dwFontSize = new(info.dwFontSize.X, info.dwFontSize.Y);
                 newInfo.FontWeight = info.FontWeight;
