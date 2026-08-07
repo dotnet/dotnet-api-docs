@@ -1,43 +1,41 @@
 ﻿//<Snippet4>
-// Example of the TimeSpan( int, int, int, int, int ) constructor. 
+// Example of the TimeSpan( int, int, int, int, int ) constructor.
 using System;
 
 class TimeSpanCtorIIIIIDemo
 {
     // Create a TimeSpan object and display its value.
-    static void CreateTimeSpan( int days, int hours, 
-        int minutes, int seconds, int millisec )
+    static void CreateTimeSpan(int days, int hours,
+        int minutes, int seconds, int millisec)
     {
-        TimeSpan elapsedTime = new TimeSpan( 
-            days, hours, minutes, seconds, millisec );
+        TimeSpan elapsedTime = new(
+            days, hours, minutes, seconds, millisec);
 
         // Format the constructor for display.
-        string ctor = 
-            String.Format( "TimeSpan( {0}, {1}, {2}, {3}, {4} )", 
-                days, hours, minutes, seconds, millisec);
+        string ctor =
+            $"TimeSpan( {days}, {hours}, {minutes}, {seconds}, {millisec} )";
 
         // Display the constructor and its value.
-        Console.WriteLine( "{0,-48}{1,24}", 
-            ctor, elapsedTime.ToString( ) );
+        Console.WriteLine($"{ctor,-48}{elapsedTime.ToString(),24}");
     }
 
-    static void Main( )
+    static void Main()
     {
-        Console.WriteLine( 
+        Console.WriteLine(
             "This example of the " +
             "TimeSpan( int, int, int, int, int ) " +
-            "\nconstructor generates the following output.\n" );
-        Console.WriteLine( "{0,-48}{1,16}", "Constructor", "Value" );
-        Console.WriteLine( "{0,-48}{1,16}", "-----------", "-----" );
+            "\nconstructor generates the following output.\n");
+        Console.WriteLine($"{"Constructor",-48}{"Value",16}");
+        Console.WriteLine($"{"-----------",-48}{"-----",16}");
 
-        CreateTimeSpan( 10, 20, 30, 40, 50 );
-        CreateTimeSpan( -10, 20, 30, 40, 50 );
-        CreateTimeSpan( 0, 0, 0, 0, 937840050 );
-        CreateTimeSpan( 1111, 2222, 3333, 4444, 5555 );
-        CreateTimeSpan( 1111, -2222, -3333, -4444, -5555 );
-        CreateTimeSpan( 99999, 99999, 99999, 99999, 99999 );
-    } 
-} 
+        CreateTimeSpan(10, 20, 30, 40, 50);
+        CreateTimeSpan(-10, 20, 30, 40, 50);
+        CreateTimeSpan(0, 0, 0, 0, 937840050);
+        CreateTimeSpan(1111, 2222, 3333, 4444, 5555);
+        CreateTimeSpan(1111, -2222, -3333, -4444, -5555);
+        CreateTimeSpan(99999, 99999, 99999, 99999, 99999);
+    }
+}
 
 /*
 This example of the TimeSpan( int, int, int, int, int )

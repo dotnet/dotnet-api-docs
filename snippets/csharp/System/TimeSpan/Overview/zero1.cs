@@ -5,7 +5,7 @@ public class Example4
     public static void Run()
     {
         // <Snippet6>
-        Random rnd = new Random();
+        Random rnd = new();
 
         TimeSpan timeSpent = TimeSpan.Zero;
 
@@ -14,15 +14,9 @@ public class Example4
 
         Console.WriteLine($"Total time: {timeSpent}");
 
-        TimeSpan GetTimeBeforeLunch()
-        {
-            return new TimeSpan(rnd.Next(3, 6), 0, 0);
-        }
+        TimeSpan GetTimeBeforeLunch() => new TimeSpan(rnd.Next(3, 6), 0, 0);
 
-        TimeSpan GetTimeAfterLunch()
-        {
-            return new TimeSpan(rnd.Next(3, 6), 0, 0);
-        }
+        TimeSpan GetTimeAfterLunch() => new TimeSpan(rnd.Next(3, 6), 0, 0);
 
         // The example displays output like the following:
         //        Total time: 08:00:00

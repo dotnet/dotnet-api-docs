@@ -3,14 +3,14 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      TimeZoneInfo localZone = TimeZoneInfo.Local;
-      Console.WriteLine("Local Time Zone ID: {0}", localZone.Id);
-      Console.WriteLine("   Display Name is: {0}.", localZone.DisplayName);
-      Console.WriteLine("   Standard name is: {0}.", localZone.StandardName);
-      Console.WriteLine("   Daylight saving name is: {0}.", localZone.DaylightName); 
-   }
+    public static void Main()
+    {
+        TimeZoneInfo localZone = TimeZoneInfo.Local;
+        Console.WriteLine($"Local Time Zone ID: {localZone.Id}");
+        Console.WriteLine($"   Display Name is: {localZone.DisplayName}.");
+        Console.WriteLine($"   Standard name is: {localZone.StandardName}.");
+        Console.WriteLine($"   Daylight saving name is: {localZone.DaylightName}.");
+    }
 }
 // The example displays output like the following:
 //     Local Time Zone ID: Pacific Standard Time
