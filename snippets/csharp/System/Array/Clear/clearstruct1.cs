@@ -19,17 +19,27 @@ public class Example1
     public static void RunIt()
     {
         // Declare an array with two elements.
-        TimeZoneTime[] timeZoneTimes = {
+        TimeZoneTime[] timeZoneTimes =
+        {
             new(DateTime.Now, TimeZoneInfo.Local),
             new(DateTime.Now, TimeZoneInfo.Utc)
         };
         foreach (var timeZoneTime in timeZoneTimes)
-            Console.WriteLine($"{(timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString())}: {timeZoneTime.DateTime:G}");
-        Console.WriteLine();
+        {
+            Console.WriteLine("{0}: {1:G}",
+                              timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString(),
+                              timeZoneTime.DateTime);
+        }
 
         Array.Clear(timeZoneTimes, 1, 1);
+        
+        Console.WriteLine();
         foreach (var timeZoneTime in timeZoneTimes)
-            Console.WriteLine($"{(timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString())}: {timeZoneTime.DateTime:G}");
+        {
+            Console.WriteLine($"{0}: {1:G}",
+                              timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString(),
+                              timeZoneTime.DateTime);
+        }
     }
 }
 
