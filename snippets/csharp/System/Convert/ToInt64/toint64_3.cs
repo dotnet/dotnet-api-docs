@@ -34,7 +34,7 @@ public class Example
                 Console.Write($"   {numericString,-22} -->  ");
                 try
                 {
-                    Console.WriteLine($"{Convert.ToInt32(numericString, provider),22}");
+                    Console.WriteLine($"{Convert.ToInt64(numericString, provider),22}");
                 }
                 catch (FormatException)
                 {
