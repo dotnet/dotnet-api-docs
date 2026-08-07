@@ -9,13 +9,13 @@ class EField
         Console.WriteLine(
             "This example of Math.E == {0:E16}\n" +
             "generates the following output.\n",
-            Math.E );
+            Math.E);
         Console.WriteLine(
-            "Define the power series PS(n) = Sum(k->0,n)[1/k!]" );
-        Console.WriteLine( " (limit n->infinity)PS(n) == e" );
+            "Define the power series PS(n) = Sum(k->0,n)[1/k!]");
+        Console.WriteLine(" (limit n->infinity)PS(n) == e");
         Console.WriteLine(
             "Display PS(n) and Math.E - PS(n), " +
-            "and stop when delta < 1.0E-15\n" );
+            "and stop when delta < 1.0E-15\n");
 
         CalcPowerSeries();
     }
@@ -28,17 +28,17 @@ class EField
 
         // Stop iterating when the series converges,
         // and prevent a runaway process.
-        for( int n = 0; n < 999 && Math.Abs( Math.E - PS ) > 1.0E-15; n++ )
+        for (int n = 0; n < 999 && Math.Abs(Math.E - PS) > 1.0E-15; n++)
         {
             // Calculate a running factorial.
-            if( n > 0 )
+            if (n > 0)
                 factorial *= (double)n;
 
             // Calculate and display the power series.
             PS += 1.0 / factorial;
             Console.WriteLine(
                 "PS({0:D2}) == {1:E16},  Math.E - PS({0:D2}) == {2:E16}",
-                n, PS, Math.E - PS );
+                n, PS, Math.E - PS);
         }
     }
 }
