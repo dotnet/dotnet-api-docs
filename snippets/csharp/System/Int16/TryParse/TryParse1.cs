@@ -3,32 +3,32 @@ using System;
 
 public class StringParsing
 {
-   public static void Main()
-   {
-      TryToParse(null);
-      TryToParse("16051");
-      TryToParse("9432.0");
-      TryToParse("16,667");
-      TryToParse("   -322   ");
-      TryToParse("+4302");
-      TryToParse("(100);");
-      TryToParse("01FA");
-   }
+    public static void Main()
+    {
+        TryToParse(null);
+        TryToParse("16051");
+        TryToParse("9432.0");
+        TryToParse("16,667");
+        TryToParse("   -322   ");
+        TryToParse("+4302");
+        TryToParse("(100);");
+        TryToParse("01FA");
+    }
 
-   private static void TryToParse(string value)
-   {
-      short number;
-      bool result = Int16.TryParse(value, out number);
-      if (result)
-      {
-         Console.WriteLine("Converted '{0}' to {1}.", value, number);
-      }
-      else
-      {
-         if (value == null) value = "";
-         Console.WriteLine("Attempted conversion of '{0}' failed.", value);
-      }
-   }
+    private static void TryToParse(string value)
+    {
+        short number;
+        bool result = short.TryParse(value, out number);
+        if (result)
+        {
+            Console.WriteLine($"Converted '{value}' to {number}.");
+        }
+        else
+        {
+            if (value == null) value = "";
+            Console.WriteLine($"Attempted conversion of '{value}' failed.");
+        }
+    }
 }
 // The example displays the following output to the console:
 //       Attempted conversion of '' failed.

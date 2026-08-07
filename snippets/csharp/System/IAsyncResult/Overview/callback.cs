@@ -1,7 +1,7 @@
 ﻿//<Snippet5>
 using System;
 using System.Threading;
-using System.Runtime.Remoting.Messaging;
+
 
 namespace Examples.AdvancedProgramming.AsynchronousOperations
 {
@@ -10,10 +10,10 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
         static void Main()
         {
             // Create an instance of the test class.
-            AsyncDemo ad = new AsyncDemo();
+            AsyncDemo ad = new();
 
             // Create the delegate.
-            AsyncMethodCaller caller = new AsyncMethodCaller(ad.TestMethod);
+            AsyncMethodCaller caller = new(ad.TestMethod);
 
             // The threadId parameter of TestMethod is an out parameter, so
             // its input value is never used by TestMethod. Therefore, a dummy
@@ -34,8 +34,7 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
                 new AsyncCallback(CallbackMethod),
                 "The call executed on thread {0}, with return value \"{1}\".");
 
-            Console.WriteLine("The main thread {0} continues to execute...",
-                Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine($"The main thread {Thread.CurrentThread.ManagedThreadId} continues to execute...");
 
             // The callback is made on a ThreadPool thread. ThreadPool threads
             // are background threads, which do not keep the application running
@@ -51,12 +50,12 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
         static void CallbackMethod(IAsyncResult ar)
         {
             // Retrieve the delegate.
-            AsyncResult result = (AsyncResult) ar;
-            AsyncMethodCaller caller = (AsyncMethodCaller) result.AsyncDelegate;
+            AsyncResult result = (AsyncResult)ar;
+            AsyncMethodCaller caller = (AsyncMethodCaller)result.AsyncDelegate;
 
             // Retrieve the format string that was passed as state
             // information.
-            string formatString = (string) ar.AsyncState;
+            string formatString = (string)ar.AsyncState;
 
             // Define a variable to receive the value of the out parameter.
             // If the parameter were ref rather than out then it would have to

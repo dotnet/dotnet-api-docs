@@ -16,8 +16,8 @@ class NotTooSafeStringReverse
         // The unsafe section where byte pointers are used.
         unsafe
         {
-            byte *src = (byte *)sptr.ToPointer();
-            byte *dst = (byte *)dptr.ToPointer();
+            byte* src = (byte*)sptr.ToPointer();
+            byte* dst = (byte*)dptr.ToPointer();
 
             if (copylen > 0)
             {
@@ -34,8 +34,8 @@ class NotTooSafeStringReverse
         }
         string stringB = Marshal.PtrToStringAnsi(dptr);
 
-        Console.WriteLine("Original:\n{0}\n", stringA);
-        Console.WriteLine("Reversed:\n{0}", stringB);
+        Console.WriteLine($"Original:\n{stringA}\n");
+        Console.WriteLine($"Reversed:\n{stringB}");
 
         // Free HGlobal memory
         Marshal.FreeHGlobal(dptr);

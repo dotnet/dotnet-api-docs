@@ -1,14 +1,14 @@
 ﻿// <Snippet4>
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
+
 
 class MyDerivedClass : MyBaseClass
 {
     // Flag: Has Dispose already been called?
     bool disposed = false;
     // Instantiate a FileStream instance.
-    FileStream fs = new FileStream("test.txt", FileMode.OpenOrCreate);
+    FileStream fs = new("test.txt", FileMode.OpenOrCreate);
 
     // Protected implementation of Dispose pattern.
     protected override void Dispose(bool disposing)
