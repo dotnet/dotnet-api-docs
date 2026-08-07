@@ -1,22 +1,24 @@
 ﻿using System;
 
-class MyClass {
+class MyClass
+{
 
-   static void Main() {
-      // <Snippet1>
-      object o = null;
-      object p = null;
-      object q = new Object();
+    static void Main()
+    {
+        // <Snippet1>
+        object o = null;
+        object p = null;
+        object q = new();
 
-      Console.WriteLine(Object.ReferenceEquals(o, p));
-      p = q;
-      Console.WriteLine(Object.ReferenceEquals(p, q));
-      Console.WriteLine(Object.ReferenceEquals(o, p));
+        Console.WriteLine(object.ReferenceEquals(o, p));
+        p = q;
+        Console.WriteLine(object.ReferenceEquals(p, q));
+        Console.WriteLine(object.ReferenceEquals(o, p));
 
-      // This code produces the following output:
-      //   True
-      //   True
-      //   False
-      // </Snippet1>
-   }
+        // This code produces the following output:
+        //   True
+        //   True
+        //   False
+        // </Snippet1>
+    }
 }

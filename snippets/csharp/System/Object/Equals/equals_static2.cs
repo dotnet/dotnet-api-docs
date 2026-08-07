@@ -3,58 +3,49 @@ using System;
 
 public class RefExample
 {
-   public static void Main()
-   {
-      Dog m1 = new Dog("Alaskan Malamute");
-      Dog m2 = new Dog("Alaskan Malamute");
-      Dog g1 = new Dog("Great Pyrenees");
-      Dog g2 = g1;
-      Dog d1 = new Dog("Dalmation");
-      Dog n1 = null;
-      Dog n2 = null;
+    public static void Main()
+    {
+        Dog m1 = new("Alaskan Malamute");
+        Dog m2 = new("Alaskan Malamute");
+        Dog g1 = new("Great Pyrenees");
+        Dog g2 = g1;
+        Dog d1 = new("Dalmation");
+        Dog n1 = null;
+        Dog n2 = null;
 
-      Console.WriteLine("null = null: {0}", Object.Equals(n1, n2));
-      Console.WriteLine("null Reference Equals null: {0}\n", Object.ReferenceEquals(n1, n2));
+        Console.WriteLine($"null = null: {object.Equals(n1, n2)}");
+        Console.WriteLine($"null Reference Equals null: {object.ReferenceEquals(n1, n2)}\n");
 
-      Console.WriteLine("{0} = {1}: {2}", g1, g2, Object.Equals(g1, g2));
-      Console.WriteLine("{0} Reference Equals {1}: {2}\n", g1, g2, Object.ReferenceEquals(g1, g2));
+        Console.WriteLine($"{g1} = {g2}: {object.Equals(g1, g2)}");
+        Console.WriteLine($"{g1} Reference Equals {g2}: {object.ReferenceEquals(g1, g2)}\n");
 
-      Console.WriteLine("{0} = {1}: {2}", m1, m2, Object.Equals(m1, m2));
-      Console.WriteLine("{0} Reference Equals {1}: {2}\n", m1, m2, Object.ReferenceEquals(m1, m2));
+        Console.WriteLine($"{m1} = {m2}: {object.Equals(m1, m2)}");
+        Console.WriteLine($"{m1} Reference Equals {m2}: {object.ReferenceEquals(m1, m2)}\n");
 
-      Console.WriteLine("{0} = {1}: {2}", m1, d1, Object.Equals(m1, d1));
-      Console.WriteLine("{0} Reference Equals {1}: {2}", m1, d1, Object.ReferenceEquals(m1, d1));
-   }
+        Console.WriteLine($"{m1} = {d1}: {object.Equals(m1, d1)}");
+        Console.WriteLine($"{m1} Reference Equals {d1}: {object.ReferenceEquals(m1, d1)}");
+    }
 }
 
 public class Dog
 {
-   // Public field.
-   public string Breed;
+    // Public field.
+    public string Breed;
 
-   // Class constructor.
-   public Dog(string dogBreed)
-   {
-      this.Breed = dogBreed;
-   }
+    // Class constructor.
+    public Dog(string dogBreed) => this.Breed = dogBreed;
 
-   public override bool Equals(Object obj)
-   {
-      if (obj == null || !(obj is Dog))
-         return false;
-      else
-         return this.Breed == ((Dog) obj).Breed;
-   }
+    public override bool Equals(object obj)
+    {
+        if (obj == null || !(obj is Dog))
+            return false;
+        else
+            return this.Breed == ((Dog)obj).Breed;
+    }
 
-   public override int GetHashCode()
-   {
-      return this.Breed.GetHashCode();
-   }
+    public override int GetHashCode() => this.Breed.GetHashCode();
 
-   public override string ToString()
-   {
-      return this.Breed;
-   }
+    public override string ToString() => this.Breed;
 }
 // The example displays the following output:
 //       null = null: True
