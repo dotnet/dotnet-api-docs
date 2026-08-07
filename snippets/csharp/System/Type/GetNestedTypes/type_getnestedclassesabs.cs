@@ -29,23 +29,23 @@ public class TypeMain
         Type myType = (typeof(MyTypeClass));
         // Get the public nested classes.
         Type[] myTypeArray = myType.GetNestedTypes(BindingFlags.Public);
-        Console.WriteLine("The number of nested public classes is {0}.", myTypeArray.Length);
+        Console.WriteLine($"The number of nested public classes is {myTypeArray.Length}.");
         // Display all the public nested classes.
         DisplayTypeInfo(myTypeArray);
         Console.WriteLine();
 
         // Get the nonpublic nested classes.
-        Type[] myTypeArray1 = myType.GetNestedTypes(BindingFlags.NonPublic|BindingFlags.Instance);
-        Console.WriteLine("The number of nested protected classes is {0}.", myTypeArray1.Length);
+        Type[] myTypeArray1 = myType.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Instance);
+        Console.WriteLine($"The number of nested protected classes is {myTypeArray1.Length}.");
         // Display all the nonpublic nested classes.
-        DisplayTypeInfo(myTypeArray1);		
+        DisplayTypeInfo(myTypeArray1);
     }
 
     public static void DisplayTypeInfo(Type[] myArrayType)
     {
         // Display the information for all the nested classes.
         foreach (var t in myArrayType)
-            Console.WriteLine("The name of the nested class is {0}.", t.FullName);
+            Console.WriteLine($"The name of the nested class is {t.FullName}.");
     }
 }
 // The example displays the following output:

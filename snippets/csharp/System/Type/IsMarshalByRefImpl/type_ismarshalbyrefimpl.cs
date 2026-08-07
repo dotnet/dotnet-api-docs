@@ -4,16 +4,13 @@ using System.Reflection;
 public class MyTypeDelegatorClass : TypeDelegator
 {
     public string myElementType = null;
-    private Type myType = null ;
-    public MyTypeDelegatorClass(Type myType) : base(myType)
-    {
-        this.myType = myType;
-    }
+    private Type myType = null;
+    public MyTypeDelegatorClass(Type myType) : base(myType) => this.myType = myType;
     // Override IsMarshalByRefImpl.
     protected override bool IsMarshalByRefImpl()
     {
         // Determine whether the type is marshalled by reference.
-        if(myType.IsMarshalByRef)
+        if (myType.IsMarshalByRef)
         {
             myElementType = " marshalled by reference";
             return true;
@@ -28,10 +25,10 @@ public class MyTypeDemoClass
         try
         {
             MyTypeDelegatorClass myType;
-            Console.WriteLine ("Determine whether MyContextBoundClass is marshalled by reference.");
+            Console.WriteLine("Determine whether MyContextBoundClass is marshalled by reference.");
             // Determine whether MyContextBoundClass type is marshalled by reference.
-            myType = new MyTypeDelegatorClass(typeof(MyContextBoundClass));
-            if( myType.IsMarshalByRef )
+            myType = new(typeof(MyContextBoundClass));
+            if (myType.IsMarshalByRef)
             {
                 Console.WriteLine(typeof(MyContextBoundClass) + " is marshalled by reference.");
             }
@@ -41,9 +38,9 @@ public class MyTypeDemoClass
             }
 
             // Determine whether int type is marshalled by reference.
-            myType = new MyTypeDelegatorClass(typeof(int));
-            Console.WriteLine ("\nDetermine whether int is marshalled by reference.");
-            if( myType.IsMarshalByRef)
+            myType = new(typeof(int));
+            Console.WriteLine("\nDetermine whether int is marshalled by reference.");
+            if (myType.IsMarshalByRef)
             {
                 Console.WriteLine(typeof(int) + " is marshalled by reference.");
             }
@@ -52,9 +49,9 @@ public class MyTypeDemoClass
                 Console.WriteLine(typeof(int) + " is not marshalled by reference.");
             }
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}", e.Message);
+            Console.WriteLine($"Exception: {e.Message}");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <Snippet1>	
+﻿// <Snippet1>
 using System;
 
 class MyGetTypeFromCLSID
@@ -14,9 +14,9 @@ class MyGetTypeFromCLSID
         // Get the type corresponding to the class MyClass.
         Type myType = typeof(MyClass1);
         // Get the object of the Guid.
-        Guid myGuid =(Guid) myType.GUID;
-        Console.WriteLine("The name of the class is "+myType.ToString());
-        Console.WriteLine("The ClassId of MyClass is "+myType.GUID);				
+        Guid myGuid = (Guid)myType.GUID;
+        Console.WriteLine("The name of the class is " + myType.ToString());
+        Console.WriteLine("The ClassId of MyClass is " + myType.GUID);
     }
 }
 // </Snippet1>

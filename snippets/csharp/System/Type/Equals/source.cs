@@ -1,17 +1,17 @@
 ﻿// <Snippet1>
 
 using System;
-using System.Reflection;
+
 
 class Example
 {
     public static void Main()
     {
 
-        Type a = typeof(System.String);
-        Type b = typeof(System.Int32);
+        Type a = typeof(string);
+        Type b = typeof(int);
 
-        Console.WriteLine("{0} == {1}: {2}", a, b, a.Equals(b));
+        Console.WriteLine($"{a} == {b}: {a.Equals(b)}");
 
         // The Type objects in a and b are not equal,
         // because they represent different types.
@@ -19,14 +19,14 @@ class Example
         a = typeof(Example);
         b = new Example().GetType();
 
-        Console.WriteLine("{0} is equal to {1}: {2}", a, b, a.Equals(b));
+        Console.WriteLine($"{a} is equal to {b}: {a.Equals(b)}");
 
         // The Type objects in a and b are equal,
         // because they both represent type Example.
 
         b = typeof(Type);
 
-        Console.WriteLine("typeof({0}).Equals(typeof({1})): {2}", a, b, a.Equals(b));
+        Console.WriteLine($"typeof({a}).Equals(typeof({b})): {a.Equals(b)}");
 
         // The Type objects in a and b are not equal,
         // because variable a represents type Example

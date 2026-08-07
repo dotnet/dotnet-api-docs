@@ -20,14 +20,14 @@ namespace TypeCodeNamespace
     {
         static void Main(string[] args)
         {
-// <Snippet1>
+            // <Snippet1>
             // Create an object of 'Type' class.
             Type myType1 = Type.GetType("System.Int32");
             // Get the 'TypeCode' of the 'Type' class object created above.
             TypeCode myTypeCode = Type.GetTypeCode(myType1);
-            Console.WriteLine("TypeCode is: {0}",myTypeCode);
-// </Snippet1>
-// <Snippet2>
+            Console.WriteLine($"TypeCode is: {myTypeCode}");
+            // </Snippet1>
+            // <Snippet2>
             PropertyInfo[] myPropertyInfo;
             // Get the properties of 'Type' class object.
             myPropertyInfo = Type.GetType("System.Type").GetProperties();
@@ -36,33 +36,33 @@ namespace TypeCodeNamespace
             {
                 Console.WriteLine(myPropertyInfo[i].ToString());
             }
-// </Snippet2>
-// <Snippet3>
-            Object[] myObject = new Object[3];
+            // </Snippet2>
+            // <Snippet3>
+            object[] myObject = new object[3];
             myObject[0] = 66;
             myObject[1] = "puri";
             myObject[2] = 33.33;
             // Get the array of 'Type' class objects.
             Type[] myTypeArray = Type.GetTypeArray(myObject);
             Console.WriteLine("Full names of the 'Type' objects in the array are:");
-            for(int h = 0; h < myTypeArray.Length ; h++)
+            for (int h = 0; h < myTypeArray.Length; h++)
             {
                 Console.WriteLine(myTypeArray[h].FullName);
             }
-// </Snippet3>
-// <Snippet4>
+            // </Snippet3>
+            // <Snippet4>
             try
             {
                 // Throws 'TypeLoadException' because of case-sensitive search.
-                Type myType2 = Type.GetType("sYSTem.iNT32",true,false);
+                Type myType2 = Type.GetType("sYSTem.iNT32", true, false);
                 Console.WriteLine(myType2.FullName);
             }
-            catch(TypeLoadException e)
+            catch (TypeLoadException e)
             {
                 Console.WriteLine(e.Message);
             }
-// </Snippet4>
-            catch(Exception e)
+            // </Snippet4>
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }

@@ -27,9 +27,9 @@ class Example
         BindingFlags bf = BindingFlags.Public | BindingFlags.Instance |
             BindingFlags.InvokeMethod | BindingFlags.OptionalParamBinding;
 
-        t.InvokeMember("MyMethod", bf, null, o, new object[] {10, 55.3, 12});
-        t.InvokeMember("MyMethod", bf, null, o, new object[] {10, 1.3, Type.Missing});
-        t.InvokeMember("MyMethod", bf, null, o, new object[] {10, Type.Missing, Type.Missing});
+        t.InvokeMember("MyMethod", bf, null, o, new object[] { 10, 55.3, 12 });
+        t.InvokeMember("MyMethod", bf, null, o, new object[] { 10, 1.3, Type.Missing });
+        t.InvokeMember("MyMethod", bf, null, o, new object[] { 10, Type.Missing, Type.Missing });
     }
 
     private static object GenerateObjectFromSource(string objectName,
@@ -37,10 +37,11 @@ class Example
     {
         object genObject = null;
         CodeDomProvider codeProvider = CodeDomProvider.CreateProvider(providerName);
-        CompilerParameters cp = new CompilerParameters();
-
-        cp.GenerateExecutable = false;
-        cp.GenerateInMemory = true;
+        CompilerParameters cp = new()
+        {
+            GenerateExecutable = false,
+            GenerateInMemory = true
+        };
 
         CompilerResults results =
             codeProvider.CompileAssemblyFromSource(cp, sourceLines);

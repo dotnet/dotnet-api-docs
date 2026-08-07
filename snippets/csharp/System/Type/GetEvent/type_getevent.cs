@@ -12,7 +12,7 @@ class MyEventExample
 
             Type myType = typeof(System.Windows.Forms.Button);
             EventInfo myEvent = myType.GetEvent("Click");
-            if(myEvent != null)
+            if (myEvent != null)
             {
                 Console.WriteLine("Looking for the Click event in the Button class.");
                 Console.WriteLine(myEvent.ToString());
@@ -22,19 +22,19 @@ class MyEventExample
                 Console.WriteLine("The Click event is not available in the Button class.");
             }
         }
-        catch(SecurityException e)
+        catch (SecurityException e)
         {
             Console.WriteLine("An exception occurred.");
-            Console.WriteLine("Message :"+e.Message);
+            Console.WriteLine("Message :" + e.Message);
         }
-        catch(ArgumentNullException e)
+        catch (ArgumentNullException e)
         {
             Console.WriteLine("An exception occurred.");
-            Console.WriteLine("Message :"+e.Message);
+            Console.WriteLine("Message :" + e.Message);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine("The following exception was raised : {0}",e.Message);
+            Console.WriteLine($"The following exception was raised : {e.Message}");
         }
     }
 }

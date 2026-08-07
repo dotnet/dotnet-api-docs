@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class Example
 {
-   public static void Main()
-   {
-      Type t = typeof(List<>);
-      Console.WriteLine(t.FullName);
-      Console.WriteLine();
+    public static void Main()
+    {
+        Type t = typeof(List<>);
+        Console.WriteLine(t.FullName);
+        Console.WriteLine();
 
-      List<String> list = new List<String>();
-      t = list.GetType();
-      Console.WriteLine(t.FullName);
-   }
+        List<string> list = new();
+        t = list.GetType();
+        Console.WriteLine(t.FullName);
+    }
 }
 // The example displays the following output:
 // System.Collections.Generic.List`1

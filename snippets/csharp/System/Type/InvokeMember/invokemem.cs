@@ -5,12 +5,12 @@ using System.Reflection;
 // This sample class has a field, constructor, method, and property.
 class MyType
 {
-    Int32 myField;
-    public MyType(ref Int32 x) {x *= 5;}
-    public override String ToString() {return myField.ToString();}
-    public Int32 MyProp
+    int myField;
+    public MyType(ref int x) => x *= 5;
+    public override string ToString() => myField.ToString();
+    public int MyProp
     {
-        get {return myField;}
+        get => myField;
         set
         {
             if (value < 1)
@@ -26,28 +26,28 @@ class MyApp
     {
         Type t = typeof(MyType);
         // Create an instance of a type.
-        Object[] args = new Object[] {8};
-        Console.WriteLine("The value of x before the constructor is called is {0}.", args[0]);
-        Object obj = t.InvokeMember(null,
+        object[] args = new object[] { 8 };
+        Console.WriteLine($"The value of x before the constructor is called is {args[0]}.");
+        object obj = t.InvokeMember(null,
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
             BindingFlags.Instance | BindingFlags.CreateInstance, null, null, args);
         Console.WriteLine("Type: " + obj.GetType().ToString());
-        Console.WriteLine("The value of x after the constructor returns is {0}.", args[0]);
+        Console.WriteLine($"The value of x after the constructor returns is {args[0]}.");
 
         // Read and write to a field.
         t.InvokeMember("myField",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
-            BindingFlags.Instance | BindingFlags.SetField, null, obj, new Object[] {5});
-        Int32 v = (Int32) t.InvokeMember("myField",
+            BindingFlags.Instance | BindingFlags.SetField, null, obj, new object[] { 5 });
+        int v = (int)t.InvokeMember("myField",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
             BindingFlags.Instance | BindingFlags.GetField, null, obj, null);
         Console.WriteLine("myField: " + v);
 
         // Call a method.
-        String s = (String) t.InvokeMember("ToString",
+        string s = (string)t.InvokeMember("ToString",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
             BindingFlags.Instance | BindingFlags.InvokeMethod, null, obj, null);
@@ -67,7 +67,7 @@ class MyApp
             t.InvokeMember("MyProp",
                 BindingFlags.DeclaredOnly |
                 BindingFlags.Public | BindingFlags.NonPublic |
-                BindingFlags.Instance | BindingFlags.SetProperty, null, obj, new Object[] {0});
+                BindingFlags.Instance | BindingFlags.SetProperty, null, obj, new object[] { 0 });
         }
         catch (TargetInvocationException e)
         {
@@ -81,8 +81,8 @@ class MyApp
         t.InvokeMember("MyProp",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
-            BindingFlags.Instance | BindingFlags.SetProperty, null, obj, new Object[] {2});
-        v = (Int32) t.InvokeMember("MyProp",
+            BindingFlags.Instance | BindingFlags.SetProperty, null, obj, new object[] { 2 });
+        v = (int)t.InvokeMember("MyProp",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
             BindingFlags.Instance | BindingFlags.GetProperty, null, obj, null);

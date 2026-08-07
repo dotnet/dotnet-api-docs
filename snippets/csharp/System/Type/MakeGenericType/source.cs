@@ -1,6 +1,6 @@
 ﻿//<Snippet1>
 using System;
-using System.Reflection;
+
 using System.Collections.Generic;
 
 public class Test
@@ -9,10 +9,10 @@ public class Test
     {
         Console.WriteLine("\r\n--- Create a constructed type from the generic Dictionary type.");
 
-        // Create a type object representing the generic Dictionary 
-        // type, by omitting the type arguments (but keeping the 
+        // Create a type object representing the generic Dictionary
+        // type, by omitting the type arguments (but keeping the
         // comma that separates them, so the compiler can infer the
-        // number of type parameters).      
+        // number of type parameters).
         Type generic = typeof(Dictionary<,>);
         DisplayTypeInfo(generic);
 
@@ -30,27 +30,24 @@ public class Test
         // obtained using typeof() and GetGenericTypeDefinition().
         Console.WriteLine("\r\n--- Compare types obtained by different methods:");
 
-        Type t = typeof(Dictionary<String, Test>);
-        Console.WriteLine("\tAre the constructed types equal? {0}", t == constructed);
-        Console.WriteLine("\tAre the generic types equal? {0}", 
-            t.GetGenericTypeDefinition() == generic);
+        Type t = typeof(Dictionary<string, Test>);
+        Console.WriteLine($"\tAre the constructed types equal? {t == constructed}");
+        Console.WriteLine($"\tAre the generic types equal? {t.GetGenericTypeDefinition() == generic}");
     }
 
     private static void DisplayTypeInfo(Type t)
     {
-        Console.WriteLine("\r\n{0}", t);
+        Console.WriteLine($"\r\n{t}");
 
-        Console.WriteLine("\tIs this a generic type definition? {0}", 
-            t.IsGenericTypeDefinition);
+        Console.WriteLine($"\tIs this a generic type definition? {t.IsGenericTypeDefinition}");
 
-        Console.WriteLine("\tIs it a generic type? {0}", 
-            t.IsGenericType);
+        Console.WriteLine($"\tIs it a generic type? {t.IsGenericType}");
 
         Type[] typeArguments = t.GetGenericArguments();
-        Console.WriteLine("\tList type arguments ({0}):", typeArguments.Length);
+        Console.WriteLine($"\tList type arguments ({typeArguments.Length}):");
         foreach (Type tParam in typeArguments)
         {
-            Console.WriteLine("\t\t{0}", tParam);
+            Console.WriteLine($"\t\t{tParam}");
         }
     }
 }

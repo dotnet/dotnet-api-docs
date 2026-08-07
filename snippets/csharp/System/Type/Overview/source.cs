@@ -9,14 +9,14 @@ class Example3
 {
     static void Main()
     {
-        Type t = typeof(String);
+        Type t = typeof(string);
 
         MethodInfo substr = t.GetMethod("Substring",
             new Type[] { typeof(int), typeof(int) });
 
-        Object result =
-            substr.Invoke("Hello, World!", new Object[] { 7, 5 });
-        Console.WriteLine("{0} returned \"{1}\".", substr, result);
+        object result =
+            substr.Invoke("Hello, World!", new object[] { 7, 5 });
+        Console.WriteLine($"{substr} returned \"{result}\".");
     }
 }
 

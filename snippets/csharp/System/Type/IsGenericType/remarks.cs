@@ -1,17 +1,17 @@
-﻿using System;
-using System.Reflection;
+﻿
+
 
 // <Snippet2>
-public class Base<T, U> {}
+public class Base<T, U> { }
 
 public class Derived<V> : Base<string, V>
 {
-    public G<Derived <V>> F;
+    public G<Derived<V>> F;
 
-    public class Nested {}
+    public class Nested { }
 }
 
-public class G<T> {}
+public class G<T> { }
 // </Snippet2>
 
 class Example

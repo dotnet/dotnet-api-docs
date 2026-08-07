@@ -7,8 +7,8 @@ namespace ConsoleApplication2
     /// Class that implements IConvertible
     class Complex : IConvertible
     {
-        double  x;
-        double  y;
+        double x;
+        double y;
 
         public Complex(double x, double y)
         {
@@ -16,98 +16,47 @@ namespace ConsoleApplication2
             this.y = y;
         }
 
-        public TypeCode GetTypeCode()
-        {
-            return TypeCode.Object;
-        }
+        public TypeCode GetTypeCode() => TypeCode.Object;
 
         bool IConvertible.ToBoolean(IFormatProvider provider)
         {
-            if( (x != 0.0) || (y != 0.0) )
+            if ((x != 0.0) || (y != 0.0))
                 return true;
             else
                 return false;
         }
 
-        double GetDoubleValue()
-        {
-            return Math.Sqrt(x*x + y*y);
-        }
+        double GetDoubleValue() => Math.Sqrt(x * x + y * y);
 
-        byte IConvertible.ToByte(IFormatProvider provider)
-        {
-            return Convert.ToByte(GetDoubleValue());
-        }
+        byte IConvertible.ToByte(IFormatProvider provider) => Convert.ToByte(GetDoubleValue());
 
-        char IConvertible.ToChar(IFormatProvider provider)
-        {
-            return Convert.ToChar(GetDoubleValue());
-        }
+        char IConvertible.ToChar(IFormatProvider provider) => Convert.ToChar(GetDoubleValue());
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider)
-        {
-            return Convert.ToDateTime(GetDoubleValue());
-        }
+        DateTime IConvertible.ToDateTime(IFormatProvider provider) => Convert.ToDateTime(GetDoubleValue());
 
-        decimal IConvertible.ToDecimal(IFormatProvider provider)
-        {
-            return Convert.ToDecimal(GetDoubleValue());
-        }
+        decimal IConvertible.ToDecimal(IFormatProvider provider) => Convert.ToDecimal(GetDoubleValue());
 
-        double IConvertible.ToDouble(IFormatProvider provider)
-        {
-            return GetDoubleValue();
-        }
+        double IConvertible.ToDouble(IFormatProvider provider) => GetDoubleValue();
 
-        short IConvertible.ToInt16(IFormatProvider provider)
-        {
-            return Convert.ToInt16(GetDoubleValue());
-        }
+        short IConvertible.ToInt16(IFormatProvider provider) => Convert.ToInt16(GetDoubleValue());
 
-        int IConvertible.ToInt32(IFormatProvider provider)
-        {
-            return Convert.ToInt32(GetDoubleValue());
-        }
+        int IConvertible.ToInt32(IFormatProvider provider) => Convert.ToInt32(GetDoubleValue());
 
-        long IConvertible.ToInt64(IFormatProvider provider)
-        {
-            return Convert.ToInt64(GetDoubleValue());
-        }
+        long IConvertible.ToInt64(IFormatProvider provider) => Convert.ToInt64(GetDoubleValue());
 
-        sbyte IConvertible.ToSByte(IFormatProvider provider)
-        {
-            return Convert.ToSByte(GetDoubleValue());
-        }
+        sbyte IConvertible.ToSByte(IFormatProvider provider) => Convert.ToSByte(GetDoubleValue());
 
-        float IConvertible.ToSingle(IFormatProvider provider)
-        {
-            return Convert.ToSingle(GetDoubleValue());
-        }
+        float IConvertible.ToSingle(IFormatProvider provider) => Convert.ToSingle(GetDoubleValue());
 
-        string IConvertible.ToString(IFormatProvider provider)
-        {
-            return "( " + x.ToString() + " , " + y.ToString() + " )";
-        }
+        string IConvertible.ToString(IFormatProvider provider) => "( " + x.ToString() + " , " + y.ToString() + " )";
 
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
-        {
-            return Convert.ChangeType(GetDoubleValue(),conversionType);
-        }
+        object IConvertible.ToType(Type conversionType, IFormatProvider provider) => Convert.ChangeType(GetDoubleValue(), conversionType);
 
-        ushort IConvertible.ToUInt16(IFormatProvider provider)
-        {
-            return Convert.ToUInt16(GetDoubleValue());
-        }
+        ushort IConvertible.ToUInt16(IFormatProvider provider) => Convert.ToUInt16(GetDoubleValue());
 
-        uint IConvertible.ToUInt32(IFormatProvider provider)
-        {
-            return Convert.ToUInt32(GetDoubleValue());
-        }
+        uint IConvertible.ToUInt32(IFormatProvider provider) => Convert.ToUInt32(GetDoubleValue());
 
-        ulong IConvertible.ToUInt64(IFormatProvider provider)
-        {
-            return Convert.ToUInt64(GetDoubleValue());
-        }
+        ulong IConvertible.ToUInt64(IFormatProvider provider) => Convert.ToUInt64(GetDoubleValue());
     }
 
     /// <summary>
@@ -118,34 +67,34 @@ namespace ConsoleApplication2
         static void Main(string[] args)
         {
 
-            Complex     testComplex = new Complex(4,7);
+            Complex testComplex = new(4, 7);
 
             WriteObjectInfo(testComplex);
             WriteObjectInfo(Convert.ToBoolean(testComplex));
             WriteObjectInfo(Convert.ToDecimal(testComplex));
             WriteObjectInfo(Convert.ToString(testComplex));
         }
-// <snippet2>
+        // <snippet2>
         static void WriteObjectInfo(object testObject)
         {
-            TypeCode    typeCode = Type.GetTypeCode( testObject.GetType() );
+            TypeCode typeCode = Type.GetTypeCode(testObject.GetType());
 
-            switch( typeCode )
+            switch (typeCode)
             {
                 case TypeCode.Boolean:
-                    Console.WriteLine("Boolean: {0}", testObject);
+                    Console.WriteLine($"Boolean: {testObject}");
                     break;
 
                 case TypeCode.Double:
-                    Console.WriteLine("Double: {0}", testObject);
+                    Console.WriteLine($"Double: {testObject}");
                     break;
 
                 default:
-                    Console.WriteLine("{0}: {1}", typeCode.ToString(), testObject);
+                    Console.WriteLine($"{typeCode.ToString()}: {testObject}");
                     break;
             }
         }
-// </snippet2>
+        // </snippet2>
     }
 }
 

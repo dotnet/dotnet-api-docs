@@ -3,18 +3,18 @@ using System.Reflection;
 
 class TypedReferenceArray
 {
-        public static void Main()
+    public static void Main()
+    {
+        try
         {
-		try
-		{
-// <Snippet1>
-		Assembly.Load("mscorlib.dll").GetType("System.TypedReference[]");
-// </Snippet1>
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine(ex.Message);
-			Console.WriteLine(ex.StackTrace);
-		}
-	}
+            // <Snippet1>
+            Assembly.Load("mscorlib.dll").GetType("System.TypedReference[]");
+            // </Snippet1>
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.StackTrace);
+        }
+    }
 }

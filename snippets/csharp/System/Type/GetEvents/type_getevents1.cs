@@ -19,15 +19,15 @@ class EventsSample
                 Console.WriteLine(myEventsBindingFlags[index].ToString());
             }
         }
-        catch(SecurityException e)
+        catch (SecurityException e)
         {
             Console.WriteLine("SecurityException :" + e.Message);
         }
-        catch(ArgumentNullException e)
+        catch (ArgumentNullException e)
         {
             Console.WriteLine("ArgumentNullException : " + e.Message);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine("Exception : " + e.Message);
         }

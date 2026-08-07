@@ -1,17 +1,17 @@
 ﻿//<Snippet1>
 using System;
-using System.Reflection;
 
-public class Base<T, U> {}
+
+public class Base<T, U> { }
 
 public class Derived<V> : Base<string, V>
 {
-    public G<Derived <V>> F;
+    public G<Derived<V>> F;
 
-    public class Nested {}
+    public class Nested { }
 }
 
-public class G<T> {}
+public class G<T> { }
 
 class Example
 {
@@ -48,17 +48,13 @@ class Example
 
     public static void DisplayGenericType(Type t, string caption)
     {
-        Console.WriteLine("\n{0}", caption);
-        Console.WriteLine("    Type: {0}", t);
+        Console.WriteLine($"\n{caption}");
+        Console.WriteLine($"    Type: {t}");
 
-        Console.WriteLine("\t            IsGenericType: {0}", 
-            t.IsGenericType);
-        Console.WriteLine("\t  IsGenericTypeDefinition: {0}", 
-            t.IsGenericTypeDefinition);
-        Console.WriteLine("\tContainsGenericParameters: {0}", 
-            t.ContainsGenericParameters);
-        Console.WriteLine("\t       IsGenericParameter: {0}", 
-            t.IsGenericParameter);
+        Console.WriteLine($"\t            IsGenericType: {t.IsGenericType}");
+        Console.WriteLine($"\t  IsGenericTypeDefinition: {t.IsGenericTypeDefinition}");
+        Console.WriteLine($"\tContainsGenericParameters: {t.ContainsGenericParameters}");
+        Console.WriteLine($"\t       IsGenericParameter: {t.IsGenericParameter}");
     }
 }
 

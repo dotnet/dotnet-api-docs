@@ -2,43 +2,39 @@
 using System;
 
 public abstract class AbstractClass
-{}
+{ }
 
 public class DerivedClass : AbstractClass
-{}
+{ }
 
 public sealed class SingleClass
-{}
+{ }
 
 public interface ITypeInfo
 {
-   string GetName();
+    string GetName();
 }
 
 public class ImplementingClass : ITypeInfo
 {
-   public string GetName()
-   {
-      return this.GetType().FullName;
-   }
+    public string GetName() => this.GetType().FullName;
 }
 
 delegate string InputOutput(string inp);
 
 public class Example
 {
-   public static void Main()
-   {
-      Type[] types= { typeof(AbstractClass),
+    public static void Main()
+    {
+        Type[] types = { typeof(AbstractClass),
                       typeof(DerivedClass),
                       typeof(ITypeInfo),
                       typeof(SingleClass),
                       typeof(ImplementingClass),
                       typeof(InputOutput) };
-      foreach (var type in types)
-         Console.WriteLine("{0} is abstract: {1}",
-                           type.Name, type.IsAbstract);
-   }
+        foreach (var type in types)
+            Console.WriteLine($"{type.Name} is abstract: {type.IsAbstract}");
+    }
 }
 // The example displays the following output:
 //       AbstractClass is abstract: True

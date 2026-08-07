@@ -1,6 +1,6 @@
-﻿// <Snippet1>	
+﻿// <Snippet1>
 using System;
-using System.Reflection;
+
 class MyClass
 {
     public int myField = 10;
@@ -12,7 +12,7 @@ class Type_TypeHandle
     {
         try
         {
-            MyClass myClass = new MyClass();
+            MyClass myClass = new();
 
             // Get the type of MyClass.
             Type myClassType = myClass.GetType();
@@ -22,9 +22,9 @@ class Type_TypeHandle
 
             DisplayTypeHandle(myClassHandle);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}", e.Message );
+            Console.WriteLine($"Exception: {e.Message}");
         }
     }
 
@@ -34,7 +34,7 @@ class Type_TypeHandle
         Type myType = Type.GetTypeFromHandle(myTypeHandle);
         // Display the type.
         Console.WriteLine("\nDisplaying the type from the handle:\n");
-        Console.WriteLine("The type is {0}.", myType.ToString());
+        Console.WriteLine($"The type is {myType.ToString()}.");
     }
 }
 // </Snippet1>

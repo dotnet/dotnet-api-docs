@@ -1,30 +1,22 @@
 ﻿//<Snippet1>
 using System;
 
-internal class InternalOnly 
+internal class InternalOnly
 {
-    public class Nested {}
+    public class Nested { }
 }
 
 public class Example
 {
-    public class Nested {}
+    public class Nested { }
 
     public static void Main()
     {
         Type t = typeof(InternalOnly.Nested);
-        Console.WriteLine(
-            "Is the {0} class visible outside the assembly? {1}", 
-            t.FullName, 
-            t.IsVisible
-        );
+        Console.WriteLine($"Is the {t.FullName} class visible outside the assembly? {t.IsVisible}");
 
         t = typeof(Example.Nested);
-        Console.WriteLine(
-            "Is the {0} class visible outside the assembly? {1}", 
-            t.FullName, 
-            t.IsVisible
-        );
+        Console.WriteLine($"Is the {t.FullName} class visible outside the assembly? {t.IsVisible}");
     }
 }
 

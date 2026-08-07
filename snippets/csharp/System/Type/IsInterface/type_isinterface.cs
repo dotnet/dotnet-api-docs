@@ -6,22 +6,22 @@ interface myIFace
 }
 class MyIsInterface
 {
-    public static void Main(string []args)
+    public static void Main(string[] args)
     {
         try
         {
             // Get the IsInterface attribute for myIFace.
             bool myBool1 = typeof(myIFace).IsInterface;
             //Display the IsInterface attribute for myIFace.
-            Console.WriteLine("Is the specified type an interface? {0}.", myBool1);
+            Console.WriteLine($"Is the specified type an interface? {myBool1}.");
             // Get the attribute IsInterface for MyIsInterface.
             bool myBool2 = typeof(MyIsInterface).IsInterface;
             //Display the IsInterface attribute for MyIsInterface.
-            Console.WriteLine("Is the specified type an interface? {0}.", myBool2);
+            Console.WriteLine($"Is the specified type an interface? {myBool2}.");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine("\nAn exception occurred: {0}.", e.Message);
+            Console.WriteLine($"\nAn exception occurred: {e.Message}.");
         }
     }
 }

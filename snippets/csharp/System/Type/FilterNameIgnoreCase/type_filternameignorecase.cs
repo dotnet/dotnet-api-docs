@@ -7,11 +7,11 @@ public class MyFilterNameIgnoreCaseSample
     public static void Main()
     {
         try
-        {		
+        {
             MemberFilter myFilter = Type.FilterNameIgnoreCase;
-            Type myType = typeof(System.String);
+            Type myType = typeof(string);
             MemberInfo[] myMemberinfo1 = myType.FindMembers(MemberTypes.Constructor
-                |MemberTypes.Method, BindingFlags.Public | BindingFlags.Static |
+                | MemberTypes.Method, BindingFlags.Public | BindingFlags.Static |
                 BindingFlags.Instance, myFilter, "C*");
             foreach (MemberInfo myMemberinfo2 in myMemberinfo1)
             {
@@ -20,15 +20,15 @@ public class MyFilterNameIgnoreCaseSample
                 Console.WriteLine(" is a " + Mymembertypes.ToString());
             }
         }
-        catch(ArgumentNullException e)
+        catch (ArgumentNullException e)
         {
             Console.Write("ArgumentNullException : " + e.Message);
         }
-        catch(SecurityException e)
+        catch (SecurityException e)
         {
             Console.Write("SecurityException : " + e.Message);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.Write("Exception : " + e.Message);
         }

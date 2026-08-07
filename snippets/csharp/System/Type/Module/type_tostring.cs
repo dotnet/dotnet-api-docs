@@ -1,4 +1,4 @@
-﻿// <Snippet1>	
+﻿// <Snippet1>
 using System;
 
 namespace MyNamespace
@@ -12,14 +12,14 @@ public class Example
 {
     public static void Main()
     {
-         Type myType = typeof(MyNamespace.MyClass);
-         Console.WriteLine("Displaying information about {0}:", myType);
-         // Get the namespace of the myClass class.
-         Console.WriteLine("   Namespace: {0}.", myType.Namespace);
-         // Get the name of the module.
-         Console.WriteLine("   Module: {0}.", myType.Module);
-         // Get the fully qualified type name.
-         Console.WriteLine("   Fully qualified name: {0}.", myType.ToString());
+        Type myType = typeof(MyNamespace.MyClass);
+        Console.WriteLine($"Displaying information about {myType}:");
+        // Get the namespace of the myClass class.
+        Console.WriteLine($"   Namespace: {myType.Namespace}.");
+        // Get the name of the module.
+        Console.WriteLine($"   Module: {myType.Module}.");
+        // Get the fully qualified type name.
+        Console.WriteLine($"   Fully qualified name: {myType.ToString()}.");
     }
 }
 // The example displays the following output:
@@ -27,4 +27,4 @@ public class Example
 //       Namespace: MyNamespace.
 //       Module: type_tostring.exe.
 //       Fully qualified name: MyNamespace.MyClass.
-// </Snippet1>				
+// </Snippet1>
