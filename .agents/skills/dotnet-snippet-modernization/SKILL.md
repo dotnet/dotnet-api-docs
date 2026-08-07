@@ -38,7 +38,7 @@ Apply these changes when they preserve behavior and sample clarity:
   remain unchanged.
 - Convert eligible value-producing `switch` statements to switch expressions.
 - Use auto-implemented properties instead of defining a separate field.
-- Use expression-bodied members for simple single-expression members. If the line gets too long, for example, a method signature with a type parameter constraint, place the expression body on a new line, for example:
+- Use expression-bodied members for simple single-expression members. If the line gets too long, for example, a method signature with a type parameter constraint, place the expression body on a new line:
   ```csharp
   public static T Factory<T>() where T : new()
       => new T();
