@@ -4,24 +4,22 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      // Define cultures whose formatting conventions are to be used.
-      CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),
+    public static void Main()
+    {
+        // Define cultures whose formatting conventions are to be used.
+        CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),
                                  CultureInfo.CreateSpecificCulture("fr-FR"),
                                  CultureInfo.CreateSpecificCulture("es-ES") };
-      string[] specifiers = {"G", "C", "D4", "E2", "F", "N", "P", "X2"};
-      ulong value = 22224021;
+        string[] specifiers = { "G", "C", "D4", "E2", "F", "N", "P", "X2" };
+        ulong value = 22224021;
 
-      foreach (string specifier in specifiers)
-      {
-         foreach (CultureInfo culture in cultures)
-            Console.WriteLine("{0,2} format using {1} culture: {2, 18}",
-                              specifier, culture.Name,
-                              value.ToString(specifier, culture));
-         Console.WriteLine();
-      }
-   }
+        foreach (string specifier in specifiers)
+        {
+            foreach (CultureInfo culture in cultures)
+                Console.WriteLine($"{specifier,2} format using {culture.Name} culture: {value.ToString(specifier, culture),18}");
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //        G format using en-US culture:           22224021

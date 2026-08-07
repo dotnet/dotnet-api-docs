@@ -1,19 +1,19 @@
 ﻿// <Snippet3>
 using System;
-using System.Globalization;
+
 
 public class Example
 {
-   public static void Main()
-   {
-      uint value = 2179608;
-      string[] specifiers = { "G", "C", "D3", "E2", "e3", "F", 
-                              "N", "P", "X", "000000.0", "#.0", 
+    public static void Main()
+    {
+        uint value = 2179608;
+        string[] specifiers = { "G", "C", "D3", "E2", "e3", "F",
+                              "N", "P", "X", "000000.0", "#.0",
                               "00000000;(0);**Zero**" };
-      
-      foreach (string specifier in specifiers)
-         Console.WriteLine("{0}: {1}", specifier, value.ToString(specifier));
-   }
+
+        foreach (string specifier in specifiers)
+            Console.WriteLine($"{specifier}: {value.ToString(specifier)}");
+    }
 }
 // The example displays the following output:
 //       G: 2179608
