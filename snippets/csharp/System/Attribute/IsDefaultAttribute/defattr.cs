@@ -29,7 +29,7 @@ namespace DefAttrCS
         public Animal Pet
         {
             get => thePet;
-            set => thePet = Pet;
+            set => thePet = value;
         }
 
         // Override IsDefaultAttribute to return the correct response.

@@ -33,7 +33,7 @@ public class Example11
         for (int ctr = 0; ctr < names.Length; ctr++)
         {
             var continent = continents[ctr];
-            Console.WriteLine($"{continent.Name}: Area: {continent.Population}, Population {continent.Area}");
+            Console.WriteLine($"{continent.Name}: Area: {continent.Area}, Population {continent.Population}");
         }
     }
 
@@ -54,7 +54,13 @@ public class Example11
 //    Adding //Australia// to the list.
 //    Adding //Europe// to the list.
 //    Adding //North America// to the list.
-//    Adding //South America// to the list.
+//    Adding 'Africa' to the list.
+//    Adding 'Antarctica' to the list.
+//    Adding 'Asia' to the list.
+//    Adding 'Australia' to the list.
+//    Adding 'Europe' to the list.
+//    Adding 'North America' to the list.
+//    Adding 'South America' to the list.
 //
 //
 //

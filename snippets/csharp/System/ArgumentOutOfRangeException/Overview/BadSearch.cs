@@ -44,7 +44,7 @@ public class Example2
         // Get the index of the element whose value is "Z".
         int index = list.FindIndex((new StringSearcher("Z")).FindEquals);
         if (index >= 0)
-            Console.WriteLine($"'Z' is found at index {list[index]}");
+            Console.WriteLine($"'Z' is found at index {index}");
         // </Snippet7>
     }
 }
