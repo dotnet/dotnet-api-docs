@@ -6,12 +6,11 @@ public class TestPropEx2
 {
     public static async Task Main()
     {
-        String name = @".\TestFile.dat";
+        string name = @".\TestFile.dat";
         var fs = new FileStream(name,
                                 FileMode.Create,
                                 FileAccess.Write);
-        Console.WriteLine("Filename: {0}, Encoding: {1}",
-                          name, await FileUtilities.GetEncodingType(fs));
+        Console.WriteLine($"Filename: {name}, Encoding: {await FileUtilities.GetEncodingType(fs)}");
     }
 }
 
@@ -26,7 +25,7 @@ public class FileUtilities
         if (!fs.CanRead)
             return EncodingType.Unknown;
 
-        Byte[] bytes = new Byte[4];
+        byte[] bytes = new byte[4];
         int bytesRead = await fs.ReadAsync(bytes, 0, 4);
         if (bytesRead < 2)
             return EncodingType.None;
@@ -36,12 +35,12 @@ public class FileUtilities
 
         if (bytesRead == 4)
         {
-            var value = BitConverter.ToUInt32(bytes, 0);
+            uint value = BitConverter.ToUInt32(bytes, 0);
             if (value == 0x0000FEFF | value == 0xFEFF0000)
                 return EncodingType.Utf32;
         }
 
-        var value16 = BitConverter.ToUInt16(bytes, 0);
+        ushort value16 = BitConverter.ToUInt16(bytes, 0);
         if (value16 == (ushort)0xFEFF | value16 == (ushort)0xFFFE)
             return EncodingType.Utf16;
 

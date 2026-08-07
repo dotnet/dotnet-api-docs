@@ -17,10 +17,7 @@ public class NRE2Example
             names.Add(arrName);
     }
 
-    private static List<string> GetData()
-    {
-        return null;
-    }
+    private static List<string> GetData() => null;
 }
 
 // The example displays output like the following:
