@@ -5,7 +5,7 @@ public class Example
 {
     public static void Main()
     {
-        float number = 1764.3789m;
+        float number = 1764.3789f;
 
         // Format as a currency value.
         Console.WriteLine(number.ToString("C"));
