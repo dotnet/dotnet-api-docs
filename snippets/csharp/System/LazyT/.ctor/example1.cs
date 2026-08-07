@@ -36,11 +36,7 @@ class Program
 
 class LargeObject
 {
-    public LargeObject()
-    {
-        Console.WriteLine("LargeObject was created on thread id {0}.",
-            Thread.CurrentThread.ManagedThreadId);
-    }
+    public LargeObject() => Console.WriteLine($"LargeObject was created on thread id {Thread.CurrentThread.ManagedThreadId}.");
     public long[] Data = new long[100000000];
 }
 

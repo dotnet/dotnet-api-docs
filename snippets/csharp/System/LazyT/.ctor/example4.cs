@@ -14,8 +14,7 @@ class Program
         if (1 == Interlocked.Increment(ref instanceCount))
         {
             throw new ApplicationException(
-                String.Format("Lazy initialization function failed on thread {0}.",
-                Thread.CurrentThread.ManagedThreadId));
+                $"Lazy initialization function failed on thread {Thread.CurrentThread.ManagedThreadId}.");
         }
         return new LargeObject(Thread.CurrentThread.ManagedThreadId);
     }
@@ -31,7 +30,7 @@ class Program
         //</SnippetNewLazy>
 
         // Create and start 3 threads, passing the same blocking event to all of them.
-        ManualResetEvent startingGate = new ManualResetEvent(false);
+        ManualResetEvent startingGate = new(false);
         Thread[] threads = { new Thread(ThreadProc), new Thread(ThreadProc), new Thread(ThreadProc) };
         foreach (Thread t in threads)
         {
@@ -64,7 +63,7 @@ class Program
     static void ThreadProc(object state)
     {
         // Wait for the signal.
-        ManualResetEvent waitForStart = (ManualResetEvent) state;
+        ManualResetEvent waitForStart = (ManualResetEvent)state;
         waitForStart.WaitOne();
 
         //<SnippetValueProp>
@@ -79,7 +78,7 @@ class Program
             // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
             //            object after creation. You must lock the object before accessing it,
             //            unless the type is thread safe. (LargeObject is not thread safe.)
-            lock(large)
+            lock (large)
             {
                 large.Data[0] = Thread.CurrentThread.ManagedThreadId;
                 Console.WriteLine("LargeObject was initialized by thread {0}; last used by thread {1}.",
@@ -88,7 +87,7 @@ class Program
         }
         catch (ApplicationException ex)
         {
-            Console.WriteLine("ApplicationException: {0}", ex.Message);
+            Console.WriteLine($"ApplicationException: {ex.Message}");
         }
         //</SnippetValueProp>
     }
@@ -97,7 +96,7 @@ class Program
 class LargeObject
 {
     int initBy = -1;
-    public int InitializedBy { get { return initBy; } }
+    public int InitializedBy => initBy;
 
     //<SnippetCtorFinalizer>
     public LargeObject(int initializedBy)
@@ -106,10 +105,7 @@ class LargeObject
         Console.WriteLine("Constructor: Instance initializing on thread {0}", initBy);
     }
 
-    ~LargeObject()
-    {
-        Console.WriteLine("Finalizer: Instance was initialized on {0}", initBy);
-    }
+    ~LargeObject() => Console.WriteLine("Finalizer: Instance was initialized on {0}", initBy);
     //</SnippetCtorFinalizer>
 
     public long[] Data = new long[100000000];

@@ -7,10 +7,7 @@ class Program
     static Lazy<LargeObject> lazyLargeObject = null;
 
     //<SnippetFactoryFunc>
-    static LargeObject InitLargeObject()
-    {
-        return new LargeObject();
-    }
+    static LargeObject InitLargeObject() => new LargeObject();
     //</SnippetFactoryFunc>
 
     static void Main()
@@ -40,7 +37,7 @@ class Program
             }
             catch (ApplicationException aex)
             {
-                Console.WriteLine("Exception: {0}", aex.Message);
+                Console.WriteLine($"Exception: {aex.Message}");
             }
         }
         //</SnippetValueProp>
@@ -62,8 +59,7 @@ class LargeObject
             throw new ApplicationException("Throw only ONCE.");
         }
 
-        Console.WriteLine("LargeObject was created on thread id {0}.",
-            Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine($"LargeObject was created on thread id {Thread.CurrentThread.ManagedThreadId}.");
     }
     //</SnippetLargeCtor>
     public long[] Data = new long[100000000];

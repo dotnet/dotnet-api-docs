@@ -7,10 +7,7 @@ class Program
     static Lazy<LargeObject> lazyLargeObject = null;
 
     //<SnippetFactoryFunc>
-    static LargeObject InitLargeObject()
-    {
-        return new LargeObject();
-    }
+    static LargeObject InitLargeObject() => new LargeObject();
     //</SnippetFactoryFunc>
 
     static void Main()
@@ -58,7 +55,7 @@ class Program
             // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
             //            object after creation. You must lock the object before accessing it,
             //            unless the type is thread safe. (LargeObject is not thread safe.)
-            lock(large)
+            lock (large)
             {
                 large.Data[0] = Thread.CurrentThread.ManagedThreadId;
                 Console.WriteLine("Initialized by thread {0}; last used by thread {1}.",
@@ -67,7 +64,7 @@ class Program
         }
         catch (ApplicationException aex)
         {
-            Console.WriteLine("Exception: {0}", aex.Message);
+            Console.WriteLine($"Exception: {aex.Message}");
         }
         //</SnippetValueProp>
     }
@@ -76,7 +73,7 @@ class Program
 class LargeObject
 {
     int initBy = 0;
-    public int InitializedBy { get { return initBy; } }
+    public int InitializedBy => initBy;
 
     //<SnippetLargeCtor>
     static int instanceCount = 0;
