@@ -3,27 +3,27 @@ using System;
 
 public class Example
 {
-   private const int MAX_RECURSIVE_CALLS = 1000;
-   static int ctr = 0;
-   
-   public static void Main()
-   {
-      Example ex = new Example();
-      ex.Execute();
-      Console.WriteLine("\nThe call counter: {0}", ctr);
-   }
+    private const int MAX_RECURSIVE_CALLS = 1000;
+    static int ctr = 0;
 
-   private void Execute()
-   {
-      ctr++;
-      if (ctr % 50 == 0)
-         Console.WriteLine("Call number {0} to the Execute method", ctr);
-         
-      if (ctr <= MAX_RECURSIVE_CALLS)
-         Execute();
-         
-      ctr--;
-   }
+    public static void Main()
+    {
+        Example ex = new();
+        ex.Execute();
+        Console.WriteLine($"\nThe call counter: {ctr}");
+    }
+
+    private void Execute()
+    {
+        ctr++;
+        if (ctr % 50 == 0)
+            Console.WriteLine($"Call number {ctr} to the Execute method");
+
+        if (ctr <= MAX_RECURSIVE_CALLS)
+            Execute();
+
+        ctr--;
+    }
 }
 // The example displays the following output:
 //       Call number 50 to the Execute method

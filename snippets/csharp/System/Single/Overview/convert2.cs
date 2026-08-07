@@ -1,21 +1,21 @@
-using System;
+﻿using System;
 
 public class Example5
 {
     public static void Main()
     {
         // <Snippet21>
-        float[] values = { Single.MinValue, -67890.1234f, -12345.6789f,
-                         12345.6789f, 67890.1234f, Single.MaxValue,
-                         Single.NaN, Single.PositiveInfinity,
-                         Single.NegativeInfinity };
+        float[] values = { float.MinValue, -67890.1234f, -12345.6789f,
+                         12345.6789f, 67890.1234f, float.MaxValue,
+                         float.NaN, float.PositiveInfinity,
+                         float.NegativeInfinity };
         checked
         {
-            foreach (var value in values)
+            foreach (float value in values)
             {
                 try
                 {
-                    Int64 lValue = (long)value;
+                    long lValue = (long)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {lValue} (0x{lValue:X16}) ({lValue.GetType().Name})");
                 }
                 catch (OverflowException)
@@ -24,7 +24,7 @@ public class Example5
                 }
                 try
                 {
-                    UInt64 ulValue = (ulong)value;
+                    ulong ulValue = (ulong)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {ulValue} (0x{ulValue:X16}) ({ulValue.GetType().Name})");
                 }
                 catch (OverflowException)
@@ -33,7 +33,7 @@ public class Example5
                 }
                 try
                 {
-                    Decimal dValue = (decimal)value;
+                    decimal dValue = (decimal)value;
                     Console.WriteLine($"{value} ({value.GetType().Name}) --> {dValue} ({dValue.GetType().Name})");
                 }
                 catch (OverflowException)
@@ -41,7 +41,7 @@ public class Example5
                     Console.WriteLine($"Unable to convert {value} to Decimal.");
                 }
 
-                Double dblValue = value;
+                double dblValue = value;
                 Console.WriteLine($"{value} ({value.GetType().Name}) --> {dblValue} ({dblValue.GetType().Name})");
                 Console.WriteLine();
             }

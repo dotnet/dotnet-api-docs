@@ -6,7 +6,7 @@ for (int ctr = 0; ctr < slice.Length; ctr++)
     slice[ctr] *= 2;
 
 // Examine the original array values.
-foreach (var value in array)
+foreach (int value in array)
     Console.Write($"{value}  ");
 Console.WriteLine();
 

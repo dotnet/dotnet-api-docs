@@ -4,32 +4,36 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      NumberFormatInfo nf = new NumberFormatInfo();
-      nf.NegativeSign = "~"; 
-      
-      string[] values = { "-103", "+12", "~16", "  1", "~255" };
-      IFormatProvider[] providers = { nf, CultureInfo.InvariantCulture };
-      
-      foreach (IFormatProvider provider in providers)
-      {
-         Console.WriteLine("Conversions using {0}:", ((object) provider).GetType().Name);
-         foreach (string value in values)
-         {
-            try {
-               Console.WriteLine("   Converted '{0}' to {1}.", 
-                                 value, SByte.Parse(value, provider));
-            }                     
-            catch (FormatException) {
-               Console.WriteLine("   Unable to parse '{0}'.", value);   
+    public static void Main()
+    {
+        NumberFormatInfo nf = new()
+        {
+            NegativeSign = "~"
+        };
+
+        string[] values = { "-103", "+12", "~16", "  1", "~255" };
+        IFormatProvider[] providers = { nf, CultureInfo.InvariantCulture };
+
+        foreach (IFormatProvider provider in providers)
+        {
+            Console.WriteLine($"Conversions using {((object)provider).GetType().Name}:");
+            foreach (string value in values)
+            {
+                try
+                {
+                    Console.WriteLine($"   Converted '{value}' to {sbyte.Parse(value, provider)}.");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine($"   Unable to parse '{value}'.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine($"   '{value}' is out of range of the SByte type.");
+                }
             }
-            catch (OverflowException) {
-               Console.WriteLine("   '{0}' is out of range of the SByte type.", value);         
-            }
-         }
-      }      
-   }
+        }
+    }
 }
 // The example displays the following output:
 //       Conversions using NumberFormatInfo:

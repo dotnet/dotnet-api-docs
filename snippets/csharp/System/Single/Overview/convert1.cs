@@ -1,22 +1,22 @@
-// <Snippet20>
+﻿// <Snippet20>
 using System;
 
 public class Example4
 {
     public static void Main()
     {
-        dynamic[] values = { Byte.MinValue, Byte.MaxValue, Decimal.MinValue,
-                           Decimal.MaxValue, Double.MinValue, Double.MaxValue,
-                           Int16.MinValue, Int16.MaxValue, Int32.MinValue,
-                           Int32.MaxValue, Int64.MinValue, Int64.MaxValue,
-                           SByte.MinValue, SByte.MaxValue, UInt16.MinValue,
-                           UInt16.MaxValue, UInt32.MinValue, UInt32.MaxValue,
-                           UInt64.MinValue, UInt64.MaxValue };
+        dynamic[] values = { byte.MinValue, byte.MaxValue, decimal.MinValue,
+                           decimal.MaxValue, double.MinValue, double.MaxValue,
+                           short.MinValue, short.MaxValue, int.MinValue,
+                           int.MaxValue, long.MinValue, long.MaxValue,
+                           sbyte.MinValue, sbyte.MaxValue, ushort.MinValue,
+                           ushort.MaxValue, uint.MinValue, uint.MaxValue,
+                           ulong.MinValue, ulong.MaxValue };
         float sngValue;
         foreach (var value in values)
         {
-            if (value.GetType() == typeof(Decimal) ||
-                value.GetType() == typeof(Double))
+            if (value.GetType() == typeof(decimal) ||
+                value.GetType() == typeof(double))
                 sngValue = (float)value;
             else
                 sngValue = value;

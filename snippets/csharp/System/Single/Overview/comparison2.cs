@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Example1
 {
@@ -13,7 +13,7 @@ public class Example1
 
         // The example displays the following output on modern .NET:
         //       10.201438 = 10.201439: False
-        
+
         // </Snippet10>
     }
 }

@@ -5,10 +5,10 @@ public class PrecisionList3Example
 {
     public static void Main()
     {
-        Single[] values = { 10.01f, 2.88f, 2.88f, 2.88f, 9.0f };
-        Single result = 27.65f;
-        Single total = 0f;
-        foreach (var value in values)
+        float[] values = { 10.01f, 2.88f, 2.88f, 2.88f, 9.0f };
+        float result = 27.65f;
+        float total = 0f;
+        foreach (float value in values)
             total += value;
 
         if (total.Equals(result))
