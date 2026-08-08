@@ -3,41 +3,41 @@ using System;
 
 class Example
 {
-   public static void Main()
-   {
-      // Get an array with the values of ConsoleColor enumeration members.
-      ConsoleColor[] colors = (ConsoleColor[]) ConsoleColor.GetValues(typeof(ConsoleColor));
-      // Save the current background and foreground colors.
-      ConsoleColor currentBackground = Console.BackgroundColor;
-      ConsoleColor currentForeground = Console.ForegroundColor;
+    public static void Main()
+    {
+        // Get an array with the values of ConsoleColor enumeration members.
+        ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+        // Save the current background and foreground colors.
+        ConsoleColor currentBackground = Console.BackgroundColor;
+        ConsoleColor currentForeground = Console.ForegroundColor;
 
-      // Display all foreground colors except the one that matches the background.
-      Console.WriteLine("All the foreground colors except {0}, the background color:",
-                        currentBackground);
-      foreach (var color in colors) {
-         if (color == currentBackground) continue;
+        // Display all foreground colors except the one that matches the background.
+        Console.WriteLine($"All the foreground colors except {currentBackground}, the background color:");
+        foreach (var color in colors)
+        {
+            if (color == currentBackground) continue;
 
-         Console.ForegroundColor = color;
-         Console.WriteLine("   The foreground color is {0}.", color);
-      }
-      Console.WriteLine();
-      // Restore the foreground color.
-      Console.ForegroundColor = currentForeground;
+            Console.ForegroundColor = color;
+            Console.WriteLine($"   The foreground color is {color}.");
+        }
+        Console.WriteLine();
+        // Restore the foreground color.
+        Console.ForegroundColor = currentForeground;
 
-      // Display each background color except the one that matches the current foreground color.
-      Console.WriteLine("All the background colors except {0}, the foreground color:",
-                        currentForeground);
-      foreach (var color in colors) {
-         if (color == currentForeground) continue;
+        // Display each background color except the one that matches the current foreground color.
+        Console.WriteLine($"All the background colors except {currentForeground}, the foreground color:");
+        foreach (var color in colors)
+        {
+            if (color == currentForeground) continue;
 
-         Console.BackgroundColor = color;
-         Console.WriteLine("   The background color is {0}.", color);
-      }
+            Console.BackgroundColor = color;
+            Console.WriteLine($"   The background color is {color}.");
+        }
 
-      // Restore the original console colors.
-      Console.ResetColor();
-      Console.WriteLine("\nOriginal colors restored...");
-   }
+        // Restore the original console colors.
+        Console.ResetColor();
+        Console.WriteLine("\nOriginal colors restored...");
+    }
 }
 //The example displays output like the following:
 //    All the foreground colors except DarkCyan, the background color:
