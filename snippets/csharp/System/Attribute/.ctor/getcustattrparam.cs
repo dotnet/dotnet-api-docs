@@ -5,16 +5,13 @@ using System.Reflection;
 
 namespace NDP_UE_CS
 {
-//<Snippet2>
+    //<Snippet2>
     // Define a custom parameter attribute that takes a single message argument.
-    [AttributeUsage( AttributeTargets.Parameter )]
+    [AttributeUsage(AttributeTargets.Parameter)]
     public class ArgumentUsageAttribute : Attribute
     {
         // This is the attribute constructor.
-        public ArgumentUsageAttribute( string UsageMsg )
-        {
-            this.usageMsg = UsageMsg;
-        }
+        public ArgumentUsageAttribute(string UsageMsg) => this.usageMsg = UsageMsg;
 
         // usageMsg is storage for the attribute message.
         protected string usageMsg;
@@ -22,11 +19,11 @@ namespace NDP_UE_CS
         // This is the Message property for the attribute.
         public string Message
         {
-            get { return usageMsg; }
-            set { usageMsg = value; }
+            get => usageMsg;
+            set => usageMsg = value;
         }
     }
-//</Snippet2>
+    //</Snippet2>
 
     public class BaseClass
     {
@@ -34,8 +31,8 @@ namespace NDP_UE_CS
         // Assign a ParamArray attribute to strList using the params keyword.
         public virtual void TestMethod(
             [ArgumentUsage("Must pass an array here.")]
-            String[] strArray,
-            params String[] strList)
+            string[] strArray,
+            params string[] strList)
         { }
     }
 
@@ -44,36 +41,36 @@ namespace NDP_UE_CS
         // Assign an ArgumentUsage attribute to the strList parameter.
         // Assign a ParamArray attribute to strList using the params keyword.
         public override void TestMethod(
-            String[] strArray,
+            string[] strArray,
             [ArgumentUsage("Can pass a parameter list or array here.")]
-            params String[] strList)
+            params string[] strList)
         { }
     }
 
     class CustomParamDemo
     {
-        static void Main( )
+        static void Main()
         {
             Console.WriteLine(
                 "This example of Attribute.GetCustomAttribute( Param" +
-                "eterInfo, Type )\ngenerates the following output." );
+                "eterInfo, Type )\ngenerates the following output.");
 
             // Get the class type, and then get the MethodInfo object
             // for TestMethod to access its metadata.
-            Type clsType = typeof( DerivedClass );
+            Type clsType = typeof(DerivedClass);
             MethodInfo mInfo = clsType.GetMethod("TestMethod");
 
             // Iterate through the ParameterInfo array for the method parameters.
             ParameterInfo[] pInfoArray = mInfo.GetParameters();
             if (pInfoArray != null)
             {
-                foreach( ParameterInfo paramInfo in pInfoArray )
+                foreach (ParameterInfo paramInfo in pInfoArray)
                 {
                     // See if the ParamArray attribute is defined.
                     bool isDef = Attribute.IsDefined(
                         paramInfo, typeof(ParamArrayAttribute));
 
-                    if( isDef )
+                    if (isDef)
                         Console.WriteLine(
                             "\nThe ParamArray attribute is defined " +
                             "for \nparameter {0} of method {1}.",
@@ -83,16 +80,16 @@ namespace NDP_UE_CS
                     // If so, display a message.
                     ArgumentUsageAttribute usageAttr = (ArgumentUsageAttribute)
                         Attribute.GetCustomAttribute(
-                            paramInfo, typeof(ArgumentUsageAttribute) );
+                            paramInfo, typeof(ArgumentUsageAttribute));
 
-                    if( usageAttr != null )
+                    if (usageAttr != null)
                     {
                         Console.WriteLine(
                             "\nThe ArgumentUsage attribute is defined " +
                             "for \nparameter {0} of method {1}.",
-                            paramInfo.Name, mInfo.Name );
+                            paramInfo.Name, mInfo.Name);
 
-                        Console.WriteLine( "\n    The usage " +
+                        Console.WriteLine("\n    The usage " +
                             "message for {0} is:\n    \"{1}\".",
                             paramInfo.Name, usageAttr.Message);
                     }
