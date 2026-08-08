@@ -9,7 +9,6 @@ net.exe process and reads output from its stream reader.*/
 
 using System;
 using System.Diagnostics;
-using System.IO;
 
 namespace Process_StandardError
 {
@@ -43,9 +42,8 @@ namespace Process_StandardError
                 myProcess.StartInfo = myProcessStartInfo;
                 myProcess.Start();
 
-                StreamReader myStreamReader = myProcess.StandardError;
                 // Read the standard error of net.exe and write it on to console.
-                Console.WriteLine(myStreamReader.ReadLine());
+                Console.WriteLine(myProcess.StandardError.ReadLine());
             }
             // </Snippet1>
         }

@@ -9,7 +9,6 @@ myProcessStartInfo.RedirectStandardError <- true
 myProcess.StartInfo <- myProcessStartInfo
 myProcess.Start() |> ignore
 
-let myStreamReader = myProcess.StandardError
 // Read the standard error of net.exe and write it on to console.
-printfn $"{myStreamReader.ReadLine()}"
+printfn $"{myProcess.StandardError.ReadLine()}"
 // </Snippet1>
