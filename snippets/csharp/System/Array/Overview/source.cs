@@ -8,7 +8,7 @@ public class SamplesArray
 
         // Creates and initializes a new integer array and a new Object array.
         int[] myIntArray = new int[5] { 1, 2, 3, 4, 5 };
-        Object[] myObjArray = new Object[5] { 26, 27, 28, 29, 30 };
+        object[] myObjArray = new object[5] { 26, 27, 28, 29, 30 };
 
         // Prints the initial values of both arrays.
         Console.WriteLine("Initially,");
@@ -38,11 +38,11 @@ public class SamplesArray
         PrintValues(myObjArray);
     }
 
-    public static void PrintValues(Object[] myArr)
+    public static void PrintValues(object[] myArr)
     {
-        foreach (Object i in myArr)
+        foreach (object i in myArr)
         {
-            Console.Write("\t{0}", i);
+            Console.Write($"\t{i}");
         }
         Console.WriteLine();
     }
@@ -51,7 +51,7 @@ public class SamplesArray
     {
         foreach (int i in myArr)
         {
-            Console.Write("\t{0}", i);
+            Console.Write($"\t{i}");
         }
         Console.WriteLine();
     }

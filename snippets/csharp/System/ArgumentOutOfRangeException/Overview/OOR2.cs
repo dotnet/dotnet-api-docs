@@ -4,19 +4,21 @@ using System.Collections.Generic;
 
 public class Example8
 {
-   public static void Main()
-   {
-      var list = new List<string>();
-      list.AddRange( new String[] { "A", "B", "C" } );
-      try {
-         // Display the elements in the list by index.
-         for (int ctr = 0; ctr <= list.Count; ctr++)
-            Console.WriteLine("Index {0}: {1}", ctr, list[ctr]);
-      }
-      catch (ArgumentOutOfRangeException e) {
-         Console.WriteLine(e.Message);
-      }
-   }
+    public static void Main()
+    {
+        var list = new List<string>();
+        list.AddRange(new string[] { "A", "B", "C" });
+        try
+        {
+            // Display the elements in the list by index.
+            for (int ctr = 0; ctr <= list.Count; ctr++)
+                Console.WriteLine($"Index {ctr}: {list[ctr]}");
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 }
 // The example displays the following output:
 //   Index 0: A
@@ -28,14 +30,14 @@ public class Example8
 
 public class Example9
 {
-   public static void Test()
-   {
-      var list = new List<string>();
-      list.AddRange( new String[] { "A", "B", "C" } );
-      // <Snippet9>
-      // Display the elements in the list by index.
-      for (int ctr = 0; ctr < list.Count; ctr++)
-         Console.WriteLine("Index {0}: {1}", ctr, list[ctr]);
-      // </Snippet9>
-   }
+    public static void Test()
+    {
+        var list = new List<string>();
+        list.AddRange(new string[] { "A", "B", "C" });
+        // <Snippet9>
+        // Display the elements in the list by index.
+        for (int ctr = 0; ctr < list.Count; ctr++)
+            Console.WriteLine($"Index {ctr}: {list[ctr]}");
+        // </Snippet9>
+    }
 }

@@ -3,19 +3,19 @@ using System;
 
 public class Example17
 {
-   public static void Main()
-   {
-      String[] phrases = { "ocean blue", "concerned citizen",
+    public static void Main()
+    {
+        string[] phrases = { "ocean blue", "concerned citizen",
                            "runOnPhrase" };
-      foreach (var phrase in phrases)
-         Console.WriteLine("Second word is {0}", GetSecondWord(phrase));
-   }
+        foreach (string phrase in phrases)
+            Console.WriteLine($"Second word is {GetSecondWord(phrase)}");
+    }
 
-   static string GetSecondWord(string s)
-   {
-      int pos = s.IndexOf(" ");
-      return s.Substring(pos).Trim();
-   }
+    static string GetSecondWord(string s)
+    {
+        int pos = s.IndexOf(" ");
+        return s.Substring(pos).Trim();
+    }
 }
 // The example displays the following output:
 //    Second word is blue

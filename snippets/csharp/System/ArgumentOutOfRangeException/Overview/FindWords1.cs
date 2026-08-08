@@ -4,35 +4,38 @@ using System.Collections.Generic;
 
 public class Example19
 {
-   public static void Main()
-   {
-      string sentence = "This is a simple, short sentence.";
-      Console.WriteLine("Words in '{0}':", sentence);
-      foreach (var word in FindWords(sentence))
-         Console.WriteLine("   '{0}'", word);
-   }
+    public static void Main()
+    {
+        string sentence = "This is a simple, short sentence.";
+        Console.WriteLine($"Words in '{sentence}':");
+        foreach (string word in FindWords(sentence))
+            Console.WriteLine($"   '{word}'");
+    }
 
-   static String[] FindWords(string s)
-   {
-      int start = 0, end = 0;
-      Char[] delimiters = { ' ', '.', ',', ';', ':', '(', ')' };
-      var words = new List<string>();
+    static string[] FindWords(string s)
+    {
+        int start = 0, end = 0;
+        char[] delimiters = { ' ', '.', ',', ';', ':', '(', ')' };
+        var words = new List<string>();
 
-      while (end >= 0) {
-         end = s.IndexOfAny(delimiters, start);
-         if (end >= 0) {
-            if (end - start > 0)
-               words.Add(s.Substring(start, end - start));
+        while (end >= 0)
+        {
+            end = s.IndexOfAny(delimiters, start);
+            if (end >= 0)
+            {
+                if (end - start > 0)
+                    words.Add(s.Substring(start, end - start));
 
-            start = end + 1;
-         }
-         else {
-            if (start < s.Length - 1)
-               words.Add(s.Substring(start));
-         }
-      }
-      return words.ToArray();
-   }
+                start = end + 1;
+            }
+            else
+            {
+                if (start < s.Length - 1)
+                    words.Add(s.Substring(start));
+            }
+        }
+        return words.ToArray();
+    }
 }
 // The example displays the following output:
 //       Words in 'This is a simple, short sentence.':

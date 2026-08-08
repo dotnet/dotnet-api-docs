@@ -1,6 +1,6 @@
 ﻿// <Snippet1>
 using System;
-using System.Collections.Generic;
+
 
 public class Example
 {
@@ -26,7 +26,7 @@ public class Example
             // If x is not null...
             //
             if (y == null)
-                // ...and y is null, x is greater.
+            // ...and y is null, x is greater.
             {
                 return 1;
             }
@@ -74,12 +74,12 @@ public class Example
     private static void Display(string[] arr)
     {
         Console.WriteLine();
-        foreach( string s in arr )
+        foreach (string s in arr)
         {
             if (s == null)
                 Console.WriteLine("(null)");
             else
-                Console.WriteLine("\"{0}\"", s);
+                Console.WriteLine($"\"{s}\"");
         }
     }
 }
