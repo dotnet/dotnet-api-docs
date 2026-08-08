@@ -8,16 +8,16 @@ class ToInt64ProviderDemo
 {
     static string format = "{0,-22}{1,-20}{2}";
 
-     // Get the exception type name; remove the namespace prefix.
-    static string GetExceptionType( Exception ex )
+    // Get the exception type name; remove the namespace prefix.
+    static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
-    static void ConvertToInt64( string numericStr,
-        IFormatProvider provider )
+    static void ConvertToInt64(string numericStr,
+        IFormatProvider provider)
     {
         object defaultValue;
         object providerValue;
@@ -25,32 +25,32 @@ class ToInt64ProviderDemo
         // Convert numericStr to Int64 without a format provider.
         try
         {
-            defaultValue = Convert.ToInt64( numericStr );
+            defaultValue = Convert.ToInt64(numericStr);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            defaultValue = GetExceptionType( ex );
+            defaultValue = GetExceptionType(ex);
         }
 
         // Convert numericStr to Int64 with a format provider.
         try
         {
-            providerValue = Convert.ToInt64( numericStr, provider );
+            providerValue = Convert.ToInt64(numericStr, provider);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            providerValue = GetExceptionType( ex );
+            providerValue = GetExceptionType(ex);
         }
 
-        Console.WriteLine( format, numericStr,
-            defaultValue, providerValue );
+        Console.WriteLine(format, numericStr,
+            defaultValue, providerValue);
     }
 
-    public static void Main( )
+    public static void Main()
     {
         // Create a NumberFormatInfo object and set several of its
         // properties that apply to numbers.
-        NumberFormatInfo provider = new NumberFormatInfo();
+        NumberFormatInfo provider = new();
 
         // These properties affect the conversion.
         provider.NegativeSign = "neg ";
@@ -60,7 +60,7 @@ class ToInt64ProviderDemo
         // The input string cannot have decimal and group separators.
         provider.NumberDecimalSeparator = ".";
         provider.NumberGroupSeparator = ",";
-        provider.NumberGroupSizes = new int[ ] { 3 };
+        provider.NumberGroupSizes = new int[] { 3 };
         provider.NumberNegativePattern = 0;
 
         Console.WriteLine("This example of\n" +
@@ -68,23 +68,23 @@ class ToInt64ProviderDemo
             "  Convert.ToInt64( string, IFormatProvider ) " +
             "\ngenerates the following output. It converts " +
             "several strings to \nlong values, using " +
-            "default formatting or a NumberFormatInfo object.\n" );
-        Console.WriteLine( format, "String to convert",
-            "Default/exception", "Provider/exception" );
-        Console.WriteLine( format, "-----------------",
-            "-----------------", "------------------" );
+            "default formatting or a NumberFormatInfo object.\n");
+        Console.WriteLine(format, "String to convert",
+            "Default/exception", "Provider/exception");
+        Console.WriteLine(format, "-----------------",
+            "-----------------", "------------------");
 
         // Convert strings, with and without an IFormatProvider.
-        ConvertToInt64( "123456789", provider );
-        ConvertToInt64( "+123456789", provider );
-        ConvertToInt64( "pos 123456789", provider );
-        ConvertToInt64( "-123456789", provider );
-        ConvertToInt64( "neg 123456789", provider );
-        ConvertToInt64( "123456789.", provider );
-        ConvertToInt64( "123,456,789", provider );
-        ConvertToInt64( "(123456789)", provider );
-        ConvertToInt64( "9223372036854775808", provider );
-        ConvertToInt64( "-9223372036854775809", provider );
+        ConvertToInt64("123456789", provider);
+        ConvertToInt64("+123456789", provider);
+        ConvertToInt64("pos 123456789", provider);
+        ConvertToInt64("-123456789", provider);
+        ConvertToInt64("neg 123456789", provider);
+        ConvertToInt64("123456789.", provider);
+        ConvertToInt64("123,456,789", provider);
+        ConvertToInt64("(123456789)", provider);
+        ConvertToInt64("9223372036854775808", provider);
+        ConvertToInt64("-9223372036854775809", provider);
     }
 }
 
