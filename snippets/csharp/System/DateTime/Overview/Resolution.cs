@@ -4,10 +4,7 @@ namespace SystemDateTimeReference
 {
     public static class Resolution
     {
-        public static void Snippets()
-        {
-            DemonstrateResolution();
-        }
+        public static void Snippets() => DemonstrateResolution();
 
         private static void DemonstrateResolution()
         {
@@ -15,7 +12,7 @@ namespace SystemDateTimeReference
             string output = "";
             for (int ctr = 0; ctr <= 20; ctr++)
             {
-                output += String.Format($"{DateTime.Now.Millisecond}\n");
+                output += string.Format($"{DateTime.Now.Millisecond}\n");
                 // Introduce a delay loop.
                 for (int delay = 0; delay <= 1000; delay++)
                 { }

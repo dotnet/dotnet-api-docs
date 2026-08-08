@@ -3,18 +3,16 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      DateTime dec31 = new DateTime(2010, 12, 31);
-      for (int ctr = 0; ctr <= 10; ctr++) {
-         DateTime dateToDisplay = dec31.AddYears(ctr);
-         Console.WriteLine("{0:d}: day {1} of {2} {3}", dateToDisplay,
-                           dateToDisplay.DayOfYear,
-                           dateToDisplay.Year,
-                           DateTime.IsLeapYear(dateToDisplay.Year) ?
-                                               "(Leap Year)" : "");
-      }
-   }
+    public static void Main()
+    {
+        DateTime dec31 = new(2010, 12, 31);
+        for (int ctr = 0; ctr <= 10; ctr++)
+        {
+            DateTime dateToDisplay = dec31.AddYears(ctr);
+            Console.WriteLine($"{dateToDisplay:d}: day {dateToDisplay.DayOfYear} of {dateToDisplay.Year} {(DateTime.IsLeapYear(dateToDisplay.Year) ?
+                                                  "(Leap Year)" : "")}");
+        }
+    }
 }
 // The example displays the following output:
 //       12/31/2010: day 365 of 2010

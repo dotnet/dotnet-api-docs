@@ -4,18 +4,18 @@ using System;
 
 class DecimalGetTypeCodeDemo
 {
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "decimal.GetTypeCode( ) \nmethod " +
-            "generates the following output.\n" );
+            "generates the following output.\n");
 
         // Create a decimal object and get its type code.
-        decimal aDecimal = new decimal( 1.0 );
-        TypeCode typCode = aDecimal.GetTypeCode( );
+        decimal aDecimal = new(1.0);
+        TypeCode typCode = aDecimal.GetTypeCode();
 
-        Console.WriteLine( "Type Code:      \"{0}\"", typCode );
-        Console.WriteLine( "Numeric value:  {0}", (int)typCode );
+        Console.WriteLine($"Type Code:      \"{typCode}\"");
+        Console.WriteLine($"Numeric value:  {(int)typCode}");
     }
 }
 
