@@ -3,22 +3,19 @@ using System;
 
 class Example
 {
-    public static void Main( )
+    public static void Main()
     {
         // Define an array of integers.
         int[] values = { 0, 15, -15, 0x100000,  -0x100000, 1000000000,
                          -1000000000, int.MinValue, int.MaxValue };
 
         // Convert each integer to a byte array.
-        Console.WriteLine("{0,16}{1,10}{2,17}", "Integer",
-                          "Endian", "Byte Array");
-        Console.WriteLine("{0,16}{1,10}{2,17}", "---", "------",
-                          "----------" );
-        foreach (var value in values) {
-          byte[] byteArray = BitConverter.GetBytes(value);
-          Console.WriteLine("{0,16}{1,10}{2,17}", value,
-                            BitConverter.IsLittleEndian ? "Little" : " Big",
-                            BitConverter.ToString(byteArray));
+        Console.WriteLine($"{"Integer",16}{"Endian",10}{"Byte Array",17}");
+        Console.WriteLine($"{"---",16}{"------",10}{"----------",17}");
+        foreach (int value in values)
+        {
+            byte[] byteArray = BitConverter.GetBytes(value);
+            Console.WriteLine($"{value,16}{(BitConverter.IsLittleEndian ? "Little" : " Big"),10}{BitConverter.ToString(byteArray),17}");
         }
     }
 }

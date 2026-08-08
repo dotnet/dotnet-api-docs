@@ -1,37 +1,42 @@
-// <Snippet2>
+﻿// <Snippet2>
 using System;
 
 public class Example7
 {
-   public static void Main()
-   {
-      string[] values = [ null, String.Empty, "True", "False",
+    public static void Main()
+    {
+        string[] values = [ null, string.Empty, "True", "False",
                           "true", "false", "    true    ",
                            "TrUe", "fAlSe", "fa lse", "0",
                           "1", "-1", "string" ];
-      // Parse strings using the Boolean.Parse method.
-      foreach (var value in values) {
-         try {
-            bool flag = Boolean.Parse(value);
-            Console.WriteLine($"'{value}' --> {flag}");
-         }
-         catch (ArgumentException) {
-            Console.WriteLine("Cannot parse a null string.");
-         }
-         catch (FormatException) {
-            Console.WriteLine($"Cannot parse '{value}'.");
-         }
-      }
-      Console.WriteLine();
-      // Parse strings using the Boolean.TryParse method.
-      foreach (var value in values) {
-         bool flag = false;
-         if (Boolean.TryParse(value, out flag))
-            Console.WriteLine($"'{value}' --> {flag}");
-         else
-            Console.WriteLine($"Unable to parse '{value}'");
-      }
-   }
+        // Parse strings using the Boolean.Parse method.
+        foreach (string value in values)
+        {
+            try
+            {
+                bool flag = bool.Parse(value);
+                Console.WriteLine($"'{value}' --> {flag}");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Cannot parse a null string.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"Cannot parse '{value}'.");
+            }
+        }
+        Console.WriteLine();
+        // Parse strings using the Boolean.TryParse method.
+        foreach (string value in values)
+        {
+            bool flag = false;
+            if (bool.TryParse(value, out flag))
+                Console.WriteLine($"'{value}' --> {flag}");
+            else
+                Console.WriteLine($"Unable to parse '{value}'");
+        }
+    }
 }
 // The example displays the following output:
 //       Cannot parse a null string.

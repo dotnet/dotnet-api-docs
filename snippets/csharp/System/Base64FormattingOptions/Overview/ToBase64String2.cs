@@ -3,22 +3,22 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-       // Define a byte array.
-       byte[] bytes = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
-       Console.WriteLine("The byte array: ");
-       Console.WriteLine("   {0}\n", BitConverter.ToString(bytes));
+    public static void Main()
+    {
+        // Define a byte array.
+        byte[] bytes = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+        Console.WriteLine("The byte array: ");
+        Console.WriteLine($"   {BitConverter.ToString(bytes)}\n");
 
-       // Convert the array to a base 64 string.
-       string s = Convert.ToBase64String(bytes);
-       Console.WriteLine("The base 64 string:\n   {0}\n", s);
+        // Convert the array to a base 64 string.
+        string s = Convert.ToBase64String(bytes);
+        Console.WriteLine($"The base 64 string:\n   {s}\n");
 
-       // Restore the byte array.
-       byte[] newBytes = Convert.FromBase64String(s);
-       Console.WriteLine("The restored byte array: ");
-       Console.WriteLine("   {0}\n", BitConverter.ToString(newBytes));
-   }
+        // Restore the byte array.
+        byte[] newBytes = Convert.FromBase64String(s);
+        Console.WriteLine("The restored byte array: ");
+        Console.WriteLine($"   {BitConverter.ToString(newBytes)}\n");
+    }
 }
 // The example displays the following output:
 //     The byte array:

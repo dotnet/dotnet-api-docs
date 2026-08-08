@@ -5,31 +5,31 @@ using System;
 class BytesToStringDemo
 {
     // Display a byte array, using multiple lines if necessary.
-    public static void WriteMultiLineByteArray( byte[ ] bytes,
-        string name )
+    public static void WriteMultiLineByteArray(byte[] bytes,
+        string name)
     {
         const int rowSize = 20;
         const string underLine = "--------------------------------";
         int iter;
 
-        Console.WriteLine( name );
-        Console.WriteLine( underLine.Substring( 0,
-            Math.Min( name.Length, underLine.Length ) ) );
+        Console.WriteLine(name);
+        Console.WriteLine(underLine.Substring(0,
+            Math.Min(name.Length, underLine.Length)));
 
-        for( iter = 0; iter < bytes.Length - rowSize; iter += rowSize )
+        for (iter = 0; iter < bytes.Length - rowSize; iter += rowSize)
         {
             Console.Write(
-                BitConverter.ToString( bytes, iter, rowSize ) );
-            Console.WriteLine( "-" );
+                BitConverter.ToString(bytes, iter, rowSize));
+            Console.WriteLine("-");
         }
 
-        Console.WriteLine( BitConverter.ToString( bytes, iter ) );
-        Console.WriteLine( );
+        Console.WriteLine(BitConverter.ToString(bytes, iter));
+        Console.WriteLine();
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        byte[ ] arrayOne = {
+        byte[] arrayOne = {
               0,   0,   0,   0, 128,  63,   0,   0, 112,  65,
               0, 255, 127,  71,   0,   0, 128,  59,   0,   0,
             128,  47,  73,  70, 131,   5,  75,   6, 158,  63,
@@ -38,7 +38,7 @@ class BytesToStringDemo
               0,   0,   0, 192, 255,   0,   0, 128, 255,   0,
               0, 128, 127 };
 
-        byte[ ] arrayTwo = {
+        byte[] arrayTwo = {
             255, 255, 255,   0,   0,  20,   0,  33,   0,   0,
               0,   1,   0,   0,   0, 100, 167, 179, 182, 224,
              13,   0, 202, 154,  59,   0, 143,  91,   0, 170,
@@ -46,7 +46,7 @@ class BytesToStringDemo
              35, 199, 138, 255, 232, 244, 255, 252, 205, 255,
             255, 129 };
 
-        byte[ ] arrayThree = {
+        byte[] arrayThree = {
               0, 222,   0,   0,   0, 224, 111,  64,   0,   0,
             224, 255, 255, 255, 239,  65,   0,   0, 131,   0,
               0,   0, 112,  63,   0, 143,   0, 100,   0,   0,
@@ -58,14 +58,14 @@ class BytesToStringDemo
               0,  10,  17,   0,   0, 248, 255,   0,  88,   0,
              91,   0,   0, 240, 255,   0,   0, 240, 157 };
 
-        Console.WriteLine( "This example of the\n" +
+        Console.WriteLine("This example of the\n" +
             "  BitConverter.ToString( byte[ ], int ) and \n" +
             "  BitConverter.ToString( byte[ ], int, int ) \n" +
-            "methods generates the following output.\n" );
+            "methods generates the following output.\n");
 
-        WriteMultiLineByteArray( arrayOne, "arrayOne" );
-        WriteMultiLineByteArray( arrayTwo, "arrayTwo" );
-        WriteMultiLineByteArray( arrayThree, "arrayThree" );
+        WriteMultiLineByteArray(arrayOne, "arrayOne");
+        WriteMultiLineByteArray(arrayTwo, "arrayTwo");
+        WriteMultiLineByteArray(arrayThree, "arrayThree");
     }
 }
 

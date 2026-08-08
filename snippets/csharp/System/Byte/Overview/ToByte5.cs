@@ -3,26 +3,28 @@ using System;
 
 public class Example5
 {
-   public static void Main()
-   {
-      String[] values = { null, "", "0xC9", "C9", "101", "16.3",
+    public static void Main()
+    {
+        string[] values = { null, "", "0xC9", "C9", "101", "16.3",
                           "$12", "$12.01", "-4", "1,032", "255",
                           "   16  " };
-      foreach (var value in values) {
-         try {
-            byte number = Convert.ToByte(value);
-            Console.WriteLine("'{0}' --> {1}",
-                              value == null ? "<null>" : value, number);
-         }
-         catch (FormatException) {
-            Console.WriteLine("Bad Format: '{0}'",
-                              value == null ? "<null>" : value);
-         }
-         catch (OverflowException) {
-            Console.WriteLine("OverflowException: '{0}'", value);
-         }
-      }
-   }
+        foreach (string value in values)
+        {
+            try
+            {
+                byte number = Convert.ToByte(value);
+                Console.WriteLine($"'{(value == null ? "<null>" : value)}' --> {number}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"Bad Format: '{(value == null ? "<null>" : value)}'");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"OverflowException: '{value}'");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //     '<null>' --> 0
