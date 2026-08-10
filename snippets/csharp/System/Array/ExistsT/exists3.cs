@@ -11,14 +11,11 @@ namespace Example
                 "Earth", "Mars", "Jupiter",
                 "Saturn", "Uranus", "Neptune" };
 
-            Console.WriteLine("One or more planets begin with 'M': {0}",
-                Array.Exists(planets, element => element.StartsWith("M")));
+            Console.WriteLine($"One or more planets begin with 'M': {Array.Exists(planets, element => element.StartsWith("M"))}");
 
-            Console.WriteLine("One or more planets begin with 'T': {0}",
-                Array.Exists(planets, element => element.StartsWith("T")));
+            Console.WriteLine($"One or more planets begin with 'T': {Array.Exists(planets, element => element.StartsWith("T"))}");
 
-            Console.WriteLine("Is Pluto one of the planets? {0}",
-                Array.Exists(planets, element => element == "Pluto"));
+            Console.WriteLine($"Is Pluto one of the planets? {Array.Exists(planets, element => element == "Pluto")}");
         }
     }
 }

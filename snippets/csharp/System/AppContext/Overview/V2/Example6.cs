@@ -1,4 +1,4 @@
-// <Snippet6>
+﻿// <Snippet6>
 using System;
 using System.Reflection;
 
@@ -6,10 +6,7 @@ using System.Reflection;
 
 public static class StringLibrary2
 {
-    public static int SubstringStartsAt(string fullString, string substr)
-    {
-        return fullString.IndexOf(substr, StringComparison.CurrentCulture);
-    }
+    public static int SubstringStartsAt(string fullString, string substr) => fullString.IndexOf(substr, StringComparison.CurrentCulture);
 }
 // </Snippet6>
 

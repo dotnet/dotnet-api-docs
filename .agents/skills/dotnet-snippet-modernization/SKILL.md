@@ -25,15 +25,27 @@ Apply these changes when they preserve behavior and sample clarity:
 - Use C# built-in aliases, such as `string`, `int`, and `bool`, instead of
   framework type names.
 - Use target-typed `new` when the target type is evident.
-- Use string interpolation instead of composite formatting.
+- Use string interpolation instead of composite formatting, unless it makes the code harder to read
+  or the composite-format overload is the subject of the snippet. For example, keep composite
+  formatting when the arguments are complex:
+  ```csharp
+  Console.WriteLine("{0}: {1:G}",
+      timeZoneTime.TimeZone == null ? "<null>" : timeZoneTime.TimeZone.ToString(),
+      timeZoneTime.DateTime);
+  ```
 - Use raw string literals (or interpolated raw string literals) for paragraph-style output.
 - Use object and collection initializers when evaluation order and behavior
   remain unchanged.
 - Convert eligible value-producing `switch` statements to switch expressions.
 - Use auto-implemented properties instead of defining a separate field.
-- Use expression-bodied members for simple single-expression members.
+- Use expression-bodied members for simple single-expression members. If the line gets too long, for example, a method signature with a type parameter constraint, place the expression body on a new line:
+  ```csharp
+  public static T Factory<T>() where T : new()
+      => new T();
+  ```
 - Remove unused using directives and sort the remaining directives with
   `System` namespaces first.
+- Put curly braces on their own lines.
 - Normalize indentation, spacing, trailing whitespace, and final newlines.
 
 Don't introduce `var`; this repository prefers explicit types.

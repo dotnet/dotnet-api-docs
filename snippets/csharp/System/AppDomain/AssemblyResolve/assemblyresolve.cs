@@ -21,7 +21,7 @@ class AssemblyResolveSnippet
         // assembly resolver is not set
         InstantiateMyTypeFail(currentDomain);
 
-        currentDomain.AssemblyResolve += new ResolveEventHandler(MyResolveEventHandler);
+        currentDomain.AssemblyResolve += new(MyResolveEventHandler);
 
         // This call will succeed in creating an instance of MyType since the
         // assembly resolver is now set.
