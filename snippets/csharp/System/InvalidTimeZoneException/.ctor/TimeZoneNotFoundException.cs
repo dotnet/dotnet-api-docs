@@ -1,8 +1,7 @@
 ﻿// <Snippet4>
 using System;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Soap;
+using System.Text.Json;
 // </Snippet4>
 
 [assembly: CLSCompliant(true)]
@@ -85,12 +84,10 @@ public class TestTimeZoneExceptions
          TimeZoneNotFoundException serializedException = new TimeZoneNotFoundException( 
                                  "Attempting to load a non-existent time zone", 
                                  e);
-         // Serialize the exception to a file
-         IFormatter exceptionFormatter = new SoapFormatter();
-         Stream exceptionStream = new FileStream("tzNotFound.xml", FileMode.Create); 
-         exceptionFormatter.Serialize(exceptionStream, serializedException);
-         exceptionStream.Close();
-         Console.WriteLine("Serialized the exception object.");
+         // Serialize the exception message to a file
+         string exceptionMessage = JsonSerializer.Serialize(serializedException.Message);
+         File.WriteAllText("tzNotFound.json", exceptionMessage);
+         Console.WriteLine("Serialized the exception message.");
       }
    }   
    // </Snippet2>
@@ -119,13 +116,11 @@ public class TestTimeZoneExceptions
          {
             Console.WriteLine(eInner.GetType().Name);
             // file not found, therefore object not serialized: 
-            // deserialize original exception information
+            // Deserialize original exception message
             Console.WriteLine("Deserializing the original exception.");
-            FileStream exceptionStream = new FileStream("tzNotFound.xml", FileMode.Open);
-            IFormatter exceptionFormatter = new SoapFormatter();
-            TimeZoneNotFoundException serializedException = 
-                exceptionFormatter.Deserialize(exceptionStream) as TimeZoneNotFoundException;
-            Console.WriteLine("Original error message: {0}", serializedException.Message);    
+            string exceptionMessage = File.ReadAllText("tzNotFound.json");
+            string serializedExceptionMessage = JsonSerializer.Deserialize<string>(exceptionMessage);
+            Console.WriteLine("Original error message: {0}", serializedExceptionMessage);
          }
       }              
    } 
