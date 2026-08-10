@@ -11,13 +11,11 @@ class CloneCompareDemo
         // actual OS version.
         Version verMMBVer = new(5, 6, 7, 8);
 
-        OperatingSystem opCreate1 = new
-(PlatformID.Win32NT, verMMBVer);
+        OperatingSystem opCreate1 = new(PlatformID.Win32NT, verMMBVer);
 
         // Create another OperatingSystem object with the same
         // parameters as opCreate1.
-        OperatingSystem opCreate2 = new
-(PlatformID.Win32NT, verMMBVer);
+        OperatingSystem opCreate2 = new(PlatformID.Win32NT, verMMBVer);
 
         // Clone opCreate1 and copy the opCreate1 reference.
         OperatingSystem opClone =
