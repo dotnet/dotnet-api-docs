@@ -17,7 +17,7 @@ public class Example
     private static void CreateObjects()
     {
         string[] str = new string[10000];
-        for (int ctr = 0; ctr <= 99999; ctr++)
+        for (int ctr = 0; ctr < str.Length; ctr++)
         {
             string s1 = "word1";
             string s2 = "word2";

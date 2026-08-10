@@ -3,7 +3,7 @@ using System;
 
 public class LocationReporter : IObserver<Location>
 {
-    private IDisposable unsubscriber;
+    private IDisposable? unsubscriber;
     private string instName;
 
     public LocationReporter(string name) => this.instName = name;
