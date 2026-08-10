@@ -60,7 +60,7 @@ public class Base64FormattingExample
                 Console.Write("\n  ");
             }
         }
-        Console.WriteLine($"{arr.GetValue(arr.GetUpperBound(0))} {"}"}");
+        Console.WriteLine($"{arr.GetValue(arr.GetUpperBound(0))} }}");
         Console.WriteLine();
     }
 }

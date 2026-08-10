@@ -13,7 +13,7 @@ public class Example4
             CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
             BooleanFormatter formatter = new(culture);
 
-            string result = $"Value for '{culture.Name}': {value}";
+            string result = string.Format(formatter, "Value for '{0}': {1}", culture.Name, value);
             Console.WriteLine(result);
         }
     }
