@@ -14,7 +14,7 @@ public class Temperature
         if (string.IsNullOrEmpty(format))
             format = "G";
 
-        switch (format.ToUpper())
+        switch (format.ToUpperInvariant())
         {
             case "G":
             case "C":
