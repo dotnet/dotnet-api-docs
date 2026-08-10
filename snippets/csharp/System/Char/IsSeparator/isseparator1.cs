@@ -9,7 +9,7 @@ public class Class1
         {
             char ch = (char)ctr;
             if (char.IsSeparator(ch))
-                Console.WriteLine(@"\u{(int)ch:X4} ({Char.GetUnicodeCategory(ch)})");
+                Console.WriteLine($@"\u{(int)ch:X4} ({char.GetUnicodeCategory(ch)})");
         }
     }
 }

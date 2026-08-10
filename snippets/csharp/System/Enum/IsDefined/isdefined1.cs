@@ -36,7 +36,7 @@ public class Example
         value = PetType.Dog | PetType.Bird;
         Console.WriteLine($"{value:D}: {Enum.IsDefined(typeof(PetType), value)}");
         value = value.ToString();
-        Console.WriteLine($"{value:D}: {Enum.IsDefined(typeof(PetType), value)}");
+        Console.WriteLine($"{value}: {Enum.IsDefined(typeof(PetType), value)}");
     }
 }
 // The example displays the following output:
