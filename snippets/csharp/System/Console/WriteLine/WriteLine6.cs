@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class WriteLineExample6
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet6>
         Random rnd = new();

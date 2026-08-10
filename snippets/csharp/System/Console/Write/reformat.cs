@@ -8,7 +8,7 @@
 // <Snippet1>
 public class FormatConverter
 {
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         string lineInput;
         while ((lineInput = Console.ReadLine()) != null)

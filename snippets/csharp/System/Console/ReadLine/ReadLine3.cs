@@ -1,9 +1,9 @@
 ﻿// <Snippet3>
 using System;
 
-public class Example
+public class ReadLineExample3
 {
-    public static void Main()
+    public static void Run()
     {
         if (!Console.IsInputRedirected)
         {

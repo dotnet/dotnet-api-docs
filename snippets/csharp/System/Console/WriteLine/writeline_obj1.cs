@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class WriteLineObjectExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet3>
         object[] values = { true, 12.632, 17908, "stringValue",

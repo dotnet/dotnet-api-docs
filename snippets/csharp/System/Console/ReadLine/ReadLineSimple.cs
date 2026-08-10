@@ -1,9 +1,9 @@
 ﻿// <Snippet6>
 using System;
 
-public class Example
+public class ReadLineSimpleExample
 {
-    public static void Main()
+    public static void Run()
     {
         Console.Clear();
 

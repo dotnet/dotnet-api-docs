@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class ReadLineExample2
 {
-    public static void Main()
+    public static void Run()
     {
         string line;
         Console.WriteLine("Enter one or more lines of text (press CTRL+Z to exit):");

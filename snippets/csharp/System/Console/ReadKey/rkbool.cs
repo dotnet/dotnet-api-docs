@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-class Example
+class ReadKeyBooleanExample
 {
-    public static void Main()
+    public static void Run()
     {
         ConsoleKeyInfo cki;
         // Prevent example from ending if CTL+C is pressed.

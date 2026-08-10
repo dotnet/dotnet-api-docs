@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class ReadKeyExample2
 {
-    public static void Main()
+    public static void Run()
     {
         DateTime dat = DateTime.Now;
         Console.WriteLine("The time: {0:d} at {0:t}", dat);

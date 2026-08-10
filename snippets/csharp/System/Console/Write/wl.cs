@@ -3,12 +3,12 @@
 // Formatting for this example uses the "en-US" culture.
 
 using System;
-class Sample
+class WriteFormattingExample
 {
     enum Color { Yellow = 1, Blue, Green };
     static DateTime thisDate = DateTime.Now;
 
-    public static void Main()
+    public static void Run()
     {
         Console.Clear();
 

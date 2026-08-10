@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class NewLineExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         string[] lines = { "This is the first line.",

@@ -1,7 +1,7 @@
 ﻿// <Snippet2>
 using System;
 
-public class Person
+public class Person2
 {
     public string Name { get; set; }
     public DateTime BirthDate { get; set; }
@@ -13,11 +13,11 @@ public class Person
     public object[] GetDescription() => new object[] { Name, Gender, Height, Weight, BirthDate };
 }
 
-public class Example
+public class WriteParamsExample2
 {
-    public static void Main()
+    public static void Run()
     {
-        var p1 = new Person()
+        var p1 = new Person2()
         {
             Name = "John",
             Gender = 'M',

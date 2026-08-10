@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class WriteLineBooleanExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet4>
         // Assign 10 random integers to an array.

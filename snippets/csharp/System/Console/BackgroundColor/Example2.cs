@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class BackgroundColorExample2
 {
-    public static void Main()
+    public static void Run()
     {
         if (Console.BackgroundColor == ConsoleColor.Black)
         {

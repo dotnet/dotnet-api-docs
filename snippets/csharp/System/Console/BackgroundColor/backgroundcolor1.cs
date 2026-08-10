@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class BackgroundColorExample1
 {
-    public static void Main()
+    public static void Run()
     {
         WriteCharacterStrings(1, 26, true);
         Console.MoveBufferArea(0, Console.CursorTop - 10, 30, 1,

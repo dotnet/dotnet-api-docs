@@ -2,9 +2,9 @@
 // This example demonstrates the Console.Beep() method.
 using System;
 
-class Sample
+class BeepExample
 {
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         int x = 0;
         //

@@ -3,9 +3,9 @@
 using System;
 using System.Threading;
 
-class Sample
+class BeepSongExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Declare the first few notes of the song, "Mary Had A Little Lamb".
         Note[] Mary =

@@ -4,7 +4,7 @@ using System;
 public class TipCalculator
 {
     private const double tipRate = 0.18;
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         double billTotal;
         if (args.Length == 0 || !double.TryParse(args[0], out billTotal))

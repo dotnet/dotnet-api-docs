@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-class Example
+class ForegroundColorExample3
 {
-    public static void Main()
+    public static void Run()
     {
         // Get an array with the values of ConsoleColor enumeration members.
         ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));

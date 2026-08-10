@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class Example2
 {
-    public static void Main()
+    public static void Run()
     {
         CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),
                                 CultureInfo.InvariantCulture,
