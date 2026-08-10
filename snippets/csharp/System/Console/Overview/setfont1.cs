@@ -33,6 +33,7 @@ public class Example
             CONSOLE_FONT_INFO_EX info = new();
             info.cbSize = (uint)Marshal.SizeOf(info);
             bool tt = false;
+
             // First determine whether there's already a TrueType font.
             if (GetCurrentConsoleFontEx(hnd, false, ref info))
             {
@@ -42,15 +43,16 @@ public class Example
                     Console.WriteLine("The console already is using a TrueType font.");
                     return;
                 }
+
                 // Set console font to Lucida Console.
                 CONSOLE_FONT_INFO_EX newInfo = new();
                 newInfo.cbSize = (uint)Marshal.SizeOf(newInfo);
                 newInfo.FontFamily = TMPF_TRUETYPE;
-                fixed (char* faceName = newInfo.FaceName)
-                {
-                    Marshal.Copy(fontName.ToCharArray(), 0, (IntPtr)faceName, fontName.Length);
-                    faceName[fontName.Length] = '\0';
-                }
+
+                char* faceName = newInfo.FaceName;
+                Marshal.Copy(fontName.ToCharArray(), 0, (IntPtr)faceName, fontName.Length);
+                faceName[fontName.Length] = '\0';
+
                 // Get some settings from current font.
                 newInfo.dwFontSize = new(info.dwFontSize.X, info.dwFontSize.Y);
                 newInfo.FontWeight = info.FontWeight;
