@@ -24,9 +24,8 @@ public class OutputTarget
         try
         {
             string fn = Path.GetTempFileName();
-            StreamWriter sw = new(fn);
+            using StreamWriter sw = new(fn);
             sw.WriteLine("Hello, World!");
-            sw.Close();
             return true;
         }
         catch

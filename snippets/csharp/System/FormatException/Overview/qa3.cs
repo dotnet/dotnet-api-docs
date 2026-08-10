@@ -47,7 +47,7 @@ public class FormatExample13
         string result;
         int nOpen = 1;
         int nClose = 2;
-        result = $"The text has {nOpen} '{"{"}' characters and {nClose} '{"}"}' characters.";
+        result = string.Format("The text has {0} '{1}' characters and {2} '{3}' characters.", nOpen, "{", nClose, "}");
         Console.WriteLine(result);
         // </Snippet25>
     }

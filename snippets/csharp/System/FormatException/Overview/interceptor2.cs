@@ -89,10 +89,10 @@ public class FormatExample12
         double value = 16.935;
         DateTime day = DateTime.Now;
         InterceptProvider provider = new();
-        Console.WriteLine($"{n:N0}: {value:C2} on {day:d}\n");
-        Console.WriteLine($"{"Today: "}: {(DayOfWeek)DateTime.Now.DayOfWeek:F}\n");
-        Console.WriteLine($"{(byte)2:X}, {(byte)12}, {(byte)199}\n");
-        Console.WriteLine($"{(byte)2:R}, {(byte)12:R}, {(byte)199:R}\n");
+        Console.WriteLine(string.Format(provider, "{0:N0}: {1:C2} on {2:d}\n", n, value, day));
+        Console.WriteLine(string.Format(provider, "{0}: {1:F}\n", "Today: ", (DayOfWeek)DateTime.Now.DayOfWeek));
+        Console.WriteLine(string.Format(provider, "{0:X}, {1}, {2}\n", (byte)2, (byte)12, (byte)199));
+        Console.WriteLine(string.Format(provider, "{0:R}, {1:R}, {2:R}\n", (byte)2, (byte)12, (byte)199));
     }
 }
 // The example displays the following output:
