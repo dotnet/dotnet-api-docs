@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Data;
 using System.Data.OleDb;
+using System.Runtime.Versioning;
 
 public class DBNullExample
 {
+    [SupportedOSPlatform("windows")]
     public static void Main()
     {
         DBNullExample ex = new();
-        OleDbConnection conn = new OleDbConnection();
-        OleDbCommand cmd = new OleDbCommand();
-        OleDbDataAdapter adapter = new OleDbDataAdapter();
+        OleDbConnection conn = new();
+        OleDbCommand cmd = new();
+        OleDbDataAdapter adapter = new();
         DataSet ds = new();
         string dbFilename = @"c:\Data\contacts.mdb";
 
         // Open database connection
-        conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
-                                 dbFilename + ";";
+        conn.ConnectionString = $"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={dbFilename};";
         conn.Open();
         // Define command : retrieve all records in contact table
         cmd.CommandText = "SELECT * FROM Contact";
@@ -40,28 +41,28 @@ public class DBNullExample
         {
             int labelLen;
             label = string.Empty;
-            label += AddFieldValue(label, row, "Title");
-            label += AddFieldValue(label, row, "FirstName");
-            label += AddFieldValue(label, row, "MiddleInitial");
-            label += AddFieldValue(label, row, "LastName");
-            label += AddFieldValue(label, row, "Suffix");
+            label += AddFieldValue(row, "Title");
+            label += AddFieldValue(row, "FirstName");
+            label += AddFieldValue(row, "MiddleInitial");
+            label += AddFieldValue(row, "LastName");
+            label += AddFieldValue(row, "Suffix");
             label += "\n";
-            label += AddFieldValue(label, row, "Address1");
-            label += AddFieldValue(label, row, "AptNo");
+            label += AddFieldValue(row, "Address1");
+            label += AddFieldValue(row, "AptNo");
             label += "\n";
             labelLen = label.Length;
-            label += AddFieldValue(label, row, "Address2");
+            label += AddFieldValue(row, "Address2");
             if (label.Length != labelLen)
                 label += "\n";
-            label += AddFieldValue(label, row, "City");
-            label += AddFieldValue(label, row, "State");
-            label += AddFieldValue(label, row, "Zip");
+            label += AddFieldValue(row, "City");
+            label += AddFieldValue(row, "State");
+            label += AddFieldValue(row, "Zip");
             Console.WriteLine(label);
             Console.WriteLine();
         }
     }
 
-    private string AddFieldValue(string label, DataRow row,
+    private string AddFieldValue(DataRow row,
                                  string fieldName)
     {
         if (!DBNull.Value.Equals(row[fieldName]))
