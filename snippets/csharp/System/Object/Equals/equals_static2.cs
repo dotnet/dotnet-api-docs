@@ -9,7 +9,7 @@ public class RefExample
         Dog m2 = new("Alaskan Malamute");
         Dog g1 = new("Great Pyrenees");
         Dog g2 = g1;
-        Dog d1 = new("Dalmation");
+        Dog d1 = new("Dalmatian");
         Dog n1 = null;
         Dog n2 = null;
 
@@ -47,7 +47,9 @@ public class Dog
 
     public override string ToString() => this.Breed;
 }
+
 // The example displays the following output:
+
 //       null = null: True
 //       null Reference Equals null: True
 //
@@ -57,6 +59,7 @@ public class Dog
 //       Alaskan Malamute = Alaskan Malamute: True
 //       Alaskan Malamute Reference Equals Alaskan Malamute: False
 //
-//       Alaskan Malamute = Dalmation: False
-//       Alaskan Malamute Reference Equals Dalmation: False
+//       Alaskan Malamute = Dalmatian: False
+//       Alaskan Malamute Reference Equals Dalmatian: False
+
 // </Snippet1>
