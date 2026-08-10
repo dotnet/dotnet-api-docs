@@ -19,7 +19,9 @@ public class Class1
         // <Snippet2>
         byte[] bytes = { 0, 1, 14, 168, 255 };
         foreach (byte byteValue in bytes)
+        {
             Console.WriteLine(byteValue);
+        }
         // The example displays the following output to the console if the current
         // culture is en-US:
         //       0
@@ -41,7 +43,9 @@ public class Class1
         foreach (byte byteValue in bytes)
         {
             foreach (CultureInfo provider in providers)
+            {
                 Console.Write($"{byteValue.ToString(provider),3} ({provider.Name})      ");
+            }
 
             Console.WriteLine();
         }
@@ -61,7 +65,9 @@ public class Class1
                           "P0", "X4", "0000.0000"};
         byte number = 240;
         foreach (string format in formats)
+        {
             Console.WriteLine($"'{format}' format specifier: {number.ToString(format)}");
+        }
 
         // The example displays the following output to the console if the
         // current culture is en-us:
@@ -88,7 +94,9 @@ public class Class1
                                  new CultureInfo("de-de")};
 
         foreach (CultureInfo provider in providers)
+        {
             Console.WriteLine($"{byteValue.ToString("N2", provider)} ({provider.Name})");
+        }
         // The example displays the following output to the console:
         //       250.00 (en-US)
         //       250,00 (fr-FR)

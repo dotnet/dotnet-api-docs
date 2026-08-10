@@ -31,18 +31,28 @@ public class BooleanFormatter : ICustomFormatter, IFormatProvider
     public object GetFormat(Type formatType)
     {
         if (formatType == typeof(ICustomFormatter))
+        {
             return this;
+        }
         else
+        {
             return null;
+        }
     }
 
     public string Format(string fmt, object arg, IFormatProvider formatProvider)
     {
         // Exit if another format provider is used.
-        if (!formatProvider.Equals(this)) return null;
+        if (!formatProvider.Equals(this))
+        {
+            return null;
+        }
 
         // Exit if the type to be formatted is not a Boolean
-        if (!(arg is bool)) return null;
+        if (!(arg is bool))
+        {
+            return null;
+        }
 
         bool value = (bool)arg;
         return culture.Name switch

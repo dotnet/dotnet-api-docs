@@ -84,9 +84,19 @@ class Sample
         Console.Write(caption);
         if (resultGeneric == resultNonGeneric)
         {
-            if (resultGeneric < 0) relation = "less than";
-            else if (resultGeneric > 0) relation = "greater than";
-            else relation = "equal to";
+            if (resultGeneric < 0)
+            {
+                relation = "less than";
+            }
+            else if (resultGeneric > 0)
+            {
+                relation = "greater than";
+            }
+            else
+            {
+                relation = "equal to";
+            }
+
             Console.WriteLine($"{var1} is {relation} {var2}");
         }
 

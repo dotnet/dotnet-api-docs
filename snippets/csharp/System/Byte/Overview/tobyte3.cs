@@ -10,19 +10,23 @@ public struct ByteString3 : IConvertible
     private string byteString;
 
     public SignBit Sign
-   {
-      set => signBit = value;
-      get => signBit;
-   }
+    {
+        set => signBit = value;
+        get => signBit;
+    }
 
     public string Value
     {
         set
         {
             if (value.Trim().Length > 2)
+            {
                 throw new ArgumentException("The string representation of a byte cannot have more than two characters.");
+            }
             else
+            {
                 byteString = value;
+            }
         }
         get => byteString;
     }
@@ -33,17 +37,25 @@ public struct ByteString3 : IConvertible
     public bool ToBoolean(IFormatProvider provider)
     {
         if (signBit == SignBit.Zero)
+        {
             return false;
+        }
         else
+        {
             return true;
+        }
     }
 
     public byte ToByte(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             throw new OverflowException($"{Convert.ToSByte(byteString, 16)} is out of range of the Byte type.");
+        }
         else
+        {
             return byte.Parse(byteString, NumberStyles.HexNumber);
+        }
     }
 
     public char ToChar(IFormatProvider provider)
@@ -78,38 +90,55 @@ public struct ByteString3 : IConvertible
     public double ToDouble(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             return Convert.ToDouble(sbyte.Parse(byteString, NumberStyles.HexNumber));
+        }
         else
+        {
             return Convert.ToDouble(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public short ToInt16(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             return Convert.ToInt16(sbyte.Parse(byteString, NumberStyles.HexNumber));
+        }
         else
+        {
             return Convert.ToInt16(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public int ToInt32(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             return Convert.ToInt32(sbyte.Parse(byteString, NumberStyles.HexNumber));
+        }
         else
+        {
             return Convert.ToInt32(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public long ToInt64(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             return Convert.ToInt64(sbyte.Parse(byteString, NumberStyles.HexNumber));
+        }
         else
+        {
             return Convert.ToInt64(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public sbyte ToSByte(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             try
             {
                 return Convert.ToSByte(byte.Parse(byteString, NumberStyles.HexNumber));
@@ -118,16 +147,23 @@ public struct ByteString3 : IConvertible
             {
                 throw new OverflowException($"{byte.Parse(byteString, NumberStyles.HexNumber)} is outside the range of the SByte type.", e);
             }
+        }
         else
+        {
             return sbyte.Parse(byteString, NumberStyles.HexNumber);
+        }
     }
 
     public float ToSingle(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             return Convert.ToSingle(sbyte.Parse(byteString, NumberStyles.HexNumber));
+        }
         else
+        {
             return Convert.ToSingle(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public string ToString(IFormatProvider provider) => "0x" + this.byteString;
@@ -156,9 +192,14 @@ public struct ByteString3 : IConvertible
                 return this.ToInt64(null);
             case TypeCode.Object:
                 if (typeof(ByteString3).Equals(conversionType))
+                {
                     return this;
+                }
                 else
+                {
                     throw new InvalidCastException($"Conversion to a {conversionType.Name} is not supported.");
+                }
+
             case TypeCode.SByte:
                 return this.ToSByte(null);
             case TypeCode.Single:
@@ -179,25 +220,37 @@ public struct ByteString3 : IConvertible
     public ushort ToUInt16(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             throw new OverflowException($"{sbyte.Parse(byteString, NumberStyles.HexNumber)} is outside the range of the UInt16 type.");
+        }
         else
+        {
             return Convert.ToUInt16(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public uint ToUInt32(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             throw new OverflowException($"{sbyte.Parse(byteString, NumberStyles.HexNumber)} is outside the range of the UInt32 type.");
+        }
         else
+        {
             return Convert.ToUInt32(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 
     public ulong ToUInt64(IFormatProvider provider)
     {
         if (signBit == SignBit.Negative)
+        {
             throw new OverflowException($"{sbyte.Parse(byteString, NumberStyles.HexNumber)} is outside the range of the UInt64 type.");
+        }
         else
+        {
             return Convert.ToUInt64(byte.Parse(byteString, NumberStyles.HexNumber));
+        }
     }
 }
 // </Snippet12>

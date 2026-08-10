@@ -26,7 +26,9 @@ public class Example
     {
         string value = "";
         foreach (byte byt in bytes)
+        {
             value += $"{byt:X2} ";
+        }
 
         return value;
     }

@@ -27,9 +27,13 @@ public class StringLib
             }
 
             if (!isException)
+            {
                 newWords[ctr] = words[ctr].Substring(0, 1).ToUpper() + words[ctr].Substring(1);
+            }
             else
+            {
                 newWords[ctr] = words[ctr];
+            }
         }
         return string.Join(" ", newWords);
     }

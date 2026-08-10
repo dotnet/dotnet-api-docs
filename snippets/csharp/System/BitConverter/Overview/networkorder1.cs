@@ -1,7 +1,7 @@
 ﻿// <Snippet4>
 using System;
 
-public class Example
+public class NetworkOrderExample
 {
     public static void Main()
     {
@@ -10,7 +10,9 @@ public class Example
         Console.WriteLine(BitConverter.ToString(bytes));
 
         if (BitConverter.IsLittleEndian)
+        {
             Array.Reverse(bytes);
+        }
 
         Console.WriteLine(BitConverter.ToString(bytes));
         // Call method to send byte stream across machine boundaries.
@@ -18,7 +20,9 @@ public class Example
         // Receive byte stream from beyond machine boundaries.
         Console.WriteLine(BitConverter.ToString(bytes));
         if (BitConverter.IsLittleEndian)
+        {
             Array.Reverse(bytes);
+        }
 
         Console.WriteLine(BitConverter.ToString(bytes));
         int result = BitConverter.ToInt32(bytes, 0);

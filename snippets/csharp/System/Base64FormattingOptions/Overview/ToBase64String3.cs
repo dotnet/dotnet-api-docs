@@ -1,7 +1,7 @@
 ﻿// <Snippet3>
 using System;
 
-public class Example
+public class Base64RoundTripExample
 {
     public static void Main()
     {
@@ -29,7 +29,9 @@ public class Example
         byte[] newBytes = Convert.FromBase64String(s);
         int newTotal = 0;
         foreach (byte newByte in newBytes)
+        {
             newTotal += newByte;
+        }
 
         // Display summary information about the restored array.
         Console.WriteLine($"   Total elements: {newBytes.Length}");

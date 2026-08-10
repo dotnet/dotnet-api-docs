@@ -14,7 +14,10 @@ class SetByteDemo
         // Display the array elements from right to left.
         Console.Write($"{name,7}:");
         for (int loopX = arr.Length - 1; loopX >= 0; loopX--)
+        {
             Console.Write(format, arr.GetValue(loopX));
+        }
+
         Console.WriteLine();
     }
 

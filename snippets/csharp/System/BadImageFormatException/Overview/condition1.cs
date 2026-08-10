@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-public class Example
+public class BadImageFormatExample
 {
     public static void Main()
     {
@@ -9,7 +9,10 @@ public class Example
         // Windows DLL (non-.NET assembly)
         string filePath = Environment.ExpandEnvironmentVariables("%windir%");
         if (!filePath.Trim().EndsWith(@"\"))
+        {
             filePath += @"\";
+        }
+
         filePath += @"System32\Kernel32.dll";
 
         try

@@ -1,7 +1,7 @@
 ﻿//<Snippet2>
 using System;
 
-class Example
+class GetBytesInt32Demo
 {
     public static void Main()
     {

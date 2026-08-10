@@ -1,7 +1,7 @@
 ﻿// <Snippet3>
 using System;
 
-public class Example
+public class BitConverterExample
 {
     public static void Main()
     {

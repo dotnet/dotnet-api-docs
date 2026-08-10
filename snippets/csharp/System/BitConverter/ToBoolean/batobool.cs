@@ -11,7 +11,9 @@ class Example
         Console.WriteLine($"{"index",5}{"array element",16}{"bool",10}\n");
         // Convert each array element to a Boolean value.
         for (int index = 0; index < bytes.Length; index++)
+        {
             Console.WriteLine($"{index,5}{bytes[index],16:X2}{BitConverter.ToBoolean(bytes, index),10}");
+        }
     }
 }
 // The example displays the following output:

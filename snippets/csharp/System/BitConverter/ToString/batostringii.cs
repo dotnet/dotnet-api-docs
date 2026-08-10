@@ -2,7 +2,7 @@
 // Example of some BitConverter.ToString( ) method overloads.
 using System;
 
-class BytesToStringDemo
+class BytesToStringRangeDemo
 {
     // Display a byte array, using multiple lines if necessary.
     public static void WriteMultiLineByteArray(byte[] bytes,

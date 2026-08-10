@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
 
-class Example
+class GetBytesInt64Demo
 {
     public static void Main()
     {

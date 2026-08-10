@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Example
+public class OverlappingCopyExample
 {
     public static void Main()
     {
@@ -16,7 +16,9 @@ public class Example
         int[] arr = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
         Buffer.BlockCopy(arr, 0 * INT_SIZE, arr, 3 * INT_SIZE, 4 * INT_SIZE);
         foreach (int value in arr)
+        {
             Console.Write($"{value}  ");
+        }
         // The example displays the following output:
         //       2  4  6  2  4  6  8  16  18  20
         // </Snippet3>
@@ -29,7 +31,9 @@ public class Example
         int[] arr = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
         Buffer.BlockCopy(arr, 3 * INT_SIZE, arr, 0 * INT_SIZE, 4 * INT_SIZE);
         foreach (int value in arr)
+        {
             Console.Write($"{value}  ");
+        }
         // The example displays the following output:
         //       8  10  12  14  10  12  14  16  18  20
         // </Snippet4>

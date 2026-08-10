@@ -1,7 +1,7 @@
 ﻿// <Snippet2>
 using System;
 
-class Example
+class BufferBlockCopyExample
 {
     // Display the individual bytes in the array in hexadecimal.
     public static void DisplayArray(Array arr, string name)
@@ -12,12 +12,18 @@ class Example
         {
             byte[] bytes;
             if (arr is long[])
+            {
                 bytes = BitConverter.GetBytes((long)arr.GetValue(ctr));
+            }
             else
+            {
                 bytes = BitConverter.GetBytes((short)arr.GetValue(ctr));
+            }
 
             foreach (byte byteValue in bytes)
+            {
                 Console.Write($" {byteValue:X2}");
+            }
         }
         Console.WriteLine();
     }
@@ -30,7 +36,9 @@ class Example
         string formatString = $" {{0:X{2 * elementLength}}}";
         Console.Write($"{name,11}:");
         for (int ctr = 0; ctr < arr.Length; ctr++)
+        {
             Console.Write(formatString, arr.GetValue(ctr));
+        }
 
         Console.WriteLine();
     }

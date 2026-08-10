@@ -57,16 +57,30 @@ public class Example5
         if (isRedirected)
         {
             sw = new(fileName);
-            if (!isBoth) Console.SetOut(sw);
+            if (!isBoth)
+            {
+                Console.SetOut(sw);
+            }
         }
         string msg = $"Application began at {DateTime.Now}";
         Console.WriteLine(msg);
-        if (isBoth) sw.WriteLine(msg);
+        if (isBoth)
+        {
+            sw.WriteLine(msg);
+        }
+
         Thread.Sleep(5000);
         msg = $"Application ended normally at {DateTime.Now}";
         Console.WriteLine(msg);
-        if (isBoth) sw.WriteLine(msg);
-        if (isRedirected) sw.Close();
+        if (isBoth)
+        {
+            sw.WriteLine(msg);
+        }
+
+        if (isRedirected)
+        {
+            sw.Close();
+        }
     }
 
     private static void ShowSyntax(string errMsg)

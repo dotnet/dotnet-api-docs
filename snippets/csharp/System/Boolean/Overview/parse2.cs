@@ -32,9 +32,13 @@ public class Example7
         {
             bool flag = false;
             if (bool.TryParse(value, out flag))
+            {
                 Console.WriteLine($"'{value}' --> {flag}");
+            }
             else
+            {
                 Console.WriteLine($"Unable to parse '{value}'");
+            }
         }
     }
 }

@@ -12,9 +12,13 @@ public class Example
         {
             bool flag;
             if (bool.TryParse(value, out flag))
+            {
                 Console.WriteLine($"'{value}' --> {flag}");
+            }
             else
+            {
                 Console.WriteLine($"Unable to parse '{(value == null ? "<null>" : value)}'.");
+            }
         }
     }
 }

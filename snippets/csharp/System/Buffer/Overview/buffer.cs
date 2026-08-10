@@ -9,7 +9,10 @@ class BufferClassDemo
     {
         Console.Write("  arr:");
         for (int loopX = arr.Length - 1; loopX >= 0; loopX--)
+        {
             Console.Write($" {arr[loopX]:X4}");
+        }
+
         Console.WriteLine();
     }
 

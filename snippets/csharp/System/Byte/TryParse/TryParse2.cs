@@ -53,9 +53,13 @@ public class ByteConversion2
         bool result = byte.TryParse(stringToConvert, styles,
                                     null as IFormatProvider, out byteValue);
         if (result)
+        {
             Console.WriteLine($"Converted '{stringToConvert}' to {byteValue}");
+        }
         else
+        {
             Console.WriteLine($"Attempted conversion of '{stringToConvert.ToString()}' failed.");
+        }
     }
 }
 // The example displays the following output to the console:

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-public class Example
+public class PlatformInfoExample
 {
     public static void Main()
     {
@@ -31,9 +31,13 @@ public class Example
                     AssemblyName an = AssemblyName.GetAssemblyName(fn);
                     Console.WriteLine($"Assembly: {an.Name}");
                     if (an.ProcessorArchitecture == ProcessorArchitecture.MSIL)
+                    {
                         Console.WriteLine("Architecture: AnyCPU");
+                    }
                     else
+                    {
                         Console.WriteLine($"Architecture: {an.ProcessorArchitecture}");
+                    }
 
                     Console.WriteLine();
                 }
