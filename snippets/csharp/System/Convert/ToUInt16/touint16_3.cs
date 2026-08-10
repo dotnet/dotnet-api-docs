@@ -21,8 +21,8 @@ public struct HexString : IConvertible
         set
         {
             if (value.Trim().Length > 4)
-                throw new ArgumentException("The string representation of a 160bit integer cannot have more than four characters.");
-            else if (!Regex.IsMatch(value, "([0-9,A-F]){1,4}", RegexOptions.IgnoreCase))
+                throw new ArgumentException("The string representation of a 16-bit integer can't have more than four characters.");
+            else if (!Regex.IsMatch(value, @"\A[0-9A-F]{1,4}\z", RegexOptions.IgnoreCase))
                 throw new ArgumentException("The hexadecimal representation of a 16-bit integer contains invalid characters.");
             else
                 hexString = value;
@@ -258,7 +258,9 @@ public class Example
         }
     }
 }
+
 // The example displays the following output:
 //       0x7D00 converts to 32000.
 //       -1 is outside the range of the UInt16 type.
+
 // </Snippet17>

@@ -24,19 +24,20 @@ public class Example
     private static void ConvertInt16()
     {
         // <Snippet1>
-        short[] numbers = { short.MinValue, -1032, 0, 192, short.MaxValue };
+        short[] numbers = [short.MinValue, -1032, 0, 192, short.MaxValue];
         double result;
 
         foreach (short number in numbers)
         {
             result = Convert.ToDouble(number);
-            Console.WriteLine($"Converted the UInt16 value {number} to {result}.");
+            Console.WriteLine($"Converted the Int16 value {number} to {result}.");
         }
-        //       Converted the UInt16 value -32768 to -32768.
-        //       Converted the UInt16 value -1032 to -1032.
-        //       Converted the UInt16 value 0 to 0.
-        //       Converted the UInt16 value 192 to 192.
-        //       Converted the UInt16 value 32767 to 32767.
+
+        //       Converted the Int16 value -32768 to -32768.
+        //       Converted the Int16 value -1032 to -1032.
+        //       Converted the Int16 value 0 to 0.
+        //       Converted the Int16 value 192 to 192.
+        //       Converted the Int16 value 32767 to 32767.
         // </Snippet1>
     }
 

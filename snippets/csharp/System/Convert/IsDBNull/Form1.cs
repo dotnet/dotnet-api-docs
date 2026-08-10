@@ -22,7 +22,7 @@ namespace IsDBNull_To_NA_CS
 
     public partial class Form1 : Form
     {
-        private string connectionString = @"Data Source=RONPET59\SQLEXPRESS;Initial Catalog=SurveyDB;Integrated Security=True";
+        private string _connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=SurveyDB;Integrated Security=True";
 
         public Form1() => InitializeComponent();
 
@@ -37,8 +37,8 @@ namespace IsDBNull_To_NA_CS
         private void Form1_Load(object sender, EventArgs e)
         {
             // Define ADO.NET objects.
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
+            using SqlConnection conn = new(_connectionString);
+            using SqlCommand cmd = new();
             SqlDataReader dr;
 
             // Open connection, and retrieve dataset.
