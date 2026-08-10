@@ -16,7 +16,7 @@ public class Example
         Point first = Array.Find(points, p => p.X * p.Y > 100000);
 
         // Display the first structure found.
-        Console.WriteLine("Found: X = {0}, Y = {1}", first.X, first.Y);
+        Console.WriteLine($"Found: X = {first.X}, Y = {first.Y}");
     }
 }
 // The example displays the following output:
