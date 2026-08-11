@@ -7,9 +7,9 @@ public enum PetType
     None = 0, Dog = 1, Cat = 2, Rodent = 4, Bird = 8, Reptile = 16, Other = 32
 };
 
-public class Example
+public class PetTypeIsDefinedExample
 {
-    public static void Main()
+    public static void Run()
     {
         object value;
 

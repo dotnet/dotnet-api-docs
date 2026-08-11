@@ -3,9 +3,9 @@ using System;
 
 enum SignMagnitude { Negative = -1, Zero = 0, Positive = 1 };
 
-public class Example
+public class SignMagnitudeExample
 {
-    public static void Main()
+    public static void Run()
     {
         foreach (object value in Enum.GetValues(typeof(SignMagnitude)))
         {

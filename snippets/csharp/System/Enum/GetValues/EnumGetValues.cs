@@ -6,7 +6,7 @@ public class GetValuesTest
     enum Colors { Red, Green, Blue, Yellow };
     enum Styles { Plaid = 0, Striped = 23, Tartan = 65, Corduroy = 78 };
 
-    public static void Main()
+    public static void Run()
     {
 
         Console.WriteLine("The values of the Colors Enum are:");

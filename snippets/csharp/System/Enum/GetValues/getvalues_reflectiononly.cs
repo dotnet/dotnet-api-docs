@@ -2,9 +2,9 @@
 using System;
 using System.Reflection;
 
-public class Example
+public class ReflectionOnlyGetValuesExample
 {
-    public static void Main()
+    public static void Run()
     {
         Assembly assem = Assembly.ReflectionOnlyLoadFrom(@".\Enumerations.dll");
         Type typ = assem.GetType("Pets");

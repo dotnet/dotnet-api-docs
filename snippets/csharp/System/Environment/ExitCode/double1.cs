@@ -2,14 +2,14 @@
 using System;
 using System.Numerics;
 
-public class Example
+public class ExitCodeReturnExample
 {
     private const int ERROR_SUCCESS = 0;
     private const int ERROR_BAD_ARGUMENTS = 0xA0;
     private const int ERROR_ARITHMETIC_OVERFLOW = 0x216;
     private const int ERROR_INVALID_COMMAND_LINE = 0x667;
 
-    public static int Main()
+    public static int Run()
     {
         string[] args = Environment.GetCommandLineArgs();
         if (args.Length == 1)

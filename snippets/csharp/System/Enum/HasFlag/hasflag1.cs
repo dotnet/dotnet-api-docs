@@ -13,9 +13,9 @@ public enum DinnerItems
     BarBeverage = 32
 }
 
-public class Example
+public class DinnerItemsHasFlagExample
 {
-    public static void Main()
+    public static void Run()
     {
         DinnerItems myOrder = DinnerItems.Appetizer | DinnerItems.Entree |
                               DinnerItems.Beverage | DinnerItems.Dessert;

@@ -6,7 +6,7 @@ public class ParseTest
     [Flags]
     enum Colors { Red = 1, Green = 2, Blue = 4, Yellow = 8 };
 
-    public static void Main()
+    public static void Run()
     {
         Console.WriteLine("The entries of the Colors enumeration are:");
         foreach (string colorName in Enum.GetNames(typeof(Colors)))

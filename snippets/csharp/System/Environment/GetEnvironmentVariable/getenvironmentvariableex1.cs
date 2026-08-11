@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GetEnvironmentVariableExample
 {
-    public static void Main()
+    public static void Run()
     {
         string value;
         bool toDelete = false;

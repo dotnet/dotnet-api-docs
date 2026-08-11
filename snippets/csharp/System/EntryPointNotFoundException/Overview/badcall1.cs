@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class Example
+public class BadCallExample
 {
     [DllImport("user32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
     public static extern int MessageBox(IntPtr hwnd, string text, string caption, uint type);
@@ -10,7 +10,7 @@ public class Example
     [DllImport("user32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
     public static extern int MessageBoxW(IntPtr hwnd, string text, string caption, uint type);
 
-    public static void Main()
+    public static void Run()
     {
         try
         {

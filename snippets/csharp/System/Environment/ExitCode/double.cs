@@ -2,13 +2,13 @@
 using System;
 using System.Numerics;
 
-public class Example
+public class ExitCodePropertyExample
 {
     private const int ERROR_BAD_ARGUMENTS = 0xA0;
     private const int ERROR_ARITHMETIC_OVERFLOW = 0x216;
     private const int ERROR_INVALID_COMMAND_LINE = 0x667;
 
-    public static void Main()
+    public static void Run()
     {
         string[] args = Environment.GetCommandLineArgs();
         if (args.Length == 1)

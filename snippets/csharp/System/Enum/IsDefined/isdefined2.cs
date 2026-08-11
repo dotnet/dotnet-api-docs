@@ -8,9 +8,9 @@ public enum Pets
     Rodent = 8, Other = 16
 };
 
-public class Example
+public class PetsIsDefinedExample
 {
-    public static void Main()
+    public static void Run()
     {
         Pets value = Pets.Dog | Pets.Cat;
         Console.WriteLine($"{value:D} Exists: {Pets.IsDefined(typeof(Pets), value)}");

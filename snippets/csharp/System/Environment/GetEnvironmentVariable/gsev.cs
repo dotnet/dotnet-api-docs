@@ -4,7 +4,7 @@
 
 class Sample
 {
-    public static void Main()
+    public static void Run()
     {
         // Environment variable names for default, process, user, and machine targets.
         string defaultEnvVar = nameof(defaultEnvVar);

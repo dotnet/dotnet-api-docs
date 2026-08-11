@@ -2,12 +2,12 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class Example
+public class NoFunctionExample
 {
     [DllImport("user32.dll")]
     public static extern int GetMyNumber();
 
-    public static void Main()
+    public static void Run()
     {
         try
         {

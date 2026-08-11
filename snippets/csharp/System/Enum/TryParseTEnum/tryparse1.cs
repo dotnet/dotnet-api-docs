@@ -1,18 +1,18 @@
 ﻿// <Snippet1>
 using System;
 
-[Flags] enum Colors { None = 0, Red = 1, Green = 2, Blue = 4 };
+[Flags] enum CaseSensitiveColors { None = 0, Red = 1, Green = 2, Blue = 4 };
 
-public class Example
+public class CaseSensitiveTryParseExample
 {
-    public static void Main()
+    public static void Run()
     {
         string[] colorStrings = { "0", "2", "8", "blue", "Blue", "Yellow", "Red, Green" };
         foreach (string colorString in colorStrings)
         {
-            Colors colorValue;
+            CaseSensitiveColors colorValue;
             if (Enum.TryParse(colorString, out colorValue))
-                if (Enum.IsDefined(typeof(Colors), colorValue) | colorValue.ToString().Contains(","))
+                if (Enum.IsDefined(typeof(CaseSensitiveColors), colorValue) | colorValue.ToString().Contains(","))
                     Console.WriteLine("Converted '{0}' to {1}.", colorString, colorValue.ToString());
                 else
                     Console.WriteLine($"{colorString} is not an underlying value of the Colors enumeration.");

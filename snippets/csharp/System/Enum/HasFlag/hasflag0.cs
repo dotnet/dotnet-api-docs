@@ -12,9 +12,9 @@ public enum Pets
     Other = 16
 }
 
-public class Example
+public class PetsHasFlagExample
 {
-    public static void Main()
+    public static void Run()
     {
         Pets[] petsInFamilies = { Pets.None, Pets.Dog | Pets.Cat, Pets.Dog };
         int familiesWithoutPets = 0;
