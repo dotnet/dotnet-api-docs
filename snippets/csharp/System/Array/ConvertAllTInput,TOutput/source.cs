@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
 using System.Drawing;
-using System.Collections.Generic;
+
 
 public class Example
 {
@@ -15,7 +15,7 @@ public class Example
 
         // Display each element in the PointF array.
         Console.WriteLine();
-        foreach( PointF p in apf )
+        foreach (PointF p in apf)
             Console.WriteLine(p);
 
         // Convert each PointF element to a Point object.
@@ -24,16 +24,13 @@ public class Example
 
         // Display each element in the Point array.
         Console.WriteLine();
-        foreach( Point p in ap )
+        foreach (Point p in ap)
         {
             Console.WriteLine(p);
         }
     }
 
-    public static Point PointFToPoint(PointF pf)
-    {
-        return new Point(((int) pf.X), ((int) pf.Y));
-    }
+    public static Point PointFToPoint(PointF pf) => new Point(((int)pf.X), ((int)pf.Y));
 }
 
 /* This code example produces the following output:

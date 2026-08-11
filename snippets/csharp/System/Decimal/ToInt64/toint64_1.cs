@@ -3,26 +3,28 @@ using System;
 
 class Example
 {
-   public static void Main( )
-   {
-      decimal[] values = { 123m, new Decimal(123000, 0, 0, false, 3),
+    public static void Main()
+    {
+        decimal[] values = { 123m, new decimal(123000, 0, 0, false, 3),
                            123.999m, 18446744073709551615.999m,
                            18446744073709551616m, 9223372036854775807.999m,
                            9223372036854775808m, -0.999m, -1m,
                            -9223372036854775808.999m,
                            -9223372036854775809m };
 
-      foreach (var value in values) {
-         try {
-            long number = Decimal.ToInt64(value);
-            Console.WriteLine("{0} --> {1}", value, number);
-         }
-         catch (OverflowException e)
-         {
-             Console.WriteLine("{0}: {1}", e.GetType().Name, value);
-         }
-      }
-   }
+        foreach (decimal value in values)
+        {
+            try
+            {
+                long number = decimal.ToInt64(value);
+                Console.WriteLine($"{value} --> {number}");
+            }
+            catch (OverflowException e)
+            {
+                Console.WriteLine($"{e.GetType().Name}: {value}");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //   123 --> 123

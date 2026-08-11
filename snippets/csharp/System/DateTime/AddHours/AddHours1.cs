@@ -3,16 +3,15 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      double[] hours = {.08333, .16667, .25, .33333, .5, .66667, 1, 2,
+    public static void Main()
+    {
+        double[] hours = {.08333, .16667, .25, .33333, .5, .66667, 1, 2,
                         29, 30, 31, 90, 365};
-      DateTime dateValue = new DateTime(2009, 3, 1, 12, 0, 0);
+        DateTime dateValue = new(2009, 3, 1, 12, 0, 0);
 
-      foreach (double hour in hours)
-         Console.WriteLine("{0} + {1} hour(s) = {2}", dateValue, hour,
-                           dateValue.AddHours(hour));
-   }
+        foreach (double hour in hours)
+            Console.WriteLine($"{dateValue} + {hour} hour(s) = {dateValue.AddHours(hour)}");
+    }
 }
 // The example displays the following output on a system whose current
 // culture is en-US:

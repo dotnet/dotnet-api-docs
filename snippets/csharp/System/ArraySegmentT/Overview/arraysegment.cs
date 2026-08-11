@@ -1,55 +1,61 @@
-// The following code example passes an ArraySegment to a method.
+﻿// The following code example passes an ArraySegment to a method.
 
 // <Snippet1>
 using System;
 
-public class SamplesArray  {
+public class SamplesArray
+{
 
-   public static void Main()  {
+    public static void Main()
+    {
 
-      // Create and initialize a new string array.
-      String[] myArr = { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
+        // Create and initialize a new string array.
+        string[] myArr = { "The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog" };
 
-      // Display the initial contents of the array.
-      Console.WriteLine( "The original array initially contains:" );
-      PrintIndexAndValues( myArr );
+        // Display the initial contents of the array.
+        Console.WriteLine("The original array initially contains:");
+        PrintIndexAndValues(myArr);
 
-      // Define an array segment that contains the entire array.
-      ArraySegment<string> myArrSegAll = new ArraySegment<string>( myArr );
+        // Define an array segment that contains the entire array.
+        ArraySegment<string> myArrSegAll = new(myArr);
 
-      // Display the contents of the ArraySegment.
-      Console.WriteLine( "The first array segment (with all the array's elements) contains:" );
-      PrintIndexAndValues( myArrSegAll );
+        // Display the contents of the ArraySegment.
+        Console.WriteLine("The first array segment (with all the array's elements) contains:");
+        PrintIndexAndValues(myArrSegAll);
 
-      // Define an array segment that contains the middle five values of the array.
-      ArraySegment<string> myArrSegMid = new ArraySegment<string>( myArr, 2, 5 );
+        // Define an array segment that contains the middle five values of the array.
+        ArraySegment<string> myArrSegMid = new(myArr, 2, 5);
 
-      // Display the contents of the ArraySegment.
-      Console.WriteLine( "The second array segment (with the middle five elements) contains:" );
-      PrintIndexAndValues( myArrSegMid );
+        // Display the contents of the ArraySegment.
+        Console.WriteLine("The second array segment (with the middle five elements) contains:");
+        PrintIndexAndValues(myArrSegMid);
 
-      // Modify the fourth element of the first array segment myArrSegAll.
-      myArrSegAll.Array[3] = "LION";
+        // Modify the fourth element of the first array segment myArrSegAll.
+        myArrSegAll.Array[3] = "LION";
 
-      // Display the contents of the second array segment myArrSegMid.
-      // Note that the value of its second element also changed.
-      Console.WriteLine( "After the first array segment is modified, the second array segment now contains:" );
-      PrintIndexAndValues( myArrSegMid );
-   }
+        // Display the contents of the second array segment myArrSegMid.
+        // Note that the value of its second element also changed.
+        Console.WriteLine("After the first array segment is modified, the second array segment now contains:");
+        PrintIndexAndValues(myArrSegMid);
+    }
 
-   public static void PrintIndexAndValues( ArraySegment<string> arrSeg )  {
-      for ( int i = arrSeg.Offset; i < (arrSeg.Offset + arrSeg.Count); i++ )  {
-         Console.WriteLine( "   [{0}] : {1}", i, arrSeg.Array[i] );
-      }
-      Console.WriteLine();
-   }
+    public static void PrintIndexAndValues(ArraySegment<string> arrSeg)
+    {
+        for (int i = arrSeg.Offset; i < (arrSeg.Offset + arrSeg.Count); i++)
+        {
+            Console.WriteLine($"   [{i}] : {arrSeg.Array[i]}");
+        }
+        Console.WriteLine();
+    }
 
-   public static void PrintIndexAndValues( String[] myArr )  {
-      for ( int i = 0; i < myArr.Length; i++ )  {
-         Console.WriteLine( "   [{0}] : {1}", i, myArr[i] );
-      }
-      Console.WriteLine();
-   }
+    public static void PrintIndexAndValues(string[] myArr)
+    {
+        for (int i = 0; i < myArr.Length; i++)
+        {
+            Console.WriteLine($"   [{i}] : {myArr[i]}");
+        }
+        Console.WriteLine();
+    }
 }
 
 

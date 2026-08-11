@@ -5,9 +5,7 @@ public class Precision2
     // <Snippet8>
     public static void Example()
     {
-        Console.WriteLine("{0,5} {1,20:R}  {2,12} {3,15}\n",
-                          "Value", "Full Precision", "ToEven",
-                          "AwayFromZero");
+        Console.WriteLine($"{"Value",5} {"Full Precision",20:R}  {"ToEven",12} {"AwayFromZero",15}\n");
         double value = 11.1;
         for (int ctr = 0; ctr <= 5; ctr++)
             value = RoundValueAndAdd(value);
@@ -45,10 +43,10 @@ public class Precision2
             if (mode == MidpointRounding.AwayFromZero)
                 return (value + 1) / Math.Pow(10, digits);
             else
-               if (value % 2 != 0)
-                return (value + 1) / Math.Pow(10, digits);
-            else
-                return value / Math.Pow(10, digits);
+                if (value % 2 != 0)
+                    return (value + 1) / Math.Pow(10, digits);
+                else
+                    return value / Math.Pow(10, digits);
         }
         // Any remaining fractional value greater than .5 is not a midpoint value.
         if (fraction > .5)

@@ -11,13 +11,12 @@ namespace NDP_UE_CS2
             "The argument to a function requiring " +
             "even input is not divisible by 2.";
 
-        public NotEvenException( ) :
-            base( notEvenMessage )
+        public NotEvenException() :
+            base(notEvenMessage)
         { }
 
-        public NotEvenException( string auxMessage ) :
-            base( String.Format( "{0} - {1}",
-                auxMessage, notEvenMessage ) )
+        public NotEvenException(string auxMessage) :
+            base($"{auxMessage} - {notEvenMessage}")
         { }
     }
 
@@ -27,70 +26,66 @@ namespace NDP_UE_CS2
         {
             Console.WriteLine(
                 "This example of the Exception( string )\n" +
-                "constructor generates the following output." );
+                "constructor generates the following output.");
             Console.WriteLine(
                 "\nHere, an exception is thrown using the \n" +
-                "constructor of the base class.\n" );
+                "constructor of the base class.\n");
 
-            CalcHalf( 18 );
-            CalcHalf( 21 );
+            CalcHalf(18);
+            CalcHalf(21);
 
             Console.WriteLine(
                 "\nHere, an exception is thrown using the \n" +
-                "constructor of a derived class.\n" );
+                "constructor of a derived class.\n");
 
-            CalcHalf2( 30 );
-            CalcHalf2( 33 );
+            CalcHalf2(30);
+            CalcHalf2(33);
         }
-    	
+
         // Half throws a base exception if the input is not even.
-        static int Half( int input )
+        static int Half(int input)
         {
-            if( input % 2 != 0 )
-                throw new Exception( String.Format(
-                    "The argument {0} is not divisible by 2.",
-                    input ) );
+            if (input % 2 != 0)
+                throw new Exception($"The argument {input} is not divisible by 2.");
 
             else return input / 2;
         }
 
         // Half2 throws a derived exception if the input is not even.
-        static int Half2( int input )
+        static int Half2(int input)
         {
-            if( input % 2 != 0 )
+            if (input % 2 != 0)
                 throw new NotEvenException(
-                    String.Format( "Invalid argument: {0}", input ) );
+                    $"Invalid argument: {input}");
 
             else return input / 2;
         }
 
         // CalcHalf calls Half and catches any thrown exceptions.
-        static void CalcHalf(int input )
+        static void CalcHalf(int input)
         {
             try
             {
-                int halfInput = Half( input );
-                Console.WriteLine(
-                    "Half of {0} is {1}.", input, halfInput );
+                int halfInput = Half(input);
+                Console.WriteLine($"Half of {input} is {halfInput}.");
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
-                Console.WriteLine( ex.ToString( ) );
+                Console.WriteLine(ex.ToString());
             }
         }
 
         // CalcHalf2 calls Half2 and catches any thrown exceptions.
-        static void CalcHalf2(int input )
+        static void CalcHalf2(int input)
         {
             try
             {
-                int halfInput = Half2( input );
-                Console.WriteLine(
-                    "Half of {0} is {1}.", input, halfInput );
+                int halfInput = Half2(input);
+                Console.WriteLine($"Half of {input} is {halfInput}.");
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
-                Console.WriteLine( ex.ToString( ) );
+                Console.WriteLine(ex.ToString());
             }
         }
     }

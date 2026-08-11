@@ -3,32 +3,35 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      int[] baseValues = { 2, 8, 16};
-      string[] values = { "FF", "81", "03", "11", "8F", "01", "1C", "111",
+    public static void Main()
+    {
+        int[] baseValues = { 2, 8, 16 };
+        string[] values = { "FF", "81", "03", "11", "8F", "01", "1C", "111",
                           "123", "18A" };
 
-      // Convert to each supported base.
-      foreach (int baseValue in baseValues)
-      {
-         Console.WriteLine("Converting strings in base {0}:", baseValue);
-         foreach (string value in values)
-         {
-            Console.Write("   '{0,-5}  -->  ", value + "'");
-            try {
-               Console.WriteLine(Convert.ToSByte(value, baseValue));
+        // Convert to each supported base.
+        foreach (int baseValue in baseValues)
+        {
+            Console.WriteLine($"Converting strings in base {baseValue}:");
+            foreach (string value in values)
+            {
+                Console.Write($"   '{value + "'",-5}  -->  ");
+                try
+                {
+                    Console.WriteLine(Convert.ToSByte(value, baseValue));
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Bad Format");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Out of Range");
+                }
             }
-            catch (FormatException) {
-               Console.WriteLine("Bad Format");
-            }
-            catch (OverflowException) {
-               Console.WriteLine("Out of Range");
-            }
-         }
-         Console.WriteLine();
-      }
-   }
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //       Converting strings in base 2:

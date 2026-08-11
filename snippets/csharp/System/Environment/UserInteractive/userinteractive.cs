@@ -6,8 +6,8 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-    Console.WriteLine("UserInteractive: {0}", Environment.UserInteractive);
+        Console.WriteLine();
+        Console.WriteLine($"UserInteractive: {Environment.UserInteractive}");
     }
 }
 /*

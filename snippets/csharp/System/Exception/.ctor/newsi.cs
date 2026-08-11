@@ -10,47 +10,44 @@ namespace NDP_UE_CS
         const string overflowMessage =
             "The log table has overflowed.";
 
-        public LogTableOverflowException( ) :
-            base( overflowMessage )
+        public LogTableOverflowException() :
+            base(overflowMessage)
         { }
 
-        public LogTableOverflowException( string auxMessage ) :
-            base( String.Format( "{0} - {1}",
-                overflowMessage, auxMessage ) )
+        public LogTableOverflowException(string auxMessage) :
+            base($"{overflowMessage} - {auxMessage}")
         { }
 
         public LogTableOverflowException(
-            string auxMessage, Exception inner ) :
-                base( String.Format( "{0} - {1}",
-                    overflowMessage, auxMessage ), inner )
+            string auxMessage, Exception inner) :
+                base($"{overflowMessage} - {auxMessage}", inner)
         { }
     }
 
     class LogTable
     {
-        public LogTable( int numElements )
+        public LogTable(int numElements)
         {
-            logArea = new string[ numElements ];
+            logArea = new string[numElements];
             elemInUse = 0;
         }
 
-        protected string[ ] logArea;
-        protected int       elemInUse;
+        protected string[] logArea;
+        protected int elemInUse;
 
         // The AddRecord method throws a derived exception
         // if the array bounds exception is caught.
-        public    int       AddRecord( string newRecord )
+        public int AddRecord(string newRecord)
         {
             try
             {
-                logArea[ elemInUse ] = newRecord;
+                logArea[elemInUse] = newRecord;
                 return elemInUse++;
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
                 throw new LogTableOverflowException(
-                    String.Format( "Record \"{0}\" was not logged.",
-                        newRecord ), ex );
+                    $"Record \"{newRecord}\" was not logged.", ex);
             }
         }
     }
@@ -60,26 +57,25 @@ namespace NDP_UE_CS
         // Create a log table and force an overflow.
         public static void Main()
         {
-            LogTable log = new LogTable( 4 );
+            LogTable log = new(4);
 
             Console.WriteLine(
                 "This example of the Exception( string, Exception )" +
-                "\nconstructor generates the following output." );
+                "\nconstructor generates the following output.");
             Console.WriteLine(
                 "\nExample of a derived exception " +
-                "that references an inner exception:\n" );
+                "that references an inner exception:\n");
             try
             {
-                for( int count = 1; ; count++ )
+                for (int count = 1; ; count++)
                 {
                     log.AddRecord(
-                        String.Format(
-                            "Log record number {0}", count ) );
+                        $"Log record number {count}");
                 }
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
-                Console.WriteLine( ex.ToString( ) );
+                Console.WriteLine(ex.ToString());
             }
         }
     }

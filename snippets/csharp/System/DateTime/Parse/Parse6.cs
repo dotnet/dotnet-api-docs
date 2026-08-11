@@ -2,9 +2,9 @@
 
 public class Example
 {
-   public static void Main()
-   {
-      (string dateAsString, string description)[]  dateInfo = { ("08/18/2018 07:22:16", "String with a date and time component"),
+    public static void Main()
+    {
+        (string dateAsString, string description)[] dateInfo = { ("08/18/2018 07:22:16", "String with a date and time component"),
                                                                 ("08/18/2018", "String with a date component only"),
                                                                 ("8/2018", "String with a month and year component only"),
                                                                 ("8/18", "String with a month and day component only"),
@@ -15,12 +15,13 @@ public class Example
                                                                 ("Sat, 18 Aug 2018 07:22:16 GMT", "String that conforms to RFC 1123"),
                                                                 ("08/18/2018 07:22:16 -5:00", "String with date, time, and time zone information" ) };
 
-      Console.WriteLine($"Today is {DateTime.Now:d}\n");
+        Console.WriteLine($"Today is {DateTime.Now:d}\n");
 
-      foreach (var item in dateInfo) {
-         Console.WriteLine($"{item.description + ":",-52} '{item.dateAsString}' --> {DateTime.Parse(item.dateAsString)}");
-      }
-   }
+        foreach (var item in dateInfo)
+        {
+            Console.WriteLine($"{item.description + ":",-52} '{item.dateAsString}' --> {DateTime.Parse(item.dateAsString)}");
+        }
+    }
 }
 // The example displays output like the following:
 //   Today is 2/22/2018
