@@ -7,16 +7,13 @@ namespace NDP_UE_CS
     // Create the derived exception class.
     class SecondLevelException : Exception
     {
-        const int SecondLevelHResult = unchecked( (int)0x81234567 );
+        const int SecondLevelHResult = unchecked((int)0x81234567);
 
         // Set HResult for this exception, and include it in
         // the exception message.
-        public SecondLevelException( string message, Exception inner ) :
-            base( string.Format( "(HRESULT:0x{1:X8}) {0}",
-                message, SecondLevelHResult ), inner )
-        {
-            HResult = SecondLevelHResult;
-        }
+        public SecondLevelException(string message, Exception inner) :
+            base(string.Format("(HRESULT:0x{1:X8}) {0}",
+                message, SecondLevelHResult), inner) => HResult = SecondLevelHResult;
     }
 
     class HResultDemo
@@ -29,19 +26,19 @@ namespace NDP_UE_CS
             {
                 try
                 {
-                    int  zero = 0;
-                    int  ecks = 1 / zero;
+                    int zero = 0;
+                    int ecks = 1 / zero;
                 }
-                catch( Exception ex )
+                catch (Exception ex)
                 {
                     throw new SecondLevelException(
                         "Forced a division by 0 and threw " +
-                        "a second exception.", ex );
+                        "a second exception.", ex);
                 }
             }
-            catch( Exception ex )
+            catch (Exception ex)
             {
-                Console.WriteLine( ex.ToString( ) );
+                Console.WriteLine(ex.ToString());
             }
         }
     }

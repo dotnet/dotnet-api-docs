@@ -1,13 +1,14 @@
 ﻿// <Snippet1>
 using System;
 
-public class EnumSample {
-    enum Colors {Red = 1, Blue = 2};
+public class EnumSample
+{
+    enum Colors { Red = 1, Blue = 2 };
 
-    public static void Main() {
+    public static void Main()
+    {
         Enum myColors = Colors.Red;
-        Console.WriteLine("The value of this instance is '{0}'",
-           myColors.ToString());
+        Console.WriteLine($"The value of this instance is '{myColors.ToString()}'");
     }
 }
 /*
