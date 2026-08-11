@@ -1,6 +1,6 @@
 ﻿//<Snippet1>
 using System;
-using System.Reflection;
+
 using System.Runtime.ExceptionServices;
 
 class FirstChanceExceptionSnippet
@@ -12,7 +12,7 @@ class FirstChanceExceptionSnippet
         // Create a set of application domains, with a Worker object in each one.
         // Each Worker object creates the next application domain.
         AppDomain ad = AppDomain.CreateDomain("AD0");
-        Worker w = (Worker) ad.CreateInstanceAndUnwrap(
+        Worker w = (Worker)ad.CreateInstanceAndUnwrap(
                                 typeof(Worker).Assembly.FullName, "Worker");
         w.Initialize(0, 3);
 
@@ -29,16 +29,11 @@ class FirstChanceExceptionSnippet
         }
         catch (ArgumentException ex)
         {
-            Console.WriteLine("ArgumentException caught in {0}: {1}",
-                AppDomain.CurrentDomain.FriendlyName, ex.Message);
+            Console.WriteLine($"ArgumentException caught in {AppDomain.CurrentDomain.FriendlyName}: {ex.Message}");
         }
     }
 
-    static void FirstChanceHandler(object source, FirstChanceExceptionEventArgs e)
-    {
-        Console.WriteLine("FirstChanceException event raised in {0}: {1}",
-            AppDomain.CurrentDomain.FriendlyName, e.Exception.Message);
-    }
+    static void FirstChanceHandler(object source, FirstChanceExceptionEventArgs e) => Console.WriteLine($"FirstChanceException event raised in {AppDomain.CurrentDomain.FriendlyName}: {e.Exception.Message}");
 }
 
 public class Worker : MarshalByRefObject
@@ -62,7 +57,7 @@ public class Worker : MarshalByRefObject
         {
             int next = count + 1;
             ad = AppDomain.CreateDomain("AD" + next);
-            w = (Worker) ad.CreateInstanceAndUnwrap(
+            w = (Worker)ad.CreateInstanceAndUnwrap(
                              typeof(Worker).Assembly.FullName, "Worker");
             w.Initialize(next, max);
         }
@@ -85,8 +80,7 @@ public class Worker : MarshalByRefObject
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine("ArgumentException caught in {0}: {1}",
-                    AppDomain.CurrentDomain.FriendlyName, ex.Message);
+                Console.WriteLine($"ArgumentException caught in {AppDomain.CurrentDomain.FriendlyName}: {ex.Message}");
             }
         }
         else
@@ -95,11 +89,7 @@ public class Worker : MarshalByRefObject
         }
     }
 
-    static void FirstChanceHandler(object source, FirstChanceExceptionEventArgs e)
-    {
-        Console.WriteLine("FirstChanceException event raised in {0}: {1}",
-            AppDomain.CurrentDomain.FriendlyName, e.Exception.Message);
-    }
+    static void FirstChanceHandler(object source, FirstChanceExceptionEventArgs e) => Console.WriteLine($"FirstChanceException event raised in {AppDomain.CurrentDomain.FriendlyName}: {e.Exception.Message}");
 }
 
 /* This example produces output similar to the following:

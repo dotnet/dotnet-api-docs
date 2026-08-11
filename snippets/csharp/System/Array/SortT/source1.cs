@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class ReverseComparer: IComparer<string>
+public class ReverseComparer : IComparer<string>
 {
     public int Compare(string x, string y)
     {
@@ -23,7 +23,7 @@ public class Example
                               "Albertasaurus"};
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -32,18 +32,18 @@ public class Example
         Array.Sort(dinosaurs, 3, 3);
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
 
-        ReverseComparer rc = new ReverseComparer();
+        ReverseComparer rc = new();
 
         Console.WriteLine("\nSort(dinosaurs, 3, 3, rc)");
         Array.Sort(dinosaurs, 3, 3, rc);
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }

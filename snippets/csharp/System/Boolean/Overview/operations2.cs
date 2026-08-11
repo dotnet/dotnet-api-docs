@@ -1,21 +1,22 @@
-// <Snippet13>
+﻿// <Snippet13>
 using System;
 
 public class Example6
 {
-   public static void Main()
-   {
-      bool[] hasServiceCharges = { true, false };
-      Decimal subtotal = 120.62m;
-      Decimal shippingCharge = 2.50m;
-      Decimal serviceCharge = 5.00m;
+    public static void Main()
+    {
+        bool[] hasServiceCharges = { true, false };
+        decimal subtotal = 120.62m;
+        decimal shippingCharge = 2.50m;
+        decimal serviceCharge = 5.00m;
 
-      foreach (var hasServiceCharge in hasServiceCharges) {
-         Decimal total = subtotal + shippingCharge +
-                                (hasServiceCharge ? serviceCharge : 0);
-         Console.WriteLine($"hasServiceCharge = {hasServiceCharge}: The total is {total:C2}.");
-      }
-   }
+        foreach (bool hasServiceCharge in hasServiceCharges)
+        {
+            decimal total = subtotal + shippingCharge +
+                                   (hasServiceCharge ? serviceCharge : 0);
+            Console.WriteLine($"hasServiceCharge = {hasServiceCharge}: The total is {total:C2}.");
+        }
+    }
 }
 // The example displays output like the following:
 //       hasServiceCharge = True: The total is $128.12.

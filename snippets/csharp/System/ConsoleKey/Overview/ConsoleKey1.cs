@@ -4,49 +4,55 @@ using System.Text;
 
 public class ConsoleKeyExample
 {
-   public static void Main()
-   {
-      ConsoleKeyInfo input;
-      do {
-         Console.WriteLine("Press a key, together with Alt, Ctrl, or Shift.");
-         Console.WriteLine("Press Esc to exit.");
-         input = Console.ReadKey(true);
+    public static void Main()
+    {
+        ConsoleKeyInfo input;
+        do
+        {
+            Console.WriteLine("Press a key, together with Alt, Ctrl, or Shift.");
+            Console.WriteLine("Press Esc to exit.");
+            input = Console.ReadKey(true);
 
-         StringBuilder output = new StringBuilder(
-                       String.Format("You pressed {0}", input.Key.ToString()));
-         bool modifiers = false;
+            StringBuilder output = new(
+                          $"You pressed {input.Key.ToString()}");
+            bool modifiers = false;
 
-         if (input.Modifiers.HasFlag(ConsoleModifiers.Alt)) {
-            output.Append(", together with " + ConsoleModifiers.Alt.ToString());
-            modifiers = true;
-         }
-         if (input.Modifiers.HasFlag(ConsoleModifiers.Control))
-         {
-            if (modifiers) {
-               output.Append(" and ");
+            if (input.Modifiers.HasFlag(ConsoleModifiers.Alt))
+            {
+                output.Append(", together with " + ConsoleModifiers.Alt.ToString());
+                modifiers = true;
             }
-            else {
-               output.Append(", together with ");
-               modifiers = true;
+            if (input.Modifiers.HasFlag(ConsoleModifiers.Control))
+            {
+                if (modifiers)
+                {
+                    output.Append(" and ");
+                }
+                else
+                {
+                    output.Append(", together with ");
+                    modifiers = true;
+                }
+                output.Append(ConsoleModifiers.Control.ToString());
             }
-            output.Append(ConsoleModifiers.Control.ToString());
-         }
-         if (input.Modifiers.HasFlag(ConsoleModifiers.Shift))
-         {
-            if (modifiers) {
-               output.Append(" and ");
+            if (input.Modifiers.HasFlag(ConsoleModifiers.Shift))
+            {
+                if (modifiers)
+                {
+                    output.Append(" and ");
+                }
+                else
+                {
+                    output.Append(", together with ");
+                    modifiers = true;
+                }
+                output.Append(ConsoleModifiers.Shift.ToString());
             }
-            else {
-               output.Append(", together with ");
-               modifiers = true;
-            }
-            output.Append(ConsoleModifiers.Shift.ToString());
-         }
-         output.Append(".");
-         Console.WriteLine(output.ToString());
-         Console.WriteLine();
-      } while (input.Key != ConsoleKey.Escape);
-   }
+            output.Append(".");
+            Console.WriteLine(output.ToString());
+            Console.WriteLine();
+        } while (input.Key != ConsoleKey.Escape);
+    }
 }
 // The output from a sample console session might appear as follows:
 //       Press a key, together with Alt, Ctrl, or Shift.

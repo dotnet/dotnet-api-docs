@@ -4,13 +4,13 @@ public class Example
 {
     public static void Main()
     {
-//<Snippet1>
+        //<Snippet1>
         Array myArray = new int[] { 1, 2, 4 };
-        lock(myArray.SyncRoot)
+        lock (myArray.SyncRoot)
         {
-            foreach (Object item in myArray)
+            foreach (object item in myArray)
                 Console.WriteLine(item);
         }
-//</Snippet1>
+        //</Snippet1>
     }
 }
