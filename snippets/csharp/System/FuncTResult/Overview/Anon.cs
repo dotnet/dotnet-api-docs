@@ -2,11 +2,11 @@
 using System;
 using System.IO;
 
-public class Anonymous
+public class AnonymousMethodExample
 {
-    public static void Main()
+    public static void Run()
     {
-        OutputTarget output = new();
+        AnonymousOutputTarget output = new();
         Func<bool> methodCall = delegate () { return output.SendToFile(); };
         if (methodCall())
             Console.WriteLine("Success!");
@@ -15,7 +15,7 @@ public class Anonymous
     }
 }
 
-public class OutputTarget
+public class AnonymousOutputTarget
 {
     public bool SendToFile()
     {

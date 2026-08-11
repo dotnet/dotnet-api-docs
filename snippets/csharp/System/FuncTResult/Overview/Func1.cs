@@ -2,11 +2,11 @@
 using System;
 using System.IO;
 
-public class TestDelegate
+public class FuncDelegateExample
 {
-    public static void Main()
+    public static void Run()
     {
-        OutputTarget output = new();
+        FuncDelegateOutputTarget output = new();
         Func<bool> methodCall = output.SendToFile;
         if (methodCall())
             Console.WriteLine("Success!");
@@ -15,7 +15,7 @@ public class TestDelegate
     }
 }
 
-public class OutputTarget
+public class FuncDelegateOutputTarget
 {
     public bool SendToFile()
     {

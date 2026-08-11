@@ -1,7 +1,7 @@
 ﻿//<Snippet1>
 using System;
 
-class Example
+class FlagsFormattingExample
 {
     // Define an Enum without FlagsAttribute.
     enum SingleHue : short
@@ -24,7 +24,7 @@ class Example
         Blue = 8
     };
 
-    static void Main()
+    public static void Run()
     {
         // Display all possible combinations of values.
         Console.WriteLine(

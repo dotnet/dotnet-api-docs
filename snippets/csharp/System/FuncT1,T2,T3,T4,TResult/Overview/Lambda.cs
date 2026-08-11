@@ -1,9 +1,9 @@
 ﻿// <Snippet4>
 using System;
 
-public class DelegateExample
+public class LambdaDelegateExample
 {
-    public static void Main()
+    public static void Run()
     {
         string title = "The House of the Seven Gables";
         int position = 0;

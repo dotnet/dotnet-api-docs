@@ -12,9 +12,9 @@ public enum PhoneService
     Other = 16
 }
 
-public class Example
+public class PhoneServiceExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Define three variables representing the types of phone service
         // in three households.

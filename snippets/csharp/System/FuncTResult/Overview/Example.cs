@@ -1,9 +1,9 @@
 ﻿// <Snippet5>
 using System;
 
-static class Func1
+static class LazyValueExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Note that each lambda expression has no parameters.
         LazyValue<int> lazyOne = new(() => ExpensiveOne());

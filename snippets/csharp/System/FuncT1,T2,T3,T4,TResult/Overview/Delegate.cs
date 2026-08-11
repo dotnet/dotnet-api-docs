@@ -4,9 +4,9 @@ using System;
 delegate int Searcher(string searchString, int start, int count,
                          StringComparison type);
 
-public class DelegateExample
+public class NamedDelegateExample
 {
-    public static void Main()
+    public static void Run()
     {
         string title = "The House of the Seven Gables";
         int position = 0;

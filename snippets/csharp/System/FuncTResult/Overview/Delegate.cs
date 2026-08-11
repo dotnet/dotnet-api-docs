@@ -4,11 +4,11 @@ using System.IO;
 
 delegate bool WriteMethod();
 
-public class TestDelegate
+public class CustomDelegateExample
 {
-    public static void Main()
+    public static void Run()
     {
-        OutputTarget output = new();
+        CustomDelegateOutputTarget output = new();
         WriteMethod methodCall = output.SendToFile;
         if (methodCall())
             Console.WriteLine("Success!");
@@ -17,7 +17,7 @@ public class TestDelegate
     }
 }
 
-public class OutputTarget
+public class CustomDelegateOutputTarget
 {
     public bool SendToFile()
     {
