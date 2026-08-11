@@ -1,5 +1,5 @@
 ---
-name: dotnet-snippet-modernization
+name: csharp-snippet-modernization
 description: Modernize C# API-reference snippets while preserving the documented API, output, and snippet structure.
 ---
 
