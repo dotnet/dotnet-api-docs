@@ -3,28 +3,31 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] hexStrings = { "8000", "0FFF", "f000", "00A30", "D", "-13",
+    public static void Main()
+    {
+        string[] hexStrings = { "8000", "0FFF", "f000", "00A30", "D", "-13",
                               "9AC61", "GAD" };
-      foreach (string hexString in hexStrings)
-      {
-         try {
-            short number = Convert.ToInt16(hexString, 16);
-            Console.WriteLine("Converted '{0}' to {1:N0}.", hexString, number);
-         }
-         catch (FormatException) {
-            Console.WriteLine("'{0}' is not in the correct format for a hexadecimal number.",
-                              hexString);
-         }
-         catch (OverflowException) {
-            Console.WriteLine("'{0}' is outside the range of an Int16.", hexString);
-         }
-         catch (ArgumentException) {
-            Console.WriteLine("'{0}' is invalid in base 16.", hexString);
-         }
-      }
-   }
+        foreach (string hexString in hexStrings)
+        {
+            try
+            {
+                short number = Convert.ToInt16(hexString, 16);
+                Console.WriteLine($"Converted '{hexString}' to {number:N0}.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"'{hexString}' is not in the correct format for a hexadecimal number.");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"'{hexString}' is outside the range of an Int16.");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine($"'{hexString}' is invalid in base 16.");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       Converted '8000' to -32,768.
