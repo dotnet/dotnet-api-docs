@@ -1,8 +1,8 @@
-﻿// <Snippet1>
-using System;
+﻿using System;
 
 public class Example
 {
+    // <Snippet1>
     public static void Main()
     {
         Tuple<string, double, int>[] scores =
@@ -24,7 +24,7 @@ public class Example
         double sum = 0;
 
         // Compute the mean.
-        foreach (var score in scores)
+        foreach (Tuple<string, double, int> score in scores)
         {
             n += score.Item3;
             sum += score.Item2 * score.Item3;
@@ -33,14 +33,16 @@ public class Example
 
         // Compute the standard deviation.
         double ss = 0;
-        foreach (var score in scores)
+        foreach (Tuple<string, double, int> score in scores)
         {
-            ss = Math.Pow(score.Item2 - mean, 2);
+            ss += Math.Pow(score.Item2 - mean, 2);
         }
         double sd = Math.Sqrt(ss / scores.Length);
         return Tuple.Create(scores.Length, mean, sd);
     }
+
+    // The example displays the following output:
+    //       Mean score: 87.02 (SD=8.18) (n=8)
+
+    // </Snippet1>
 }
-// The example displays the following output:
-//       Mean score: 87.02 (SD=0.96) (n=8)
-// </Snippet1>
