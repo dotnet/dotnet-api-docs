@@ -8,58 +8,57 @@ class Sample
 {
     public static void Main()
     {
-    byte[] byteArray1 = new byte[256];
-    byte[] byteArray2 = new byte[256];
-    char[] charArray  = new char[352];
-    int charArrayLength;
-    string nl = Environment.NewLine;
+        byte[] byteArray1 = new byte[256];
+        byte[] byteArray2 = new byte[256];
+        char[] charArray = new char[352];
+        int charArrayLength;
+        string nl = Environment.NewLine;
 
-    string ruler1a = "         1         2         3         4";
-    string ruler2a = "1234567890123456789012345678901234567890";
-    string ruler3a = "----+----+----+----+----+----+----+----+";
-    string ruler1b = "         5         6         7      ";
-    string ruler2b = "123456789012345678901234567890123456";
-    string ruler3b = "----+----+----+----+----+----+----+-";
-    string ruler   = String.Concat(ruler1a, ruler1b, nl,
-                                   ruler2a, ruler2b, nl,
-                                   ruler3a, ruler3b);
+        string ruler1a = "         1         2         3         4";
+        string ruler2a = "1234567890123456789012345678901234567890";
+        string ruler3a = "----+----+----+----+----+----+----+----+";
+        string ruler1b = "         5         6         7      ";
+        string ruler2b = "123456789012345678901234567890123456";
+        string ruler3b = "----+----+----+----+----+----+----+-";
+        string ruler = string.Concat(ruler1a, ruler1b, nl,
+                                       ruler2a, ruler2b, nl,
+                                       ruler3a, ruler3b);
 
-// 1) Initialize and display a Byte array of arbitrary data.
-    Console.WriteLine("1) Input: A Byte array of arbitrary data.{0}", nl);
-    for (int x = 0; x < byteArray1.Length; x++)
-    {
-    byteArray1[x] = (byte)x;
-    Console.Write("{0:X2} ", byteArray1[x]);
-    if (((x+1)%20) == 0) Console.WriteLine();
-    }
-    Console.Write("{0}{0}", nl);
+        // 1) Initialize and display a Byte array of arbitrary data.
+        Console.WriteLine($"1) Input: A Byte array of arbitrary data.{nl}");
+        for (int x = 0; x < byteArray1.Length; x++)
+        {
+            byteArray1[x] = (byte)x;
+            Console.Write($"{byteArray1[x]:X2} ");
+            if (((x + 1) % 20) == 0) Console.WriteLine();
+        }
+        Console.Write("{0}{0}", nl);
 
-// 2) Convert the input Byte array to a Char array, with newlines inserted.
-    charArrayLength =
-        Convert.ToBase64CharArray(byteArray1, 0, byteArray1.Length,
-                                   charArray, 0, Base64FormattingOptions.InsertLineBreaks);
-    Console.WriteLine("2) Convert the input Byte array to a Char array with newlines.");
-    Console.Write("   Output: A Char array (length = {0}). ", charArrayLength);
-    Console.WriteLine("The elements of the array are:{0}", nl);
-    Console.WriteLine(ruler);
-    Console.WriteLine(new String(charArray));
-    Console.WriteLine();
+        // 2) Convert the input Byte array to a Char array, with newlines inserted.
+        charArrayLength =
+            Convert.ToBase64CharArray(byteArray1, 0, byteArray1.Length,
+                                       charArray, 0, Base64FormattingOptions.InsertLineBreaks);
+        Console.WriteLine("2) Convert the input Byte array to a Char array with newlines.");
+        Console.Write($"   Output: A Char array (length = {charArrayLength}). ");
+        Console.WriteLine($"The elements of the array are:{nl}");
+        Console.WriteLine(ruler);
+        Console.WriteLine(new string(charArray));
+        Console.WriteLine();
 
-// 3) Convert the Char array back to a Byte array.
-    Console.WriteLine("3) Convert the Char array to an output Byte array.");
-    byteArray2 = Convert.FromBase64CharArray(charArray, 0, charArrayLength);
+        // 3) Convert the Char array back to a Byte array.
+        Console.WriteLine("3) Convert the Char array to an output Byte array.");
+        byteArray2 = Convert.FromBase64CharArray(charArray, 0, charArrayLength);
 
-// 4) Are the input and output Byte arrays equivalent?
-    Console.WriteLine("4) The output Byte array is equal to the input Byte array: {0}",
-                      ArraysAreEqual(byteArray1, byteArray2));
+        // 4) Are the input and output Byte arrays equivalent?
+        Console.WriteLine($"4) The output Byte array is equal to the input Byte array: {ArraysAreEqual(byteArray1, byteArray2)}");
     }
 
     public static bool ArraysAreEqual(byte[] a1, byte[] a2)
     {
-    if (a1.Length != a2.Length) return false;
-    for (int i = 0; i < a1.Length; i++)
-        if (a1[i] != a2[i]) return false;
-    return true;
+        if (a1.Length != a2.Length) return false;
+        for (int i = 0; i < a1.Length; i++)
+            if (a1[i] != a2[i]) return false;
+        return true;
     }
 }
 /*

@@ -15,7 +15,7 @@ public class Example01
         catch (ArgumentOutOfRangeException e)
         {
             if (e.ActualValue != null)
-                Console.WriteLine("{0} is an invalid value for {1}: ", e.ActualValue, e.ParamName);
+                Console.WriteLine($"{e.ActualValue} is an invalid value for {e.ParamName}: ");
             Console.WriteLine(e.Message);
         }
     }

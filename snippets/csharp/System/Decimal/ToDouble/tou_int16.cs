@@ -7,15 +7,15 @@ class DecimalToU_Int16Demo
     const string formatter = "{0,16}{1,19}{2,19}";
 
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Convert the decimal argument; catch exceptions that are thrown.
-    public static void DecimalToU_Int16( decimal argument )
+    public static void DecimalToU_Int16(decimal argument)
     {
         object Int16Value;
         object UInt16Value;
@@ -23,51 +23,51 @@ class DecimalToU_Int16Demo
         // Convert the argument to a short value.
         try
         {
-            Int16Value = decimal.ToInt16( argument );
+            Int16Value = decimal.ToInt16(argument);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            Int16Value = GetExceptionType( ex );
+            Int16Value = GetExceptionType(ex);
         }
 
         // Convert the argument to a ushort value.
         try
         {
-            UInt16Value = decimal.ToUInt16( argument );
+            UInt16Value = decimal.ToUInt16(argument);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            UInt16Value = GetExceptionType( ex );
+            UInt16Value = GetExceptionType(ex);
         }
 
-        Console.WriteLine( formatter, argument,
-            Int16Value, UInt16Value );
+        Console.WriteLine(formatter, argument,
+            Int16Value, UInt16Value);
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the \n" +
+        Console.WriteLine("This example of the \n" +
             "  decimal.ToInt16( decimal ) and \n" +
             "  decimal.ToUInt16( decimal ) \nmethods " +
             "generates the following output. It \ndisplays " +
-            "several converted decimal values.\n" );
-        Console.WriteLine( formatter, "decimal argument",
-            "short/exception", "ushort/exception" );
-        Console.WriteLine( formatter, "----------------",
-            "---------------", "----------------" );
+            "several converted decimal values.\n");
+        Console.WriteLine(formatter, "decimal argument",
+            "short/exception", "ushort/exception");
+        Console.WriteLine(formatter, "----------------",
+            "---------------", "----------------");
 
         // Convert decimal values and display the results.
-        DecimalToU_Int16( 123M );
-        DecimalToU_Int16( new decimal( 123000, 0, 0, false, 3 ) );
-        DecimalToU_Int16( 123.999M );
-        DecimalToU_Int16( 65535.999M );
-        DecimalToU_Int16( 65536M );
-        DecimalToU_Int16( 32767.999M );
-        DecimalToU_Int16( 32768M );
-        DecimalToU_Int16( - 0.999M );
-        DecimalToU_Int16( - 1M );
-        DecimalToU_Int16( - 32768.999M );
-        DecimalToU_Int16( - 32769M );
+        DecimalToU_Int16(123M);
+        DecimalToU_Int16(new decimal(123000, 0, 0, false, 3));
+        DecimalToU_Int16(123.999M);
+        DecimalToU_Int16(65535.999M);
+        DecimalToU_Int16(65536M);
+        DecimalToU_Int16(32767.999M);
+        DecimalToU_Int16(32768M);
+        DecimalToU_Int16(-0.999M);
+        DecimalToU_Int16(-1M);
+        DecimalToU_Int16(-32768.999M);
+        DecimalToU_Int16(-32769M);
     }
 }
 
