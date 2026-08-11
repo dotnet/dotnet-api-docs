@@ -17,7 +17,7 @@ class Example
 
     private static void ShowPopulationChange(int year, int newPopulation, int oldPopulation) => Console.WriteLine($"{year,5}  {newPopulation,14:N0}  {((double)(newPopulation - oldPopulation) / oldPopulation) / 10,10:P2}");
 
-    private static void ShowPopulation(int year, int newPopulation) => Console.WriteLine($"{year,5}  {newPopulation,14:N0}  {"n/a",10:P2}");
+    private static void ShowPopulation(int year, int newPopulation) => Console.WriteLine($"{year,5}  {newPopulation,14:N0}  {"n/a",10}");
 }
 // The example displays the following output:
 //   (Detroit, 1860, 45619, 79577, 116340, 205876, 285704, 465766, 993078,
