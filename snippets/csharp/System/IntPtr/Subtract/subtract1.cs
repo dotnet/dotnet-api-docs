@@ -6,7 +6,7 @@ public class Example
 {
     public static void Main()
     {
-        int[] arr = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+        int[] arr = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
         // Get the size of a single array element.
         int size = sizeof(int);
         unsafe
@@ -23,6 +23,8 @@ public class Example
         }
     }
 }
+
 // The example displays the following output:
 //       20   18   16   14   12   10   8   6   4   2
+
 // </Snippet1>

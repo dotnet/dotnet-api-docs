@@ -6,7 +6,7 @@ public class Example
 {
     public static void Main()
     {
-        int[] arr = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+        int[] arr = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
         unsafe
         {
             fixed (int* parr = arr)
@@ -23,6 +23,8 @@ public class Example
         }
     }
 }
+
 // The example displays the following output:
 //       2   4   6   8   10   12   14   16   18   20
+
 // </Snippet1>
