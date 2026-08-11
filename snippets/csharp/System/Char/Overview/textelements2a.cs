@@ -1,4 +1,4 @@
-﻿// <Snippet4>
+// <Snippet4>
 using System;
 using System.Globalization;
 
@@ -6,11 +6,11 @@ public class Example4
 {
     public static void Main()
     {
-        string result = string.Empty;
+        string result = String.Empty;
         for (int ctr = 0x10107; ctr <= 0x10110; ctr++)  // Range of Aegean numbers.
-            result += char.ConvertFromUtf32(ctr);
+            result += Char.ConvertFromUtf32(ctr);
 
-        StringInfo si = new(result);
+        StringInfo si = new StringInfo(result);
         Console.WriteLine($"The string contains {si.LengthInTextElements} characters.");
     }
 }

@@ -4,23 +4,22 @@ using System.Globalization;
 
 public class Example
 {
-    public static void Main()
-    {
-        CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),
+   public static void Main()
+   {
+      CultureInfo[] cultures= { CultureInfo.CreateSpecificCulture("en-US"),
                                 CultureInfo.InvariantCulture,
                                 CultureInfo.CreateSpecificCulture("tr-TR") };
-        char[] chars = { 'ä', 'e', 'E', 'i', 'I' };
+      Char[] chars = {'ä', 'e', 'E', 'i', 'I' };
 
-        Console.WriteLine("Character     en-US     Invariant     tr-TR");
-        foreach (char ch in chars)
-        {
-            Console.Write($"    {ch}");
-            foreach (var culture in cultures)
-                Console.Write($"{char.ToUpper(ch, culture),12}");
+      Console.WriteLine("Character     en-US     Invariant     tr-TR");
+      foreach (var ch in chars) {
+         Console.Write("    {0}", ch);
+         foreach (var culture in cultures)
+            Console.Write("{0,12}", Char.ToUpper(ch, culture));
 
-            Console.WriteLine();
-        }
-    }
+         Console.WriteLine();
+      }
+   }
 }
 // The example displays the following output:
 //       Character     en-US     Invariant     tr-TR

@@ -13,9 +13,9 @@ public class FormatConverter
         string lineInput;
         while ((lineInput = Console.ReadLine()) != null)
         {
-            string[] fields = lineInput.Split(new char[] { '\t' });
+            string[] fields = lineInput.Split(new char[] {'\t'});
             bool isFirstField = true;
-            foreach (string item in fields)
+            foreach (var item in fields)
             {
                 if (isFirstField)
                     isFirstField = false;
@@ -23,11 +23,11 @@ public class FormatConverter
                     Console.Write(',');
 
                 // If the field represents a boolean, replace with a numeric representation.
-                bool itemBool;
-                if (bool.TryParse(item, out itemBool))
-                    Console.Write(Convert.ToByte(itemBool));
-                else
-                    Console.Write(item);
+				bool itemBool;
+				if (Boolean.TryParse(item, out itemBool))
+					Console.Write(Convert.ToByte(itemBool));
+				else
+					Console.Write(item);
             }
             Console.WriteLine();
         }

@@ -3,22 +3,22 @@ using System;
 
 public class ControlChars
 {
-    public static void Main()
-    {
-        int charsWritten = 0;
+   public static void Main()
+   {
+      int charsWritten = 0;
 
-        for (int ctr = 0x00; ctr <= 0xFFFF; ctr++)
-        {
-            char ch = Convert.ToChar(ctr);
-            if (char.IsControl(ch))
-            {
-                Console.Write($"\\U{ctr:X4}    ");
-                charsWritten++;
-                if (charsWritten % 6 == 0)
-                    Console.WriteLine();
-            }
-        }
-    }
+      for (int ctr = 0x00; ctr <= 0xFFFF; ctr++)
+      {
+         char ch = Convert.ToChar(ctr);
+         if (char.IsControl(ch))
+         {
+            Console.Write(@"\U{0:X4}    ", ctr);
+            charsWritten++;
+            if (charsWritten % 6 == 0)
+               Console.WriteLine();
+         }
+      }
+   }
 }
 // The example displays the following output to the console:
 //       \U0000    \U0001    \U0002    \U0003    \U0004    \U0005

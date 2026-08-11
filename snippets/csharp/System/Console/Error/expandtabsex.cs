@@ -23,28 +23,24 @@ public class ExpandTabs
     {
         StreamWriter writer = null;
 
-        if (args.Length < 2)
-        {
+        if (args.Length < 2) {
             Console.WriteLine(usageText);
             return;
         }
 
-        try
-        {
-            writer = new(args[1]);
+        try {
+            writer = new StreamWriter(args[1]);
             Console.SetOut(writer);
             Console.SetIn(new StreamReader(args[0]));
         }
-        catch (IOException e)
-        {
+        catch(IOException e) {
             TextWriter errorWriter = Console.Error;
             errorWriter.WriteLine(e.Message);
             errorWriter.WriteLine(usageText);
             return;
         }
         int i;
-        while ((i = Console.Read()) != -1)
-        {
+        while ((i = Console.Read()) != -1) {
             char c = (char)i;
             if (c == '\t')
                 Console.Write(("").PadRight(tabSize, ' '));
@@ -54,12 +50,10 @@ public class ExpandTabs
         writer.Close();
         // Recover the standard output stream so that a
         // completion message can be displayed.
-        StreamWriter standardOutput = new(Console.OpenStandardOutput())
-        {
-            AutoFlush = true
-        };
+        StreamWriter standardOutput = new StreamWriter(Console.OpenStandardOutput());
+        standardOutput.AutoFlush = true;
         Console.SetOut(standardOutput);
-        Console.WriteLine($"EXPANDTABSEX has completed the processing of {args[0]}.");
+        Console.WriteLine("EXPANDTABSEX has completed the processing of {0}.", args[0]);
         return;
     }
 }

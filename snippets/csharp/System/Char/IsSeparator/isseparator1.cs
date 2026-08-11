@@ -3,15 +3,15 @@ using System;
 
 public class Class1
 {
-    public static void Main()
-    {
-        for (int ctr = (int)(char.MinValue); ctr <= (int)(char.MaxValue); ctr++)
-        {
-            char ch = (char)ctr;
-            if (char.IsSeparator(ch))
-                Console.WriteLine(@"\u{(int)ch:X4} ({Char.GetUnicodeCategory(ch)})");
-        }
-    }
+   public static void Main()
+   {
+      for (int ctr = (int)(Char.MinValue); ctr <= (int)(Char.MaxValue); ctr++)
+      {
+         char ch = (Char)ctr;
+         if (Char.IsSeparator(ch))
+            Console.WriteLine(@"\u{(int)ch:X4} ({Char.GetUnicodeCategory(ch)})");
+      }
+   }
 }
 // The example displays the following output:
 //       \u0020 (SpaceSeparator)

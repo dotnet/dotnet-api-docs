@@ -1,11 +1,11 @@
-﻿//<snippet1>
+//<snippet1>
 // This code example demonstrates the Console.WriteLine() method.
 // Formatting for this example uses the "en-US" culture.
 
 using System;
 class Sample
 {
-    enum Color { Yellow = 1, Blue, Green };
+    enum Color {Yellow = 1, Blue, Green};
     static DateTime thisDate = DateTime.Now;
 
     public static void Main()

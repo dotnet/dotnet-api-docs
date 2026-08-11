@@ -1,13 +1,13 @@
-﻿// <Snippet3>
+// <Snippet3>
 using System;
 
 public class Example5
 {
     public static void Main()
     {
-        string result = string.Empty;
+        string result = String.Empty;
         for (int ctr = 0x10107; ctr <= 0x10110; ctr++)  // Range of Aegean numbers.
-            result += char.ConvertFromUtf32(ctr);
+            result += Char.ConvertFromUtf32(ctr);
 
         Console.WriteLine($"The string contains {result.Length} characters.");
     }

@@ -1,4 +1,4 @@
-﻿// This sample opens a file whose name is passed to it as a parameter.
+// This sample opens a file whose name is passed to it as a parameter.
 // It reads each line in the file and replaces every occurrence of 4
 // space characters with a tab character.
 //
@@ -45,7 +45,7 @@ public class InsertTabs
                 }
             }
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             TextWriter errorWriter = Console.Error;
             errorWriter.WriteLine(e.Message);
@@ -55,7 +55,8 @@ public class InsertTabs
 
         // Recover the standard output stream so that a
         // completion message can be displayed.
-        var standardOutput = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
+        var standardOutput = new StreamWriter(Console.OpenStandardOutput());
+        standardOutput.AutoFlush = true;
         Console.SetOut(standardOutput);
         Console.WriteLine($"INSERTTABS has completed the processing of {args[0]}.");
         return 0;

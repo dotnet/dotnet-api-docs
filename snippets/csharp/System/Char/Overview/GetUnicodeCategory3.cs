@@ -1,17 +1,17 @@
-﻿//<Snippet6>
+//<Snippet6>
 using System;
-
+using System.Globalization;
 
 class Example
 {
-    public static void Main()
-    {
-        // Define a string with a variety of character categories.
-        string s = "The red car drove down the long, narrow, secluded road.";
-        // Determine the category of each character.
-        foreach (char ch in s)
-            Console.WriteLine($"'{ch}': {char.GetUnicodeCategory(ch)}");
-    }
+   public static void Main()
+   {
+      // Define a string with a variety of character categories.
+      String s = "The red car drove down the long, narrow, secluded road.";
+      // Determine the category of each character.
+      foreach (var ch in s)
+         Console.WriteLine($"'{ch}': {Char.GetUnicodeCategory(ch)}");
+   }
 }
 // The example displays the following output:
 //      'T': UppercaseLetter

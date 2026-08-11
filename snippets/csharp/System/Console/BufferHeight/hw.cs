@@ -7,8 +7,10 @@ class Sample
 {
     public static void Main()
     {
-        Console.WriteLine($"The current buffer height is {Console.BufferHeight} rows.");
-        Console.WriteLine($"The current buffer width is {Console.BufferWidth} columns.");
+    Console.WriteLine("The current buffer height is {0} rows.",
+                      Console.BufferHeight);
+    Console.WriteLine("The current buffer width is {0} columns.",
+                      Console.BufferWidth);
     }
 }
 /*
