@@ -9,11 +9,10 @@ class Example
         uint[] values = { uint.MinValue, uint.MaxValue, 0xFFFFFF,
                           123456789, 4000000000 };
         // Convert each value to a Decimal.
-        foreach (var value in values) {
-           Decimal decValue = value;
-           Console.WriteLine("{0} ({1}) --> {2} ({3})", value,
-                             value.GetType().Name, decValue,
-                             decValue.GetType().Name);
+        foreach (uint value in values)
+        {
+            decimal decValue = value;
+            Console.WriteLine($"{value} ({value.GetType().Name}) --> {decValue} ({decValue.GetType().Name})");
         }
     }
 }

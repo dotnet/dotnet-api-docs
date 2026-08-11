@@ -6,9 +6,9 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-//  <-- Keep this information secure! -->
-    Console.WriteLine("UserName: {0}", Environment.UserName);
+        Console.WriteLine();
+        //  <-- Keep this information secure! -->
+        Console.WriteLine($"UserName: {Environment.UserName}");
     }
 }
 //</snippet1>

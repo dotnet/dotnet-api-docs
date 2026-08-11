@@ -14,22 +14,16 @@ public class Example
             "Compsognathus" };
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
 
-        Console.WriteLine(
-            "\nArray.IndexOf(dinosaurs, \"Tyrannosaurus\"): {0}",
-            Array.IndexOf(dinosaurs, "Tyrannosaurus"));
+        Console.WriteLine($"\nArray.IndexOf(dinosaurs, \"Tyrannosaurus\"): {Array.IndexOf(dinosaurs, "Tyrannosaurus")}");
 
-        Console.WriteLine(
-            "\nArray.IndexOf(dinosaurs, \"Tyrannosaurus\", 3): {0}",
-            Array.IndexOf(dinosaurs, "Tyrannosaurus", 3));
+        Console.WriteLine($"\nArray.IndexOf(dinosaurs, \"Tyrannosaurus\", 3): {Array.IndexOf(dinosaurs, "Tyrannosaurus", 3)}");
 
-        Console.WriteLine(
-            "\nArray.IndexOf(dinosaurs, \"Tyrannosaurus\", 2, 2): {0}",
-            Array.IndexOf(dinosaurs, "Tyrannosaurus", 2, 2));
+        Console.WriteLine($"\nArray.IndexOf(dinosaurs, \"Tyrannosaurus\", 2, 2): {Array.IndexOf(dinosaurs, "Tyrannosaurus", 2, 2)}");
 
         /* This code example produces the following output:
 

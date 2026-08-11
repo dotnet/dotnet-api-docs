@@ -15,7 +15,7 @@ namespace IsDef1CS
             // Get the assembly object.
             Assembly assy = clsType.Assembly;
             // Store the assembly's name.
-            String assyName = assy.GetName().Name;
+            string assyName = assy.GetName().Name;
             // See if the Assembly Description is defined.
             bool isdef = Attribute.IsDefined(assy,
                 typeof(AssemblyDescriptionAttribute));
@@ -30,8 +30,7 @@ namespace IsDef1CS
                     assy, typeof(AssemblyDescriptionAttribute));
                 // Display the description.
                 if (adAttr != null)
-                    Console.WriteLine("The description is \"{0}\".",
-                        adAttr.Description);
+                    Console.WriteLine($"The description is \"{adAttr.Description}\".");
                 else
                     Console.WriteLine("The description could not " +
                         "be retrieved.");

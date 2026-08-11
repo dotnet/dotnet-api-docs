@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,10 +14,10 @@ static class Func
         // Create an array of strings.
         string[] words = { "orange", "apple", "Article", "elephant" };
         // Query the array and select strings according to the selector method.
-        IEnumerable<String> aWords = words.Select(selector);
+        IEnumerable<string> aWords = words.Select(selector);
 
         // Output the results to the console.
-        foreach (String word in aWords)
+        foreach (string word in aWords)
             Console.WriteLine(word);
 
         /*

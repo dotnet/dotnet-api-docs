@@ -1,20 +1,22 @@
 ﻿//<snippet1>
 using System;
 
-public class GetNamesTest {
+public class GetNamesTest
+{
     enum Colors { Red, Green, Blue, Yellow };
     enum Styles { Plaid, Striped, Tartan, Corduroy };
 
-    public static void Main() {
+    public static void Main()
+    {
 
         Console.WriteLine("The members of the Colors enum are:");
-        foreach(string s in Enum.GetNames(typeof(Colors)))
+        foreach (string s in Enum.GetNames(typeof(Colors)))
             Console.WriteLine(s);
 
         Console.WriteLine();
 
         Console.WriteLine("The members of the Styles enum are:");
-        foreach(string s in Enum.GetNames(typeof(Styles)))
+        foreach (string s in Enum.GetNames(typeof(Styles)))
             Console.WriteLine(s);
     }
 }

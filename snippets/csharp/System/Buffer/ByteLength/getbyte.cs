@@ -7,61 +7,64 @@ class GetByteDemo
     const string formatter = "{0,10}{1,10}{2,9} {3}";
 
     // Display the array contents in hexadecimal.
-    public static void DisplayArray( Array arr, string name )
+    public static void DisplayArray(Array arr, string name)
     {
         // Get the array element width; format the formatting string.
-        int elemWidth = Buffer.ByteLength( arr ) / arr.Length;
-        string format = String.Format( " {{0:X{0}}}", 2 * elemWidth );
+        int elemWidth = Buffer.ByteLength(arr) / arr.Length;
+        string format = $" {{0:X{2 * elemWidth}}}";
 
         // Display the array elements from right to left.
-        Console.Write( "{0,5}:", name );
-        for( int loopX = arr.Length - 1; loopX >= 0; loopX-- )
-            Console.Write( format, arr.GetValue( loopX ) );
-        Console.WriteLine( );
+        Console.Write($"{name,5}:");
+        for (int loopX = arr.Length - 1; loopX >= 0; loopX--)
+        {
+            Console.Write(format, arr.GetValue(loopX));
+        }
+
+        Console.WriteLine();
     }
 
-    public static void ArrayInfo( Array arr, string name, int index )
+    public static void ArrayInfo(Array arr, string name, int index)
     {
-        byte value = Buffer.GetByte( arr, index );
+        byte value = Buffer.GetByte(arr, index);
 
         // Display the array name, index, and byte to be viewed.
-        Console.WriteLine( formatter, name, index, value,
-            String.Format( "0x{0:X2}", value ) );
+        Console.WriteLine(formatter, name, index, value,
+            $"0x{value:X2}");
     }
 
-    public static void Main( )
+    public static void Main()
     {
         // These are the arrays to be viewed with GetByte.
-        long[ ] longs =
+        long[] longs =
             { 333333333333333333, 666666666666666666, 999999999999999999 };
-        int[ ]  ints  =
+        int[] ints =
             { 111111111, 222222222, 333333333, 444444444, 555555555 };
 
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "Buffer.GetByte( Array, int ) \n" +
             "method generates the following output.\n" +
-            "Note: The arrays are displayed from right to left.\n" );
-        Console.WriteLine( "  Values of arrays:\n" );
+            "Note: The arrays are displayed from right to left.\n");
+        Console.WriteLine("  Values of arrays:\n");
 
         // Display the values of the arrays.
-        DisplayArray( longs, "longs" );
-        DisplayArray( ints, "ints" );
-        Console.WriteLine( );
+        DisplayArray(longs, "longs");
+        DisplayArray(ints, "ints");
+        Console.WriteLine();
 
-        Console.WriteLine( formatter, "Array", "index", "value", "" );
-        Console.WriteLine( formatter, "-----", "-----", "-----",
-            "----" );
+        Console.WriteLine(formatter, "Array", "index", "value", "");
+        Console.WriteLine(formatter, "-----", "-----", "-----",
+            "----");
 
         // Display the Length and ByteLength for each array.
-        ArrayInfo( ints, "ints", 0 );
-        ArrayInfo( ints, "ints", 7 );
-        ArrayInfo( ints, "ints", 10 );
-        ArrayInfo( ints, "ints", 17 );
-        ArrayInfo( longs, "longs", 0 );
-        ArrayInfo( longs, "longs", 6 );
-        ArrayInfo( longs, "longs", 10 );
-        ArrayInfo( longs, "longs", 17 );
-        ArrayInfo( longs, "longs", 21 );
+        ArrayInfo(ints, "ints", 0);
+        ArrayInfo(ints, "ints", 7);
+        ArrayInfo(ints, "ints", 10);
+        ArrayInfo(ints, "ints", 17);
+        ArrayInfo(longs, "longs", 0);
+        ArrayInfo(longs, "longs", 6);
+        ArrayInfo(longs, "longs", 10);
+        ArrayInfo(longs, "longs", 17);
+        ArrayInfo(longs, "longs", 21);
     }
 }
 

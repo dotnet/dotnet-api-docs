@@ -5,41 +5,41 @@ using System;
 class DecimalGetHashCodeDemo
 {
     // Display the decimal.GetHashCode argument and the result array.
-    public static void ShowDecimalGetHashCode( decimal Argument )
+    public static void ShowDecimalGetHashCode(decimal Argument)
     {
-        int hashCode = Argument.GetHashCode( );
+        int hashCode = Argument.GetHashCode();
 
-        Console.WriteLine( "{0,31}{1,14}  0x{1:X8}",
-            Argument, hashCode );
+        Console.WriteLine("{0,31}{1,14}  0x{1:X8}",
+            Argument, hashCode);
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "decimal.GetHashCode( ) method generates \nthe " +
             "following output. It displays the hash code of the \n" +
-            "decimal argument in decimal and hexadecimal.\n" );
-        Console.WriteLine( "{0,31}{1,14}", "Argument", "Hash Code" );
-        Console.WriteLine( "{0,31}{1,14}", "--------", "---------" );
+            "decimal argument in decimal and hexadecimal.\n");
+        Console.WriteLine($"{"Argument",31}{"Hash Code",14}");
+        Console.WriteLine($"{"--------",31}{"---------",14}");
 
         // Generate hash codes for decimal objects.
-        ShowDecimalGetHashCode( 0M );
-        ShowDecimalGetHashCode( 1M );
-        ShowDecimalGetHashCode( 1.0000000000000000000000000000M );
-        ShowDecimalGetHashCode( 100000000000000M );
-        ShowDecimalGetHashCode( 100000000000000.00000000000000M );
-        ShowDecimalGetHashCode( 10000000000000000000000000000M );
-        ShowDecimalGetHashCode( 10000000000000000000000009999M );
-        ShowDecimalGetHashCode( 10000000000000000004294967295M );
-        ShowDecimalGetHashCode( 123456789M );
-        ShowDecimalGetHashCode( 0.123456789M );
-        ShowDecimalGetHashCode( 0.000000000123456789M );
-        ShowDecimalGetHashCode( 0.000000000000000000123456789M );
-        ShowDecimalGetHashCode( 4294967295M );
-        ShowDecimalGetHashCode( 18446744073709551615M );
-        ShowDecimalGetHashCode( decimal.MaxValue );
-        ShowDecimalGetHashCode( decimal.MinValue );
-        ShowDecimalGetHashCode( -7.9228162514264337593543950335M );
+        ShowDecimalGetHashCode(0M);
+        ShowDecimalGetHashCode(1M);
+        ShowDecimalGetHashCode(1.0000000000000000000000000000M);
+        ShowDecimalGetHashCode(100000000000000M);
+        ShowDecimalGetHashCode(100000000000000.00000000000000M);
+        ShowDecimalGetHashCode(10000000000000000000000000000M);
+        ShowDecimalGetHashCode(10000000000000000000000009999M);
+        ShowDecimalGetHashCode(10000000000000000004294967295M);
+        ShowDecimalGetHashCode(123456789M);
+        ShowDecimalGetHashCode(0.123456789M);
+        ShowDecimalGetHashCode(0.000000000123456789M);
+        ShowDecimalGetHashCode(0.000000000000000000123456789M);
+        ShowDecimalGetHashCode(4294967295M);
+        ShowDecimalGetHashCode(18446744073709551615M);
+        ShowDecimalGetHashCode(decimal.MaxValue);
+        ShowDecimalGetHashCode(decimal.MinValue);
+        ShowDecimalGetHashCode(-7.9228162514264337593543950335M);
     }
 }
 

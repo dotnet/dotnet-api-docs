@@ -7,8 +7,8 @@ namespace ArrayTypeMismatch
     {
         static void Main(string[] args)
         {
-            string[] names = {"Dog", "Cat", "Fish"};
-            Object[] objs  = (Object[]) names;
+            string[] names = { "Dog", "Cat", "Fish" };
+            object[] objs = (object[])names;
 
             try
             {
@@ -27,7 +27,7 @@ namespace ArrayTypeMismatch
 
             try
             {
-                Object obj = (Object) 13;
+                object obj = (object)13;
                 objs[2] = obj;
             }
             catch (System.ArrayTypeMismatchException)
@@ -39,12 +39,12 @@ namespace ArrayTypeMismatch
 
             // Set objs to an array of objects instead of
             // an array of strings.
-            objs  = new Object[3];
+            objs = new object[3];
             try
             {
-                objs[0] = (Object) "Turtle";
-                objs[1] = (Object) 12;
-                objs[2] = (Object) 2.341;
+                objs[0] = (object)"Turtle";
+                objs[1] = (object)12;
+                objs[2] = (object)2.341;
 
                 foreach (object element in objs)
                 {

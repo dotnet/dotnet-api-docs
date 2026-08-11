@@ -11,26 +11,20 @@ public class Example
             "Triceratops" };
 
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
 
-        Console.WriteLine(
-            "\nArray.FindLastIndex(dinosaurs, EndsWithSaurus): {0}",
-            Array.FindLastIndex(dinosaurs, EndsWithSaurus));
+        Console.WriteLine($"\nArray.FindLastIndex(dinosaurs, EndsWithSaurus): {Array.FindLastIndex(dinosaurs, EndsWithSaurus)}");
 
-        Console.WriteLine(
-            "\nArray.FindLastIndex(dinosaurs, 4, EndsWithSaurus): {0}",
-            Array.FindLastIndex(dinosaurs, 4, EndsWithSaurus));
+        Console.WriteLine($"\nArray.FindLastIndex(dinosaurs, 4, EndsWithSaurus): {Array.FindLastIndex(dinosaurs, 4, EndsWithSaurus)}");
 
-        Console.WriteLine(
-            "\nArray.FindLastIndex(dinosaurs, 4, 3, EndsWithSaurus): {0}",
-            Array.FindLastIndex(dinosaurs, 4, 3, EndsWithSaurus));
+        Console.WriteLine($"\nArray.FindLastIndex(dinosaurs, 4, 3, EndsWithSaurus): {Array.FindLastIndex(dinosaurs, 4, 3, EndsWithSaurus)}");
     }
 
     // Search predicate returns true if a string ends in "saurus".
-    private static bool EndsWithSaurus(String s)
+    private static bool EndsWithSaurus(string s)
     {
         if ((s.Length > 5) &&
             (s.Substring(s.Length - 6).ToLower() == "saurus"))
