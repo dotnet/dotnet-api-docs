@@ -5,7 +5,7 @@ using System.Threading;
 
 public class ParseString
 {
-    public static void Main()
+    public static void Run()
     {
         // Set current thread culture to en-US.
         Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");

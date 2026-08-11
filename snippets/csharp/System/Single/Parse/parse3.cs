@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class SingleParseProviderExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Define an array of string values.
         string[] values = { " 987.654E-2", " 987,654E-2",  "(98765,43210)",

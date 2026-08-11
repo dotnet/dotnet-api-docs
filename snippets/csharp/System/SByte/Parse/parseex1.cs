@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class SByteParseDefaultExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         // Define an array of numeric strings.

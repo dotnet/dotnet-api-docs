@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class SingleNaNOperationsExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         float zero = 0.0f;

@@ -1,0 +1,2 @@
+SingleNaNOperationsExample.Run();
+SingleNaNComparisonExample.Run();

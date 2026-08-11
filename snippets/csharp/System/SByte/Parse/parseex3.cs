@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class SByteParseProviderExample
 {
-    public static void Main()
+    public static void Run()
     {
         NumberFormatInfo nf = new()
         {

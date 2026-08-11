@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class SByteToStringDefaultExample
 {
-    public static void Main()
+    public static void Run()
     {
         sbyte value = -123;
         // Display value using default ToString method.

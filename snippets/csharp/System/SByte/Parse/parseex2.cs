@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class SByteParseStylesExample
 {
-    public static void Main()
+    public static void Run()
     {
         NumberStyles style;
         sbyte number;

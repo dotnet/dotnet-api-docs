@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class SingleParseDefaultExample
 {
-    public static void Main()
+    public static void Run()
     {
         string[] values = { "100", "(100)", "-123,456,789", "123.45e+6",
                           "+500", "5e2", "3.1416", "600.", "-.123",

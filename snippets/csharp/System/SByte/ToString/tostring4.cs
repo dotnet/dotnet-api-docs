@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class SByteToStringFormatExample
 {
-    public static void Main()
+    public static void Run()
     {
         sbyte[] values = { -124, 0, 118 };
         string[] specifiers = { "G", "C", "D3", "E2", "e3", "F",

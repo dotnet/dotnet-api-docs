@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class SByteToStringProviderExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Define a custom NumberFormatInfo object with "~" as its negative sign.
         NumberFormatInfo nfi = new()

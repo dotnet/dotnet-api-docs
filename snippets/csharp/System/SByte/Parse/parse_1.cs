@@ -6,7 +6,7 @@ public class SByteConversion
 {
     NumberFormatInfo provider = NumberFormatInfo.CurrentInfo;
 
-    public static void Main()
+    public static void Run()
     {
         string stringValue;
         NumberStyles style;

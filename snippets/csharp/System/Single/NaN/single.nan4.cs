@@ -1,9 +1,9 @@
 ﻿// <Snippet4>
 using System;
 
-public class Example
+public class SingleNaNComparisonExample
 {
-    public static void Main()
+    public static void Run()
     {
         Console.WriteLine($"NaN == NaN: {float.NaN == float.NaN}");
         Console.WriteLine($"NaN != NaN: {float.NaN != float.NaN}");
