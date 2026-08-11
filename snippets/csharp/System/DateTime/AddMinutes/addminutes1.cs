@@ -3,18 +3,17 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2013, 9, 15, 12, 0, 0);
+    public static void Main()
+    {
+        DateTime dateValue = new(2013, 9, 15, 12, 0, 0);
 
-      double[] minutes = { .01667, .08333, .16667, .25, .33333,
+        double[] minutes = { .01667, .08333, .16667, .25, .33333,
                            .5, .66667, 1, 2, 15, 30, 17, 45,
                            60, 180, 60 * 24 };
 
-      foreach (double minute in minutes)
-         Console.WriteLine("{0} + {1} minute(s) = {2}", dateValue, minute,
-                           dateValue.AddMinutes(minute));
-   }
+        foreach (double minute in minutes)
+            Console.WriteLine($"{dateValue} + {minute} minute(s) = {dateValue.AddMinutes(minute)}");
+    }
 }
 // The example displays the following output on a system whose current culture is en-US:
 //    9/15/2013 12:00:00 PM + 0.01667 minute(s) = 9/15/2013 12:00:01 PM

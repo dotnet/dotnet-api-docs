@@ -7,72 +7,72 @@ class Sample
 {
     public static void Main()
     {
-    byte[] inArray  = new byte[256];
-    byte[] outArray = new byte[256];
-    string s2;
-    string s3;
-    string step1 = "1) The input is a byte array (inArray) of arbitrary data.";
-    string step2 = "2) Convert a subarray of the input data array to a base 64 string.";
-    string step3 = "3) Convert the entire input data array to a base 64 string.";
-    string step4 = "4) The two methods in steps 2 and 3 produce the same result: {0}";
-    string step5 = "5) Convert the base 64 string to an output byte array (outArray).";
-    string step6 = "6) The input and output arrays, inArray and outArray, are equal: {0}";
-    int x;
-    string nl = Environment.NewLine;
-    string ruler1a = "         1         2         3         4";
-    string ruler2a = "1234567890123456789012345678901234567890";
-    string ruler3a = "----+----+----+----+----+----+----+----+";
-    string ruler1b = "         5         6         7      ";
-    string ruler2b = "123456789012345678901234567890123456";
-    string ruler3b = "----+----+----+----+----+----+----+-";
-    string ruler   = String.Concat(ruler1a, ruler1b, nl,
-                                   ruler2a, ruler2b, nl,
-                                   ruler3a, ruler3b, nl);
+        byte[] inArray = new byte[256];
+        byte[] outArray = new byte[256];
+        string s2;
+        string s3;
+        string step1 = "1) The input is a byte array (inArray) of arbitrary data.";
+        string step2 = "2) Convert a subarray of the input data array to a base 64 string.";
+        string step3 = "3) Convert the entire input data array to a base 64 string.";
+        string step4 = "4) The two methods in steps 2 and 3 produce the same result: {0}";
+        string step5 = "5) Convert the base 64 string to an output byte array (outArray).";
+        string step6 = "6) The input and output arrays, inArray and outArray, are equal: {0}";
+        int x;
+        string nl = Environment.NewLine;
+        string ruler1a = "         1         2         3         4";
+        string ruler2a = "1234567890123456789012345678901234567890";
+        string ruler3a = "----+----+----+----+----+----+----+----+";
+        string ruler1b = "         5         6         7      ";
+        string ruler2b = "123456789012345678901234567890123456";
+        string ruler3b = "----+----+----+----+----+----+----+-";
+        string ruler = string.Concat(ruler1a, ruler1b, nl,
+                                       ruler2a, ruler2b, nl,
+                                       ruler3a, ruler3b, nl);
 
-// 1) Display an arbitrary array of input data (inArray). The data could be
-//    derived from user input, a file, an algorithm, etc.
+        // 1) Display an arbitrary array of input data (inArray). The data could be
+        //    derived from user input, a file, an algorithm, etc.
 
-    Console.WriteLine(step1);
-    Console.WriteLine();
-    for (x = 0; x < inArray.Length; x++)
+        Console.WriteLine(step1);
+        Console.WriteLine();
+        for (x = 0; x < inArray.Length; x++)
         {
-        inArray[x] = (byte)x;
-        Console.Write("{0:X2} ", inArray[x]);
-        if (((x+1)%20) == 0) Console.WriteLine();
+            inArray[x] = (byte)x;
+            Console.Write($"{inArray[x]:X2} ");
+            if (((x + 1) % 20) == 0) Console.WriteLine();
         }
-    Console.Write("{0}{0}", nl);
+        Console.Write("{0}{0}", nl);
 
-// 2) Convert a subarray of the input data to a base64 string. In this case,
-//    the subarray is the entire input data array. New lines (CRLF) are inserted.
+        // 2) Convert a subarray of the input data to a base64 string. In this case,
+        //    the subarray is the entire input data array. New lines (CRLF) are inserted.
 
-    Console.WriteLine(step2);
-    s2 = Convert.ToBase64String(inArray, 0, inArray.Length,
-                                Base64FormattingOptions.InsertLineBreaks);
-    Console.WriteLine("{0}{1}{2}{3}", nl, ruler, s2, nl);
+        Console.WriteLine(step2);
+        s2 = Convert.ToBase64String(inArray, 0, inArray.Length,
+                                    Base64FormattingOptions.InsertLineBreaks);
+        Console.WriteLine($"{nl}{ruler}{s2}{nl}");
 
-// 3) Convert the input data to a base64 string. In this case, the entire
-//    input data array is converted by default. New lines (CRLF) are inserted.
+        // 3) Convert the input data to a base64 string. In this case, the entire
+        //    input data array is converted by default. New lines (CRLF) are inserted.
 
-    Console.WriteLine(step3);
-    s3 = Convert.ToBase64String(inArray, Base64FormattingOptions.InsertLineBreaks);
+        Console.WriteLine(step3);
+        s3 = Convert.ToBase64String(inArray, Base64FormattingOptions.InsertLineBreaks);
 
-// 4) Test whether the methods in steps 2 and 3 produce the same result.
-    Console.WriteLine(step4, s2.Equals(s3));
+        // 4) Test whether the methods in steps 2 and 3 produce the same result.
+        Console.WriteLine(step4, s2.Equals(s3));
 
-// 5) Convert the base 64 string to an output array (outArray).
-    Console.WriteLine(step5);
-    outArray = Convert.FromBase64String(s2);
+        // 5) Convert the base 64 string to an output array (outArray).
+        Console.WriteLine(step5);
+        outArray = Convert.FromBase64String(s2);
 
-// 6) Is outArray equal to inArray?
-   Console.WriteLine(step6, ArraysAreEqual(inArray, outArray));
-   }
+        // 6) Is outArray equal to inArray?
+        Console.WriteLine(step6, ArraysAreEqual(inArray, outArray));
+    }
 
     public static bool ArraysAreEqual(byte[] a1, byte[] a2)
     {
-    if (a1.Length != a2.Length) return false;
-    for (int i = 0; i < a1.Length; i++)
-        if (a1[i] != a2[i]) return false;
-    return true;
+        if (a1.Length != a2.Length) return false;
+        for (int i = 0; i < a1.Length; i++)
+            if (a1[i] != a2[i]) return false;
+        return true;
     }
 }
 /*

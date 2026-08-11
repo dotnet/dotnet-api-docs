@@ -5,32 +5,32 @@ using System;
 class DecimalCtorLDemo
 {
     // Create a decimal object and display its value.
-    public static void CreateDecimal( long value, string valToStr )
+    public static void CreateDecimal(long value, string valToStr)
     {
-        decimal decimalNum = new decimal( value );
+        decimal decimalNum = new(value);
 
         // Format the constructor for display.
-        string ctor = String.Format( "decimal( {0} )", valToStr );
+        string ctor = $"decimal( {valToStr} )";
 
         // Display the constructor and its value.
-        Console.WriteLine( "{0,-35}{1,22}", ctor, decimalNum );
+        Console.WriteLine($"{ctor,-35}{decimalNum,22}");
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the decimal( long ) " +
-            "constructor \ngenerates the following output.\n" );
-        Console.WriteLine( "{0,-35}{1,22}", "Constructor", "Value" );
-        Console.WriteLine( "{0,-35}{1,22}", "-----------", "-----" );
+        Console.WriteLine("This example of the decimal( long ) " +
+            "constructor \ngenerates the following output.\n");
+        Console.WriteLine($"{"Constructor",-35}{"Value",22}");
+        Console.WriteLine($"{"-----------",-35}{"-----",22}");
 
         // Construct decimal objects from long values.
-        CreateDecimal( long.MinValue, "long.MinValue" );
-        CreateDecimal( long.MaxValue, "long.MaxValue" );
-        CreateDecimal( 0L, "0L" );
-        CreateDecimal( 999999999999999999, "999999999999999999" );
-        CreateDecimal( 0x2000000000000000, "0x2000000000000000" );
-        CreateDecimal( unchecked( (long)0xE000000000000000 ),
-            "(long)0xE000000000000000" );
+        CreateDecimal(long.MinValue, "long.MinValue");
+        CreateDecimal(long.MaxValue, "long.MaxValue");
+        CreateDecimal(0L, "0L");
+        CreateDecimal(999999999999999999, "999999999999999999");
+        CreateDecimal(0x2000000000000000, "0x2000000000000000");
+        CreateDecimal(unchecked((long)0xE000000000000000),
+            "(long)0xE000000000000000");
     }
 }
 

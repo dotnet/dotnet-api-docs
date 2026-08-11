@@ -9,33 +9,33 @@ class DecimalMulDivRemOpsDemo
 
     // Display decimal parameters and their product, quotient, and
     // remainder.
-    public static void ShowDecimalProQuoRem( decimal Left, decimal Right )
+    public static void ShowDecimalProQuoRem(decimal Left, decimal Right)
     {
-        Console.WriteLine( );
-        Console.WriteLine( dataFmt, "decimal Left", Left );
-        Console.WriteLine( dataFmt, "decimal Right", Right );
-        Console.WriteLine( dataFmt, "Left * Right", Left * Right );
-        Console.WriteLine( dataFmt, "Left / Right", Left / Right );
-        Console.WriteLine( dataFmt, "Left % Right", Left % Right );
+        Console.WriteLine();
+        Console.WriteLine(dataFmt, "decimal Left", Left);
+        Console.WriteLine(dataFmt, "decimal Right", Right);
+        Console.WriteLine(dataFmt, "Left * Right", Left * Right);
+        Console.WriteLine(dataFmt, "Left / Right", Left / Right);
+        Console.WriteLine(dataFmt, "Left % Right", Left % Right);
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the decimal multiplication, division, " +
             "and modulus \noperators generates the following " +
             "output. It displays the product, \nquotient, and " +
-            "remainder of several pairs of decimal objects." );
+            "remainder of several pairs of decimal objects.");
 
         // Create pairs of decimal objects.
-        ShowDecimalProQuoRem( 1000M, 7M );
-        ShowDecimalProQuoRem( -1000M, 7M );
+        ShowDecimalProQuoRem(1000M, 7M);
+        ShowDecimalProQuoRem(-1000M, 7M);
         ShowDecimalProQuoRem(
-            new decimal( 1230000000, 0, 0, false, 7 ), 0.0012300M );
-        ShowDecimalProQuoRem( 12345678900000000M,
-            0.0000000012345678M );
-        ShowDecimalProQuoRem( 123456789.0123456789M,
-            123456789.1123456789M );
+            new decimal(1230000000, 0, 0, false, 7), 0.0012300M);
+        ShowDecimalProQuoRem(12345678900000000M,
+            0.0000000012345678M);
+        ShowDecimalProQuoRem(123456789.0123456789M,
+            123456789.1123456789M);
     }
 }
 

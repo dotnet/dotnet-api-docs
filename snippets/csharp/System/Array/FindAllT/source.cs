@@ -12,7 +12,7 @@ public class DinoDiscoverySet
             "Gallimimus",    "Triceratops"
         };
 
-        DinoDiscoverySet GoMesozoic = new DinoDiscoverySet(dinosaurs);
+        DinoDiscoverySet GoMesozoic = new(dinosaurs);
 
         GoMesozoic.DiscoverAll();
         GoMesozoic.DiscoverByEnding("saurus");
@@ -20,15 +20,12 @@ public class DinoDiscoverySet
 
     private string[] dinosaurs;
 
-    public DinoDiscoverySet(string[] items)
-    {
-        dinosaurs = items;
-    }
+    public DinoDiscoverySet(string[] items) => dinosaurs = items;
 
     public void DiscoverAll()
     {
         Console.WriteLine();
-        foreach(string dinosaur in dinosaurs)
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -51,33 +48,20 @@ public class DinoDiscoverySet
                 dinoType = EndsWithSaurus;
                 break;
         }
-        Console.WriteLine(
-            "\nArray.Exists(dinosaurs, \"{0}\"): {1}",
-            Ending,
-            Array.Exists(dinosaurs, dinoType));
+        Console.WriteLine($"\nArray.Exists(dinosaurs, \"{Ending}\"): {Array.Exists(dinosaurs, dinoType)}");
 
-        Console.WriteLine(
-            "\nArray.TrueForAll(dinosaurs, \"{0}\"): {1}",
-            Ending,
-            Array.TrueForAll(dinosaurs, dinoType));
+        Console.WriteLine($"\nArray.TrueForAll(dinosaurs, \"{Ending}\"): {Array.TrueForAll(dinosaurs, dinoType)}");
 
-        Console.WriteLine(
-            "\nArray.Find(dinosaurs, \"{0}\"): {1}",
-            Ending,
-            Array.Find(dinosaurs, dinoType));
+        Console.WriteLine($"\nArray.Find(dinosaurs, \"{Ending}\"): {Array.Find(dinosaurs, dinoType)}");
 
-        Console.WriteLine(
-            "\nArray.FindLast(dinosaurs, \"{0}\"): {1}",
-            Ending,
-            Array.FindLast(dinosaurs, dinoType));
+        Console.WriteLine($"\nArray.FindLast(dinosaurs, \"{Ending}\"): {Array.FindLast(dinosaurs, dinoType)}");
 
-        Console.WriteLine(
-            "\nArray.FindAll(dinosaurs, \"{0}\"):", Ending);
+        Console.WriteLine($"\nArray.FindAll(dinosaurs, \"{Ending}\"):");
 
         string[] subArray =
             Array.FindAll(dinosaurs, dinoType);
 
-        foreach(string dinosaur in subArray)
+        foreach (string dinosaur in subArray)
         {
             Console.WriteLine(dinosaur);
         }
@@ -98,7 +82,7 @@ public class DinoDiscoverySet
     }
 
     // Search predicate returns true if a string ends in "raptor".
-    private bool EndsWithRaptor(String s)
+    private bool EndsWithRaptor(string s)
     {
         if ((s.Length > 5) &&
             (s.Substring(s.Length - 6).ToLower() == "raptor"))
@@ -112,7 +96,7 @@ public class DinoDiscoverySet
     }
 
     // Search predicate returns true if a string ends in "tops".
-    private bool EndsWithTops(String s)
+    private bool EndsWithTops(string s)
     {
         if ((s.Length > 3) &&
             (s.Substring(s.Length - 4).ToLower() == "tops"))

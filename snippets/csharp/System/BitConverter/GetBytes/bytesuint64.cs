@@ -7,31 +7,31 @@ class GetBytesUInt64Demo
     const string formatter = "{0,22}{1,30}";
 
     // Convert a ulong argument to a byte array and display it.
-    public static void GetBytesUInt64( ulong argument )
+    public static void GetBytesUInt64(ulong argument)
     {
-        byte[ ] byteArray = BitConverter.GetBytes( argument );
-        Console.WriteLine( formatter, argument,
-            BitConverter.ToString( byteArray ) );
+        byte[] byteArray = BitConverter.GetBytes(argument);
+        Console.WriteLine(formatter, argument,
+            BitConverter.ToString(byteArray));
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the BitConverter.GetBytes( ulong ) " +
-            "\nmethod generates the following output.\n" );
-        Console.WriteLine( formatter, "ulong", "byte array" );
-        Console.WriteLine( formatter, "-----", "----------" );
+            "\nmethod generates the following output.\n");
+        Console.WriteLine(formatter, "ulong", "byte array");
+        Console.WriteLine(formatter, "-----", "----------");
 
         // Convert ulong values and display the results.
-        GetBytesUInt64( 0xFFFFFF );
-        GetBytesUInt64( 1000000000 );
-        GetBytesUInt64( 0x100000000 );
-        GetBytesUInt64( 0xAAAAAAAAAAAA );
-        GetBytesUInt64( 1000000000000000000 );
-        GetBytesUInt64( 10000000000000000000 );
-        GetBytesUInt64( ulong.MinValue );
-        GetBytesUInt64( long.MaxValue );
-        GetBytesUInt64( ulong.MaxValue );
+        GetBytesUInt64(0xFFFFFF);
+        GetBytesUInt64(1000000000);
+        GetBytesUInt64(0x100000000);
+        GetBytesUInt64(0xAAAAAAAAAAAA);
+        GetBytesUInt64(1000000000000000000);
+        GetBytesUInt64(10000000000000000000);
+        GetBytesUInt64(ulong.MinValue);
+        GetBytesUInt64(long.MaxValue);
+        GetBytesUInt64(ulong.MaxValue);
     }
 }
 

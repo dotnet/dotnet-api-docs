@@ -7,14 +7,15 @@ public class Example
 {
     public static void Main()
     {
-        List<PointF> lpf = new List<PointF>();
-
-        lpf.Add(new PointF(27.8F, 32.62F));
-        lpf.Add(new PointF(99.3F, 147.273F));
-        lpf.Add(new PointF(7.5F, 1412.2F));
+        List<PointF> lpf = new()
+        {
+            new PointF(27.8F, 32.62F),
+            new PointF(99.3F, 147.273F),
+            new PointF(7.5F, 1412.2F)
+        };
 
         Console.WriteLine();
-        foreach( PointF p in lpf )
+        foreach (PointF p in lpf)
         {
             Console.WriteLine(p);
         }
@@ -23,16 +24,13 @@ public class Example
             new Converter<PointF, Point>(PointFToPoint));
 
         Console.WriteLine();
-        foreach( Point p in lp )
+        foreach (Point p in lp)
         {
             Console.WriteLine(p);
         }
     }
 
-    public static Point PointFToPoint(PointF pf)
-    {
-        return new Point(((int) pf.X), ((int) pf.Y));
-    }
+    public static Point PointFToPoint(PointF pf) => new Point(((int)pf.X), ((int)pf.Y));
 }
 
 /* This code example produces the following output:
