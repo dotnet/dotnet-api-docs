@@ -11,7 +11,7 @@ public class Example
         s1 = s1.Trim();
         foreach (char ch in s1)
         {
-            if (char.IsPunctuation(ch) | char.IsWhiteSpace(ch))
+            if (char.IsPunctuation(ch) || char.IsWhiteSpace(ch))
                 nWords++;
         }
         Console.WriteLine($"The sentence\n   {s1}\nhas {nWords} words.");
