@@ -7,11 +7,11 @@ public sealed class App
     static void Main()
     {
         // ArgumentException is not thrown because 10 is an even number.
-        Console.WriteLine("10 divided by 2 is {0}", DivideByTwo(10));
+        Console.WriteLine($"10 divided by 2 is {DivideByTwo(10)}");
         try
         {
-             // ArgumentException is thrown because 7 is not an even number.
-             Console.WriteLine("7 divided by 2 is {0}", DivideByTwo(7));
+            // ArgumentException is thrown because 7 is not an even number.
+            Console.WriteLine($"7 divided by 2 is {DivideByTwo(7)}");
         }
         catch (ArgumentException)
         {
@@ -20,7 +20,7 @@ public sealed class App
         }
     }
 
-    //<snippet2>	
+    //<snippet2>
     static int DivideByTwo(int num)
     {
         // If num is an odd number, throw an ArgumentException.

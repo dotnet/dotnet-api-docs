@@ -10,7 +10,7 @@ class Example
 
         for (int i = 0; i < 9; i++)
         {
-            Console.Write("{0} ", numbers1[i]);
+            Console.Write($"{numbers1[i]} ");
         }
         Console.WriteLine();
         Console.WriteLine();
@@ -20,7 +20,7 @@ class Example
 
         for (int i = 0; i < 9; i++)
         {
-            Console.Write("{0} ", numbers1[i]);
+            Console.Write($"{numbers1[i]} ");
         }
         Console.WriteLine();
         Console.WriteLine();
@@ -32,7 +32,7 @@ class Example
         {
             for (int j = 0; j < 3; j++)
             {
-                Console.Write("{0} ", numbers2[i, j]);
+                Console.Write($"{numbers2[i, j]} ");
             }
             Console.WriteLine();
         }
@@ -45,7 +45,7 @@ class Example
         {
             for (int j = 0; j < 3; j++)
             {
-                Console.Write("{0} ", numbers2[i, j]);
+                Console.Write($"{numbers2[i, j]} ");
             }
             Console.WriteLine();
         }
@@ -61,7 +61,7 @@ class Example
             {
                 for (int k = 0; k < 2; k++)
                 {
-                    Console.Write("{0} ", numbers3[i, j, k]);
+                    Console.Write($"{numbers3[i, j, k]} ");
                 }
                 Console.WriteLine();
             }
@@ -77,7 +77,7 @@ class Example
             {
                 for (int k = 0; k < 2; k++)
                 {
-                    Console.Write("{0} ", numbers3[i, j, k]);
+                    Console.Write($"{numbers3[i, j, k]} ");
                 }
                 Console.WriteLine();
             }
@@ -107,20 +107,20 @@ class Example
  * Three dimensions (Rank=3):
  * 1 2
  * 3 4
- * 
+ *
  * 5 6
  * 7 8
- * 
+ *
  * 9 10
  * 11 12
- * 
+ *
  * Array.Clear(numbers3, 2, 5)
  * 1 2
  * 0 0
- * 
+ *
  * 0 0
  * 0 8
- * 
+ *
  * 9 10
  * 11 12
  */

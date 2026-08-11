@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public class Example13
 {
-   public static void Main()
-   {
-      var numbers = new List<int>();
-      numbers.AddRange( new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20 } );
+    public static void Main()
+    {
+        var numbers = new List<int>();
+        numbers.AddRange(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20 });
 
-      var squares = new List<int>();
-      for (int ctr = 0; ctr < numbers.Count; ctr++)
-         squares[ctr] = (int) Math.Pow(numbers[ctr], 2);
-   }
+        var squares = new List<int>();
+        for (int ctr = 0; ctr < numbers.Count; ctr++)
+            squares[ctr] = (int)Math.Pow(numbers[ctr], 2);
+    }
 }
 // The example displays the following output:
 //    Unhandled Exception: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
@@ -23,15 +23,15 @@ public class Example13
 
 class Correction
 {
-   public void Test()
-   {
-      var numbers = new List<int>();
-      numbers.AddRange( new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20 } );
+    public void Test()
+    {
+        var numbers = new List<int>();
+        numbers.AddRange(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20 });
 
-      // <Snippet14>
-      var squares = new List<int>();
-      for (int ctr = 0; ctr < numbers.Count; ctr++)
-         squares.Add((int) Math.Pow(numbers[ctr], 2));
-      // </Snippet14>
-   }
+        // <Snippet14>
+        var squares = new List<int>();
+        for (int ctr = 0; ctr < numbers.Count; ctr++)
+            squares.Add((int)Math.Pow(numbers[ctr], 2));
+        // </Snippet14>
+    }
 }

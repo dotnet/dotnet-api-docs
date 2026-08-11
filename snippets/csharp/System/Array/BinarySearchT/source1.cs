@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class ReverseComparer: IComparer<string>
+public class ReverseComparer : IComparer<string>
 {
     public int Compare(string x, string y)
     {
@@ -23,18 +23,18 @@ public class Example
                               "Edmontosaurus"};
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
 
-        ReverseComparer rc = new ReverseComparer();
+        ReverseComparer rc = new();
 
         Console.WriteLine("\nSort");
         Array.Sort(dinosaurs, rc);
 
         Console.WriteLine();
-        foreach( string dinosaur in dinosaurs )
+        foreach (string dinosaur in dinosaurs)
         {
             Console.WriteLine(dinosaur);
         }
@@ -50,7 +50,7 @@ public class Example
 
     private static void ShowWhere<T>(T[] array, int index)
     {
-        if (index<0)
+        if (index < 0)
         {
             // If the index is negative, it represents the bitwise
             // complement of the next larger element in the array.
@@ -62,16 +62,16 @@ public class Example
             if (index == 0)
                 Console.Write("beginning of array and ");
             else
-                Console.Write("{0} and ", array[index-1]);
+                Console.Write($"{array[index - 1]} and ");
 
             if (index == array.Length)
                 Console.WriteLine("end of array.");
             else
-                Console.WriteLine("{0}.", array[index]);
+                Console.WriteLine($"{array[index]}.");
         }
         else
         {
-            Console.WriteLine("Found at index {0}.", index);
+            Console.WriteLine($"Found at index {index}.");
         }
     }
 }
