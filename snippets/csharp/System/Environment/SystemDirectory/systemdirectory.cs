@@ -6,9 +6,9 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-//  <-- Keep this information secure! -->
-    Console.WriteLine("SystemDirectory: {0}", Environment.SystemDirectory);
+        Console.WriteLine();
+        //  <-- Keep this information secure! -->
+        Console.WriteLine($"SystemDirectory: {Environment.SystemDirectory}");
     }
 }
 /*

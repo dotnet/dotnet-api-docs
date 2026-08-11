@@ -4,61 +4,63 @@ using System.Globalization;
 
 public class ByteConversion2
 {
-   public static void Main()
-   {
-      string byteString;
-      NumberStyles styles;
+    public static void Main()
+    {
+        string byteString;
+        NumberStyles styles;
 
-      byteString = "1024";
-      styles = NumberStyles.Integer;
-      CallTryParse(byteString, styles);
+        byteString = "1024";
+        styles = NumberStyles.Integer;
+        CallTryParse(byteString, styles);
 
-      byteString = "100.1";
-      styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
-      CallTryParse(byteString, styles);
+        byteString = "100.1";
+        styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
+        CallTryParse(byteString, styles);
 
-      byteString = "100.0";
-      CallTryParse(byteString, styles);
+        byteString = "100.0";
+        CallTryParse(byteString, styles);
 
-      byteString = "+100";
-      styles = NumberStyles.Integer | NumberStyles.AllowLeadingSign
-               | NumberStyles.AllowTrailingSign;
-      CallTryParse(byteString, styles);
+        byteString = "+100";
+        styles = NumberStyles.Integer | NumberStyles.AllowLeadingSign
+                 | NumberStyles.AllowTrailingSign;
+        CallTryParse(byteString, styles);
 
-      byteString = "-100";
-      CallTryParse(byteString, styles);
+        byteString = "-100";
+        CallTryParse(byteString, styles);
 
-      byteString = "000000000000000100";
-      CallTryParse(byteString, styles);
+        byteString = "000000000000000100";
+        CallTryParse(byteString, styles);
 
-      byteString = "00,100";
-      styles = NumberStyles.Integer | NumberStyles.AllowThousands;
-      CallTryParse(byteString, styles);
+        byteString = "00,100";
+        styles = NumberStyles.Integer | NumberStyles.AllowThousands;
+        CallTryParse(byteString, styles);
 
-      byteString = "2E+3   ";
-      styles = NumberStyles.Integer | NumberStyles.AllowExponent;
-      CallTryParse(byteString, styles);
+        byteString = "2E+3   ";
+        styles = NumberStyles.Integer | NumberStyles.AllowExponent;
+        CallTryParse(byteString, styles);
 
-      byteString = "FF";
-      styles = NumberStyles.HexNumber;
-      CallTryParse(byteString, styles);
+        byteString = "FF";
+        styles = NumberStyles.HexNumber;
+        CallTryParse(byteString, styles);
 
-      byteString = "0x1F";
-      CallTryParse(byteString, styles);
-   }
+        byteString = "0x1F";
+        CallTryParse(byteString, styles);
+    }
 
-   private static void CallTryParse(string stringToConvert, NumberStyles styles)
-   {
-      Byte byteValue;
-      bool result = Byte.TryParse(stringToConvert, styles,
-                                  null as IFormatProvider, out byteValue);
-      if (result)
-         Console.WriteLine("Converted '{0}' to {1}",
-                        stringToConvert, byteValue);
-      else
-         Console.WriteLine("Attempted conversion of '{0}' failed.",
-                           stringToConvert.ToString());
-   }
+    private static void CallTryParse(string stringToConvert, NumberStyles styles)
+    {
+        byte byteValue;
+        bool result = byte.TryParse(stringToConvert, styles,
+                                    null as IFormatProvider, out byteValue);
+        if (result)
+        {
+            Console.WriteLine($"Converted '{stringToConvert}' to {byteValue}");
+        }
+        else
+        {
+            Console.WriteLine($"Attempted conversion of '{stringToConvert.ToString()}' failed.");
+        }
+    }
 }
 // The example displays the following output to the console:
 //       Attempted conversion of '1024' failed.

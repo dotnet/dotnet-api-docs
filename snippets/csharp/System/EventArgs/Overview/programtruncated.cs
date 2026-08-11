@@ -13,10 +13,7 @@ namespace ConsoleApplication2
             // provide remaining implementation for the class
         }
 
-        static void c_ThresholdReached(object? sender, EventArgs e)
-        {
-            Console.WriteLine("The threshold was reached.");
-        }
+        static void c_ThresholdReached(object? sender, EventArgs e) => Console.WriteLine("The threshold was reached.");
     }
     // </snippet2>
 

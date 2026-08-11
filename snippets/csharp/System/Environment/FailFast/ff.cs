@@ -5,21 +5,21 @@ class Example
 {
     public static void Main()
     {
-       string causeOfFailure = "A catastrophic failure has occurred.";
+        string causeOfFailure = "A catastrophic failure has occurred.";
 
-       // Assume your application has failed catastrophically and must
-       // terminate immediately. The try-finally block is not executed
-       // and is included only to demonstrate that instructions within
-       // try-catch blocks and finalizers are not performed.
-       try
-       {
-           Environment.FailFast(causeOfFailure);
-       }
-       finally
-       {
-           Console.WriteLine("This finally block will not be executed.");
-       }
-   }
+        // Assume your application has failed catastrophically and must
+        // terminate immediately. The try-finally block is not executed
+        // and is included only to demonstrate that instructions within
+        // try-catch blocks and finalizers are not performed.
+        try
+        {
+            Environment.FailFast(causeOfFailure);
+        }
+        finally
+        {
+            Console.WriteLine("This finally block will not be executed.");
+        }
+    }
 }
 /*
 The example produces no output because the application is terminated.

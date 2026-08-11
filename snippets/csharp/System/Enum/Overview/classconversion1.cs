@@ -1,12 +1,12 @@
-// <Snippet7>
+﻿// <Snippet7>
 using System;
 
 public class Example3
 {
     public static void Main()
     {
-        int[] values = { -3, -1, 0, 1, 5, Int32.MaxValue };
-        foreach (var value in values)
+        int[] values = { -3, -1, 0, 1, 5, int.MaxValue };
+        foreach (int value in values)
         {
             ArrivalStatus status;
             if (Enum.IsDefined(typeof(ArrivalStatus), value))

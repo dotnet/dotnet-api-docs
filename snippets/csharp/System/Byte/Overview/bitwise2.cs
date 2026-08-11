@@ -19,7 +19,7 @@ public class BSExample1
 
         foreach (ByteString strValue in values)
         {
-            byte byteValue = Byte.Parse(strValue.Value, NumberStyles.AllowHexSpecifier);
+            byte byteValue = byte.Parse(strValue.Value, NumberStyles.AllowHexSpecifier);
             Console.WriteLine($"{strValue.Sign * byteValue} ({Convert.ToString(byteValue, 2)}) And {mask} ({Convert.ToString(mask, 2)}) = {(strValue.Sign & Math.Sign(mask)) * (byteValue & mask)} ({Convert.ToString(byteValue & mask, 2)})");
         }
     }
@@ -30,7 +30,7 @@ public class BSExample1
 
         foreach (object value in values)
         {
-            ByteString temp = new ByteString();
+            ByteString temp = new();
             int sign = Math.Sign((int)value);
             temp.Sign = sign;
 

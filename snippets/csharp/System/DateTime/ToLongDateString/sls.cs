@@ -8,7 +8,7 @@ class Sample
     {
         // Initialize a DateTime object.
         Console.WriteLine("Initialize the DateTime object to May 16, 2001 3:02:15 AM.\n");
-        DateTime dateAndTime = new System.DateTime(2001, 5, 16, 3, 2, 15);
+        DateTime dateAndTime = new(2001, 5, 16, 3, 2, 15);
 
         // Display the name of the current culture.
         Console.WriteLine($"Current culture: \"{CultureInfo.CurrentCulture.Name}\"\n");

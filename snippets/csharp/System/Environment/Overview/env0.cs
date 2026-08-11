@@ -14,67 +14,65 @@ class Sample
         Console.WriteLine("-- Environment members --");
 
         //  Invoke this sample with an arbitrary set of command line arguments.
-        Console.WriteLine("CommandLine: {0}", Environment.CommandLine);
+        Console.WriteLine($"CommandLine: {Environment.CommandLine}");
 
         string[] arguments = Environment.GetCommandLineArgs();
-        Console.WriteLine("GetCommandLineArgs: {0}", String.Join(", ", arguments));
+        Console.WriteLine($"GetCommandLineArgs: {string.Join(", ", arguments)}");
 
         //  <-- Keep this information secure! -->
-        Console.WriteLine("CurrentDirectory: {0}", Environment.CurrentDirectory);
+        Console.WriteLine($"CurrentDirectory: {Environment.CurrentDirectory}");
 
-        Console.WriteLine("ExitCode: {0}", Environment.ExitCode);
+        Console.WriteLine($"ExitCode: {Environment.ExitCode}");
 
-        Console.WriteLine("HasShutdownStarted: {0}", Environment.HasShutdownStarted);
+        Console.WriteLine($"HasShutdownStarted: {Environment.HasShutdownStarted}");
 
         //  <-- Keep this information secure! -->
-        Console.WriteLine("MachineName: {0}", Environment.MachineName);
+        Console.WriteLine($"MachineName: {Environment.MachineName}");
 
         Console.WriteLine("NewLine: {0}  first line{0}  second line{0}  third line",
                               Environment.NewLine);
 
-        Console.WriteLine("OSVersion: {0}", Environment.OSVersion.ToString());
+        Console.WriteLine($"OSVersion: {Environment.OSVersion.ToString()}");
 
-        Console.WriteLine("StackTrace: '{0}'", Environment.StackTrace);
-
-        //  <-- Keep this information secure! -->
-        Console.WriteLine("SystemDirectory: {0}", Environment.SystemDirectory);
-
-        Console.WriteLine("TickCount: {0}", Environment.TickCount);
+        Console.WriteLine($"StackTrace: '{Environment.StackTrace}'");
 
         //  <-- Keep this information secure! -->
-        Console.WriteLine("UserDomainName: {0}", Environment.UserDomainName);
+        Console.WriteLine($"SystemDirectory: {Environment.SystemDirectory}");
 
-        Console.WriteLine("UserInteractive: {0}", Environment.UserInteractive);
+        Console.WriteLine($"TickCount: {Environment.TickCount}");
 
         //  <-- Keep this information secure! -->
-        Console.WriteLine("UserName: {0}", Environment.UserName);
+        Console.WriteLine($"UserDomainName: {Environment.UserDomainName}");
 
-        Console.WriteLine("Version: {0}", Environment.Version.ToString());
+        Console.WriteLine($"UserInteractive: {Environment.UserInteractive}");
 
-        Console.WriteLine("WorkingSet: {0}", Environment.WorkingSet);
+        //  <-- Keep this information secure! -->
+        Console.WriteLine($"UserName: {Environment.UserName}");
+
+        Console.WriteLine($"Version: {Environment.Version.ToString()}");
+
+        Console.WriteLine($"WorkingSet: {Environment.WorkingSet}");
 
         //  No example for Exit(exitCode) because doing so would terminate this example.
 
         //  <-- Keep this information secure! -->
         string query = "My system drive is %SystemDrive% and my system root is %SystemRoot%";
         str = Environment.ExpandEnvironmentVariables(query);
-        Console.WriteLine("ExpandEnvironmentVariables: {0}  {1}", nl, str);
+        Console.WriteLine($"ExpandEnvironmentVariables: {nl}  {str}");
 
-        Console.WriteLine("GetEnvironmentVariable: {0}  My temporary directory is {1}.", nl,
-                               Environment.GetEnvironmentVariable("TEMP"));
+        Console.WriteLine($"GetEnvironmentVariable: {nl}  My temporary directory is {Environment.GetEnvironmentVariable("TEMP")}.");
 
         Console.WriteLine("GetEnvironmentVariables: ");
         IDictionary environmentVariables = Environment.GetEnvironmentVariables();
         foreach (DictionaryEntry de in environmentVariables)
         {
-            Console.WriteLine("  {0} = {1}", de.Key, de.Value);
+            Console.WriteLine($"  {de.Key} = {de.Value}");
         }
 
-        Console.WriteLine("GetFolderPath: {0}",
-                     Environment.GetFolderPath(Environment.SpecialFolder.System));
+        Console.WriteLine($"GetFolderPath: {Environment.GetFolderPath(Environment.SpecialFolder.System)}");
 
         string[] drives = Environment.GetLogicalDrives();
-        Console.WriteLine("GetLogicalDrives: {0}", String.Join(", ", drives));
+        Console.WriteLine($"GetLogicalDrives: {string.Join(", ", drives)}");
     }
 }
 /*

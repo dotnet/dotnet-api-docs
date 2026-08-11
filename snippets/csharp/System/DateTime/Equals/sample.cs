@@ -15,11 +15,11 @@ public class Application
         // Compare the DateTime objects and display the results.
         bool result = one.Equals(two);
 
-        Console.WriteLine("The result of comparing DateTime object one and two is: {0}.", result);
+        Console.WriteLine($"The result of comparing DateTime object one and two is: {result}.");
 
         result = one.Equals(three);
 
-        Console.WriteLine("The result of comparing DateTime object one and three is: {0}.", result);
+        Console.WriteLine($"The result of comparing DateTime object one and three is: {result}.");
     }
 }
 
