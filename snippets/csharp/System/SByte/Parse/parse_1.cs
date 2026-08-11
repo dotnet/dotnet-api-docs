@@ -61,7 +61,7 @@ public class SByteConversion
         try
         {
             number = sbyte.Parse(stringValue, style);
-            Console.WriteLine($"SByte.Parse('{stringValue}', {style})) = {number}");
+            Console.WriteLine($"SByte.Parse('{stringValue}', {style}) = {number}");
         }
         catch (FormatException)
         {

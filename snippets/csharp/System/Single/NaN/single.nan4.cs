@@ -16,7 +16,7 @@ public class Example
         Console.WriteLine($"NaN < NaN: {float.NaN < float.NaN}");
         Console.WriteLine($"NaN < 100.0: {float.NaN < 100.0f}");
         Console.WriteLine($"NaN <= 100.0: {float.NaN <= 100.0f}");
-        Console.WriteLine($"NaN >= 100.0: {float.NaN > 100.0f}");
+        Console.WriteLine($"NaN > 100.0: {float.NaN > 100.0f}");
         Console.WriteLine($"NaN.CompareTo(NaN): {float.NaN.CompareTo(float.NaN)}");
         Console.WriteLine($"NaN.CompareTo(100.0): {float.NaN.CompareTo(100.0f)}");
         Console.WriteLine($"(100.0).CompareTo(Single.NaN): {(100.0f).CompareTo(float.NaN)}");
