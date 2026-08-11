@@ -1,4 +1,6 @@
-﻿// <Snippet3>
+﻿namespace PredicateExample3;
+
+// <Snippet3>
 using System;
 using System.Collections.Generic;
 

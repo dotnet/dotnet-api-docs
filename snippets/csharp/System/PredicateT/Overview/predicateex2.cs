@@ -1,4 +1,6 @@
-﻿// <Snippet4>
+﻿namespace PredicateExample4;
+
+// <Snippet4>
 using System;
 using System.Drawing;
 
