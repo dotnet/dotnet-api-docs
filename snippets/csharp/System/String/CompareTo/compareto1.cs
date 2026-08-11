@@ -3,7 +3,7 @@ using System;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         string s1 = "ani\u00ADmal";
         object o1 = "animal";

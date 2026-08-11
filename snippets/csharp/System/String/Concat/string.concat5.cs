@@ -3,7 +3,7 @@ using System;
 
 class stringConcat5
 {
-    public static void Main()
+    public static void Run()
     {
         int i = -123;
         object o = i;

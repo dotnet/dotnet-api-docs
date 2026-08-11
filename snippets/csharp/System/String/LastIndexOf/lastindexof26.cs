@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class LastIndexOfIgnorable26Example
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet26>
         string s1 = "ani\u00ADmal";

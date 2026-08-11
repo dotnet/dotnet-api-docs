@@ -3,7 +3,7 @@ using System;
 
 public class JoinTest
 {
-    public static void Main()
+    public static void Run()
     {
         Console.WriteLine(MakeLine(0, 5, ", "));
         Console.WriteLine(MakeLine(1, 6, "  "));

@@ -4,7 +4,7 @@ using System;
 
 class IndexOfCII
 {
-    public static void Main()
+    public static void Run()
     {
         string br1 =
             "0----+----1----+----2----+----3----+----" +

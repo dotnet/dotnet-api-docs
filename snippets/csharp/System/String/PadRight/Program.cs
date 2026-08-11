@@ -1,0 +1,2 @@
+PadRightWidthSample.Run();
+PadRightCharacterSample.Run();

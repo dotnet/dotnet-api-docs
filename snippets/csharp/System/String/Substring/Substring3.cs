@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class SubstringMarkupExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet3>
         string s = "<term>extant<definition>still in existence</definition></term>";

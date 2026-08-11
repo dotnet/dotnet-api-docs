@@ -17,9 +17,9 @@ public class Animal
     public override string ToString() => this.Kind;
 }
 
-public class Example
+public class JoinAnimalsExample
 {
-    public static void Main()
+    public static void Run()
     {
         List<Animal> animals = new()
         {

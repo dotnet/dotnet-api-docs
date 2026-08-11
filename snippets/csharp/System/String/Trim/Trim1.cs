@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class TrimCharactersExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         char[] charsToTrim = { '*', ' ', '\'' };

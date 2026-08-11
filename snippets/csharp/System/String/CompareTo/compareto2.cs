@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class CompareToStringExample
 {
-    public static void Main()
+    public static void Run()
     {
         string s1 = "ani\u00ADmal";
         string s2 = "animal";

@@ -2,9 +2,9 @@
 // Sample for String.LastIndexOf(Char, Int32)
 using System;
 
-class Sample
+class LastIndexOfCharSample
 {
-    public static void Main()
+    public static void Run()
     {
 
         string br1 = "0----+----1----+----2----+----3----+----4----+----5----+----6----+-";

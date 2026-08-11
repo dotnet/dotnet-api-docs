@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class SubstringPairsExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         string[] pairs = { "Color1=red", "Color2=green", "Color3=blue",

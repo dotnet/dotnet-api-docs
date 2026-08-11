@@ -3,7 +3,7 @@ using System;
 
 class Sample
 {
-    public static void Main()
+    public static void Run()
     {
         //<snippet1>
         string[] val = { "apple", "orange", "grape", "pear" };

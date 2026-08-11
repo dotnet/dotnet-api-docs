@@ -1,0 +1,2 @@
+TrimCharactersExample.Run();
+TrimWhitespaceExample.Run();

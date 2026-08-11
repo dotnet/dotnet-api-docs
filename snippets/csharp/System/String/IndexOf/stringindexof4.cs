@@ -3,7 +3,7 @@ using System;
 
 public class IndexOfTest
 {
-    public static void Main()
+    public static void Run()
     {
 
         string strSource = "This is the string which we will perform the search on";

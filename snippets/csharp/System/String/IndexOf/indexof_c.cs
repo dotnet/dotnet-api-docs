@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Example
+class IndexOfCharExample
 {
-    static void Main()
+    public static void Run()
     {
         // <Snippet5>
         // Create a Unicode string with 5 Greek Alpha characters.

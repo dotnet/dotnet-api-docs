@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class IsNullOrWhiteSpaceExample
 {
-    public static void Main()
+    public static void Run()
     {
         string[] values = { null, string.Empty, "ABCDE",
                           new string(' ', 20), "  \t   ",

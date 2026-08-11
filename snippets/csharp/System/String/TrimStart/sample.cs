@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class TrimExample
 {
     // <Snippet3>
-    public static void Main()
+    public static void Run()
     {
         string[] lines = {"using System;",
                        "",
@@ -57,7 +57,7 @@ public class TrimExample
     }
     // </Snippet2>
 
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         // <Snippet1>
         // TrimStart examples

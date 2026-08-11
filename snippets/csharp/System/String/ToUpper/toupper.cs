@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-class Example
+class ToUpperCultureExample
 {
-    public static void Main()
+    public static void Run()
     {
         string str1 = "indigo";
         string str2, str3;

@@ -1,0 +1,14 @@
+IndexOfIgnorable21Example.Run();
+IndexOfIgnorable22Example.Run();
+IndexOfIgnorable23Example.Run();
+IndexOfIgnorable24Example.Run();
+IndexOfIgnorable25Example.Run();
+IndexOfIgnorable26Example.Run();
+IndexOfCharExample.Run();
+IndexOfCII.Run();
+IndexOfComparisonSample.Run();
+IndexOfCharStartSample.Run();
+IndexOfStringRangeSample.Run();
+IndexOfSimpleExample.Run();
+IndexOfTest.Run();
+IndexOfInsertExample.Run();

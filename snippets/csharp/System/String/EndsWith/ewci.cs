@@ -6,9 +6,9 @@ using System;
 
 using System.Globalization;
 
-class Sample
+class EndsWithCultureSample
 {
-    public static void Main()
+    public static void Run()
     {
         string msg1 = "Search for the target string \"{0}\" in the string \"{1}\".\n";
         string msg2 = "Using the {0} - \"{1}\" culture:";

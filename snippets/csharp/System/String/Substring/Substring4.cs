@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class SubstringLengthExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet4>
         string value = "This is a string.";

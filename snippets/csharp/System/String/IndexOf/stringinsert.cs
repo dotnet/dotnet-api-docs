@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class IndexOfInsertExample
 {
-    public static void Main()
+    public static void Run()
     {
         string animal1 = "fox";
         string animal2 = "dog";

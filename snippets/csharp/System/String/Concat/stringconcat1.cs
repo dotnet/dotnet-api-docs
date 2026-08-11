@@ -3,7 +3,7 @@ using System;
 
 public class ConcatTest
 {
-    public static void Main()
+    public static void Run()
     {
         // Create a group of objects.
         Test1 t1 = new();

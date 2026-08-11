@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class IndexOfSimpleExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet12>
         string str = "animal";

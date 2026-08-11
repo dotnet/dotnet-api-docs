@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Sample
+public class PadRightWidthSample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         string str;

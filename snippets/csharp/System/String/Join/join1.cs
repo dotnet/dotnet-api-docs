@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class JoinArrayExample
 {
-    public static void Main()
+    public static void Run()
     {
         int maxPrime = 100;
         int[] primes = GetPrimes(maxPrime);

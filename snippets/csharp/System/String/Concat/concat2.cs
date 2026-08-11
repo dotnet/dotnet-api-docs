@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Example
+public class ConcatAlphabetExample
 {
-    public static void Main()
+    public static void Run()
     {
         string output = string.Concat(GetAlphabet(true).Where(letter =>
                         letter.CompareTo("M") >= 0));

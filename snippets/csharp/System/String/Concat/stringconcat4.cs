@@ -1,9 +1,9 @@
 ﻿//<snippet1>
 using System;
 
-public class ConcatTest
+public class ConcatNamesTest
 {
-    public static void Main()
+    public static void Run()
     {
 
         // we want to simply quickly add this person's name together

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         int maxPrime = 100;
         IEnumerable<string> primeList = GetPrimes(maxPrime);

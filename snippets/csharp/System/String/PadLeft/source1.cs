@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-class Sample
+class PadLeftCharacterSample
 {
-    public static void Main()
+    public static void Run()
     {
         string str = "forty-two";
         char pad = '.';

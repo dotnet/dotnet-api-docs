@@ -1,0 +1,13 @@
+TestLastIndexOf.Run();
+LastIndexOfTagsExample.Run();
+LastIndexOfIgnorable21Example.Run();
+LastIndexOfIgnorable22Example.Run();
+LastIndexOfIgnorable23Example.Run();
+LastIndexOfIgnorable24Example.Run();
+LastIndexOfIgnorable25Example.Run();
+LastIndexOfIgnorable26Example.Run();
+LastIndexOfCharSample.Run();
+LastIndexOfCharRangeSample.Run();
+LastIndexOfStringSample.Run();
+LastIndexOfStringRangeSample.Run();
+LastIndexOfComparisonSample.Run();

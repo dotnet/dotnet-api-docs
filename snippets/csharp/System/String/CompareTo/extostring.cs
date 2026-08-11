@@ -4,9 +4,9 @@ using System;
 public class TestClass
 { }
 
-public class Example
+public class CompareToObjectExample
 {
-    public static void Main()
+    public static void Run()
     {
         var test = new TestClass();
         object[] objectsToCompare = { test, test.ToString(), 123,

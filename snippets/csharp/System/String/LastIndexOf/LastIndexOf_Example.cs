@@ -4,7 +4,7 @@ using System.IO;
 
 public class TestLastIndexOf
 {
-    public static void Main()
+    public static void Run()
     {
         string filename;
 

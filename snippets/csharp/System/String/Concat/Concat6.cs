@@ -1,9 +1,9 @@
 ﻿// <Snippet6>
 using System;
 
-public class Example
+public class ConcatThreeStringsExample
 {
-    public static void Main()
+    public static void Run()
     {
         string s1 = "We went to a bookstore, ";
         string s2 = "a movie, ";

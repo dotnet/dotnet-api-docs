@@ -2,7 +2,7 @@
 
 public class Sample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         string myString = "abc";

@@ -1,9 +1,9 @@
 ﻿// <Snippet26>
 using System;
 
-public class Example
+public class IndexOfIgnorable26Example
 {
-    public static void Main()
+    public static void Run()
     {
         string s1 = "ani\u00ADmal";
         string s2 = "animal";

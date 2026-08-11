@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class ToUpperRangeExample
 {
-    public static void Main()
+    public static void Run()
     {
         int n = 0;
         for (int ctr = 0x20; ctr <= 0x017F; ctr++)

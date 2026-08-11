@@ -6,9 +6,9 @@ using System;
 using System.Threading;
 
 
-class Sample
+class IndexOfComparisonSample
 {
-    public static void Main()
+    public static void Run()
     {
         string intro = "Find the first occurrence of a character using different " +
                        "values of StringComparison.";

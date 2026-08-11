@@ -5,9 +5,9 @@
 using System;
 using System.Threading;
 
-class Sample
+class EndsWithComparisonSample
 {
-    public static void Main()
+    public static void Run()
     {
         string intro = "Determine whether a string ends with another string, " +
                    "using\n  different values of StringComparison.";

@@ -2,7 +2,7 @@
 
 public class SubStringTest
 {
-    public static void Main()
+    public static void Run()
     {
         //<snippet10>
         string[] info = { "Name: Felica Walker", "Title: Mz.",

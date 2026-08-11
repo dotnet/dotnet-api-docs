@@ -1,9 +1,9 @@
 ﻿// <Snippet24>
 using System;
 
-public class Example
+public class IndexOfIgnorable24Example
 {
-    public static void Main()
+    public static void Run()
     {
 
         string searchString = "\u00ADm";

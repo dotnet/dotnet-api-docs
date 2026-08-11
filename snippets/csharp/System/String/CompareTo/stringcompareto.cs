@@ -1,9 +1,9 @@
 ﻿//<snippet1>
 using System;
 
-public class Example
+public class CompareStringsExample
 {
-    public static void Main()
+    public static void Run()
     {
         string strFirst = "Goodbye";
         string strSecond = "Hello";

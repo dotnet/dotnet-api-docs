@@ -6,9 +6,9 @@ using System;
 using System.Threading;
 
 
-class Sample
+class LastIndexOfComparisonSample
 {
-    public static void Main()
+    public static void Run()
     {
         string intro = "Find the last occurrence of a character using different " +
                        "values of StringComparison.";

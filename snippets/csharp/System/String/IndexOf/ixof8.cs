@@ -1,9 +1,9 @@
 ﻿// Sample for String.IndexOf(String, Int32, Int32)
 using System;
 
-class Sample
+class IndexOfStringRangeSample
 {
-    public static void Main()
+    public static void Run()
     {
         //<snippet1>
         string br1 = "0----+----1----+----2----+----3----+----4----+----5----+----6----+---";

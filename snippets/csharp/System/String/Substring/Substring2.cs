@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class SubstringRangeExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         string s = "aaaaabbbcccccccdd";

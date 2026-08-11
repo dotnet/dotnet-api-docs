@@ -2,9 +2,9 @@
 // Sample for String.LastIndexOfAny(Char[], Int32)
 using System;
 
-class Sample
+class LastIndexOfAnyStartSample
 {
-    public static void Main()
+    public static void Run()
     {
 
         string br1 = "0----+----1----+----2----+----3----+----4----+----5----+----6----+-";

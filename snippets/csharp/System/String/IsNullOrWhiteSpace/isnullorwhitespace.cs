@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class IsNullOrWhiteSpaceEquivalentExample
 {
-    public static void Main() => Console.WriteLine(ShowCode());
+    public static void Run() => Console.WriteLine(ShowCode());
 
     private static bool ShowCode()
     {

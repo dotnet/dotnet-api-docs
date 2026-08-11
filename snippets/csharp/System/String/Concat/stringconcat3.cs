@@ -1,9 +1,9 @@
 ﻿//<snippet1>
 using System;
 
-public class Example
+public class ConcatArrayExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Make an array of strings. Note that we have included spaces.
         string[] s = { "hello ", "and ", "welcome ", "to ",

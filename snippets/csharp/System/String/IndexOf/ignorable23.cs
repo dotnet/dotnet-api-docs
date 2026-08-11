@@ -1,9 +1,9 @@
 ﻿// <Snippet23>
 using System;
 
-public class Example
+public class IndexOfIgnorable23Example
 {
-    public static void Main()
+    public static void Run()
     {
         string searchString = "\u00ADm";
         string s1 = "ani\u00ADmal";

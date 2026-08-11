@@ -2,9 +2,9 @@
 using System;
 using System.Collections;
 
-public class Example
+public class ConcatScrambleExample
 {
-    public static void Main()
+    public static void Run()
     {
         const int WORD_SIZE = 4;
 

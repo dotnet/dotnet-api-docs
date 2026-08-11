@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class TrimWhitespaceExample
 {
-    public static void Main()
+    public static void Run()
     {
         Console.Write("Enter your first name: ");
         string firstName = Console.ReadLine();

@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class StartsWithInvariantExample
 {
-    public static void Main()
+    public static void Run()
     {
         string title = "The House of the Seven Gables";
         string searchString = "the";

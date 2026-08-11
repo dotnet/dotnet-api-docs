@@ -3,7 +3,7 @@ using System;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         string[] strings = { "This is a string.", "Hello!", "Nothing.",
                            "Yes.", "randomize" };

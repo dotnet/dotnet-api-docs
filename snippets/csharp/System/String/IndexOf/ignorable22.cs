@@ -1,9 +1,9 @@
 ﻿// <Snippet22>
 using System;
 
-public class Example
+public class IndexOfIgnorable22Example
 {
-    public static void Main()
+    public static void Run()
     {
         string searchString = "\u00ADm";
         string s1 = "ani\u00ADmal";

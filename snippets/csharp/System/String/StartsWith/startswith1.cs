@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class StartsWithComparisonExample
 {
-    public static void Main()
+    public static void Run()
     {
         string[,] strings = { {"ABCdef", "abc" },
                             {"ABCdef", "abc" },

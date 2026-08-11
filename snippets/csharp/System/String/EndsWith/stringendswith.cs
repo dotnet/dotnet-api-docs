@@ -3,7 +3,7 @@ using System;
 
 public class EndsWithTest
 {
-    public static void Main()
+    public static void Run()
     {
 
         // process an input file that contains html tags.
