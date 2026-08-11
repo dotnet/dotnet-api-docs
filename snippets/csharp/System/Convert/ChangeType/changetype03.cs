@@ -179,7 +179,7 @@ public class Example
         }
     }
 }
-// The example dosplays the following output:
+// The example displays the following output:
 //       Converted Temperature 5.00°C to SByte 5.
 //       Converted Temperature 5.00°C to Int16 5.
 //       Converted Temperature 5.00°C to Int32 5.

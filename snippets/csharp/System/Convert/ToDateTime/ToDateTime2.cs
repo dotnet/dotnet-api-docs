@@ -45,7 +45,7 @@ public class ConversionToDateTime
         try
         {
             convertedDate = Convert.ToDateTime(value);
-            Console.WriteLine($"'{value}' converts to {convertedDate} {convertedDate.Kind.ToString()} time.");
+            Console.WriteLine($"'{value}' converts to {convertedDate} {convertedDate.Kind} time.");
         }
         catch (FormatException)
         {
