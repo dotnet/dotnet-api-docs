@@ -3,20 +3,24 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      string[] values = { null, String.Empty, "True", "False",
+    public static void Main()
+    {
+        string[] values = { null, string.Empty, "True", "False",
                           "true", "false", "    true    ", "0",
                           "1", "-1", "string" };
-      foreach (var value in values) {
-         bool flag;
-         if (Boolean.TryParse(value, out flag))
-            Console.WriteLine("'{0}' --> {1}", value, flag);
-         else
-            Console.WriteLine("Unable to parse '{0}'.",
-                              value == null ? "<null>" : value);
-      }
-   }
+        foreach (string value in values)
+        {
+            bool flag;
+            if (bool.TryParse(value, out flag))
+            {
+                Console.WriteLine($"'{value}' --> {flag}");
+            }
+            else
+            {
+                Console.WriteLine($"Unable to parse '{(value == null ? "<null>" : value)}'.");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       Unable to parse '<null>'.
