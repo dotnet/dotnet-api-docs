@@ -5,11 +5,11 @@ public class TestFormatter
 {
     public static void Main()
     {
-int acctNumber = 79203159;
-Console.WriteLine(string.Format(new CustomerFormatter(), "{0}", acctNumber));
-Console.WriteLine(string.Format(new CustomerFormatter(), "{0:G}", acctNumber));
-Console.WriteLine(string.Format(new CustomerFormatter(), "{0:S}", acctNumber));
-Console.WriteLine(string.Format(new CustomerFormatter(), "{0:P}", acctNumber));
+        int acctNumber = 79203159;
+        Console.WriteLine(string.Format(new CustomerFormatter(), "{0}", acctNumber));
+        Console.WriteLine(string.Format(new CustomerFormatter(), "{0:G}", acctNumber));
+        Console.WriteLine(string.Format(new CustomerFormatter(), "{0:S}", acctNumber));
+        Console.WriteLine(string.Format(new CustomerFormatter(), "{0:P}", acctNumber));
         try
         {
             Console.WriteLine($"{acctNumber:X}");
