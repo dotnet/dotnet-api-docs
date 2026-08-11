@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class MathAbsExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         decimal[] decimals = { decimal.MaxValue, 12.45M, 0M, -19.69M,

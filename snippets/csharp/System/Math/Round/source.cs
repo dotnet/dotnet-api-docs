@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Program
+class MathRoundExample6
 {
-    static void Main()
+    public static void Run()
     {
         // <Snippet1>
         Console.WriteLine("Classic Math.Round in CSharp");

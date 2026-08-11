@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class MathRoundExample2
 {
-    public static void Main()
+    public static void Run()
     {
         double[] values = { 2.125, 2.135, 2.145, 3.125, 3.135, 3.145 };
         foreach (double value in values)

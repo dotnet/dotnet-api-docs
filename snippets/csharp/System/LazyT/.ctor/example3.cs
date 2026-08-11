@@ -1,8 +1,9 @@
 ﻿//<SnippetAll>
 using System;
 using System.Threading;
+using LargeObject = LargeObjectCtorExample4;
 
-class Program
+class LazyCtorExample4
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
@@ -10,7 +11,7 @@ class Program
     static LargeObject InitLargeObject() => new LargeObject();
     //</SnippetFactoryFunc>
 
-    static void Main()
+    public static void Run()
     {
         // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
@@ -47,11 +48,11 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectCtorExample4
 {
     //<SnippetLargeCtor>
     static bool pleaseThrow = true;
-    public LargeObject()
+    public LargeObjectCtorExample4()
     {
         if (pleaseThrow)
         {

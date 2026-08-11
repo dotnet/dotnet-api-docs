@@ -1,8 +1,9 @@
 ﻿//<SnippetAll>
 using System;
 using System.Threading;
+using LargeObject = LargeObjectOverviewExample1;
 
-class Program
+class LazyOverviewExample1
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
@@ -15,7 +16,7 @@ class Program
     }
     //</SnippetFactoryFunc>
 
-    static void Main()
+    public static void Run()
     {
         // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
@@ -70,13 +71,13 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectOverviewExample1
 {
     public int InitializedBy => initBy;
 
     //<SnippetLargeCtor>
     int initBy = 0;
-    public LargeObject(int initializedBy)
+    public LargeObjectOverviewExample1(int initializedBy)
     {
         initBy = initializedBy;
         Console.WriteLine("LargeObject was created on thread id {0}.", initBy);

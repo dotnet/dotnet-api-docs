@@ -1,8 +1,9 @@
 ﻿//<SnippetAll>
 using System;
 using System.Threading;
+using LargeObject = LargeObjectCtorExample5;
 
-class Program
+class LazyCtorExample5
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
@@ -20,7 +21,7 @@ class Program
     }
     //</SnippetFactoryFunc>
 
-    static void Main()
+    public static void Run()
     {
         // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
@@ -93,19 +94,19 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectCtorExample5
 {
     int initBy = -1;
     public int InitializedBy => initBy;
 
     //<SnippetCtorFinalizer>
-    public LargeObject(int initializedBy)
+    public LargeObjectCtorExample5(int initializedBy)
     {
         initBy = initializedBy;
         Console.WriteLine("Constructor: Instance initializing on thread {0}", initBy);
     }
 
-    ~LargeObject() => Console.WriteLine("Finalizer: Instance was initialized on {0}", initBy);
+    ~LargeObjectCtorExample5() => Console.WriteLine("Finalizer: Instance was initialized on {0}", initBy);
     //</SnippetCtorFinalizer>
 
     public long[] Data = new long[100000000];

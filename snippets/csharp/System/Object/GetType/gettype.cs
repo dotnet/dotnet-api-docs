@@ -11,7 +11,7 @@ public class MyDerivedClass : MyBaseClass
 
 public class Test
 {
-    public static void Main()
+    public static void Run()
     {
         MyBaseClass myBase = new();
         MyDerivedClass myDerived = new();

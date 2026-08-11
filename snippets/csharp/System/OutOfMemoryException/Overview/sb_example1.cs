@@ -2,9 +2,9 @@
 using System;
 using System.Text;
 
-public class Example
+public class OutOfMemoryExceptionExample4
 {
-    public static void Main()
+    public static void Run()
     {
         StringBuilder sb = new(15, 15);
         sb.Append("Substring #1 ");

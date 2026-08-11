@@ -1,9 +1,9 @@
 ﻿// <Snippet4>
 using System;
 
-public class Example
+public class MathRoundExample4
 {
-    public static void Main()
+    public static void Run()
     {
         double value = 11.1;
         for (int ctr = 0; ctr <= 5; ctr++)

@@ -27,9 +27,9 @@ public class CityInfo
     public static int CompareByNames(CityInfo city1, CityInfo city2) => string.Compare(city1.Country + city1.City, city2.Country + city2.City);
 }
 
-public class Example
+public class ComparisonTOverviewExample1
 {
-    public static void Main()
+    public static void Run()
     {
         CityInfo NYC = new("New York City", "United States of America", 8175133);
         CityInfo Det = new("Detroit", "United States of America", 713777);

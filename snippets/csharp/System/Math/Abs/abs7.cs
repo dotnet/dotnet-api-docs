@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class MathAbsExample7
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet7>
         float[] values = { float.MaxValue, 16.354e-12F, 15.098123F, 0F,

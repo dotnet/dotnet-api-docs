@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class ObjectGetTypeExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         object[] values = { (int) 12, (long) 10653, (byte) 12, (sbyte) -5,

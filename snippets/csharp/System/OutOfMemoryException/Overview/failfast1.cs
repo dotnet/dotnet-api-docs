@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class OutOfMemoryExceptionExample3
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {

@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class ObjectReferenceEqualsExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         int int1 = 3;

@@ -2,8 +2,7 @@
 
 class MyClass
 {
-
-    static void Main()
+    public static void Run()
     {
         // <Snippet1>
         object o = null;

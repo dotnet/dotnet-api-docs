@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class MathAbsExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         double[] doubles = { double.MaxValue, 16.354e-17, 15.098123, 0,

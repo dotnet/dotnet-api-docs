@@ -2,7 +2,7 @@
 
 public class Sample
 {
-    static void Main()
+    public static void Run()
     {
         // <Snippet1>
         Math.Round(3.44, 1); //Returns 3.4.

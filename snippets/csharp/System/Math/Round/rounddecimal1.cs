@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Example
+class MathRoundExample5
 {
-    static void Main()
+    public static void Run()
     {
         //  <Snippet6>
         for (decimal value = 4.2m; value <= 4.8m; value += .1m)

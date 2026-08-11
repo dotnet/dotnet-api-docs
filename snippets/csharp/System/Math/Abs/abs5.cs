@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class MathAbsExample5
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet5>
         long[] values = { long.MaxValue, 109013, 0, -6871982, long.MinValue };

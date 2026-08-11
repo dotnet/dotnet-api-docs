@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class MathRoundExample3
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet3>
         double[] values = { 2.125, 2.135, 2.145, 3.125, 3.135, 3.145 };

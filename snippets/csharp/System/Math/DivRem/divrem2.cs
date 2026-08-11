@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class MathDivRemExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // Define several positive and negative dividends.
         long[] dividends = { long.MaxValue, 13952, 0, -14032,

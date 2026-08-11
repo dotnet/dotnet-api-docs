@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class ComparisonTOverviewExample2
 {
     private static int CompareDinosByLength(string x, string y)
     {
@@ -55,7 +55,7 @@ public class Example
         }
     }
 
-    public static void Main()
+    public static void Run()
     {
         List<string> dinosaurs = new()
         {

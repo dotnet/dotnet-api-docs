@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading;
+using LargeObject = LargeObjectOverviewExample2;
 
-class Program
+class LazyOverviewExample2
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
-    static void Main()
+    public static void Run()
     {
         //<SnippetInitWithLambda>
         lazyLargeObject = new Lazy<LargeObject>(() =>
@@ -55,12 +56,12 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectOverviewExample2
 {
     public int InitializedBy => initBy;
 
     int initBy = 0;
-    public LargeObject(int initializedBy)
+    public LargeObjectOverviewExample2(int initializedBy)
     {
         initBy = initializedBy;
         Console.WriteLine("LargeObject was created on thread id {0}.", initBy);

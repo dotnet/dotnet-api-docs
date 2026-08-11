@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class MathAbsExample6
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet6>
         sbyte[] values = { sbyte.MaxValue, 98, 0, -32, sbyte.MinValue };

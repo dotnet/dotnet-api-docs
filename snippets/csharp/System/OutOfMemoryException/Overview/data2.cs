@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class OutOfMemoryExceptionExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<double, long> result = GetResult();
         Console.WriteLine($"Sample mean: {result.Item1}, N = {result.Item2:N0}");

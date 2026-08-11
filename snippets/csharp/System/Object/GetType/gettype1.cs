@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class ObjectGetTypeExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         int n1 = 12;

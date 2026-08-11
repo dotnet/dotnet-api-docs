@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class OutOfMemoryExceptionExample1
 {
-    public static void Main()
+    public static void Run()
     {
         double[] values = GetData();
         // Compute mean.
