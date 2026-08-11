@@ -11,10 +11,10 @@ public struct HexString : IConvertible
     private string hexString;
 
     public SignBit Sign
-   {
-      set => signBit = value;
-      get => signBit;
-   }
+    {
+        set => signBit = value;
+        get => signBit;
+    }
 
     public string Value
     {
