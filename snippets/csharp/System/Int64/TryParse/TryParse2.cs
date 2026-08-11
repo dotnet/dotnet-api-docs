@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class StringParsing
+public class Int64TryParseExample2
 {
-    public static void Main()
+    public static void Run()
     {
         string numericString;
         NumberStyles styles;

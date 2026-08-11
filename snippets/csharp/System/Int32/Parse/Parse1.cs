@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class Int32ParseExample1
 {
-    public static void Main()
+    public static void Run()
     {
         string[] values = { "+13230", "-0", "1,390,146", "$190,235,421,127",
                           "0xFA1B", "163042", "-10", "007", "2147483647",

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-public class Example
+public class IntPtrSubtractionExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         int[] arr = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };

@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GuidParseExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet3>
         var originalGuid = Guid.NewGuid();

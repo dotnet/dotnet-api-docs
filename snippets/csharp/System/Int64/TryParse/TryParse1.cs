@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class StringParsing
+public class Int64TryParseExample1
 {
-    public static void Main()
+    public static void Run()
     {
         TryToParse(null);
         TryToParse("160519");

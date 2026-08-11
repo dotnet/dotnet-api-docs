@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class GuidCompareToExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Guid mainGuid = Guid.Parse("01e75c83-c6f5-4192-b57e-7427cec5560d");
         unchecked

@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class ParseInt32
+public class Int32ParseExample3
 {
-    public static void Main()
+    public static void Run()
     {
         Convert("12,000", NumberStyles.Float | NumberStyles.AllowThousands,
                 new CultureInfo("en-GB"));

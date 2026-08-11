@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime;
 
-public class Example
+public class CollectMemoryExample
 {
-    public static void Main()
+    public static void Run()
     {
         CreateObjects();
         Console.WriteLine($"Memory allocated before GC: {GC.GetTotalMemory(false):N0}");

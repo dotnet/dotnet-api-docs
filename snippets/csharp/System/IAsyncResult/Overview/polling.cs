@@ -4,9 +4,9 @@ using System.Threading;
 
 namespace Examples.AdvancedProgramming.AsynchronousOperations
 {
-    public class AsyncMain
+    public class PollingExample
     {
-        static void Main()
+        public static void Run()
         {
             // The asynchronous method puts the thread id here.
             int threadId;

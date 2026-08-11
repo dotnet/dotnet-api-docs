@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GuidConstructorExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         string[] guidStrings = { "ca761232ed4211cebacd00aa0057b223",

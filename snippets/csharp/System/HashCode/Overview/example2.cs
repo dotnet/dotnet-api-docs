@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 
-public struct Path : IEquatable<Path>
+public struct PathExample2 : IEquatable<PathExample2>
 {
     public IReadOnlyList<string> Segments { get; }
 
-    public Path(params string[] segments) => Segments = segments;
+    public PathExample2(params string[] segments) => Segments = segments;
 
-    public override bool Equals(object obj) => obj is Path o && Equals(o);
+    public override bool Equals(object obj) => obj is PathExample2 o && Equals(o);
 
-    public bool Equals(Path other)
+    public bool Equals(PathExample2 other)
     {
         if (ReferenceEquals(Segments, other.Segments)) return true;
         if (Segments is null || other.Segments is null) return false;
@@ -36,15 +36,15 @@ public struct Path : IEquatable<Path>
     }
 }
 
-class Program
+class PathHashCodeExample2
 {
-    static void Main(string[] args)
+    public static void Run(string[] args)
     {
-        var set = new HashSet<Path>
+        var set = new HashSet<PathExample2>
         {
-            new Path("C:", "tmp", "file.txt"),
-            new Path("C:", "tmp", "file.txt"),
-            new Path("C:", "tmp", "file.tmp")
+            new PathExample2("C:", "tmp", "file.txt"),
+            new PathExample2("C:", "tmp", "file.txt"),
+            new PathExample2("C:", "tmp", "file.tmp")
         };
 
         Console.WriteLine($"Item count: {set.Count}.");

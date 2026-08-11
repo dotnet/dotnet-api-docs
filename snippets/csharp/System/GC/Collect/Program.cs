@@ -1,8 +1,19 @@
 ﻿//<Snippet1>
 using System;
 
-class Program
+class CollectGenerationExample
 {
-    static void Main(string[] args) => GC.Collect(2, GCCollectionMode.Optimized);
+    public static void Run(string[] args) => GC.Collect(2, GCCollectionMode.Optimized);
 }
 // </Snippet1>
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        CollectGenerationExample.Run(args);
+        MyGCCollectClass.Run();
+        CollectMemoryExample.Run();
+        LohCompactionModeExample.Run();
+    }
+}

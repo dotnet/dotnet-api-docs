@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GuidConstructorExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet2>
         var g = new Guid(0xA, 0xB, 0xC,

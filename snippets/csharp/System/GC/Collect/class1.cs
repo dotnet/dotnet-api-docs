@@ -5,7 +5,7 @@ class MyGCCollectClass
 {
     private const int maxGarbage = 1000;
 
-    static void Main()
+    public static void Run()
     {
         // Put some objects in memory.
         MyGCCollectClass.MakeSomeGarbage();

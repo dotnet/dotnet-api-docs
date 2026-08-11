@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class LengthExample1
 {
-    public static void Main()
+    public static void Run()
     {
         List<char> characters = new();
         characters.InsertRange(0, new char[] { 'a', 'b', 'c', 'd', 'e', 'f' });

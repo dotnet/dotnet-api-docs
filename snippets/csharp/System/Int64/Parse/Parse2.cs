@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class ParseInt32
+public class Int64ParseExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Convert("104.0", NumberStyles.AllowDecimalPoint);
         Convert("104.9", NumberStyles.AllowDecimalPoint);

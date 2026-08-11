@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class NegativeIndexExample1
 {
     static List<int> numbers = new();
 
-    public static void Main()
+    public static void Run()
     {
         int startValue;
         string[] args = Environment.GetCommandLineArgs();

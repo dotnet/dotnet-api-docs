@@ -3,11 +3,11 @@ using System;
 using System.Runtime.InteropServices;
 
 [Guid("936DA01F-9ABD-4d9d-80C7-02AF85C822A8")]
-public class Example
+public class GuidCompareToExample1
 {
-    public static void Main()
+    public static void Run()
     {
-        GuidAttribute guidAttr = (GuidAttribute)Attribute.GetCustomAttribute(typeof(Example),
+        GuidAttribute guidAttr = (GuidAttribute)Attribute.GetCustomAttribute(typeof(GuidCompareToExample1),
                                                         typeof(GuidAttribute));
         Guid guidValue = Guid.Parse(guidAttr.Value);
         object[] values = { null , 16,

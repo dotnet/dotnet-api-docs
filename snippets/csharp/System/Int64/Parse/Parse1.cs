@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class ParseInt64
+public class Int64ParseExample1
 {
-    public static void Main()
+    public static void Run()
     {
         Convert("  179042  ");
         Convert(" -2041326 ");

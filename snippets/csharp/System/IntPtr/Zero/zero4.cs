@@ -3,7 +3,7 @@ using Microsoft.Win32.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 
-public class Example
+public class IntPtrZeroExample4
 {
     private const uint GENERIC_READ = 0x80000000;
     private const uint OPEN_EXISTING = 3;
@@ -16,7 +16,7 @@ public class Example
              IntPtr pSecurityAttributes, uint dwCreationDisposition,
              uint dwFlagsAndAttributes, IntPtr hTemplateFile);
 
-    public static void Main()
+    public static void Run()
     {
         SafeFileHandle hnd = CreateFile("CallOfTheWild.txt", GENERIC_READ, 0,
                                         IntPtr.Zero, OPEN_EXISTING,

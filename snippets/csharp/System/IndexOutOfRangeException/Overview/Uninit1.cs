@@ -1,7 +1,7 @@
 ﻿// <Snippet10>
-public class Example
+public class UninitializedArrayExample
 {
-    public static void Main()
+    public static void Run()
     {
         int[] values1 = { 3, 6, 9, 12, 15, 18, 21 };
         int[] values2 = new int[6];

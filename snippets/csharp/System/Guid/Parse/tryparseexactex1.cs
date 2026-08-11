@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class GuidTryParseExactExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet5>
         // Define an array of all format specifiers.

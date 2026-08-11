@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class NonZeroLowerBoundExample1
 {
-    public static void Main()
+    public static void Run()
     {
         Array values = Array.CreateInstance(typeof(int), new int[] { 10 },
                                             new int[] { 1 });

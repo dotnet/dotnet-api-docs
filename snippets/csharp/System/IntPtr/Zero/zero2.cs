@@ -2,14 +2,14 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class Example
+public class IntPtrZeroExample2
 {
     private const int GW_OWNER = 4;
 
     [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
     public static extern IntPtr GetWindow(IntPtr hwnd, int wFlag);
 
-    public static void Main()
+    public static void Run()
     {
         IntPtr hwnd = new(3);
         IntPtr hOwner = GetWindow(hwnd, GW_OWNER);

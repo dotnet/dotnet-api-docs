@@ -1,9 +1,9 @@
 ﻿// <Snippet8>
 using System;
 
-public class Example
+public class ForeachExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // Generate array of random values.
         int[] values = PopulateArray(5, 10);
