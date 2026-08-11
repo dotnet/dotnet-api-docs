@@ -7,9 +7,9 @@ public class QAExample26
         // <Snippet26>
         object[] values = { 1603, 1794.68235, 15436.14 };
         string result;
-        foreach (var value in values)
+        foreach (object value in values)
         {
-            result = String.Format("{0,12:C2}   {0,12:E3}   {0,12:F4}   {0,12:N3}  {1,12:P2}\n",
+            result = string.Format("{0,12:C2}   {0,12:E3}   {0,12:F4}   {0,12:N3}  {1,12:P2}\n",
                                    Convert.ToDouble(value), Convert.ToDouble(value) / 10000);
             Console.WriteLine(result);
         }

@@ -7,13 +7,13 @@ delegate T ParseNumber<T>(string input, NumberStyles styles,
 
 public class DelegateExample
 {
-   public static void Main()
-   {
-      string numericString = "-1,234";
-      ParseNumber<int> parser = int.Parse;
-      Console.WriteLine(parser(numericString,
-                        NumberStyles.Integer | NumberStyles.AllowThousands,
-                        CultureInfo.InvariantCulture));
-   }
+    public static void Main()
+    {
+        string numericString = "-1,234";
+        ParseNumber<int> parser = int.Parse;
+        Console.WriteLine(parser(numericString,
+                          NumberStyles.Integer | NumberStyles.AllowThousands,
+                          CultureInfo.InvariantCulture));
+    }
 }
 // </Snippet1>
