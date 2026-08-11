@@ -3,7 +3,7 @@ name: dotnet-snippet-modernization
 description: Modernize C# API-reference snippets while preserving the documented API, output, and snippet structure.
 ---
 
-# .NET API Snippet Modernization
+# C# API Snippet Modernization
 
 Modernize C# files in the requested `snippets/csharp` scope. Apply current C#
 syntax and repository formatting conventions without changing what an API sample
