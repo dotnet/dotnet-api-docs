@@ -6,9 +6,9 @@ public class Example
 {
     public static void Main()
     {
-        string[] words = { "Tuesday", "Salı", "Вторник", "Mardi",
+        string[] words = [ "Tuesday", "Salı", "Вторник", "Mardi",
                          "Τρίτη", "Martes", "יום שלישי",
-                         "الثلاثاء", "วันอังคาร" };
+                         "الثلاثاء", "วันอังคาร" ];
         StreamWriter sw = new(@".\output.txt");
 
         // Display array in unsorted order.

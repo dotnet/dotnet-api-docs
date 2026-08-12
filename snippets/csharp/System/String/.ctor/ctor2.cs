@@ -5,8 +5,8 @@ public class Example4
 {
     public static unsafe void Main()
     {
-        char[] characters = { 'H', 'e', 'l', 'l', 'o', ' ',
-                            'w', 'o', 'r', 'l', 'd', '!', '\u0000' };
+        char[] characters = [ 'H', 'e', 'l', 'l', 'o', ' ',
+                            'w', 'o', 'r', 'l', 'd', '!', '\u0000' ];
         string value;
 
         fixed (char* charPtr = characters)

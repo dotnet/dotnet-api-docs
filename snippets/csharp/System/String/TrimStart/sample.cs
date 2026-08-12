@@ -6,7 +6,7 @@ public class TrimExample
     // <Snippet3>
     public static void Run()
     {
-        string[] lines = {"using System;",
+        string[] lines = ["using System;",
                        "",
                        "public class HelloWorld",
                        "{",
@@ -16,7 +16,7 @@ public class TrimExample
                        "      // to the console.",
                        "      Console.WriteLine(\"Hello, World.\");",
                        "   }",
-                       "}"};
+                       "}"];
         Console.WriteLine("Before call to StripComments:");
         foreach (string line in lines)
             Console.WriteLine($"   {line}");
@@ -53,7 +53,7 @@ public class TrimExample
             if (line.TrimStart(' ').StartsWith("//"))
                 lineList.Add(line.TrimStart(' ', '/'));
         }
-        return lineList.ToArray();
+        return [.. lineList];
     }
     // </Snippet2>
 
@@ -68,7 +68,7 @@ public class TrimExample
         string lineAfterTrimStart = string.Empty;
 
         // Make it easy to print out and work with all of the examples
-        string[] lines = { lineWithLeadingSpaces, lineWithLeadingSymbols, lineWithLeadingUnderscores, lineWithLeadingLetters };
+        string[] lines = [lineWithLeadingSpaces, lineWithLeadingSymbols, lineWithLeadingUnderscores, lineWithLeadingLetters];
 
         foreach (string line in lines)
         {

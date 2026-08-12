@@ -6,7 +6,7 @@ class Sample
     public static void Run()
     {
         //<snippet1>
-        string[] val = { "apple", "orange", "grape", "pear" };
+        string[] val = ["apple", "orange", "grape", "pear"];
         string sep = ", ";
         string result;
 

@@ -12,7 +12,7 @@ public class ConcatTest
         string s = "Demonstration";
 
         // Place the objects in an array.
-        object[] o = { t1, i, t2, s };
+        object[] o = [t1, i, t2, s];
 
         // Concatenate the objects together as a string. To do this,
         // the ToString method of each of the objects is called.

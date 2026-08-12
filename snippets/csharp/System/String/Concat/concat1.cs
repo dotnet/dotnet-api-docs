@@ -15,7 +15,7 @@ public class Example
     private static IEnumerable<string> GetPrimes(int maxPrime)
     {
         Array values = Array.CreateInstance(typeof(int),
-                                new int[] { maxPrime - 1 }, new int[] { 2 });
+                                [maxPrime - 1], [2]);
         // Use Sieve of Erathsthenes to determine prime numbers.
         for (int ctr = values.GetLowerBound(0); ctr <= (int)Math.Ceiling(Math.Sqrt(values.GetUpperBound(0))); ctr++)
         {
@@ -30,7 +30,7 @@ public class Example
         List<string> primes = new();
         for (int ctr = values.GetLowerBound(0); ctr <= values.GetUpperBound(0); ctr++)
             if ((int)values.GetValue(ctr) == 0)
-                primes.Add(ctr.ToString() + " ");
+                primes.Add($"{ctr} ");
         return primes;
     }
 }

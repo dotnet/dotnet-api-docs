@@ -1,4 +1,4 @@
-JoinArrayExample.Run();
+﻿JoinArrayExample.Run();
 Sample.Run();
 JoinListExample.Run();
 JoinAlphabetExample.Run();

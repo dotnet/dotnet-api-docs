@@ -12,13 +12,13 @@ class EndsWithComparisonSample
         string intro = "Determine whether a string ends with another string, " +
                    "using\n  different values of StringComparison.";
 
-        StringComparison[] scValues = {
+        StringComparison[] scValues = [
             StringComparison.CurrentCulture,
             StringComparison.CurrentCultureIgnoreCase,
             StringComparison.InvariantCulture,
             StringComparison.InvariantCultureIgnoreCase,
             StringComparison.Ordinal,
-            StringComparison.OrdinalIgnoreCase };
+            StringComparison.OrdinalIgnoreCase ];
 
         Console.WriteLine(intro);
 

@@ -5,8 +5,8 @@ public class SubstringPairsExample
     public static void Run()
     {
         // <Snippet1>
-        string[] pairs = { "Color1=red", "Color2=green", "Color3=blue",
-                         "Title=Code Repository" };
+        string[] pairs = [ "Color1=red", "Color2=green", "Color3=blue",
+                         "Title=Code Repository" ];
         foreach (string pair in pairs)
         {
             int position = pair.IndexOf("=");

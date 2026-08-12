@@ -1,2 +1,2 @@
-TrimExample.Run();
+﻿TrimExample.Run();
 TrimExample.Run(args);

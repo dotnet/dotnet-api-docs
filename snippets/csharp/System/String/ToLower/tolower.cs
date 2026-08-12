@@ -10,7 +10,7 @@ class Sample
     {
         string str1 = "INDIGO";
         // str2 = str1, except each 'I' is '\u0130' (Unicode LATIN CAPITAL I WITH DOT ABOVE).
-        string str2 = new(new char[] { '\u0130', 'N', 'D', '\u0130', 'G', 'O' });
+        string str2 = new(['\u0130', 'N', 'D', '\u0130', 'G', 'O']);
         string str3, str4;
 
         Console.WriteLine();

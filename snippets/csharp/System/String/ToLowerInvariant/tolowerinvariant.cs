@@ -5,9 +5,9 @@ public class Example
 {
     public static void Main()
     {
-        string[] words = { "Tuesday", "Salı", "Вторник", "Mardi",
+        string[] words = [ "Tuesday", "Salı", "Вторник", "Mardi",
                          "Τρίτη", "Martes", "יום שלישי",
-                         "الثلاثاء", "วันอังคาร" };
+                         "الثلاثاء", "วันอังคาร" ];
         // Display array in unsorted order.
         foreach (string word in words)
             Console.WriteLine(word);

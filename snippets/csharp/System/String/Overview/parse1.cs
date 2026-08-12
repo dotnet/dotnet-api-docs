@@ -7,9 +7,9 @@ public class Example
     public static void Main()
     {
         string dateString = "07/10/2011";
-        CultureInfo[] cultures = { CultureInfo.InvariantCulture,
-                                 CultureInfo.CreateSpecificCulture("en-GB"),
-                                 CultureInfo.CreateSpecificCulture("en-US") };
+        CultureInfo[] cultures = [CultureInfo.InvariantCulture,
+                                  CultureInfo.CreateSpecificCulture("en-GB"),
+                                  CultureInfo.CreateSpecificCulture("en-US")];
         Console.WriteLine($"{"Date String",-12} {"Culture",10} {"Month",8} {"Day",8}\n");
         foreach (var culture in cultures)
         {

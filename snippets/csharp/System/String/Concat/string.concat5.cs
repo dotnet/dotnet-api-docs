@@ -7,7 +7,7 @@ class stringConcat5
     {
         int i = -123;
         object o = i;
-        object[] objs = new object[] { -123, -456, -789 };
+        object[] objs = [-123, -456, -789];
 
         Console.WriteLine("Concatenate 1, 2, and 3 objects:");
         Console.WriteLine($"1) {string.Concat(o)}");

@@ -5,7 +5,7 @@ public class TrimCharactersExample
     public static void Run()
     {
         // <Snippet1>
-        char[] charsToTrim = { '*', ' ', '\'' };
+        char[] charsToTrim = ['*', ' ', '\''];
         string banner = "*** Much Ado About Nothing ***";
         string result = banner.Trim(charsToTrim);
         Console.WriteLine($"Trimmed\n   {banner}\nto\n   '{result}'");

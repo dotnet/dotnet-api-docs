@@ -8,8 +8,8 @@ public class Example
 {
     public static void Main()
     {
-        string[] strings = { "coop", "co-op", "cooperative",
-                           "co\u00ADoperative", "cœur", "coeur" };
+        string[] strings = ["coop", "co-op", "cooperative",
+                            "co\u00ADoperative", "cœur", "coeur"];
 
         // Perform a word sort using the current (en-US) culture.
         string[] current = new string[strings.Length];

@@ -5,7 +5,7 @@ public class Example1
     public static void Main()
     {
         // <Snippet1>
-        short[] values = { short.MinValue, -27, 0, 1042, short.MaxValue };
+        short[] values = [short.MinValue, -27, 0, 1042, short.MaxValue];
         Console.WriteLine($"{"Decimal",10}  {"Hex",10}\n");
         foreach (short value in values)
         {

@@ -5,9 +5,9 @@ public class IsNullOrWhiteSpaceExample
 {
     public static void Run()
     {
-        string[] values = { null, string.Empty, "ABCDE",
+        string[] values = [ null, string.Empty, "ABCDE",
                           new string(' ', 20), "  \t   ",
-                          new string('\u2000', 10) };
+                          new string('\u2000', 10) ];
         foreach (string value in values)
             Console.WriteLine(string.IsNullOrWhiteSpace(value));
     }

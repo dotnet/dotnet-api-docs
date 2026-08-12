@@ -5,10 +5,10 @@ public class StartsWithTagsExample
 {
     public static void Run()
     {
-        string[] strSource = { "<b>This is bold text</b>", "<H1>This is large Text</H1>",
+        string[] strSource = [ "<b>This is bold text</b>", "<H1>This is large Text</H1>",
                 "<b><i><font color=green>This has multiple tags</font></i></b>",
                 "<b>This has <i>embedded</i> tags.</b>",
-                "<This line simply begins with a lesser than symbol, it should not be modified" };
+                "<This line simply begins with a lesser than symbol, it should not be modified" ];
 
         // Display the initial string array.
         Console.WriteLine("The original strings:");

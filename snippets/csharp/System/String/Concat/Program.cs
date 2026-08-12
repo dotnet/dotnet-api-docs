@@ -1,4 +1,4 @@
-Example.Run();
+﻿Example.Run();
 ConcatAlphabetExample.Run();
 ConcatAnimalsExample.Run();
 ConcatScrambleExample.Run();

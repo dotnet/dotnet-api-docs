@@ -7,7 +7,7 @@ class Example
     public static void Main()
     {
         // Character c; combining characters acute and cedilla; character 3/4
-        string s1 = new(new char[] { '\u0063', '\u0301', '\u0327', '\u00BE' });
+        string s1 = new(['\u0063', '\u0301', '\u0327', '\u00BE']);
         string s2 = null;
         string divider = new('-', 80);
         divider = string.Concat(Environment.NewLine, divider, Environment.NewLine);

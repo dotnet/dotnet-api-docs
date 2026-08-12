@@ -1,2 +1,2 @@
-TrimCharactersExample.Run();
+﻿TrimCharactersExample.Run();
 TrimWhitespaceExample.Run();

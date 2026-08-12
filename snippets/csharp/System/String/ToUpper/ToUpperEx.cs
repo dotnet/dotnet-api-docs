@@ -12,7 +12,7 @@ public class ToUpperRangeExample
             string upperString = string1.ToUpper();
             if (string1 != upperString)
             {
-                Console.Write($"{string1} (\\u+{Convert.ToUInt16(string1[0]).ToString("X4")}) --> {upperString} (\\u+{Convert.ToUInt16(upperString[0]).ToString("X4")})         ");
+                Console.Write($"{string1} (\\u+{Convert.ToUInt16(string1[0]):X4}) --> {upperString} (\\u+{Convert.ToUInt16(upperString[0]):X4})         ");
                 n++;
                 if (n % 2 == 0) Console.WriteLine();
             }

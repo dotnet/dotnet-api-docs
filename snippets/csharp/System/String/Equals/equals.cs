@@ -16,7 +16,7 @@ class Sample1
 
         Console.WriteLine();
         Console.WriteLine($" *  The value of String str1 is '{str1}'.");
-        Console.WriteLine($" *  The value of StringBuilder sb is '{sb.ToString()}'.");
+        Console.WriteLine($" *  The value of StringBuilder sb is '{sb}'.");
 
         Console.WriteLine();
         Console.WriteLine("1a) String.Equals(Object). Object is a StringBuilder, not a String.");

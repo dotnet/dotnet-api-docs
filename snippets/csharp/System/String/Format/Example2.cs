@@ -6,7 +6,7 @@ public class Example2
     public static void Main()
     {
         // <Snippet2>
-        string[] cultureNames = { "en-US", "fr-FR", "de-DE", "es-ES" };
+        string[] cultureNames = ["en-US", "fr-FR", "de-DE", "es-ES"];
 
         DateTime dateToDisplay = new(2009, 9, 1, 18, 32, 0);
         double value = 9164.32;

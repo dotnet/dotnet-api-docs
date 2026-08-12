@@ -18,7 +18,7 @@ public class Example
             if (sb.Length % 60 == 0)
                 sb.AppendLine();
         }
-        sw.Write(sb.ToString());
+        sw.Write(sb);
         sw.Close();
     }
 }

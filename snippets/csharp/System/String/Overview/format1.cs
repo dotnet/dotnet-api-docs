@@ -7,9 +7,9 @@ public class Example
     public static void Main()
     {
         DateTime date = new(2011, 3, 1);
-        CultureInfo[] cultures = { CultureInfo.InvariantCulture,
-                                 new CultureInfo("en-US"),
-                                 new CultureInfo("fr-FR") };
+        CultureInfo[] cultures = [CultureInfo.InvariantCulture,
+                                  new CultureInfo("en-US"),
+                                  new CultureInfo("fr-FR")];
 
         foreach (var culture in cultures)
             Console.WriteLine($"{(string.IsNullOrEmpty(culture.Name) ?

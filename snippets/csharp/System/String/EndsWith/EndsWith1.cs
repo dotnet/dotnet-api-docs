@@ -5,8 +5,8 @@ public class Example
 {
     public static void Run()
     {
-        string[] strings = { "This is a string.", "Hello!", "Nothing.",
-                           "Yes.", "randomize" };
+        string[] strings = [ "This is a string.", "Hello!", "Nothing.",
+                           "Yes.", "randomize" ];
         foreach (string value in strings)
         {
             bool endsInPeriod = value.EndsWith(".");

@@ -8,7 +8,7 @@ class Sample
     {
         string str = "abc";
         TypeCode tc = str.GetTypeCode();
-        Console.WriteLine($"The type code for '{str}' is {tc.ToString("D")}, which represents {tc.ToString("F")}.");
+        Console.WriteLine($"The type code for '{str}' is {tc:D}, which represents {tc:F}.");
     }
 }
 /*

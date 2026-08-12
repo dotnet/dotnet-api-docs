@@ -7,7 +7,7 @@ public class Example
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         string word = "File";
-        string[] others = { word.ToLower(), word, word.ToUpper(), "Fıle" };
+        string[] others = [word.ToLower(), word, word.ToUpper(), "Fıle"];
         foreach (string other in others)
         {
             if (word.Equals(other))

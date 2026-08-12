@@ -8,7 +8,7 @@ public class ArraySort
     public static void Main(string[] args)
     {
         // Create and initialize a new array to store the strings.
-        string[] stringArray = { "Apple", "Æble", "Zebra" };
+        string[] stringArray = ["Apple", "Æble", "Zebra"];
 
         // Display the values of the array.
         Console.WriteLine("The original string array:");

@@ -5,7 +5,7 @@ public class Example2
 {
     public unsafe static void Main()
     {
-        char[] chars = { 'a', 'b', 'c', 'd', '\0', 'A', 'B', 'C', 'D', '\0' };
+        char[] chars = ['a', 'b', 'c', 'd', '\0', 'A', 'B', 'C', 'D', '\0'];
         string s = null;
 
         fixed (char* chPtr = chars)

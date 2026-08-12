@@ -6,7 +6,7 @@ public class ToLowerTest
     public static void Main()
     {
 
-        string[] info = { "Name", "Title", "Age", "Location", "Gender" };
+        string[] info = ["Name", "Title", "Age", "Location", "Gender"];
 
         Console.WriteLine("The initial values in the array are:");
         foreach (string s in info)

@@ -8,10 +8,10 @@ public class Example
     public static void Main()
     {
         StreamWriter sw = new(@".\case.txt");
-        string[] words = { "file", "sıfır", "ǅenana" };
-        CultureInfo[] cultures = { CultureInfo.InvariantCulture,
-                                 new CultureInfo("en-US"),
-                                 new CultureInfo("tr-TR") };
+        string[] words = ["file", "sıfır", "ǅenana"];
+        CultureInfo[] cultures = [CultureInfo.InvariantCulture,
+                                  new CultureInfo("en-US"),
+                                  new CultureInfo("tr-TR")];
 
         foreach (string word in words)
         {

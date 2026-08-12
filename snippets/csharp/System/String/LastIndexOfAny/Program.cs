@@ -1,3 +1,3 @@
-LastIndexOfAnySample.Run();
+﻿LastIndexOfAnySample.Run();
 LastIndexOfAnyStartSample.Run();
 LastIndexOfAnyRangeSample.Run();

@@ -5,10 +5,10 @@ public class LastIndexOfTagsExample
 {
     public static void Run()
     {
-        string[] strSource = { "<b>This is bold text</b>", "<H1>This is large Text</H1>",
+        string[] strSource = [ "<b>This is bold text</b>", "<H1>This is large Text</H1>",
                "<b><i><font color=green>This has multiple tags</font></i></b>",
                "<b>This has <i>embedded</i> tags.</b>",
-               "This line ends with a greater than symbol and should not be modified>" };
+               "This line ends with a greater than symbol and should not be modified>" ];
 
         // Strip HTML start and end tags from each string if they are present.
         foreach (string s in strSource)

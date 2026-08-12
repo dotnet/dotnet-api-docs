@@ -8,8 +8,8 @@ public class Example
         string str1 = "a";
         string str2 = str1 + "b";
         string str3 = str2 + "c";
-        string[] strings = { "value", "part1" + "_" + "part2", str3,
-                           string.Empty, null };
+        string[] strings = [ "value", "part1" + "_" + "part2", str3,
+                           string.Empty, null ];
         foreach (string value in strings)
         {
             if (value == null) continue;

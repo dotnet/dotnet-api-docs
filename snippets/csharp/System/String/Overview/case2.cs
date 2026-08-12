@@ -11,10 +11,10 @@ public class Example
 
     private static void IsAccessAllowed(string resource)
     {
-        CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),
-                                 CultureInfo.CreateSpecificCulture("tr-TR") };
+        CultureInfo[] cultures = [CultureInfo.CreateSpecificCulture("en-US"),
+                                  CultureInfo.CreateSpecificCulture("tr-TR")];
         string scheme = null;
-        int index = resource.IndexOfAny(new char[] { '\\', '/' });
+        int index = resource.IndexOfAny(['\\', '/']);
         if (index > 0)
             scheme = resource.Substring(0, index - 1);
 

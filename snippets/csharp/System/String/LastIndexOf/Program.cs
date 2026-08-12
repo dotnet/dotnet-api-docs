@@ -1,4 +1,4 @@
-TestLastIndexOf.Run();
+﻿TestLastIndexOf.Run();
 LastIndexOfTagsExample.Run();
 LastIndexOfIgnorable21Example.Run();
 LastIndexOfIgnorable22Example.Run();

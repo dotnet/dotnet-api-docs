@@ -11,10 +11,10 @@ public class EndsWithTest
         // removing the last one.
         // note: HTML markup tags always end in a greater than symbol (>).
 
-        string[] strSource = { "<b>This is bold text</b>", "<H1>This is large Text</H1>",
+        string[] strSource = [ "<b>This is bold text</b>", "<H1>This is large Text</H1>",
                 "<b><i><font color=green>This has multiple tags</font></i></b>",
                 "<b>This has <i>embedded</i> tags.</b>",
-                "This line simply ends with a greater than symbol, it should not be modified>" };
+                "This line simply ends with a greater than symbol, it should not be modified>" ];
 
         Console.WriteLine("The following lists the items before the ends have been stripped:");
         Console.WriteLine("-----------------------------------------------------------------");

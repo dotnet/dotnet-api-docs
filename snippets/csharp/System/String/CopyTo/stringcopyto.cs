@@ -8,8 +8,8 @@ public class CopyToTest
 
         // Embed an array of characters in a string
         string strSource = "changed";
-        char[] destination = { 'T', 'h', 'e', ' ', 'i', 'n', 'i', 't', 'i', 'a', 'l', ' ',
-                'a', 'r', 'r', 'a', 'y' };
+        char[] destination = [ 'T', 'h', 'e', ' ', 'i', 'n', 'i', 't', 'i', 'a', 'l', ' ',
+                'a', 'r', 'r', 'a', 'y' ];
 
         // Print the char array
         Console.WriteLine(destination);

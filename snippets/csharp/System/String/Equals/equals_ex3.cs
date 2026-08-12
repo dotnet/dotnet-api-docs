@@ -7,9 +7,9 @@ public class Example3
 {
     public static void Main()
     {
-        string[] cultureNames = { "en-US", "th-TH", "tr-TR" };
-        string[] strings1 = { "a", "i", "case", };
-        string[] strings2 = { "a-", "\u0130", "Case" };
+        string[] cultureNames = ["en-US", "th-TH", "tr-TR"];
+        string[] strings1 = ["a", "i", "case",];
+        string[] strings2 = ["a-", "\u0130", "Case"];
         StringComparison[] comparisons = (StringComparison[])Enum.GetValues(typeof(StringComparison));
 
         foreach (string cultureName in cultureNames)

@@ -10,11 +10,11 @@ namespace Microsoft.Demo
         {
             //<snippet1>
             // Unicode Mathematical operators
-            char[] charArr1 = { '\u2200', '\u2202', '\u200F', '\u2205' };
+            char[] charArr1 = ['\u2200', '\u2202', '\u200F', '\u2205'];
             string szMathSymbols = new(charArr1);
 
             // Unicode Letterlike Symbols
-            char[] charArr2 = { '\u2111', '\u2118', '\u2122', '\u2126' };
+            char[] charArr2 = ['\u2111', '\u2118', '\u2122', '\u2126'];
             string szLetterLike = new(charArr2);
 
             // Compare Strings - the result is false
@@ -26,14 +26,14 @@ namespace Microsoft.Demo
             {
                 // Null terminated ASCII characters in an sbyte array
                 string szAsciiUpper = null;
-                sbyte[] sbArr1 = new sbyte[] { 0x41, 0x42, 0x43, 0x00 };
+                sbyte[] sbArr1 = [0x41, 0x42, 0x43, 0x00];
                 // Instruct the Garbage Collector not to move the memory
                 fixed (sbyte* pAsciiUpper = sbArr1)
                 {
                     szAsciiUpper = new(pAsciiUpper);
                 }
                 string szAsciiLower = null;
-                sbyte[] sbArr2 = { 0x61, 0x62, 0x63, 0x00 };
+                sbyte[] sbArr2 = [0x61, 0x62, 0x63, 0x00];
                 // Instruct the Garbage Collector not to move the memory
                 fixed (sbyte* pAsciiLower = sbArr2)
                 {
@@ -55,7 +55,7 @@ namespace Microsoft.Demo
             // Create a Unicode String with 5 Greek Alpha characters
             string szGreekAlpha = new('\u0391', 5);
             // Create a Unicode String with a Greek Omega character
-            string szGreekOmega = new(new char[] { '\u03A9', '\u03A9', '\u03A9' }, 2, 1);
+            string szGreekOmega = new(['\u03A9', '\u03A9', '\u03A9'], 2, 1);
 
             string szGreekLetters = string.Concat(szGreekOmega, szGreekAlpha, szGreekOmega.Clone());
 
@@ -75,7 +75,7 @@ namespace Microsoft.Demo
             unsafe
             {
                 string utfeightstring = null;
-                sbyte[] asciiChars = new sbyte[] { 0x51, 0x52, 0x53, 0x54, 0x54, 0x56 };
+                sbyte[] asciiChars = [0x51, 0x52, 0x53, 0x54, 0x54, 0x56];
                 UTF8Encoding encoding = new(true, true);
 
                 // Instruct the Garbage Collector not to move the memory

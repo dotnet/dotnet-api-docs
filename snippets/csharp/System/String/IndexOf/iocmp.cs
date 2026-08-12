@@ -25,13 +25,13 @@ class IndexOfComparisonSample
         string cat = "A Cheshire c" + "\u0061\u030a" + "t";
 
         int loc = 0;
-        StringComparison[] scValues = {
+        StringComparison[] scValues = [
         StringComparison.CurrentCulture,
         StringComparison.CurrentCultureIgnoreCase,
         StringComparison.InvariantCulture,
         StringComparison.InvariantCultureIgnoreCase,
         StringComparison.Ordinal,
-        StringComparison.OrdinalIgnoreCase };
+        StringComparison.OrdinalIgnoreCase ];
 
         // Clear the screen and display an introduction.
         Console.Clear();

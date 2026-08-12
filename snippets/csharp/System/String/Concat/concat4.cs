@@ -9,7 +9,7 @@ public class ConcatScrambleExample
         const int WORD_SIZE = 4;
 
         // Define some 4-letter words to be scrambled.
-        string[] words = { "home", "food", "game", "rest" };
+        string[] words = ["home", "food", "game", "rest"];
         // Define two arrays equal to the number of letters in each word.
         double[] keys = new double[WORD_SIZE];
         string[] letters = new string[WORD_SIZE];

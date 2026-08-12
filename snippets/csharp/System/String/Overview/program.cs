@@ -34,8 +34,8 @@ public class Example
     private static void CallConstructors()
     {
         // <Snippet2>
-        char[] chars = { 'w', 'o', 'r', 'd' };
-        sbyte[] bytes = { 0x41, 0x42, 0x43, 0x44, 0x45, 0x00 };
+        char[] chars = ['w', 'o', 'r', 'd'];
+        sbyte[] bytes = [0x41, 0x42, 0x43, 0x44, 0x45, 0x00];
 
         // Create a string from a character array.
         string string1 = new(chars);
@@ -73,7 +73,7 @@ public class Example
     private static void Concatenate()
     {
         // <Snippet3>
-        string string1 = "Today is " + DateTime.Now.ToString("D") + ".";
+        string string1 = $"Today is {DateTime.Now:D}.";
         Console.WriteLine(string1);
 
         string string2 = "This is one sentence. " + "This is a second. ";

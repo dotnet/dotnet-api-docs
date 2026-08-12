@@ -9,9 +9,9 @@ public class CompareToObjectExample
     public static void Run()
     {
         var test = new TestClass();
-        object[] objectsToCompare = { test, test.ToString(), 123,
+        object[] objectsToCompare = [ test, test.ToString(), 123,
                                     123.ToString(), "some text",
-                                    "Some Text" };
+                                    "Some Text" ];
         string s = "some text";
         foreach (object objectToCompare in objectsToCompare)
         {

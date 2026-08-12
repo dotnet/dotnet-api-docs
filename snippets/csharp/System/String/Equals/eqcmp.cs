@@ -7,7 +7,7 @@ class Sample
     {
         // Define a string array with the following three "I" characters:
         //      U+0069, U+0131, and U+0049.
-        string[] threeIs = { "i", "ı", "I" };
+        string[] threeIs = ["i", "ı", "I"];
         // Define Type object representing StringComparison type.
         Type scType = typeof(StringComparison);
 
@@ -26,7 +26,7 @@ class Sample
                 for (int innerCtr = ctr + 1; innerCtr <= threeIs.GetUpperBound(0); innerCtr++)
                 {
                     string otherChar = threeIs[innerCtr];
-                    Console.WriteLine($"{instanceChar} (U+{Convert.ToInt16(char.Parse(instanceChar)).ToString("X4")}) = {otherChar} (U+{Convert.ToInt16(char.Parse(otherChar)).ToString("X4")}): {instanceChar.Equals(otherChar, sc)}");
+                    Console.WriteLine($"{instanceChar} (U+{Convert.ToInt16(char.Parse(instanceChar)):X4}) = {otherChar} (U+{Convert.ToInt16(char.Parse(otherChar)):X4}): {instanceChar.Equals(otherChar, sc)}");
                 }
                 Console.WriteLine();
             }

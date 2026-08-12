@@ -15,7 +15,7 @@ public class JoinListExample
     private static List<int> GetPrimes(int maxPrime)
     {
         Array values = Array.CreateInstance(typeof(int),
-                                new int[] { maxPrime - 1 }, new int[] { 2 });
+                                [maxPrime - 1], [2]);
         // Use Sieve of Eratosthenes to determine prime numbers.
         for (int ctr = values.GetLowerBound(0); ctr <= (int)Math.Ceiling(Math.Sqrt(values.GetUpperBound(0))); ctr++)
         {

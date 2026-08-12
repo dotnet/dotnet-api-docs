@@ -5,8 +5,8 @@ public class SubStringTest
     public static void Run()
     {
         //<snippet10>
-        string[] info = { "Name: Felica Walker", "Title: Mz.",
-                           "Age: 47", "Location: Paris", "Gender: F"};
+        string[] info = [ "Name: Felica Walker", "Title: Mz.",
+                           "Age: 47", "Location: Paris", "Gender: F"];
         int found = 0;
 
         Console.WriteLine("The initial values in the array are:");

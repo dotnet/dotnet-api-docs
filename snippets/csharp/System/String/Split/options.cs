@@ -14,7 +14,7 @@ namespace Split
             Console.WriteLine("1) Split a string delimited by characters:\n");
 
             string s1 = ",ONE,, TWO,, , THREE,,";
-            char[] charSeparators = new char[] { ',' };
+            char[] charSeparators = [','];
             string[] result;
 
             Console.WriteLine($"The original string is: \"{s1}\".");
@@ -69,7 +69,7 @@ namespace Split
                         "ONE[stop] [stop]" +
                         "TWO  [stop][stop]  [stop]" +
                         "THREE[stop][stop]  ";
-            string[] stringSeparators = new string[] { "[stop]" };
+            string[] stringSeparators = ["[stop]"];
 
             Console.WriteLine($"The original string is: \"{s2}\".");
             Console.WriteLine($"The delimiter string is: \"{stringSeparators[0]}\".\n");
@@ -212,7 +212,7 @@ namespace Split
         {
             // <Snippet2>
             string source = "[stop]ONE[stop][stop]TWO[stop][stop][stop]THREE[stop][stop]";
-            string[] stringSeparators = new string[] { "[stop]" };
+            string[] stringSeparators = ["[stop]"];
             string[] result;
 
             // Display the original string and delimiter string.
@@ -260,7 +260,7 @@ namespace Split
         public static void Main2()
         {
             // <Snippet3>
-            string[] separators = { ",", ".", "!", "?", ";", ":", " " };
+            string[] separators = [",", ".", "!", "?", ";", ":", " "];
             string value = "The handsome, energetic, young dog was playing with his smaller, more lethargic litter mate.";
             string[] words = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
             foreach (string word in words)

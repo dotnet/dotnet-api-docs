@@ -6,7 +6,7 @@ public class Example
 {
     public static void Main()
     {
-        string[] cultureNames = { "da-DK", "en-US" };
+        string[] cultureNames = ["da-DK", "en-US"];
         CompareInfo ci;
         string str = "aerial";
         char ch = 'æ';  // U+00E6

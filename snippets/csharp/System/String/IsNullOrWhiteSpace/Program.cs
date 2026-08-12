@@ -1,2 +1,2 @@
-IsNullOrWhiteSpaceEquivalentExample.Run();
+﻿IsNullOrWhiteSpaceEquivalentExample.Run();
 IsNullOrWhiteSpaceExample.Run();

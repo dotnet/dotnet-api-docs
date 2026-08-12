@@ -12,7 +12,7 @@ namespace String_Example
 
             // Create an array of characters
             // that represent characters to trim.
-            char[] charsToTrim = { '/' };
+            char[] charsToTrim = ['/'];
 
             // Thim the string.
             string trimmedPath = path.TrimEnd(charsToTrim);
