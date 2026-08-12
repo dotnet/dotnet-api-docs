@@ -11,8 +11,8 @@ public class SByteParseProviderExample
             NegativeSign = "~"
         };
 
-        string[] values = { "-103", "+12", "~16", "  1", "~255" };
-        IFormatProvider[] providers = { nf, CultureInfo.InvariantCulture };
+        string[] values = ["-103", "+12", "~16", "  1", "~255"];
+        IFormatProvider[] providers = [nf, CultureInfo.InvariantCulture];
 
         foreach (IFormatProvider provider in providers)
         {

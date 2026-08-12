@@ -5,13 +5,13 @@ public class Example4
 {
     public static void Main()
     {
-        dynamic[] values = { byte.MinValue, byte.MaxValue, decimal.MinValue,
-                           decimal.MaxValue, double.MinValue, double.MaxValue,
-                           short.MinValue, short.MaxValue, int.MinValue,
-                           int.MaxValue, long.MinValue, long.MaxValue,
-                           sbyte.MinValue, sbyte.MaxValue, ushort.MinValue,
-                           ushort.MaxValue, uint.MinValue, uint.MaxValue,
-                           ulong.MinValue, ulong.MaxValue };
+        dynamic[] values = [byte.MinValue, byte.MaxValue, decimal.MinValue,
+                            decimal.MaxValue, double.MinValue, double.MaxValue,
+                            short.MinValue, short.MaxValue, int.MinValue,
+                            int.MaxValue, long.MinValue, long.MaxValue,
+                            sbyte.MinValue, sbyte.MaxValue, ushort.MinValue,
+                            ushort.MaxValue, uint.MinValue, uint.MaxValue,
+                            ulong.MinValue, ulong.MaxValue];
         float sngValue;
         foreach (var value in values)
         {

@@ -10,9 +10,9 @@ public class SByteParseStylesExample
         sbyte number;
 
         // Parse value with no styles allowed.
-        string[] values1 = { " 121 ", "121", "-121" };
+        string[] values1 = [" 121 ", "121", "-121"];
         style = NumberStyles.None;
-        Console.WriteLine($"Styles: {style.ToString()}");
+        Console.WriteLine($"Styles: {style}");
         foreach (string value in values1)
         {
             try
@@ -29,8 +29,8 @@ public class SByteParseStylesExample
 
         // Parse value with trailing sign.
         style = NumberStyles.Integer | NumberStyles.AllowTrailingSign;
-        string[] values2 = { " 103+", " 103 +", "+103", "(103)", "   +103  " };
-        Console.WriteLine($"Styles: {style.ToString()}");
+        string[] values2 = [" 103+", " 103 +", "+103", "(103)", "   +103  "];
+        Console.WriteLine($"Styles: {style}");
         foreach (string value in values2)
         {
             try

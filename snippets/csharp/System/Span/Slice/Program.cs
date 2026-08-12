@@ -1,6 +1,6 @@
 ﻿using System;
 
-var array = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+int[] array = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
 var slice = new Span<int>(array, 2, 5);
 for (int ctr = 0; ctr < slice.Length; ctr++)
     slice[ctr] *= 2;

@@ -6,10 +6,10 @@ public class SByteToStringFormatExample
 {
     public static void Run()
     {
-        sbyte[] values = { -124, 0, 118 };
-        string[] specifiers = { "G", "C", "D3", "E2", "e3", "F",
-                              "N", "P", "X", "00.0", "#.0",
-                              "000;(0);**Zero**" };
+        sbyte[] values = [-124, 0, 118];
+        string[] specifiers = ["G", "C", "D3", "E2", "e3", "F",
+                               "N", "P", "X", "00.0", "#.0",
+                               "000;(0);**Zero**"];
 
         foreach (sbyte value in values)
         {

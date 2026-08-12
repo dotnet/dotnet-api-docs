@@ -5,8 +5,8 @@ public class ParseSByte
     public static void Main()
     {
         // <Snippet1>
-        string[] numericStrings = {"-3.6", "12.8", "+16.7", "    3   ", "(17)",
-                                 "-17", "+12", "18-", "987", "1,024", "  127 "};
+        string[] numericStrings = ["-3.6", "12.8", "+16.7", "    3   ", "(17)",
+                                   "-17", "+12", "18-", "987", "1,024", "  127 "];
         sbyte number;
         foreach (string numericString in numericStrings)
         {

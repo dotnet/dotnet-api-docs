@@ -6,8 +6,8 @@ public class SByteParseDefaultExample
     {
         // <Snippet1>
         // Define an array of numeric strings.
-        string[] values = { "-16", "  -3", "+ 12", " +12 ", "  12  ",
-                          "+120", "(103)", "192", "-160" };
+        string[] values = ["-16", "  -3", "+ 12", " +12 ", "  12  ",
+                           "+120", "(103)", "192", "-160"];
 
         // Parse each string and display the result.
         foreach (string value in values)

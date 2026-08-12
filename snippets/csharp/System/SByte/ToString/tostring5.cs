@@ -7,12 +7,12 @@ public class SByteToStringCultureExample
     public static void Run()
     {
         // Define cultures whose formatting conventions are to be used.
-        CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),
-                                 CultureInfo.CreateSpecificCulture("fr-FR"),
-                                 CultureInfo.CreateSpecificCulture("es-ES") };
+        CultureInfo[] cultures = [CultureInfo.CreateSpecificCulture("en-US"),
+                                  CultureInfo.CreateSpecificCulture("fr-FR"),
+                                  CultureInfo.CreateSpecificCulture("es-ES")];
         sbyte positiveNumber = 119;
         sbyte negativeNumber = -45;
-        string[] specifiers = { "G", "C", "D4", "E2", "F", "N", "P", "X2" };
+        string[] specifiers = ["G", "C", "D4", "E2", "F", "N", "P", "X2"];
 
         foreach (string specifier in specifiers)
         {

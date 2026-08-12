@@ -11,7 +11,7 @@ namespace SingleSnippet
             //</snippet1>
 
             //<snippet2>
-            Console.WriteLine($"A Single is of type {s.GetType().ToString()}.");
+            Console.WriteLine($"A Single is of type {s.GetType()}.");
             //</snippet2>
 
             //<snippet3>
@@ -24,7 +24,7 @@ namespace SingleSnippet
                 try
                 {
                     s = float.Parse(inp);
-                    Console.WriteLine($"You entered {s.ToString()}.");
+                    Console.WriteLine($"You entered {s}.");
                     done = true;
                 }
                 catch (FormatException)
@@ -33,7 +33,7 @@ namespace SingleSnippet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"An exception occurred while parsing your response: {e.ToString()}");
+                    Console.WriteLine($"An exception occurred while parsing your response: {e}");
                 }
             } while (!done);
             //</snippet3>
@@ -53,7 +53,7 @@ namespace SingleSnippet
             //</snippet5>
 
             //<snippet6>
-            Console.WriteLine($"Epsilon, or the permittivity of a vacuum, has value {float.Epsilon.ToString()}");
+            Console.WriteLine($"Epsilon, or the permittivity of a vacuum, has value {float.Epsilon}");
             //</snippet6>
 
             //<snippet7>
@@ -80,12 +80,12 @@ namespace SingleSnippet
 
             //<snippet9>
             // This will equal Infinity.
-            Console.WriteLine($"10.0 minus NegativeInfinity equals {(10.0 - float.NegativeInfinity).ToString()}.");
+            Console.WriteLine($"10.0 minus NegativeInfinity equals {10.0 - float.NegativeInfinity}.");
             //</snippet9>
 
             //<snippet10>
             // This will equal Infinity.
-            Console.WriteLine($"PositiveInfinity plus 10.0 equals {(float.PositiveInfinity + 10.0).ToString()}.");
+            Console.WriteLine($"PositiveInfinity plus 10.0 equals {float.PositiveInfinity + 10.0}.");
             //</snippet10>
 
             //<snippet11>
@@ -131,17 +131,17 @@ namespace SingleSnippet
 
             if (a.CompareTo(obj1) < 0)
             {
-                Console.WriteLine($"{a.ToString()} is less than {obj1.ToString()}.");
+                Console.WriteLine($"{a} is less than {obj1}.");
             }
 
             if (a.CompareTo(obj1) > 0)
             {
-                Console.WriteLine($"{a.ToString()} is greater than {obj1.ToString()}.");
+                Console.WriteLine($"{a} is greater than {obj1}.");
             }
 
             if (a.CompareTo(obj1) == 0)
             {
-                Console.WriteLine($"{a.ToString()} equals {obj1.ToString()}.");
+                Console.WriteLine($"{a} equals {obj1}.");
             }
             //</snippet16>
 

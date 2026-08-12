@@ -82,11 +82,11 @@ public class Class1
     private static void CallToStringWithFormatString()
     {
         // <Snippet3>
-        float[] numbers = { 1054.32179F, -195489100.8377F, 1.0437E21F,
-                         -1.0573e-05F };
-        string[] specifiers = { "C", "E", "e", "F", "G", "N", "P",
-                              "R", "#,000.000", "0.###E-000",
-                              "000,000,000,000.00###" };
+        float[] numbers = [1054.32179F, -195489100.8377F, 1.0437E21F,
+                           -1.0573e-05F];
+        string[] specifiers = ["C", "E", "e", "F", "G", "N", "P",
+                               "R", "#,000.000", "0.###E-000",
+                               "000,000,000,000.00###"];
 
         foreach (float number in numbers)
         {

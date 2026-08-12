@@ -5,7 +5,7 @@ public class Example1
 {
     public static void Main()
     {
-        float[] values = { 0f, float.Epsilon, float.Epsilon * .5f };
+        float[] values = [0f, float.Epsilon, float.Epsilon * .5f];
 
         for (int ctr = 0; ctr <= values.Length - 2; ctr++)
         {

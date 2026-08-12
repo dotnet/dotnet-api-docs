@@ -46,11 +46,11 @@ public class ParseString
         try
         {
             number = float.Parse(value, styles);
-            Console.WriteLine($"Converted '{value}' using {styles.ToString()} to {number}.");
+            Console.WriteLine($"Converted '{value}' using {styles} to {number}.");
         }
         catch (FormatException)
         {
-            Console.WriteLine($"Unable to parse '{value}' with styles {styles.ToString()}.");
+            Console.WriteLine($"Unable to parse '{value}' with styles {styles}.");
         }
         Console.WriteLine();
     }

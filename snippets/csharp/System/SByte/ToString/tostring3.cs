@@ -13,7 +13,7 @@ public class SByteToStringProviderExample
         };
 
         // Initialize an array of SByte values.
-        sbyte[] bytes = { -122, 17, 124 };
+        sbyte[] bytes = [-122, 17, 124];
 
         // Display the formatted result using the custom provider.
         Console.WriteLine("Using the custom NumberFormatInfo object:");

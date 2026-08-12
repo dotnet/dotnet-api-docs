@@ -5,10 +5,10 @@ public class Example5
     public static void Main()
     {
         // <Snippet21>
-        float[] values = { float.MinValue, -67890.1234f, -12345.6789f,
-                         12345.6789f, 67890.1234f, float.MaxValue,
-                         float.NaN, float.PositiveInfinity,
-                         float.NegativeInfinity };
+        float[] values = [float.MinValue, -67890.1234f, -12345.6789f,
+                          12345.6789f, 67890.1234f, float.MaxValue,
+                          float.NaN, float.PositiveInfinity,
+                          float.NegativeInfinity];
         checked
         {
             foreach (float value in values)

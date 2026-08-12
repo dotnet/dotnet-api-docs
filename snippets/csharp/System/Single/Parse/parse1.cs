@@ -5,10 +5,10 @@ public class SingleParseDefaultExample
 {
     public static void Run()
     {
-        string[] values = { "100", "(100)", "-123,456,789", "123.45e+6",
-                          "+500", "5e2", "3.1416", "600.", "-.123",
-                          "-Infinity", "-1E-16", double.MaxValue.ToString(),
-                          float.MinValue.ToString(), string.Empty };
+        string[] values = ["100", "(100)", "-123,456,789", "123.45e+6",
+                           "+500", "5e2", "3.1416", "600.", "-.123",
+                           "-Infinity", "-1E-16", $"{double.MaxValue}",
+                           $"{float.MinValue}", string.Empty];
         foreach (string value in values)
         {
             try

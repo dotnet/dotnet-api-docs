@@ -5,7 +5,7 @@ public class Example2
 {
     public static void Main()
     {
-        float[] values = { 0.0f, float.Epsilon };
+        float[] values = [0.0f, float.Epsilon];
         foreach (float value in values)
         {
             Console.WriteLine(GetComponentParts(value));

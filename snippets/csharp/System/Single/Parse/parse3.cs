@@ -7,19 +7,19 @@ public class SingleParseProviderExample
     public static void Run()
     {
         // Define an array of string values.
-        string[] values = { " 987.654E-2", " 987,654E-2",  "(98765,43210)",
-                          "9,876,543.210", "9.876.543,210",  "98_76_54_32,19" };
+        string[] values = [" 987.654E-2", " 987,654E-2",  "(98765,43210)",
+                           "9,876,543.210", "9.876.543,210",  "98_76_54_32,19"];
         // Create a custom culture based on the invariant culture.
         CultureInfo ci = new("");
-        ci.NumberFormat.NumberGroupSizes = new int[] { 2 };
+        ci.NumberFormat.NumberGroupSizes = [2];
         ci.NumberFormat.NumberGroupSeparator = "_";
 
         // Define an array of format providers.
-        CultureInfo[] providers = { new CultureInfo("en-US"),
-                                  new CultureInfo("nl-NL"), ci };
+        CultureInfo[] providers = [new CultureInfo("en-US"),
+                                   new CultureInfo("nl-NL"), ci];
 
         // Define an array of styles.
-        NumberStyles[] styles = { NumberStyles.Currency, NumberStyles.Float };
+        NumberStyles[] styles = [NumberStyles.Currency, NumberStyles.Float];
 
         // Iterate the array of format providers.
         foreach (CultureInfo provider in providers)
