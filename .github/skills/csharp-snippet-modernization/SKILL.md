@@ -24,7 +24,7 @@ Apply these changes when they preserve behavior and sample clarity:
 - Use top-level statements where possible.
 - Use C# built-in aliases, such as `string`, `int`, and `bool`, instead of
   framework type names.
-- Use target-typed `new` when the target type is evident.
+- Remove calls to `ToString()` when the result is used in a string context, unless the call is the subject of the snippet.
 - Use string interpolation instead of composite formatting, unless it makes the code harder to read
   or the composite-format overload is the subject of the snippet. For example, keep composite
   formatting when the arguments are complex:
@@ -34,8 +34,8 @@ Apply these changes when they preserve behavior and sample clarity:
       timeZoneTime.DateTime);
   ```
 - Use raw string literals (or interpolated raw string literals) for paragraph-style output.
-- Use object and collection initializers when evaluation order and behavior
-  remain unchanged.
+- Use target-typed `new` when the target type is evident.
+- Use collection expressions to initialize collections and arrays wherever possible.
 - Convert eligible value-producing `switch` statements to switch expressions.
 - Use auto-implemented properties instead of defining a separate field.
 - Use expression-bodied members for simple single-expression members. If the line gets too long, for example, a method signature with a type parameter constraint, place the expression body on a new line:
