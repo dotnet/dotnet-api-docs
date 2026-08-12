@@ -3,11 +3,11 @@ using System;
 
 public class FormatExample11
 {
-   public static void Main()
-   {
-      string guidString = "ba748d5c-ae5f-4cca-84e5-1ac5291c38cb";
-      Console.WriteLine(Guid.Parse(guidString));
-   }
+    public static void Main()
+    {
+        string guidString = "ba748d5c-ae5f-4cca-84e5-1ac5291c38cb";
+        Console.WriteLine(Guid.Parse(guidString));
+    }
 }
 
 // The example displays the following output:

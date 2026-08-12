@@ -6,9 +6,8 @@ class Sample
 {
     public static void Main()
     {
-    Console.WriteLine();
-    Console.WriteLine("GetFolderPath: {0}",
-                 Environment.GetFolderPath(Environment.SpecialFolder.System));
+        Console.WriteLine();
+        Console.WriteLine($"GetFolderPath: {Environment.GetFolderPath(Environment.SpecialFolder.System)}");
     }
 }
 /*

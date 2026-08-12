@@ -5,18 +5,14 @@ public class SingleExample
     public static void Example()
     {
         // <Snippet1>
-        Single value = 16.325f;
-        Console.WriteLine("Widening Conversion of {0:R} (type {1}) to {2:R} (type {3}): ",
-                          value, value.GetType().Name, (double)value,
-                          ((double)(value)).GetType().Name);
+        float value = 16.325f;
+        Console.WriteLine($"Widening Conversion of {value:R} (type {value.GetType().Name}) to {(double)value:R} (type {((double)(value)).GetType().Name}): ");
         Console.WriteLine(Math.Round(value, 2));
         Console.WriteLine(Math.Round(value, 2, MidpointRounding.AwayFromZero));
         Console.WriteLine();
 
-        Decimal decValue = (decimal)value;
-        Console.WriteLine("Cast of {0:R} (type {1}) to {2} (type {3}): ",
-                          value, value.GetType().Name, decValue,
-                          decValue.GetType().Name);
+        decimal decValue = (decimal)value;
+        Console.WriteLine($"Cast of {value:R} (type {value.GetType().Name}) to {decValue} (type {decValue.GetType().Name}): ");
         Console.WriteLine(Math.Round(decValue, 2));
         Console.WriteLine(Math.Round(decValue, 2, MidpointRounding.AwayFromZero));
 

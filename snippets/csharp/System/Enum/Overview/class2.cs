@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 
 public class Example1
 {
     public static void Main()
     {
         // <Snippet3>
-        ArrivalStatus status1 = new ArrivalStatus();
+        ArrivalStatus status1 = new();
         Console.WriteLine($"Arrival Status: {status1} ({status1:D})");
         // The example displays the following output:
         //       Arrival Status: OnTime (0)

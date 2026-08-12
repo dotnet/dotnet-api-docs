@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Example6
 {
@@ -15,7 +15,7 @@ public class Example6
         string[] names = Enum.GetNames(typeof(ArrivalStatus));
         Console.WriteLine($"Members of {typeof(ArrivalStatus).Name}:");
         Array.Sort(names);
-        foreach (var name in names)
+        foreach (string name in names)
         {
             ArrivalStatus status = (ArrivalStatus)Enum.Parse(typeof(ArrivalStatus), name);
             Console.WriteLine($"   {status} ({status:D})");

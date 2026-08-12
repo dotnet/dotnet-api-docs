@@ -7,41 +7,41 @@ class DecCompareEqualsDemo
     const string dataFmt = "{0,-45}{1}";
 
     // Compare decimal parameters, and display them with the results.
-    public static void CompareDecimals( decimal Left, decimal Right,
-        string RightText )
+    public static void CompareDecimals(decimal Left, decimal Right,
+        string RightText)
     {
-        Console.WriteLine( );
-        Console.WriteLine( dataFmt, "Right: "+RightText, Right );
-        Console.WriteLine( dataFmt, "decimal.Equals( Left, Right )",
-            Decimal.Equals( Left, Right ) );
-        Console.WriteLine( dataFmt, "decimal.Compare( Left, Right )",
-            Decimal.Compare( Left, Right ) );
+        Console.WriteLine();
+        Console.WriteLine(dataFmt, "Right: " + RightText, Right);
+        Console.WriteLine(dataFmt, "decimal.Equals( Left, Right )",
+            decimal.Equals(Left, Right));
+        Console.WriteLine(dataFmt, "decimal.Compare( Left, Right )",
+            decimal.Compare(Left, Right));
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "decimal.Equals( decimal, decimal ) and \n" +
             "decimal.Compare( decimal, decimal ) methods " +
             "generates the \nfollowing output. It creates several " +
             "different decimal \nvalues and compares them with " +
-            "the following reference value.\n" );
+            "the following reference value.\n");
 
         // Create a reference decimal value.
-        decimal Left = new decimal( 123.456 );
+        decimal Left = new(123.456);
 
-        Console.WriteLine( dataFmt, "Left: decimal( 123.456 )",
-            Left );
+        Console.WriteLine(dataFmt, "Left: decimal( 123.456 )",
+            Left);
 
         // Create decimal values to compare with the reference.
-        CompareDecimals( Left, new decimal( 1.2345600E+2 ),
-            "decimal( 1.2345600E+2 )" );
-        CompareDecimals( Left, 123.4561M, "123.4561M" );
-        CompareDecimals( Left, 123.4559M, "123.4559M" );
-        CompareDecimals( Left, 123.456000M, "123.456000M" );
-        CompareDecimals( Left,
-            new decimal( 123456000, 0, 0, false, 6 ),
-            "decimal( 123456000, 0, 0, false, 6 )" );
+        CompareDecimals(Left, new decimal(1.2345600E+2),
+            "decimal( 1.2345600E+2 )");
+        CompareDecimals(Left, 123.4561M, "123.4561M");
+        CompareDecimals(Left, 123.4559M, "123.4559M");
+        CompareDecimals(Left, 123.456000M, "123.456000M");
+        CompareDecimals(Left,
+            new decimal(123456000, 0, 0, false, 6),
+            "decimal( 123456000, 0, 0, false, 6 )");
     }
 }
 

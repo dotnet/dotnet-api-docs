@@ -100,7 +100,7 @@ namespace SystemDateTimeReference
             Console.WriteLine("Using the Gregorian calendar:");
             Console.WriteLine($"Date: {dat:d}");
             Console.WriteLine($"Day of Week: {dat.DayOfWeek}");
-            Console.WriteLine($"Week of year: {greg.GetWeekOfYear(dat, System.Globalization.CalendarWeekRule.FirstDay,DayOfWeek.Sunday)}");
+            Console.WriteLine($"Week of year: {greg.GetWeekOfYear(dat, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday)}");
             // The example displays the following output:
             //       Using the Thai Buddhist Era calendar
             //       Date :  18/8/1395
