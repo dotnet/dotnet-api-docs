@@ -6,18 +6,18 @@ public class CompareToExample1
     public static void Run()
     {
         Tuple<string, Nullable<int>>[] scores =
-                      { new Tuple<string, Nullable<int>>("Jack", 78),
+                      [ new Tuple<string, Nullable<int>>("Jack", 78),
                       new Tuple<string, Nullable<int>>("Abbey", 92),
                       new Tuple<string, Nullable<int>>("Dave", 88),
                       new Tuple<string, Nullable<int>>("Sam", 91),
                       new Tuple<string, Nullable<int>>("Ed", null),
                       new Tuple<string, Nullable<int>>("Penelope", 82),
                       new Tuple<string, Nullable<int>>("Linda", 99),
-                      new Tuple<string, Nullable<int>>("Judith", 84) };
+                      new Tuple<string, Nullable<int>>("Judith", 84) ];
 
         Console.WriteLine("The values in unsorted order:");
         foreach (Tuple<string, Nullable<int>> score in scores)
-            Console.WriteLine(score.ToString());
+            Console.WriteLine(score);
 
         Console.WriteLine();
 
@@ -25,7 +25,7 @@ public class CompareToExample1
 
         Console.WriteLine("The values in sorted order:");
         foreach (Tuple<string, Nullable<int>> score in scores)
-            Console.WriteLine(score.ToString());
+            Console.WriteLine(score);
     }
 }
 // The example displays the following output;

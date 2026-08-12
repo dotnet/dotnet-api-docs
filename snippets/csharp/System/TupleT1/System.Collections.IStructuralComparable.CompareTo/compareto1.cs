@@ -5,7 +5,7 @@ class Example
 {
     static void Main()
     {
-        Tuple<double>[] values = { Tuple.Create(13.54),
+        Tuple<double>[] values = [ Tuple.Create(13.54),
                                  Tuple.Create(double.NaN),
                                  Tuple.Create(-189.42993),
                                  Tuple.Create(double.PositiveInfinity),
@@ -13,7 +13,7 @@ class Example
                                  Tuple.Create(1.934E-17),
                                  Tuple.Create(double.NegativeInfinity),
                                  Tuple.Create(-0.000000000003588),
-                                 null };
+                                 null ];
         Console.WriteLine("The values in unsorted order:");
         foreach (var value in values)
             if (value != null)

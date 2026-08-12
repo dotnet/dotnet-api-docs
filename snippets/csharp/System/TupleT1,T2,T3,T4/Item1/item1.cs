@@ -7,12 +7,12 @@ public class Example
     public static void Main()
     {
         Tuple<string, int, double, double>[] temperatures =
-              { Tuple.Create("New York, NY", 4, 61.0, 43.0),
+              [ Tuple.Create("New York, NY", 4, 61.0, 43.0),
               Tuple.Create("Chicago, IL", 2, 34.0, 18.0),
               Tuple.Create("Newark, NJ", 4, 61.0, 43.0),
               Tuple.Create("Boston, MA", 6, 77.0, 59.0),
               Tuple.Create("Detroit, MI", 9, 74.0, 53.0),
-              Tuple.Create("Minneapolis, MN", 8, 81.0, 61.0) };
+              Tuple.Create("Minneapolis, MN", 8, 81.0, 61.0) ];
         // Display the array of 4-tuple objects.
         Console.WriteLine($"{"Temperatures",41}");
         Console.WriteLine($"{"City",-20} {"Month",5}    {"High",4}  {"Low",4}\n");

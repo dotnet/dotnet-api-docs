@@ -25,17 +25,17 @@ public class CompareToExample2
     public static void Run()
     {
         Tuple<string, double, double, int>[] pitchers =
-                      { Tuple.Create("McHale, Joe", 240.1, 3.60, 221),
+                      [ Tuple.Create("McHale, Joe", 240.1, 3.60, 221),
                       Tuple.Create("Paul, Dave", 233.1, 3.24, 231),
                       Tuple.Create("Williams, Mike", 193.2, 4.00, 183),
                       Tuple.Create("Blair, Jack", 168.1, 3.48, 146),
                       Tuple.Create("Henry, Walt", 140.1, 1.92, 96),
                       Tuple.Create("Lee, Adam", 137.2, 2.94, 109),
-                      Tuple.Create("Rohr, Don", 101.0, 3.74, 110) };
+                      Tuple.Create("Rohr, Don", 101.0, 3.74, 110) ];
 
         Console.WriteLine("The values in unsorted order:");
         foreach (var pitcher in pitchers)
-            Console.WriteLine(pitcher.ToString());
+            Console.WriteLine(pitcher);
 
         Console.WriteLine();
 
@@ -43,7 +43,7 @@ public class CompareToExample2
 
         Console.WriteLine("The values sorted by earned run average (component 3):");
         foreach (var pitcher in pitchers)
-            Console.WriteLine(pitcher.ToString());
+            Console.WriteLine(pitcher);
     }
 }
 // The example displays the following output;

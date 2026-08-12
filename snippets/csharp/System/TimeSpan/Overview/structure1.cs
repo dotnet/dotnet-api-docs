@@ -11,7 +11,7 @@ public class StructureExample1
 
         // Calculate the interval between the two dates.
         TimeSpan interval = date2 - date1;
-        Console.WriteLine($"{date2} - {date1} = {interval.ToString()}");
+        Console.WriteLine($"{date2} - {date1} = {interval}");
 
         // Display individual properties of the resulting TimeSpan object.
         Console.WriteLine($"   {"Value of Days Component:",-35} {interval.Days,20}");

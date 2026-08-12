@@ -9,9 +9,9 @@ public class Class1
         // Create tuples containing population data for New York, Chicago,
         // and Los Angeles, 1960-2000.
         Tuple<string, int, int, int, int, int>[] cities =
-             { Tuple.Create("New York", 7781984, 7894862, 7071639, 7322564, 8008278),
+             [ Tuple.Create("New York", 7781984, 7894862, 7071639, 7322564, 8008278),
              Tuple.Create("Los Angeles", 2479015, 2816061, 2966850, 3485398, 3694820),
-             Tuple.Create("Chicago", 3550904, 3366957, 3005072, 2783726, 2896016) };
+             Tuple.Create("Chicago", 3550904, 3366957, 3005072, 2783726, 2896016) ];
 
         // Display tuple data in table.
         string header = "Population in";

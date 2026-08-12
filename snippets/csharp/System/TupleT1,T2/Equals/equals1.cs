@@ -6,12 +6,12 @@ public class EqualsExample1
     public static void Run()
     {
         Tuple<string, Nullable<int>>[] scores =
-                        { new Tuple<string, Nullable<int>>("Dan", 90),
+                        [ new Tuple<string, Nullable<int>>("Dan", 90),
                         new Tuple<string, Nullable<int>>("Ernie", null),
                         new Tuple<string, Nullable<int>>("Jill", 88),
                         new Tuple<string, Nullable<int>>("Ernie", null),
                         new Tuple<string, Nullable<int>>("Nancy", 88),
-                        new Tuple<string, Nullable<int>>("Dan", 90) };
+                        new Tuple<string, Nullable<int>>("Dan", 90) ];
 
         // Compare the Tuple objects
         for (int ctr = 0; ctr < scores.Length; ctr++)

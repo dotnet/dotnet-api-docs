@@ -23,7 +23,7 @@ namespace TimeZoneInfoCode
             // Declare necessary TimeZoneInfo.AdjustmentRule objects for time zone
             TimeSpan delta = new(1, 0, 0);
             TimeZoneInfo.AdjustmentRule adjustment;
-            List<TimeZoneInfo.AdjustmentRule> adjustmentList = new();
+            List<TimeZoneInfo.AdjustmentRule> adjustmentList = [];
             // Declare transition time variables to hold transition time information
             TimeZoneInfo.TransitionTime transitionRuleStart, transitionRuleEnd;
 
@@ -193,7 +193,7 @@ namespace TimeZoneInfoCode
                         }
                         else
                         {
-                            Console.WriteLine($"The {((WeekOfMonth)transitionStart.Week).ToString()} {transitionStart.DayOfWeek.ToString()} of {monthNames[transitionStart.Month - 1]} at {transitionStart.TimeOfDay:t}");
+                            Console.WriteLine($"The {((WeekOfMonth)transitionStart.Week)} {transitionStart.DayOfWeek} of {monthNames[transitionStart.Month - 1]} at {transitionStart.TimeOfDay:t}");
                         }
                         // Get transition end information
                         TimeZoneInfo.TransitionTime transitionEnd = adjustment.DaylightTransitionEnd;
@@ -204,7 +204,7 @@ namespace TimeZoneInfoCode
                         }
                         else
                         {
-                            Console.WriteLine($"The {((WeekOfMonth)transitionEnd.Week).ToString()} {transitionEnd.DayOfWeek.ToString()} of {monthNames[transitionEnd.Month - 1]} at {transitionEnd.TimeOfDay:t}");
+                            Console.WriteLine($"The {((WeekOfMonth)transitionEnd.Week)} {transitionEnd.DayOfWeek} of {monthNames[transitionEnd.Month - 1]} at {transitionEnd.TimeOfDay:t}");
                         }
                     }
                 }

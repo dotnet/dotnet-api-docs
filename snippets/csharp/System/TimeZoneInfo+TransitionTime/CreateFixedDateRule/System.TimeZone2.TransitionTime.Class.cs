@@ -66,7 +66,7 @@ public class TransitionTimeExamplesFull
         TimeZoneInfo imaginaryTZ;
         TimeSpan delta = new(1, 0, 0);
         TimeZoneInfo.AdjustmentRule adjustment;
-        List<TimeZoneInfo.AdjustmentRule> adjustmentList = new();
+        List<TimeZoneInfo.AdjustmentRule> adjustmentList = [];
         // Declare transition time variables to hold transition time information
         TimeZoneInfo.TransitionTime transitionRuleStart, transitionRuleEnd;
 
@@ -132,11 +132,11 @@ public class TransitionTimeExamplesFull
             {
                 TimeZoneInfo.TransitionTime daylightStart = adjustmentRule.DaylightTransitionStart;
                 if (!daylightStart.IsFixedDateRule)
-                    Console.WriteLine($"{zone.StandardName}, {adjustmentRule.DateStart:d}-{adjustmentRule.DateEnd:d}: Begins at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week).ToString()} {daylightStart.DayOfWeek.ToString()} of {dateInfo.GetMonthName(daylightStart.Month)}.");
+                    Console.WriteLine($"{zone.StandardName}, {adjustmentRule.DateStart:d}-{adjustmentRule.DateEnd:d}: Begins at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week)} {daylightStart.DayOfWeek} of {dateInfo.GetMonthName(daylightStart.Month)}.");
 
                 TimeZoneInfo.TransitionTime daylightEnd = adjustmentRule.DaylightTransitionEnd;
                 if (!daylightEnd.IsFixedDateRule)
-                    Console.WriteLine($"{zone.StandardName}, {adjustmentRule.DateStart:d}-{adjustmentRule.DateEnd:d}: Ends at {daylightEnd.TimeOfDay:t} on the {((WeekOfMonth)daylightEnd.Week).ToString()} {daylightEnd.DayOfWeek.ToString()} of {dateInfo.GetMonthName(daylightEnd.Month)}.");
+                    Console.WriteLine($"{zone.StandardName}, {adjustmentRule.DateStart:d}-{adjustmentRule.DateEnd:d}: Ends at {daylightEnd.TimeOfDay:t} on the {((WeekOfMonth)daylightEnd.Week)} {daylightEnd.DayOfWeek} of {dateInfo.GetMonthName(daylightEnd.Month)}.");
             }
         }
     }
@@ -252,19 +252,19 @@ public class AdditionalExamples
                     TimeZoneInfo.TransitionTime daylightStart = adjustmentRule.DaylightTransitionStart;
                     // Display information on fixed date rule
                     if (!daylightStart.IsFixedDateRule)
-                        Console.WriteLine($"      Begins at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week).ToString()} {daylightStart.DayOfWeek.ToString()} of {dateInfo.GetMonthName(daylightStart.Month)}.");
+                        Console.WriteLine($"      Begins at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week)} {daylightStart.DayOfWeek} of {dateInfo.GetMonthName(daylightStart.Month)}.");
                     // Display information on floating date rule
                     else
-                        Console.WriteLine($"      Begins at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week).ToString()} {daylightStart.DayOfWeek.ToString()} of {dateInfo.GetMonthName(daylightStart.Month)}.");
+                        Console.WriteLine($"      Begins at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week)} {daylightStart.DayOfWeek} of {dateInfo.GetMonthName(daylightStart.Month)}.");
 
                     // Get end of transition
                     TimeZoneInfo.TransitionTime daylightEnd = adjustmentRule.DaylightTransitionEnd;
                     // Display information on fixed date rule
                     if (!daylightEnd.IsFixedDateRule)
-                        Console.WriteLine($"      Ends at {daylightEnd.TimeOfDay:t} on the {((WeekOfMonth)daylightEnd.Week).ToString()} {daylightEnd.DayOfWeek.ToString()} of {dateInfo.GetMonthName(daylightEnd.Month)}.");
+                        Console.WriteLine($"      Ends at {daylightEnd.TimeOfDay:t} on the {((WeekOfMonth)daylightEnd.Week)} {daylightEnd.DayOfWeek} of {dateInfo.GetMonthName(daylightEnd.Month)}.");
                     // Display information on floating date rule
                     else
-                        Console.WriteLine($"      Ends at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week).ToString()} {daylightStart.DayOfWeek.ToString()} of {dateInfo.GetMonthName(daylightStart.Month)}.");
+                        Console.WriteLine($"      Ends at {daylightStart.TimeOfDay:t} on the {((WeekOfMonth)daylightStart.Week)} {daylightStart.DayOfWeek} of {dateInfo.GetMonthName(daylightStart.Month)}.");
                 }
             }
         }

@@ -27,12 +27,12 @@ public class EqualsExample2
 {
     public static void Run()
     {
-        Tuple<string, double>[] distancesWalked = {
+        Tuple<string, double>[] distancesWalked = [
                         Tuple.Create("Jan", double.NaN),
                         Tuple.Create("Joe", double.NaN),
                         Tuple.Create("Adam", 1.36),
                         Tuple.Create("Selena", 2.01),
-                        Tuple.Create("Jake", 1.36) };
+                        Tuple.Create("Jake", 1.36) ];
         for (int ctr = 0; ctr < distancesWalked.Length; ctr++)
         {
             Tuple<string, double> distanceWalked = distancesWalked[ctr];

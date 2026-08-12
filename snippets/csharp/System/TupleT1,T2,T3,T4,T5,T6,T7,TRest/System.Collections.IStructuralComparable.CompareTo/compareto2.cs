@@ -50,14 +50,14 @@ public class CompareToExample2
         // Create array of octuples with population data for three U.S.
         // cities, 1940-2000.
         Tuple<string, int, int, int, int, int, int, Tuple<int>>[] cities =
-            { Tuple.Create("Los Angeles", 1504277, 1970358, 2479015, 2816061, 2966850, 3485398, 3694820),
+            [ Tuple.Create("Los Angeles", 1504277, 1970358, 2479015, 2816061, 2966850, 3485398, 3694820),
             Tuple.Create("New York", 7454995, 7891957, 7781984, 7894862, 7071639, 7322564, 8008278),
             Tuple.Create("Chicago", 3396808, 3620962, 3550904, 3366957, 3005072, 2783726, 2896016),
-            Tuple.Create("Detroit", 1623452, 1849568, 1670144, 1511462, 1203339, 1027974, 951270) };
+            Tuple.Create("Detroit", 1623452, 1849568, 1670144, 1511462, 1203339, 1027974, 951270) ];
         // Display array in unsorted order.
         Console.WriteLine("In unsorted order:");
         foreach (var city in cities)
-            Console.WriteLine(city.ToString());
+            Console.WriteLine(city);
         Console.WriteLine();
 
         Array.Sort(cities, new PopulationComparer<string, int, int, int, int, int, int, int>(2));
@@ -65,7 +65,7 @@ public class CompareToExample2
         // Display array in sorted order.
         Console.WriteLine("Sorted by population in 1950:");
         foreach (var city in cities)
-            Console.WriteLine(city.ToString());
+            Console.WriteLine(city);
         Console.WriteLine();
 
         Array.Sort(cities, new PopulationComparer<string, int, int, int, int, int, int, int>(8));
@@ -73,7 +73,7 @@ public class CompareToExample2
         // Display array in sorted order.
         Console.WriteLine("Sorted by population in 2000:");
         foreach (var city in cities)
-            Console.WriteLine(city.ToString());
+            Console.WriteLine(city);
     }
 }
 // The example displays the following output:

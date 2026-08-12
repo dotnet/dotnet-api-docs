@@ -21,7 +21,7 @@ public class EqualsExample1
         TestEquality(doubleTuple1, tuple2);
     }
 
-    private static void TestEquality(Tuple<double> tuple, object obj) => Console.WriteLine($"{tuple.ToString()} = {obj.ToString()}: {tuple.Equals(obj)}");
+    private static void TestEquality(Tuple<double> tuple, object obj) => Console.WriteLine($"{tuple} = {obj}: {tuple.Equals(obj)}");
 }
 // The example displays the following output:
 //       (12.3455) = (16.8912): False

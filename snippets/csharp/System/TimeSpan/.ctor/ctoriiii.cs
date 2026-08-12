@@ -15,7 +15,7 @@ class Example
             $"TimeSpan( {days}, {hours}, {minutes}, {seconds} )";
 
         // Display the constructor and its value.
-        Console.WriteLine($"{ctor,-44}{elapsedTime.ToString(),16}");
+        Console.WriteLine($"{ctor,-44}{elapsedTime,16}");
     }
 
     static void Main()

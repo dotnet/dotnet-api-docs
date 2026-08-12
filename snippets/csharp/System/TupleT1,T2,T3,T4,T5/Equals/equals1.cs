@@ -6,12 +6,12 @@ public class Class1
     public static void Main()
     {
         Tuple<int, double, double, double, double>[] temperatureInfos =
-                             { Tuple.Create(2, 97.9, 97.8, 98.0, 98.2),
+                             [ Tuple.Create(2, 97.9, 97.8, 98.0, 98.2),
                              Tuple.Create(1, 98.6, 98.8, 98.8, 99.0),
                              Tuple.Create(2, 98.6, 98.6, 98.6, 98.4),
                              Tuple.Create(1, 98.4, 98.6, 99.0, 99.2),
                              Tuple.Create(2, 98.6, 98.6, 98.6, 98.4),
-                             Tuple.Create(1, 98.6, 98.8, 98.8, 99.0) };
+                             Tuple.Create(1, 98.6, 98.8, 98.8, 99.0) ];
         // Compare each item with every other item for equality.
         for (int ctr = 0; ctr < temperatureInfos.Length; ctr++)
         {

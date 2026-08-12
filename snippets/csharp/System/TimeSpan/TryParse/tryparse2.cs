@@ -6,12 +6,12 @@ public class Example
 {
     public static void Main()
     {
-        string[] values = { "6", "6:12", "6:12:14", "6:12:14:45",
+        string[] values = [ "6", "6:12", "6:12:14", "6:12:14:45",
                           "6.12:14:45", "6:12:14:45.3448",
-                          "6:12:14:45,3448", "6:34:14:45" };
-        CultureInfo[] cultures = { new CultureInfo("en-US"),
+                          "6:12:14:45,3448", "6:34:14:45" ];
+        CultureInfo[] cultures = [ new CultureInfo("en-US"),
                                  new CultureInfo("ru-RU"),
-                                 CultureInfo.InvariantCulture };
+                                 CultureInfo.InvariantCulture ];
 
         string header = $"{"String",-17}";
         foreach (CultureInfo culture in cultures)

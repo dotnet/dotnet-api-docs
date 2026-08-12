@@ -42,7 +42,7 @@ public class EqualsExample2
         TestEquality(doubleTuple1, doubleTuple3);
     }
 
-    private static void TestEquality(Tuple<double> tuple, object obj) => Console.WriteLine($"{tuple.ToString()} = {obj.ToString()}: {((IStructuralEquatable)tuple).Equals(obj, new Tuple1Comparer())}");
+    private static void TestEquality(Tuple<double> tuple, object obj) => Console.WriteLine($"{tuple} = {obj}: {((IStructuralEquatable)tuple).Equals(obj, new Tuple1Comparer())}");
 }
 // The example displays the following output:
 //       (12.3455) = (16.8912): False

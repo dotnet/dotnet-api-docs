@@ -6,14 +6,14 @@ public class EqualsExample1
     public static void Run()
     {
         Tuple<string, double, int>[] scores =
-                        { Tuple.Create("Ed", 78.8, 8),
+                        [ Tuple.Create("Ed", 78.8, 8),
                         Tuple.Create("Abbey", 92.1, 9),
                         Tuple.Create("Ed", 71.2, 9),
                         Tuple.Create("Sam", 91.7, 8),
                         Tuple.Create("Ed", 71.2, 5),
                         Tuple.Create("Penelope", 82.9, 8),
                         Tuple.Create("Ed", 71.2, 9),
-                        Tuple.Create("Judith", 84.3, 9) };
+                        Tuple.Create("Judith", 84.3, 9) ];
 
         // Test each tuple object for equality with every other tuple.
         for (int ctr = 0; ctr < scores.Length; ctr++)

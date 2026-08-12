@@ -6,12 +6,12 @@ public class Class1
     public static void Main()
     {
         Tuple<DateTime, double, double, double>[] temperatures =
-              { Tuple.Create(new DateTime(2009, 1, 16), 3.0, 5.0, 4.0),
+              [ Tuple.Create(new DateTime(2009, 1, 16), 3.0, 5.0, 4.0),
               Tuple.Create(new DateTime(2009, 4, 22), 9.0, 14.0, 11.0),
               Tuple.Create(new DateTime(2009, 4, 22), 9.0, 14.0, 10.0),
               Tuple.Create(new DateTime(2009, 6, 1), 23.0, 28.0, 21.0),
               Tuple.Create(new DateTime(2009, 4, 22), 9.0, 14.0, 11.0),
-              Tuple.Create(new DateTime(2009, 9, 6), 25.0, 30.0, 25.0) };
+              Tuple.Create(new DateTime(2009, 9, 6), 25.0, 30.0, 25.0) ];
         // Compare each item with every other item for equality.
         for (int ctr = 0; ctr < temperatures.Length; ctr++)
         {

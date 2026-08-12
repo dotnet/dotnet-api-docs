@@ -7,13 +7,13 @@ public class Example
     public static void Main()
     {
         Tuple<string, decimal, int, int>[] pitchers =
-             { Tuple.Create("McHale, Joe", 240.1m, 221, 96),
+             [ Tuple.Create("McHale, Joe", 240.1m, 221, 96),
              Tuple.Create("Paul, Dave", 233.1m, 231, 84),
              Tuple.Create("Williams, Mike", 193.2m, 183, 86),
              Tuple.Create("Blair, Jack", 168.1m, 146, 65),
              Tuple.Create("Henry, Walt", 140.1m, 96, 30),
              Tuple.Create("Lee, Adam", 137.2m, 109, 45),
-             Tuple.Create("Rohr, Don", 101.0m, 110, 42) };
+             Tuple.Create("Rohr, Don", 101.0m, 110, 42) ];
         Tuple<string, double, double, double>[] results = ComputeStatistics(pitchers);
 
         // Display the results.
@@ -24,7 +24,7 @@ public class Example
 
     private static Tuple<string, double, double, double>[] ComputeStatistics(Tuple<string, decimal, int, int>[] pitchers)
     {
-        var list = new List<Tuple<string, double, double, double>>();
+        List<Tuple<string, double, double, double>> list = [];
         Tuple<string, double, double, double> result;
 
         foreach (var pitcher in pitchers)

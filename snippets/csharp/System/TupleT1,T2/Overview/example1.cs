@@ -6,14 +6,14 @@ public class Example
     public static void Main()
     {
         Tuple<string, Nullable<int>>[] scores =
-                      { new Tuple<string, Nullable<int>>("Jack", 78),
+                      [ new Tuple<string, Nullable<int>>("Jack", 78),
                       new Tuple<string, Nullable<int>>("Abbey", 92),
                       new Tuple<string, Nullable<int>>("Dave", 88),
                       new Tuple<string, Nullable<int>>("Sam", 91),
                       new Tuple<string, Nullable<int>>("Ed", null),
                       new Tuple<string, Nullable<int>>("Penelope", 82),
                       new Tuple<string, Nullable<int>>("Linda", 99),
-                      new Tuple<string, Nullable<int>>("Judith", 84) };
+                      new Tuple<string, Nullable<int>>("Judith", 84) ];
         int number;
         double mean = ComputeMean(scores, out number);
         Console.WriteLine($"Average test score: {mean:N2} (n={number})");

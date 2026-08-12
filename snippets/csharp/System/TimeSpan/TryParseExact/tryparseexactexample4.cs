@@ -6,9 +6,9 @@ public class TryParseExactExample4
 {
     public static void Run()
     {
-        string[] inputs = { "3", "16:42", "1:6:52:35.0625",
-                          "1:6:52:35,0625" };
-        string[] formats = { "%h", "g", "G" };
+        string[] inputs = [ "3", "16:42", "1:6:52:35.0625",
+                          "1:6:52:35,0625" ];
+        string[] formats = [ "%h", "g", "G" ];
         TimeSpan interval;
         CultureInfo culture = new("fr-FR");
 

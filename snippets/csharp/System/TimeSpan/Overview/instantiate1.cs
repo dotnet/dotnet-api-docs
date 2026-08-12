@@ -26,7 +26,7 @@ public class Example
     {
         // <Snippet3>
         TimeSpan interval = new(2, 14, 18);
-        Console.WriteLine(interval.ToString());
+        Console.WriteLine(interval);
 
         // Displays "02:14:18".
         // </Snippet3>
@@ -48,7 +48,7 @@ public class Example
     private static void Parse()
     {
         // <Snippet5>
-        string[] values = { "12", "31.", "5.8:32:16", "12:12:15.95", ".12" };
+        string[] values = [ "12", "31.", "5.8:32:16", "12:12:15.95", ".12" ];
         foreach (string value in values)
         {
             try

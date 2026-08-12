@@ -47,7 +47,7 @@ public class EqualsExample2
                                  .0662544, .0728964, .0491912);
         IStructuralEquatable eq = rate1;
         // Compare first tuple with remaining two tuples.
-        Console.WriteLine($"{rate1.ToString()} = ");
+        Console.WriteLine($"{rate1} = ");
         Console.WriteLine($"   {rate2} : {eq.Equals(rate2, new RateComparer<string, double, double, double, double, double>())}");
         Console.WriteLine($"   {rate3} : {eq.Equals(rate3, new RateComparer<string, double, double, double, double, double>())}");
         Console.WriteLine($"   {rate4} : {eq.Equals(rate4, new RateComparer<string, double, double, double, double, double>())}");

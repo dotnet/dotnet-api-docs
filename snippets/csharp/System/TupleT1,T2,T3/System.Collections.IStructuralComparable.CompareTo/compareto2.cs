@@ -25,18 +25,18 @@ public class CompareToExample2
     public static void Run()
     {
         Tuple<string, double, int>[] scores =
-                  { Tuple.Create("Jack", 78.8, 8),
+                  [ Tuple.Create("Jack", 78.8, 8),
                   Tuple.Create("Abbey", 92.1, 9),
                   Tuple.Create("Dave", 88.3, 9),
                   Tuple.Create("Sam", 91.7, 8),
                   Tuple.Create("Ed", 71.2, 5),
                   Tuple.Create("Penelope", 82.9, 8),
                   Tuple.Create("Linda", 99.0, 9),
-                  Tuple.Create("Judith", 84.3, 9) };
+                  Tuple.Create("Judith", 84.3, 9) ];
 
         Console.WriteLine("The values in unsorted order:");
         foreach (var score in scores)
-            Console.WriteLine(score.ToString());
+            Console.WriteLine(score);
 
         Console.WriteLine();
 
@@ -44,7 +44,7 @@ public class CompareToExample2
 
         Console.WriteLine("The values in sorted order:");
         foreach (var score in scores)
-            Console.WriteLine(score.ToString());
+            Console.WriteLine(score);
     }
 }
 // The example displays the following output;

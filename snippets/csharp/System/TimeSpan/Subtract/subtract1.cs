@@ -8,14 +8,14 @@ public class Example
         TimeSpan baseTimeSpan = new(1, 12, 15, 16);
 
         // Create an array of timespan intervals.
-        TimeSpan[] intervals = {
+        TimeSpan[] intervals = [
          TimeSpan.FromDays(1.5),
          TimeSpan.FromHours(1.5),
          TimeSpan.FromMinutes(45),
          TimeSpan.FromMilliseconds(505),
          new TimeSpan(1, 17, 32, 20),
          new TimeSpan(-8, 30, 0)
-      };
+      ];
 
         // Calculate a new time interval by adding each element to the base interval.
         foreach (var interval in intervals)

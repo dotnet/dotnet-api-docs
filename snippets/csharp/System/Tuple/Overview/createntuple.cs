@@ -14,6 +14,6 @@ public class CreateNTupleExample
         // The example displays the following output:
         //    Prime numbers less than 20: 2, 3, 5, 7, 11, 13, 17, and 19
         // </Snippet17>
-        Console.WriteLine(primes.ToString());
+        Console.WriteLine(primes);
     }
 }

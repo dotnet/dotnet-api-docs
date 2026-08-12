@@ -199,7 +199,7 @@ public class TZExamples
         {
             DateTime utcTime = DateTime.SpecifyKind(ambiguousTime - TimeZoneInfo.Local.BaseUtcOffset,
                                                     DateTimeKind.Utc);
-            Console.WriteLine($"{ambiguousTime} local time corresponds to {utcTime} {utcTime.Kind.ToString()}.");
+            Console.WriteLine($"{ambiguousTime} local time corresponds to {utcTime} {utcTime.Kind}.");
             return utcTime;
         }
     }
@@ -231,12 +231,12 @@ public class TZExamples
             // Convert local time to UTC, and set Kind property to DateTimeKind.Utc
             utcDate = DateTime.SpecifyKind(inputDate - offsets[selection], DateTimeKind.Utc);
 
-            Console.WriteLine($"{inputDate} local time corresponds to {utcDate} {utcDate.Kind.ToString()}.");
+            Console.WriteLine($"{inputDate} local time corresponds to {utcDate} {utcDate.Kind}.");
         }
         else
         {
             utcDate = inputDate.ToUniversalTime();
-            Console.WriteLine($"{inputDate} local time corresponds to {utcDate} {utcDate.Kind.ToString()}.");
+            Console.WriteLine($"{inputDate} local time corresponds to {utcDate} {utcDate.Kind}.");
         }
     }
 
@@ -317,7 +317,7 @@ public class TZListForm : Form
     private void OkButton_Click(object sender, EventArgs e)
     {
         TimeZoneInfo selectedTimeZone = (TimeZoneInfo)this.timeZoneList.SelectedItem;
-        MessageBox.Show("You selected the " + selectedTimeZone.ToString() + " time zone.");
+        MessageBox.Show("You selected the " + selectedTimeZone + " time zone.");
     }
     // </Snippet2>
 

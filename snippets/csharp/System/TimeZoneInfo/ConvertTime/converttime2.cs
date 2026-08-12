@@ -8,10 +8,10 @@ public class ConvertTimeExample2
         // Define times to be converted.
         DateTime time1 = new(2010, 1, 1, 12, 1, 0);
         DateTime time2 = new(2010, 11, 6, 23, 30, 0);
-        DateTimeOffset[] times = { new DateTimeOffset(time1, TimeZoneInfo.Local.GetUtcOffset(time1)),
+        DateTimeOffset[] times = [ new DateTimeOffset(time1, TimeZoneInfo.Local.GetUtcOffset(time1)),
                                  new DateTimeOffset(time1, TimeSpan.Zero),
                                  new DateTimeOffset(time2, TimeZoneInfo.Local.GetUtcOffset(time2)),
-                                 new DateTimeOffset(time2.AddHours(3), TimeZoneInfo.Local.GetUtcOffset(time2.AddHours(3))) };
+                                 new DateTimeOffset(time2.AddHours(3), TimeZoneInfo.Local.GetUtcOffset(time2.AddHours(3))) ];
 
         // Retrieve the time zone for Eastern Standard Time (U.S. and Canada).
         TimeZoneInfo est;

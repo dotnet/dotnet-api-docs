@@ -5,7 +5,7 @@ public class Class1
     public static void Run()
     {
         // <Snippet3>
-        TimeSpan[] spans = {
+        TimeSpan[] spans = [
          TimeSpan.Zero,
          new TimeSpan(-14, 0, 0, 0, 0),
          new TimeSpan(1, 2, 3),
@@ -13,9 +13,9 @@ public class Class1
          new TimeSpan(99, 23, 59, 59, 999),
          new TimeSpan(3, 0, 0),
          new TimeSpan(0, 0, 0, 0, 25)
-      };
+      ];
 
-        string[] fmts = { "c", "g", "G", @"hh\:mm\:ss", "%m' min.'" };
+        string[] fmts = [ "c", "g", "G", @"hh\:mm\:ss", "%m' min.'" ];
         foreach (TimeSpan span in spans)
         {
             foreach (string fmt in fmts)

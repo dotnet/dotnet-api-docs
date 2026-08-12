@@ -9,6 +9,6 @@ public class Constructor8Example
                          Tuple<int>>(2, 3, 5, 7, 11, 13, 16,
                          new Tuple<int>(19));
         // </Snippet20>
-        Console.WriteLine(primes.ToString());
+        Console.WriteLine(primes);
     }
 }

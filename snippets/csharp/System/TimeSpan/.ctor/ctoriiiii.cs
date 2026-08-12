@@ -16,7 +16,7 @@ class TimeSpanCtorIIIIIDemo
             $"TimeSpan( {days}, {hours}, {minutes}, {seconds}, {millisec} )";
 
         // Display the constructor and its value.
-        Console.WriteLine($"{ctor,-48}{elapsedTime.ToString(),24}");
+        Console.WriteLine($"{ctor,-48}{elapsedTime,24}");
     }
 
     static void Main()

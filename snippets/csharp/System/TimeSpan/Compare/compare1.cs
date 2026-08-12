@@ -10,7 +10,7 @@ class Example
 
         // Define an array of time intervals to compare with
         // the base interval.
-        TimeSpan[] spans = {
+        TimeSpan[] spans = [
             TimeSpan.FromSeconds(-2.5),
             TimeSpan.FromMinutes(20),
             TimeSpan.FromHours(1),
@@ -18,7 +18,7 @@ class Example
             baseInterval,
             TimeSpan.FromDays(.5),
             TimeSpan.FromDays(1)
-        };
+        ];
 
         // Compare the time intervals.
         foreach (var span in spans)

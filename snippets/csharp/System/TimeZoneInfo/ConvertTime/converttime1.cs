@@ -6,11 +6,11 @@ public class ConvertTimeExample1
     public static void Run()
     {
         // Define times to be converted.
-        DateTime[] times = { new DateTime(2010, 1, 1, 0, 1, 0),
+        DateTime[] times = [ new DateTime(2010, 1, 1, 0, 1, 0),
                            new DateTime(2010, 1, 1, 0, 1, 0, DateTimeKind.Utc),
                            new DateTime(2010, 1, 1, 0, 1, 0, DateTimeKind.Local),
                            new DateTime(2010, 11, 6, 23, 30, 0),
-                           new DateTime(2010, 11, 7, 2, 30, 0) };
+                           new DateTime(2010, 11, 7, 2, 30, 0) ];
 
         // Retrieve the time zone for Eastern Standard Time (U.S. and Canada).
         TimeZoneInfo est;

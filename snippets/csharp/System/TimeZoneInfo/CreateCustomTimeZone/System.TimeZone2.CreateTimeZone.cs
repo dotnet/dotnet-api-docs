@@ -76,7 +76,7 @@ public class TimeZoneCreation
         TimeZoneInfo.AdjustmentRule adjustment;
         adjustment = TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(new DateTime(1999, 10, 1), DateTime.MaxValue.Date, delta, startTransition, endTransition);
         // Create array for adjustment rules
-        TimeZoneInfo.AdjustmentRule[] adjustments = { adjustment };
+        TimeZoneInfo.AdjustmentRule[] adjustments = [ adjustment ];
         // Define other custom time zone arguments
         string displayName = "(GMT-04:00) Antarctica/Palmer Time";
         string standardName = "Palmer Time";
@@ -101,7 +101,7 @@ public class TimeZoneCreation
         TimeZoneInfo.AdjustmentRule adjustment = TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(new DateTime(1999, 10, 1),
                                               DateTime.MaxValue.Date, delta, startTransition, endTransition);
         // Create array for adjustment rules
-        TimeZoneInfo.AdjustmentRule[] adjustments = { adjustment };
+        TimeZoneInfo.AdjustmentRule[] adjustments = [ adjustment ];
         // Define other custom time zone arguments
         string displayName = "(GMT-04:00) Antarctica/Palmer Time";
         string standardName = "Palmer Standard Time";
@@ -157,7 +157,7 @@ public class TimeZoneCreation
                 TimeSpan delta = new(1, 0, 0);
                 TimeZoneInfo.AdjustmentRule adjustment = TimeZoneInfo.AdjustmentRule.CreateAdjustmentRule(new DateTime(1989, 10, 1), DateTime.MaxValue.Date, delta, startTransition, endTransition);
                 // Create array for adjustment rules
-                TimeZoneInfo.AdjustmentRule[] adjustments = { adjustment };
+                TimeZoneInfo.AdjustmentRule[] adjustments = [ adjustment ];
                 // Define other custom time zone arguments
                 string displayName = "(GMT+12:00) Antarctica/South Pole";
                 string standardName = "Antarctica/South Pole Standard Time";
@@ -181,7 +181,7 @@ public class TimeZoneCreation
         // Declare necessary TimeZoneInfo.AdjustmentRule objects for time zone
         TimeSpan delta = new(1, 0, 0);
         TimeZoneInfo.AdjustmentRule adjustment;
-        List<TimeZoneInfo.AdjustmentRule> adjustmentList = new();
+        List<TimeZoneInfo.AdjustmentRule> adjustmentList = [];
         // Declare transition time variables to hold transition time information
         TimeZoneInfo.TransitionTime transitionRuleStart, transitionRuleEnd;
 

@@ -13,16 +13,16 @@ public class CompareToExample1
         //    Component 4: Number of yards gained
         //    Component 5: Number of touchdowns
         Tuple<string, int, int, int, int>[] runningBacks =
-             { Tuple.Create("Payton, Walter", 190, 3838, 16726, 110),
+             [ Tuple.Create("Payton, Walter", 190, 3838, 16726, 110),
              Tuple.Create("Sanders, Barry", 153, 3062, 15269, 99),
              Tuple.Create("Brown, Jim", 118, 2359, 12312, 106),
              Tuple.Create("Dickerson, Eric", 144, 2996, 13259, 90),
-             Tuple.Create("Faulk, Marshall", 176, 2836, 12279, 100) };
+             Tuple.Create("Faulk, Marshall", 176, 2836, 12279, 100) ];
 
         // Display the array in unsorted order.
         Console.WriteLine("The values in unsorted order:");
         foreach (var runningBack in runningBacks)
-            Console.WriteLine(runningBack.ToString());
+            Console.WriteLine(runningBack);
         Console.WriteLine();
 
         // Sort the array
@@ -31,7 +31,7 @@ public class CompareToExample1
         // Display the array in sorted order.
         Console.WriteLine("The values in sorted order:");
         foreach (var runningBack in runningBacks)
-            Console.WriteLine(runningBack.ToString());
+            Console.WriteLine(runningBack);
     }
 }
 // The example displays the following output:

@@ -6,11 +6,11 @@ public class Example
 {
     public static void Run()
     {
-        TimeSpan[] intervals = { new TimeSpan(38, 30, 15),
-                               new TimeSpan(16, 14, 30) };
-        CultureInfo[] cultures = { new CultureInfo("en-US"),
-                                 new CultureInfo("fr-FR") };
-        string[] formats = { "c", "g", "G", @"hh\:mm\:ss" };
+        TimeSpan[] intervals = [ new TimeSpan(38, 30, 15),
+                               new TimeSpan(16, 14, 30) ];
+        CultureInfo[] cultures = [ new CultureInfo("en-US"),
+                                 new CultureInfo("fr-FR") ];
+        string[] formats = [ "c", "g", "G", @"hh\:mm\:ss" ];
         Console.WriteLine($"{"Interval",12}      Format  {cultures[0].Name,22}  {cultures[1].Name,22}\n");
 
         foreach (var interval in intervals)
