@@ -27,9 +27,9 @@ public class Tuple1Comparer : IEqualityComparer
     public int GetHashCode(object obj) => obj.GetHashCode();
 }
 
-public class Example
+public class EqualsExample2
 {
-    public static void Main()
+    public static void Run()
     {
         var doubleTuple1 = Tuple.Create(12.3455);
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class CreateNTupleExample
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet17>
         var primes = Tuple.Create(2, 3, 5, 7, 11, 13, 17, 19);

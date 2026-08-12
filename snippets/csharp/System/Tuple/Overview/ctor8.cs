@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class Constructor8Example
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet20>
         var primes = new Tuple<int, int, int, int, int, int, int,

@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class CompareToExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Create array of sextuple with population data for three U.S.
         // cities, 1960-2000.

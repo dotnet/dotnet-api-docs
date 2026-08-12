@@ -4,7 +4,7 @@ namespace TupleCreateC
 {
     class Create1
     {
-        static void Main(string[] args)
+        public static void Run(string[] args)
         {
             Create1Tuple();
             New1Tuple();

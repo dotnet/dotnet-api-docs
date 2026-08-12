@@ -4,7 +4,7 @@ using System.Globalization;
 
 public class Example
 {
-    public static void Main()
+    public static void Run()
     {
         TimeSpan[] intervals = { new TimeSpan(38, 30, 15),
                                new TimeSpan(16, 14, 30) };

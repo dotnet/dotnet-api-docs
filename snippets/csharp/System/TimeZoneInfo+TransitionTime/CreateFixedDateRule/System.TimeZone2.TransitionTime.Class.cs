@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 
 [assembly: CLSCompliant(true)]
-public class TransitionTimeExamples
+public class TransitionTimeExamplesFull
 {
-    public static void Main()
+    public static void Run()
     {
-        TransitionTimeExamples tte = new();
+        TransitionTimeExamplesFull tte = new();
 
         Console.WriteLine("***CompareForEquality()");
         tte.CompareForEquality();

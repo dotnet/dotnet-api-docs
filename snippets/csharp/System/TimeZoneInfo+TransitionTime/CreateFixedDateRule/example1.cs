@@ -2,12 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 
-[assembly: CLSCompliant(true)]
-public class TransitionTimeExamples
+public class TransitionTimeExamplesYear
 {
-    public static void Main()
+    public static void Run()
     {
-        TransitionTimeExamples tte = new();
+        TransitionTimeExamplesYear tte = new();
         tte.GetTransitionTimes(2007);
     }
 

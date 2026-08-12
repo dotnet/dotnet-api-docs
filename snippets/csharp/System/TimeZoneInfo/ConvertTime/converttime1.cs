@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class ConvertTimeExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Define times to be converted.
         DateTime[] times = { new DateTime(2010, 1, 1, 0, 1, 0),

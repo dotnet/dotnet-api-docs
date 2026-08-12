@@ -20,9 +20,9 @@ public class ScoreComparer<T1, T2, T3> : IComparer
     }
 }
 
-public class Example
+public class CompareToExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, double, int>[] scores =
                   { Tuple.Create("Jack", 78.8, 8),

@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class CompareToExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Create array of 8-tuple objects containing prime numbers.
         Tuple<int, int, int, int, int, int, int, Tuple<int>>[] primes =

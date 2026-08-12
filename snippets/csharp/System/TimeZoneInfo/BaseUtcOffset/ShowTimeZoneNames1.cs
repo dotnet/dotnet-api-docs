@@ -1,9 +1,9 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class ShowTimeZoneNamesExample
 {
-    public static void Main()
+    public static void Run()
     {
         TimeZoneInfo localZone = TimeZoneInfo.Local;
         Console.WriteLine($"Local Time Zone ID: {localZone.Id}");

@@ -26,9 +26,9 @@ public class Item2Comparer<T1, T2, T3> : IEqualityComparer
     }
 }
 
-public class Example
+public class EqualsExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, double, int>[] scores =
              { Tuple.Create("Ed", 78.8, 8),

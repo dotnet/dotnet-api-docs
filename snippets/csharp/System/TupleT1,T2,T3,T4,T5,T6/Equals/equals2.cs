@@ -33,9 +33,9 @@ public class RateComparer<T1, T2, T3, T4, T5, T6> : IEqualityComparer
     }
 }
 
-public class Example
+public class EqualsExample2
 {
-    public static void Main()
+    public static void Run()
     {
         var rate1 = Tuple.Create("New York", .014505, -.1042733,
                                  .0354833, .093644, .0290792);

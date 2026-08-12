@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class CompareToExample1
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, double, int>[] scores =
                       { Tuple.Create("Jack", 78.8, 8),

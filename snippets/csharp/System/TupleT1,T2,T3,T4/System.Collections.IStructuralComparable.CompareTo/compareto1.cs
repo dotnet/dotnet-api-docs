@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class CompareToExample1
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, decimal, int, int>[] pitchers =
                         { Tuple.Create("McHale, Joe", 240.1m, 221, 96),

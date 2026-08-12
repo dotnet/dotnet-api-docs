@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class EqualsExample1
 {
-    public static void Main()
+    public static void Run()
     {
         var doubleTuple1 = Tuple.Create(12.3455);
         var doubleTuple2 = Tuple.Create(16.8912);

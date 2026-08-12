@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class CompareToExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Organization of runningBacks 5-tuple:
         //    Component 1: Player name

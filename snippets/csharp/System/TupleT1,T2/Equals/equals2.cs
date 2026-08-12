@@ -23,9 +23,9 @@ public class Item2Comparer<T1, T2> : IEqualityComparer
     }
 }
 
-public class Example
+public class EqualsExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, double>[] distancesWalked = {
                         Tuple.Create("Jan", double.NaN),

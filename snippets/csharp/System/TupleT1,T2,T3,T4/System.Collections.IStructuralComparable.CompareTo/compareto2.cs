@@ -20,9 +20,9 @@ public class PitcherComparer<T1, T2, T3, T4> : IComparer
     }
 }
 
-public class Example
+public class CompareToExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, double, double, int>[] pitchers =
                       { Tuple.Create("McHale, Joe", 240.1, 3.60, 221),

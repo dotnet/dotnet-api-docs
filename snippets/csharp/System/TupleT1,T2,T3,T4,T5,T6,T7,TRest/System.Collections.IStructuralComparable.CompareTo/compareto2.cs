@@ -43,9 +43,9 @@ public class PopulationComparer<T1, T2, T3, T4, T5, T6, T7, T8> : IComparer
     }
 }
 
-public class Example
+public class CompareToExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // Create array of octuples with population data for three U.S.
         // cities, 1940-2000.

@@ -20,9 +20,9 @@ public class ScoreComparer<T1, T2> : IComparer
     }
 }
 
-public class Example
+public class CompareToExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, Nullable<int>>[] scores =
                       { new Tuple<string, Nullable<int>>("Jack", 78),

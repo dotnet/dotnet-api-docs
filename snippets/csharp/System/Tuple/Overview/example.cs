@@ -1,8 +1,8 @@
 ﻿using System;
 
-class Example
+class TupleOverviewExample
 {
-    static void Main(string[] args)
+    public static void Run(string[] args)
     {
         // <Snippet19>
         var from1980 = Tuple.Create(1203339, 1027974, 951270);

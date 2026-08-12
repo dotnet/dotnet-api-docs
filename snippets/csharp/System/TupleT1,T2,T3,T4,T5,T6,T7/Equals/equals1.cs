@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class EqualsExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // Get population data for New York City and Los Angeles, 1960-2000.
         Tuple<string, int, int, int, int, int, int>[] urbanPopulations =

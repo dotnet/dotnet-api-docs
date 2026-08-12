@@ -2,7 +2,7 @@
 
 public class Class1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet3>
         TimeSpan[] spans = {

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 public class TZExamples
 {
-    public static void Main()
+    public static void Run()
     {
         TZExamples tze = new();
         //      tze.IterateTimeZones();

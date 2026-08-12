@@ -8,7 +8,7 @@ namespace TimeZoneExamples
 {
     public class TZClass
     {
-        public static void Main()
+        public static void Run()
         {
             TZClass tz = new();
             if (MessageBox.Show("Display time zone offset?", "Offset", MessageBoxButtons.YesNo) == DialogResult.Yes)

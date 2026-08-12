@@ -20,9 +20,9 @@ public class YardsGained<T1, T2, T3, T4, T5> : IComparer
     }
 }
 
-public class Example
+public class CompareToExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // Organization of runningBacks 5-tuple:
         //    Component 1: Player name

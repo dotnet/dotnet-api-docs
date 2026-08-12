@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class TryParseExactExample3
 {
-    public static void Main()
+    public static void Run()
     {
         string[] inputs = { "3", "16:42", "1:6:52:35.0625",
                           "1:6:52:35,0625" };

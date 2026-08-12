@@ -4,9 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Collections.ObjectModel;
 
-public class Example
+public class GetSystemTimeZonesExample
 {
-    public static void Main()
+    public static void Run()
     {
         const string OUTPUTFILENAME = @"C:\Temp\TimeZoneInfo.txt";
 

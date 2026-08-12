@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class EqualsExample1
 {
-    public static void Main()
+    public static void Run()
     {
         Tuple<string, double, int>[] scores =
                         { Tuple.Create("Ed", 78.8, 8),

@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class TupleOverviewExample1
 {
-    public static void Main()
+    public static void Run()
     {
         Ctor1();
         Factory();
