@@ -23,7 +23,7 @@ Apply these changes when they preserve behavior and sample clarity:
 
 - Use top-level statements where possible.
 - Use C# built-in aliases, such as `string`, `int`, and `bool`, instead of
-  framework type names.
+  framework type names. Use `nint` and `nuint` for `IntPtr` and `UIntPtr`.
 - Remove calls to `ToString()` when the result is used in a string context, unless the call is the subject of the snippet.
 - Use string interpolation instead of composite formatting, unless it makes the code harder to read
   or the composite-format overload is the subject of the snippet. For example, keep composite
