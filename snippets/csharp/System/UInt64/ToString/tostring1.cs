@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class UInt64ToStringExample1
 {
-    public static void Main()
+    public static void Run()
     {
         ulong value = 163249057;
         // Display value using default ToString method.

@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt64ParseExample4
 {
-    public static void Main()
+    public static void Run()
     {
         string[] cultureNames = { "en-US", "fr-FR" };
         NumberStyles[] styles = { NumberStyles.Integer,

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-public class Form1 : Form
+public class UriBuilderConstructorForm : Form
 {
     protected void Method()
     {

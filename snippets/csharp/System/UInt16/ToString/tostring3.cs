@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class UInt16ToStringExample3
 {
-    public static void Main()
+    public static void Run()
     {
         ushort value = 21708;
         string[] specifiers = { "G", "C", "D3", "E2", "e3", "F",

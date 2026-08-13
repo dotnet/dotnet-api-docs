@@ -1,11 +1,11 @@
 ﻿// <Snippet2>
 using System;
 
-public class Example
+public class UInt64EqualsOverloadExample
 {
     static ulong value = 112;
 
-    public static void Main()
+    public static void Run()
     {
         byte byte1 = 112;
         Console.WriteLine($"value = byte1: {value.Equals(byte1),16}");

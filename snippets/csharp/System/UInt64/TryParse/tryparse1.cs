@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class UInt64TryParseExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         string[] numericStrings = { "1293.8", "+1671.7", "28347.",

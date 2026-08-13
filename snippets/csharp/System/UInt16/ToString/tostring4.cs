@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt16ToStringExample4
 {
-    public static void Main()
+    public static void Run()
     {
         // Define cultures whose formatting conventions are to be used.
         CultureInfo[] cultures = { CultureInfo.CreateSpecificCulture("en-US"),

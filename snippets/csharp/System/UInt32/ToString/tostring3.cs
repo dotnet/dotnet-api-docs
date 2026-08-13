@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class UInt32ToStringExample3
 {
-    public static void Main()
+    public static void Run()
     {
         uint value = 2179608;
         string[] specifiers = { "G", "C", "D3", "E2", "e3", "F",

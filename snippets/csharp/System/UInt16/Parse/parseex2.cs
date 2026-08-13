@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt16ParseExample2
 {
-    public static void Main()
+    public static void Run()
     {
         string[] values = { " 214 ", "1,064", "(0)", "1241+", " + 214 ", " +214 ", "2153.0", "1e03", "1300.0e-2" };
         NumberStyles whitespace = NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite;

@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class UInt64EqualsObjectExample
 {
-    public static void Main()
+    public static void Run()
     {
         object[] values = { (short) 10, (short) 20, 10, 20,
                           10L, 20L, 10D, 20D, (ushort) 10,

@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class UInt32ToStringExample1
 {
-    public static void Main()
+    public static void Run()
     {
         uint value = 1632490;
         // Display value using default ToString method.

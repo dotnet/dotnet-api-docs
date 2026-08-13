@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class UInt64ToStringExample3
 {
-    public static void Main()
+    public static void Run()
     {
         ulong value = 217960834;
         string[] specifiers = { "G", "C", "D3", "E2", "e3", "F",

@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-class Example
+class UInt64EqualsExample
 {
-    public static void Main()
+    public static void Run()
     {
         ulong value1 = 50;
         ulong value2 = 50;

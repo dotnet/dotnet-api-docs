@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt16ToStringExample2
 {
-    public static void Main()
+    public static void Run()
     {
         // Define an array of CultureInfo objects.
         CultureInfo[] ci = { new CultureInfo("en-US"),

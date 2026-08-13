@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt64ParseExample2
 {
-    public static void Main()
+    public static void Run()
     {
         string[] values = { " 214309 ", "1,064,181", "(0)", "10241+", " + 21499 ",
                          " +21499 ", "122153.00", "1e03ff", "91300.0e-2" };

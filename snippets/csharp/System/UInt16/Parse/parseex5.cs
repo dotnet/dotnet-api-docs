@@ -1,9 +1,9 @@
 ﻿// <Snippet5>
 using System;
 
-public class Example
+public class UInt16ParseExample5
 {
-    public static void Main()
+    public static void Run()
     {
         string[] values = { "-0", "17", "-12", "185", "66012", "+0",
                           "", null, "16.1", "28.0", "1,034" };

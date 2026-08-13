@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt16ParseExample3
 {
-    public static void Main()
+    public static void Run()
     {
         // Define a custom culture that uses "++" as a positive sign.
         CultureInfo ci = new("");

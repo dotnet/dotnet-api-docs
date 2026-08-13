@@ -1,9 +1,9 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class UInt16ToStringExample1
 {
-    public static void Main()
+    public static void Run()
     {
         ushort value = 16324;
         // Display value using default ToString method.
