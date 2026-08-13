@@ -28,16 +28,18 @@ public class Example
     {
         Version ver = null;
         if (Version.TryParse(input, out ver))
-            Console.WriteLine($"Converted '{input} to {ver}.");
+            Console.WriteLine($"Converted '{input}' to {ver}.");
         else
             Console.WriteLine($"Unable to determine the version from '{input}'.");
     }
 }
+
 // The example displays the following output:
-//       Converted '4.0 to 4.0.
+//       Converted '4.0' to 4.0.
 //       Unable to determine the version from '4.0.'.
-//       Converted '1.1.2 to 1.1.2.
-//       Converted '1.1.2.01702 to 1.1.2.1702.
+//       Converted '1.1.2' to 1.1.2.
+//       Converted '1.1.2.01702' to 1.1.2.1702.
 //       Unable to determine the version from '1.1.2.0702.119'.
 //       Unable to determine the version from '1.3.5.2150000000'.
+
 // </Snippet1>
