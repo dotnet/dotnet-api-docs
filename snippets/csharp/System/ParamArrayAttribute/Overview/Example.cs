@@ -56,7 +56,7 @@ public class Class1
     public static void Main()
     {
         Temperature temp1 = new(100);
-        string[] formats = { "C", "G", "F", "K" };
+        string[] formats = [ "C", "G", "F", "K" ];
 
         // Call Display method with a string array.
         Console.WriteLine("Calling Display with a string array:");

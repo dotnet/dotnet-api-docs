@@ -34,7 +34,7 @@ public class Example
         }
     }
 
-    private static int[] CreateInt32Array() => new int[] { 100, 200, 300, 400, 500 };
+    private static int[] CreateInt32Array() =>[ 100, 200, 300, 400, 500 ];
 }
 
 // The example displays the following output:
