@@ -2,111 +2,108 @@
 
 namespace SystemByte_Examples
 {
-   /// <summary>
-   /// Summary description for Class1.
-   /// </summary>
-   class Class1
-   {
-      static void Main(string[] args)
-      {
-         SystemByteExamples sbe = new SystemByteExamples();
-         int numberToSet;
-         Byte compareByte;
-//         String stringToConvert;
+    /// <summary>
+    /// Summary description for Class1.
+    /// </summary>
+    class Class1
+    {
+        static void Main(string[] args)
+        {
+            SystemByteExamples sbe = new();
+            int numberToSet;
+            byte compareByte;
+            //         String stringToConvert;
 
-         numberToSet = 120;
-//         stringToConvert = "200";
-         compareByte = 201;
-			
-         sbe.MinMaxFields(numberToSet);
-         sbe.ParseByte();
+            numberToSet = 120;
+            //         stringToConvert = "200";
+            compareByte = 201;
 
-         sbe.Compare(compareByte);
-      }
-   }
-	
-   class SystemByteExamples
-   {
-      private Byte MemberByte;
+            sbe.MinMaxFields(numberToSet);
+            sbe.ParseByte();
 
-      // c'tor()
-      public SystemByteExamples()
-      {
-         MemberByte = 0;
-      }
+            sbe.Compare(compareByte);
+        }
+    }
 
-      // The following example demonstrates using the MinValue and MaxValue fields to
-      //  determine whether an integer value falls within range of a byte.  If it does,
-      //  the value is set.  If not, an error message is displayed.
+    class SystemByteExamples
+    {
+        private byte MemberByte;
 
-      // MemberByte is assumed to exist as a class member.
+        // c'tor()
+        public SystemByteExamples() => MemberByte = 0;
 
-      //<Snippet1>
-      public void MinMaxFields(int numberToSet)
-      {
-         if(numberToSet <= (int)Byte.MaxValue && numberToSet >= (int)Byte.MinValue)
-         {
-            // You must explicitly convert an integer to a byte.
-            MemberByte = (Byte)numberToSet;
+        // The following example demonstrates using the MinValue and MaxValue fields to
+        //  determine whether an integer value falls within range of a byte.  If it does,
+        //  the value is set.  If not, an error message is displayed.
 
-            // Displays MemberByte using the ToString() method.
-            Console.WriteLine("The MemberByte value is {0}", MemberByte.ToString());
-         }
-         else
-         {
-            Console.WriteLine("The value {0} is outside of the range of possible Byte values", numberToSet.ToString());
-         }
-      }
-      //</Snippet1>
+        // MemberByte is assumed to exist as a class member.
 
-      // The following example converts the string representation of a byte
-      //  into its actual numeric value.
+        //<Snippet1>
+        public void MinMaxFields(int numberToSet)
+        {
+            if (numberToSet <= (int)byte.MaxValue && numberToSet >= (int)byte.MinValue)
+            {
+                // You must explicitly convert an integer to a byte.
+                MemberByte = (byte)numberToSet;
 
-      // MemberByte is assumed to exist as a class member.
+                // Displays MemberByte using the ToString() method.
+                Console.WriteLine($"The MemberByte value is {MemberByte.ToString()}");
+            }
+            else
+            {
+                Console.WriteLine($"The value {numberToSet.ToString()} is outside of the range of possible Byte values");
+            }
+        }
+        //</Snippet1>
 
-      public void ParseByte()
-      {
-         // <Snippet2>
-         string stringToConvert = " 162";
-         byte byteValue;
+        // The following example converts the string representation of a byte
+        //  into its actual numeric value.
 
-         try
-         {
-            byteValue = Byte.Parse(stringToConvert);
-            Console.WriteLine("The byte value is {0}.", byteValue.ToString());
-         }
-         catch(System.OverflowException e)
-         {
-            Console.WriteLine("Exception: {0}", e.Message);
-         }
-         //</Snippet2>
-      }
+        // MemberByte is assumed to exist as a class member.
 
-      // The following example checks to see whether a byte passed in is
-      //  greater than, less than, or equal to the member byte.
+        public void ParseByte()
+        {
+            // <Snippet2>
+            string stringToConvert = " 162";
+            byte byteValue;
 
-      // MemberByte is assumed to exist as a class member.
+            try
+            {
+                byteValue = byte.Parse(stringToConvert);
+                Console.WriteLine($"The byte value is {byteValue.ToString()}.");
+            }
+            catch (System.OverflowException e)
+            {
+                Console.WriteLine($"Exception: {e.Message}");
+            }
+            //</Snippet2>
+        }
 
-      //<Snippet3>
-      public void Compare(Byte myByte)
-      {
-         int myCompareResult;
+        // The following example checks to see whether a byte passed in is
+        //  greater than, less than, or equal to the member byte.
 
-         myCompareResult = MemberByte.CompareTo(myByte);
+        // MemberByte is assumed to exist as a class member.
 
-         if(myCompareResult > 0)
-         {
-            Console.WriteLine("{0} is less than the MemberByte value {1}", myByte.ToString(), MemberByte.ToString());
-         }
-         else if(myCompareResult < 0)
-         {
-            Console.WriteLine("{0} is greater than the MemberByte value {1}", myByte.ToString(), MemberByte.ToString());
-         }
-         else
-         {
-            Console.WriteLine("{0} is equal to the MemberByte value {1}", myByte.ToString(), MemberByte.ToString());
-         }
-      }
-      //</Snippet3>
-   }
+        //<Snippet3>
+        public void Compare(byte myByte)
+        {
+            int myCompareResult;
+
+            myCompareResult = MemberByte.CompareTo(myByte);
+
+            if (myCompareResult > 0)
+            {
+                Console.WriteLine($"{myByte.ToString()} is less than the MemberByte value {MemberByte.ToString()}");
+            }
+            else if (myCompareResult < 0)
+            {
+                Console.WriteLine($"{myByte.ToString()} is greater than the MemberByte value {MemberByte.ToString()}");
+            }
+            else
+            {
+                Console.WriteLine($"{myByte.ToString()} is equal to the MemberByte value {MemberByte.ToString()}");
+            }
+        }
+        //</Snippet3>
+    }
 }

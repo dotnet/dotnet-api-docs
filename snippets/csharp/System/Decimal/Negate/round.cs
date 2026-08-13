@@ -7,34 +7,34 @@ class DecimalRoundDemo
     const string dataFmt = "{0,26}{1,8}{2,26}";
 
     // Display decimal.Round parameters and the result.
-    public static void ShowDecimalRound( decimal Argument, int Digits )
+    public static void ShowDecimalRound(decimal Argument, int Digits)
     {
-        decimal rounded = decimal.Round( Argument, Digits );
+        decimal rounded = decimal.Round(Argument, Digits);
 
-        Console.WriteLine( dataFmt, Argument, Digits, rounded );
+        Console.WriteLine(dataFmt, Argument, Digits, rounded);
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the " +
+        Console.WriteLine("This example of the " +
             "decimal.Round( decimal, Integer ) \n" +
-            "method generates the following output.\n" );
-        Console.WriteLine( dataFmt, "Argument", "Digits", "Result" );
-        Console.WriteLine( dataFmt, "--------", "------", "------" );
+            "method generates the following output.\n");
+        Console.WriteLine(dataFmt, "Argument", "Digits", "Result");
+        Console.WriteLine(dataFmt, "--------", "------", "------");
 
         // Create pairs of decimal objects.
-        ShowDecimalRound( 1.45M, 1 );
-        ShowDecimalRound( 1.55M, 1 );
-        ShowDecimalRound( 123.456789M, 4 );
-        ShowDecimalRound( 123.456789M, 6 );
-        ShowDecimalRound( 123.456789M, 8 );
-        ShowDecimalRound( -123.456M, 0 );
+        ShowDecimalRound(1.45M, 1);
+        ShowDecimalRound(1.55M, 1);
+        ShowDecimalRound(123.456789M, 4);
+        ShowDecimalRound(123.456789M, 6);
+        ShowDecimalRound(123.456789M, 8);
+        ShowDecimalRound(-123.456M, 0);
         ShowDecimalRound(
-            new decimal( 1230000000, 0, 0, true, 7 ), 3 );
+            new decimal(1230000000, 0, 0, true, 7), 3);
         ShowDecimalRound(
-            new decimal( 1230000000, 0, 0, true, 7 ), 11 );
-        ShowDecimalRound( -9999999999.9999999999M, 9 );
-        ShowDecimalRound( -9999999999.9999999999M, 10 );
+            new decimal(1230000000, 0, 0, true, 7), 11);
+        ShowDecimalRound(-9999999999.9999999999M, 9);
+        ShowDecimalRound(-9999999999.9999999999M, 10);
     }
 }
 

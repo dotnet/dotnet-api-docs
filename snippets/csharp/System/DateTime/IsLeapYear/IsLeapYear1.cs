@@ -3,21 +3,19 @@ using System;
 
 public class IsLeapYear
 {
-   public static void Main()
-   {
-      for (int year = 1994; year <= 2014; year++)
-      {
-         if (DateTime.IsLeapYear(year))
-         {
-            Console.WriteLine("{0} is a leap year.", year);
-            DateTime leapDay = new DateTime(year, 2, 29);
-            DateTime nextYear = leapDay.AddYears(1);
-            Console.WriteLine("   One year from {0} is {1}.",
-                              leapDay.ToString("d"),
-                              nextYear.ToString("d"));
-         }
-      }
-   }
+    public static void Main()
+    {
+        for (int year = 1994; year <= 2014; year++)
+        {
+            if (DateTime.IsLeapYear(year))
+            {
+                Console.WriteLine($"{year} is a leap year.");
+                DateTime leapDay = new(year, 2, 29);
+                DateTime nextYear = leapDay.AddYears(1);
+                Console.WriteLine($"   One year from {leapDay.ToString("d")} is {nextYear.ToString("d")}.");
+            }
+        }
+    }
 }
 // The example produces the following output:
 //       1996 is a leap year.

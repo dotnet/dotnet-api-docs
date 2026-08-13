@@ -27,12 +27,12 @@ public class ReflectionOnlySnippet
         Console.WriteLine("------------- Execution Context --------------");
         foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
         {
-            Console.WriteLine("\t{0}", a.GetName());
+            Console.WriteLine($"\t{a.GetName()}");
         }
         Console.WriteLine("------------- Reflection-only Context --------------");
         foreach (Assembly a in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
         {
-            Console.WriteLine("\t{0}", a.GetName());
+            Console.WriteLine($"\t{a.GetName()}");
         }
     }
 }

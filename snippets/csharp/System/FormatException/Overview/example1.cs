@@ -3,26 +3,26 @@ using System;
 
 public class Example1
 {
-   public enum TemperatureScale
-   { Celsius, Fahrenheit, Kelvin }
+    public enum TemperatureScale
+    { Celsius, Fahrenheit, Kelvin }
 
-   public static void Run()
-   {
-      String info = GetCurrentTemperature();
-      Console.WriteLine(info);
-   }
+    public static void Run()
+    {
+        string info = GetCurrentTemperature();
+        Console.WriteLine(info);
+    }
 
-   private static String GetCurrentTemperature()
-   {
-      DateTime dat = DateTime.Now;
-      Decimal temp = 20.6m;
-      TemperatureScale scale = TemperatureScale.Celsius;
-      String result;
+    private static string GetCurrentTemperature()
+    {
+        DateTime dat = DateTime.Now;
+        decimal temp = 20.6m;
+        TemperatureScale scale = TemperatureScale.Celsius;
+        string result;
 
-      result = String.Format("At {0:t} on {1:D}, the temperature is {2:F1} {3:G}",
-                             dat, temp, scale);
-      return result;
-   }
+        result = string.Format("At {0:t} on {1:D}, the temperature is {2:F1} {3:G}",
+                               dat, temp, scale);
+        return result;
+    }
 }
 
 // The example displays output like the following:

@@ -9,10 +9,7 @@ public static class Extensions
 {
     public static Grades minPassing = Grades.D;
 
-    public static bool Passing(this Grades grade)
-    {
-        return grade >= minPassing;
-    }
+    public static bool Passing(this Grades grade) => grade >= minPassing;
 }
 
 class Example8
