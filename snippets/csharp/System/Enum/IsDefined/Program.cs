@@ -1,0 +1,2 @@
+PetTypeIsDefinedExample.Run();
+PetsIsDefinedExample.Run();

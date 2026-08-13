@@ -1,7 +1,7 @@
 ﻿// <Snippet1>
 using System;
 
-class Example
+class GetBytesInt64Demo
 {
     public static void Main()
     {
@@ -12,16 +12,15 @@ class Example
                           -1000000000000000000, long.MinValue,
                           long.MaxValue };
 
-        Console.WriteLine( "{0,22}{1,10} {2,30}", "Int64", "Endian", "Byte Array");
-        Console.WriteLine( "{0,22}{1,10} {2,30}", "----", "------", "----------" );
+        Console.WriteLine($"{"Int64",22}{"Endian",10} {"Byte Array",30}");
+        Console.WriteLine($"{"----",22}{"------",10} {"----------",30}");
 
-        foreach (var value in values) {
+        foreach (long value in values)
+        {
             // Convert each Int64 value to a byte array.
             byte[] byteArray = BitConverter.GetBytes(value);
             // Display the result.
-            Console.WriteLine("{0,22}{1,10}{2,30}", value,
-                              BitConverter.IsLittleEndian ? "Little" : "Big",
-                              BitConverter.ToString(byteArray));
+            Console.WriteLine($"{value,22}{(BitConverter.IsLittleEndian ? "Little" : "Big"),10}{BitConverter.ToString(byteArray),30}");
         }
     }
 }

@@ -6,21 +6,21 @@ class Example
     public static void Main()
     {
         // Define an array of decimal values.
-       decimal[] values = { 78m, new Decimal(78000, 0, 0, false, 3),
+        decimal[] values = { 78m, new decimal(78000, 0, 0, false, 3),
                             78.999m, 255.999m, 256m, 127.999m,
                             128m, -0.999m, -1m, -128.999m, -129m };
-       foreach (var value in values) {
-          try {
-              SByte byteValue = (SByte) value;
-              Console.WriteLine("{0} ({1}) --> {2} ({3})", value,
-                                value.GetType().Name, byteValue,
-                                byteValue.GetType().Name);
-           }
-           catch (OverflowException) {
-              Console.WriteLine("OverflowException: Cannot convert {0}",
-                                value);
-           }
-       }
+        foreach (decimal value in values)
+        {
+            try
+            {
+                sbyte byteValue = (sbyte)value;
+                Console.WriteLine($"{value} ({value.GetType().Name}) --> {byteValue} ({byteValue.GetType().Name})");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"OverflowException: Cannot convert {value}");
+            }
+        }
     }
 }
 // The example displays the following output:

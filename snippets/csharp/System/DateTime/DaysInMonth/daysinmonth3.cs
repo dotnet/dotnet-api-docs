@@ -4,28 +4,28 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      int[] years = { 2012, 2014 };
-      DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
-      Console.WriteLine("Days in the Month for the {0} culture " +
-                        "using the {1} calendar\n",
-                        CultureInfo.CurrentCulture.Name,
-                        dtfi.Calendar.GetType().Name.Replace("Calendar", ""));
-      Console.WriteLine("{0,-10}{1,-15}{2,4}\n", "Year", "Month", "Days");
+    public static void Main()
+    {
+        int[] years = { 2012, 2014 };
+        DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
+        Console.WriteLine("Days in the Month for the {0} culture " +
+                          "using the {1} calendar\n",
+                          CultureInfo.CurrentCulture.Name,
+                          dtfi.Calendar.GetType().Name.Replace("Calendar", ""));
+        Console.WriteLine($"{"Year",-10}{"Month",-15}{"Days",4}\n");
 
-      foreach (var year in years) {
-         for (int ctr = 0; ctr <= dtfi.MonthNames.Length - 1; ctr++) {
-            if (String.IsNullOrEmpty(dtfi.MonthNames[ctr]))
-               continue;
+        foreach (int year in years)
+        {
+            for (int ctr = 0; ctr <= dtfi.MonthNames.Length - 1; ctr++)
+            {
+                if (string.IsNullOrEmpty(dtfi.MonthNames[ctr]))
+                    continue;
 
-            Console.WriteLine("{0,-10}{1,-15}{2,4}", year,
-                              dtfi.MonthNames[ctr],
-                              DateTime.DaysInMonth(year, ctr + 1));
-         }
-         Console.WriteLine();
-      }
-   }
+                Console.WriteLine($"{year,-10}{dtfi.MonthNames[ctr],-15}{DateTime.DaysInMonth(year, ctr + 1),4}");
+            }
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //    Days in the Month for the en-US culture using the Gregorian calendar

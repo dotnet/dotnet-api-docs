@@ -3,34 +3,32 @@ using System;
 
 public class ByteConversion
 {
-   public static void Main()
-   {
-      string[] byteStrings = { null, string.Empty, "1024",
+    public static void Main()
+    {
+        string[] byteStrings = { null, string.Empty, "1024",
                                "100.1", "100", "+100", "-100",
                                "000000000000000100", "00,100",
                                "   20   ", "FF", "0x1F" };
 
-      foreach (var byteString in byteStrings)
-      {
-          CallTryParse(byteString);
-      }
-   }
+        foreach (string byteString in byteStrings)
+        {
+            CallTryParse(byteString);
+        }
+    }
 
-   private static void CallTryParse(string stringToConvert)
-   {
-      byte byteValue;
-      bool success = Byte.TryParse(stringToConvert, out byteValue);
-      if (success)
-      {
-         Console.WriteLine("Converted '{0}' to {1}",
-                        stringToConvert, byteValue);
-      }
-      else
-      {
-         Console.WriteLine("Attempted conversion of '{0}' failed.",
-                           stringToConvert);
-      }
-   }
+    private static void CallTryParse(string stringToConvert)
+    {
+        byte byteValue;
+        bool success = byte.TryParse(stringToConvert, out byteValue);
+        if (success)
+        {
+            Console.WriteLine($"Converted '{stringToConvert}' to {byteValue}");
+        }
+        else
+        {
+            Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
+        }
+    }
 }
 // The example displays the following output to the console:
 //       Attempted conversion of '' failed.

@@ -7,28 +7,28 @@ class GetBytesUInt16Demo
     const string formatter = "{0,10}{1,13}";
 
     // Convert a ushort argument to a byte array and display it.
-    public static void GetBytesUInt16( ushort argument )
+    public static void GetBytesUInt16(ushort argument)
     {
-        byte[ ] byteArray = BitConverter.GetBytes( argument );
-        Console.WriteLine( formatter, argument,
-            BitConverter.ToString( byteArray ) );
+        byte[] byteArray = BitConverter.GetBytes(argument);
+        Console.WriteLine(formatter, argument,
+            BitConverter.ToString(byteArray));
     }
 
-    public static void Main( )
+    public static void Main()
     {
         Console.WriteLine(
             "This example of the BitConverter.GetBytes( ushort ) " +
-            "\nmethod generates the following output.\n" );
-        Console.WriteLine( formatter, "ushort", "byte array" );
-        Console.WriteLine( formatter, "------", "----------" );
+            "\nmethod generates the following output.\n");
+        Console.WriteLine(formatter, "ushort", "byte array");
+        Console.WriteLine(formatter, "------", "----------");
 
         // Convert ushort values and display the results.
-        GetBytesUInt16( 15 );
-        GetBytesUInt16( 1023 );
-        GetBytesUInt16( 10000 );
-        GetBytesUInt16( ushort.MinValue );
-        GetBytesUInt16( (ushort)short.MaxValue );
-        GetBytesUInt16( ushort.MaxValue );
+        GetBytesUInt16(15);
+        GetBytesUInt16(1023);
+        GetBytesUInt16(10000);
+        GetBytesUInt16(ushort.MinValue);
+        GetBytesUInt16((ushort)short.MaxValue);
+        GetBytesUInt16(ushort.MaxValue);
     }
 }
 

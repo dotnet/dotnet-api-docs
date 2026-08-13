@@ -7,15 +7,15 @@ class DecimalToS_ByteDemo
     const string formatter = "{0,16}{1,19}{2,19}";
 
     // Get the exception type name; remove the namespace prefix.
-    public static string GetExceptionType( Exception ex )
+    public static string GetExceptionType(Exception ex)
     {
-        string exceptionType = ex.GetType( ).ToString( );
+        string exceptionType = ex.GetType().ToString();
         return exceptionType.Substring(
-            exceptionType.LastIndexOf( '.' ) + 1 );
+            exceptionType.LastIndexOf('.') + 1);
     }
 
     // Convert the decimal argument; catch exceptions that are thrown.
-    public static void DecimalToS_Byte( decimal argument )
+    public static void DecimalToS_Byte(decimal argument)
     {
         object SByteValue;
         object ByteValue;
@@ -23,51 +23,51 @@ class DecimalToS_ByteDemo
         // Convert the argument to an sbyte value.
         try
         {
-            SByteValue = decimal.ToSByte( argument );
+            SByteValue = decimal.ToSByte(argument);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            SByteValue = GetExceptionType( ex );
+            SByteValue = GetExceptionType(ex);
         }
 
         // Convert the argument to a byte value.
         try
         {
-            ByteValue = decimal.ToByte( argument );
+            ByteValue = decimal.ToByte(argument);
         }
-        catch( Exception ex )
+        catch (Exception ex)
         {
-            ByteValue = GetExceptionType( ex );
+            ByteValue = GetExceptionType(ex);
         }
 
-        Console.WriteLine( formatter, argument,
-            SByteValue, ByteValue );
+        Console.WriteLine(formatter, argument,
+            SByteValue, ByteValue);
     }
 
-    public static void Main( )
+    public static void Main()
     {
-        Console.WriteLine( "This example of the \n" +
+        Console.WriteLine("This example of the \n" +
             "  decimal.ToSByte( decimal ) and \n" +
             "  decimal.ToByte( decimal ) \nmethods " +
             "generates the following output. It \ndisplays " +
-            "several converted decimal values.\n" );
-        Console.WriteLine( formatter, "decimal argument",
-            "sbyte/exception", "byte/exception" );
-        Console.WriteLine( formatter, "----------------",
-            "---------------", "--------------" );
+            "several converted decimal values.\n");
+        Console.WriteLine(formatter, "decimal argument",
+            "sbyte/exception", "byte/exception");
+        Console.WriteLine(formatter, "----------------",
+            "---------------", "--------------");
 
         // Convert decimal values and display the results.
-        DecimalToS_Byte( 78M );
-        DecimalToS_Byte( new decimal( 78000, 0, 0, false, 3 ) );
-        DecimalToS_Byte( 78.999M );
-        DecimalToS_Byte( 255.999M );
-        DecimalToS_Byte( 256M );
-        DecimalToS_Byte( 127.999M );
-        DecimalToS_Byte( 128M );
-        DecimalToS_Byte( -0.999M );
-        DecimalToS_Byte( -1M );
-        DecimalToS_Byte( -128.999M );
-        DecimalToS_Byte( -129M );
+        DecimalToS_Byte(78M);
+        DecimalToS_Byte(new decimal(78000, 0, 0, false, 3));
+        DecimalToS_Byte(78.999M);
+        DecimalToS_Byte(255.999M);
+        DecimalToS_Byte(256M);
+        DecimalToS_Byte(127.999M);
+        DecimalToS_Byte(128M);
+        DecimalToS_Byte(-0.999M);
+        DecimalToS_Byte(-1M);
+        DecimalToS_Byte(-128.999M);
+        DecimalToS_Byte(-129M);
     }
 }
 

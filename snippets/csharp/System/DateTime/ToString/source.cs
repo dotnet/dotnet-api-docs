@@ -7,7 +7,7 @@ public class MainClass
     public static void Main(string[] args)
     {
         DateTime dt = DateTime.Now;
-        String[] format = {
+        string[] format = {
             "d", "D",
             "f", "F",
             "g", "G",

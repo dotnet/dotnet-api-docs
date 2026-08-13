@@ -17,7 +17,7 @@ Class AttributesSample
         Dim Mymethodbase As MethodBase = MyType.GetMethod("Mymethod")
 
         ' Display the method name.
-        Console.WriteLine("Mymethodbase = {0}.", Mymethodbase)
+        Console.WriteLine("Mymethodbase = {0}", Mymethodbase)
 
         ' Get the MethodAttribute enumerated value.
         Dim Myattributes As MethodAttributes = Mymethodbase.Attributes
@@ -42,4 +42,14 @@ Class AttributesSample
         Next i
     End Sub
 End Class
+' This code produces the following output:
+'
+' Reflection.MethodBase.Attributes Sample
+' Mymethodbase = Void Mymethod(Int32, System.String ByRef, System.String ByRef)
+' PrivateScope
+' FamANDAssem
+' Family
+' Public
+' HideBySig
+' ReuseSlot
 '</Snippet1>

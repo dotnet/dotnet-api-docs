@@ -9,11 +9,10 @@ class Example
         ushort[] values = { ushort.MinValue, ushort.MaxValue,
                             0xFFF, 12345, 40000 };
         // Convert each value to a Decimal.
-        foreach (var value in values) {
-           Decimal decValue = value;
-           Console.WriteLine("{0} ({1}) --> {2} ({3})", value,
-                             value.GetType().Name, decValue,
-                             decValue.GetType().Name);
+        foreach (ushort value in values)
+        {
+            decimal decValue = value;
+            Console.WriteLine($"{value} ({value.GetType().Name}) --> {decValue} ({decValue.GetType().Name})");
         }
     }
 }

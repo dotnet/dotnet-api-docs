@@ -4,10 +4,7 @@ using System;
 
 class Sample
 {
-    public static void Main()
-    {
-    Console.WriteLine("WorkingSet: {0}", Environment.WorkingSet);
-    }
+    public static void Main() => Console.WriteLine($"WorkingSet: {Environment.WorkingSet}");
 }
 /*
 This example produces the following results:

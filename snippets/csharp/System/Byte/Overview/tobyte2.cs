@@ -3,34 +3,37 @@ using System;
 
 public class Example2
 {
-   public static void Main()
-   {
-      int[] bases = { 2, 8, 10, 16 };
-      string[] values = { "-1", "1", "08", "0F", "11" , "12", "30",
+    public static void Main()
+    {
+        int[] bases = { 2, 8, 10, 16 };
+        string[] values = { "-1", "1", "08", "0F", "11" , "12", "30",
                           "101", "255", "FF", "10000000", "80" };
-      byte number;
-      foreach (int numBase in bases)
-      {
-         Console.WriteLine("Base {0}:", numBase);
-         foreach (string value in values)
-         {
-            try {
-               number = Convert.ToByte(value, numBase);
-               Console.WriteLine("   Converted '{0}' to {1}.", value, number);
+        byte number;
+        foreach (int numBase in bases)
+        {
+            Console.WriteLine($"Base {numBase}:");
+            foreach (string value in values)
+            {
+                try
+                {
+                    number = Convert.ToByte(value, numBase);
+                    Console.WriteLine($"   Converted '{value}' to {number}.");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine($"   '{value}' is not in the correct format for a base {numBase} byte value.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine($"   '{value}' is outside the range of the Byte type.");
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"   '{value}' is invalid in base {numBase}.");
+                }
             }
-            catch (FormatException) {
-               Console.WriteLine("   '{0}' is not in the correct format for a base {1} byte value.",
-                                 value, numBase);
-            }
-            catch (OverflowException) {
-               Console.WriteLine("   '{0}' is outside the range of the Byte type.", value);
-            }
-            catch (ArgumentException) {
-               Console.WriteLine("   '{0}' is invalid in base {1}.", value, numBase);
-            }
-         }
-      }
-   }
+        }
+    }
 }
 
 // The example displays the following output:
