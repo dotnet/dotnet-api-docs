@@ -12,14 +12,14 @@ class FieldsSample
         Console.WriteLine("\nThe IPAddress class has the following nonpublic fields: ");
         foreach (FieldInfo myField in myFields)
         {
-            Console.WriteLine(myField.ToString());
+            Console.WriteLine(myField);
         }
         Type myType1 = typeof(System.Net.IPAddress);
         FieldInfo[] myFields1 = myType1.GetFields();
         Console.WriteLine("\nThe IPAddress class has the following public fields: ");
         foreach (FieldInfo myField in myFields1)
         {
-            Console.WriteLine(myField.ToString());
+            Console.WriteLine(myField);
         }
         try
         {

@@ -17,7 +17,7 @@ public class MyFilterNameIgnoreCaseSample
             {
                 Console.Write("\n" + myMemberinfo2.Name);
                 MemberTypes Mymembertypes = myMemberinfo2.MemberType;
-                Console.WriteLine(" is a " + Mymembertypes.ToString());
+                Console.WriteLine(" is a " + Mymembertypes);
             }
         }
         catch (ArgumentNullException e)

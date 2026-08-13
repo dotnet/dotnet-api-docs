@@ -17,9 +17,9 @@ public class MyFindInterfacesSample
             // Specify the TypeFilter delegate that compares the
             // interfaces against filter criteria.
             TypeFilter myFilter = new(MyInterfaceFilter);
-            string[] myInterfaceList = new string[2]
-                {"System.Collections.IEnumerable",
-                "System.Collections.ICollection"};
+            string[] myInterfaceList =
+                ["System.Collections.IEnumerable",
+                "System.Collections.ICollection"];
             for (int index = 0; index < myInterfaceList.Length; index++)
             {
                 Type[] myInterfaces = myType.FindInterfaces(myFilter,
@@ -28,7 +28,7 @@ public class MyFindInterfacesSample
                 {
                     Console.WriteLine($"\n{myType} implements the interface {myInterfaceList[index]}.");
                     for (int j = 0; j < myInterfaces.Length; j++)
-                        Console.WriteLine($"Interfaces supported: {myInterfaces[j].ToString()}.");
+                        Console.WriteLine($"Interfaces supported: {myInterfaces[j]}.");
                 }
                 else
                     Console.WriteLine($"\n{myType} does not implement the interface {myInterfaceList[index]}.");
@@ -50,7 +50,7 @@ public class MyFindInterfacesSample
 
     public static bool MyInterfaceFilter(Type typeObj, object criteriaObj)
     {
-        if (typeObj.ToString() == criteriaObj.ToString())
+        if (typeObj.FullName == criteriaObj as string)
             return true;
         else
             return false;

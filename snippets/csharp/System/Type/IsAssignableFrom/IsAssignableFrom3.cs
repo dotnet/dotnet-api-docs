@@ -10,7 +10,7 @@ public class Example
         Type c = typeof(Array);
 
         IEnumerable instanceOfT;
-        int[] instanceOfC = { 1, 2, 3, 4 };
+        int[] instanceOfC = [1, 2, 3, 4];
         if (t.IsAssignableFrom(c))
             // <Snippet4>
             instanceOfT = instanceOfC;

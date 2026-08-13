@@ -16,8 +16,8 @@ public abstract class Example
     public static void Main()
     {
         // Create an array of types.
-        Type[] types = { typeof(Example), typeof(NestedClass),
-                         typeof(INested), typeof(S) };
+        Type[] types = [typeof(Example), typeof(NestedClass),
+                        typeof(INested), typeof(S)];
 
         foreach (var t in types)
         {

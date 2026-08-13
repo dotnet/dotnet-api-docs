@@ -7,8 +7,8 @@ public class Example
 {
     public static void Main()
     {
-        Type[] interf = { typeof(IFormatProvider), typeof(IAppDomainSetup) };
-        Type[] impl = { typeof(CultureInfo), typeof(AppDomainSetup) };
+        Type[] interf = [typeof(IFormatProvider), typeof(IFormattable)];
+        Type[] impl = [typeof(CultureInfo), typeof(DateTime)];
 
         for (int ctr = 0; ctr < interf.Length; ctr++)
             ShowInterfaceMapping(interf[ctr], impl[ctr]);
@@ -31,25 +31,6 @@ public class Example
 //    Mapping of System.IFormatProvider to System.Globalization.CultureInfo:
 //       GetFormat --> GetFormat
 //
-//    Mapping of System.IAppDomainSetup to System.AppDomainSetup:
-//       get_ApplicationBase --> get_ApplicationBase
-//       set_ApplicationBase --> set_ApplicationBase
-//       get_ApplicationName --> get_ApplicationName
-//       set_ApplicationName --> set_ApplicationName
-//       get_CachePath --> get_CachePath
-//       set_CachePath --> set_CachePath
-//       get_ConfigurationFile --> get_ConfigurationFile
-//       set_ConfigurationFile --> set_ConfigurationFile
-//       get_DynamicBase --> get_DynamicBase
-//       set_DynamicBase --> set_DynamicBase
-//       get_LicenseFile --> get_LicenseFile
-//       set_LicenseFile --> set_LicenseFile
-//       get_PrivateBinPath --> get_PrivateBinPath
-//       set_PrivateBinPath --> set_PrivateBinPath
-//       get_PrivateBinPathProbe --> get_PrivateBinPathProbe
-//       set_PrivateBinPathProbe --> set_PrivateBinPathProbe
-//       get_ShadowCopyDirectories --> get_ShadowCopyDirectories
-//       set_ShadowCopyDirectories --> set_ShadowCopyDirectories
-//       get_ShadowCopyFiles --> get_ShadowCopyFiles
-//       set_ShadowCopyFiles --> set_ShadowCopyFiles
+//    Mapping of System.IFormattable to System.DateTime:
+//       ToString --> ToString
 // </Snippet1>

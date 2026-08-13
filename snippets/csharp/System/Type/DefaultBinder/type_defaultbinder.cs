@@ -12,7 +12,7 @@ public class MyDefaultBinderSample
             MyClass myClass = new();
             // Invoke the HelloWorld method of MyClass.
             myClass.GetType().InvokeMember("HelloWorld", BindingFlags.InvokeMethod,
-                defaultBinder, myClass, new object[] { });
+                defaultBinder, myClass, []);
         }
         catch (Exception e)
         {

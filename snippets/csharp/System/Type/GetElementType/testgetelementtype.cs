@@ -4,10 +4,10 @@ class TestGetElementType
 {
     public static void Main()
     {
-        int[] array = { 1, 2, 3 };
+        int[] array = [1, 2, 3];
         Type t = array.GetType();
         Type t2 = t.GetElementType();
-        Console.WriteLine($"The element type of {array} is {t2.ToString()}.");
+        Console.WriteLine($"The element type of {array} is {t2}.");
         TestGetElementType newMe = new();
         t = newMe.GetType();
         t2 = t.GetElementType();

@@ -31,7 +31,7 @@ public class Example
             if (method.Name == "HandleT")
                 paramType = paramType.MakePointerType();
             Console.WriteLine($"      Parameter: {paramType.FullName ??
-                              paramType.ToString() + " (unassigned)"}");
+                              paramType + " (unassigned)"}");
         }
     }
 }

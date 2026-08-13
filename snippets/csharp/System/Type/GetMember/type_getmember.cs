@@ -52,7 +52,7 @@ public class MyMemberSample
         {
             Console.WriteLine($"\nThe member(s) starting with the letter C for type {myType}:");
             for (int index = 0; index < myMembers.Length; index++)
-                Console.WriteLine($"Member {index + 1}: {myMembers[index].ToString()}");
+                Console.WriteLine($"Member {index + 1}: {myMembers[index]}");
         }
         else
         {
@@ -73,7 +73,7 @@ public class MyMemberSample
         {
             Console.WriteLine($"\nThe public static member(s) starting with the letter C for type {myType}:");
             for (int index = 0; index < myMembers.Length; index++)
-                Console.WriteLine($"Member {index + 1}: {myMembers[index].ToString()}");
+                Console.WriteLine($"Member {index + 1}: {myMembers[index]}");
         }
         else
         {
@@ -94,7 +94,7 @@ public class MyMemberSample
         {
             Console.WriteLine($"\nThe public instance method(s) starting with the letter C for type {myType}:");
             for (int index = 0; index < myMembers.Length; index++)
-                Console.WriteLine($"Member {index + 1}: {myMembers[index].ToString()}");
+                Console.WriteLine($"Member {index + 1}: {myMembers[index]}");
         }
         else
         {

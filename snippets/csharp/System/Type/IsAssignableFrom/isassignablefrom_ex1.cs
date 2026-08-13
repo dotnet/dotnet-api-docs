@@ -10,15 +10,14 @@ public class Example
 {
     public static void Main()
     {
-        AppDomain domain = AppDomain.CurrentDomain;
         AssemblyName assemName = new()
         {
             Name = "TempAssembly"
         };
 
-        // Define a dynamic assembly in the current application domain.
-        AssemblyBuilder assemBuilder = domain.DefineDynamicAssembly(assemName,
-                                              AssemblyBuilderAccess.Run);
+        // Define a dynamic assembly.
+        AssemblyBuilder assemBuilder = AssemblyBuilder.DefineDynamicAssembly(
+            assemName, AssemblyBuilderAccess.Run);
 
         // Define a dynamic module in this assembly.
         ModuleBuilder moduleBuilder = assemBuilder.DefineDynamicModule("TempModule");

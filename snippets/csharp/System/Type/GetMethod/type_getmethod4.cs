@@ -24,27 +24,27 @@ class Program4
 
         // Get MethodA(int i, int i)
         mInfo = typeof(Program).GetMethod("MethodA",
-            new Type[] { typeof(int), typeof(int) });
+            [typeof(int), typeof(int)]);
         Console.WriteLine($"Found method: {mInfo}");
 
         // Get MethodA(int[] i)
         mInfo = typeof(Program).GetMethod("MethodA",
-            new Type[] { typeof(int[]) });
+            [typeof(int[])]);
         Console.WriteLine($"Found method: {mInfo}");
 
         // Get MethodA(int* i)
         mInfo = typeof(Program).GetMethod("MethodA",
-            new Type[] { typeof(int).MakePointerType() });
+            [typeof(int).MakePointerType()]);
         Console.WriteLine($"Found method: {mInfo}");
 
         // Get MethodA(ref int r)
         mInfo = typeof(Program).GetMethod("MethodA",
-            new Type[] { typeof(int).MakeByRefType() });
+            [typeof(int).MakeByRefType()]);
         Console.WriteLine($"Found method: {mInfo}");
 
         // Get MethodA(int i, out int o)
         mInfo = typeof(Program).GetMethod("MethodA",
-            new Type[] { typeof(int), typeof(int).MakeByRefType() });
+            [typeof(int), typeof(int).MakeByRefType()]);
         Console.WriteLine($"Found method: {mInfo}");
     }
 }

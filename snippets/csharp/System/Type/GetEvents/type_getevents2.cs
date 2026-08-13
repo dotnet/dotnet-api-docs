@@ -16,7 +16,7 @@ class EventsSample
             Console.WriteLine("\nThe events on the Button class with the specified BindingFlags are:");
             for (int index = 0; index < myEventsBindingFlags.Length; index++)
             {
-                Console.WriteLine(myEventsBindingFlags[index].ToString());
+                Console.WriteLine(myEventsBindingFlags[index]);
             }
         }
         catch (SecurityException e)

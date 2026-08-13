@@ -17,7 +17,7 @@ public class MyFilterAttributeSample
             foreach (MemberInfo myMemberinfo in myMemberInfoArray)
             {
                 Console.Write("\n" + myMemberinfo.Name);
-                Console.Write(" is a " + myMemberinfo.MemberType.ToString());
+                Console.Write(" is a " + myMemberinfo.MemberType);
             }
         }
         catch (ArgumentNullException e)

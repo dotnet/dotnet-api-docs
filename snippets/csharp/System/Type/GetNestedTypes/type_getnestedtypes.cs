@@ -25,7 +25,7 @@ public class MyMainClass
             Type[] nestType = myType.GetNestedTypes();
             Console.WriteLine($"The number of nested types is {nestType.Length}.");
             foreach (Type t in nestType)
-                Console.WriteLine($"Nested type is {t.ToString()}.");
+                Console.WriteLine($"Nested type is {t}.");
         }
         catch (Exception e)
         {

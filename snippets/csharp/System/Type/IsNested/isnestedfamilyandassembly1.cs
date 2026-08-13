@@ -22,12 +22,12 @@ public class OuterClass
     public static void Main()
     {
         // Create an array of Type objects for all the classes.
-        Type[] types = { typeof(OuterClass),
-                         typeof(OuterClass.PublicClass),
-                         typeof(OuterClass.PrivateClass),
-                         typeof(OuterClass.ProtectedClass),
-                         typeof(OuterClass.InternalClass),
-                         typeof(OuterClass.ProtectedInternalClass) };
+        Type[] types = [typeof(OuterClass),
+                        typeof(OuterClass.PublicClass),
+                        typeof(OuterClass.PrivateClass),
+                        typeof(OuterClass.ProtectedClass),
+                        typeof(OuterClass.InternalClass),
+                        typeof(OuterClass.ProtectedInternalClass)];
         // Display the property values of each nested class.
         foreach (var type in types)
         {

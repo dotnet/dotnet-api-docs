@@ -21,7 +21,7 @@ public class Example
 
             // Close Word.
             word.InvokeMember("Quit", BindingFlags.InvokeMethod, null,
-                              wordObj, new object[] { 0, 0, false });
+                              wordObj, [0, 0, false]);
         }
         catch (COMException)
         {

@@ -34,7 +34,7 @@ namespace TypeCodeNamespace
             Console.WriteLine("Properties of System.Type are:");
             for (int i = 0; i < myPropertyInfo.Length; i++)
             {
-                Console.WriteLine(myPropertyInfo[i].ToString());
+                Console.WriteLine(myPropertyInfo[i]);
             }
             // </Snippet2>
             // <Snippet3>

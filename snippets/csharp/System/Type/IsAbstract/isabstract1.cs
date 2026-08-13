@@ -26,12 +26,12 @@ public class Example
 {
     public static void Main()
     {
-        Type[] types = { typeof(AbstractClass),
-                      typeof(DerivedClass),
-                      typeof(ITypeInfo),
-                      typeof(SingleClass),
-                      typeof(ImplementingClass),
-                      typeof(InputOutput) };
+        Type[] types = [typeof(AbstractClass),
+                        typeof(DerivedClass),
+                        typeof(ITypeInfo),
+                        typeof(SingleClass),
+                        typeof(ImplementingClass),
+                        typeof(InputOutput)];
         foreach (var type in types)
             Console.WriteLine($"{type.Name} is abstract: {type.IsAbstract}");
     }

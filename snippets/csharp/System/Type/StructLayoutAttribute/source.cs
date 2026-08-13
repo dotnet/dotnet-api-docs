@@ -11,7 +11,7 @@ public class Example
         DisplayLayoutAttribute(typeof(Test2).StructLayoutAttribute);
     }
 
-    private static void DisplayLayoutAttribute(StructLayoutAttribute sla) => Console.WriteLine("\r\nCharSet: " + sla.CharSet.ToString() + "\r\n   Pack: " + sla.Pack.ToString() + "\r\n   Size: " + sla.Size.ToString() + "\r\n  Value: " + sla.Value.ToString());
+    private static void DisplayLayoutAttribute(StructLayoutAttribute sla) => Console.WriteLine("\r\nCharSet: " + sla.CharSet + "\r\n   Pack: " + sla.Pack + "\r\n   Size: " + sla.Size + "\r\n  Value: " + sla.Value);
     public struct Test1
     {
         public byte B1;

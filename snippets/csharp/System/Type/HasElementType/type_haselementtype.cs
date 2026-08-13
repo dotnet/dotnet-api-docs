@@ -14,7 +14,7 @@ public class Example
         // All of the following display 'True'.
 
         // Define an array, get its type, and display HasElementType.
-        int[] nums = { 1, 1, 2, 3, 5, 8, 13 };
+        int[] nums = [1, 1, 2, 3, 5, 8, 13];
         Type t = nums.GetType();
         Console.WriteLine($"HasElementType is '{t.HasElementType}' for array types.");
 

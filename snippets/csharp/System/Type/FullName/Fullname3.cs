@@ -15,7 +15,7 @@ public class Example
             for (int ctr = 0; ctr < gtArgs.Length; ctr++)
             {
                 Console.WriteLine(gtArgs[ctr].FullName ??
-                                  "(unassigned) " + gtArgs[ctr].ToString());
+                                  "(unassigned) " + gtArgs[ctr]);
             }
             Console.WriteLine();
         }

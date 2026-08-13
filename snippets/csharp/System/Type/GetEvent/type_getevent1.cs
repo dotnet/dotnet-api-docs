@@ -17,7 +17,7 @@ class MyEventExample
             if (myEventBindingFlags != null)
             {
                 Console.WriteLine("Looking for the Click event in the Button class with the specified BindingFlags.");
-                Console.WriteLine(myEventBindingFlags.ToString());
+                Console.WriteLine(myEventBindingFlags);
             }
             else
             {

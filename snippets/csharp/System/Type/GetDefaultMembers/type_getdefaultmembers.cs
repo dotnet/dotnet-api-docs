@@ -18,7 +18,7 @@ public class MyClass
             {
                 foreach (MemberInfo memberInfoObj in memberInfoArray)
                 {
-                    Console.WriteLine("The default member name is: " + memberInfoObj.ToString());
+                    Console.WriteLine("The default member name is: " + memberInfoObj);
                 }
             }
             else

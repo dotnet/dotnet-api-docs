@@ -48,7 +48,7 @@ namespace ConsoleApplication2
 
         float IConvertible.ToSingle(IFormatProvider provider) => Convert.ToSingle(GetDoubleValue());
 
-        string IConvertible.ToString(IFormatProvider provider) => "( " + x.ToString() + " , " + y.ToString() + " )";
+        string IConvertible.ToString(IFormatProvider provider) => "( " + x + " , " + y + " )";
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider) => Convert.ChangeType(GetDoubleValue(), conversionType);
 
@@ -90,7 +90,7 @@ namespace ConsoleApplication2
                     break;
 
                 default:
-                    Console.WriteLine($"{typeCode.ToString()}: {testObject}");
+                    Console.WriteLine($"{typeCode}: {testObject}");
                     break;
             }
         }

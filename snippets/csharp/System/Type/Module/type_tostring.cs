@@ -19,7 +19,7 @@ public class Example
         // Get the name of the module.
         Console.WriteLine($"   Module: {myType.Module}.");
         // Get the fully qualified type name.
-        Console.WriteLine($"   Fully qualified name: {myType.ToString()}.");
+        Console.WriteLine($"   Fully qualified name: {myType}.");
     }
 }
 // The example displays the following output:

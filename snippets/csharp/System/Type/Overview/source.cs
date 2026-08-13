@@ -12,10 +12,10 @@ class Example3
         Type t = typeof(string);
 
         MethodInfo substr = t.GetMethod("Substring",
-            new Type[] { typeof(int), typeof(int) });
+            [typeof(int), typeof(int)]);
 
         object result =
-            substr.Invoke("Hello, World!", new object[] { 7, 5 });
+            substr.Invoke("Hello, World!", [7, 5]);
         Console.WriteLine($"{substr} returned \"{result}\".");
     }
 }

@@ -37,7 +37,7 @@ public class Example
         // This is not a generic type.
         else
         {
-            method = typ.GetMethod("Add", new Type[] { typeof(object) });
+            method = typ.GetMethod("Add", [typeof(object)]);
         }
 
         // Test if an Add method was found.

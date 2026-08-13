@@ -34,7 +34,7 @@ public class Test
         //</Snippet3>
 
         // Invoke the method.
-        object[] args = { 42 };
+        object[] args = [42];
         miConstructed.Invoke(null, args);
 
         // Invoke the method normally.

@@ -26,7 +26,7 @@ class Program5
         mInfo = typeof(Program).GetMethod("MethodA",
             BindingFlags.Public | BindingFlags.Instance,
             null,
-            new Type[] { typeof(int), typeof(int) },
+            [typeof(int), typeof(int)],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -34,7 +34,7 @@ class Program5
         mInfo = typeof(Program).GetMethod("MethodA",
             BindingFlags.Public | BindingFlags.Instance,
             null,
-            new Type[] { typeof(int[]) },
+            [typeof(int[])],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -42,7 +42,7 @@ class Program5
         mInfo = typeof(Program).GetMethod("MethodA",
             BindingFlags.Public | BindingFlags.Instance,
             null,
-            new Type[] { typeof(int).MakePointerType() },
+            [typeof(int).MakePointerType()],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -50,7 +50,7 @@ class Program5
         mInfo = typeof(Program).GetMethod("MethodA",
             BindingFlags.Public | BindingFlags.Instance,
             null,
-            new Type[] { typeof(int).MakeByRefType() },
+            [typeof(int).MakeByRefType()],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -58,7 +58,7 @@ class Program5
         mInfo = typeof(Program).GetMethod("MethodA",
             BindingFlags.Public | BindingFlags.Instance,
             null,
-            new Type[] { typeof(int), typeof(int).MakeByRefType() },
+            [typeof(int), typeof(int).MakeByRefType()],
             null);
         Console.WriteLine($"Found method: {mInfo}");
     }

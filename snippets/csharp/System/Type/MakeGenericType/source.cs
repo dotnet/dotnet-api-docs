@@ -19,7 +19,7 @@ public class Test
         // Create an array of types to substitute for the type
         // parameters of Dictionary. The key is of type string, and
         // the type to be contained in the Dictionary is Test.
-        Type[] typeArgs = { typeof(string), typeof(Test) };
+        Type[] typeArgs = [typeof(string), typeof(Test)];
 
         // Create a Type object representing the constructed generic
         // type.

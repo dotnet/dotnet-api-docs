@@ -12,7 +12,7 @@ public class RegexEx1
         domain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromSeconds(-2));
 
         Regex rgx = new("[aeiouy]");
-        Console.WriteLine($"Regular expression pattern: {rgx.ToString()}");
+        Console.WriteLine($"Regular expression pattern: {rgx}");
         Console.WriteLine($"Timeout interval for this regex: {rgx.MatchTimeout.TotalSeconds} seconds");
     }
 }

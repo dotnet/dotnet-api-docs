@@ -32,7 +32,7 @@ public class MyTypeClass3
             PropertyInfo myPropInfo = myType.GetProperty("Item", myTypeArr);
 
             // Display the property.
-            Console.WriteLine($"The {myPropInfo.ToString()} property exists in MyClass3.");
+            Console.WriteLine($"The {myPropInfo} property exists in MyClass3.");
         }
         catch (NullReferenceException e)
         {

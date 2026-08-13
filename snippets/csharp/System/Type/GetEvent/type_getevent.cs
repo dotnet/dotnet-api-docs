@@ -15,7 +15,7 @@ class MyEventExample
             if (myEvent != null)
             {
                 Console.WriteLine("Looking for the Click event in the Button class.");
-                Console.WriteLine(myEvent.ToString());
+                Console.WriteLine(myEvent);
             }
             else
             {

@@ -26,20 +26,20 @@ class MyApp
     {
         Type t = typeof(MyType);
         // Create an instance of a type.
-        object[] args = new object[] { 8 };
+        object[] args = [8];
         Console.WriteLine($"The value of x before the constructor is called is {args[0]}.");
         object obj = t.InvokeMember(null,
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
             BindingFlags.Instance | BindingFlags.CreateInstance, null, null, args);
-        Console.WriteLine("Type: " + obj.GetType().ToString());
+        Console.WriteLine("Type: " + obj.GetType());
         Console.WriteLine($"The value of x after the constructor returns is {args[0]}.");
 
         // Read and write to a field.
         t.InvokeMember("myField",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
-            BindingFlags.Instance | BindingFlags.SetField, null, obj, new object[] { 5 });
+            BindingFlags.Instance | BindingFlags.SetField, null, obj, [5]);
         int v = (int)t.InvokeMember("myField",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
@@ -67,7 +67,7 @@ class MyApp
             t.InvokeMember("MyProp",
                 BindingFlags.DeclaredOnly |
                 BindingFlags.Public | BindingFlags.NonPublic |
-                BindingFlags.Instance | BindingFlags.SetProperty, null, obj, new object[] { 0 });
+                BindingFlags.Instance | BindingFlags.SetProperty, null, obj, [0]);
         }
         catch (TargetInvocationException e)
         {
@@ -81,7 +81,7 @@ class MyApp
         t.InvokeMember("MyProp",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |
-            BindingFlags.Instance | BindingFlags.SetProperty, null, obj, new object[] { 2 });
+            BindingFlags.Instance | BindingFlags.SetProperty, null, obj, [2]);
         v = (int)t.InvokeMember("MyProp",
             BindingFlags.DeclaredOnly |
             BindingFlags.Public | BindingFlags.NonPublic |

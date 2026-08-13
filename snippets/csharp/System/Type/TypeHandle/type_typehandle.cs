@@ -34,7 +34,7 @@ class Type_TypeHandle
         Type myType = Type.GetTypeFromHandle(myTypeHandle);
         // Display the type.
         Console.WriteLine("\nDisplaying the type from the handle:\n");
-        Console.WriteLine($"The type is {myType.ToString()}.");
+        Console.WriteLine($"The type is {myType}.");
     }
 }
 // </Snippet1>

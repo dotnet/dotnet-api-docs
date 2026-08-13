@@ -27,7 +27,7 @@ class Program3
             BindingFlags.Public | BindingFlags.Instance,
             null,
             CallingConventions.Any,
-            new Type[] { typeof(int), typeof(int) },
+            [typeof(int), typeof(int)],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -36,7 +36,7 @@ class Program3
             BindingFlags.Public | BindingFlags.Instance,
             null,
             CallingConventions.Any,
-            new Type[] { typeof(int[]) },
+            [typeof(int[])],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -45,7 +45,7 @@ class Program3
             BindingFlags.Public | BindingFlags.Instance,
             null,
             CallingConventions.Any,
-            new Type[] { typeof(int).MakePointerType() },
+            [typeof(int).MakePointerType()],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -54,7 +54,7 @@ class Program3
             BindingFlags.Public | BindingFlags.Instance,
             null,
             CallingConventions.Any,
-            new Type[] { typeof(int).MakeByRefType() },
+            [typeof(int).MakeByRefType()],
             null);
         Console.WriteLine($"Found method: {mInfo}");
 
@@ -63,7 +63,7 @@ class Program3
             BindingFlags.Public | BindingFlags.Instance,
             null,
             CallingConventions.Any,
-            new Type[] { typeof(int), typeof(int).MakeByRefType() },
+            [typeof(int), typeof(int).MakeByRefType()],
             null);
         Console.WriteLine($"Found method: {mInfo}");
     }

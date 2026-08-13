@@ -23,7 +23,7 @@ public class Example
 
             // Close Word.
             word.InvokeMember("Quit", BindingFlags.InvokeMethod, null,
-                              wordObj, new object[] { 0, 0, false });
+                              wordObj, [0, 0, false]);
         }
         // The method can throw any of a variety of exceptions.
         catch (Exception e)

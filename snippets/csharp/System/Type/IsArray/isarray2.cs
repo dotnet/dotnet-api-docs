@@ -7,10 +7,10 @@ public class Example
 {
     public static void Main()
     {
-        Type[] types = { typeof(string), typeof(int[]),
-                       typeof(ArrayList), typeof(Array),
-                       typeof(List<string>),
-                       typeof(IEnumerable<char>) };
+        Type[] types = [typeof(string), typeof(int[]),
+                        typeof(ArrayList), typeof(Array),
+                        typeof(List<string>),
+                        typeof(IEnumerable<char>)];
         foreach (var t in types)
             Console.WriteLine($"{t.Name + ":",-15} IsArray = {t.IsArray}");
     }

@@ -15,7 +15,7 @@ class MyGetTypeFromCLSID
         Type myType = typeof(MyClass1);
         // Get the object of the Guid.
         Guid myGuid = (Guid)myType.GUID;
-        Console.WriteLine("The name of the class is " + myType.ToString());
+        Console.WriteLine("The name of the class is " + myType);
         Console.WriteLine("The ClassId of MyClass is " + myType.GUID);
     }
 }

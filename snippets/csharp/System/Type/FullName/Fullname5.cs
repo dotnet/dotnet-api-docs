@@ -17,7 +17,7 @@ public class Example
 
         Type baseType = t.BaseType;
         Console.WriteLine($"Its Base Class: {baseType.FullName ??
-                          "(unassigned) " + baseType.ToString()}");
+                          "(unassigned) " + baseType}");
         Console.WriteLine($"   Contains Generic Paramters: {baseType.ContainsGenericParameters}");
         Console.WriteLine($"   Generic Type Definition: {baseType.IsGenericTypeDefinition}");
         Console.WriteLine($"   Full Name: {baseType.GetGenericTypeDefinition().FullName}\n");

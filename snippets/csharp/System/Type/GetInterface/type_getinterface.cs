@@ -37,7 +37,7 @@ class MyInterfaceClass
                 Console.WriteLine(methodInfo);
 
             //Get the Interface methods for 'IDictionary' interface
-            InterfaceMapping interfaceMappingOb = objType.GetInterfaceMap(typeof(IDictionary));
+            InterfaceMapping interfaceMappingObj = objType.GetInterfaceMap(typeof(IDictionary));
             arrayMemberInfo = interfaceMappingObj.InterfaceMethods;
             Console.WriteLine("\nHashtable class Implements the following IDictionary Interface methods :");
             foreach (MemberInfo memberInfo in arrayMemberInfo)
@@ -45,7 +45,7 @@ class MyInterfaceClass
         }
         catch (Exception e)
         {
-            Console.WriteLine("Exception : " + e.ToString());
+            Console.WriteLine("Exception : " + e);
         }
     }
     // </Snippet3>
