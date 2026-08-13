@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Example
+public class ParseExample1
 {
-    public static void Main()
+    public static void Run()
     {
         // <Snippet1>
         string[] values = { "+13230", "-0", "1,390,146", "$190,235,421,127",
