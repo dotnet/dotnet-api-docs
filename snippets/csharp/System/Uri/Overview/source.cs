@@ -10,9 +10,9 @@ public class Form1
 
         // HttpClient lifecycle management best practices:
         // https://learn.microsoft.com/dotnet/fundamentals/networking/http/httpclient-guidelines#recommended-use
-        HttpClient client = new();
-        HttpRequestMessage request = new(HttpMethod.Get, siteUri);
-        HttpResponseMessage response = client.Send(request);
+        using HttpClient client = new();
+        using HttpRequestMessage request = new(HttpMethod.Get, siteUri);
+        using HttpResponseMessage response = client.Send(request);
         // </Snippet1>
 
         // <Snippet2>

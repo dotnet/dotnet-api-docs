@@ -29,7 +29,7 @@ public class Example
         try
         {
             Version ver = Version.Parse(input);
-            Console.WriteLine($"Converted '{input} to {ver}.");
+            Console.WriteLine($"Converted '{input}' to {ver}.");
         }
         catch (ArgumentNullException)
         {
@@ -53,11 +53,13 @@ public class Example
         }
     }
 }
+
 // The example displays the following output:
-//       Converted '4.0 to 4.0.
+//       Converted '4.0' to 4.0.
 //       Error: Non-integer value in '4.0.'.
-//       Converted '1.1.2 to 1.1.2.
-//       Converted '1.1.2.01702 to 1.1.2.1702.
+//       Converted '1.1.2' to 1.1.2.
+//       Converted '1.1.2.01702' to 1.1.2.1702.
 //       Error: Bad number of components in '1.1.2.0702.119'.
 //       Error: Number out of range in '1.3.5.2150000000'.
+
 // </Snippet1>
