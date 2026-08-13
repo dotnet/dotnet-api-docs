@@ -11,12 +11,12 @@ using System.Reflection;
 using System.Security;
 
 // <Snippet1>
-class MyClass
+class MembersSampleClass
 {
     public int myInt = 0;
     public string myString = null;
 
-    public MyClass()
+    public MembersSampleClass()
     {
     }
     public void Myfunction()
@@ -26,11 +26,11 @@ class MyClass
 
 class Type_GetMembers
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {
-            MyClass myObject = new();
+            MembersSampleClass myObject = new();
             MemberInfo[] myMemberInfo;
 
             // Get the type of 'MyClass'.

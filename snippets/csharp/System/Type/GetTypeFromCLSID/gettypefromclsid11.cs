@@ -12,9 +12,9 @@ public class ExplicitGuid
 public class NoExplicitGuid
 { }
 
-public class Example
+public class GetTypeFromClsidExample11
 {
-    public static void Main()
+    public static void Run()
     {
         Type explicitType = typeof(ExplicitGuid);
         Guid explicitGuid = explicitType.GUID;

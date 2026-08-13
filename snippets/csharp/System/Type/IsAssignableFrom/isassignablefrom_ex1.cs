@@ -6,9 +6,9 @@ using System.Reflection.Emit;
 public class A
 { }
 
-public class Example
+public class IsAssignableFromExample1
 {
-    public static void Main()
+    public static void Run()
     {
         AssemblyName assemName = new()
         {

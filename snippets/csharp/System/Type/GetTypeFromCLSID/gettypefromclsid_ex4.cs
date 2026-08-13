@@ -3,11 +3,11 @@ using System;
 using System.Reflection;
 
 
-public class Example
+public class GetTypeFromClsidExample4
 {
     private const string WORD_CLSID = "{000209FF-0000-0000-C000-000000000046}";
 
-    public static void Main()
+    public static void Run()
     {
         try
         {

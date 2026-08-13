@@ -2,15 +2,14 @@
 using System;
 using System.Reflection;
 
-public class t
+public class ConstructorSample2
 {
-    public t() { }
-    static t() { }
-    public t(int i) { }
-
-    public static void Main()
+    public ConstructorSample2() { }
+    static ConstructorSample2() { }
+    public ConstructorSample2(int i) { }
+    public static void Run()
     {
-        ConstructorInfo[] p = typeof(t).GetConstructors(
+        ConstructorInfo[] p = typeof(ConstructorSample2).GetConstructors(
            BindingFlags.Public | BindingFlags.Static |
            BindingFlags.NonPublic | BindingFlags.Instance);
         Console.WriteLine(p.Length);

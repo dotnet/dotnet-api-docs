@@ -1,9 +1,9 @@
 ﻿//<Snippet1>
 using System;
 using System.Collections.Generic;
-class Program
+class IsAssignableFromTest
 {
-    public static void Main()
+    public static void Run()
     {
         // Demonstrate classes:
         Console.WriteLine("Defined Classes:");

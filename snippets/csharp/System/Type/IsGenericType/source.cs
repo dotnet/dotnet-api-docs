@@ -13,9 +13,9 @@ public class Derived<V> : Base<string, V>
 
 public class G<T> { }
 
-class Example
+class IsGenericTypeSourceExample
 {
-    public static void Main()
+    public static void Run()
     {
         // Get the generic type definition for Derived, and the base
         // type for Derived.

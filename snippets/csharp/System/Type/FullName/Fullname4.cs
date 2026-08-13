@@ -13,9 +13,9 @@ public class GenericType1<T>
     public bool ChangeValue(ref T arg) => true;
 }
 
-public class Example
+public class FullName4Example
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(GenericType1<>);
         Console.WriteLine($"Type Name: {t.FullName}");

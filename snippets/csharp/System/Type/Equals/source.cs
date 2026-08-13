@@ -3,9 +3,9 @@
 using System;
 
 
-class Example
+class EqualsSourceExample
 {
-    public static void Main()
+    public static void Run()
     {
 
         Type a = typeof(string);
@@ -16,8 +16,8 @@ class Example
         // The Type objects in a and b are not equal,
         // because they represent different types.
 
-        a = typeof(Example);
-        b = new Example().GetType();
+        a = typeof(EqualsSourceExample);
+        b = new EqualsSourceExample().GetType();
 
         Console.WriteLine($"{a} is equal to {b}: {a.Equals(b)}");
 

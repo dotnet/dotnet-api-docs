@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class FullNameEx1Example
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(List<>);
         Console.WriteLine(t.FullName);

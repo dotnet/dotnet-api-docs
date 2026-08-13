@@ -6,9 +6,9 @@ public class Base<T> { }
 
 public class Derived<T> : Base<T> { }
 
-public class Example
+public class FullName5Example
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(Derived<>);
         Console.WriteLine($"Generic Class: {t.FullName}");

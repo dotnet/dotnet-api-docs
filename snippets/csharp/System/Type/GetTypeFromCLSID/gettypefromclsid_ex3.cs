@@ -3,11 +3,11 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-public class Example
+public class GetTypeFromClsidExample3
 {
     private const string WORD_CLSID = "{000209FF-0000-0000-C000-000000000046}";
 
-    public static void Main()
+    public static void Run()
     {
         // Start an instance of the Word application.
         var word = Type.GetTypeFromCLSID(Guid.Parse(WORD_CLSID), "computer17.central.contoso.com");

@@ -2,9 +2,9 @@
 using System;
 
 
-public class Example
+public class FullName3Example
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(Nullable<>);
         Console.WriteLine(t.FullName);

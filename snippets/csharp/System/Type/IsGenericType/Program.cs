@@ -1,0 +1,2 @@
+IsGenericTypeRemarksExample.Run();
+IsGenericTypeSourceExample.Run();

@@ -2,21 +2,21 @@
 
 
 // <Snippet2>
-public class Base<T, U> { }
+public class RemarksBase<T, U> { }
 
-public class Derived<V> : Base<string, V>
+public class RemarksDerived<V> : RemarksBase<string, V>
 {
-    public G<Derived<V>> F;
+    public RemarksG<RemarksDerived<V>> F;
 
     public class Nested { }
 }
 
-public class G<T> { }
+public class RemarksG<T> { }
 // </Snippet2>
 
-class Example
+class IsGenericTypeRemarksExample
 {
-    public static void Main()
+    public static void Run()
     {
     }
 }

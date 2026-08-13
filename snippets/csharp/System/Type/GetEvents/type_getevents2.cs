@@ -3,9 +3,9 @@ using System;
 using System.Reflection;
 using System.Security;
 
-class EventsSample
+class EventsSample2
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {

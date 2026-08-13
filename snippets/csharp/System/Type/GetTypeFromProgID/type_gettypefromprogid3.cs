@@ -1,8 +1,8 @@
 ﻿// <Snippet1>
 using System;
-class MainApp
+class ProgIdExample3
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {

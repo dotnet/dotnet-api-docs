@@ -13,12 +13,12 @@ using System.Security;
 
 // <Snippet1>
 
-class MyClass
+class MembersBindingFlagsSampleClass
 {
     public int myInt = 0;
     public string myString = null;
 
-    public MyClass()
+    public MembersBindingFlagsSampleClass()
     {
     }
     public void Myfunction()
@@ -28,11 +28,11 @@ class MyClass
 
 class Type_GetMembers_BindingFlags
 {
-    public static void Main()
+    public static void Run()
     {
         try
         {
-            MyClass MyObject = new();
+            MembersBindingFlagsSampleClass MyObject = new();
             MemberInfo[] myMemberInfo;
 
             // Get the type of the class 'MyClass'.

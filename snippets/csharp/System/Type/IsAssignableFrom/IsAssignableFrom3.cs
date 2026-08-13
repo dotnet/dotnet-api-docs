@@ -2,9 +2,9 @@
 using System;
 using System.Collections;
 
-public class Example
+public class IsAssignableFromExample3
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(IEnumerable);
         Type c = typeof(Array);

@@ -2,7 +2,7 @@
 using System;
 class TestFullName
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(Array);
         Console.WriteLine($"The full name of the Array type is {t.FullName}.");

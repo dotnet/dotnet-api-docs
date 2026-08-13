@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 
-public class Example
+public class IsAssignableFromExample2
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(Stream);
         Type genericT = typeof(GenericWithConstraint<>);

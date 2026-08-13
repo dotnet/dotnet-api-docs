@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-public class Example
+public class EqualsEx1Example
 {
-    public static void Main()
+    public static void Run()
     {
         Type t = typeof(int);
         object obj1 = typeof(int).GetTypeInfo();
