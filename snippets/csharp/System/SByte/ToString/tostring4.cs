@@ -1,23 +1,23 @@
 ﻿// <Snippet4>
 using System;
-using System.Globalization;
 
-public class Example
+
+public class SByteToStringFormatExample
 {
-   public static void Main()
-   {
-      sbyte[] values = { -124, 0, 118 };
-      string[] specifiers = { "G", "C", "D3", "E2", "e3", "F", 
-                              "N", "P", "X", "00.0", "#.0", 
-                              "000;(0);**Zero**" };
-      
-      foreach (sbyte value in values)
-      {
-         foreach (string specifier in specifiers)
-            Console.WriteLine("{0}: {1}", specifier, value.ToString(specifier));
-         Console.WriteLine();
-      }
-   }
+    public static void Run()
+    {
+        sbyte[] values = [-124, 0, 118];
+        string[] specifiers = ["G", "C", "D3", "E2", "e3", "F",
+                               "N", "P", "X", "00.0", "#.0",
+                               "000;(0);**Zero**"];
+
+        foreach (sbyte value in values)
+        {
+            foreach (string specifier in specifiers)
+                Console.WriteLine($"{specifier}: {value.ToString(specifier)}");
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //       G: -124
@@ -32,7 +32,7 @@ public class Example
 //       00.0: -124.0
 //       #.0: -124.0
 //       000;(0);**Zero**: (124)
-//       
+//
 //       G: 0
 //       C: $0.00
 //       D3: 000
@@ -45,7 +45,7 @@ public class Example
 //       00.0: 00.0
 //       #.0: .0
 //       000;(0);**Zero**: **Zero**
-//       
+//
 //       G: 118
 //       C: $118.00
 //       D3: 118

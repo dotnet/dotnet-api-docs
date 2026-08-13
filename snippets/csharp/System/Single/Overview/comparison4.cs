@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Example3
 {
@@ -29,9 +29,9 @@ public class Example3
             return true;
 
         // Handle NaN, Infinity.
-        if (Double.IsInfinity(value1) | Double.IsNaN(value1))
+        if (double.IsInfinity(value1) | double.IsNaN(value1))
             return value1.Equals(value2);
-        else if (Double.IsInfinity(value2) | Double.IsNaN(value2))
+        else if (double.IsInfinity(value2) | double.IsNaN(value2))
             return value1.Equals(value2);
 
         // Handle zero to avoid division by zero.

@@ -28,7 +28,7 @@ class Program
             arraySpan[ctr] = data++;
 
         int arraySum = 0;
-        foreach (var value in array)
+        foreach (byte value in array)
             arraySum += value;
 
         Console.WriteLine($"The sum is {arraySum}");
@@ -44,14 +44,14 @@ class Program
         Span<byte> nativeSpan;
         unsafe
         {
-            nativeSpan = new Span<byte>(native.ToPointer(), 100);
+            nativeSpan = new(native.ToPointer(), 100);
         }
         byte data = 0;
         for (int ctr = 0; ctr < nativeSpan.Length; ctr++)
             nativeSpan[ctr] = data++;
 
         int nativeSum = 0;
-        foreach (var value in nativeSpan)
+        foreach (byte value in nativeSpan)
             nativeSum += value;
 
         Console.WriteLine($"The sum is {nativeSum}");
@@ -70,7 +70,7 @@ class Program
             stackSpan[ctr] = data++;
 
         int stackSum = 0;
-        foreach (var value in stackSpan)
+        foreach (byte value in stackSpan)
             stackSum += value;
 
         Console.WriteLine($"The sum is {stackSum}");
@@ -96,7 +96,7 @@ public class Program2
         Span<byte> nativeSpan;
         unsafe
         {
-            nativeSpan = new Span<byte>(native.ToPointer(), 100);
+            nativeSpan = new(native.ToPointer(), 100);
         }
 
         InitializeSpan(nativeSpan);
@@ -121,7 +121,7 @@ public class Program2
     public static int ComputeSum(Span<byte> span)
     {
         int sum = 0;
-        foreach (var value in span)
+        foreach (byte value in span)
             sum += value;
 
         return sum;
