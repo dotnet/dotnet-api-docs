@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt32TryParseStylesExample
 {
-    public static void Main()
+    public static void Run()
     {
         string numericString;
         NumberStyles styles;
