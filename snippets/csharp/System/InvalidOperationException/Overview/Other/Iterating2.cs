@@ -1,4 +1,4 @@
-// <Snippet2>
+﻿// <Snippet2>
 using System;
 using System.Collections.Generic;
 
@@ -19,8 +19,8 @@ public class IteratingEx2
         }
 
         Console.WriteLine("Elements now in the collection: ");
-        foreach (var number in numbers)
-            Console.Write("{0}    ", number);
+        foreach (int number in numbers)
+            Console.Write($"{number}    ");
     }
 }
 // The example displays the following output:

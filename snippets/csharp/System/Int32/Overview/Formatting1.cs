@@ -16,15 +16,15 @@ public class Example1
         foreach (int number in numbers)
         {
             // Display value using default formatting.
-            Console.Write("{0,-8}  -->   ", number.ToString());
+            Console.Write($"{number.ToString(),-8}  -->   ");
             // Display value with 3 digits and leading zeros.
-            Console.Write("{0,11:D3}", number);
+            Console.Write($"{number,11:D3}");
             // Display value with 1 decimal digit.
-            Console.Write("{0,13:N1}", number);
+            Console.Write($"{number,13:N1}");
             // Display value as hexadecimal.
-            Console.Write("{0,12:X2}", number);
+            Console.Write($"{number,12:X2}");
             // Display value with eight hexadecimal digits.
-            Console.WriteLine("{0,14:X8}", number);
+            Console.WriteLine($"{number,14:X8}");
         }
         // The example displays the following output:
         //    -1403     -->         -1403     -1,403.0    FFFFFA85      FFFFFA85
@@ -38,14 +38,10 @@ public class Example1
     {
         // <Snippet2>
         int[] numbers = { -146, 11043, 2781913 };
-        Console.WriteLine("{0,8}   {1,32}   {2,11}   {3,10}",
-                          "Value", "Binary", "Octal", "Hex");
+        Console.WriteLine($"{"Value",8}   {"Binary",32}   {"Octal",11}   {"Hex",10}");
         foreach (int number in numbers)
         {
-            Console.WriteLine("{0,8}   {1,32}   {2,11}   {3,10}",
-                              number, Convert.ToString(number, 2),
-                              Convert.ToString(number, 8),
-                              Convert.ToString(number, 16));
+            Console.WriteLine($"{number,8}   {Convert.ToString(number, 2),32}   {Convert.ToString(number, 8),11}   {Convert.ToString(number, 16),10}");
         }
         // The example displays the following output:
         //       Value                             Binary         Octal          Hex

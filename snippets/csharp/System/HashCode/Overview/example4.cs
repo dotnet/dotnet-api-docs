@@ -2,21 +2,21 @@
 using System;
 using System.Collections.Generic;
 
-public struct Path : IEquatable<Path>
+public struct PathExample4 : IEquatable<PathExample4>
 {
     public IReadOnlyList<string> Segments { get; }
 
-    public Path(params string[] segments) => Segments = segments;
+    public PathExample4(params string[] segments) => Segments = segments;
 
-    public override bool Equals(object obj) => obj is Path o && Equals(o);
+    public override bool Equals(object obj) => obj is PathExample4 o && Equals(o);
 
-    public bool Equals(Path other)
+    public bool Equals(PathExample4 other)
     {
         if (ReferenceEquals(Segments, other.Segments)) return true;
         if (Segments is null || other.Segments is null) return false;
         if (Segments.Count != other.Segments.Count) return false;
 
-        for (var i = 0; i < Segments.Count; i++)
+        for (int i = 0; i < Segments.Count; i++)
         {
             if (!PlatformUtils.PathEquals(Segments[i], other.Segments[i]))
                 return false;
@@ -29,7 +29,7 @@ public struct Path : IEquatable<Path>
     {
         var hash = new HashCode();
 
-        for (var i = 0; i < Segments?.Count; i++)
+        for (int i = 0; i < Segments?.Count; i++)
             PlatformUtils.AddPath(ref hash, Segments[i]);
 
         return hash.ToHashCode();
@@ -42,15 +42,15 @@ internal static class PlatformUtils
     public static void AddPath(ref HashCode hash, string path) => hash.Add(path, StringComparer.OrdinalIgnoreCase);
 }
 
-class Program
+class PathHashCodeExample4
 {
-    static void Main(string[] args)
+    public static void Run(string[] args)
     {
-        var set = new HashSet<Path>
+        var set = new HashSet<PathExample4>
         {
-            new Path("C:", "tmp", "file.txt"),
-            new Path("C:", "TMP", "file.txt"),
-            new Path("C:", "tmp", "FILE.TXT")
+            new PathExample4("C:", "tmp", "file.txt"),
+            new PathExample4("C:", "TMP", "file.txt"),
+            new PathExample4("C:", "tmp", "FILE.TXT")
         };
 
         Console.WriteLine($"Item count: {set.Count}.");

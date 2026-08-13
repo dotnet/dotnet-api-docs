@@ -7,7 +7,7 @@ List<Person> applicants = new List<Person>()
 };
 
 // Create a Person object for the final candidate.
-Person candidate = new Person("Jones", "199-29-3999");
+Person candidate = new("Jones", "199-29-3999");
 bool contains = applicants.Contains(candidate);
 Console.WriteLine($"{candidate.LastName} ({candidate.NationalId}) is on record: {contains}");
 // The example prints the following output:

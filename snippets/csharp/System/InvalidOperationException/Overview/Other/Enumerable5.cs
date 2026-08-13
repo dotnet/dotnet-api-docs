@@ -1,4 +1,4 @@
-// <Snippet10>
+﻿// <Snippet10>
 using System;
 using System.Linq;
 
@@ -8,7 +8,7 @@ public class EnumerableEx5
     {
         int[] dbQueryResults = { 1, 2, 3, 4 };
 
-        var singleObject = dbQueryResults.Single(value => value > 4);
+        int singleObject = dbQueryResults.Single(value => value > 4);
 
         // Display results.
         Console.WriteLine($"{singleObject} is the only value greater than 4");

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Example1
 {
@@ -13,18 +13,18 @@ public class Example1
     {
         // <Snippet1>
         long[] numbers = { -1403, 0, 169, 1483104 };
-        foreach (var number in numbers)
+        foreach (long number in numbers)
         {
             // Display value using default formatting.
-            Console.Write("{0,-8}  -->   ", number.ToString());
+            Console.Write($"{number.ToString(),-8}  -->   ");
             // Display value with 3 digits and leading zeros.
-            Console.Write("{0,8:D3}", number);
+            Console.Write($"{number,8:D3}");
             // Display value with 1 decimal digit.
-            Console.Write("{0,13:N1}", number);
+            Console.Write($"{number,13:N1}");
             // Display value as hexadecimal.
-            Console.Write("{0,18:X2}", number);
+            Console.Write($"{number,18:X2}");
             // Display value with eight hexadecimal digits.
-            Console.WriteLine("{0,18:X8}", number);
+            Console.WriteLine($"{number,18:X8}");
         }
         // The example displays the following output:
         //    -1403     -->      -1403     -1,403.0  FFFFFFFFFFFFFA85  FFFFFFFFFFFFFA85
@@ -38,7 +38,7 @@ public class Example1
     {
         // <Snippet2>
         long[] numbers = { -146, 11043, 2781913 };
-        foreach (var number in numbers)
+        foreach (long number in numbers)
         {
             Console.WriteLine($"{number} (Base 10):");
             Console.WriteLine($"   Binary:  {Convert.ToString(number, 2)}");

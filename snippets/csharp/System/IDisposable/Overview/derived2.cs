@@ -26,10 +26,7 @@ class DerivedClass : BaseClass
         base.Dispose(disposing);
     }
 
-    ~DerivedClass()
-    {
-        Dispose(disposing: false);
-    }
+    ~DerivedClass() => Dispose(disposing: false);
 }
 // </Snippet6>
 
@@ -62,8 +59,5 @@ class BaseClass : IDisposable
         disposed = true;
     }
 
-    ~BaseClass()
-    {
-        Dispose(disposing: false);
-    }
+    ~BaseClass() => Dispose(disposing: false);
 }
