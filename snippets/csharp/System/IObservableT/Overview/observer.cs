@@ -32,6 +32,6 @@ public class LocationReporter : IObserver<Location>
     public virtual void OnNext(Location value) => Console.WriteLine("{2}: The current location is {0}, {1}", value.Latitude, value.Longitude, this.Name);
     // </Snippet12>
 
-    public virtual void Unsubscribe() => unsubscriber.Dispose();
+    public virtual void Unsubscribe() => unsubscriber?.Dispose();
 }
 // </Snippet8>
