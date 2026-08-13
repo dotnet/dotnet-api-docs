@@ -1,12 +1,13 @@
 ﻿//<SnippetAll>
 using System;
 using System.Threading;
+using LargeObject = LargeObjectCtorExample2;
 
-class Program
+class LazyCtorExample2
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
-    static void Main()
+    public static void Run()
     {
         // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
@@ -34,13 +35,9 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectCtorExample2
 {
-    public LargeObject()
-    {
-        Console.WriteLine("LargeObject was created on thread id {0}.",
-            Thread.CurrentThread.ManagedThreadId);
-    }
+    public LargeObjectCtorExample2() => Console.WriteLine($"LargeObject was created on thread id {Thread.CurrentThread.ManagedThreadId}.");
     public long[] Data = new long[100000000];
 }
 

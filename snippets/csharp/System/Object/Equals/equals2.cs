@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 
 class Point2
@@ -14,7 +14,7 @@ class Point2
         this.y = y;
     }
 
-    public override bool Equals(Object obj)
+    public override bool Equals(object obj)
     {
         //Check for null and compare run-time types.
         if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -28,27 +28,18 @@ class Point2
         }
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(x, y);
-    }
+    public override int GetHashCode() => HashCode.Combine(x, y);
 
-    public override string ToString()
-    {
-        return String.Format("Point2({0}, {1})", x, y);
-    }
+    public override string ToString() => $"Point2({x}, {y})";
 }
 
 sealed class Point3D : Point2
 {
     int z;
 
-    public Point3D(int x, int y, int z) : base(x, y)
-    {
-        this.z = z;
-    }
+    public Point3D(int x, int y, int z) : base(x, y) => this.z = z;
 
-    public override bool Equals(Object obj)
+    public override bool Equals(object obj)
     {
         Point3D pt3 = obj as Point3D;
         if (pt3 == null)
@@ -57,25 +48,19 @@ sealed class Point3D : Point2
             return base.Equals((Point2)obj) && z == pt3.z;
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(base.GetHashCode(), z);
-    }
+    public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), z);
 
-    public override String ToString()
-    {
-        return String.Format("Point2({0}, {1}, {2})", x, y, z);
-    }
+    public override string ToString() => $"Point2({x}, {y}, {z})";
 }
 
 class Example7
 {
     public static void Main()
     {
-        Point2 point2D = new Point2(5, 5);
-        Point3D point3Da = new Point3D(5, 5, 2);
-        Point3D point3Db = new Point3D(5, 5, 2);
-        Point3D point3Dc = new Point3D(5, 5, -1);
+        Point2 point2D = new(5, 5);
+        Point3D point3Da = new(5, 5, 2);
+        Point3D point3Db = new(5, 5, 2);
+        Point3D point3Dc = new(5, 5, -1);
 
         Console.WriteLine($"{point2D} = {point3Da}: {point2D.Equals(point3Da)}");
         Console.WriteLine($"{point2D} = {point3Db}: {point2D.Equals(point3Db)}");

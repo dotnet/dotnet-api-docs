@@ -2,23 +2,23 @@
 
 class Program
 {
-// <Snippet1>
-static void Main(string[] args)
-{
-    try
+    // <Snippet1>
+    static void Main(string[] args)
     {
-        FutureFeature();
+        try
+        {
+            FutureFeature();
+        }
+        catch (NotImplementedException notImp)
+        {
+            Console.WriteLine(notImp.Message);
+        }
     }
-    catch (NotImplementedException notImp)
-    {
-        Console.WriteLine(notImp.Message);
-    }
-}
 
-static void FutureFeature()
-{
-    // Not developed yet.
-    throw new NotImplementedException();
-}
-//</Snippet1>
+    static void FutureFeature()
+    {
+        // Not developed yet.
+        throw new NotImplementedException();
+    }
+    //</Snippet1>
 }

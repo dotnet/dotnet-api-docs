@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Threading;
+using LargeObject = LargeObjectOverviewExample2;
 
-class Program
+class LazyOverviewExample2
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
-    static void Main()
+    public static void Run()
     {
         //<SnippetInitWithLambda>
         lazyLargeObject = new Lazy<LargeObject>(() =>
         {
-            LargeObject large = new LargeObject(Thread.CurrentThread.ManagedThreadId);
+            LargeObject large = new(Thread.CurrentThread.ManagedThreadId);
             // Perform additional initialization here.
             return large;
         });
@@ -25,7 +26,7 @@ class Program
         Thread[] threads = new Thread[3];
         for (int i = 0; i < 3; i++)
         {
-            threads[i] = new Thread(ThreadProc);
+            threads[i] = new(ThreadProc);
             threads[i].Start();
         }
 
@@ -46,7 +47,7 @@ class Program
         // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
         //            object after creation. You must lock the object before accessing it,
         //            unless the type is thread safe. (LargeObject is not thread safe.)
-        lock(large)
+        lock (large)
         {
             large.Data[0] = Thread.CurrentThread.ManagedThreadId;
             Console.WriteLine("Initialized by thread {0}; last used by thread {1}.",
@@ -55,12 +56,12 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectOverviewExample2
 {
-    public int InitializedBy { get { return initBy; } }
+    public int InitializedBy => initBy;
 
     int initBy = 0;
-    public LargeObject(int initializedBy)
+    public LargeObjectOverviewExample2(int initializedBy)
     {
         initBy = initializedBy;
         Console.WriteLine("LargeObject was created on thread id {0}.", initBy);

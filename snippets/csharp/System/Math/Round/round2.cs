@@ -1,25 +1,25 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class MathRoundExample1
 {
-   public static void Main()
-   {
-      double value = 11.1;
-      for (int ctr = 0; ctr <= 5; ctr++)
-         value = RoundValueAndAdd(value);
+    public static void Run()
+    {
+        double value = 11.1;
+        for (int ctr = 0; ctr <= 5; ctr++)
+            value = RoundValueAndAdd(value);
 
-      Console.WriteLine();
+        Console.WriteLine();
 
-      value = 11.5;
-      RoundValueAndAdd(value);
-   }
+        value = 11.5;
+        RoundValueAndAdd(value);
+    }
 
-   private static double RoundValueAndAdd(double value)
-   {
-      Console.WriteLine("{0} --> {1}", value, Math.Round(value));
-      return value + .1;
-   }
+    private static double RoundValueAndAdd(double value)
+    {
+        Console.WriteLine($"{value} --> {Math.Round(value)}");
+        return value + .1;
+    }
 }
 // The example displays the following output:
 //       11.1 --> 11

@@ -8,28 +8,28 @@ class Sample
 {
     public static void Main()
     {
-    DateTime? nullableDate;
+        DateTime? nullableDate;
 
-// Display the current date and time.
-    nullableDate = DateTime.Now;
-    Display("1)", nullableDate);
+        // Display the current date and time.
+        nullableDate = DateTime.Now;
+        Display("1)", nullableDate);
 
-// Assign null (Nothing in Visual Basic) to nullableDate, then
-// display its value.
-    nullableDate = null;
-    Display("2)", nullableDate);
+        // Assign null (Nothing in Visual Basic) to nullableDate, then
+        // display its value.
+        nullableDate = null;
+        Display("2)", nullableDate);
     }
 
-// Display the text representation of a nullable DateTime.
+    // Display the text representation of a nullable DateTime.
     public static void Display(string title, DateTime? dspDT)
     {
-    string msg = dspDT.ToString();
+        string msg = dspDT.ToString();
 
-    Console.Write("{0} ", title);
-    if (String.IsNullOrEmpty(msg))
-        Console.WriteLine("The nullable DateTime has no defined value.");
-    else
-        Console.WriteLine("The current date and time is {0}.", msg);
+        Console.Write($"{title} ");
+        if (string.IsNullOrEmpty(msg))
+            Console.WriteLine("The nullable DateTime has no defined value.");
+        else
+            Console.WriteLine($"The current date and time is {msg}.");
     }
 }
 

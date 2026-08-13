@@ -2,37 +2,36 @@
 using System;
 using System.Collections.Generic;
 
-public class Example
+public class OutOfMemoryExceptionExample1
 {
-   public static void Main()
-   {
-      Double[] values = GetData();
-      // Compute mean.
-      Console.WriteLine("Sample mean: {0}, N = {1}",
-                        GetMean(values), values.Length);
-   }
+    public static void Run()
+    {
+        double[] values = GetData();
+        // Compute mean.
+        Console.WriteLine($"Sample mean: {GetMean(values)}, N = {values.Length}");
+    }
 
-   private static Double[] GetData()
-   {
-      Random rnd = new Random();
-      List<Double> values = new List<Double>();
-      for (int ctr = 1; ctr <= 200000000; ctr++) {
-         values.Add(rnd.NextDouble());
-         if (ctr % 10000000 == 0)
-            Console.WriteLine("Retrieved {0:N0} items of data.",
-                              ctr);
-      }
-      return values.ToArray();
-   }
+    private static double[] GetData()
+    {
+        Random rnd = new();
+        List<double> values = new();
+        for (int ctr = 1; ctr <= 200000000; ctr++)
+        {
+            values.Add(rnd.NextDouble());
+            if (ctr % 10000000 == 0)
+                Console.WriteLine($"Retrieved {ctr:N0} items of data.");
+        }
+        return values.ToArray();
+    }
 
-   private static Double GetMean(Double[] values)
-   {
-      Double sum = 0;
-      foreach (var value in values)
-         sum += value;
+    private static double GetMean(double[] values)
+    {
+        double sum = 0;
+        foreach (double value in values)
+            sum += value;
 
-      return sum / values.Length;
-   }
+        return sum / values.Length;
+    }
 }
 // The example displays output like the following:
 //    Retrieved 10,000,000 items of data.

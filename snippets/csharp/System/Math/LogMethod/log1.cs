@@ -2,26 +2,24 @@
 using System;
 public class Example
 {
-   public static void Main()
-   {
-      Console.WriteLine("  Evaluate this identity with selected values for X:");
-      Console.WriteLine("                              ln(x) = 1 / log[X](B)");
-      Console.WriteLine();
+    public static void Main()
+    {
+        Console.WriteLine("  Evaluate this identity with selected values for X:");
+        Console.WriteLine("                              ln(x) = 1 / log[X](B)");
+        Console.WriteLine();
 
-      double[] XArgs = { 1.2, 4.9, 9.9, 0.1 };
+        double[] XArgs = { 1.2, 4.9, 9.9, 0.1 };
 
-      foreach (double argX in XArgs)
-      {
-         // Find natural log of argX.
-         Console.WriteLine("                      Math.Log({0}) = {1:E16}",
-                           argX, Math.Log(argX));
+        foreach (double argX in XArgs)
+        {
+            // Find natural log of argX.
+            Console.WriteLine($"                      Math.Log({argX}) = {Math.Log(argX):E16}");
 
-         // Evaluate 1 / log[X](e).
-         Console.WriteLine("             1.0 / Math.Log(e, {0}) = {1:E16}",
-                           argX, 1.0 / Math.Log(Math.E, argX));
-         Console.WriteLine();
-      }
-   }
+            // Evaluate 1 / log[X](e).
+            Console.WriteLine($"             1.0 / Math.Log(e, {argX}) = {1.0 / Math.Log(Math.E, argX):E16}");
+            Console.WriteLine();
+        }
+    }
 }
 // This example displays the following output:
 //         Evaluate this identity with selected values for X:
