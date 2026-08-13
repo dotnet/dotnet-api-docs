@@ -1,28 +1,31 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class Int32ParseExample1
 {
-   public static void Main()
-   {
-      string[] values = { "+13230", "-0", "1,390,146", "$190,235,421,127",
+    public static void Run()
+    {
+        string[] values = { "+13230", "-0", "1,390,146", "$190,235,421,127",
                           "0xFA1B", "163042", "-10", "007", "2147483647",
                           "2147483648", "16e07", "134985.0", "-12034",
                           "-2147483648", "-2147483649" };
-      foreach (string value in values)
-      {
-         try {
-            int number = Int32.Parse(value);
-            Console.WriteLine("{0} --> {1}", value, number);
-         }
-         catch (FormatException) {
-            Console.WriteLine("{0}: Bad Format", value);
-         }
-         catch (OverflowException) {
-            Console.WriteLine("{0}: Overflow", value);
-         }
-      }
-   }
+        foreach (string value in values)
+        {
+            try
+            {
+                int number = int.Parse(value);
+                Console.WriteLine($"{value} --> {number}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"{value}: Bad Format");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"{value}: Overflow");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //       +13230 --> 13230

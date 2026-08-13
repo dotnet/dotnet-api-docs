@@ -2,57 +2,57 @@
 using System;
 using System.Globalization;
 
-public class StringParsing
+public class Int16TryParseExample2
 {
-   public static void Main()
-   {
-      string numericString;
-      NumberStyles styles;
+    public static void Run()
+    {
+        string numericString;
+        NumberStyles styles;
 
-      numericString = "10677";
-      styles = NumberStyles.Integer;
-      CallTryParse(numericString, styles);
+        numericString = "10677";
+        styles = NumberStyles.Integer;
+        CallTryParse(numericString, styles);
 
-      numericString = "-30677";
-      styles = NumberStyles.None;
-      CallTryParse(numericString, styles);
+        numericString = "-30677";
+        styles = NumberStyles.None;
+        CallTryParse(numericString, styles);
 
-      numericString = "10345.00";
-      styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
-      CallTryParse(numericString, styles);
+        numericString = "10345.00";
+        styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
+        CallTryParse(numericString, styles);
 
-      numericString = "10345.72";
-      styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
-      CallTryParse(numericString, styles);
+        numericString = "10345.72";
+        styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
+        CallTryParse(numericString, styles);
 
-      numericString = "22,593";
-      styles = NumberStyles.Integer | NumberStyles.AllowThousands;
-      CallTryParse(numericString, styles);
+        numericString = "22,593";
+        styles = NumberStyles.Integer | NumberStyles.AllowThousands;
+        CallTryParse(numericString, styles);
 
-      numericString = "12E-01";
-      styles = NumberStyles.Integer | NumberStyles.AllowExponent;
-      CallTryParse(numericString, styles);
+        numericString = "12E-01";
+        styles = NumberStyles.Integer | NumberStyles.AllowExponent;
+        CallTryParse(numericString, styles);
 
-      numericString = "12E03";
-      CallTryParse(numericString, styles);
+        numericString = "12E03";
+        CallTryParse(numericString, styles);
 
-      numericString = "80c1";
-      CallTryParse(numericString, NumberStyles.HexNumber);
+        numericString = "80c1";
+        CallTryParse(numericString, NumberStyles.HexNumber);
 
-      numericString = "0x80C1";
-      CallTryParse(numericString, NumberStyles.HexNumber);
-   }
+        numericString = "0x80C1";
+        CallTryParse(numericString, NumberStyles.HexNumber);
+    }
 
-   private static void CallTryParse(string stringToConvert, NumberStyles styles)
-   {
-      short number;
-      bool result = Int16.TryParse(stringToConvert, styles,
-                                   CultureInfo.InvariantCulture, out number);
-      if (result)
-         Console.WriteLine($"Converted '{stringToConvert}' to {number}.");
-      else
-         Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
-   }
+    private static void CallTryParse(string stringToConvert, NumberStyles styles)
+    {
+        short number;
+        bool result = short.TryParse(stringToConvert, styles,
+                                     CultureInfo.InvariantCulture, out number);
+        if (result)
+            Console.WriteLine($"Converted '{stringToConvert}' to {number}.");
+        else
+            Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
+    }
 }
 // The example displays the following output to the console:
 //       Converted '10677' to 10677.

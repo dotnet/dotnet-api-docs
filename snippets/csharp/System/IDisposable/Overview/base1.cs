@@ -1,14 +1,14 @@
 ﻿// <Snippet3>
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
+
 
 class BaseClass1 : IDisposable
 {
     // Flag: Has Dispose already been called?
     bool disposed = false;
     // Instantiate a FileStream instance.
-    FileStream fs = new FileStream("test.txt", FileMode.OpenOrCreate);
+    FileStream fs = new("test.txt", FileMode.OpenOrCreate);
 
     // Public implementation of Dispose pattern callable by consumers.
     public void Dispose()

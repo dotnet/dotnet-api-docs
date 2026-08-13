@@ -1,19 +1,19 @@
 ﻿//<Snippet5>
 using System;
 using System.Threading;
-using System.Runtime.Remoting.Messaging;
+
 
 namespace Examples.AdvancedProgramming.AsynchronousOperations
 {
-    public class AsyncMain
+    public class CallbackExample
     {
-        static void Main()
+        public static void Run()
         {
             // Create an instance of the test class.
-            AsyncDemo ad = new AsyncDemo();
+            AsyncDemo ad = new();
 
             // Create the delegate.
-            AsyncMethodCaller caller = new AsyncMethodCaller(ad.TestMethod);
+            AsyncMethodCaller caller = new(ad.TestMethod);
 
             // The threadId parameter of TestMethod is an out parameter, so
             // its input value is never used by TestMethod. Therefore, a dummy
@@ -27,15 +27,14 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
             // for the callDuration parameter of TestMethod; a dummy variable
             // for the out parameter (threadId); the callback delegate; and
             // state information that can be retrieved by the callback method.
-            // In this case, the state information is a string that can be used
-            // to format a console message.
+            // In this case, the state information contains the delegate and a
+            // string that can be used to format a console message.
             IAsyncResult result = caller.BeginInvoke(3000,
                 out dummy,
                 new AsyncCallback(CallbackMethod),
-                "The call executed on thread {0}, with return value \"{1}\".");
+                (caller, "The call executed on thread {0}, with return value \"{1}\"."));
 
-            Console.WriteLine("The main thread {0} continues to execute...",
-                Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine($"The main thread {Thread.CurrentThread.ManagedThreadId} continues to execute...");
 
             // The callback is made on a ThreadPool thread. ThreadPool threads
             // are background threads, which do not keep the application running
@@ -50,13 +49,9 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
         // AsyncCallback delegate.
         static void CallbackMethod(IAsyncResult ar)
         {
-            // Retrieve the delegate.
-            AsyncResult result = (AsyncResult) ar;
-            AsyncMethodCaller caller = (AsyncMethodCaller) result.AsyncDelegate;
-
-            // Retrieve the format string that was passed as state
-            // information.
-            string formatString = (string) ar.AsyncState;
+            // Retrieve the delegate and format string that were passed as
+            // state information.
+            var state = ((AsyncMethodCaller Caller, string FormatString))ar.AsyncState;
 
             // Define a variable to receive the value of the out parameter.
             // If the parameter were ref rather than out then it would have to
@@ -64,10 +59,10 @@ namespace Examples.AdvancedProgramming.AsynchronousOperations
             int threadId = 0;
 
             // Call EndInvoke to retrieve the results.
-            string returnValue = caller.EndInvoke(out threadId, ar);
+            string returnValue = state.Caller.EndInvoke(out threadId, ar);
 
             // Use the format string to format the output message.
-            Console.WriteLine(formatString, threadId, returnValue);
+            Console.WriteLine(state.FormatString, threadId, returnValue);
         }
     }
 }

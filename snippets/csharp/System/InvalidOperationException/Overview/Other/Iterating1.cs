@@ -1,4 +1,4 @@
-// <Snippet1>
+﻿// <Snippet1>
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +7,7 @@ public class IteratingEx1
     public static void Main()
     {
         var numbers = new List<int>() { 1, 2, 3, 4, 5 };
-        foreach (var number in numbers)
+        foreach (int number in numbers)
         {
             int square = (int)Math.Pow(number, 2);
             Console.WriteLine($"{number}^{square}");

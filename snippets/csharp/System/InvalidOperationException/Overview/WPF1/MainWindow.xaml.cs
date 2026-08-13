@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -11,15 +11,12 @@ namespace WPFCrossThreadCS
     {
         public static void Main() { }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() => InitializeComponent();
 
         // <Snippet1>
         private async void threadExampleBtn_Click(object sender, RoutedEventArgs e)
         {
-            textBox1.Text = String.Empty;
+            textBox1.Text = string.Empty;
 
             textBox1.Text = "Simulating work on UI thread.\n";
             DoSomeWork(20);
@@ -36,7 +33,7 @@ namespace WPFCrossThreadCS
             await Task.Delay(milliseconds);
 
             // Report completion.
-            var msg = String.Format("Some work completed in {0} ms.\n", milliseconds);
+            string msg = $"Some work completed in {milliseconds} ms.\n";
             textBox1.Text += msg;
         }
         // </Snippet1>

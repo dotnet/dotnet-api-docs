@@ -1,23 +1,24 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class NonZeroLowerBoundExample1
 {
-   public static void Main()
-   {
-      Array values = Array.CreateInstance(typeof(int), new int[] { 10 },
-                                          new int[] { 1 });
-      int value = 2;
-      // Assign values.
-      for (int ctr = 0; ctr < values.Length; ctr++) {
-         values.SetValue(value, ctr);
-         value *= 2;
-      }
+    public static void Run()
+    {
+        Array values = Array.CreateInstance(typeof(int), new int[] { 10 },
+                                            new int[] { 1 });
+        int value = 2;
+        // Assign values.
+        for (int ctr = 0; ctr < values.Length; ctr++)
+        {
+            values.SetValue(value, ctr);
+            value *= 2;
+        }
 
-      // Display values.
-      for (int ctr = 0; ctr < values.Length; ctr++)
-         Console.Write("{0}    ", values.GetValue(ctr));
-   }
+        // Display values.
+        for (int ctr = 0; ctr < values.Length; ctr++)
+            Console.Write($"{values.GetValue(ctr)}    ");
+    }
 }
 // The example displays the following output:
 //    Unhandled Exception:
