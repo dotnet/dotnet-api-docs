@@ -62,12 +62,13 @@ public static class Validation
 public static class Bytes
 {
     // <SnippetBytes>
-    // Bytes that are unsafe to write into HTML without escaping them first.
+    // Bytes that separate fields in the UTF-8 log lines this app reads.
     // A UTF-8 literal ("u8") avoids allocating a string just to create the set.
-    private static readonly SearchValues<byte> s_bytesToEscape = SearchValues.Create("\"&'+<=>`"u8);
+    private static readonly SearchValues<byte> s_delimiters = SearchValues.Create("\t ,;:|="u8);
 
-    public static bool NeedsEscaping(ReadOnlySpan<byte> utf8Value) =>
-        utf8Value.ContainsAny(s_bytesToEscape);
+    // Finds where the next field ends, or -1 when the last field is reached.
+    public static int IndexOfNextDelimiter(ReadOnlySpan<byte> utf8Line) =>
+        utf8Line.IndexOfAny(s_delimiters);
     // </SnippetBytes>
 }
 
@@ -95,7 +96,7 @@ public static class SingleValues
     {
         while (true)
         {
-            int index = value.IndexOf("\\u");
+            int index = value.IndexOf("\\u", StringComparison.Ordinal);
             if (index < 0 || value.Length - index < 6)
             {
                 builder.Append(value);
