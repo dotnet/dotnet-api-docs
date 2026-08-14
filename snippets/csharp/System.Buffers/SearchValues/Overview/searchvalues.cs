@@ -109,9 +109,12 @@ public static class SingleValues
             ReadOnlySpan<char> escaped = value.Slice(index, 3);
             value = value[(index + 3)..];
 
+            // Only ASCII bytes are decoded here. Anything else is part of a
+            // multi-byte UTF-8 sequence and is left as-is.
             // The decoded character is computed one at a time, so there's no span
             // to search and Contains is the right choice here.
             if (!int.TryParse(escaped[1..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int codePoint) ||
+                codePoint > 0x7F ||
                 s_notSafeToUnescape.Contains((char)codePoint))
             {
                 builder.Append(escaped);
