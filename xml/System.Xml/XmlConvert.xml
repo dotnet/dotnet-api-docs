@@ -1123,13 +1123,17 @@ The <xref:System.Xml.XmlConvert> contains additional methods that validate token
       </Parameters>
       <Docs>
         <param name="s">The string to convert.</param>
-        <param name="format">The format from which <paramref name="s" /> is converted. The format parameter can be any subset of the W3C Recommendation for the XML dateTime type. (For more information, see the <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see> section of the XML Schema specification..) The string <paramref name="s" /> is validated against this format.</param>
+        <param name="format">A .NET standard or custom date and time format string that specifies the required format of <paramref name="s" />.</param>
         <summary>Converts the supplied <see cref="T:System.String" /> to a <see cref="T:System.DateTimeOffset" /> equivalent.</summary>
         <returns>The <see cref="T:System.DateTimeOffset" /> equivalent of the supplied string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+ This overload is equivalent to calling <xref:System.DateTimeOffset.ParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles)?displayProperty=nameWithType> with <xref:System.Globalization.DateTimeFormatInfo.InvariantInfo?displayProperty=nameWithType> and the <xref:System.Globalization.DateTimeStyles.AllowLeadingWhite> and <xref:System.Globalization.DateTimeStyles.AllowTrailingWhite> flags. Leading and trailing white space is ignored, but `s` must otherwise exactly match `format`. The `format` parameter uses .NET [standard date and time format strings](/dotnet/standard/base-types/standard-date-and-time-format-strings) or [custom date and time format strings](/dotnet/standard/base-types/custom-date-and-time-format-strings), not XML Schema dateTime patterns.
+
+ In a custom format string, the `z`, `zz`, and `zzz` specifiers require a signed numeric UTC offset. They don't match the XML UTC designator `Z`. Use the `K` custom format specifier when `s` can contain `Z`.
+
  If the offset specified within the input string will cause an overflow in the deserialized representation of the DateTimeOffset, a FormatException is thrown.
 
  When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.
@@ -1161,7 +1165,7 @@ The <xref:System.Xml.XmlConvert> contains additional methods that validate token
         <exception cref="T:System.ArgumentNullException">
           <paramref name="s" /> is <see langword="null" />.</exception>
         <exception cref="T:System.FormatException">
-          <paramref name="s" /> or <paramref name="format" /> is an empty string or is not in the specified format.</exception>
+          <paramref name="format" /> is invalid, or <paramref name="s" /> doesn't exactly match <paramref name="format" /> under the invariant culture rules, except for leading or trailing white space.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToDateTimeOffset">
@@ -1206,13 +1210,17 @@ The <xref:System.Xml.XmlConvert> contains additional methods that validate token
       </Parameters>
       <Docs>
         <param name="s">The string to convert.</param>
-        <param name="formats">An array of formats from which <paramref name="s" /> can be converted. Each format in <paramref name="formats" /> can be any subset of the W3C Recommendation for the XML dateTime type. (For more information, see the <see href="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</see> section of the XML Schema specification..) The string <paramref name="s" /> is validated against one of these formats.</param>
+        <param name="formats">An array of .NET standard or custom date and time format strings that specify the permitted formats of <paramref name="s" />.</param>
         <summary>Converts the supplied <see cref="T:System.String" /> to a <see cref="T:System.DateTimeOffset" /> equivalent.</summary>
         <returns>The <see cref="T:System.DateTimeOffset" /> equivalent of the supplied string.</returns>
         <remarks>
           <format type="text/markdown"><![CDATA[
 
 ## Remarks
+ This overload is equivalent to calling <xref:System.DateTimeOffset.ParseExact(System.String,System.String%5B%5D,System.IFormatProvider,System.Globalization.DateTimeStyles)?displayProperty=nameWithType> with <xref:System.Globalization.DateTimeFormatInfo.InvariantInfo?displayProperty=nameWithType> and the <xref:System.Globalization.DateTimeStyles.AllowLeadingWhite> and <xref:System.Globalization.DateTimeStyles.AllowTrailingWhite> flags. Leading and trailing white space is ignored, but `s` must otherwise exactly match one of the strings in `formats`. The `formats` parameter uses .NET [standard date and time format strings](/dotnet/standard/base-types/standard-date-and-time-format-strings) or [custom date and time format strings](/dotnet/standard/base-types/custom-date-and-time-format-strings), not XML Schema dateTime patterns.
+
+ In a custom format string, the `z`, `zz`, and `zzz` specifiers require a signed numeric UTC offset. They don't match the XML UTC designator `Z`. Use the `K` custom format specifier when `s` can contain `Z`.
+
  If the offset specified within the input string will cause an overflow in the deserialized representation of the DateTimeOffset, a FormatException is thrown.
 
  When more than seven digits are specified for fractional seconds, the value is rounded. For example, 00000004 becomes 0000000 and 00000005 becomes 0000001.
@@ -1241,6 +1249,7 @@ The <xref:System.Xml.XmlConvert> contains additional methods that validate token
 
  ]]></format>
         </remarks>
+        <exception cref="T:System.FormatException">An element of <paramref name="formats" /> is invalid, or <paramref name="s" /> doesn't exactly match any element of <paramref name="formats" /> under the invariant culture rules, except for leading or trailing white space.</exception>
       </Docs>
     </Member>
     <Member MemberName="ToDecimal">
