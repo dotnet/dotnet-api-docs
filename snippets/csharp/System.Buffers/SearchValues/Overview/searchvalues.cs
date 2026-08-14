@@ -1,6 +1,7 @@
 // <SnippetUsings>
 using System;
 using System.Buffers;
+using System.Text;
 // </SnippetUsings>
 
 namespace SearchValuesExamples;
@@ -66,21 +67,22 @@ public static class Strings
 public static class SingleValues
 {
     // <SnippetContains>
-    private static readonly SearchValues<char> s_invalidFileNameChars =
-        SearchValues.Create("\"<>|:*?\\/");
+    private static readonly SearchValues<char> s_charsToEscape = SearchValues.Create("\\[]+*&,");
 
-    // The characters are inspected one at a time because each one is replaced,
-    // so there's no span to search. Contains is the right choice here.
-    public static string ReplaceInvalidChars(ReadOnlySpan<char> fileName)
+    // Each character is inspected as it's written out because the ones in the set
+    // expand into two characters. There's no span left to search, so Contains is
+    // the right choice here.
+    public static void AppendEscaped(StringBuilder builder, ReadOnlySpan<char> identifier)
     {
-        return string.Create(fileName.Length, fileName.ToString(), static (destination, state) =>
+        foreach (char c in identifier)
         {
-            for (int i = 0; i < state.Length; i++)
+            if (s_charsToEscape.Contains(c))
             {
-                char c = state[i];
-                destination[i] = s_invalidFileNameChars.Contains(c) ? '_' : c;
+                builder.Append('\\');
             }
-        });
+
+            builder.Append(c);
+        }
     }
     // </SnippetContains>
 }
