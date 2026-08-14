@@ -1,26 +1,25 @@
 ﻿// <Snippet1>
 using System;
 
-public class Example
+public class UInt64ToStringExample1
 {
-   public static void Main()
-   {
-      ulong value = 163249057;
-      // Display value using default ToString method.
-      Console.WriteLine(value.ToString());      
-      Console.WriteLine();
-      
-      // Define an array of format specifiers.
-      string[] formats = { "G", "C", "D", "F", "N", "X" };
-      // Display value using the standard format specifiers.
-      foreach (string format in formats)
-         Console.WriteLine("{0} format specifier: {1,16}", 
-                           format, value.ToString(format));         
-   }
+    public static void Run()
+    {
+        ulong value = 163249057;
+        // Display value using default ToString method.
+        Console.WriteLine(value.ToString());
+        Console.WriteLine();
+
+        // Define an array of format specifiers.
+        string[] formats = { "G", "C", "D", "F", "N", "X" };
+        // Display value using the standard format specifiers.
+        foreach (string format in formats)
+            Console.WriteLine($"{format} format specifier: {value.ToString(format),16}");
+    }
 }
 // The example displays the following output:
 //       163249057
-//       
+//
 //       G format specifier:        163249057
 //       C format specifier:  $163,249,057.00
 //       D format specifier:        163249057

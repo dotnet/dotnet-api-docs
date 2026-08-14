@@ -4,32 +4,29 @@ using Corporate.EmployeeObjects;
 
 public class Example
 {
-   public static void Main()
-   {
-      var empA = new EmployeeA{ Name = "Robert",};
-      Console.WriteLine(empA.ToString());
-      
-      var empB = new EmployeeB{ Name = "Robert",};
-      Console.WriteLine(empB.ToString());
-   }
+    public static void Main()
+    {
+        var empA = new EmployeeA { Name = "Robert", };
+        Console.WriteLine(empA.ToString());
+
+        var empB = new EmployeeB { Name = "Robert", };
+        Console.WriteLine(empB.ToString());
+    }
 }
 
 namespace Corporate.EmployeeObjects
 {
     public struct EmployeeA
     {
-         public String Name { get; set; }
+        public string Name { get; set; }
     }
-    
+
     public struct EmployeeB
     {
-         public String Name { get; set; }
+        public string Name { get; set; }
 
-         public override String ToString()
-         {
-              return Name;
-         }
-    }  
+        public override string ToString() => Name;
+    }
 }
 // The example displays the following output:
 //     Corporate.EmployeeObjects.EmployeeA

@@ -8,21 +8,22 @@ public class Program
     {
         // Create the cache.
         int cacheSize = 50;
-        Random r = new Random();
-        Cache c = new Cache(cacheSize);
+        Random r = new();
+        Cache c = new(cacheSize);
 
         string DataName = "";
         GC.Collect(0);
 
         // Randomly access objects in the cache.
-        for (int i = 0; i < c.Count; i++) {
+        for (int i = 0; i < c.Count; i++)
+        {
             int index = r.Next(c.Count);
 
             // Access the object by getting a property value.
             DataName = c[index].Name;
         }
         // Show results.
-        double regenPercent = c.RegenerationCount/(double)c.Count;
+        double regenPercent = c.RegenerationCount / (double)c.Count;
         Console.WriteLine($"Cache size: {c.Count}, Regenerated: {regenPercent:P0}");
     }
 }
@@ -37,49 +38,47 @@ public class Cache
 
     public Cache(int count)
     {
-        _cache = new Dictionary<int, WeakReference>();
+        _cache = new();
 
         // <Snippet2>
         // Add objects with a short weak reference to the cache.
-       for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++)
+        {
             _cache.Add(i, new WeakReference(new Data(i), false));
         }
         // </Snippet2>
     }
 
     // Number of items in the cache.
-    public int Count
-    {
-        get {  return _cache.Count; }
-    }
+    public int Count => _cache.Count;
 
     // Number of times an object needs to be regenerated.
-    public int RegenerationCount
-    {
-        get { return regenCount; }
-    }
+    public int RegenerationCount => regenCount;
 
     // Retrieve a data object from the cache.
     public Data this[int index]
     {
-        get {
+        get
+        {
             // <Snippet3>
             Data d = _cache[index].Target as Data;
-            if (d == null) {
+            if (d == null)
+            {
                 // If the object was reclaimed, generate a new one.
-                Console.WriteLine("Regenerate object at {0}: Yes", index);
-                d = new Data(index);
+                Console.WriteLine($"Regenerate object at {index}: Yes");
+                d = new(index);
                 _cache[index].Target = d;
                 regenCount++;
             }
-            else {
+            else
+            {
                 // Object was obtained with the weak reference.
-                Console.WriteLine("Regenerate object at {0}: No", index);
+                Console.WriteLine($"Regenerate object at {index}: No");
             }
 
             return d;
-             // </Snippet3>
-       }
+            // </Snippet3>
+        }
     }
 }
 
@@ -96,10 +95,7 @@ public class Data
     }
 
     // Simple property.
-    public string Name
-    {
-        get { return _name; }
-    }
+    public string Name => _name;
 }
 // Example of the last lines of the output:
 //

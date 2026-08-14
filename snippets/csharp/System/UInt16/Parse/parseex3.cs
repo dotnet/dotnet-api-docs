@@ -2,37 +2,40 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt16ParseExample3
 {
-   public static void Main()
-   {
-      // Define a custom culture that uses "++" as a positive sign. 
-      CultureInfo ci = new CultureInfo("");
-      ci.NumberFormat.PositiveSign = "++";
-      // Create an array of cultures.
-      CultureInfo[] cultures = { ci, CultureInfo.InvariantCulture };
-      // Create an array of strings to parse.
-      string[] values = { "++1403", "-0", "+0", "+16034", 
-                          Int16.MinValue.ToString(), "14.0", "18012" };
-      // Parse the strings using each culture.
-      foreach (CultureInfo culture in cultures)
-      {
-         Console.WriteLine("Parsing with the '{0}' culture.", culture.Name);
-         foreach (string value in values)
-         {
-            try {
-               ushort number = UInt16.Parse(value, culture);
-               Console.WriteLine("   Converted '{0}' to {1}.", value, number);
+    public static void Run()
+    {
+        // Define a custom culture that uses "++" as a positive sign.
+        CultureInfo ci = new("");
+        ci.NumberFormat.PositiveSign = "++";
+        // Create an array of cultures.
+        CultureInfo[] cultures = { ci, CultureInfo.InvariantCulture };
+        // Create an array of strings to parse.
+        string[] values = { "++1403", "-0", "+0", "+16034",
+                          short.MinValue.ToString(), "14.0", "18012" };
+        // Parse the strings using each culture.
+        foreach (CultureInfo culture in cultures)
+        {
+            Console.WriteLine($"Parsing with the '{culture.Name}' culture.");
+            foreach (string value in values)
+            {
+                try
+                {
+                    ushort number = ushort.Parse(value, culture);
+                    Console.WriteLine($"   Converted '{value}' to {number}.");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine($"   The format of '{value}' is invalid.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine($"   '{value}' is outside the range of a UInt16 value.");
+                }
             }
-            catch (FormatException) {
-               Console.WriteLine("   The format of '{0}' is invalid.", value);
-            }
-            catch (OverflowException) {
-               Console.WriteLine("   '{0}' is outside the range of a UInt16 value.", value);
-            }               
-         }
-      }
-   }
+        }
+    }
 }
 // The example displays the following output:
 //       Parsing with the  culture.

@@ -3,50 +3,44 @@ using System;
 
 public class Example
 {
-   static uint value = 112;
-   
-   public static void Main()
-   {
-      byte byte1= 112;
-      Console.WriteLine("value = byte1: {0,16}", value.Equals(byte1));
-      TestObjectForEquality(byte1);
+    static uint value = 112;
 
-      short short1 = 112;
-      Console.WriteLine("value = short1: {0,17}", value.Equals(short1));
-      TestObjectForEquality(short1);
+    public static void Main()
+    {
+        byte byte1 = 112;
+        Console.WriteLine($"value = byte1: {value.Equals(byte1),16}");
+        TestObjectForEquality(byte1);
 
-      long long1 = 112;
-      Console.WriteLine("value = long1: {0,18}", value.Equals(long1));
-      TestObjectForEquality(long1);
+        short short1 = 112;
+        Console.WriteLine($"value = short1: {value.Equals(short1),17}");
+        TestObjectForEquality(short1);
 
-      sbyte sbyte1 = 112;
-      Console.WriteLine("value = sbyte1: {0,17}", value.Equals(sbyte1));
-      TestObjectForEquality(sbyte1);
+        long long1 = 112;
+        Console.WriteLine($"value = long1: {value.Equals(long1),18}");
+        TestObjectForEquality(long1);
 
-      ushort ushort1 = 112;
-      Console.WriteLine("value = ushort1: {0,16}", value.Equals(ushort1));
-      TestObjectForEquality(ushort1);
+        sbyte sbyte1 = 112;
+        Console.WriteLine($"value = sbyte1: {value.Equals(sbyte1),17}");
+        TestObjectForEquality(sbyte1);
 
-      ulong ulong1 = 112;
-      Console.WriteLine("value = ulong1: {0,18}", value.Equals(ulong1));
-      TestObjectForEquality(ulong1);
+        ushort ushort1 = 112;
+        Console.WriteLine($"value = ushort1: {value.Equals(ushort1),16}");
+        TestObjectForEquality(ushort1);
 
-      decimal dec1 = 112m;
-      Console.WriteLine("value = dec1: {0,21}", value.Equals(dec1));
-      TestObjectForEquality(dec1);
+        ulong ulong1 = 112;
+        Console.WriteLine($"value = ulong1: {value.Equals(ulong1),18}");
+        TestObjectForEquality(ulong1);
 
-      double dbl1 = 112;
-      Console.WriteLine("value = dbl1: {0,20}", value.Equals(dbl1));
-      TestObjectForEquality(dbl1);
-   }
+        decimal dec1 = 112m;
+        Console.WriteLine($"value = dec1: {value.Equals(dec1),21}");
+        TestObjectForEquality(dec1);
 
-   private static void TestObjectForEquality(Object obj)
-   {
-      Console.WriteLine("{0} ({1}) = {2} ({3}): {4}\n",
-                        value, value.GetType().Name,
-                        obj, obj.GetType().Name,
-                        value.Equals(obj));
-   }
+        double dbl1 = 112;
+        Console.WriteLine($"value = dbl1: {value.Equals(dbl1),20}");
+        TestObjectForEquality(dbl1);
+    }
+
+    private static void TestObjectForEquality(object obj) => Console.WriteLine($"{value} ({value.GetType().Name}) = {obj} ({obj.GetType().Name}): {value.Equals(obj)}\n");
 }
 // The example displays the following output:
 //       value = byte1:             True

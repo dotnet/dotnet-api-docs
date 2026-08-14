@@ -1,24 +1,27 @@
 ﻿// <Snippet2>
 using System;
 
-enum VersionTime {Earlier = -1, Same = 0, Later = 1 };
+enum VersionTime
+{
+    Earlier = -1,
+    Same = 0,
+    Later = 1
+}
 
 public class Example2
 {
-   public static void Main()
-   {
-      Version v1 = new(1, 1);
-      Version v1a = new("1.1.0");
-      ShowRelationship(v1, v1a);
-      
-      Version v1b = new(1, 1, 0, 0);
-      ShowRelationship(v1b, v1a);
-   }
+    public static void Main()
+    {
+        Version v1 = new(1, 1);
+        Version v1a = new("1.1.0");
+        ShowRelationship(v1, v1a);
 
-   private static void ShowRelationship(Version v1, Version v2)
-   {
-      Console.WriteLine($"Relationship of {v1} to {v2}: {(VersionTime) v1.CompareTo(v2)}");       
-   }
+        Version v1b = new(1, 1, 0, 0);
+        ShowRelationship(v1b, v1a);
+    }
+
+    private static void ShowRelationship(Version v1, Version v2) =>
+        Console.WriteLine($"Relationship of {v1} to {v2}: {(VersionTime)v1.CompareTo(v2)}");
 }
 
 // The example displays the following output:

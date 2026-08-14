@@ -1,19 +1,21 @@
-using System;
-using System.Data;
-using System.Security.Principal;
+﻿using System;
+
+
 
 
 public class Form1
 {
- protected void Method()
- {
-// <Snippet1>
-UriBuilder uBuild = new UriBuilder("http://www.contoso.com/");
-uBuild.Path = "index.htm";
-uBuild.Fragment = "main";
+    protected void Method()
+    {
+        // <Snippet1>
+        UriBuilder uBuild = new("http://www.contoso.com/")
+        {
+            Path = "index.htm",
+            Fragment = "main"
+        };
 
-Uri myUri = uBuild.Uri;
+        Uri myUri = uBuild.Uri;
 
-// </Snippet1>
- }
+        // </Snippet1>
+    }
 }
