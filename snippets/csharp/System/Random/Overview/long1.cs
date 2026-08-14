@@ -19,11 +19,9 @@ public class ExampleLong
             count[(int)(number / ONE_TENTH)]++;
         }
         // Display breakdown by range.
-        Console.WriteLine("{0,28} {1,32}   {2,7}\n", "Range", "Count", "Pct.");
+        Console.WriteLine($"{"Range",28} {"Count",32}   {"Pct.",7}\n");
         for (int ctr = 0; ctr <= 9; ctr++)
-            Console.WriteLine("{0,25:N0}-{1,25:N0}  {2,8:N0}   {3,7:P2}", ctr * ONE_TENTH,
-                               ctr < 9 ? ctr * ONE_TENTH + ONE_TENTH - 1 : long.MaxValue,
-                               count[ctr], count[ctr] / 20000000.0);
+            Console.WriteLine($"{ctr * ONE_TENTH,25:N0}-{(ctr < 9 ? ctr * ONE_TENTH + ONE_TENTH - 1 : long.MaxValue),25:N0}  {count[ctr],8:N0}   {count[ctr] / 20000000.0,7:P2}");
 
         // The example displays output like the following:
         //                           Range                            Count      Pct.

@@ -16,11 +16,11 @@ public class Example18
 
     public Example18()
     {
-        s_rand = new Random();
-        s_randLock = new object();
-        s_numericLock = new object();
-        s_countdown = new CountdownEvent(1);
-        s_source = new CancellationTokenSource();
+        s_rand = new();
+        s_randLock = new();
+        s_numericLock = new();
+        s_countdown = new(1);
+        s_source = new();
     }
 
     public static void Main()
