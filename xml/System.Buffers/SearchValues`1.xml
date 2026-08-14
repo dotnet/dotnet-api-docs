@@ -48,11 +48,11 @@ Passing a <xref:System.Buffers.SearchValues%601> to one of the searching methods
 
 ## Common use cases
 
-Escaping and encoding are among the most common uses. Use <xref:System.MemoryExtensions.IndexOfAny%2A> to skip ahead to the next element that needs special treatment, so that everything in between is processed in bulk. This pattern shows up throughout [dotnet/runtime](https://github.com/dotnet/runtime), for example when escaping JSON, JavaScript, or console output:
+Escaping and encoding are among the most common uses. Use <xref:System.MemoryExtensions.IndexOfAny%2A> to skip ahead to the next element that needs special treatment, so that everything in between is processed in bulk, for example when escaping JSON, JavaScript, or console output:
 
 :::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetEscaping":::
 
-Validation is another. Instead of testing each element in a loop, describe the set of allowed values once and use <xref:System.MemoryExtensions.ContainsAnyExcept%2A> to find out whether the input contains anything else. [dotnet/runtime](https://github.com/dotnet/runtime) and [dotnet/aspnetcore](https://github.com/dotnet/aspnetcore) use this to check URIs, host names, header values, and file names:
+Validation is another. Instead of testing each element in a loop, describe the set of allowed values once and use <xref:System.MemoryExtensions.ContainsAnyExcept%2A> to find out whether the input contains anything else. This pattern is common when checking URIs, host names, header values, and file names:
 
 :::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetValidation":::
 
@@ -122,7 +122,7 @@ The following example decodes percent-encoded sequences in a URI, but leaves the
 
 :::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetContains":::
 
-For a <xref:System.Buffers.SearchValues%601> of <xref:System.String>, this method tests whether the whole `value` is one of the strings in the set, using the <xref:System.StringComparison> that was specified when the instance was created. It doesn't perform a substring search.
+For a <xref:System.Buffers.SearchValues%601> of <xref:System.String>, this method tests whether the whole `value` is one of the strings in the set, using the <xref:System.StringComparison> that was specified when the instance was created. It doesn't perform a substring search. Such a lookup is slower than <xref:System.Collections.Frozen.FrozenSet%601.Contains%2A?displayProperty=nameWithType>, so only create a <xref:System.Buffers.SearchValues%601> of <xref:System.String> when you need to search a span for multiple substrings.
 
 ]]></format>
         </remarks>
