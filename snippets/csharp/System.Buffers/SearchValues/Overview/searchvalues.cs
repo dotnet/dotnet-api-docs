@@ -100,6 +100,11 @@ public static class SingleString
 public static class SingleValues
 {
     // <SnippetContains>
+    // The prefix that starts an escape sequence. A single-value SearchValues<string>
+    // is a faster alternative to IndexOf(value, StringComparison).
+    private static readonly SearchValues<string> s_escapePrefix =
+        SearchValues.Create(["\\u"], StringComparison.Ordinal);
+
     // Characters that aren't allowed to appear unescaped in the output.
     private static readonly SearchValues<char> s_mustStayEscaped = SearchValues.Create("\"\\\b\f\n\r\t");
 
@@ -109,7 +114,7 @@ public static class SingleValues
     {
         while (true)
         {
-            int index = value.IndexOf("\\u", StringComparison.Ordinal);
+            int index = value.IndexOfAny(s_escapePrefix);
             if (index < 0 || value.Length - index < 6)
             {
                 builder.Append(value);
