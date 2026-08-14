@@ -3,39 +3,37 @@ using System;
 
 public class TryParse
 {
-   private static void ParseTimeSpan(string intervalStr)
-   {
-      // Write the first part of the output line.
-      Console.Write( "{0,20}   ", intervalStr );
+    private static void ParseTimeSpan(string intervalStr)
+    {
+        // Write the first part of the output line.
+        Console.Write($"{intervalStr,20}   ");
 
-      // Parse the parameter, and then convert it back to a string.
-      TimeSpan intervalVal; 
-      if (TimeSpan.TryParse(intervalStr, out intervalVal)) 
-      {
-         string intervalToStr = intervalVal.ToString();
-  
-         // Pad the end of the TimeSpan string with spaces if it 
-         // does not contain milliseconds.
-         int pIndex = intervalToStr.IndexOf(':');
-         pIndex = intervalToStr.IndexOf('.', pIndex);
-         if (pIndex < 0)
-            intervalToStr += "        ";
-   
-         Console.WriteLine("{0,21}", intervalToStr);
-         // Handle failure of TryParse method.
-      }
-      else
-      {
-         Console.WriteLine("Parse operation failed.");
-      }
-   } 
-   
-   public static void Main()
-   {
-        Console.WriteLine( "{0,20}   {1,21}", 
-            "String to Parse", "TimeSpan" );    
-        Console.WriteLine( "{0,20}   {1,21}", 
-            "---------------", "---------------------" );    
+        // Parse the parameter, and then convert it back to a string.
+        TimeSpan intervalVal;
+        if (TimeSpan.TryParse(intervalStr, out intervalVal))
+        {
+            string intervalToStr = intervalVal.ToString();
+
+            // Pad the end of the TimeSpan string with spaces if it
+            // does not contain milliseconds.
+            int pIndex = intervalToStr.IndexOf(':');
+            pIndex = intervalToStr.IndexOf('.', pIndex);
+            if (pIndex < 0)
+                intervalToStr += "        ";
+
+            Console.WriteLine($"{intervalToStr,21}");
+            // Handle failure of TryParse method.
+        }
+        else
+        {
+            Console.WriteLine("Parse operation failed.");
+        }
+    }
+
+    public static void Main()
+    {
+        Console.WriteLine($"{"String to Parse",20}   {"TimeSpan",21}");
+        Console.WriteLine($"{"---------------",20}   {"---------------------",21}");
 
         ParseTimeSpan("0");
         ParseTimeSpan("14");
@@ -61,7 +59,7 @@ public class TryParse
         ParseTimeSpan("10.");
         ParseTimeSpan("10.12");
         ParseTimeSpan("10.12:00");
-   }
+    }
 }
 //            String to Parse                TimeSpan
 //            ---------------   ---------------------

@@ -1,46 +1,49 @@
 ﻿// <Snippet2>
 using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
+
 
 public class Example2
 {
-   public static void Main()
-   {
-      string[] values = { "6", "6:12", "6:12:14", "6:12:14:45",
+    public static void Main()
+    {
+        string[] values = [ "6", "6:12", "6:12:14", "6:12:14:45",
                           "6.12:14:45", "6:12:14:45.3448",
-                          "6:12:14:45,3448", "6:34:14:45" };
-      CultureInfo[] cultures = { new CultureInfo("en-US"),
+                          "6:12:14:45,3448", "6:34:14:45" ];
+        CultureInfo[] cultures = [ new CultureInfo("en-US"),
                                  new CultureInfo("ru-RU"),
-                                 CultureInfo.InvariantCulture };
+                                 CultureInfo.InvariantCulture ];
 
-      string header = String.Format("{0,-17}", "String");
-      foreach (CultureInfo culture in cultures)
-         header += culture.Equals(CultureInfo.InvariantCulture) ?
-                      String.Format("{0,20}", "Invariant") :
-                      String.Format("{0,20}", culture.Name);
-      Console.WriteLine(header);
-      Console.WriteLine();
+        string header = $"{"String",-17}";
+        foreach (CultureInfo culture in cultures)
+            header += culture.Equals(CultureInfo.InvariantCulture) ?
+                         $"{"Invariant",20}" :
+                         $"{culture.Name,20}";
+        Console.WriteLine(header);
+        Console.WriteLine();
 
-      foreach (string value in values)
-      {
-         Console.Write("{0,-17}", value);
-         foreach (CultureInfo culture in cultures)
-         {
-            try {
-               TimeSpan ts = TimeSpan.Parse(value, culture);
-               Console.Write("{0,20}", ts.ToString("c"));
+        foreach (string value in values)
+        {
+            Console.Write($"{value,-17}");
+            foreach (CultureInfo culture in cultures)
+            {
+                try
+                {
+                    TimeSpan ts = TimeSpan.Parse(value, culture);
+                    Console.Write($"{ts.ToString("c"),20}");
+                }
+                catch (FormatException)
+                {
+                    Console.Write($"{"Bad Format",20}");
+                }
+                catch (OverflowException)
+                {
+                    Console.Write($"{"Overflow",20}");
+                }
             }
-            catch (FormatException) {
-               Console.Write("{0,20}", "Bad Format");
-            }
-            catch (OverflowException) {
-               Console.Write("{0,20}", "Overflow");
-            }
-         }
-         Console.WriteLine();
-      }
-   }
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //    String                          en-US               ru-RU           Invariant

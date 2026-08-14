@@ -4,44 +4,42 @@ using System;
 
 class FromTicksDemo
 {
-    static void GenTimeSpanFromTicks( long ticks )
+    static void GenTimeSpanFromTicks(long ticks)
     {
-        // Create a TimeSpan object and TimeSpan string from 
+        // Create a TimeSpan object and TimeSpan string from
         // a number of ticks.
-        TimeSpan    interval = TimeSpan.FromTicks( ticks );
-        string      timeInterval = interval.ToString( );
+        TimeSpan interval = TimeSpan.FromTicks(ticks);
+        string timeInterval = interval.ToString();
 
-        // Pad the end of the TimeSpan string with spaces if it 
+        // Pad the end of the TimeSpan string with spaces if it
         // does not contain milliseconds.
-        int pIndex = timeInterval.IndexOf( ':' );
-        pIndex = timeInterval.IndexOf( '.', pIndex );
-        if( pIndex < 0 )   timeInterval += "        ";
+        int pIndex = timeInterval.IndexOf(':');
+        pIndex = timeInterval.IndexOf('.', pIndex);
+        if (pIndex < 0) timeInterval += "        ";
 
-        Console.WriteLine( "{0,21}{1,26}", ticks, timeInterval );
-    } 
+        Console.WriteLine($"{ticks,21}{timeInterval,26}");
+    }
 
-    static void Main( )
+    static void Main()
     {
         Console.WriteLine(
             "This example of TimeSpan.FromTicks( long )\n" +
-            "generates the following output.\n" );
-        Console.WriteLine( "{0,21}{1,18}", 
-            "FromTicks", "TimeSpan" );
-        Console.WriteLine( "{0,21}{1,18}", 
-            "---------", "--------" );
+            "generates the following output.\n");
+        Console.WriteLine($"{"FromTicks",21}{"TimeSpan",18}");
+        Console.WriteLine($"{"---------",21}{"--------",18}");
 
-        GenTimeSpanFromTicks( 1 );
-        GenTimeSpanFromTicks( 12345 );
-        GenTimeSpanFromTicks( 123456789 );
-        GenTimeSpanFromTicks( 1234567898765 );
-        GenTimeSpanFromTicks( 12345678987654321 );
-        GenTimeSpanFromTicks( 10000000 );
-        GenTimeSpanFromTicks( 600000000 );
-        GenTimeSpanFromTicks( 36000000000 );
-        GenTimeSpanFromTicks( 864000000000 );
-        GenTimeSpanFromTicks( 18012202000000 );
-    } 
-} 
+        GenTimeSpanFromTicks(1);
+        GenTimeSpanFromTicks(12345);
+        GenTimeSpanFromTicks(123456789);
+        GenTimeSpanFromTicks(1234567898765);
+        GenTimeSpanFromTicks(12345678987654321);
+        GenTimeSpanFromTicks(10000000);
+        GenTimeSpanFromTicks(600000000);
+        GenTimeSpanFromTicks(36000000000);
+        GenTimeSpanFromTicks(864000000000);
+        GenTimeSpanFromTicks(18012202000000);
+    }
+}
 
 /*
 This example of TimeSpan.FromTicks( long )
