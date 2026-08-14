@@ -50,12 +50,12 @@ public static class Escaping
 public static class Validation
 {
     // <SnippetValidation>
-    private static readonly SearchValues<char> s_allowedHostChars =
-        SearchValues.Create("-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+    private static readonly SearchValues<char> s_hexDigits =
+        SearchValues.Create("0123456789ABCDEFabcdef");
 
-    // Rejects any host name that contains a character outside of the allowed set.
-    public static bool IsValidHost(ReadOnlySpan<char> host) =>
-        !host.IsEmpty && !host.ContainsAnyExcept(s_allowedHostChars);
+    // Rejects any value that contains a character outside of the allowed set.
+    public static bool IsHexString(ReadOnlySpan<char> value) =>
+        !value.IsEmpty && !value.ContainsAnyExcept(s_hexDigits);
     // </SnippetValidation>
 }
 
