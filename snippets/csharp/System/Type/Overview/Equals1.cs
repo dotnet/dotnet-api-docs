@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 public class Example1
 {
@@ -14,9 +14,9 @@ public class Example1
         Type t = number1.GetType();
 
         // Compare types of all objects with number1.
-        Console.WriteLine($"Type of number1 and number2 are equal: {Object.ReferenceEquals(t, number2.GetType())}");
-        Console.WriteLine($"Type of number1 and number3 are equal: {Object.ReferenceEquals(t, number3.GetType())}");
-        Console.WriteLine($"Type of number1 and number4 are equal: {Object.ReferenceEquals(t, number4.GetType())}");
+        Console.WriteLine($"Type of number1 and number2 are equal: {object.ReferenceEquals(t, number2.GetType())}");
+        Console.WriteLine($"Type of number1 and number3 are equal: {object.ReferenceEquals(t, number3.GetType())}");
+        Console.WriteLine($"Type of number1 and number4 are equal: {object.ReferenceEquals(t, number4.GetType())}");
 
         // The example displays the following output:
         //       Type of number1 and number2 are equal: False

@@ -1,11 +1,11 @@
 ﻿//<Snippet1>
 using System;
 
-public interface IExample {}
+public interface IExample { }
 
-public class BaseClass : IExample {}
+public class BaseClass : IExample { }
 
-public class DerivedClass : BaseClass {}
+public class DerivedClass : BaseClass { }
 
 public class Example
 {
@@ -18,16 +18,11 @@ public class Example
         var derived1Type = derived1.GetType();
         int[] arr = new int[11];
 
-        Console.WriteLine("Is int[] an instance of the Array class? {0}.",
-                           typeof(Array).IsInstanceOfType(arr));
-        Console.WriteLine("Is base1 an instance of BaseClass? {0}.",
-                          base1Type.IsInstanceOfType(base1));
-        Console.WriteLine("Is derived1 an instance of BaseClass? {0}.",
-                          base1Type.IsInstanceOfType(derived1));
-        Console.WriteLine("Is base1 an instance of IExample? {0}.",
-                          interfaceType.IsInstanceOfType(base1));
-        Console.WriteLine("Is derived1 an instance of IExample? {0}.",
-                          interfaceType.IsInstanceOfType(derived1));
+        Console.WriteLine($"Is int[] an instance of the Array class? {typeof(Array).IsInstanceOfType(arr)}.");
+        Console.WriteLine($"Is base1 an instance of BaseClass? {base1Type.IsInstanceOfType(base1)}.");
+        Console.WriteLine($"Is derived1 an instance of BaseClass? {base1Type.IsInstanceOfType(derived1)}.");
+        Console.WriteLine($"Is base1 an instance of IExample? {interfaceType.IsInstanceOfType(base1)}.");
+        Console.WriteLine($"Is derived1 an instance of IExample? {interfaceType.IsInstanceOfType(derived1)}.");
     }
 }
 // The example displays the following output:

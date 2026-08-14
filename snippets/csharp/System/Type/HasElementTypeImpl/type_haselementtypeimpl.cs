@@ -4,28 +4,25 @@ using System.Reflection;
 public class MyTypeDelegator : TypeDelegator
 {
     public string myElementType = null;
-    private Type myType = null ;
-    public MyTypeDelegator(Type myType) : base(myType)
-    {
-        this.myType = myType;
-    }
+    private Type myType = null;
+    public MyTypeDelegator(Type myType) : base(myType) => this.myType = myType;
     // Override Type.HasElementTypeImpl().
     protected override bool HasElementTypeImpl()
     {
         // Determine whether the type is an array.
-        if(myType.IsArray)
+        if (myType.IsArray)
         {
             myElementType = "array";
             return true;
         }
         // Determine whether the type is a reference.
-        if(myType.IsByRef)
+        if (myType.IsByRef)
         {
             myElementType = "reference";
             return true;
         }
         // Determine whether the type is a pointer.
-        if(myType.IsPointer)
+        if (myType.IsPointer)
         {
             myElementType = "pointer";
             return true;
@@ -40,25 +37,25 @@ public class Type_HasElementTypeImpl
     {
         try
         {
-            int myInt = 0 ;
+            int myInt = 0;
             int[] myArray = new int[5];
-            MyTypeDelegator myType = new MyTypeDelegator(myArray.GetType());
+            MyTypeDelegator myType = new(myArray.GetType());
             // Determine whether myType is an array, pointer, reference type.
             Console.WriteLine("\nDetermine whether a variable is an array, pointer, or reference type.\n");
-            if( myType.HasElementType)
-                Console.WriteLine("The type of myArray is {0}.", myType.myElementType);
+            if (myType.HasElementType)
+                Console.WriteLine($"The type of myArray is {myType.myElementType}.");
             else
                 Console.WriteLine("myArray is not an array, pointer, or reference type.");
-            myType = new MyTypeDelegator(myInt.GetType());
+            myType = new(myInt.GetType());
             // Determine whether myType is an array, pointer, reference type.
-            if( myType.HasElementType)
-                Console.WriteLine("The type of myInt is {0}.", myType.myElementType);
+            if (myType.HasElementType)
+                Console.WriteLine($"The type of myInt is {myType.myElementType}.");
             else
                 Console.WriteLine("myInt is not an array, pointer, or reference type.");
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            Console.WriteLine("Exception: {0}", e.Message);
+            Console.WriteLine($"Exception: {e.Message}");
         }
     }
 }

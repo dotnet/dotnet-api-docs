@@ -1,18 +1,15 @@
-//<Snippet1>
+﻿//<Snippet1>
 
 using System;
 using System.Reflection;
 
 class AttributesSample
 {
-    public void Mymethod (int int1m, out string str2m, ref string str3m)
-    {
-        str2m = "in Mymethod";
-    }
+    public void Mymethod(int int1m, out string str2m, ref string str3m) => str2m = "in Mymethod";
 
     public static int Main(string[] args)
     {
-        Console.WriteLine ("Reflection.MethodBase.Attributes Sample");
+        Console.WriteLine("Reflection.MethodBase.Attributes Sample");
 
         // Get the type.
         Type MyType = Type.GetType("AttributesSample");
@@ -27,7 +24,7 @@ class AttributesSample
         MethodAttributes Myattributes = Mymethodbase.Attributes;
 
         // Display the flags that are set.
-        PrintAttributes(typeof(System.Reflection.MethodAttributes), (int) Myattributes);
+        PrintAttributes(typeof(System.Reflection.MethodAttributes), (int)Myattributes);
         return 0;
     }
 

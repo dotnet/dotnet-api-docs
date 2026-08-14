@@ -1,7 +1,7 @@
 ﻿// <Snippet4>
 using System;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
+
 
 public class RegexEx1
 {
@@ -11,8 +11,8 @@ public class RegexEx1
         // Set a timeout interval of -2 seconds.
         domain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromSeconds(-2));
 
-        Regex rgx = new Regex("[aeiouy]");
-        Console.WriteLine($"Regular expression pattern: {rgx.ToString()}");
+        Regex rgx = new("[aeiouy]");
+        Console.WriteLine($"Regular expression pattern: {rgx}");
         Console.WriteLine($"Timeout interval for this regex: {rgx.MatchTimeout.TotalSeconds} seconds");
     }
 }

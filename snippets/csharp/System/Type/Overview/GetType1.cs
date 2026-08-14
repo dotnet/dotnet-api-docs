@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 
 public class Example2
 {
     public static void Main()
     {
         // <Snippet2>
-        object[] values = { "word", true, 120, 136.34, 'a' };
-        foreach (var value in values)
+        object[] values = ["word", true, 120, 136.34, 'a'];
+        foreach (object value in values)
             Console.WriteLine($"{value} - type {value.GetType().Name}");
 
         // The example displays the following output:

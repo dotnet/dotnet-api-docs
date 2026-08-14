@@ -7,17 +7,17 @@ public class Example
 {
     public static void Main()
     {
-        Type t = typeof(String);
+        Type t = typeof(string);
         ShowTypeInfo(t);
 
         t = typeof(List<>);
         ShowTypeInfo(t);
 
-        var list = new List<String>();
+        var list = new List<string>();
         t = list.GetType();
         ShowTypeInfo(t);
 
-        Object v = 12;
+        object v = 12;
         t = v.GetType();
         ShowTypeInfo(t);
 

@@ -6,29 +6,29 @@ class MyFindMembersClass
 {
     public static void Main()
     {
-        Object objTest = new Object();
-        Type objType = objTest.GetType ();
+        object objTest = new();
+        Type objType = objTest.GetType();
         MemberInfo[] arrayMemberInfo;
         try
         {
             //Find all static or public methods in the Object class that match the specified name.
             arrayMemberInfo = objType.FindMembers(MemberTypes.Method,
-                BindingFlags.Public | BindingFlags.Static| BindingFlags.Instance,
+                BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance,
                 new MemberFilter(DelegateToSearchCriteria),
                 "ReferenceEquals");
 
-            for(int index=0;index < arrayMemberInfo.Length ;index++)
-                Console.WriteLine ("Result of FindMembers -\t"+ arrayMemberInfo[index].ToString() +"\n");
+            for (int index = 0; index < arrayMemberInfo.Length; index++)
+                Console.WriteLine("Result of FindMembers -\t" + arrayMemberInfo[index] + "\n");
         }
         catch (Exception e)
         {
-            Console.WriteLine ("Exception : " + e.ToString() );
+            Console.WriteLine("Exception : " + e);
         }
     }
-    public static bool DelegateToSearchCriteria(MemberInfo objMemberInfo, Object objSearch)
+    public static bool DelegateToSearchCriteria(MemberInfo objMemberInfo, object objSearch)
     {
         // Compare the name of the member function with the filter criteria.
-        if(objMemberInfo.Name.ToString() == objSearch.ToString())
+        if (objMemberInfo.Name == objSearch as string)
             return true;
         else
             return false;
