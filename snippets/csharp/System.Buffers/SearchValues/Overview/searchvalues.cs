@@ -84,6 +84,19 @@ public static class Strings
     // </SnippetStrings>
 }
 
+public static class SingleString
+{
+    // <SnippetSingleString>
+    private static readonly SearchValues<string> s_chunked =
+        SearchValues.Create(["chunked"], StringComparison.OrdinalIgnoreCase);
+
+    // Equivalent to text.IndexOf("chunked", StringComparison.OrdinalIgnoreCase),
+    // but faster because the value is analyzed once when the instance is created.
+    public static int IndexOfChunked(ReadOnlySpan<char> text) =>
+        text.IndexOfAny(s_chunked);
+    // </SnippetSingleString>
+}
+
 public static class SingleValues
 {
     // <SnippetContains>
