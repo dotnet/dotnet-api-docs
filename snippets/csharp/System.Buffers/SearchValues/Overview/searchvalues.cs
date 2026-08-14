@@ -55,7 +55,7 @@ public static class Validation
 
     // Rejects any value that contains a character outside of the allowed set.
     public static bool IsHexString(ReadOnlySpan<char> value) =>
-        !value.IsEmpty && !value.ContainsAnyExcept(s_hexDigits);
+        value.Length % 2 == 0 && !value.ContainsAnyExcept(s_hexDigits);
     // </SnippetValidation>
 }
 
