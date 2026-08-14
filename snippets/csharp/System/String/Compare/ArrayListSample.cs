@@ -1,7 +1,7 @@
 ﻿//<snippet7>
 using System;
-using System.Text;
 using System.Collections;
+using System.Text;
 
 public class SamplesArrayList
 {
@@ -10,20 +10,22 @@ public class SamplesArrayList
     {
         //<snippet1>
         // Creates and initializes a new ArrayList.
-        ArrayList myAL = new ArrayList();
-        myAL.Add("Eric");
-        myAL.Add("Mark");
-        myAL.Add("Lance");
-        myAL.Add("Rob");
-        myAL.Add("Kris");
-        myAL.Add("Brad");
-        myAL.Add("Kit");
-        myAL.Add("Bradley");
-        myAL.Add("Keith");
-        myAL.Add("Susan");
+        ArrayList myAL = new ArrayList()
+        {
+            "Eric",
+            "Mark",
+            "Lance",
+            "Rob",
+            "Kris",
+            "Brad",
+            "Kit",
+            "Bradley",
+            "Keith",
+            "Susan"
+        };
 
         // Displays the properties and values of	the	ArrayList.
-        Console.WriteLine("Count: {0}", myAL.Count);
+        Console.WriteLine($"Count: {myAL.Count}");
         //</snippet1>
 
         PrintValues("Unsorted", myAL);
@@ -43,7 +45,7 @@ public class SamplesArrayList
     //<snippet2>
     public static void PrintValues(string title, IEnumerable myList)
     {
-        Console.Write("{0,10}: ", title);
+        Console.Write($"{title,10}: ");
         StringBuilder sb = new StringBuilder();
         foreach (string s in myList)
         {
@@ -62,7 +64,7 @@ public class ReverseStringComparer : IComparer
         string? s1 = x as string;
         string? s2 = y as string;
         //negate the return value to get the reverse order
-        return -String.Compare(s1, s2);
+        return -string.Compare(s1, s2);
     }
 }
 //</snippet6>

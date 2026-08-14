@@ -4,24 +4,23 @@ using System.Globalization;
 
 public class Example
 {
-   public static void Main()
-   {
-      String[] cultureNames = { "da-DK", "en-US" };
-      CompareInfo ci;
-      String str = "aerial";
-      Char ch = 'æ';  // U+00E6
-      
-      Console.Write("Ordinal comparison -- ");
-      Console.WriteLine("Position of '{0}' in {1}: {2}", ch, str,
-                        str.IndexOf(ch));
-      
-      foreach (var cultureName in cultureNames) {
-         ci = CultureInfo.CreateSpecificCulture(cultureName).CompareInfo;
-         Console.Write("{0} cultural comparison -- ", cultureName);
-         Console.WriteLine("Position of '{0}' in {1}: {2}", ch, str,
-                           ci.IndexOf(str, ch));
-      }
-   }
+    public static void Main()
+    {
+        string[] cultureNames = ["da-DK", "en-US"];
+        CompareInfo ci;
+        string str = "aerial";
+        char ch = 'æ';  // U+00E6
+
+        Console.Write("Ordinal comparison -- ");
+        Console.WriteLine($"Position of '{ch}' in {str}: {str.IndexOf(ch)}");
+
+        foreach (string cultureName in cultureNames)
+        {
+            ci = CultureInfo.CreateSpecificCulture(cultureName).CompareInfo;
+            Console.Write($"{cultureName} cultural comparison -- ");
+            Console.WriteLine($"Position of '{ch}' in {str}: {ci.IndexOf(str, ch)}");
+        }
+    }
 }
 // The example displays the following output:
 //       Ordinal comparison -- Position of 'æ' in aerial: -1

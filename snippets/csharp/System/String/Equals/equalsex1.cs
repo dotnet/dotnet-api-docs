@@ -7,13 +7,13 @@ public class Example
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         string word = "File";
-        string[] others = { word.ToLower(), word, word.ToUpper(), "Fıle" };
+        string[] others = [word.ToLower(), word, word.ToUpper(), "Fıle"];
         foreach (string other in others)
         {
             if (word.Equals(other))
-                Console.WriteLine("{0} = {1}", word, other);
+                Console.WriteLine($"{word} = {other}");
             else
-                Console.WriteLine("{0} {1} {2}", word, '\u2260', other);
+                Console.WriteLine($"{word} {'\u2260'} {other}");
         }
     }
 }

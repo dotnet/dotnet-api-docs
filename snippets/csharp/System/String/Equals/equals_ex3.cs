@@ -7,21 +7,19 @@ public class Example3
 {
     public static void Main()
     {
-        String[] cultureNames = { "en-US", "th-TH", "tr-TR" };
-        String[] strings1 = { "a", "i", "case", };
-        String[] strings2 = { "a-", "\u0130", "Case" };
+        string[] cultureNames = ["en-US", "th-TH", "tr-TR"];
+        string[] strings1 = ["a", "i", "case",];
+        string[] strings2 = ["a-", "\u0130", "Case"];
         StringComparison[] comparisons = (StringComparison[])Enum.GetValues(typeof(StringComparison));
 
-        foreach (var cultureName in cultureNames)
+        foreach (string cultureName in cultureNames)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cultureName);
-            Console.WriteLine("Current Culture: {0}", CultureInfo.CurrentCulture.Name);
+            Console.WriteLine($"Current Culture: {CultureInfo.CurrentCulture.Name}");
             for (int ctr = 0; ctr <= strings1.GetUpperBound(0); ctr++)
             {
                 foreach (var comparison in comparisons)
-                    Console.WriteLine("   {0} = {1} ({2}): {3}", strings1[ctr],
-                                      strings2[ctr], comparison,
-                                      String.Equals(strings1[ctr], strings2[ctr], comparison));
+                    Console.WriteLine($"   {strings1[ctr]} = {strings2[ctr]} ({comparison}): {string.Equals(strings1[ctr], strings2[ctr], comparison)}");
 
                 Console.WriteLine();
             }

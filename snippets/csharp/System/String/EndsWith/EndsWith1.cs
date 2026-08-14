@@ -3,16 +3,16 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      String[] strings = { "This is a string.", "Hello!", "Nothing.", 
-                           "Yes.", "randomize" };
-      foreach (var value in strings) {
-         bool endsInPeriod = value.EndsWith(".");
-         Console.WriteLine("'{0}' ends in a period: {1}", 
-                           value, endsInPeriod);
-      }                            
-   }
+    public static void Run()
+    {
+        string[] strings = [ "This is a string.", "Hello!", "Nothing.",
+                           "Yes.", "randomize" ];
+        foreach (string value in strings)
+        {
+            bool endsInPeriod = value.EndsWith(".");
+            Console.WriteLine($"'{value}' ends in a period: {endsInPeriod}");
+        }
+    }
 }
 // The example displays the following output:
 //       'This is a string.' ends in a period: True
