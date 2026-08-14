@@ -1,32 +1,50 @@
 // <SnippetUsings>
 using System;
 using System.Buffers;
+using System.Globalization;
 using System.Text;
 // </SnippetUsings>
 
 namespace SearchValuesExamples;
 
-public static class Parsing
+public static class Escaping
 {
-    // <SnippetParsing>
+    // <SnippetEscaping>
     // Cache the SearchValues instance in a static readonly field so that the
     // optimized representation is computed once and reused for every search.
-    private static readonly SearchValues<char> s_delimiters = SearchValues.Create(";,");
+    private static readonly SearchValues<char> s_charsToEscape = SearchValues.Create("\"\\\b\f\n\r\t");
 
-    public static void PrintFields(ReadOnlySpan<char> line)
+    public static void AppendEscaped(StringBuilder builder, ReadOnlySpan<char> value)
     {
-        while (!line.IsEmpty)
+        while (true)
         {
-            // Find the next delimiter. IndexOfAny returns -1 when none of the values are present.
-            int index = line.IndexOfAny(s_delimiters);
+            // Find the next character that needs special treatment.
+            // IndexOfAny returns -1 when none of the values are present.
+            int index = value.IndexOfAny(s_charsToEscape);
+            if (index < 0)
+            {
+                builder.Append(value);
+                return;
+            }
 
-            ReadOnlySpan<char> field = index < 0 ? line : line[..index];
-            Console.WriteLine(field.Trim().ToString());
+            // Everything up to that point can be copied in bulk.
+            builder.Append(value[..index]);
 
-            line = index < 0 ? default : line[(index + 1)..];
+            builder.Append('\\');
+            builder.Append(value[index] switch
+            {
+                '\b' => 'b',
+                '\f' => 'f',
+                '\n' => 'n',
+                '\r' => 'r',
+                '\t' => 't',
+                char c => c,
+            });
+
+            value = value[(index + 1)..];
         }
     }
-    // </SnippetParsing>
+    // </SnippetEscaping>
 }
 
 public static class Validation
@@ -44,11 +62,16 @@ public static class Validation
 public static class Bytes
 {
     // <SnippetBytes>
-    // A UTF-8 literal ("u8") avoids allocating a string just to create the set.
-    private static readonly SearchValues<byte> s_newLineBytes = SearchValues.Create("\r\n"u8);
+    // Bytes that must be escaped in a JSON string: the quote, the backslash,
+    // and every control character. A UTF-8 literal ("u8") avoids allocating a
+    // string just to create the set.
+    private static readonly SearchValues<byte> s_bytesToEscape = SearchValues.Create(
+        "\"\\"u8 +
+        "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\u0008\u0009\u000A\u000B\u000C\u000D\u000E\u000F"u8 +
+        "\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001A\u001B\u001C\u001D\u001E\u001F"u8);
 
-    public static int IndexOfLineBreak(ReadOnlySpan<byte> utf8Text) =>
-        utf8Text.IndexOfAny(s_newLineBytes);
+    public static bool NeedsEscaping(ReadOnlySpan<byte> utf8Value) =>
+        utf8Value.ContainsAny(s_bytesToEscape);
     // </SnippetBytes>
 }
 
@@ -67,21 +90,36 @@ public static class Strings
 public static class SingleValues
 {
     // <SnippetContains>
-    private static readonly SearchValues<char> s_charsToEscape = SearchValues.Create("\\[]+*&,");
+    // Characters that change the meaning of a URI, so they must stay escaped.
+    private static readonly SearchValues<char> s_notSafeToUnescape = SearchValues.Create("#%/:?@[]\\");
 
-    // Each character is inspected as it's written out because the ones in the set
-    // expand into two characters. There's no span left to search, so Contains is
-    // the right choice here.
-    public static void AppendEscaped(StringBuilder builder, ReadOnlySpan<char> identifier)
+    public static void AppendUnescaped(StringBuilder builder, ReadOnlySpan<char> value)
     {
-        foreach (char c in identifier)
+        while (true)
         {
-            if (s_charsToEscape.Contains(c))
+            int index = value.IndexOf('%');
+            if (index < 0 || value.Length - index < 3)
             {
-                builder.Append('\\');
+                builder.Append(value);
+                return;
             }
 
-            builder.Append(c);
+            builder.Append(value[..index]);
+
+            ReadOnlySpan<char> escaped = value.Slice(index, 3);
+            value = value[(index + 3)..];
+
+            // The decoded character is computed one at a time, so there's no span
+            // to search and Contains is the right choice here.
+            if (!int.TryParse(escaped[1..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int codePoint) ||
+                s_notSafeToUnescape.Contains((char)codePoint))
+            {
+                builder.Append(escaped);
+            }
+            else
+            {
+                builder.Append((char)codePoint);
+            }
         }
     }
     // </SnippetContains>

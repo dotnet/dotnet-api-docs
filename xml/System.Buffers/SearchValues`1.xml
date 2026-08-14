@@ -48,15 +48,15 @@ Passing a <xref:System.Buffers.SearchValues%601> to one of the searching methods
 
 ## Common use cases
 
-Parsing is one of the most common uses. Cache the set of delimiters and use <xref:System.MemoryExtensions.IndexOfAny%2A> to jump to the next one:
+Escaping and encoding are among the most common uses. Use <xref:System.MemoryExtensions.IndexOfAny%2A> to skip ahead to the next element that needs special treatment, so that everything in between is processed in bulk. This pattern shows up throughout [dotnet/runtime](https://github.com/dotnet/runtime), for example when escaping JSON, JavaScript, or console output:
 
-:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetParsing":::
+:::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetEscaping":::
 
-Validation is another. Instead of testing each element in a loop, describe the set of allowed values once and use <xref:System.MemoryExtensions.ContainsAnyExcept%2A> to find out whether the input contains anything else. This pattern shows up throughout [dotnet/runtime](https://github.com/dotnet/runtime) and [dotnet/aspnetcore](https://github.com/dotnet/aspnetcore) for checking URIs, host names, header values, and file names:
+Validation is another. Instead of testing each element in a loop, describe the set of allowed values once and use <xref:System.MemoryExtensions.ContainsAnyExcept%2A> to find out whether the input contains anything else. [dotnet/runtime](https://github.com/dotnet/runtime) and [dotnet/aspnetcore](https://github.com/dotnet/aspnetcore) use this to check URIs, host names, header values, and file names:
 
 :::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetValidation":::
 
-The same applies to UTF-8 data. Create a <xref:System.Buffers.SearchValues%601> of <xref:System.Byte> from a UTF-8 literal to search the bytes without transcoding them first:
+The same applies to UTF-8 data. Create a <xref:System.Buffers.SearchValues%601> of <xref:System.Byte> from a UTF-8 literal to search the bytes without transcoding them first. The benefit grows with the number of values: the <xref:System.MemoryExtensions> overloads that take individual values only go up to three, and passing a longer span of values is slower than using a cached <xref:System.Buffers.SearchValues%601>:
 
 :::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetBytes":::
 
@@ -114,11 +114,11 @@ Testing individual values isn't the primary function of <xref:System.Buffers.Sea
 
 Use this method when you only have a single value at hand and there's no span to search, for example:
 
-- You're inspecting elements one at a time as part of a larger operation, such as copying, transforming, or escaping each element.
-- You've already located an element with one of the searching methods and want to classify the character that follows it.
+- You're inspecting or producing elements one at a time as part of a larger operation, such as decoding, transcoding, or transforming each element.
+- You've already located an element with one of the searching methods and want to classify the element that follows it.
 - You want to reuse an existing set of values as a general-purpose lookup table for a value you got from somewhere else.
 
-The following example escapes certain characters while copying an identifier. Because each character is inspected as it's written out, there's no span to search and `Contains` is the appropriate choice:
+The following example decodes percent-encoded sequences in a URI, but leaves the ones that would change the meaning of the URI escaped. Because each decoded character is computed on the fly, there's no span to search and `Contains` is the appropriate choice:
 
 :::code language="csharp" source="~/snippets/csharp/System.Buffers/SearchValues/Overview/searchvalues.cs" id="SnippetContains":::
 
