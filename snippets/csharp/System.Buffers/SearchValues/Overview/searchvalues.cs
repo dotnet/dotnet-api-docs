@@ -62,13 +62,9 @@ public static class Validation
 public static class Bytes
 {
     // <SnippetBytes>
-    // Bytes that must be escaped in a JSON string: the quote, the backslash,
-    // and every control character. A UTF-8 literal ("u8") avoids allocating a
-    // string just to create the set.
-    private static readonly SearchValues<byte> s_bytesToEscape = SearchValues.Create(
-        "\"\\"u8 +
-        "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\u0008\u0009\u000A\u000B\u000C\u000D\u000E\u000F"u8 +
-        "\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001A\u001B\u001C\u001D\u001E\u001F"u8);
+    // Bytes that are unsafe to write into HTML without escaping them first.
+    // A UTF-8 literal ("u8") avoids allocating a string just to create the set.
+    private static readonly SearchValues<byte> s_bytesToEscape = SearchValues.Create("\"&'+<=>`"u8);
 
     public static bool NeedsEscaping(ReadOnlySpan<byte> utf8Value) =>
         utf8Value.ContainsAny(s_bytesToEscape);
@@ -90,15 +86,17 @@ public static class Strings
 public static class SingleValues
 {
     // <SnippetContains>
-    // Characters that change the meaning of a URI, so they must stay escaped.
-    private static readonly SearchValues<char> s_notSafeToUnescape = SearchValues.Create("#%/:?@[]\\");
+    // Characters that aren't allowed to appear unescaped in the output.
+    private static readonly SearchValues<char> s_mustStayEscaped = SearchValues.Create("\"\\\b\f\n\r\t");
 
-    public static void AppendUnescaped(StringBuilder builder, ReadOnlySpan<char> value)
+    // Turns "\uXXXX" sequences back into the characters they represent, but
+    // keeps the ones that must stay escaped as they are.
+    public static void AppendDecoded(StringBuilder builder, ReadOnlySpan<char> value)
     {
         while (true)
         {
-            int index = value.IndexOf('%');
-            if (index < 0 || value.Length - index < 3)
+            int index = value.IndexOf("\\u");
+            if (index < 0 || value.Length - index < 6)
             {
                 builder.Append(value);
                 return;
@@ -106,22 +104,19 @@ public static class SingleValues
 
             builder.Append(value[..index]);
 
-            ReadOnlySpan<char> escaped = value.Slice(index, 3);
-            value = value[(index + 3)..];
+            ReadOnlySpan<char> escaped = value.Slice(index, 6);
+            value = value[(index + 6)..];
 
-            // Only ASCII bytes are decoded here. Anything else is part of a
-            // multi-byte UTF-8 sequence and is left as-is.
             // The decoded character is computed one at a time, so there's no span
             // to search and Contains is the right choice here.
-            if (!int.TryParse(escaped[1..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int codePoint) ||
-                codePoint > 0x7F ||
-                s_notSafeToUnescape.Contains((char)codePoint))
+            if (!ushort.TryParse(escaped[2..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ushort decoded) ||
+                s_mustStayEscaped.Contains((char)decoded))
             {
                 builder.Append(escaped);
             }
             else
             {
-                builder.Append((char)codePoint);
+                builder.Append((char)decoded);
             }
         }
     }
