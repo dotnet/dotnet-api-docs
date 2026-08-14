@@ -7,11 +7,23 @@ using System.Text;
 
 namespace SearchValuesExamples;
 
+public static class Validation
+{
+    // <SnippetValidation>
+    // Cache the SearchValues instance in a static readonly field so that the
+    // optimized representation is computed once and reused for every search.
+    private static readonly SearchValues<char> s_hexDigits =
+        SearchValues.Create("0123456789ABCDEFabcdef");
+
+    // Rejects any value that contains a character outside of the allowed set.
+    public static bool IsHexString(ReadOnlySpan<char> value) =>
+        value.Length % 2 == 0 && !value.ContainsAnyExcept(s_hexDigits);
+    // </SnippetValidation>
+}
+
 public static class Escaping
 {
     // <SnippetEscaping>
-    // Cache the SearchValues instance in a static readonly field so that the
-    // optimized representation is computed once and reused for every search.
     private static readonly SearchValues<char> s_charsToEscape = SearchValues.Create("\"\\\b\f\n\r\t");
 
     public static void AppendEscaped(StringBuilder builder, ReadOnlySpan<char> value)
@@ -45,18 +57,6 @@ public static class Escaping
         }
     }
     // </SnippetEscaping>
-}
-
-public static class Validation
-{
-    // <SnippetValidation>
-    private static readonly SearchValues<char> s_hexDigits =
-        SearchValues.Create("0123456789ABCDEFabcdef");
-
-    // Rejects any value that contains a character outside of the allowed set.
-    public static bool IsHexString(ReadOnlySpan<char> value) =>
-        value.Length % 2 == 0 && !value.ContainsAnyExcept(s_hexDigits);
-    // </SnippetValidation>
 }
 
 public static class Bytes
