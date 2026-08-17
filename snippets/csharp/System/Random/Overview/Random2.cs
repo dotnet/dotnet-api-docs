@@ -13,37 +13,37 @@ public class Class2
         rand.NextBytes(bytes);
         Console.WriteLine("Five random byte values:");
         foreach (byte byteValue in bytes)
-            Console.Write("{0, 5}", byteValue);
+            Console.Write($"{byteValue,5}");
         Console.WriteLine();
 
         // Generate and display 5 random integers.
         Console.WriteLine("Five random integer values:");
         for (int ctr = 0; ctr <= 4; ctr++)
-            Console.Write("{0,15:N0}", rand.Next());
+            Console.Write($"{rand.Next(),15:N0}");
         Console.WriteLine();
 
         // Generate and display 5 random integers between 0 and 100.
         Console.WriteLine("Five random integers between 0 and 100:");
         for (int ctr = 0; ctr <= 4; ctr++)
-            Console.Write("{0,8:N0}", rand.Next(101));
+            Console.Write($"{rand.Next(101),8:N0}");
         Console.WriteLine();
 
         // Generate and display 5 random integers from 50 to 100.
         Console.WriteLine("Five random integers between 50 and 100:");
         for (int ctr = 0; ctr <= 4; ctr++)
-            Console.Write("{0,8:N0}", rand.Next(50, 101));
+            Console.Write($"{rand.Next(50, 101),8:N0}");
         Console.WriteLine();
 
         // Generate and display 5 random floating point values from 0 to 1.
         Console.WriteLine("Five Doubles.");
         for (int ctr = 0; ctr <= 4; ctr++)
-            Console.Write("{0,8:N3}", rand.NextDouble());
+            Console.Write($"{rand.NextDouble(),8:N3}");
         Console.WriteLine();
 
         // Generate and display 5 random floating point values from 0 to 5.
         Console.WriteLine("Five Doubles between 0 and 5.");
         for (int ctr = 0; ctr <= 4; ctr++)
-            Console.Write("{0,8:N3}", rand.NextDouble() * 5);
+            Console.Write($"{rand.NextDouble() * 5,8:N3}");
 
         // The example displays output like the following:
         //    Five random byte values:

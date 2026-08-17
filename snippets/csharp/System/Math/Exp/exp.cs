@@ -8,10 +8,10 @@ class ExpDemo
     {
         Console.WriteLine(
             "This example of Math.Exp( double ) " +
-            "generates the following output.\n" );
+            "generates the following output.\n");
         Console.WriteLine(
             "Evaluate [e ^ ln(X) == ln(e ^ X) == X] " +
-            "with selected values for X:" );
+            "with selected values for X:");
 
         UseLnExp(0.1);
         UseLnExp(1.2);
@@ -20,10 +20,10 @@ class ExpDemo
 
         Console.WriteLine(
             "\nEvaluate these identities with " +
-            "selected values for X and Y:" );
-        Console.WriteLine( "   (e ^ X) * (e ^ Y) == e ^ (X + Y)" );
-        Console.WriteLine( "   (e ^ X) ^ Y == e ^ (X * Y)" );
-        Console.WriteLine( "   X ^ Y == e ^ (Y * ln(X))" );
+            "selected values for X and Y:");
+        Console.WriteLine("   (e ^ X) * (e ^ Y) == e ^ (X + Y)");
+        Console.WriteLine("   (e ^ X) ^ Y == e ^ (X * Y)");
+        Console.WriteLine("   X ^ Y == e ^ (Y * ln(X))");
 
         UseTwoArgs(0.1, 1.2);
         UseTwoArgs(1.2, 4.9);
@@ -37,7 +37,7 @@ class ExpDemo
         Console.WriteLine(
             "\n      Math.Exp(Math.Log({0})) == {1:E16}\n" +
             "      Math.Log(Math.Exp({0})) == {2:E16}",
-            arg, Math.Exp(Math.Log(arg)), Math.Log(Math.Exp(arg)) );
+            arg, Math.Exp(Math.Log(arg)), Math.Log(Math.Exp(arg)));
     }
 
     // Evaluate exponential identities that are functions of two arguments.
@@ -48,21 +48,21 @@ class ExpDemo
             "\nMath.Exp({0}) * Math.Exp({1}) == {2:E16}" +
             "\n          Math.Exp({0} + {1}) == {3:E16}",
             argX, argY, Math.Exp(argX) * Math.Exp(argY),
-            Math.Exp(argX + argY) );
+            Math.Exp(argX + argY));
 
         // Evaluate (e ^ X) ^ Y == e ^ (X * Y).
         Console.WriteLine(
             " Math.Pow(Math.Exp({0}), {1}) == {2:E16}" +
             "\n          Math.Exp({0} * {1}) == {3:E16}",
             argX, argY, Math.Pow(Math.Exp(argX), argY),
-            Math.Exp(argX * argY) );
+            Math.Exp(argX * argY));
 
         // Evaluate X ^ Y == e ^ (Y * ln(X)).
         Console.WriteLine(
             "           Math.Pow({0}, {1}) == {2:E16}" +
             "\nMath.Exp({1} * Math.Log({0})) == {3:E16}",
             argX, argY, Math.Pow(argX, argY),
-            Math.Exp(argY * Math.Log(argX)) );
+            Math.Exp(argY * Math.Log(argX)));
     }
 }
 

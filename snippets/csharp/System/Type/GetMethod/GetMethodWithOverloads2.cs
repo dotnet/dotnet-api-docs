@@ -4,13 +4,10 @@ using System.Reflection;
 
 public class Person
 {
-    public String FirstName;
-    public String LastName;
+    public string FirstName;
+    public string LastName;
 
-    public override String ToString()
-    {
-        return (FirstName + " " + LastName).Trim();
-    }
+    public override string ToString() => (FirstName + " " + LastName).Trim();
 }
 
 public class Example2
@@ -20,25 +17,23 @@ public class Example2
         Type t = typeof(Person);
         RetrieveMethod(t, "ToString");
 
-        t = typeof(Int32);
+        t = typeof(int);
         RetrieveMethod(t, "ToString");
     }
 
-    private static void RetrieveMethod(Type t, String name)
+    private static void RetrieveMethod(Type t, string name)
     {
         try
         {
             MethodInfo m = t.GetMethod(name);
             if (m != null)
-                Console.WriteLine("{0}.{1}: {2} method", m.ReflectedType.Name,
-                                  m.Name, m.IsStatic ? "Static" : "Instance");
+                Console.WriteLine($"{m.ReflectedType.Name}.{m.Name}: {(m.IsStatic ? "Static" : "Instance")} method");
             else
-                Console.WriteLine("{0}.ToString method not found", t.Name);
+                Console.WriteLine($"{t.Name}.ToString method not found");
         }
         catch (AmbiguousMatchException)
         {
-            Console.WriteLine("{0}.{1} has multiple public overloads.",
-                              t.Name, name);
+            Console.WriteLine($"{t.Name}.{name} has multiple public overloads.");
         }
     }
 }

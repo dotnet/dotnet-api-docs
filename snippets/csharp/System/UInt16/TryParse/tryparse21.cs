@@ -2,56 +2,56 @@
 using System;
 using System.Globalization;
 
-public class Example
+public class UInt32TryParseStylesExample
 {
-   public static void Main()
-   {
-      string numericString;
-      NumberStyles styles;
-      
-      numericString = "2106034";
-      styles = NumberStyles.Integer;
-      CallTryParse(numericString, styles);
-      
-      numericString = "-10603";
-      styles = NumberStyles.None;
-      CallTryParse(numericString, styles);
-      
-      numericString = "29103674.00";
-      styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
-      CallTryParse(numericString, styles);
-      
-      numericString = "10345.72";
-      styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
-      CallTryParse(numericString, styles);
+    public static void Run()
+    {
+        string numericString;
+        NumberStyles styles;
 
-      numericString = "41792210E-01";
-      styles = NumberStyles.Integer | NumberStyles.AllowExponent;
-      CallTryParse(numericString, styles); 
-      
-      numericString = "9112E-01";
-      CallTryParse(numericString, styles);
-          
-      numericString = "312E01";
-      CallTryParse(numericString, styles); 
-      
-      numericString = "FFC86DA1";
-      CallTryParse(numericString, NumberStyles.HexNumber);
-      
-      numericString = "0x8F8C";
-      CallTryParse(numericString, NumberStyles.HexNumber);
-   }
-   
-   private static void CallTryParse(string stringToConvert, NumberStyles styles)
-   {
-      uint number;
-      bool result = UInt32.TryParse(stringToConvert, styles, 
-                                   CultureInfo.InvariantCulture, out number);
-      if (result)
-         Console.WriteLine($"Converted '{stringToConvert}' to {number}.");
-      else
-         Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
-   }
+        numericString = "2106034";
+        styles = NumberStyles.Integer;
+        CallTryParse(numericString, styles);
+
+        numericString = "-10603";
+        styles = NumberStyles.None;
+        CallTryParse(numericString, styles);
+
+        numericString = "29103674.00";
+        styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
+        CallTryParse(numericString, styles);
+
+        numericString = "10345.72";
+        styles = NumberStyles.Integer | NumberStyles.AllowDecimalPoint;
+        CallTryParse(numericString, styles);
+
+        numericString = "41792210E-01";
+        styles = NumberStyles.Integer | NumberStyles.AllowExponent;
+        CallTryParse(numericString, styles);
+
+        numericString = "9112E-01";
+        CallTryParse(numericString, styles);
+
+        numericString = "312E01";
+        CallTryParse(numericString, styles);
+
+        numericString = "FFC86DA1";
+        CallTryParse(numericString, NumberStyles.HexNumber);
+
+        numericString = "0x8F8C";
+        CallTryParse(numericString, NumberStyles.HexNumber);
+    }
+
+    private static void CallTryParse(string stringToConvert, NumberStyles styles)
+    {
+        uint number;
+        bool result = uint.TryParse(stringToConvert, styles,
+                                     CultureInfo.InvariantCulture, out number);
+        if (result)
+            Console.WriteLine($"Converted '{stringToConvert}' to {number}.");
+        else
+            Console.WriteLine($"Attempted conversion of '{stringToConvert}' failed.");
+    }
 }
 // The example displays the following output:
 //       Converted '2106034' to 2106034.

@@ -1,12 +1,13 @@
 ﻿//<SnippetAll>
 using System;
 using System.Threading;
+using LargeObject = LargeObjectCtorExample1;
 
-class Program
+class LazyCtorExample1
 {
     static Lazy<LargeObject> lazyLargeObject = null;
 
-    static void Main()
+    public static void Run()
     {
         // The lazy initializer is created here. LargeObject is not created until the
         // ThreadProc method executes.
@@ -25,7 +26,7 @@ class Program
         Console.ReadLine();
 
         // Create and start 3 threads, passing the same blocking event to all of them.
-        ManualResetEvent startingGate = new ManualResetEvent(false);
+        ManualResetEvent startingGate = new(false);
         Thread[] threads = { new Thread(ThreadProc), new Thread(ThreadProc), new Thread(ThreadProc) };
         foreach (Thread t in threads)
         {
@@ -49,7 +50,7 @@ class Program
     static void ThreadProc(object state)
     {
         // Wait for the signal.
-        ManualResetEvent waitForStart = (ManualResetEvent) state;
+        ManualResetEvent waitForStart = (ManualResetEvent)state;
         waitForStart.WaitOne();
 
         //<SnippetValueProp>
@@ -62,7 +63,7 @@ class Program
         // IMPORTANT: Lazy initialization is thread-safe, but it doesn't protect the
         //            object after creation. You must lock the object before accessing it,
         //            unless the type is thread safe. (LargeObject is not thread safe.)
-        lock(large)
+        lock (large)
         {
             large.Data[0] = Thread.CurrentThread.ManagedThreadId;
             Console.WriteLine("Initialized by thread {0}; last used by thread {1}.",
@@ -71,12 +72,12 @@ class Program
     }
 }
 
-class LargeObject
+class LargeObjectCtorExample1
 {
     int initBy = 0;
-    public int InitializedBy { get { return initBy; } }
+    public int InitializedBy => initBy;
 
-    public LargeObject()
+    public LargeObjectCtorExample1()
     {
         initBy = Thread.CurrentThread.ManagedThreadId;
         Console.WriteLine("LargeObject was created on thread id {0}.", initBy);

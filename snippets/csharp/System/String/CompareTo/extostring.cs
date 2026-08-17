@@ -2,30 +2,30 @@
 using System;
 
 public class TestClass
-{}
+{ }
 
-public class Example
+public class CompareToObjectExample
 {
-   public static void Main()
-   {
-      var test = new TestClass();
-      Object[] objectsToCompare = { test, test.ToString(), 123,
+    public static void Run()
+    {
+        var test = new TestClass();
+        object[] objectsToCompare = [ test, test.ToString(), 123,
                                     123.ToString(), "some text",
-                                    "Some Text" };
-      string s = "some text";
-      foreach (var objectToCompare in objectsToCompare) {
-         try {
-            int i = s.CompareTo(objectToCompare);
-            Console.WriteLine("Comparing '{0}' with '{1}': {2}",
-                              s, objectToCompare, i);
-         }
-         catch (ArgumentException) {
-            Console.WriteLine("Bad argument: {0} (type {1})",
-                              objectToCompare,
-                              objectToCompare.GetType().Name);
-         }
-      }
-   }
+                                    "Some Text" ];
+        string s = "some text";
+        foreach (object objectToCompare in objectsToCompare)
+        {
+            try
+            {
+                int i = s.CompareTo(objectToCompare);
+                Console.WriteLine($"Comparing '{s}' with '{objectToCompare}': {i}");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine($"Bad argument: {objectToCompare} (type {objectToCompare.GetType().Name})");
+            }
+        }
+    }
 }
 // The example displays the following output:
 //    Bad argument: TestClass (type TestClass)

@@ -1,13 +1,13 @@
 ﻿// <Snippet24>
 using System;
 
-public class Example
+public class IndexOfIgnorable24Example
 {
-    public static void Main()
+    public static void Run()
     {
 
         string searchString = "\u00ADm";
-        string s1 = "ani\u00ADmal" ;
+        string s1 = "ani\u00ADmal";
         string s2 = "animal";
 
         Console.WriteLine(s1.IndexOf(searchString, 2, 4, StringComparison.CurrentCulture));

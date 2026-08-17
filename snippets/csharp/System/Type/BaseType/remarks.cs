@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 
 // <Snippet1>
 class B<U> { }
@@ -7,5 +7,5 @@ class C<T> : B<T> { }
 
 class ProgStubClass
 {
-    public static void Main() {}
+    public static void Main() { }
 }

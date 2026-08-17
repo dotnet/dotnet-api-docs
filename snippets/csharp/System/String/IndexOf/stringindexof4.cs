@@ -1,8 +1,10 @@
 ﻿//<snippet1>
 using System;
 
-public class IndexOfTest {
-    public static void Main() {
+public class IndexOfTest
+{
+    public static void Run()
+    {
 
         string strSource = "This is the string which we will perform the search on";
 
@@ -12,18 +14,22 @@ public class IndexOfTest {
         int found = 0;
         int totFinds = 0;
 
-        do {
+        do
+        {
             Console.Write("Please enter a search value to look for in the above string (hit Enter to exit) ==> ");
 
             strTarget = Console.ReadLine();
 
-            if (strTarget != "") {
+            if (strTarget != "")
+            {
 
-                for (int i = 0; i < strSource.Length; i++) {
+                for (int i = 0; i < strSource.Length; i++)
+                {
 
                     found = strSource.IndexOf(strTarget, i);
 
-                    if (found >= 0) {
+                    if (found >= 0)
+                    {
                         totFinds++;
                         i = found;
                     }
@@ -42,7 +48,7 @@ public class IndexOfTest {
                     Environment.NewLine, strTarget, totFinds);
 
             totFinds = 0;
-        } while ( true );
+        } while (true);
     }
 }
 // </snippet1>

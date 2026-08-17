@@ -5,9 +5,9 @@ class ProgStubClass
 {
     public static void Main()
     {
-// <Snippet1>
+        // <Snippet1>
         Type t = typeof(List<string>).GetMethod("ConvertAll").GetGenericArguments()[0].DeclaringType;
-// </Snippet1>
-        Console.WriteLine("Declaring type: {0:s}", t.FullName);
+        // </Snippet1>
+        Console.WriteLine($"Declaring type: {t.FullName:s}");
     }
 }

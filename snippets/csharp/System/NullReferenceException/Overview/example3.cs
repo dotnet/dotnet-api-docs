@@ -1,4 +1,4 @@
-// <Snippet12>
+﻿// <Snippet12>
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -12,15 +12,12 @@ public class NullReferenceExample
         _ = GetList(listType);
     }
 
-    private static Type GetListType()
-    {
-        return typeof(List<int>);
-    }
+    private static Type GetListType() => typeof(List<int>);
 
     private static IList GetList(Type type)
     {
         var emptyList = (IList)FormatterServices.GetUninitializedObject(type); // Does not call list constructor
-        var value = 1;
+        int value = 1;
         emptyList.Add(value);
         return emptyList;
     }

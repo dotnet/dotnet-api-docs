@@ -4,53 +4,51 @@ using System;
 
 class GetHashCode
 {
-    static void DisplayHashCode( TimeSpan interval )
+    static void DisplayHashCode(TimeSpan interval)
     {
-        // Create a hash code and a string representation of 
+        // Create a hash code and a string representation of
         // the TimeSpan parameter.
-        string  timeInterval = interval.ToString( );
-        int     hashCode = interval.GetHashCode( );
+        string timeInterval = interval.ToString();
+        int hashCode = interval.GetHashCode();
 
-        // Pad the end of the TimeSpan string with spaces if it 
+        // Pad the end of the TimeSpan string with spaces if it
         // does not contain milliseconds.
-        int pIndex = timeInterval.IndexOf( ':' );
-        pIndex = timeInterval.IndexOf( '.', pIndex );
-        if( pIndex < 0 )   timeInterval += "        ";
+        int pIndex = timeInterval.IndexOf(':');
+        pIndex = timeInterval.IndexOf('.', pIndex);
+        if (pIndex < 0) timeInterval += "        ";
 
-        Console.WriteLine( "{0,22}   0x{1:X8}, {1}", 
-            timeInterval, hashCode );
+        Console.WriteLine("{0,22}   0x{1:X8}, {1}",
+            timeInterval, hashCode);
     }
 
-    static void Main( )
+    static void Main()
     {
         Console.WriteLine(
             "This example of TimeSpan.GetHashCode( ) generates " +
             "the following \noutput, which displays " +
             "the hash codes of representative TimeSpan \n" +
-            "objects in hexadecimal and decimal formats.\n" );
-        Console.WriteLine( "{0,22}   {1,10}", 
-            "TimeSpan        ", "Hash Code" );
-        Console.WriteLine( "{0,22}   {1,10}", 
-            "--------        ", "---------" );
+            "objects in hexadecimal and decimal formats.\n");
+        Console.WriteLine($"{"TimeSpan        ",22}   {"Hash Code",10}");
+        Console.WriteLine($"{"--------        ",22}   {"---------",10}");
 
-        DisplayHashCode( new TimeSpan( 0 ) );
-        DisplayHashCode( new TimeSpan( 1 ) );
-        DisplayHashCode( new TimeSpan( 0, 0, 0, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 0, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 0, 1, 0 ) );
-        DisplayHashCode( new TimeSpan( 1, 0, 0 ) );
-        DisplayHashCode( new TimeSpan( 36000000001 ) );
-        DisplayHashCode( new TimeSpan( 0, 1, 0, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 1, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 1, 0, 0, 0 ) );
-        DisplayHashCode( new TimeSpan( 864000000001 ) );
-        DisplayHashCode( new TimeSpan( 1, 0, 0, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 1, 0, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 100, 0, 0, 0 ) );
-        DisplayHashCode( new TimeSpan( 100, 0, 0, 0, 1 ) );
-        DisplayHashCode( new TimeSpan( 100, 0, 0, 1 ) );
-    } 
-} 
+        DisplayHashCode(new TimeSpan(0));
+        DisplayHashCode(new TimeSpan(1));
+        DisplayHashCode(new TimeSpan(0, 0, 0, 0, 1));
+        DisplayHashCode(new TimeSpan(0, 0, 1));
+        DisplayHashCode(new TimeSpan(0, 1, 0));
+        DisplayHashCode(new TimeSpan(1, 0, 0));
+        DisplayHashCode(new TimeSpan(36000000001));
+        DisplayHashCode(new TimeSpan(0, 1, 0, 0, 1));
+        DisplayHashCode(new TimeSpan(1, 0, 1));
+        DisplayHashCode(new TimeSpan(1, 0, 0, 0));
+        DisplayHashCode(new TimeSpan(864000000001));
+        DisplayHashCode(new TimeSpan(1, 0, 0, 0, 1));
+        DisplayHashCode(new TimeSpan(1, 0, 0, 1));
+        DisplayHashCode(new TimeSpan(100, 0, 0, 0));
+        DisplayHashCode(new TimeSpan(100, 0, 0, 0, 1));
+        DisplayHashCode(new TimeSpan(100, 0, 0, 1));
+    }
+}
 
 /*
 This example of TimeSpan.GetHashCode( ) generates the following
@@ -75,5 +73,5 @@ objects in hexadecimal and decimal formats.
   100.00:00:00           0x914F4E94, -1857073516
   100.00:00:00.0010000   0x914F6984, -1857066620
   100.00:00:01           0x91E7D814, -1847076844
-*/ 
+*/
 //</snippet1>

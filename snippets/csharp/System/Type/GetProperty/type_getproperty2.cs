@@ -25,7 +25,7 @@ public class MyTypeClass2
                 );
 
             // Display Name property to console.
-            Console.WriteLine("{0} is a property of MyClass2.", myPropInfo.Name);
+            Console.WriteLine($"{myPropInfo.Name} is a property of MyClass2.");
         }
         catch (NullReferenceException e)
         {

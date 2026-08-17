@@ -9,23 +9,20 @@ public class MyDefaultBinderSample
         try
         {
             Binder defaultBinder = Type.DefaultBinder;
-            MyClass myClass = new MyClass();
+            MyClass myClass = new();
             // Invoke the HelloWorld method of MyClass.
             myClass.GetType().InvokeMember("HelloWorld", BindingFlags.InvokeMethod,
-                defaultBinder, myClass, new object [] {});
+                defaultBinder, myClass, []);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine("Exception :" + e.Message);
         }
-    }	
+    }
 
     class MyClass
     {
-        public void HelloWorld()
-        {
-            Console.WriteLine("Hello World");
-        }	
+        public void HelloWorld() => Console.WriteLine("Hello World");
     }
 }
 // </Snippet1>

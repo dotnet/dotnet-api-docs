@@ -4,55 +4,53 @@ using System.Collections;
 
 public class Item2Comparer<T1, T2, T3> : IEqualityComparer
 {
-   new public bool Equals(object x, object y)
-   {
-      // Return true for all values of Item1.
-      if (x is T1)
-         return true;
-      else if (x is T2)
-         return x.Equals(y);
-      else
-         return true;	
-   }
-   
-   public int GetHashCode(object obj)
-   {
-      if (obj is T1)
-         return ((T1) obj).GetHashCode();
-      else if (obj is T2)
-         return ((T2) obj).GetHashCode();
-      else
-         return ((T3) obj).GetHashCode();
-   }                
+    new public bool Equals(object x, object y)
+    {
+        // Return true for all values of Item1.
+        if (x is T1)
+            return true;
+        else if (x is T2)
+            return x.Equals(y);
+        else
+            return true;
+    }
+
+    public int GetHashCode(object obj)
+    {
+        if (obj is T1)
+            return ((T1)obj).GetHashCode();
+        else if (obj is T2)
+            return ((T2)obj).GetHashCode();
+        else
+            return ((T3)obj).GetHashCode();
+    }
 }
 
-public class Example
+public class EqualsExample2
 {
-   public static void Main()
-   {
-      Tuple<string, double, int>[] scores = 
-           { Tuple.Create("Ed", 78.8, 8),
-             Tuple.Create("Abbey", 92.1, 9), 
+    public static void Run()
+    {
+        Tuple<string, double, int>[] scores =
+             [ Tuple.Create("Ed", 78.8, 8),
+             Tuple.Create("Abbey", 92.1, 9),
              Tuple.Create("Jim", 71.2, 9),
-             Tuple.Create("Sam", 91.7, 8), 
+             Tuple.Create("Sam", 91.7, 8),
              Tuple.Create("Sandy", 71.2, 5),
              Tuple.Create("Penelope", 82.9, 8),
              Tuple.Create("Serena", 71.2, 9),
-             Tuple.Create("Judith", 84.3, 9) };
+             Tuple.Create("Judith", 84.3, 9) ];
 
-      for (int ctr = 0; ctr < scores.Length; ctr++)
-      {
-         IStructuralEquatable score = scores[ctr];
-         for (int ctr2 = ctr + 1; ctr2 < scores.Length; ctr2++)
-         {
-            Console.WriteLine("{0} = {1}: {2}", score, 
-                              scores[ctr2], 
-                              score.Equals(scores[ctr2], 
-                                           new Item2Comparer<string, double, int>()));
-         }
-         Console.WriteLine();
-      }   
-   }
+        for (int ctr = 0; ctr < scores.Length; ctr++)
+        {
+            IStructuralEquatable score = scores[ctr];
+            for (int ctr2 = ctr + 1; ctr2 < scores.Length; ctr2++)
+            {
+                Console.WriteLine($"{score} = {scores[ctr2]}: {score.Equals(scores[ctr2],
+                                               new Item2Comparer<string, double, int>())}");
+            }
+            Console.WriteLine();
+        }
+    }
 }
 // The example displays the following output:
 //      (Ed, 78.8, 8) = (Abbey, 92.1, 9): False
@@ -69,7 +67,7 @@ public class Example
 //      (Abbey, 92.1, 9) = (Penelope, 82.9, 8): False
 //      (Abbey, 92.1, 9) = (Serena, 71.2, 9): False
 //      (Abbey, 92.1, 9) = (Judith, 84.3, 9): False
-//      
+//
 //      (Jim, 71.2, 9) = (Sam, 91.7, 8): False
 //      (Jim, 71.2, 9) = (Sandy, 71.2, 5): True
 //      (Jim, 71.2, 9) = (Penelope, 82.9, 8): False

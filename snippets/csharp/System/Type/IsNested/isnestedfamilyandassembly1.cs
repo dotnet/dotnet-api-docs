@@ -5,41 +5,42 @@ using System;
 public class OuterClass
 {
     private class PrivateClass
-    {}
+    { }
 
     protected class ProtectedClass
-    {}
+    { }
 
     internal class InternalClass
-    {}
+    { }
 
     protected internal class ProtectedInternalClass
-    {}
+    { }
 
     public class PublicClass
-    {}
+    { }
 
     public static void Main()
     {
         // Create an array of Type objects for all the classes.
-        Type[] types = { typeof(OuterClass),
-                         typeof(OuterClass.PublicClass),
-                         typeof(OuterClass.PrivateClass),
-                         typeof(OuterClass.ProtectedClass),
-                         typeof(OuterClass.InternalClass),
-                         typeof(OuterClass.ProtectedInternalClass) };
+        Type[] types = [typeof(OuterClass),
+                        typeof(OuterClass.PublicClass),
+                        typeof(OuterClass.PrivateClass),
+                        typeof(OuterClass.ProtectedClass),
+                        typeof(OuterClass.InternalClass),
+                        typeof(OuterClass.ProtectedInternalClass)];
         // Display the property values of each nested class.
-        foreach (var type in types) {
-           Console.WriteLine("\n{0} property values:", type.Name);
-           Console.WriteLine("   Public Class: {0}", type.IsPublic);
-           Console.WriteLine("   Not a Public Class: {0}", type.IsNotPublic);
-           Console.WriteLine("   Nested Class: {0}", type.IsNested);
-           Console.WriteLine("   Nested Private Class: {0}", type.IsNestedPrivate);
-           Console.WriteLine("   Nested Internal Class: {0}", type.IsNestedAssembly);
-           Console.WriteLine("   Nested Protected Class: {0}", type.IsNestedFamily);
-           Console.WriteLine("   Nested Family Or Assembly Class: {0}", type.IsNestedFamORAssem);
-           Console.WriteLine("   Nested Family And Assembly Class: {0}", type.IsNestedFamANDAssem);
-           Console.WriteLine("   Nested Public Class: {0}", type.IsNestedPublic);
+        foreach (var type in types)
+        {
+            Console.WriteLine($"\n{type.Name} property values:");
+            Console.WriteLine($"   Public Class: {type.IsPublic}");
+            Console.WriteLine($"   Not a Public Class: {type.IsNotPublic}");
+            Console.WriteLine($"   Nested Class: {type.IsNested}");
+            Console.WriteLine($"   Nested Private Class: {type.IsNestedPrivate}");
+            Console.WriteLine($"   Nested Internal Class: {type.IsNestedAssembly}");
+            Console.WriteLine($"   Nested Protected Class: {type.IsNestedFamily}");
+            Console.WriteLine($"   Nested Family Or Assembly Class: {type.IsNestedFamORAssem}");
+            Console.WriteLine($"   Nested Family And Assembly Class: {type.IsNestedFamANDAssem}");
+            Console.WriteLine($"   Nested Public Class: {type.IsNestedPublic}");
         }
     }
 }

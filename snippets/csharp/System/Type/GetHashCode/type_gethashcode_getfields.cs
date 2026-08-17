@@ -5,37 +5,36 @@ using System.Reflection;
 
 class FieldsSample
 {
-    public static void Main()						
+    public static void Main()
     {
         Type myType = typeof(System.Net.IPAddress);
-        FieldInfo [] myFields = myType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-        Console.WriteLine ("\nThe IPAddress class has the following nonpublic fields: ");
+        FieldInfo[] myFields = myType.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+        Console.WriteLine("\nThe IPAddress class has the following nonpublic fields: ");
         foreach (FieldInfo myField in myFields)
         {
-            Console.WriteLine(myField.ToString());
+            Console.WriteLine(myField);
         }
         Type myType1 = typeof(System.Net.IPAddress);
-        FieldInfo [] myFields1 = myType1.GetFields();
-        Console.WriteLine ("\nThe IPAddress class has the following public fields: ");
+        FieldInfo[] myFields1 = myType1.GetFields();
+        Console.WriteLine("\nThe IPAddress class has the following public fields: ");
         foreach (FieldInfo myField in myFields1)
         {
-            Console.WriteLine(myField.ToString());
+            Console.WriteLine(myField);
         }
         try
         {
-            Console.WriteLine("The HashCode of the System.Windows.Forms.Button type is: {0}",
-                typeof(System.Windows.Forms.Button).GetHashCode());
-        }		
-        catch(SecurityException e)
-        {
-            Console.WriteLine("An exception occurred.");
-            Console.WriteLine("Message: "+e.Message);
+            Console.WriteLine($"The HashCode of the System.Windows.Forms.Button type is: {typeof(System.Windows.Forms.Button).GetHashCode()}");
         }
-        catch(Exception e)
+        catch (SecurityException e)
         {
             Console.WriteLine("An exception occurred.");
-            Console.WriteLine("Message: "+e.Message);
-        }		
+            Console.WriteLine("Message: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("An exception occurred.");
+            Console.WriteLine("Message: " + e.Message);
+        }
     }
-}	
+}
 // </Snippet1>

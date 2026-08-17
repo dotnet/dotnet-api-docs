@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class TrimExample
 {
     // <Snippet3>
-    public static void Main()
+    public static void Run()
     {
-        string[] lines = {"using System;",
+        string[] lines = ["using System;",
                        "",
                        "public class HelloWorld",
                        "{",
@@ -16,20 +16,20 @@ public class TrimExample
                        "      // to the console.",
                        "      Console.WriteLine(\"Hello, World.\");",
                        "   }",
-                       "}"};
+                       "}"];
         Console.WriteLine("Before call to StripComments:");
         foreach (string line in lines)
-            Console.WriteLine("   {0}", line);
+            Console.WriteLine($"   {line}");
 
         string[] strippedLines = StripComments(lines);
         Console.WriteLine("After call to StripComments:");
         foreach (string line in strippedLines)
-            Console.WriteLine("   {0}", line);
+            Console.WriteLine($"   {line}");
     }
     // This code produces the following output to the console:
     //    Before call to StripComments:
     //       using System;
-    //   
+    //
     //       public class HelloWorld
     //       {
     //           public static void Main()
@@ -38,7 +38,7 @@ public class TrimExample
     //               // to the console.
     //               Console.WriteLine("Hello, World.");
     //           }
-    //       }  
+    //       }
     //    After call to StripComments:
     //       This code displays a simple greeting
     //       to the console.
@@ -47,17 +47,17 @@ public class TrimExample
     // <Snippet2>
     public static string[] StripComments(string[] lines)
     {
-        List<string> lineList = new List<string>();
+        List<string> lineList = new();
         foreach (string line in lines)
         {
             if (line.TrimStart(' ').StartsWith("//"))
                 lineList.Add(line.TrimStart(' ', '/'));
         }
-        return lineList.ToArray();
+        return [.. lineList];
     }
     // </Snippet2>
 
-    public static void Main(string[] args)
+    public static void Run(string[] args)
     {
         // <Snippet1>
         // TrimStart examples
@@ -68,9 +68,9 @@ public class TrimExample
         string lineAfterTrimStart = string.Empty;
 
         // Make it easy to print out and work with all of the examples
-        string[] lines = { lineWithLeadingSpaces, lineWithLeadingSymbols, lineWithLeadingUnderscores, lineWithLeadingLetters };
+        string[] lines = [lineWithLeadingSpaces, lineWithLeadingSymbols, lineWithLeadingUnderscores, lineWithLeadingLetters];
 
-        foreach (var line in lines)
+        foreach (string line in lines)
         {
             Console.WriteLine($"This line has leading characters: {line}");
         }
@@ -83,19 +83,19 @@ public class TrimExample
         // A basic demonstration of TrimStart in action
         lineAfterTrimStart = lineWithLeadingSpaces.TrimStart(' ');
         Console.WriteLine($"This is the result after calling TrimStart: {lineAfterTrimStart}");
-        // This is the result after calling TrimStart: Hello World!   
+        // This is the result after calling TrimStart: Hello World!
 
         // Since TrimStart accepts a character array of leading items to be removed as an argument,
-        // it's possible to do things like trim multiple pieces of data that each have different 
+        // it's possible to do things like trim multiple pieces of data that each have different
         // leading characters,
-        foreach (var lineToEdit in lines)
+        foreach (string lineToEdit in lines)
         {
             Console.WriteLine(lineToEdit.TrimStart(' ', '$', '_', 'x'));
         }
         // Result for each: Hello World!
 
-        // or handle pieces of data that have multiple kinds of leading characters 
-        var lineToBeTrimmed = "__###__ John Smith";
+        // or handle pieces of data that have multiple kinds of leading characters
+        string lineToBeTrimmed = "__###__ John Smith";
         lineAfterTrimStart = lineToBeTrimmed.TrimStart('_', '#', ' ');
         Console.WriteLine(lineAfterTrimStart);
         // Result: John Smith

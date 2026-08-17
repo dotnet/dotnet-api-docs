@@ -1,18 +1,18 @@
-using System;
-using System.Data;
-using System.Security.Principal;
+﻿using System;
+
+
 
 
 public class Form1
 {
- protected void Method()
- {
-// <Snippet1>
- Uri baseUri = new Uri("http://www.contoso.com:8080/");
- Uri myUri = new Uri(baseUri,"shownew.htm?date=today");
+    protected void Method()
+    {
+        // <Snippet1>
+        Uri baseUri = new("http://www.contoso.com:8080/");
+        Uri myUri = new(baseUri, "shownew.htm?date=today");
 
- Console.WriteLine(myUri.Authority);
+        Console.WriteLine(myUri.Authority);
 
-// </Snippet1>
- }
+        // </Snippet1>
+    }
 }

@@ -1,38 +1,41 @@
 ﻿using System;
 
-public class Example
+public class UInt64ParseExample1
 {
-   public static void Main()
-   {
-      // <Snippet1>
-      string[] values = { "+13230", "-0", "1,390,146", "$190,235,421,127",
+    public static void Run()
+    {
+        // <Snippet1>
+        string[] values = { "+13230", "-0", "1,390,146", "$190,235,421,127",
                           "0xFA1B", "163042", "-10", "14065839182",
                           "16e07", "134985.0", "-12034" };
-      foreach (string value in values)
-      {
-         try {
-            ulong number = UInt64.Parse(value); 
-            Console.WriteLine("{0} --> {1}", value, number);
-         }
-         catch (FormatException) {
-            Console.WriteLine("{0}: Bad Format", value);
-         }   
-         catch (OverflowException) {
-            Console.WriteLine("{0}: Overflow", value);   
-         }  
-      }
-      // The example displays the following output:
-      //       +13230 --> 13230
-      //       -0 --> 0
-      //       1,390,146: Bad Format
-      //       $190,235,421,127: Bad Format
-      //       0xFA1B: Bad Format
-      //       163042 --> 163042
-      //       -10: Overflow
-      //       14065839182 --> 14065839182
-      //       16e07: Bad Format
-      //       134985.0: Bad Format
-      //       -12034: Overflow
-      // </Snippet1>
-   }
+        foreach (string value in values)
+        {
+            try
+            {
+                ulong number = ulong.Parse(value);
+                Console.WriteLine($"{value} --> {number}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"{value}: Bad Format");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"{value}: Overflow");
+            }
+        }
+        // The example displays the following output:
+        //       +13230 --> 13230
+        //       -0 --> 0
+        //       1,390,146: Bad Format
+        //       $190,235,421,127: Bad Format
+        //       0xFA1B: Bad Format
+        //       163042 --> 163042
+        //       -10: Overflow
+        //       14065839182 --> 14065839182
+        //       16e07: Bad Format
+        //       134985.0: Bad Format
+        //       -12034: Overflow
+        // </Snippet1>
+    }
 }

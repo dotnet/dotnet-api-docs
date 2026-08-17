@@ -3,41 +3,41 @@ using System;
 
 class Example
 {
-   public static void Main() 
-   {
-      EnumerateAndDisplay("Test Case");
-      EnumerateAndDisplay("This is a sentence.");
-      EnumerateAndDisplay("Has\ttwo\ttabs" );
-      EnumerateAndDisplay("Two\nnew\nlines");
-   }
+    public static void Main()
+    {
+        EnumerateAndDisplay("Test Case");
+        EnumerateAndDisplay("This is a sentence.");
+        EnumerateAndDisplay("Has\ttwo\ttabs");
+        EnumerateAndDisplay("Two\nnew\nlines");
+    }
 
-   static void EnumerateAndDisplay(String phrase)
-   {
-      Console.WriteLine("The characters in the string \"{0}\" are:",
-                        phrase);
+    static void EnumerateAndDisplay(string phrase)
+    {
+        Console.WriteLine($"The characters in the string \"{phrase}\" are:");
 
-      int CharCount = 0;
-      int controlChars = 0;
-      int alphanumeric = 0;
-      int punctuation = 0;
+        int CharCount = 0;
+        int controlChars = 0;
+        int alphanumeric = 0;
+        int punctuation = 0;
 
-      foreach (var ch in phrase) {
-         Console.Write(Char.IsControl(ch) ? $"{ch}" : $"0x{(ushort)ch:X4}");
+        foreach (char ch in phrase)
+        {
+            Console.Write(char.IsControl(ch) ? $"{ch}" : $"0x{(ushort)ch:X4}");
 
-         if (Char.IsLetterOrDigit(ch)) 
-            alphanumeric++;
-         else if (Char.IsControl(ch)) 
-            controlChars++;
-         else if (Char.IsPunctuation(ch)) 
-            punctuation++;             
-         CharCount++;
-      }
+            if (char.IsLetterOrDigit(ch))
+                alphanumeric++;
+            else if (char.IsControl(ch))
+                controlChars++;
+            else if (char.IsPunctuation(ch))
+                punctuation++;
+            CharCount++;
+        }
 
-      Console.WriteLine("\n   Total characters:        {0,3}", CharCount);
-      Console.WriteLine("   Alphanumeric characters: {0,3}", alphanumeric);
-      Console.WriteLine("   Punctuation characters:  {0,3}", punctuation);
-      Console.WriteLine("   Control Characters:      {0,3}\n", controlChars);
-   }
+        Console.WriteLine($"\n   Total characters:        {CharCount,3}");
+        Console.WriteLine($"   Alphanumeric characters: {alphanumeric,3}");
+        Console.WriteLine($"   Punctuation characters:  {punctuation,3}");
+        Console.WriteLine($"   Control Characters:      {controlChars,3}\n");
+    }
 }
 // The example displays the following output:
 //    The characters in the string "Test Case" are:
@@ -46,21 +46,21 @@ class Example
 //       Alphanumeric characters:   8
 //       Punctuation characters:    0
 //       Control Characters:        0
-//    
+//
 //    The characters in the string "This is a sentence." are:
 //    'T' 'h' 'i' 's' ' ' 'i' 's' ' ' 'a' ' ' 's' 'e' 'n' 't' 'e' 'n' 'c' 'e' '.'
 //       Total characters:         19
 //       Alphanumeric characters:  15
 //       Punctuation characters:    1
 //       Control Characters:        0
-//    
+//
 //    The characters in the string "Has       two     tabs" are:
 //    'H' 'a' 's' '0x0009' 't' 'w' 'o' '0x0009' 't' 'a' 'b' 's'
 //       Total characters:         12
 //       Alphanumeric characters:  10
 //       Punctuation characters:    0
 //       Control Characters:        2
-//    
+//
 //    The characters in the string "Two
 //    new
 //    lines" are:

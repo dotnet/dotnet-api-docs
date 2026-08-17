@@ -7,10 +7,7 @@ public class Card
     public Suit Suit;
     public FaceValue FaceValue;
 
-    public override string ToString()
-    {
-        return string.Format("{0:F} of {1:F}", FaceValue, Suit);
-    }
+    public override string ToString() => $"{FaceValue:F} of {Suit:F}";
 }
 
 public enum Suit { Hearts, Diamonds, Spades, Clubs };
@@ -36,7 +33,7 @@ public class Dealer
 
     public Dealer()
     {
-        _rnd = new Random();
+        _rnd = new();
         // Initialize the deck.
         int deckCtr = 0;
         foreach (object suit in Enum.GetValues(typeof(Suit)))
@@ -97,7 +94,7 @@ public class Example21
     {
         foreach (Card card in cards)
             if (card != null)
-                Console.WriteLine("{0} of {1}", card.FaceValue, card.Suit);
+                Console.WriteLine($"{card.FaceValue} of {card.Suit}");
     }
 }
 // The example displays output like the following:

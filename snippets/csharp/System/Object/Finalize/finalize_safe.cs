@@ -51,7 +51,7 @@ public class FileAssociationInfo : IDisposable
         if (retVal != ERROR_SUCCESS)
             throw new Win32Exception(retVal);
         // Instantiate the first SafeRegistryHandle.
-        hExtHandle = new SafeRegistryHandle(hExtension, true);
+        hExtHandle = new(hExtension, true);
 
         string appId = new(' ', MAX_PATH);
         uint appIdLength = (uint)appId.Length;
@@ -83,7 +83,7 @@ public class FileAssociationInfo : IDisposable
             throw new Win32Exception(retVal);
 
         // Instantiate the second SafeRegistryHandle.
-        hAppIdHandle = new SafeRegistryHandle(hAppId, true);
+        hAppIdHandle = new(hAppId, true);
 
         // Get the executable name for this file type.
         string exePath = new(' ', MAX_PATH);
@@ -117,14 +117,14 @@ public class FileAssociationInfo : IDisposable
 
     public string Open
     {
-        get { return openCmd; }
+        get => openCmd;
         set
         {
             if (hAppIdHandle.IsInvalid | hAppIdHandle.IsClosed)
                 throw new InvalidOperationException("Cannot write to registry key.");
             if (!File.Exists(value))
             {
-                string message = string.Format("'{0}' does not exist", value);
+                string message = $"'{value}' does not exist";
                 throw new FileNotFoundException(message);
             }
             string cmd = value + " %1";

@@ -3,17 +3,17 @@ using System;
 
 public class Example
 {
-   public static void Main()
-   {
-      var os = Environment.OSVersion;
-      Console.WriteLine("Current OS Information:\n");
-      Console.WriteLine("Platform: {0:G}", os.Platform);
-      Console.WriteLine("Version String: {0}", os.VersionString);
-      Console.WriteLine("Version Information:");
-      Console.WriteLine("   Major: {0}", os.Version.Major);
-      Console.WriteLine("   Minor: {0}", os.Version.Minor);
-      Console.WriteLine("Service Pack: '{0}'", os.ServicePack);
-   }
+    public static void Main()
+    {
+        var os = Environment.OSVersion;
+        Console.WriteLine("Current OS Information:\n");
+        Console.WriteLine($"Platform: {os.Platform:G}");
+        Console.WriteLine($"Version String: {os.VersionString}");
+        Console.WriteLine("Version Information:");
+        Console.WriteLine($"   Major: {os.Version.Major}");
+        Console.WriteLine($"   Minor: {os.Version.Minor}");
+        Console.WriteLine($"Service Pack: '{os.ServicePack}'");
+    }
 }
 // If run on a Windows 8.1 system, the example displays output like the following:
 //       Current OS Information:

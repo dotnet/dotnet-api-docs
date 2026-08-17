@@ -5,12 +5,12 @@ using System.Threading;
 
 public class Example
 {
-   public static void Main()
-   {
-      Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
-      Console.WriteLine(String.Compare("A", "a", StringComparison.CurrentCulture));
-      Console.WriteLine(String.Compare("A", "a", StringComparison.Ordinal));
-   }
+    public static void Main()
+    {
+        Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+        Console.WriteLine(string.Compare("A", "a", StringComparison.CurrentCulture));
+        Console.WriteLine(string.Compare("A", "a", StringComparison.Ordinal));
+    }
 }
 // The example displays the following output:
 //       1

@@ -1,13 +1,13 @@
-// <Snippet3>
+﻿// <Snippet3>
 using System;
 
 public class Example12
 {
     public static void Main()
     {
-        Single value = .2f;
-        Single result1 = value * 10f;
-        Single result2 = 0f;
+        float value = .2f;
+        float result1 = value * 10f;
+        float result2 = 0f;
         for (int ctr = 1; ctr <= 10; ctr++)
             result2 += value;
 

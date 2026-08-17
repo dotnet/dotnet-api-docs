@@ -10,13 +10,13 @@ public class RandomObjectDemo
     static void RunIntNDoubleRandoms(Random randObj)
     {
         // Generate the first six random integers.
-        for(int j = 0; j < 6; j++)
-            Console.Write(" {0,10} ", randObj.Next());
+        for (int j = 0; j < 6; j++)
+            Console.Write($" {randObj.Next(),10} ");
         Console.WriteLine();
 
         // Generate the first six random doubles.
-        for(int j = 0; j < 6; j++)
-            Console.Write(" {0:F8} ", randObj.NextDouble());
+        for (int j = 0; j < 6; j++)
+            Console.Write($" {randObj.NextDouble():F8} ");
         Console.WriteLine();
     }
 
@@ -26,7 +26,7 @@ public class RandomObjectDemo
         Console.WriteLine(
             "\nRandom numbers from a Random object with " +
             "seed = {0}:", seed);
-        Random fixRand = new Random(seed);
+        Random fixRand = new(seed);
 
         RunIntNDoubleRandoms(fixRand);
     }
@@ -40,13 +40,13 @@ public class RandomObjectDemo
         Console.WriteLine(
             "\nRandom numbers from a Random object " +
             "with an auto-generated seed:");
-        Random autoRand = new Random();
+        Random autoRand = new();
 
         RunIntNDoubleRandoms(autoRand);
     }
 
     static void Main()
-    {	
+    {
         Console.WriteLine(
             "This example of the Random class constructors and " +
             "Random.NextDouble() \n" +
@@ -108,19 +108,19 @@ Random numbers from a Random object with an auto-generated seed:
 // same timer value that will produce unique random number sequences.
 public class FixTimerResolution
 {
-   public static void CreateEnginesWithSameTimer()
-   {
-// <Snippet3>
-      int randomInstancesToCreate = 4;
-      Random[] randomEngines = new Random[randomInstancesToCreate];
-      for (int ctr = 0; ctr < randomInstancesToCreate; ctr++)
-      {
-         randomEngines[ctr] = new Random(unchecked((int) (DateTime.Now.Ticks >> ctr)));
-      }
-// </Snippet3>
-      for (int ctr = 0; ctr < randomInstancesToCreate; ctr++)
-      {
-         Console.WriteLine(randomEngines[ctr].Next());
-      }
-   }
+    public static void CreateEnginesWithSameTimer()
+    {
+        // <Snippet3>
+        int randomInstancesToCreate = 4;
+        Random[] randomEngines = new Random[randomInstancesToCreate];
+        for (int ctr = 0; ctr < randomInstancesToCreate; ctr++)
+        {
+            randomEngines[ctr] = new(unchecked((int)(DateTime.Now.Ticks >> ctr)));
+        }
+        // </Snippet3>
+        for (int ctr = 0; ctr < randomInstancesToCreate; ctr++)
+        {
+            Console.WriteLine(randomEngines[ctr].Next());
+        }
+    }
 }

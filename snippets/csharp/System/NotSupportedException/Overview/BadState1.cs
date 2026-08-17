@@ -9,10 +9,10 @@ public class Example
     public static async Task Main()
     {
         Encoding enc = Encoding.Unicode;
-        String value = "This is a string to persist.";
-        Byte[] bytes = enc.GetBytes(value);
+        string value = "This is a string to persist.";
+        byte[] bytes = enc.GetBytes(value);
 
-        FileStream fs = new FileStream(@".\TestFile.dat",
+        FileStream fs = new(@".\TestFile.dat",
                                        FileMode.Open,
                                        FileAccess.Read);
         Task t = fs.WriteAsync(enc.GetPreamble(), 0, enc.GetPreamble().Length);
