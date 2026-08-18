@@ -2,15 +2,10 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Microsoft.CSharp;
-using Microsoft.VisualBasic;
-using Microsoft.JScript;
 
 // This example demonstrates building a Hello World program graph
 // using System.CodeDom elements. It calls code generator and
@@ -86,7 +81,7 @@ namespace CodeDOMExample
         {
             // Build the source file name with the appropriate
             // language extension.
-            String sourceFile;
+            string sourceFile;
             if (provider.FileExtension[0] == '.')
             {
                 sourceFile = "TestGraph" + provider.FileExtension;
@@ -108,12 +103,12 @@ namespace CodeDOMExample
 
         //<Snippet4>
         public static CompilerResults CompileCode(CodeDomProvider provider,
-                                                  String sourceFile,
-                                                  String exeFile)
+                                                  string sourceFile,
+                                                  string exeFile)
         {
             // Configure a CompilerParameters that links System.dll
             // and produces the specified executable file.
-            String[] referenceAssemblies = { "System.dll" };
+            string[] referenceAssemblies = ["System.dll"];
             CompilerParameters cp = new CompilerParameters(referenceAssemblies,
                                                            exeFile, false);
             // Generate an executable rather than a DLL file.
@@ -143,7 +138,7 @@ namespace CodeDOMExample
 
             // Build the source file name with the appropriate
             // language extension.
-            String sourceFile;
+            string sourceFile;
             if (provider.FileExtension[0] == '.')
             {
                 sourceFile = "TestGraph" + provider.FileExtension;
@@ -166,7 +161,7 @@ namespace CodeDOMExample
 
             // Build the source file name with the appropriate
             // language extension.
-            String sourceFile;
+            string sourceFile;
             if (provider.FileExtension[0] == '.')
             {
                 sourceFile = "TestGraph" + provider.FileExtension;
@@ -236,7 +231,7 @@ namespace CodeDOMExample
             this.comboBox1.Location = new System.Drawing.Point(560, 16);
             this.comboBox1.Size = new Size(190, 23);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Items.AddRange(new string[] { "CSharp", "Visual Basic", "JScript" });
+            this.comboBox1.Items.AddRange(["CSharp", "Visual Basic", "JScript"]);
             this.comboBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
                                     | System.Windows.Forms.AnchorStyles.Right
                                     | System.Windows.Forms.AnchorStyles.Top;
@@ -275,9 +270,9 @@ namespace CodeDOMExample
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(768, 340);
             this.MinimumSize = new System.Drawing.Size(750, 340);
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {this.textBox1,
+            this.Controls.AddRange([this.textBox1,
                 this.run_button, this.compile_button, this.generate_button,
-                this.comboBox1, this.label1 });
+                this.comboBox1, this.label1]);
             this.Name = "CodeDomExampleForm";
             this.Text = "CodeDom Hello World Example";
             this.ResumeLayout(false);

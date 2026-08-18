@@ -1,7 +1,5 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
-using System.Reflection;
 
 namespace CodeDomSamples
 {
@@ -17,7 +15,7 @@ namespace CodeDomSamples
             // Sets the member attributes for the type to private.
             newType.Attributes = MemberAttributes.Private;
             // Sets a base class which the type inherits from.
-            newType.BaseTypes.Add( "BaseType" );
+            newType.BaseTypes.Add("BaseType");
 
             // A C# code generator produces the following source code for the preceeding example code:
 

@@ -3,7 +3,6 @@ using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace BasicCodeDomApp
 {
@@ -11,7 +10,7 @@ namespace BasicCodeDomApp
     {
         static string providerName = "cs";
         static string sourceFileName = "test.cs";
-        static void Main(string[] args)
+        public static void Run(string[] args)
         {
             CodeDomProvider provider = CodeDomProvider.CreateProvider(providerName);
 
@@ -28,8 +27,7 @@ namespace BasicCodeDomApp
             //</Snippet5>
 
             //<Snippet6>
-            CompilerParameters opt = new CompilerParameters(new string[]{
-                                      "System.dll" });
+            CompilerParameters opt = new CompilerParameters(["System.dll"]);
             opt.GenerateExecutable = true;
             opt.OutputAssembly = "HelloWorld.exe";
             opt.TreatWarningsAsErrors = true;
@@ -55,6 +53,12 @@ namespace BasicCodeDomApp
                 LogMessage("Demo completed successfully.");
             }
             File.Delete(sourceFileName);
+        }
+
+        static void Main(string[] args)
+        {
+            Run(args);
+            CodeDOMSample.Run();
         }
 
         //<Snippet2>

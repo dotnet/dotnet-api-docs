@@ -2,15 +2,8 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Data;
 using System.IO;
-using Microsoft.CSharp;
-using Microsoft.VisualBasic;
-using Microsoft.JScript;
+using System.Windows.Forms;
 
 namespace CodeDOMSamples
 {
@@ -87,7 +80,7 @@ namespace CodeDOMSamples
 
             // Create appropriate CodeProvider
             System.CodeDom.Compiler.CodeDomProvider cp;
-            switch(language)
+            switch (language)
             {
                 case 2: // VB
                     cp = CodeDomProvider.CreateProvider("VisualBasic");
@@ -110,16 +103,16 @@ namespace CodeDOMSamples
             this.textBox1.Text = sw.ToString();
         }
 
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
                 if (components != null)
                 {
                     components.Dispose();
                 }
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
@@ -170,10 +163,10 @@ namespace CodeDOMSamples
             //
             // groupBox1
             //
-            this.groupBox1.Controls.AddRange(new System.Windows.Forms.Control[] {
+            this.groupBox1.Controls.AddRange([
                                                                                     this.radioButton3,
                                                                                     this.radioButton2,
-                                                                                    this.radioButton1});
+                                                                                    this.radioButton1]);
             this.groupBox1.Location = new System.Drawing.Point(16, 48);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(384, 56);
@@ -211,11 +204,11 @@ namespace CodeDOMSamples
             //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(714, 367);
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
+            this.Controls.AddRange([
                                                                           this.groupBox1,
                                                                           this.button2,
                                                                           this.button1,
-                                                                          this.textBox1});
+                                                                          this.textBox1]);
             this.Name = "Form1";
             this.Text = "CodeDOM Samples Framework";
             this.groupBox1.ResumeLayout(false);
@@ -231,7 +224,7 @@ namespace CodeDOMSamples
 
         private void ShowCode()
         {
-            this.textBox1.Text="";
+            this.textBox1.Text = "";
         }
 
         // Show code button
@@ -249,31 +242,31 @@ namespace CodeDOMSamples
         // Csharp language selection button
         private void radioButton1_CheckedChanged(object sender, System.EventArgs e)
         {
-            radioButton1.Checked=true;
-            radioButton2.Checked=false;
-            radioButton3.Checked=false;
+            radioButton1.Checked = true;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
 
-            language=1;
+            language = 1;
         }
 
         // Visual Basic language selection button
         private void radioButton2_CheckedChanged(object sender, System.EventArgs e)
         {
-            radioButton1.Checked=false;
-            radioButton2.Checked=true;
-            radioButton3.Checked=false;
+            radioButton1.Checked = false;
+            radioButton2.Checked = true;
+            radioButton3.Checked = false;
 
-            language=2;
+            language = 2;
         }
 
         // JScript language selection button
         private void radioButton3_CheckedChanged(object sender, System.EventArgs e)
         {
-            radioButton1.Checked=false;
-            radioButton2.Checked=false;
-            radioButton3.Checked=true;
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = true;
 
-            language=3;
+            language = 3;
         }
     }
 }

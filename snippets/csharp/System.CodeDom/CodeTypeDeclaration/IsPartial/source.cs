@@ -6,10 +6,8 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
-using System.ComponentModel;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
 namespace CompilerParametersSamples
 {
@@ -467,12 +465,12 @@ new CodePropertySetValueReferenceExpression()));
             baseClass.Members.Add(docDateProp);
         }
 
-        public static String GenerateCode(CodeDomProvider provider,
+        public static string GenerateCode(CodeDomProvider provider,
                                           CodeCompileUnit compileUnit)
         {
             // Build the source file name with the language
             // extension (vb, cs, js).
-            String sourceFile = "";
+            string sourceFile = "";
 
             // Write the source out in the selected language if
             // the code generator supports partial type declarations.
@@ -502,8 +500,8 @@ null);
 
         //<Snippet1>
         public static bool CompileCode(CodeDomProvider provider,
-            String sourceFile,
-            String exeFile)
+            string sourceFile,
+            string exeFile)
         {
 
             CompilerParameters cp = new CompilerParameters();
@@ -546,18 +544,16 @@ sourceFile);
             if (cr.Errors.Count > 0)
             {
                 // Display compilation errors.
-                Console.WriteLine("Errors building {0} into {1}",
-                    sourceFile, cr.PathToAssembly);
+                Console.WriteLine($"Errors building {sourceFile} into {cr.PathToAssembly}");
                 foreach (CompilerError ce in cr.Errors)
                 {
-                    Console.WriteLine("  {0}", ce.ToString());
+                    Console.WriteLine($"  {ce}");
                     Console.WriteLine();
                 }
             }
             else
             {
-                Console.WriteLine("Source {0} built into {1} successfully.",
-                    sourceFile, cr.PathToAssembly);
+                Console.WriteLine($"Source {sourceFile} built into {cr.PathToAssembly} successfully.");
             }
 
             // Return the results of compilation.
@@ -576,10 +572,10 @@ sourceFile);
         static void Main()
         {
             CodeDomProvider provider = null;
-            String exeName = "DocProp.exe";
+            string exeName = "DocProp.exe";
 
             Console.WriteLine("Enter the source language for DocumentProperties class (cs, vb, etc):");
-            String inputLang = Console.ReadLine();
+            string inputLang = Console.ReadLine();
             Console.WriteLine();
 
             if (CodeDomProvider.IsDefinedLanguage(inputLang))
@@ -597,7 +593,7 @@ sourceFile);
 
                 DocumentPropertyGraphExpand(ref docPropertyUnit);
 
-                String sourceFile = GenerateCode(provider, docPropertyUnit);
+                string sourceFile = GenerateCode(provider, docPropertyUnit);
 
                 if (!String.IsNullOrEmpty(sourceFile))
                 {

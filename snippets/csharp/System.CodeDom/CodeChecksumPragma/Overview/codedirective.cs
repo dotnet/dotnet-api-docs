@@ -1,12 +1,7 @@
 ﻿//<Snippet1>
-using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Specialized;
 using System.IO;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Globalization;
 namespace System.CodeDom
 {
     class CodeDirectiveDemo
@@ -54,12 +49,12 @@ namespace System.CodeDom
             t.Close();
             s.Close();
 
-            CompilerParameters opt = new CompilerParameters(new string[]{
-                                      "System.dll",
-                                      "System.Xml.dll",
-                                      "System.Windows.Forms.dll",
-                                      "System.Data.dll",
-                                      "System.Drawing.dll"});
+            CompilerParameters opt = new CompilerParameters([
+                "System.dll",
+                "System.Xml.dll",
+                "System.Windows.Forms.dll",
+                "System.Data.dll",
+                "System.Drawing.dll"]);
             opt.GenerateExecutable = false;
             opt.TreatWarningsAsErrors = true;
             opt.IncludeDebugInformation = true;
@@ -90,7 +85,7 @@ namespace System.CodeDom
         private static Guid HashSHA1 = new Guid(0xff1816ec, 0xaa5e, 0x4d10, 0x87, 0xf7, 0x6f, 0x49, 0x63, 0x83, 0x34, 0x60);
 
         // Create a CodeDOM graph.
-        static void CreateGraph( CodeCompileUnit cu)
+        static void CreateGraph(CodeCompileUnit cu)
         {
             //<Snippet2>
             cu.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start,
@@ -110,11 +105,11 @@ namespace System.CodeDom
             pragma1.ChecksumAlgorithmId = HashMD5;
             //</Snippet6>
             //<Snippet7>
-            pragma1.ChecksumData = new byte[] { 0xAA, 0xAA };
+            pragma1.ChecksumData = [0xAA, 0xAA];
             //</Snippet7>
             cu.StartDirectives.Add(pragma1);
             //<Snippet8>
-            CodeChecksumPragma pragma2 = new CodeChecksumPragma("test.txt", HashSHA1, new byte[] { 0xBB, 0xBB, 0xBB });
+            CodeChecksumPragma pragma2 = new CodeChecksumPragma("test.txt", HashSHA1, [0xBB, 0xBB, 0xBB]);
             //</Snippet8>
             cu.StartDirectives.Add(pragma2);
 

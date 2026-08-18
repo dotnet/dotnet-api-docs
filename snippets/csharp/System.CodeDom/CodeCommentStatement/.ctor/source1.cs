@@ -7,14 +7,14 @@ using Microsoft.CSharp;
 
 public class CodeDOMSample
 {
-    public static void Main()
+    public static void Run()
     {
         string sourceFile;
         int dotSpot;
 
         CodeCompileUnit cu = new CodeCompileUnit();
         sourceFile = GenerateCSharpCode(cu);
-        Console.WriteLine("CS source file: {0}", sourceFile);
+        Console.WriteLine($"CS source file: {sourceFile}");
         dotSpot = sourceFile.IndexOf('.');
         CompileCSharpCode(sourceFile, sourceFile.Substring(0, dotSpot) + ".exe");
     }
@@ -63,7 +63,7 @@ public class CodeDOMSample
         CompilerParameters cp = new CompilerParameters();
 
         // Add an assembly reference.
-        cp.ReferencedAssemblies.Add( "System.dll" );
+        cp.ReferencedAssemblies.Add("System.dll");
 
         // Generate an executable instead of
         // a class library.
@@ -81,18 +81,16 @@ public class CodeDOMSample
         if (cr.Errors.Count > 0)
         {
             // Display compilation errors.
-            Console.WriteLine("Errors building {0} into {1}",
-                sourceFile, cr.PathToAssembly);
-            foreach(CompilerError ce in cr.Errors)
+            Console.WriteLine($"Errors building {sourceFile} into {cr.PathToAssembly}");
+            foreach (CompilerError ce in cr.Errors)
             {
-                Console.WriteLine("  {0}", ce.ToString());
+                Console.WriteLine($"  {ce}");
                 Console.WriteLine();
             }
         }
         else
         {
-            Console.WriteLine("Source {0} built into {1} successfully.",
-                sourceFile, cr.PathToAssembly);
+            Console.WriteLine($"Source {sourceFile} built into {cr.PathToAssembly} successfully.");
         }
 
         // Return the results of compilation.

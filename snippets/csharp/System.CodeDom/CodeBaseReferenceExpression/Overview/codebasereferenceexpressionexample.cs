@@ -1,5 +1,4 @@
 ﻿//<Snippet1>
-using System;
 using System.CodeDom;
 
 namespace CodeDomSamples
@@ -21,7 +20,7 @@ namespace CodeDomSamples
                 new CodeBaseReferenceExpression(),
 
                 // Method name and method parameter arguments
-                "Dispose", new CodeExpression[] {});
+                "Dispose", []);
 
             // A C# code generator produces the following source code for the preceeding example code:
 

@@ -1,13 +1,8 @@
 ﻿//<Snippet1>
-using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Specialized;
-using System.IO;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Globalization;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 namespace System.CodeDom
 {
     class CodeDomGenericsDemo
@@ -54,12 +49,12 @@ namespace System.CodeDom
             t.Close();
             s.Close();
 
-            CompilerParameters opt = new CompilerParameters(new string[]{
-                                      "System.dll",
-                                      "System.Xml.dll",
-                                      "System.Windows.Forms.dll",
-                                      "System.Data.dll",
-                                      "System.Drawing.dll"});
+            CompilerParameters opt = new CompilerParameters([
+                "System.dll",
+                "System.Xml.dll",
+                "System.Windows.Forms.dll",
+                "System.Data.dll",
+                "System.Drawing.dll"]);
             opt.GenerateExecutable = false;
             opt.TreatWarningsAsErrors = true;
             opt.IncludeDebugInformation = true;
@@ -188,7 +183,7 @@ namespace System.CodeDom
                       new CodeVariableReferenceExpression("dict"),
                             "Count")));
 
-//<Snippet9>
+            //<Snippet9>
             methodMain.Statements.Add(new CodeExpressionStatement(
                  new CodeMethodInvokeExpression(
                       new CodeMethodReferenceExpression(
@@ -199,14 +194,14 @@ namespace System.CodeDom
                                        new CodeTypeReference("System.Int32"),}),
                                            new CodeExpression[0])));
 
-//</Snippet9>
+            //</Snippet9>
             string dictionaryTypeName = typeof(System.Collections.Generic.Dictionary<int,
                 System.Collections.Generic.List<string>>[]).FullName;
 
             CodeTypeReference dictionaryType = new CodeTypeReference(dictionaryTypeName);
             methodMain.Statements.Add(
                   new CodeVariableDeclarationStatement(dictionaryType, "dict2",
-                     new CodeArrayCreateExpression(dictionaryType, new CodeExpression[1] { new CodePrimitiveExpression(null) })));
+                     new CodeArrayCreateExpression(dictionaryType, [new CodePrimitiveExpression(null)])));
 
             methodMain.Statements.Add(ConsoleWriteLineStatement(
                            new CodePropertyReferenceExpression(
