@@ -3,6 +3,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
+namespace ConcurrentStackSingleExample;
+
 class Example
 {
     // Demonstrates:
@@ -15,7 +17,7 @@ class Example
     {
         int items = 10000;
 
-        ConcurrentStack<int> stack = new ConcurrentStack<int>();
+        ConcurrentStack<int> stack = new();
 
         // Create an action to push items onto the stack
         Action pusher = () =>
@@ -61,7 +63,7 @@ class Example
         };
 
         // Spin up five concurrent tasks of the action
-        var tasks = new Task[5];
+        Task[] tasks = new Task[5];
         for (int i = 0; i < tasks.Length; i++)
             tasks[i] = Task.Factory.StartNew(pushAndPop);
 
