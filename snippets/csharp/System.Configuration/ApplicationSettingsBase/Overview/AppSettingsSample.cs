@@ -1,28 +1,27 @@
-﻿//AppSettingsSample C# sample, flattened to one file for Parsnip.
+﻿// AppSettingsSample C# sample, flattened to one file for Parsnip.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
-using System.Configuration;
 using System.Windows.Forms;
 
 namespace AppSettingsSample
 {
-	static class Program
-	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main()
-		{
-			Application.EnableVisualStyles();
-			//Application.EnableRTLMirroring();
-			Application.Run(new Form1());
-		}
-	}
+    static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            // Application.EnableRTLMirroring();
+            Application.Run(new Form1());
+        }
+    }
 
 	partial class Form1
 	{
@@ -122,43 +121,40 @@ namespace AppSettingsSample
     //<SNIPPET1>
     partial class Form1 : Form
     {
-        private FormSettings frmSettings1 = new FormSettings();
+        private readonly FormSettings frmSettings1 = new();
 
-        public Form1()
-        {
-            InitializeComponent();
-        }
+        public Form1() => InitializeComponent();
 
         //<SNIPPET2>
         private void Form1_Load(object sender, EventArgs e)
         {
             //<SNIPPET11>
-            this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
+            FormClosing += Form1_FormClosing;
 
-            //Associate settings property event handlers.
-            frmSettings1.SettingChanging += new SettingChangingEventHandler(
-                                                frmSettings1_SettingChanging);
-            frmSettings1.SettingsSaving += new SettingsSavingEventHandler(
-                                                frmSettings1_SettingsSaving);
+            // Associate settings property event handlers.
+            frmSettings1.SettingChanging += frmSettings1_SettingChanging;
+            frmSettings1.SettingsSaving += frmSettings1_SettingsSaving;
             //</SNIPPET11>
 
             //<SNIPPET12>
-            //Data bind settings properties with straightforward associations.
-            Binding bndBackColor = new Binding("BackColor", frmSettings1,
+            // Data-bind settings properties with straightforward associations.
+            Binding bndBackColor = new("BackColor", frmSettings1,
                 "FormBackColor", true, DataSourceUpdateMode.OnPropertyChanged);
-            this.DataBindings.Add(bndBackColor);
-            Binding bndLocation = new Binding("Location", frmSettings1,
+            DataBindings.Add(bndBackColor);
+            Binding bndLocation = new("Location", frmSettings1,
                 "FormLocation", true, DataSourceUpdateMode.OnPropertyChanged);
-            this.DataBindings.Add(bndLocation);
+            DataBindings.Add(bndLocation);
 
-            // Assign Size property, since databinding to Size doesn't work well.
-             this.Size = frmSettings1.FormSize;
+            // Assign the Size property, since data binding to Size doesn't work well.
+            Size = frmSettings1.FormSize;
 
-            //For more complex associations, manually assign associations.
-            String savedText = frmSettings1.FormText;
-            //Since there is no default value for FormText.
+            // For more complex associations, manually assign associations.
+            string savedText = frmSettings1.FormText;
+            // There is no default value for FormText.
             if (savedText != null)
-                this.Text = savedText;
+            {
+                Text = savedText;
+            }
             //</SNIPPET12>
         }
         //</SNIPPET2>
@@ -166,9 +162,9 @@ namespace AppSettingsSample
         //<SNIPPET3>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Synchronize manual associations first.
-            frmSettings1.FormText = this.Text + '.';
-            frmSettings1.FormSize = this.Size;
+            // Synchronize manual associations first.
+            frmSettings1.FormText = $"{Text}.";
+            frmSettings1.FormSize = Size;
             frmSettings1.Save();
         }
         //</SNIPPET3>
@@ -179,7 +175,7 @@ namespace AppSettingsSample
             if (DialogResult.OK == colorDialog1.ShowDialog())
             {
                 Color c = colorDialog1.Color;
-                this.BackColor = c;
+                BackColor = c;
             }
         }
         //</SNIPPET4>
@@ -188,28 +184,23 @@ namespace AppSettingsSample
         private void btnReset_Click(object sender, EventArgs e)
         {
             frmSettings1.Reset();
-            this.BackColor = SystemColors.Control;
+            BackColor = SystemColors.Control;
         }
         //</SNIPPET5>
 
         //<SNIPPET6>
-        private void btnReload_Click(object sender, EventArgs e)
-        {
-            frmSettings1.Reload();
-        }
+        private void btnReload_Click(object sender, EventArgs e) => frmSettings1.Reload();
         //</SNIPPET6>
 
         //<SNIPPET7>
         void frmSettings1_SettingChanging(object sender, SettingChangingEventArgs e)
-        {
-            tbStatus.Text = e.SettingName + ": " + e.NewValue;
-        }
+            => tbStatus.Text = $"{e.SettingName}: {e.NewValue}";
         //</SNIPPET7>
 
         //<SNIPPET8>
         void frmSettings1_SettingsSaving(object sender, CancelEventArgs e)
         {
-            //Should check for settings changes first.
+            // Check for settings changes first.
             DialogResult dr = MessageBox.Show(
                             "Save current values for application settings?",
                             "Save Settings", MessageBoxButtons.YesNo);
@@ -222,40 +213,40 @@ namespace AppSettingsSample
     }
 
     //<SNIPPET9>
-    //Application settings wrapper class
+    // Application settings wrapper class.
     sealed class FormSettings : ApplicationSettingsBase
     {
-        [UserScopedSettingAttribute()]
-        public String FormText
+        [UserScopedSetting]
+        public string FormText
         {
-            get { return (String)this["FormText"]; }
-            set { this["FormText"] = value; }
+            get => (string)this["FormText"];
+            set => this["FormText"] = value;
         }
 
         //<SNIPPET10>
-        [UserScopedSettingAttribute()]
-        [DefaultSettingValueAttribute("0, 0")]
+        [UserScopedSetting]
+        [DefaultSettingValue("0, 0")]
         public Point FormLocation
         {
-            get { return (Point)(this["FormLocation"]); }
-            set { this["FormLocation"] = value; }
+            get => (Point)this["FormLocation"];
+            set => this["FormLocation"] = value;
         }
         //</SNIPPET10>
 
-        [UserScopedSettingAttribute()]
-        [DefaultSettingValueAttribute("225, 200")]
+        [UserScopedSetting]
+        [DefaultSettingValue("225, 200")]
         public Size FormSize
         {
-            get { return (Size)this["FormSize"]; }
-            set { this["FormSize"] = value; }
+            get => (Size)this["FormSize"];
+            set => this["FormSize"] = value;
         }
 
-        [UserScopedSettingAttribute()]
-        [DefaultSettingValueAttribute("LightGray")]
+        [UserScopedSetting]
+        [DefaultSettingValue("LightGray")]
         public Color FormBackColor
         {
-            get { return (Color)this["FormBackColor"]; }
-            set { this["FormBackColor"] = value; }
+            get => (Color)this["FormBackColor"];
+            set => this["FormBackColor"] = value;
         }
     }
     //</SNIPPET9>

@@ -19,7 +19,7 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
     // threshold of 0 means the internal Dictionary is created
     // the first time an object is added.
     //
-    public MutableKeys() : base(null, 0) {}
+    public MutableKeys() : base(null, 0) { }
 
     protected override int GetKeyForItem(MutableKey item)
     {
@@ -58,7 +58,7 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
 
     protected override void ClearItems()
     {
-        foreach( MutableKey mk in Items )
+        foreach (MutableKey mk in Items)
         {
             mk.Collection = null;
         }
@@ -83,18 +83,18 @@ public class MutableKeys : KeyedCollection<int, MutableKey>
             Console.WriteLine("    Dictionary entries");
             Console.WriteLine("    ------------------");
 
-            foreach( KeyValuePair<int, MutableKey> kvp in Dictionary )
+            foreach (KeyValuePair<int, MutableKey> kvp in Dictionary)
             {
-                Console.WriteLine("    {0} : {1}", kvp.Key, kvp.Value);
+                Console.WriteLine($"    {kvp.Key} : {kvp.Value}");
             }
         }
 
         Console.WriteLine("\n    List of items");
         Console.WriteLine("    -------------");
 
-        foreach( MutableKey mk in Items )
+        foreach (MutableKey mk in Items)
         {
-            Console.WriteLine("    {0}", mk);
+            Console.WriteLine($"    {mk}");
         }
     }
 }
@@ -103,17 +103,18 @@ public class Demo
 {
     public static void Main()
     {
-        MutableKeys mkeys = new MutableKeys();
-
-        // The Add method is inherited from Collection.
-        //
-        mkeys.Add(new MutableKey(110072674, "Widget"));
-        mkeys.Add(new MutableKey(110072675, "Sprocket"));
+        MutableKeys mkeys =
+        [
+            // The Add method is inherited from Collection.
+            //
+            new MutableKey(110072674, "Widget"),
+            new MutableKey(110072675, "Sprocket"),
+        ];
 
         mkeys.Dump();
 
         Console.WriteLine("\nCreate and insert a new item:");
-        MutableKey test = new MutableKey(110072684, "Gear");
+        MutableKey test = new(110072684, "Gear");
         mkeys.Insert(1, test);
 
         mkeys.Dump();
@@ -123,9 +124,9 @@ public class Demo
             Console.WriteLine("\nTry to insert the item again:");
             mkeys.Insert(1, test);
         }
-        catch(ArgumentException ex)
+        catch (ArgumentException ex)
         {
-            Console.WriteLine("Error: {0}", ex.Message);
+            Console.WriteLine($"Error: {ex.Message}");
         }
 
         Console.WriteLine("\nChange the Key property of the item:");
@@ -138,9 +139,9 @@ public class Demo
             Console.WriteLine("\nTry to set the Key property to an existing key:");
             test.Key = 110072674;
         }
-        catch(ArgumentException ex)
+        catch (ArgumentException ex)
         {
-            Console.WriteLine("Error: {0}", ex.Message);
+            Console.WriteLine($"Error: {ex.Message}");
         }
 
         mkeys.Dump();
@@ -149,7 +150,7 @@ public class Demo
     private static void Display(MutableKeys order)
     {
         Console.WriteLine();
-        foreach( MutableKey item in order )
+        foreach (MutableKey item in order)
         {
             Console.WriteLine(item);
         }
@@ -188,10 +189,7 @@ public class MutableKey
         }
     }
 
-    public override string ToString()
-    {
-        return String.Format("{0,9} {1}", _key, Value);
-    }
+    public override string ToString() => $"{_key,9} {Value}";
 }
 
 /* This code example produces the following output:

@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 class ConcurrentBagDemo
 {
@@ -15,19 +15,19 @@ class ConcurrentBagDemo
     static void Main()
     {
         // Add to ConcurrentBag concurrently
-        ConcurrentBag<int> cb = new ConcurrentBag<int>();
-        List<Task> bagAddTasks = new List<Task>();
+        ConcurrentBag<int> cb = [];
+        List<Task> bagAddTasks = [];
         for (int i = 0; i < 500; i++)
         {
-            var numberToAdd = i;
+            int numberToAdd = i;
             bagAddTasks.Add(Task.Run(() => cb.Add(numberToAdd)));
         }
 
         // Wait for all tasks to complete
-        Task.WaitAll(bagAddTasks.ToArray());
+        Task.WaitAll([.. bagAddTasks]);
 
         // Consume the items in the bag
-        List<Task> bagConsumeTasks = new List<Task>();
+        List<Task> bagConsumeTasks = [];
         int itemsInBag = 0;
         while (!cb.IsEmpty)
         {
@@ -41,7 +41,7 @@ class ConcurrentBagDemo
                 }
             }));
         }
-        Task.WaitAll(bagConsumeTasks.ToArray());
+        Task.WaitAll([.. bagConsumeTasks]);
 
         Console.WriteLine($"There were {itemsInBag} items in the bag");
 
